@@ -3,7 +3,7 @@ import React from 'react';
 function App() {
   return (
     <div>
-      <p>Osc Legal</p>
+      <p>Oscc Legal</p>
     </div>
   );
 }
