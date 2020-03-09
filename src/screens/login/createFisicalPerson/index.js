@@ -1,13 +1,35 @@
 import React, { Component } from "react";
 import Logo from "../../../assets/logo.svg";
 import VisibilityOff from "../../../assets/visibility-off.svg";
+import VisibilityOn from "../../../assets/visibility-on.svg";
+import { connect } from "react-redux";
 
-import { Container, Form, Label, TextTerms, Error } from "./styles";
+import {
+  Container,
+  Form,
+  Label,
+  TextTerms,
+  Error,
+  InputForm,
+  LogoImage,
+  ImagePassword
+} from "./styles";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import ModalTerms from "./Modal";
 
-export default class CreateFisicalPerson extends Component {
+const user = [
+  {
+    rg: "123456789",
+    orgao: "Detran",
+    uf: "RJ",
+    cpf: "12345678901",
+    email: "gabriel@test.com",
+    telefone: "21999999999"
+  }
+];
+
+class CreateFisicalPerson extends Component {
   state = {
     nome: "",
     sobrenome: "",
@@ -19,8 +41,20 @@ export default class CreateFisicalPerson extends Component {
     email: "",
     telefone: "",
     senha: "",
-    errorMessage: false,
-    modal: false
+    isErrorRg: false,
+    isErrorPassword: false,
+    isErrorCpf: false,
+    isErrorTel: false,
+    modal: false,
+    emptyError: false,
+    togglePassword: false
+  };
+
+  togglePassword = ev => {
+    ev.preventDefault();
+    this.setState({
+      togglePassword: !this.state.togglePassword
+    });
   };
 
   handleModal = () => {
@@ -37,24 +71,43 @@ export default class CreateFisicalPerson extends Component {
 
   handleSubmit = ev => {
     ev.preventDefault();
+    console.log(user);
 
-    if (this.state.rg.length < 9) {
+    if (
+      this.state.rg.length < 9 ||
+      this.state.rg.length > 9 ||
+      this.state.rg !== user.rg
+    ) {
       this.setState({
-        errorMessage: true
+        isErrorRg: true
       });
     } else {
       this.setState({
-        errorMessage: false
+        isErrorRg: false
       });
     }
 
-    if (this.state.cpf.length < 11) {
+    if (
+      this.state.cpf.length < 11 ||
+      this.state.cpf.length > 11 ||
+      this.state.rg !== user.cpf
+    ) {
       this.setState({
-        errorMessage: true
+        isErrorCpf: true
       });
     } else {
       this.setState({
-        errorMessage: false
+        isErrorCpf: false
+      });
+    }
+
+    if (this.state.senha.length < 6) {
+      this.setState({
+        isErrorPassword: true
+      });
+    } else {
+      this.setState({
+        isErrorPassword: false
       });
     }
 
@@ -73,6 +126,7 @@ export default class CreateFisicalPerson extends Component {
   };
 
   render() {
+    const { isErrorCpf, isErrorPassword, isErrorRg } = this.state;
     return (
       <Container>
         {this.state.modal === true ? (
@@ -80,9 +134,9 @@ export default class CreateFisicalPerson extends Component {
         ) : (
           <Form
             onSubmit={this.handleSubmit}
-            withError={this.state.errorMessage}
+            withError={(isErrorCpf, isErrorPassword, isErrorRg)}
           >
-            <img src={Logo} alt="Osc-logo" />
+            <LogoImage src={Logo} alt="Osc-logo" />
             <Label>
               <p>Nome:</p>
               <Input
@@ -93,7 +147,6 @@ export default class CreateFisicalPerson extends Component {
                 name="nome"
               />
             </Label>
-
             <Label>
               <p>Sobrenome:</p>
               <Input
@@ -107,18 +160,18 @@ export default class CreateFisicalPerson extends Component {
             <span>
               <Label>
                 <p>rg</p>
-                <Input
+                <InputForm
                   type="number"
                   onChange={this.handleChange}
                   value={this.state.rg}
                   placeholder="000000-0"
                   name="rg"
                 />
-                {this.state.errorMessage && <Error>RG invalido</Error>}
+                {this.state.isErrorRg && <Error>RG invalido</Error>}
               </Label>
               <Label>
                 <p>Orgão expedidor</p>
-                <Input
+                <InputForm
                   type="text"
                   onChange={this.handleChange}
                   value={this.state.orgao}
@@ -129,7 +182,7 @@ export default class CreateFisicalPerson extends Component {
             <span>
               <Label>
                 <p>uf</p>
-                <Input
+                <InputForm
                   type="text"
                   onChange={this.handleChange}
                   value={this.state.uf}
@@ -138,7 +191,7 @@ export default class CreateFisicalPerson extends Component {
               </Label>
               <Label>
                 <p>data de nascimento</p>
-                <Input
+                <InputForm
                   type="number"
                   onChange={this.handleChange}
                   value={this.state.nascimento}
@@ -156,7 +209,7 @@ export default class CreateFisicalPerson extends Component {
                 placeholder="000000-0"
                 name="cpf"
               />
-              {this.state.errorMessage && <Error>CPF inválido</Error>}
+              {this.state.isErrorCpf && <Error>CPF inválido</Error>}
             </Label>
             <Label>
               <p>email</p>
@@ -180,12 +233,25 @@ export default class CreateFisicalPerson extends Component {
             <Label>
               <p>senha</p>
               <Input
-                type="password"
+                className="input-password"
+                type={this.state.togglePassword === true ? "text" : "password"}
                 onChange={this.handleChange}
                 value={this.state.senha}
                 placeholder="Inserir senha"
                 name="senha"
               />
+              {this.state.togglePassword === true ? (
+                <ImagePassword
+                  src={VisibilityOff}
+                  onClick={this.togglePassword}
+                />
+              ) : (
+                <ImagePassword
+                  src={VisibilityOn}
+                  onClick={this.togglePassword}
+                />
+              )}
+              {this.state.isErrorPassword && <Error>Senha fraca</Error>}
             </Label>
             <p>
               Clique abaixo para concordar com os
@@ -203,3 +269,5 @@ export default class CreateFisicalPerson extends Component {
     );
   }
 }
+
+export default CreateFisicalPerson;

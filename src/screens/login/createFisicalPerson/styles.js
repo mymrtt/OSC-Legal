@@ -19,13 +19,8 @@ export const Form = styled.form`
   padding: 1rem 2rem;
   margin: 1rem 0;
 
-  img {
-    width: 150px;
-    margin: 0.5rem 0;
-  }
-
   input {
-    border: ${props => props.withError && "1px solid red"};
+    border: ${props => props.withError && "2px solid red"};
   }
 
   @media (max-width: 375px) {
@@ -33,13 +28,14 @@ export const Form = styled.form`
   }
 
   span {
-    width: 80%;
+    width: 90%;
     display: flex;
     justify-content: space-between;
   }
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     span {
       width: 100%;
+      flex-direction: column;
     }
     p {
       text-align: center;
@@ -60,13 +56,19 @@ export const Form = styled.form`
   }
 `;
 
+export const LogoImage = styled.img`
+  width: 150px;
+  margin: 0.5rem 0;
+`;
+
 export const Label = styled.label`
-  width: 80%;
+  position: relative;
+  width: 90%;
   display: flex;
   align-items: center;
   flex-direction: column;
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     width: 100%;
   }
   p {
@@ -74,7 +76,14 @@ export const Label = styled.label`
     text-transform: uppercase;
     color: #85144b;
     font-size: 13px;
-    margin: 0.5rem 0;
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 425px) {
+    p {
+      text-align: left;
+      margin-left: 0;
+    }
   }
 `;
 
@@ -90,7 +99,7 @@ export const Overlay = styled.section`
   min-width: 100%;
   min-height: 100vh;
   background-color: #00000040;
-  position: fixed;
+  position: sticky;
   top: 0;
   display: flex;
   flex-direction: column;
@@ -108,10 +117,21 @@ export const Modal = styled.div`
   align-items: center;
   padding: 0 0.5rem;
 
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+  @media (max-width: 425px) {
+    width: 100%;
+    height: 100%;
+  }
+
   h1 {
     align-self: flex-start;
     margin: 1rem 1rem;
     text-transform: uppercase;
+    @media (max-width: 425px) {
+      margin: 0.5rem;
+    }
   }
 `;
 
@@ -124,7 +144,11 @@ export const ButtonTerms = styled.button`
   border: 0;
   border-radius: 4px;
   align-self: flex-end;
-  margin: 1rem 1rem;
+  margin: 1rem;
+
+  @media (max-width: 425px) {
+    margin: 0.5rem;
+  }
 `;
 
 export const BlockTerms = styled.div`
@@ -147,4 +171,24 @@ export const BlockTerms = styled.div`
 
 export const Terms = styled.p`
   width: 100%;
+`;
+
+export const InputForm = styled.input`
+  width: 90%;
+  height: 40px;
+  border: 1px solid #ffcfcd;
+  background: #fafafa;
+  padding: 0.5rem;
+  font-size: 15px;
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
+`;
+
+export const ImagePassword = styled.img`
+  position: absolute;
+  bottom: 1.5vh;
+  right: 2vw;
+  cursor: pointer;
 `;

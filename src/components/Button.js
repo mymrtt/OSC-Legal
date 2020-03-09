@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 export const MyButton = styled.button`
-  width: 80%;
+  width: 87%;
   height: 50px;
   text-transform: uppercase;
   color: #fff;
