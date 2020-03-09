@@ -1,11 +1,16 @@
-import React from 'react';
+import React from "react";
+import CreateFisicalPerson from "./screens/login/createFisicalPerson";
+import { Provider } from "react-redux";
+import store from "./store";
 
 function App() {
-	return (
-		<div>
-			<p>Oscc Legal</p>
-		</div>
-	);
+  return (
+    <Provider store={store}>
+      <div>
+        <CreateFisicalPerson />
+      </div>
+    </Provider>
+  );
 }
 
 export default App;
