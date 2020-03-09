@@ -1,9 +1,10 @@
 import React from 'react';
+import CreateLegalPerson from './screens/login/createLegalPerson/Index';
 
 function App() {
 	return (
 		<div>
-			<p>Oscc Legal</p>
+			<CreateLegalPerson />
 		</div>
 	);
 }
