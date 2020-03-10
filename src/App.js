@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateLegalPerson from './screens/login/createLegalPerson/Index';
+import CreateLegalPerson from './screens/login/createLegalPerson/LegalPerson';
 
 function App() {
 	return (
