@@ -22,7 +22,6 @@ export default function Input(props) {
       value={props.value}
       placeholder={props.placeholder}
       name={props.name}
-      src={props.src}
     />
   );
 }

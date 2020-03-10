@@ -1,45 +1,42 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-
-import { Container } from "./styles";
 import ModalTerms from "./ModalTerms";
 import Formulario from "./Form";
 import ModalSucess from "./ModalSucess";
+import styled from "styled-components";
 
-const user = [
-  {
-    rg: "123456789",
-    orgao: "Detran",
-    uf: "RJ",
-    cpf: "12345678901",
-    email: "gabriel@test.com",
-    telefone: "21999999999"
-  }
-];
+export const Container = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffcfcd;
+`;
 
-class CreateFisicalPerson extends Component {
+class FisicalPerson extends Component {
   state = {
     modalTerms: false
   };
 
-  handleModal = () => {
+  handleModalTerms = () => {
     this.setState({
-      modalTerms: !this.state.modal
+      modalTerms: !this.state.modalTerms
     });
   };
 
   render() {
     return (
       <Container>
-        {this.state.modal === true ? (
-          <ModalTerms handleModal={this.handleModal} />
+        {this.state.modalTerms === true ? (
+          <ModalTerms handleModalTerms={this.handleModalTerms} />
         ) : (
-          <Formulario handleModal={this.handleModal} />
+          <Formulario handleModalTerms={this.handleModalTerms} />
         )}
       </Container>
     );
   }
 }
 
-export default CreateFisicalPerson;
+export default FisicalPerson;

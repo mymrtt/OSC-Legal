@@ -14,7 +14,7 @@ export const MyButton = styled.button`
 
 export default function Button(props) {
   return (
-    <MyButton onClick={props.onClick} type={props.value}>
+    <MyButton onClick={props.onClick} type={props.type}>
       {props.text}
     </MyButton>
   );

@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import {
-  Form,
-  Label,
-  TextTerms,
-  Error,
-  InputForm,
-  ImagePassword
-} from "./styles";
+import styled from "styled-components";
 import VisibilityOff from "../../../assets/visibility-off.svg";
 import VisibilityOn from "../../../assets/visibility-on.svg";
 
@@ -16,6 +8,106 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import ImageLogo from "../../../components/ImageLogo";
 import ModalSucess from "./ModalSucess";
+
+export const Form = styled.form`
+  min-width: 30%;
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 2rem;
+  margin: 1rem 0;
+
+  input {
+    border: ${props => props.withError && "2px solid red"};
+  }
+
+  @media (max-width: 375px) {
+    padding: 1rem;
+  }
+
+  span {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+  }
+  @media (max-width: 425px) {
+    span {
+      width: 100%;
+      flex-direction: column;
+    }
+    p {
+      text-align: center;
+    }
+  }
+
+  p {
+    width: 80%;
+    font-size: 11px;
+    margin: 0.5rem 0;
+
+    strong {
+      color: #85144b;
+      cursor: pointer;
+      text-decoration: underline;
+      margin: 0 0.3rem;
+    }
+  }
+`;
+
+export const Label = styled.label`
+  position: relative;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
+  p {
+    align-self: flex-start;
+    text-transform: uppercase;
+    color: #85144b;
+    font-size: 13px;
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 425px) {
+    p {
+      text-align: left;
+      margin-left: 0;
+    }
+  }
+`;
+
+export const Error = styled.h4`
+  font-size: 11px;
+  color: red;
+  text-align: left;
+  font-weight: normal;
+  margin: 0.2rem 0;
+`;
+export const InputForm = styled.input`
+  width: 90%;
+  height: 40px;
+  border: 1px solid #ffcfcd;
+  background: #fafafa;
+  padding: 0.5rem;
+  font-size: 15px;
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
+`;
+
+export const ImagePassword = styled.img`
+  position: absolute;
+  bottom: 1.5vh;
+  right: 2vw;
+  cursor: pointer;
+`;
 
 class Formulario extends Component {
   state = {
@@ -52,7 +144,7 @@ class Formulario extends Component {
   handleSubmit = ev => {
     ev.preventDefault();
     const { rg, cpf, password } = this.state;
-
+    this.handleModalSucess();
     if (password < 4 || rg < 9 || cpf < 11) {
       this.setState({
         isErrorCpf: true,
@@ -60,7 +152,6 @@ class Formulario extends Component {
         isErrorRg: true
       });
     } else {
-      this.handleModalSucess();
     }
   };
 
@@ -198,7 +289,7 @@ class Formulario extends Component {
             </Label>
             <p>
               Clique abaixo para concordar com os
-              <strong onClick={this.props.handleModal}>
+              <strong onClick={this.props.handleModalTerms}>
                 Termos de Serviço
               </strong>{" "}
               e registrar.
@@ -215,4 +306,4 @@ class Formulario extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Formulario);
+export default connect()(Formulario);

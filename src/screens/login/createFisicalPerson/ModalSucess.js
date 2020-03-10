@@ -1,7 +1,7 @@
 import React from "react";
 import Sucess from "../../../assets/sucess.svg";
 import Button from "../../../components/Button";
-import { Overlay } from "./styles";
+import { Overlay } from "./ModalTerms";
 import styled from "styled-components";
 
 export const Modal = styled.div`

@@ -1,7 +1,83 @@
 import React from "react";
 import Logo from "../../../assets/logo.svg";
-import { Overlay, Modal, ButtonTerms, BlockTerms, Terms } from "./styles";
+import styled from "styled-components";
 import Button from "../../../components/Button";
+
+export const Overlay = styled.section`
+  min-width: 100%;
+  min-height: 100vh;
+  background-color: #00000040;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+export const Modal = styled.div`
+  width: 45vw;
+  min-height: 65vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5rem;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+  @media (max-width: 425px) {
+    width: 100%;
+    height: 100%;
+  }
+
+  h1 {
+    align-self: flex-start;
+    margin: 1rem 1rem;
+    text-transform: uppercase;
+    @media (max-width: 425px) {
+      margin: 0.5rem;
+    }
+  }
+`;
+export const ButtonTerms = styled.button`
+  width: 90px;
+  height: 35px;
+  background-color: #ff4136;
+  color: #fff;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 4px;
+  align-self: flex-end;
+  margin: 1rem;
+
+  @media (max-width: 425px) {
+    margin: 0.5rem;
+  }
+`;
+
+export const BlockTerms = styled.div`
+  width: 95%;
+  height: 90%;
+  background: #ffcfcd;
+  padding: 1rem 1rem;
+
+  h3 {
+    margin: 1rem 0;
+    font-size: 14px;
+  }
+
+  h4 {
+    color: #f00;
+    font-weight: normal;
+    font-size: 14px;
+  }
+`;
+
+export const Terms = styled.p`
+  width: 100%;
+`;
 
 export default function ModalTerms(props) {
   return (
@@ -27,7 +103,7 @@ export default function ModalTerms(props) {
             eleifend rutrum felis.
           </Terms>
         </BlockTerms>
-        <ButtonTerms onClick={props.handleModal}>OK</ButtonTerms>
+        <ButtonTerms onClick={() => props.handleModalTerms()}>OK</ButtonTerms>
       </Modal>
     </Overlay>
   );
