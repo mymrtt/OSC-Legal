@@ -5,14 +5,13 @@ import { Overlay } from "./ModalTerms";
 import styled from "styled-components";
 
 export const Modal = styled.div`
-  width: 50vw;
+  width: 45vw;
   height: 65vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   background: #fff;
-  padding: 1rem;
 
   @media (max-width: 768px) {
     width: 80%;
@@ -40,10 +39,6 @@ export const Modal = styled.div`
     font-size: 16px;
     color: #85144b;
     cursor: pointer;
-  }
-
-  img {
-    fill: red;
   }
 `;
 

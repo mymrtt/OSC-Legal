@@ -1,6 +1,7 @@
-import React from 'react';
+
+import React from "react";
+import FisicalPerson from "./screens/login/createFisicalPerson/FisicalPerson";
 import { Provider } from "react-redux";
-// import FisicalPerson from "./screens/login/createFisicalPerson";
 import store from './store';
 import LegalPerson from './screens/login/createLegalPerson/LegalPerson';
 
@@ -8,7 +9,7 @@ function App() {
 	return (
 		<Provider store={store}>
 			<div>
-				{/* <FisicalPerson /> */}
+				<FisicalPerson />
 				<LegalPerson />
 			</div>
 		</Provider>
