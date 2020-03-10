@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
+import ImagemLogo from '../../../components/ImageLogo';
 
 export const Container = styled.div`
   max-width: 100%;
@@ -11,7 +14,8 @@ export const Container = styled.div`
 
   form {
     display: flex;
-    max-width: 500px;
+    min-width: 30%;
+		justify-content: center;
     flex-direction: column;
     padding: 50px 50px 20px 50px;
     margin: 20px 0 45px 0;
@@ -19,12 +23,13 @@ export const Container = styled.div`
   }
 `;
 
-export const FisicalPerson = styled.label`
+export const ContainerFisicalPerson = styled.label`
 
   h1 {
     font-size: 20px;
     margin: 60px 0 0 0;
 		text-transform: uppercase;
+		margin-left: 15px;
   }
 
   div {
@@ -38,62 +43,56 @@ export const FisicalPerson = styled.label`
       margin-bottom: 10px;
       color: #85144B;
 			text-transform: uppercase;
+			margin-left: 15px;
     }
 
     p {
       font-size: 16px;
       margin-bottom: 25px;
+			margin-left: 15px;
     }
   }
 `;
 
-export const LegalPerson = styled.label`
+export const ContainerLegalPerson = styled.label`
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
   h1 {
     font-size: 20px;
+		align-self: flex-start;
     margin-bottom: 25px;
 		text-transform: uppercase;
+		margin-left: 15px;
   }
 
-  div {
-    margin-bottom: 25px;
+	label {
+		width: 100%;
 
-    p {
-      margin-bottom: 5px;
-      color: #85144B;
+		h2 {
+			margin-bottom: 5px;
+			color: #85144B;
 			text-transform: uppercase;
-    }
-
-    Input {
-      width: 100%;
-      padding: 20px 15px;
-      background: #FAFAFA;
-      border: 1px solid #FFCFCD;
-      border-radius: 3px;
-    }
-  }
+			font-size: 12px;
+			margin-left: 15px;
+			margin-top: 25px;
+		}
+	}
 `;
 
 export const WrapLegalPerson = styled.div`
   display: flex;
+	width: 97%;
+	margin-bottom: 40px;
   
   div {
     display: flex;
-    flex-direction: column; 
-    width: 95%;
+    flex-direction: column;
   }
 `;
 
-export const Button = styled.button`
-  width: 100%;
-  padding: 20px 15px;
-  background: #FF4136;
-  color: #FAFAFA;
-  border: 0;
-  font-weight: bold;
-	text-transform: uppercase;
-`;
-
-export default class createLegalPerson extends Component {
+export default class LegalPerson extends Component {
   state = {
   	nome: 'Yasmin Miranda',
   	rg: '0000000-0',
@@ -107,9 +106,8 @@ export default class createLegalPerson extends Component {
   	return (
   		<Container>
 				<form>
-  				{/* <img src={Logo} alt="" /> */}
-
-  				<FisicalPerson>
+  				<ImagemLogo/>
+  				<ContainerFisicalPerson>
   					<h1>pessoa física</h1>
   					<div>
   						<h2>nome</h2>
@@ -125,45 +123,45 @@ export default class createLegalPerson extends Component {
   						<h2>cpf</h2>
   						<p>{this.state.cpf}</p>
   					</div>
-  				</FisicalPerson>
-  				<LegalPerson>
+  				</ContainerFisicalPerson>
+  				<ContainerLegalPerson>
   					<h1>associar pessoa jurídica</h1>
-  					{/* <div>
-  						<p>nome fantasia</p>
+  					<label>
+  						<h2>nome fantasia</h2>
   						<Input placeholder="Nome da empresa" />
-  					</div>
-  					<div>
-  						<p>cnpj</p>
+  					</label>
+  					<label>
+  						<h2>cnpj</h2>
   						<Input placeholder="00.000.000/0000-00" />
-  					</div>
-  					<div>
-  						<p>email</p>
+  					</label>
+  					<label>
+  						<h2>email</h2>
   						<Input placeholder="email@email.com" />
-  					</div>
-  					<div>
-  						<p>telefone</p>
+  					</label>
+  					<label>
+  						<h2>telefone</h2>
   						<Input placeholder="(00) 00000-0000" />
-  					</div>
-  					<div>
-  						<p>endereço</p>
+  					</label>
+  					<label>
+  						<h2>endereço</h2>
   						<Input placeholder="Endereço" />
-  					</div>
+  					</label>
   					<WrapLegalPerson>
-  						<div>
-  							<p>complemento</p>
+  						<label>
+  							<h2>complemento</h2>
   							<Input placeholder="Complemento" />
-  							<p>cidade</p>
+  							<h2>cidade</h2>
   							<Input placeholder="Cidade" />
-  						</div>
-  						<div>
-  							<p>bairro</p>
+  						</label>
+  						<label>
+  							<h2>bairro</h2>
   							<Input placeholder="Bairro" />
-  							<p>cep</p>
+  							<h2>cep</h2>
   							<Input placeholder="00000-000" />
-  						</div>
-  					</WrapLegalPerson> */}
-  					<Button type="submit">associar pessoa jurídica</Button>
-  				</LegalPerson>
+  						</label>
+  					</WrapLegalPerson>
+  					<Button type="submit" text="associar pessoa jurídica"/>
+  				</ContainerLegalPerson>
   			</form>
   		</Container>
   	);
