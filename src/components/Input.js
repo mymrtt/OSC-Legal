@@ -4,11 +4,12 @@ import styled from "styled-components";
 
 export const InputForm = styled.input`
   width: 95%;
-  height: 40px;
+  height: 45px;
   border: 1px solid #ffcfcd;
   background: #fafafa;
   padding: 0.5rem;
   font-size: 15px;
+  border-radius: 3px;
   @media (max-width: 425px) {
     width: 100%;
   }

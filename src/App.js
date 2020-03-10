@@ -1,5 +1,5 @@
 import React from "react";
-import FisicalPerson from "./screens/login/createFisicalPerson";
+import FisicalPerson from "./screens/login/createFisicalPerson/FisicalPerson";
 import { Provider } from "react-redux";
 import store from "./store";
 

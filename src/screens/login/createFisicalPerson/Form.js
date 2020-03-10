@@ -10,7 +10,7 @@ import ImageLogo from "../../../components/ImageLogo";
 import ModalSucess from "./ModalSucess";
 
 export const Form = styled.form`
-  min-width: 30%;
+  min-width: 40%;
   min-height: 100vh;
   background-color: #fff;
   display: flex;
@@ -19,8 +19,15 @@ export const Form = styled.form`
   padding: 1rem 2rem;
   margin: 1rem 0;
 
+  h1 {
+    font-size: 20px;
+    text-transform: uppercase;
+    margin: 2rem 0 1.5rem 2.5rem;
+    align-self: flex-start;
+  }
+
   input {
-    border: ${props => props.withError && "2px solid red"};
+    border: ${props => props.withError && "1px solid red"};
   }
 
   @media (max-width: 375px) {
@@ -46,6 +53,7 @@ export const Form = styled.form`
     width: 80%;
     font-size: 11px;
     margin: 0.5rem 0;
+    color: #505050;
 
     strong {
       color: #85144b;
@@ -70,8 +78,9 @@ export const Label = styled.label`
     align-self: flex-start;
     text-transform: uppercase;
     color: #85144b;
-    font-size: 13px;
-    margin-left: 1rem;
+    font-size: 12px;
+    margin-left: 1.3rem;
+    font-weight: bold;
   }
 
   @media (max-width: 425px) {
@@ -85,9 +94,9 @@ export const Label = styled.label`
 export const Error = styled.h4`
   font-size: 11px;
   color: red;
-  text-align: left;
+  align-self: flex-start;
   font-weight: normal;
-  margin: 0.2rem 0;
+  margin: 0.2rem 1rem;
 `;
 export const InputForm = styled.input`
   width: 90%;
@@ -111,15 +120,15 @@ export const ImagePassword = styled.img`
 
 class Formulario extends Component {
   state = {
-    rg: "",
-    cpf: "",
-    password: "",
-    modalSucess: false,
-    togglePassword: false,
-    empty: false,
-    isErrorRg: false,
-    isErrorCpf: false,
-    isErrorPassword: false
+    // rg: "",
+    // cpf: "",
+    // password: "",
+    modalSucess: false
+    // togglePassword: false,
+    // empty: false,
+    // isErrorRg: false,
+    // isErrorCpf: false,
+    // isErrorPassword: false
   };
 
   togglePassword = ev => {
@@ -144,14 +153,15 @@ class Formulario extends Component {
   handleSubmit = ev => {
     ev.preventDefault();
     const { rg, cpf, password } = this.state;
-    this.handleModalSucess();
-    if (password < 4 || rg < 9 || cpf < 11) {
+    if (rg < 9 || cpf < 11 || password < 4) {
+      console.log("errrrooooou");
       this.setState({
         isErrorCpf: true,
         isErrorPassword: true,
         isErrorRg: true
       });
     } else {
+      this.handleModalSucess();
     }
   };
 
@@ -162,7 +172,7 @@ class Formulario extends Component {
           <ModalSucess handleModalSucess={this.handleModalSucess} />
         ) : (
           <Form
-            onSubmit={this.handleSubmit}
+            handleSubmit={this.handleSubmit}
             withError={
               (this.state.empty,
               this.state.isErrorCpf,
@@ -171,6 +181,7 @@ class Formulario extends Component {
             }
           >
             <ImageLogo />
+            <h1>cadastrar pessoa física</h1>
             <Label>
               <p>Nome:</p>
               <Input
@@ -296,8 +307,8 @@ class Formulario extends Component {
             </p>
             <Button
               text="concordar e criar conta"
-              type="button"
-              onCliick={this.handleSubmit}
+              type="submit"
+              onClick={this.handleSubmit}
             />
           </Form>
         )}
@@ -306,4 +317,4 @@ class Formulario extends Component {
   }
 }
 
-export default connect()(Formulario);
+export default Formulario;
