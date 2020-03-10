@@ -56,11 +56,6 @@ export const Form = styled.form`
   }
 `;
 
-export const LogoImage = styled.img`
-  width: 150px;
-  margin: 0.5rem 0;
-`;
-
 export const Label = styled.label`
   position: relative;
   width: 90%;
