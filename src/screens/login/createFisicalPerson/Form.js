@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useReducer } from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { addNewUser } from "../../../reducers/SignUpReducer";
 import styled from "styled-components";
 import VisibilityOff from "../../../assets/visibility-off.svg";
 import VisibilityOn from "../../../assets/visibility-on.svg";
@@ -8,6 +10,18 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import ImageLogo from "../../../components/ImageLogo";
 import ModalSucess from "./ModalSucess";
+
+const mapStateToProps = state => {
+  return {
+    users: state.users
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  addNewUser: user => {
+    dispatch(addNewUser(user));
+  }
+});
 
 export const Form = styled.form`
   min-width: 40%;
@@ -120,15 +134,20 @@ export const ImagePassword = styled.img`
 
 class Formulario extends Component {
   state = {
-    // rg: "",
-    // cpf: "",
-    // password: "",
-    modalSucess: false
-    // togglePassword: false,
-    // empty: false,
-    // isErrorRg: false,
-    // isErrorCpf: false,
-    // isErrorPassword: false
+    togglePassword: false,
+    modalSucess: false,
+    user: {
+      nome: "",
+      sobrenome: "",
+      rg: "",
+      orgao: "",
+      uf: "",
+      nascimento: "",
+      cpf: "",
+      email: "",
+      telefone: "",
+      senha: ""
+    }
   };
 
   togglePassword = ev => {
@@ -144,25 +163,19 @@ class Formulario extends Component {
     });
   };
 
-  handleChange = ev => {
-    this.setState({
-      [ev.target.name]: ev.target.value
-    });
+  handleChange = (field, ev) => {
+    const { user } = this.state;
+    user[field] = ev.target.value;
+    this.setState({ user });
   };
 
   handleSubmit = ev => {
     ev.preventDefault();
-    const { rg, cpf, password } = this.state;
-    if (rg < 9 || cpf < 11 || password < 4) {
-      console.log("errrrooooou");
-      this.setState({
-        isErrorCpf: true,
-        isErrorPassword: true,
-        isErrorRg: true
-      });
-    } else {
-      this.handleModalSucess();
-    }
+    const { user } = this.state;
+    const { users } = this.props;
+
+    this.props.addNewUser(user);
+    this.handleModalSucess();
   };
 
   render() {
@@ -171,22 +184,14 @@ class Formulario extends Component {
         {this.state.modalSucess === true ? (
           <ModalSucess handleModalSucess={this.handleModalSucess} />
         ) : (
-          <Form
-            handleSubmit={this.handleSubmit}
-            withError={
-              (this.state.empty,
-              this.state.isErrorCpf,
-              this.state.isErrorPassword,
-              this.state.isErrorRg)
-            }
-          >
+          <Form handleSubmit={this.handleSubmit}>
             <ImageLogo />
             <h1>cadastrar pessoa física</h1>
             <Label>
               <p>Nome:</p>
               <Input
                 type="text"
-                onChange={this.handleChange}
+                onChange={ev => this.handleChange("nome", ev)}
                 value={this.state.nome}
                 placeholder="Nome"
                 name="nome"
@@ -196,7 +201,7 @@ class Formulario extends Component {
               <p>Sobrenome:</p>
               <Input
                 type="text"
-                onChange={this.handleChange}
+                onChange={ev => this.handleChange("sobrenome", ev)}
                 value={this.state.sobrenome}
                 placeholder="Sobrenome"
                 name="sobrenome"
@@ -207,7 +212,7 @@ class Formulario extends Component {
                 <p>rg</p>
                 <InputForm
                   type="number"
-                  onChange={this.handleChange}
+                  onChange={ev => this.handleChange("rg", ev)}
                   value={this.state.rg}
                   placeholder="000000-0"
                   name="rg"
@@ -218,7 +223,7 @@ class Formulario extends Component {
                 <p>Orgão expedidor</p>
                 <InputForm
                   type="text"
-                  onChange={this.handleChange}
+                  onChange={ev => this.handleChange("orgao", ev)}
                   value={this.state.orgao}
                   name="orgao"
                 />
@@ -229,7 +234,7 @@ class Formulario extends Component {
                 <p>uf</p>
                 <InputForm
                   type="text"
-                  onChange={this.handleChange}
+                  onChange={ev => this.handleChange("uf", ev)}
                   value={this.state.uf}
                   name="uf"
                 />
@@ -238,7 +243,7 @@ class Formulario extends Component {
                 <p>data de nascimento</p>
                 <InputForm
                   type="number"
-                  onChange={this.handleChange}
+                  onChange={ev => this.handleChange("nascimento", ev)}
                   value={this.state.nascimento}
                   placeholder="02/01/2020"
                   name="nascimento"
@@ -249,7 +254,7 @@ class Formulario extends Component {
               <p>cpf</p>
               <Input
                 type="number"
-                onChange={this.handleChange}
+                onChange={ev => this.handleChange("cpf", ev)}
                 value={this.state.cpf}
                 placeholder="000000-0"
                 name="cpf"
@@ -260,7 +265,7 @@ class Formulario extends Component {
               <p>email</p>
               <Input
                 type="email"
-                onChange={this.handleChange}
+                onChange={ev => this.handleChange("email", ev)}
                 value={this.state.email}
                 name="email"
               />
@@ -269,7 +274,7 @@ class Formulario extends Component {
               <p>telefone</p>
               <Input
                 type="tel"
-                onChange={this.handleChange}
+                onChange={ev => this.handleChange("telefone", ev)}
                 value={this.state.telefone}
                 placeholder="(00) 00000-0000"
                 name="telefone"
@@ -280,7 +285,7 @@ class Formulario extends Component {
               <Input
                 className="input-password"
                 type={this.state.togglePassword === true ? "text" : "password"}
-                onChange={this.handleChange}
+                onChange={ev => this.handleChange("senha", ev)}
                 value={this.state.password}
                 placeholder="Inserir senha"
                 name="password"
@@ -317,4 +322,4 @@ class Formulario extends Component {
   }
 }
 
-export default Formulario;
+export default connect(mapStateToProps, mapDispatchToProps)(Formulario);

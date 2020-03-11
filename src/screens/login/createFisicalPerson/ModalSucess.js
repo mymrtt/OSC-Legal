@@ -3,6 +3,13 @@ import Sucess from "../../../assets/sucess.svg";
 import Button from "../../../components/Button";
 import { Overlay } from "./ModalTerms";
 import styled from "styled-components";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+  return {
+    users: state.users
+  };
+};
 
 export const Modal = styled.div`
   width: 45vw;
@@ -42,15 +49,20 @@ export const Modal = styled.div`
   }
 `;
 
-export default function ModalSucess(props) {
+function ModalSucess(props) {
+  function handleClick() {
+    console.log(props.SignUp);
+  }
+
   return (
     <Overlay>
       <Modal>
         <h1>Cadastro de Pessoa física concluído!</h1>
         <img src={Sucess} />
         <p>
-          Enviamos um e-mail de confirmação para <b>name@email.com</b>.
-          Verifique sua caixa de entrada para prosseguir.
+          Enviamos um e-mail de confirmação para
+          {/* <b>{props.users.email}</b>. Verifique sua caixa de entrada para */}
+          prosseguir.
         </p>
         <p>
           Caso não tenha recebido a confirmação, clique em
@@ -62,6 +74,8 @@ export default function ModalSucess(props) {
         />
         <h3>fazer login</h3>
       </Modal>
+      <button onClick={handleClick}>LOG</button>
     </Overlay>
   );
 }
+export default connect(mapStateToProps)(ModalSucess);
