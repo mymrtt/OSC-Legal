@@ -1,5 +1,6 @@
 import React from "react";
-import FisicalPerson from "./screens/login/createFisicalPerson/FisicalPerson";
+// import FisicalPerson from "./screens/login/createFisicalPerson/FisicalPerson";
+import Login from "./screens/login/login";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -7,7 +8,8 @@ function App() {
   return (
     <Provider store={store}>
       <div>
-        <FisicalPerson />
+        {/* <FisicalPerson /> */}
+        <Login/>
       </div>
     </Provider>
   );
