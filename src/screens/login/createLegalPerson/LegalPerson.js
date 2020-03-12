@@ -17,37 +17,61 @@ export const Container = styled.div`
     min-width: 40%;
     justify-content: center;
     flex-direction: column;
-    padding: 50px 0 20px 0;
-    margin: 20px 0 45px 0;
+		padding: 3rem 0 1rem 0;
+    margin: 1rem 1rem 2rem 1rem;
     background: #ffffff;
   }
 `;
 
 export const ContainerFisicalPerson = styled.label`
+
   h1 {
-    font-size: 20px;
-    margin: 60px 0 0 64px;
+    font-size: 1.3rem;
+    margin: 0 0 10% 13%;
     text-transform: uppercase;
+		font-weight: 800;
+		font-family: 'Overpass', sans-serif;
   }
 
   div {
     display: flex;
     flex-flow: wrap column;
-    height: 350px;
-    padding: 60px 50px 20px 50px;
+    height: 300px;
+
+    @media (max-width: 500px) {
+      & {
+        height: initial;
+        align-items: flex-start;
+      }
+    }
+
+		span {
+			h2 {
+				margin: 0;
+				margin-bottom: 0.4rem;
+			}
+
+			p {
+				margin: 0;
+			}
+		}
 
     h2 {
-      font-size: 12px;
-      margin-bottom: 10px;
+      font-size: 0.7rem;
+      margin-bottom: 0.4rem;
       color: #85144b;
       text-transform: uppercase;
-      margin-left: 15px;
+      margin-left: 3.5rem;
+			font-family: 'Overpass', sans-serif;
+			font-weight: 700;
     }
 
     p {
       font-size: 16px;
       margin-bottom: 25px;
-      margin-left: 15px;
+      margin-left: 13%;
+			font-family: 'Overpass', sans-serif;
+			font-weight: 300;
     }
   }
 `;
@@ -57,7 +81,9 @@ export const ContainerLegalPerson = styled.label`
     font-size: 20px;
     align-self: flex-start;
     text-transform: uppercase;
-		margin:0 0 25px 64px;
+    margin: 0 0 5% 13%;
+		font-family: 'Overpass', sans-serif;
+		font-weight: 800;
   }
 
   div {
@@ -67,6 +93,8 @@ export const ContainerLegalPerson = styled.label`
 
     input {
       width: 100%;
+			font-family: 'Overpass', sans-serif;
+			font-weight: 300;
     }
 
     label {
@@ -79,6 +107,8 @@ export const ContainerLegalPerson = styled.label`
         font-size: 12px;
         margin-left: 13px;
         margin-top: 25px;
+				font-family: 'Overpass', sans-serif;
+				font-weight: 700;
       }
     }
   }
@@ -86,6 +116,10 @@ export const ContainerLegalPerson = styled.label`
   button {
     max-width: 80%;
     margin: 0 10%;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 3px;
+		font-family: 'Overpass', sans-serif;
+		font-weight: 700;
   }
 `;
 
@@ -96,45 +130,75 @@ export const WrapLegalPerson = styled.div`
 `;
 
 export const Label = styled.label`
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-
-	label:nth-of-type(1) {
-		padding-right: 10px;
-	}
+  label:nth-of-type(1) {
+    padding-right: 10px;
+  }
 `;
 
 export default class LegalPerson extends Component {
   state = {
-  	nome: 'Yasmin Miranda',
-  	rg: '0000000-0',
-  	email: 'nome@email.com',
-  	telefone: '(99) 99999-9999',
-  	dataNascimento: '22/02/2020',
-  	cpf: '0000000-00',
+  	nomeError: false,
+  	dataLegalPerson: {
+  		nomeFantasia: '',
+  		cnpj: '',
+  		email: '',
+  		telefone: '',
+  		endereco: '',
+  		complemento: '',
+  		bairro: '',
+  		cidade: '',
+  		cep: '',
+  	},
+  };
+
+  handleSubmit = (ev) => {
+  	ev.preventDefault();
+  	if (this.state.nome === '') {
+  		this.setState({
+  			nomeError: true,
+  		});
+  	} else {
+  		this.setState({
+  			nomeError: false,
+  		});
+  	}
+  };
+
+  handleChange = (field, ev) => {
+  	const { dataLegalPerson } = this.state;
+  	dataLegalPerson[field] = ev.target.value;
+  	this.setState({
+  		dataLegalPerson,
+  	});
   };
 
   render() {
+  	const error = ['Nome fantasia incorreto'];
+
   	return (
   		<Container>
-  			<form>
+  			<form onSubmit={this.handleSubmit}>
   				<ImagemLogo />
   				<ContainerFisicalPerson>
   					<h1>pessoa física</h1>
   					<div>
   						<h2>nome</h2>
-  						<p>{this.state.nome}</p>
+  						<p>Yasmin Miranda</p>
   						<h2>rg</h2>
-  						<p>{this.state.rg}</p>
+  						<p>0000000-0</p>
   						<h2>email</h2>
-  						<p>{this.state.email}</p>
+  						<p>nome@email.com</p>
   						<h2>telefone</h2>
-  						<p>{this.state.telefone}</p>
-  						<h2>data de nascimento</h2>
-  						<p>{this.state.dataNascimento}</p>
-  						<h2>cpf</h2>
-  						<p>{this.state.cpf}</p>
+  						<p>(99) 99999-9999</p>
+  						<span>
+  							<h2>data de nascimento</h2>
+  							<p>22/02/2020</p>
+  							<h2>cpf</h2>
+  							<p>0000000-00</p>
+  						</span>
   					</div>
   				</ContainerFisicalPerson>
   				<ContainerLegalPerson>
@@ -142,23 +206,40 @@ export default class LegalPerson extends Component {
   					<div>
   						<label>
   							<h2>nome fantasia</h2>
-  							<Input placeholder="Nome da empresa" />
+  							<Input
+  								placeholder="Nome da empresa"
+  								onChange={ev => this.handleChange('nomeFantasia', ev)}
+  								value={this.state.nomeFantasia}
+  							/>
+  							{this.state.nomeError && <p>{error[0]}</p>}
   						</label>
   						<label>
   							<h2>cnpj</h2>
-  							<Input placeholder="00.000.000/0000-00" />
+  							<Input
+  								placeholder="00.000.000/0000-00"
+  								value={this.state.cnpj}
+  							/>
   						</label>
   						<label>
   							<h2>email</h2>
-  							<Input placeholder="email@email.com" />
+  							<Input
+  								placeholder="email@email.com"
+  								value={this.state.email}
+  							/>
   						</label>
   						<label>
   							<h2>telefone</h2>
-  							<Input placeholder="(00) 00000-0000" />
+  							<Input
+  								placeholder="(00) 00000-0000"
+  								value={this.state.telefone}
+  							/>
   						</label>
   						<label>
   							<h2>endereço</h2>
-  							<Input placeholder="Endereço" />
+  							<Input
+  								placeholder="Endereço"
+  								value={this.state.endereco}
+  							/>
   						</label>
   					</div>
   					<WrapLegalPerson>
@@ -166,21 +247,33 @@ export default class LegalPerson extends Component {
   							<label>
   								<label>
   									<h2>complemento</h2>
-  									<Input placeholder="Complemento" />
+  									<Input
+  										placeholder="Complemento"
+  										value={this.state.complemento}
+  									/>
   								</label>
   								<label>
   									<h2>cidade</h2>
-  									<Input placeholder="Cidade" />
+  									<Input
+  										placeholder="Cidade"
+  										value={this.state.cidade}
+  									/>
   								</label>
   							</label>
   							<label>
   								<label>
   									<h2>bairro</h2>
-  									<Input placeholder="Bairro" />
+  									<Input
+  										placeholder="Bairro"
+  										value={this.state.bairro}
+  									/>
   								</label>
   								<label>
   									<h2>cep</h2>
-  									<Input placeholder="00000-000" />
+  									<Input
+  										placeholder="00000-000"
+  										value={this.state.cep}
+  									/>
   								</label>
   							</label>
   						</Label>
