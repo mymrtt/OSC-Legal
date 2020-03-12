@@ -1,7 +1,6 @@
-import React, { Component, useReducer } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { addNewUser } from "../../../reducers/SignUpReducer";
+import { addNewUser } from "../../../dataflow/modules/SignUpReducer";
 import styled from "styled-components";
 import VisibilityOff from "../../../assets/visibility-off.svg";
 import VisibilityOn from "../../../assets/visibility-on.svg";
@@ -34,10 +33,17 @@ export const Form = styled.form`
   margin: 1rem 0;
 
   h1 {
-    font-size: 20px;
+    font-size: 1.4rem;
+    font-family: "Overpass", ExtraBold;
     text-transform: uppercase;
     margin: 2rem 0 1.5rem 2.5rem;
     align-self: flex-start;
+  }
+  @media (max-width: 425px) {
+    h1 {
+      margin: 2rem 0;
+      font-size: 1.3rem;
+    }
   }
 
   input {
@@ -65,15 +71,18 @@ export const Form = styled.form`
 
   p {
     width: 80%;
-    font-size: 11px;
+    font-size: 0.65rem;
     margin: 0.5rem 0;
     color: #505050;
+    font-family: Overpass, Regular;
 
     strong {
       color: #85144b;
+      font-size: 0.65rem;
       cursor: pointer;
       text-decoration: underline;
-      margin: 0 0.3rem;
+      margin: 0 0.2rem;
+      font-family: Overpass, Regular;
     }
   }
 `;
@@ -92,8 +101,9 @@ export const Label = styled.label`
     align-self: flex-start;
     text-transform: uppercase;
     color: #85144b;
-    font-size: 12px;
+    font-size: 0.7rem;
     margin-left: 1.3rem;
+    font-family: Overpass, Bold;
     font-weight: bold;
   }
 
@@ -106,7 +116,7 @@ export const Label = styled.label`
 `;
 
 export const Error = styled.h4`
-  font-size: 11px;
+  font-size: 0.6rem;
   color: red;
   align-self: flex-start;
   font-weight: normal;
@@ -118,7 +128,7 @@ export const InputForm = styled.input`
   border: 1px solid #ffcfcd;
   background: #fafafa;
   padding: 0.5rem;
-  font-size: 15px;
+  font-size: 0.9rem;
 
   @media (max-width: 425px) {
     width: 100%;
@@ -127,8 +137,8 @@ export const InputForm = styled.input`
 
 export const ImagePassword = styled.img`
   position: absolute;
-  bottom: 1.5vh;
-  right: 2vw;
+  bottom: 2vh;
+  right: 1.5rem;
   cursor: pointer;
 `;
 
@@ -147,7 +157,11 @@ class Formulario extends Component {
       email: "",
       telefone: "",
       senha: ""
-    }
+    },
+    isErrorRg: false,
+    isErrorSenha: false,
+    isErrorCpf: false,
+    isEmpty: false
   };
 
   togglePassword = ev => {
@@ -171,20 +185,80 @@ class Formulario extends Component {
 
   handleSubmit = ev => {
     ev.preventDefault();
-    const { user } = this.state;
-    const { users } = this.props;
+    this.errors();
+  };
 
-    this.props.addNewUser(user);
-    this.handleModalSucess();
+  errors = () => {
+    const { user } = this.state;
+    const {
+      nome,
+      sobrenome,
+      rg,
+      orgao,
+      uf,
+      nascimento,
+      cpf,
+      email,
+      telefone,
+      senha
+    } = this.state.user;
+    if (senha.length < 4) {
+      this.setState({ isErrorSenha: true });
+    } else {
+      this.setState({ isErrorSenha: false });
+    }
+    if (rg.length < 9 || rg.length > 9) {
+      this.setState({ isErrorRg: true });
+    } else {
+      this.setState({ isErrorRg: false });
+    }
+    if (cpf.length < 11 || cpf.length > 11) {
+      this.setState({ isErrorCpf: true });
+    } else {
+      this.setState({ isErrorCpf: false });
+    }
+    if (
+      nome === "" ||
+      sobrenome === "" ||
+      rg === "" ||
+      orgao === "" ||
+      uf === "" ||
+      nascimento === "" ||
+      cpf === "" ||
+      email === "" ||
+      telefone === "" ||
+      senha === ""
+    ) {
+      this.setState({ isEmpty: true });
+    } else {
+      this.setState({ isEmpty: false });
+      this.props.addNewUser(user);
+      this.handleModalSucess();
+    }
   };
 
   render() {
+    let errorMessage = [
+      "RG inválido",
+      "Senha fraca",
+      "CPF inválido",
+      "Preencha todos os valores"
+    ];
+
+    const {
+      isErrorSenha,
+      isErrorRg,
+      isErrorCpf,
+      modalSucess,
+      isEmpty
+    } = this.state;
+
     return (
       <>
-        {this.state.modalSucess === true ? (
+        {modalSucess === true ? (
           <ModalSucess handleModalSucess={this.handleModalSucess} />
         ) : (
-          <Form handleSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit}>
             <ImageLogo />
             <h1>cadastrar pessoa física</h1>
             <Label>
@@ -196,6 +270,7 @@ class Formulario extends Component {
                 placeholder="Nome"
                 name="nome"
               />
+              {isEmpty && <Error>{errorMessage[3]}</Error>}
             </Label>
             <Label>
               <p>Sobrenome:</p>
@@ -206,6 +281,7 @@ class Formulario extends Component {
                 placeholder="Sobrenome"
                 name="sobrenome"
               />
+              {isEmpty && <Error>{errorMessage[3]}</Error>}
             </Label>
             <span>
               <Label>
@@ -217,7 +293,7 @@ class Formulario extends Component {
                   placeholder="000000-0"
                   name="rg"
                 />
-                {this.state.isErrorRg && <Error>RG invalido</Error>}
+                {isErrorRg && <Error>{errorMessage[0]}</Error>}
               </Label>
               <Label>
                 <p>Orgão expedidor</p>
@@ -227,6 +303,7 @@ class Formulario extends Component {
                   value={this.state.orgao}
                   name="orgao"
                 />
+                {isEmpty && <Error>{errorMessage[3]}</Error>}
               </Label>
             </span>
             <span>
@@ -238,6 +315,7 @@ class Formulario extends Component {
                   value={this.state.uf}
                   name="uf"
                 />
+                {isEmpty && <Error>{errorMessage[3]}</Error>}
               </Label>
               <Label>
                 <p>data de nascimento</p>
@@ -248,6 +326,7 @@ class Formulario extends Component {
                   placeholder="02/01/2020"
                   name="nascimento"
                 />
+                {isEmpty && <Error>{errorMessage[3]}</Error>}
               </Label>
             </span>
             <Label>
@@ -259,7 +338,8 @@ class Formulario extends Component {
                 placeholder="000000-0"
                 name="cpf"
               />
-              {this.state.isErrorCpf && <Error>CPF inválido</Error>}
+
+              {isErrorCpf && <Error>{errorMessage[2]}</Error>}
             </Label>
             <Label>
               <p>email</p>
@@ -268,7 +348,11 @@ class Formulario extends Component {
                 onChange={ev => this.handleChange("email", ev)}
                 value={this.state.email}
                 name="email"
+                placeholder="nome@mail.com"
+                require
               />
+
+              {isEmpty && <Error>{errorMessage[3]}</Error>}
             </Label>
             <Label>
               <p>telefone</p>
@@ -279,6 +363,7 @@ class Formulario extends Component {
                 placeholder="(00) 00000-0000"
                 name="telefone"
               />
+              {isEmpty && <Error>{errorMessage[3]}</Error>}
             </Label>
             <Label>
               <p>senha</p>
@@ -286,7 +371,7 @@ class Formulario extends Component {
                 className="input-password"
                 type={this.state.togglePassword === true ? "text" : "password"}
                 onChange={ev => this.handleChange("senha", ev)}
-                value={this.state.password}
+                value={this.state.senha}
                 placeholder="Inserir senha"
                 name="password"
               />
@@ -301,13 +386,13 @@ class Formulario extends Component {
                   onClick={this.togglePassword}
                 />
               )}
-              {this.state.isErrorPassword && <Error>Senha fraca</Error>}
+              {isErrorSenha && <Error>{errorMessage[1]}</Error>}
             </Label>
             <p>
               Clique abaixo para concordar com os
               <strong onClick={this.props.handleModalTerms}>
                 Termos de Serviço
-              </strong>{" "}
+              </strong>
               e registrar.
             </p>
             <Button

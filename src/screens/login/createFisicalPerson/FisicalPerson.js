@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-
-import { connect } from "react-redux";
 import ModalTerms from "./ModalTerms";
 import Formulario from "./Form";
-import ModalSucess from "./ModalSucess";
 import styled from "styled-components";
 
 export const Container = styled.div`

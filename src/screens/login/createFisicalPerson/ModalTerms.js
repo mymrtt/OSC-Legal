@@ -1,7 +1,6 @@
 import React from "react";
 import Logo from "../../../assets/logo.svg";
 import styled from "styled-components";
-import Button from "../../../components/Button";
 
 export const Overlay = styled.section`
   min-width: 100%;
@@ -34,6 +33,8 @@ export const Modal = styled.div`
   h1 {
     align-self: flex-start;
     margin: 1rem 1rem;
+    font-family: Overpass, Bold;
+    font-size: 14px;
     text-transform: uppercase;
     @media (max-width: 425px) {
       margin: 0.5rem;
@@ -64,18 +65,22 @@ export const BlockTerms = styled.div`
 
   h3 {
     margin: 1rem 0;
-    font-size: 14px;
+    font-size: 0.8rem;
+    font-family: Overpass, Bold;
   }
 
   h4 {
     color: #f00;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 1rem;
+    font-family: Overpass, Regular;
   }
 `;
 
 export const Terms = styled.p`
   width: 100%;
+  font-family: Overpass, Regular;
+  font-size: 0.9rem;
 `;
 
 export default function ModalTerms(props) {

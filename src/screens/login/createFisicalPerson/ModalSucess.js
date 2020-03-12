@@ -29,12 +29,15 @@ export const Modal = styled.div`
   }
 
   h1 {
-    font-size: 20px;
+    font-family: Overpass, ExtraBold;
+    font-size: 1.3rem;
   }
 
   p {
+    font-family: Overpass;
     width: 80%;
-    font-size: 14px;
+    font-size: 0.7rem;
+    line-height: 1rem;
   }
   strong {
     margin-left: 0.5rem;
@@ -43,25 +46,25 @@ export const Modal = styled.div`
   }
   h3 {
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 1rem;
     color: #85144b;
     cursor: pointer;
+    font-family: Overpass, Bold;
+  }
+  b {
+    margin-left: 0.3rem;
   }
 `;
 
-function ModalSucess(props) {
-  function handleClick() {
-    console.log(props.SignUp);
-  }
-
+const ModalSucess = props => {
   return (
     <Overlay>
       <Modal>
         <h1>Cadastro de Pessoa física concluído!</h1>
-        <img src={Sucess} />
+        <img src={Sucess} alt="Sucess" />
         <p>
           Enviamos um e-mail de confirmação para
-          {/* <b>{props.users.email}</b>. Verifique sua caixa de entrada para */}
+          <b>{props.users.email}</b>. Verifique sua caixa de entrada para
           prosseguir.
         </p>
         <p>
@@ -74,8 +77,7 @@ function ModalSucess(props) {
         />
         <h3>fazer login</h3>
       </Modal>
-      <button onClick={handleClick}>LOG</button>
     </Overlay>
   );
-}
+};
 export default connect(mapStateToProps)(ModalSucess);
