@@ -9,8 +9,10 @@ export const MyButton = styled.button`
   background-color: #ff4136;
   border: 0;
   font-weight: 600;
-  margin: 0.5rem 0;
+  margin: 1.5rem 0;
   font-family: Overpass, Bold;
+  box-shadow: 0 3px 6px #00000029;
+  border-radius: 3px;
 `;
 
 export default function Button(props) {

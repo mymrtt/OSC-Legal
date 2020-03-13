@@ -1,17 +1,14 @@
 // Libs
-import React from 'react';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
-
-// Components
-import { Overlay } from './FisicalPersonTerms';
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
 
 // Images
-import Sucess from '../../../assets/sucess.svg';
-import Button from '../../../components/Button';
+import Sucess from "../../../assets/sucess.svg";
+import Button from "../../../components/Button";
 
 const mapStateToProps = state => ({
-	users: state.users,
+  signup: state.signup
 });
 
 export const Modal = styled.div`
@@ -59,26 +56,26 @@ export const Modal = styled.div`
   }
 `;
 
-const FisicalPersonSucess = props => (
-	<Overlay>
-		<Modal>
-			<h1>Cadastro de Pessoa física concluído!</h1>
-			<img src={Sucess} alt="Sucess" />
-			<p>
-          Enviamos um e-mail de confirmação para
-				<b>{props.users.email}</b>. Verifique sua caixa de entrada para
-          prosseguir.
-			</p>
-			<p>
-          Caso não tenha recebido a confirmação, clique em
-				<strong>Reenviar email.</strong>
-			</p>
-			<Button
-				onClick={() => props.handleModalSucess()}
-				text="cadastrar pessoa jurídica"
-			/>
-			<h3>fazer login</h3>
-		</Modal>
-	</Overlay>
-);
+function FisicalPersonSucess(props) {
+  return (
+    <Modal>
+      <h1>Cadastro de Pessoa física concluído!</h1>
+      <img src={Sucess} alt="Sucess" />
+      <p>
+        Enviamos um e-mail de confirmação para
+        <b>{props.signup.users.email}</b>. Verifique sua caixa de entrada para
+        prosseguir.
+      </p>
+      <p>
+        Caso não tenha recebido a confirmação, clique em
+        <strong>Reenviar email.</strong>
+      </p>
+      <Button
+        onClick={() => props.handleModalSucess()}
+        text="cadastrar pessoa jurídica"
+      />
+      <h3>fazer login</h3>
+    </Modal>
+  );
+}
 export default connect(mapStateToProps)(FisicalPersonSucess);
