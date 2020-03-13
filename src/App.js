@@ -1,16 +1,9 @@
-import React from "react";
-import FisicalPerson from "./screens/login/createFisicalPerson/FisicalPerson";
-import { Provider } from "react-redux";
-import store from "./store";
+// Libs
+import React from 'react';
 
-function App() {
-  return (
-    <Provider store={store}>
-      <div>
-        <FisicalPerson />
-      </div>
-    </Provider>
-  );
-}
+// Routes
+import Routes from './routes/routes';
+
+const App = () => <Routes />;
 
 export default App;
