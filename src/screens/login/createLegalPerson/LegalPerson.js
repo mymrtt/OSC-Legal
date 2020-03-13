@@ -14,7 +14,6 @@ export const Container = styled.div`
 
   form {
     display: flex;
-    min-width: 40%;
     justify-content: center;
     flex-direction: column;
 		padding: 3rem 0 1rem 0;
@@ -27,7 +26,7 @@ export const ContainerFisicalPerson = styled.label`
 
   h1 {
     font-size: 1.3rem;
-    margin: 0 0 10% 13%;
+    margin: 10% 0 10% 12%;
     text-transform: uppercase;
 		font-weight: 800;
 		font-family: 'Overpass', sans-serif;
@@ -38,20 +37,27 @@ export const ContainerFisicalPerson = styled.label`
     flex-flow: wrap column;
     height: 300px;
 
-    @media (max-width: 500px) {
+    @media (max-width: 425px) {
       & {
         height: initial;
         align-items: flex-start;
+				padding-left: 13%;
       }
     }
 
 		span {
+
 			h2 {
-				margin: 0;
-				margin-bottom: 0.4rem;
+				margin: 0 0 0.4rem 0;
 			}
 
 			p {
+				margin: 0 0 1.6rem 0;
+			}
+		}
+
+		@media (max-width: 425px) {
+			span {
 				margin: 0;
 			}
 		}
@@ -61,27 +67,38 @@ export const ContainerFisicalPerson = styled.label`
       margin-bottom: 0.4rem;
       color: #85144b;
       text-transform: uppercase;
-      margin-left: 3.5rem;
+      margin-left: 3.4rem;
 			font-family: 'Overpass', sans-serif;
 			font-weight: 700;
     }
 
+		@media (max-width: 425px) {
+			h2 {
+				margin: 0;
+			}
+		}
+
     p {
-      font-size: 16px;
-      margin-bottom: 25px;
-      margin-left: 13%;
+      font-size: 1rem;
+			margin: 0 0 1.6rem 3.4rem;
 			font-family: 'Overpass', sans-serif;
 			font-weight: 300;
     }
+
+		@media (max-width: 425px) {
+			p {
+				margin: 0 0 1.6rem 0;
+			}
+		}
   }
 `;
 
 export const ContainerLegalPerson = styled.label`
   h1 {
-    font-size: 20px;
+    font-size: 1.3rem;
     align-self: flex-start;
     text-transform: uppercase;
-    margin: 0 0 5% 13%;
+    margin: 0 0 0 12.2%;
 		font-family: 'Overpass', sans-serif;
 		font-weight: 800;
   }
@@ -95,18 +112,19 @@ export const ContainerLegalPerson = styled.label`
       width: 100%;
 			font-family: 'Overpass', sans-serif;
 			font-weight: 300;
+			padding: 0.7rem;
     }
 
     label {
       width: 80%;
 
       h2 {
-        margin-bottom: 5px;
+        margin-bottom: 0.4rem;
         color: #85144b;
         text-transform: uppercase;
-        font-size: 12px;
-        margin-left: 13px;
-        margin-top: 25px;
+        font-size: 0.7rem;
+        margin-left: 0.7rem;
+        margin-top: 1.5rem;
 				font-family: 'Overpass', sans-serif;
 				font-weight: 700;
       }
@@ -126,7 +144,7 @@ export const ContainerLegalPerson = styled.label`
 export const WrapLegalPerson = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin-bottom: 3rem;
 `;
 
 export const Label = styled.label`
@@ -134,7 +152,7 @@ export const Label = styled.label`
   justify-content: space-between;
 
   label:nth-of-type(1) {
-    padding-right: 10px;
+    padding-right: 1rem;
   }
 `;
 

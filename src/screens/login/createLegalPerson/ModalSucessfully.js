@@ -18,10 +18,9 @@ export const Container = styled.div`
   @media (max-width: 425px) {
   & {
     position: initial;
-    padding: 15px 0;
+    padding: 1rem 0;
   }
 }
-
 `;
 
 export const Modal = styled.div`
@@ -30,13 +29,13 @@ export const Modal = styled.div`
   flex-direction: column;
   max-width: 480px;
   background: #FFFFFF;
-  margin: 0 20px;
+  margin: 0 1rem;
 
   h1 {
-    font-size: 18px;
+    font-size: 1.1rem;
     width: 60%;
     text-align: center;
-    margin: 25px 0 20px 0;
+    margin: 1.7rem 0 1.3rem 0;
     font-family: 'Overpass', sans-serif;
 		font-weight: 800;
   }
@@ -48,25 +47,25 @@ export const Modal = styled.div`
   }
 
   img {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
   }
 
   h2 {
     color: #85144B;
     text-transform: uppercase;
-    font-size: 12px;
-    margin-bottom: 5px;
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
     font-family: 'Overpass', sans-serif;
-			font-weight: 700;
+		font-weight: 700;
   }
 
   Input {
-    max-width: 300px;
+    max-width: 62%;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     text-transform: uppercase;
     font-family: 'Overpass', sans-serif;
-			font-weight: 300;
+		font-weight: 300;
   }
 
   @media (max-width: 375px) {
@@ -76,7 +75,7 @@ export const Modal = styled.div`
   }
 
   Button {
-    max-width: 300px;
+    max-width: 62%;
     text-transform: uppercase;
     margin: 0;
     border-radius: 3px;
@@ -102,19 +101,19 @@ export const Modal = styled.div`
 `;
 
 export const TextoDeAviso = styled.div`
-  padding: 0 78px;
+  padding: 0 4rem;
   width: 100%;
 
   @media (max-width: 375px) {
     & {
       width: 80%;
-      padding: 0;
+      padding: 0 0.4rem;
     }
   }
 
   p {
-    margin-bottom: 10px;
-    font-size: 12px;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
     color: #231F20;
     font-family: 'Overpass', sans-serif;
 		font-weight: 300;
