@@ -10,6 +10,7 @@ export const InputForm = styled.input`
   padding: 0.5rem;
   font-size: 15px;
   border-radius: 3px;
+  
   @media (max-width: 425px) {
     width: 100%;
   }

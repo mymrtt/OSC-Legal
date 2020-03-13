@@ -19,7 +19,6 @@ export const ContainerForm = styled.div`
 	
 	  }
 	}
-
 `;
 
 export const Form = styled.form`
@@ -36,8 +35,6 @@ export const Form = styled.form`
 	
 	  }
 	}
-
-
 `;
 
 
@@ -47,12 +44,11 @@ export const InputBox = styled.span`
 	flex-direction: column;
 
 
-	@media (max-width: 320px) {
+	@media (max-width: 457px) {
 		width: 83%;
 		
 		  }
-		}
-	
+		}	
 `;
 
 export const Label = styled.label`
@@ -71,6 +67,12 @@ export const Span = styled.span`
   flex-direction: row;
   justify-content: space-around;
   margin-top: 0.8rem;
+
+  @media (max-width: 648px) {
+	Span {
+		width: 76%;
+	  }
+	}
 
 
   buttonText {

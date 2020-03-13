@@ -16,10 +16,8 @@ export const ContainerForm = styled.div`
 
   @media (max-width: 648px) {
 	background-color: #fff;
-	
 	  }
 	}
-
 `;
 
 export const Form = styled.form`
@@ -33,26 +31,19 @@ export const Form = styled.form`
 
   @media (max-width: 648px) {
 	width: 100%;
-	
 	  }
 	}
-
-
 `;
-
 
 export const InputBox = styled.span`
 	width: 62%;
 	display: flex;
 	flex-direction: column;
 
-
 	@media (max-width: 320px) {
 		width: 83%;
-		
 		  }
 		}
-	
 `;
 
 export const Label = styled.label`
@@ -61,7 +52,6 @@ export const Label = styled.label`
   font-weight: bold;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-
 `;
 
 export const Span = styled.span` 
@@ -72,12 +62,10 @@ export const Span = styled.span`
   justify-content: space-around;
   margin-top: 0.8rem;
 
-
   buttonText {
     color: #85144B;
     font-size: 0.75rem; 
   }
-
 `;
 
 export const Error = styled.h4`
@@ -86,7 +74,6 @@ export const Error = styled.h4`
   font-size: 0.75rem;
   display: flex;
   align-self: flex-end;
-
 `;
 
 class App extends React.Component {
