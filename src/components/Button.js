@@ -10,6 +10,7 @@ export const MyButton = styled.button`
   border: 0;
   font-weight: 600;
   margin: 0.5rem 0;
+  font-family: Overpass, Bold;
 `;
 
 export default function Button(props) {

@@ -1,20 +1,9 @@
-import React from "react";
-import FisicalPerson from "./screens/login/createFisicalPerson/FisicalPerson";
-import { Provider } from "react-redux";
-import store from './store';
-import LegalPerson from './screens/login/createLegalPerson/LegalPerson';
-import ModalSucessfully from './screens/login/createLegalPerson/ModalSucessfully';
+// Libs
+import React from 'react';
 
-function App() {
-	return (
-		<Provider store={store}>
-			<div>
-				<FisicalPerson />
-				<LegalPerson />
-				<ModalSucessfully/>
-			</div>
-		</Provider>
-	);
-}
+// Routes
+import Routes from './routes/routes';
+
+const App = () => <Routes />;
 
 export default App;
