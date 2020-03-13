@@ -15,11 +15,6 @@ const reducers = combineReducers({
 	// login: Login,
 });
 
-// const store = createStore(
-// 	SignUp,
-// 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-// );
-
 export default function configureStore(initialState) {
 	// const epicMiddleware = createEpicMiddleware(rootEpic);
 
@@ -28,7 +23,7 @@ export default function configureStore(initialState) {
 	const store = createStoreWithMiddleware(
 		reducers,
 		initialState,
-		window.devToolsExtension ? window.devToolsExtension() : f => f
+		window.devToolsExtension ? window.devToolsExtension() : f => f,
 	);
 
 	return store;
