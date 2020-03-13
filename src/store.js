@@ -1,25 +1,30 @@
-import { createStore } from "redux";
+// Libs
+import {
+	compose,
+	createStore,
+	applyMiddleware,
+	combineReducers,
+} from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
-function reducer(state, action) {
-  return {
-    user: [
-      {
-        id: 1,
-        nome: "Gabriel",
-        sobrenome: "Luiz",
-        rg: "1234456789",
-        orgao: "detran",
-        uf: "rj",
-        nascimento: "01051997",
-        cpf: "12345678901",
-        email: "gabriel.luizvieira01@gmail.com",
-        telefone: 222695596,
-        senha: 12334567
-      }
-    ]
-  };
+// Reducers
+import SignUp from './dataflow/modules/sign-up-modules';
+
+const reducers = combineReducers({
+	signup: SignUp,
+	// login: Login,
+});
+
+export default function configureStore(initialState) {
+	// const epicMiddleware = createEpicMiddleware(rootEpic);
+
+	const bundle = compose(applyMiddleware(thunkMiddleware));
+	const createStoreWithMiddleware = bundle(createStore);
+	const store = createStoreWithMiddleware(
+		reducers,
+		initialState,
+		window.devToolsExtension ? window.devToolsExtension() : f => f,
+	);
+
+	return store;
 }
-
-const store = createStore(reducer);
-
-export default store;

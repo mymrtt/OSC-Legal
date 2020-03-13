@@ -10,20 +10,19 @@
     "i18n-js": "^3.5.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
-    "react-redux": "^5.0.7",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "babel-core": "7.0.0-bridge.0",
-    "eslint": "^5.4.0",
-    "eslint-config-airbnb": "^17.1.0",
     "babel-jest": "^24.9.0",
-    "eslint": "^6.4.0"
+    "eslint-config-airbnb": "^17.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
