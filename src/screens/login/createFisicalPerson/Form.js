@@ -58,6 +58,7 @@ export const Form = styled.form`
     width: 90%;
     display: flex;
     justify-content: space-between;
+    position: relative;
   }
   @media (max-width: 425px) {
     span {
@@ -66,23 +67,6 @@ export const Form = styled.form`
     }
     p {
       text-align: center;
-    }
-  }
-
-  p {
-    width: 80%;
-    font-size: 0.65rem;
-    margin: 0.5rem 0;
-    color: #505050;
-    font-family: Overpass, Regular;
-
-    strong {
-      color: #85144b;
-      font-size: 0.65rem;
-      cursor: pointer;
-      text-decoration: underline;
-      margin: 0 0.2rem;
-      font-family: Overpass, Regular;
     }
   }
 `;
@@ -102,7 +86,7 @@ export const Label = styled.label`
     text-transform: uppercase;
     color: #85144b;
     font-size: 0.7rem;
-    margin-left: 1.3rem;
+    margin: 0.5rem 1.3rem;
     font-family: Overpass, Bold;
     font-weight: bold;
   }
@@ -115,12 +99,16 @@ export const Label = styled.label`
   }
 `;
 
-export const Error = styled.h4`
+export const Error = styled.h6`
   font-size: 0.6rem;
   color: red;
   align-self: flex-start;
   font-weight: normal;
-  margin: 0.2rem 1rem;
+  margin-left: 1.4rem;
+
+  @media (max-width: 425px) {
+    margin: 0;
+  }
 `;
 export const InputForm = styled.input`
   width: 90%;
@@ -137,9 +125,25 @@ export const InputForm = styled.input`
 
 export const ImagePassword = styled.img`
   position: absolute;
-  bottom: 2vh;
-  right: 1.5rem;
+  bottom: 1.5vh;
+  right: 0.7rem;
   cursor: pointer;
+`;
+export const TextTerms = styled.p`
+  font-size: 0.7rem;
+  margin: 0.5rem 0;
+  color: #505050;
+  font-family: Overpass, Regular;
+  text-align: center;
+
+  strong {
+    color: #85144b;
+    font-size: 0.7rem;
+    cursor: pointer;
+    text-decoration: underline;
+    margin: 0 0.2rem;
+    font-family: Overpass, Regular;
+  }
 `;
 
 class Formulario extends Component {
@@ -202,6 +206,7 @@ class Formulario extends Component {
       telefone,
       senha
     } = this.state.user;
+
     if (senha.length < 4) {
       this.setState({ isErrorSenha: true });
     } else {
@@ -262,7 +267,7 @@ class Formulario extends Component {
             <ImageLogo />
             <h1>cadastrar pessoa física</h1>
             <Label>
-              <p>Nome:</p>
+              <p>Nome</p>
               <Input
                 type="text"
                 onChange={ev => this.handleChange("nome", ev)}
@@ -273,7 +278,7 @@ class Formulario extends Component {
               {isEmpty && <Error>{errorMessage[3]}</Error>}
             </Label>
             <Label>
-              <p>Sobrenome:</p>
+              <p>Sobrenome</p>
               <Input
                 type="text"
                 onChange={ev => this.handleChange("sobrenome", ev)}
@@ -376,25 +381,29 @@ class Formulario extends Component {
                 name="password"
               />
               {this.state.togglePassword === true ? (
-                <ImagePassword
-                  src={VisibilityOn}
-                  onClick={this.togglePassword}
-                />
+                <span>
+                  <ImagePassword
+                    src={VisibilityOn}
+                    onClick={this.togglePassword}
+                  />
+                </span>
               ) : (
-                <ImagePassword
-                  src={VisibilityOff}
-                  onClick={this.togglePassword}
-                />
+                <span>
+                  <ImagePassword
+                    src={VisibilityOff}
+                    onClick={this.togglePassword}
+                  />
+                </span>
               )}
               {isErrorSenha && <Error>{errorMessage[1]}</Error>}
             </Label>
-            <p>
+            <TextTerms>
               Clique abaixo para concordar com os
               <strong onClick={this.props.handleModalTerms}>
                 Termos de Serviço
               </strong>
               e registrar.
-            </p>
+            </TextTerms>
             <Button
               text="concordar e criar conta"
               type="submit"
