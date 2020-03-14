@@ -1,6 +1,6 @@
-import React from "react";
-
-import styled from "styled-components";
+// Libs
+import React from 'react';
+import styled from 'styled-components';
 
 export const InputForm = styled.input`
   width: ${props => (props.login ? '100%' : '95%')};;
@@ -15,21 +15,20 @@ export const InputForm = styled.input`
 
   @media (max-width: 425px) {
     width: 100%;
- 
   }
 `;
 
 
 export default function Input(props) {
-  return (
-    <InputForm
-      login={props.login}
-      type={props.type}
-      onChange={props.onChange}
-      value={props.value}
-      placeholder={props.placeholder}
-      name={props.name}
-      required
-    />
-  );
+	return (
+		<InputForm
+			login={props.login}
+			type={props.type}
+			onChange={props.onChange}
+			value={props.value}
+			placeholder={props.placeholder}
+			name={props.name}
+			required
+		/>
+	);
 }
