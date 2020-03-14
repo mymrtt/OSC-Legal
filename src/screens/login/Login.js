@@ -1,9 +1,12 @@
+// Libs
 import React from 'react';
 import styled from 'styled-components';
 // import VisibilityOff from "../../../assets/visibility-off.svg";
 // import VisibilityOn from "../../../assets/visibility-on.svg";
 
 import ImageLogo from '../../components/ImageLogo';
+
+// Components
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
@@ -15,8 +18,7 @@ export const ContainerForm = styled.div`
   margin: 0;
 
   @media (max-width: 648px) {
-	background-color: #fff;
-	  }
+		background-color: #fff;
 	}
 `;
 
@@ -30,8 +32,7 @@ export const Form = styled.form`
   background-color: #fff;
 
   @media (max-width: 648px) {
-	width: 100%;
-	  }
+		width: 100%;
 	}
 `;
 
@@ -42,8 +43,7 @@ export const InputBox = styled.span`
 
 	@media (max-width: 320px) {
 		width: 83%;
-		  }
-		}
+	}
 `;
 
 export const Label = styled.label`
@@ -76,7 +76,7 @@ export const Error = styled.h4`
   align-self: flex-end;
 `;
 
-class App extends React.Component {
+class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -99,7 +99,6 @@ class App extends React.Component {
   }
 
   render() {
-  	console.log(this.state.email);
   	return (
   		<ContainerForm>
   			<Form onSubmit={this.handleSubmit}>
@@ -139,4 +138,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Login;
