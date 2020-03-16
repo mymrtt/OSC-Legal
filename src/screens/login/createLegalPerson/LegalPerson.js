@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Input from '../../../components/Input';
@@ -173,8 +175,8 @@ export default class LegalPerson extends Component {
   };
 
   handleSubmit = (ev) => {
-  	ev.preventDefault();
-  	if (this.state.nome === '') {
+		ev.preventDefault();
+  	if (this.state.dataLegalPerson.nomeFantasia === '') {
   		this.setState({
   			nomeError: true,
   		});
@@ -182,7 +184,17 @@ export default class LegalPerson extends Component {
   		this.setState({
   			nomeError: false,
   		});
-  	}
+		}
+
+		if (this.state.dataLegalPerson.cnpj === '') {
+			this.setState({
+				nomeError: true,
+			});
+		} else {
+			this.setState({
+				nomeError: false,
+			});
+		}
   };
 
   handleChange = (field, ev) => {
@@ -194,7 +206,12 @@ export default class LegalPerson extends Component {
   };
 
   render() {
-  	const error = ['Nome fantasia incorreto'];
+  	const error = [
+  		'Nome fantasia invalido',
+  		'CNPJ invalido',
+  		'Email invalido',
+
+  	];
 
   	return (
   		<Container>
@@ -235,8 +252,10 @@ export default class LegalPerson extends Component {
   							<h2>cnpj</h2>
   							<Input
   								placeholder="00.000.000/0000-00"
+									onChange={ev => this.handleChange('cnpj', ev)}
   								value={this.state.cnpj}
   							/>
+								{this.state.nomeError && <p>{error[1]}</p>}
   						</label>
   						<label>
   							<h2>email</h2>
