@@ -1,14 +1,15 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-// import VisibilityOff from "../../../assets/visibility-off.svg";
-// import VisibilityOn from "../../../assets/visibility-on.svg";
-
-import ImageLogo from '../../components/ImageLogo';
 
 // Components
-import Input from '../../components/Input';
-import Button from '../../components/Button';
+import ImageLogo from '../../../components/ImageLogo';
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
+
+// Images
+// import VisibilityOff from "../../../assets/visibility-off.svg";
+// import VisibilityOn from "../../../assets/visibility-on.svg";
 
 export const ContainerForm = styled.div`
   background-color: #FFCFCD;
@@ -18,7 +19,9 @@ export const ContainerForm = styled.div`
   margin: 0;
 
   @media (max-width: 648px) {
-		background-color: #fff;
+	background-color: #fff;
+	
+	  }
 	}
 `;
 
@@ -32,18 +35,24 @@ export const Form = styled.form`
   background-color: #fff;
 
   @media (max-width: 648px) {
-		width: 100%;
+	width: 100%;
+	
+	  }
 	}
 `;
+
 
 export const InputBox = styled.span`
 	width: 62%;
 	display: flex;
 	flex-direction: column;
 
-	@media (max-width: 320px) {
+
+	@media (max-width: 457px) {
 		width: 83%;
-	}
+		
+		  }
+		}	
 `;
 
 export const Label = styled.label`
@@ -52,6 +61,7 @@ export const Label = styled.label`
   font-weight: bold;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+
 `;
 
 export const Span = styled.span` 
@@ -62,10 +72,18 @@ export const Span = styled.span`
   justify-content: space-around;
   margin-top: 0.8rem;
 
+  @media (max-width: 648px) {
+	Span {
+		width: 76%;
+	  }
+	}
+
+
   buttonText {
     color: #85144B;
     font-size: 0.75rem; 
   }
+
 `;
 
 export const Error = styled.h4`
@@ -74,9 +92,10 @@ export const Error = styled.h4`
   font-size: 0.75rem;
   display: flex;
   align-self: flex-end;
+
 `;
 
-class Login extends React.Component {
+class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -138,4 +157,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default App;
