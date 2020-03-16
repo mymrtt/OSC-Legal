@@ -6,8 +6,10 @@ import {
 
 // Components
 import FisicalPersonForm from '../screens/login/createFisicalPerson/FisicalPersonForm';
-import Login from '../screens/login/Login';
 import NoMatch from '../NoMatch';
+import Login from '../screens/login/login/login';
+import ResetPassword from '../screens/login/login/resetPassword';
+import ErroPassword from '../screens/login/login/erroPassword';
 // import PrivateRoute from './PrivateRoute';
 
 const Routes = () => (
@@ -16,6 +18,8 @@ const Routes = () => (
 			<Route exact path='/' component = {Login} />
 			<Route path='/createfisicalperson' component = {FisicalPersonForm} />
 			<Route component={NoMatch} />
+			{/* <Route exact path='/resetPassword' component={ResetPassword} /> */}
+			{/* <Route exact path='/erroPassword' component={ErroPassword} /> */}
 			{/* <PrivateRoute component = {Dashboard} /> */}
 		</Switch>
 	</BrowserRouter>

@@ -1,5 +1,5 @@
-// Libs
 import React from 'react';
+
 import styled from 'styled-components';
 
 export const InputForm = styled.input`
@@ -12,7 +12,6 @@ export const InputForm = styled.input`
   border-radius: 3px;
   font-family: Overpass, Light;
   position: relative;
-
   @media (max-width: 425px) {
     width: 100%;
   }
