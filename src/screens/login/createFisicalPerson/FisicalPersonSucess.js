@@ -2,6 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 // Images
 import Sucess from "../../../assets/sucess.svg";
@@ -74,7 +75,9 @@ function FisicalPersonSucess(props) {
         onClick={() => props.handleModalSucess()}
         text="cadastrar pessoa jurídica"
       />
-      <h3>fazer login</h3>
+      <Link to="/">
+        <h3>fazer login</h3>
+      </Link>
     </Modal>
   );
 }

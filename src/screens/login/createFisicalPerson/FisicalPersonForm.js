@@ -175,10 +175,18 @@ class FisicalPersonForm extends Component {
       telefone: "",
       senha: ""
     },
+    email2: "gabriel@test.com",
+    cpf2: "12345678901",
+    rg2: "123456789",
+    orgao2: "detran",
+    uf2: "rj",
     isErrorRg: false,
     isErrorPassword: false,
     isErrorCpf: false,
-    isEmpty: false
+    isEmpty: false,
+    isErrorEmail: false,
+    isErrorOrgao: false,
+    isErrorUf: false
   };
 
   togglePassword = ev => {
@@ -203,6 +211,8 @@ class FisicalPersonForm extends Component {
   handleSubmit = ev => {
     ev.preventDefault();
     this.errors();
+    this.props.addNewUser(this.state.user);
+    this.handleModalSucess();
   };
 
   errors = () => {
@@ -219,30 +229,6 @@ class FisicalPersonForm extends Component {
       telefone,
       senha
     } = this.state.user;
-
-    if (
-      nome === "" ||
-      sobrenome === "" ||
-      rg === "" ||
-      orgao === "" ||
-      uf === "" ||
-      nascimento === "" ||
-      cpf === "" ||
-      email === "" ||
-      telefone === "" ||
-      senha === ""
-    ) {
-      this.setState({ isEmpty: true });
-    } else {
-      this.setState({
-        isEmpty: false,
-        isErrorCpf: false,
-        isErrorPassword: false,
-        isErrorRg: false
-      });
-      this.props.addNewUser(user);
-      this.handleModalSucess();
-    }
   };
 
   render() {
@@ -250,7 +236,10 @@ class FisicalPersonForm extends Component {
       "RG inválido",
       "Senha fraca",
       "CPF inválido",
-      "Preencha todos os valores"
+      "Preencha todos os valores",
+      "E-mail inválido",
+      "Uf inválida",
+      "Orgão expedidor inválido"
     ];
 
     const {
@@ -258,7 +247,10 @@ class FisicalPersonForm extends Component {
       isErrorRg,
       isErrorCpf,
       modalSucess,
-      isEmpty
+      isEmpty,
+      isErrorOrgao,
+      isErrorUf,
+      isErrorEmail
     } = this.state;
 
     return (
@@ -304,7 +296,6 @@ class FisicalPersonForm extends Component {
                     placeholder="000000-0"
                     name="rg"
                   />
-
                   {isErrorRg && <Error>{errorMessage[0]}</Error>}
                 </Label>
                 <Label>
@@ -314,7 +305,9 @@ class FisicalPersonForm extends Component {
                     onChange={ev => this.handleChange("orgao", ev)}
                     value={this.state.orgao}
                     name="orgao"
+                    placeholder="Detran"
                   />
+                  {isErrorOrgao && <Error>{errorMessage[6]}</Error>}
                   {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
               </span>
@@ -325,8 +318,10 @@ class FisicalPersonForm extends Component {
                     type="text"
                     onChange={ev => this.handleChange("uf", ev)}
                     value={this.state.uf}
+                    placeholder="RJ"
                     name="uf"
                   />
+                  {isErrorUf && <Error>{errorMessage[5]}</Error>}
                   {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
                 <Label>
@@ -363,7 +358,7 @@ class FisicalPersonForm extends Component {
                   placeholder="nome@mail.com"
                   require
                 />
-
+                {isErrorEmail && <Error>{errorMessage[4]}</Error>}
                 {isEmpty && <Error>{errorMessage[3]}</Error>}
               </Label>
               <Label>
