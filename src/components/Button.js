@@ -10,8 +10,13 @@ export const MyButton = styled.button`
   border: 0;
   font-weight: 600;
   margin: ${props => (props.login ? '1.7rem' : '0.5rem 0')};
-
+  font-family: Overpass, Bold;
   
+  @media (max-width: 648px) {
+    width: ${props => (props.login ? '70%' : '87%')};
+      }
+    }
+
   @media (max-width: 320px) {
     width: ${props => (props.login ? '83%' : '87%')};
       }
