@@ -5,21 +5,19 @@ import {
 } from 'react-router-dom';
 
 // Components
-import FisicalPersonForm from '../screens/login/createFisicalPerson/FisicalPersonForm';
+import Login from '../screens/onboarding/Login/LoginScreen';
+import CreateFisicalPerson from '../screens/onboarding/CreateFisicalPerson/CreateFisicalPersonScreen';
+import CreateLegalPerson from '../screens/onboarding/CreateLegalPerson/LegalPersonScreen';
 import NoMatch from '../NoMatch';
-import Login from '../screens/login/login/login';
-import ResetPassword from '../screens/login/login/resetPassword';
-import ErroPassword from '../screens/login/login/erroPassword';
 // import PrivateRoute from './PrivateRoute';
 
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
-			<Route exact path='/' component = {Login} />
-			<Route path='/createfisicalperson' component = {FisicalPersonForm} />
+			<Route exact path='/' component={Login} />
+			<Route path='/createfisicalperson' component={CreateFisicalPerson} />
+			<Route path='/createlegalperson' component={CreateLegalPerson} />
 			<Route component={NoMatch} />
-			{/* <Route exact path='/resetPassword' component={ResetPassword} /> */}
-			{/* <Route exact path='/erroPassword' component={ErroPassword} /> */}
 			{/* <PrivateRoute component = {Dashboard} /> */}
 		</Switch>
 	</BrowserRouter>

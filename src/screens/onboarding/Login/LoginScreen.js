@@ -1,11 +1,15 @@
+// Libs
 import React from 'react';
 import styled from 'styled-components';
-// import VisibilityOff from "../../../assets/visibility-off.svg";
-// import VisibilityOn from "../../../assets/visibility-on.svg";
 
+// Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+
+// Images
+// import VisibilityOff from "../../../assets/visibility-off.svg";
+// import VisibilityOn from "../../../assets/visibility-on.svg";
 
 export const ContainerForm = styled.div`
   background-color: #FFCFCD;
@@ -87,7 +91,7 @@ export const Error = styled.h2`
 		}
 `;
 
-class Login extends React.Component {
+class LoginScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -128,7 +132,6 @@ class Login extends React.Component {
   }
 
   render() {
-  	console.log(this.state.email);
   	return (
   		<ContainerForm>
   			<Form onSubmit={this.handleSubmit}>
@@ -168,4 +171,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default LoginScreen;
