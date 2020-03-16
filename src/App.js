@@ -1,11 +1,9 @@
+// Libs
 import React from 'react';
 
-function App() {
-	return (
-		<div>
-			<p>Oscc Legal</p>
-		</div>
-	);
-}
+// Routes
+import Routes from './routes/routes';
+
+const App = () => <Routes />;
 
 export default App;
