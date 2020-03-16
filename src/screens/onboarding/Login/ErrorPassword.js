@@ -1,11 +1,11 @@
+// Libs
 import React from 'react';
 import styled from 'styled-components';
 
+// Components
 import ImageLogo from '../../../components/ImageLogo';
-import Input from '../../../components/Input';
-import Button from '../../../components/Button';
-import { InputBox } from './login';
-
+// import Input from '../../../components/Input';
+// import Button from '../../../components/Button';
 
 export const ContainerForm = styled.div`
   width: 100%;
@@ -55,7 +55,7 @@ export const Erro = styled.p`
   justify-content: center;
 `;
 
-export const Span= styled.span` 
+export const Span = styled.span` 
   color: #231F20;
   display: flex;
   align-items: center;
@@ -70,8 +70,7 @@ export const SpanParagraph = styled.span`
 `;
 
 class ErroPassoword extends React.Component {
-
-  render() {
+	render() {
   	return (
 		  <ContainerForm>
 		  <ImageLogo/>
@@ -81,14 +80,14 @@ class ErroPassoword extends React.Component {
   					<Erro>210704</Erro>
   				</BoxErro>
   				<Span>
-  					<SpanParagraph>A password reset was required for your email address:
-                        name@email.com. If you did not perform this request,
-                        you can access your account normally.</SpanParagraph>
+  					<SpanParagraph>
+              A password reset was required for your email address: name@email.com. If you did not perform this request, you can access your account normally.
+						</SpanParagraph>
   				</Span>
   			</Form>
   		</ContainerForm>
   	);
-  }
+	}
 }
 
 export default ErroPassoword;

@@ -1,11 +1,12 @@
+// Libs
 import React from 'react';
 import styled from 'styled-components';
 
+// Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-import { InputBox } from './login';
-
+// import { InputBox } from './login';
 
 export const ContainerForm = styled.div`
   width: 100%;
@@ -76,7 +77,7 @@ export const VoltarLogin = styled.span`
   }
 `;
 
-class ResetPassoword extends React.Component {
+class ResetPassowordScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -92,7 +93,6 @@ class ResetPassoword extends React.Component {
   };
 
   render() {
-  	console.log(this.state.email);
   	return (
 		  <ContainerForm>
 		  <ImageLogo/>
@@ -121,4 +121,4 @@ class ResetPassoword extends React.Component {
   }
 }
 
-export default ResetPassoword;
+export default ResetPassowordScreen;
