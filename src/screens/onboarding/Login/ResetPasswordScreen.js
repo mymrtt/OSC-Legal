@@ -92,7 +92,6 @@ class ResetPassowordScreen extends React.Component {
 	};
 
 	render() {
-		console.log(this.state.email);
 		return (
 			<ContainerForm>
 				<ImageLogo />
