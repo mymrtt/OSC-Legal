@@ -1,9 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-import {
-	Link,
-} from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 
 
 // Components
@@ -188,7 +186,7 @@ class LoginScreen extends React.Component {
 					/>
 					<Span>
 						<ButtonText to={'/createfisicalperson'}>CRIAR CONTA</ButtonText>
-						<ButtonText>RESETAR SENHA</ButtonText>
+						<ButtonText to={'/resetPasswordScreen'}>RESETAR SENHA</ButtonText>
 					</Span>
 				</Form>
 			</ContainerForm>
