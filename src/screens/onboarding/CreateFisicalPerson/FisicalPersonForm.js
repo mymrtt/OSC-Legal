@@ -1,3 +1,7 @@
+/* eslint-disable no-dupe-class-members */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-mixed-spaces-and-tabs */
+
 // Libs
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -15,6 +19,8 @@ import VisibilityOn from '../../../assets/visibility-on.svg';
 
 // Redux
 import { addNewUser } from '../../../dataflow/modules/sign-up-modules';
+
+import { createUser } from '../../../api';
 
 const mapStateToProps = state => ({
 	users: state.users,
@@ -155,22 +161,33 @@ class FisicalPersonForm extends Component {
   	togglePassword: false,
   	modalSucess: false,
   	user: {
-  		nome: '',
-  		sobrenome: '',
+  		name: '',
+  		surname: '',
   		rg: '',
-  		orgao: '',
+  		sendingBody: '',
   		uf: '',
-  		nascimento: '',
+  		birth: '',
   		cpf: '',
   		email: '',
-  		telefone: '',
-  		senha: '',
+  		telephone: '',
+  		password: '',
   	},
   	isErrorRg: false,
   	isErrorPassword: false,
   	isErrorCpf: false,
   	isEmpty: false,
+
+  	dataUser: [],
   };
+
+  async register(user) {
+  	try {
+  		const createdUser = await createUser(user);
+
+  	} catch (err) {
+  		console.log('err', err);
+  	}
+  }
 
   togglePassword = (ev) => {
   	ev.preventDefault();
@@ -199,19 +216,19 @@ class FisicalPersonForm extends Component {
   errors = () => {
   	const { user } = this.state;
   	const {
-  		nome,
-  		sobrenome,
+  		name,
+  		surname,
   		rg,
-  		orgao,
+  		sendingBody,
   		uf,
-  		nascimento,
+  		birth,
   		cpf,
   		email,
-  		telefone,
-  		senha,
+  		telephone,
+  		password,
   	} = this.state.user;
 
-  	if (senha.length < 4) {
+  	if (password.length < 4) {
   		this.setState({ isErrorPassword: true });
   	} else {
   		this.setState({ isErrorPassword: false });
@@ -227,22 +244,24 @@ class FisicalPersonForm extends Component {
   		this.setState({ isErrorCpf: false });
   	}
   	if (
-  		nome === ''
-      || sobrenome === ''
+  		name === ''
+      || surname === ''
       || rg === ''
-      || orgao === ''
+      || sendingBody === ''
       || uf === ''
-      || nascimento === ''
+      || birth === ''
       || cpf === ''
       || email === ''
-      || telefone === ''
-      || senha === ''
+      || telephone === ''
+      || password === ''
   	) {
   		this.setState({ isEmpty: true });
   	} else {
   		this.setState({ isEmpty: false });
   		this.props.addNewUser(user);
   		this.handleModalSucess();
+
+  		this.register(user);
   	}
   };
 
@@ -274,10 +293,10 @@ class FisicalPersonForm extends Component {
   						<p>Nome</p>
   						<Input
   							type="text"
-  							onChange={ev => this.handleChange('nome', ev)}
-  							value={this.state.nome}
+  							onChange={ev => this.handleChange('name', ev)}
+  							value={this.state.name}
   							placeholder="Nome"
-  							name="nome"
+  							name="name"
   						/>
   						{isEmpty && <Error>{errorMessage[3]}</Error>}
   					</Label>
@@ -285,10 +304,10 @@ class FisicalPersonForm extends Component {
   						<p>Sobrenome</p>
   						<Input
   							type="text"
-  							onChange={ev => this.handleChange('sobrenome', ev)}
-  							value={this.state.sobrenome}
+  							onChange={ev => this.handleChange('surname', ev)}
+  							value={this.state.surname}
   							placeholder="Sobrenome"
-  							name="sobrenome"
+  							name="surname"
   						/>
   						{isEmpty && <Error>{errorMessage[3]}</Error>}
   					</Label>
@@ -308,9 +327,9 @@ class FisicalPersonForm extends Component {
   							<p>Orgão expedidor</p>
   							<InputForm
   								type="text"
-  								onChange={ev => this.handleChange('orgao', ev)}
-  								value={this.state.orgao}
-  								name="orgao"
+  								onChange={ev => this.handleChange('sendingBody', ev)}
+  								value={this.state.sendingBody}
+  								name="sendingBody"
   							/>
   							{isEmpty && <Error>{errorMessage[3]}</Error>}
   						</Label>
@@ -330,10 +349,10 @@ class FisicalPersonForm extends Component {
   							<p>data de nascimento</p>
   							<InputForm
   								type="number"
-  								onChange={ev => this.handleChange('nascimento', ev)}
-  								value={this.state.nascimento}
+  								onChange={ev => this.handleChange('birth', ev)}
+  								value={this.state.birth}
   								placeholder="02/01/2020"
-  								name="nascimento"
+  								name="birth"
   							/>
   							{isEmpty && <Error>{errorMessage[3]}</Error>}
   						</Label>
@@ -357,7 +376,7 @@ class FisicalPersonForm extends Component {
   							onChange={ev => this.handleChange('email', ev)}
   							value={this.state.email}
   							name="email"
-  							placeholder="nome@mail.com"
+  							placeholder="name@mail.com"
   							require
   						/>
 
@@ -367,21 +386,21 @@ class FisicalPersonForm extends Component {
   						<p>telefone</p>
   						<Input
   							type="tel"
-  							onChange={ev => this.handleChange('telefone', ev)}
-  							value={this.state.telefone}
+  							onChange={ev => this.handleChange('telephone', ev)}
+  							value={this.state.telephone}
   							placeholder="(00) 00000-0000"
-  							name="telefone"
+  							name="telephone"
   						/>
   						{isEmpty && <Error>{errorMessage[3]}</Error>}
   					</Label>
   					<Label>
-  						<p>senha</p>
+  						<p>password</p>
   						<Input
   							className="input-password"
   							type={this.state.togglePassword === true ? 'text' : 'password'}
-  							onChange={ev => this.handleChange('senha', ev)}
-  							value={this.state.senha}
-  							placeholder="Inserir senha"
+  							onChange={ev => this.handleChange('password', ev)}
+  							value={this.state.password}
+  							placeholder="Inserir password"
   							name="password"
   						/>
   						{this.state.togglePassword === true ? (
@@ -411,7 +430,7 @@ class FisicalPersonForm extends Component {
   					<Button
   						text="concordar e criar conta"
   						type="submit"
-  						onClick={this.handleSubmit}
+  						// onClick={this.handleSubmit}
   					/>
   				</Form>
   			)}

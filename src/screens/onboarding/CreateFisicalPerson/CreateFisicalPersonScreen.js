@@ -30,9 +30,9 @@ class CreateFisicalPersonScreen extends Component {
   	return (
   		<Container>
   			{this.state.modalTerms === true ? (
-  				<FisicalPersonForm handleModalTerms={this.handleModalTerms} />
-  			) : (
   				<FisicalPersonTerms handleModalTerms={this.handleModalTerms} />
+  			) : (
+  				<FisicalPersonForm handleModalTerms={this.handleModalTerms} />
   			)}
   		</Container>
   	);
