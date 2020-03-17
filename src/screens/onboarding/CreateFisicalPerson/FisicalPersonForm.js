@@ -157,286 +157,273 @@ export const TextTerms = styled.p`
 `;
 
 class FisicalPersonForm extends Component {
-  state = {
-  	togglePassword: false,
-  	modalSucess: false,
-  	user: {
-  		name: '',
-  		surname: '',
-  		rg: '',
-  		sendingBody: '',
-  		uf: '',
-  		birth: '',
-  		cpf: '',
-  		email: '',
-  		telephone: '',
-  		password: '',
-  	},
-  	isErrorRg: false,
-  	isErrorPassword: false,
-  	isErrorCpf: false,
-  	isEmpty: false,
+	state = {
+		togglePassword: false,
+		modalSucess: false,
+		user: {
+			nome: '',
+			sobrenome: '',
+			rg: '',
+			orgao: '',
+			uf: '',
+			nascimento: '',
+			cpf: '',
+			email: '',
+			telefone: '',
+			senha: '',
+		},
+		isErrorRg: false,
+		isErrorPassword: false,
+		isErrorCpf: false,
+		isEmpty: false,
+	};
 
-  	dataUser: [],
-  };
+	togglePassword = (ev) => {
+		ev.preventDefault();
+		this.setState({
+			togglePassword: !this.state.togglePassword,
+		});
+	};
 
-  async register(user) {
-  	try {
-  		const createdUser = await createUser(user);
+	handleModalSucess = () => {
+		this.setState({
+			modalSucess: !this.state.modalSucess,
+		});
+	};
 
-  	} catch (err) {
-  		console.log('err', err);
-  	}
-  }
+	handleChange = (field, ev) => {
+		const { user } = this.state;
+		user[field] = ev.target.value;
+		this.setState({ user });
+	};
 
-  togglePassword = (ev) => {
-  	ev.preventDefault();
-  	this.setState({
-  		togglePassword: !this.state.togglePassword,
-  	});
-  };
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		this.errors();
+	};
 
-  handleModalSucess = () => {
-  	this.setState({
-  		modalSucess: !this.state.modalSucess,
-  	});
-  };
+	errors = () => {
+		const { user } = this.state;
+		const {
+			nome,
+			sobrenome,
+			rg,
+			orgao,
+			uf,
+			nascimento,
+			cpf,
+			email,
+			telefone,
+			senha,
+		} = this.state.user;
 
-  handleChange = (field, ev) => {
-  	const { user } = this.state;
-  	user[field] = ev.target.value;
-  	this.setState({ user });
-  };
+		if (senha.length < 4) {
+			this.setState({ isErrorPassword: true });
+		} else {
+			this.setState({ isErrorPassword: false });
+		}
+		if (rg.length < 9 || rg.length > 9) {
+			this.setState({ isErrorRg: true });
+		} else {
+			this.setState({ isErrorRg: false });
+		}
+		if (cpf.length < 11 || cpf.length > 11) {
+			this.setState({ isErrorCpf: true });
+		} else {
+			this.setState({ isErrorCpf: false });
+		}
+		if (
+			nome === ''
+			|| sobrenome === ''
+			|| rg === ''
+			|| orgao === ''
+			|| uf === ''
+			|| nascimento === ''
+			|| cpf === ''
+			|| email === ''
+			|| telefone === ''
+			|| senha === ''
+		) {
+			this.setState({ isEmpty: true });
+		} else {
+			this.setState({ isEmpty: false });
+			this.props.addNewUser(user);
+			this.handleModalSucess();
+		}
+	};
 
-  handleSubmit = (ev) => {
-  	ev.preventDefault();
-  	this.errors();
-  };
+	render() {
+		const errorMessage = [
+			'RG inválido',
+			'Senha fraca',
+			'CPF inválido',
+			'Preencha todos os valores',
+		];
 
-  errors = () => {
-  	const { user } = this.state;
-  	const {
-  		name,
-  		surname,
-  		rg,
-  		sendingBody,
-  		uf,
-  		birth,
-  		cpf,
-  		email,
-  		telephone,
-  		password,
-  	} = this.state.user;
+		const {
+			isErrorPassword,
+			isErrorRg,
+			isErrorCpf,
+			modalSucess,
+			isEmpty,
+		} = this.state;
 
-  	if (password.length < 4) {
-  		this.setState({ isErrorPassword: true });
-  	} else {
-  		this.setState({ isErrorPassword: false });
-  	}
-  	if (rg.length < 9 || rg.length > 9) {
-  		this.setState({ isErrorRg: true });
-  	} else {
-  		this.setState({ isErrorRg: false });
-  	}
-  	if (cpf.length < 11 || cpf.length > 11) {
-  		this.setState({ isErrorCpf: true });
-  	} else {
-  		this.setState({ isErrorCpf: false });
-  	}
-  	if (
-  		name === ''
-      || surname === ''
-      || rg === ''
-      || sendingBody === ''
-      || uf === ''
-      || birth === ''
-      || cpf === ''
-      || email === ''
-      || telephone === ''
-      || password === ''
-  	) {
-  		this.setState({ isEmpty: true });
-  	} else {
-  		this.setState({ isEmpty: false });
-  		this.props.addNewUser(user);
-  		this.handleModalSucess();
+		return (
+			<>
+				{modalSucess === true ? (
+					<FisicalPersonSucess handleModalSucess={this.handleModalSucess} />
+				) : (
+					<Form onSubmit={this.handleSubmit}>
+						<ImageLogo />
+						<h1>cadastrar pessoa física</h1>
+						<Label>
+							<p>Nome</p>
+							<Input
+								type="text"
+								onChange={ev => this.handleChange('nome', ev)}
+								value={this.state.nome}
+								placeholder="Nome"
+								name="nome"
+							/>
+							{isEmpty && <Error>{errorMessage[3]}</Error>}
+						</Label>
+						<Label>
+							<p>Sobrenome</p>
+							<Input
+								type="text"
+								onChange={ev => this.handleChange('sobrenome', ev)}
+								value={this.state.sobrenome}
+								placeholder="Sobrenome"
+								name="sobrenome"
+							/>
+							{isEmpty && <Error>{errorMessage[3]}</Error>}
+						</Label>
+						<span>
+							<Label>
+								<p>rg</p>
+								<InputForm
+									type="number"
+									onChange={ev => this.handleChange('rg', ev)}
+									value={this.state.rg}
+									placeholder="000000-0"
+									name="rg"
+								/>
+								{isErrorRg && <Error>{errorMessage[0]}</Error>}
+							</Label>
+							<Label>
+								<p>Orgão expedidor</p>
+								<InputForm
+									type="text"
+									onChange={ev => this.handleChange('orgao', ev)}
+									value={this.state.orgao}
+									name="orgao"
+								/>
+								{isEmpty && <Error>{errorMessage[3]}</Error>}
+							</Label>
+						</span>
+						<span>
+							<Label>
+								<p>uf</p>
+								<InputForm
+									type="text"
+									onChange={ev => this.handleChange('uf', ev)}
+									value={this.state.uf}
+									name="uf"
+								/>
+								{isEmpty && <Error>{errorMessage[3]}</Error>}
+							</Label>
+							<Label>
+								<p>data de nascimento</p>
+								<InputForm
+									type="number"
+									onChange={ev => this.handleChange('nascimento', ev)}
+									value={this.state.nascimento}
+									placeholder="02/01/2020"
+									name="nascimento"
+								/>
+								{isEmpty && <Error>{errorMessage[3]}</Error>}
+							</Label>
+						</span>
+						<Label>
+							<p>cpf</p>
+							<Input
+								type="number"
+								onChange={ev => this.handleChange('cpf', ev)}
+								value={this.state.cpf}
+								placeholder="000000-0"
+								name="cpf"
+							/>
 
-  		this.register(user);
-  	}
-  };
+							{isErrorCpf && <Error>{errorMessage[2]}</Error>}
+						</Label>
+						<Label>
+							<p>email</p>
+							<Input
+								type="email"
+								onChange={ev => this.handleChange('email', ev)}
+								value={this.state.email}
+								name="email"
+								placeholder="nome@mail.com"
+								require
+							/>
 
-  render() {
-  	const errorMessage = [
-  		'RG inválido',
-  		'Senha fraca',
-  		'CPF inválido',
-  		'Preencha todos os valores',
-  	];
-
-  	const {
-  		isErrorPassword,
-  		isErrorRg,
-  		isErrorCpf,
-  		modalSucess,
-  		isEmpty,
-  	} = this.state;
-
-  	return (
-  		<>
-  			{modalSucess === true ? (
-  				<FisicalPersonSucess handleModalSucess={this.handleModalSucess} />
-  			) : (
-  				<Form onSubmit={this.handleSubmit}>
-  					<ImageLogo />
-  					<h1>cadastrar pessoa física</h1>
-  					<Label>
-  						<p>Nome</p>
-  						<Input
-  							type="text"
-  							onChange={ev => this.handleChange('name', ev)}
-  							value={this.state.name}
-  							placeholder="Nome"
-  							name="name"
-  						/>
-  						{isEmpty && <Error>{errorMessage[3]}</Error>}
-  					</Label>
-  					<Label>
-  						<p>Sobrenome</p>
-  						<Input
-  							type="text"
-  							onChange={ev => this.handleChange('surname', ev)}
-  							value={this.state.surname}
-  							placeholder="Sobrenome"
-  							name="surname"
-  						/>
-  						{isEmpty && <Error>{errorMessage[3]}</Error>}
-  					</Label>
-  					<span>
-  						<Label>
-  							<p>rg</p>
-  							<InputForm
-  								type="number"
-  								onChange={ev => this.handleChange('rg', ev)}
-  								value={this.state.rg}
-  								placeholder="000000-0"
-  								name="rg"
-  							/>
-  							{isErrorRg && <Error>{errorMessage[0]}</Error>}
-  						</Label>
-  						<Label>
-  							<p>Orgão expedidor</p>
-  							<InputForm
-  								type="text"
-  								onChange={ev => this.handleChange('sendingBody', ev)}
-  								value={this.state.sendingBody}
-  								name="sendingBody"
-  							/>
-  							{isEmpty && <Error>{errorMessage[3]}</Error>}
-  						</Label>
-  					</span>
-  					<span>
-  						<Label>
-  							<p>uf</p>
-  							<InputForm
-  								type="text"
-  								onChange={ev => this.handleChange('uf', ev)}
-  								value={this.state.uf}
-  								name="uf"
-  							/>
-  							{isEmpty && <Error>{errorMessage[3]}</Error>}
-  						</Label>
-  						<Label>
-  							<p>data de nascimento</p>
-  							<InputForm
-  								type="number"
-  								onChange={ev => this.handleChange('birth', ev)}
-  								value={this.state.birth}
-  								placeholder="02/01/2020"
-  								name="birth"
-  							/>
-  							{isEmpty && <Error>{errorMessage[3]}</Error>}
-  						</Label>
-  					</span>
-  					<Label>
-  						<p>cpf</p>
-  						<Input
-  							type="number"
-  							onChange={ev => this.handleChange('cpf', ev)}
-  							value={this.state.cpf}
-  							placeholder="000000-0"
-  							name="cpf"
-  						/>
-
-  						{isErrorCpf && <Error>{errorMessage[2]}</Error>}
-  					</Label>
-  					<Label>
-  						<p>email</p>
-  						<Input
-  							type="email"
-  							onChange={ev => this.handleChange('email', ev)}
-  							value={this.state.email}
-  							name="email"
-  							placeholder="name@mail.com"
-  							require
-  						/>
-
-  						{isEmpty && <Error>{errorMessage[3]}</Error>}
-  					</Label>
-  					<Label>
-  						<p>telefone</p>
-  						<Input
-  							type="tel"
-  							onChange={ev => this.handleChange('telephone', ev)}
-  							value={this.state.telephone}
-  							placeholder="(00) 00000-0000"
-  							name="telephone"
-  						/>
-  						{isEmpty && <Error>{errorMessage[3]}</Error>}
-  					</Label>
-  					<Label>
-  						<p>password</p>
-  						<Input
-  							className="input-password"
-  							type={this.state.togglePassword === true ? 'text' : 'password'}
-  							onChange={ev => this.handleChange('password', ev)}
-  							value={this.state.password}
-  							placeholder="Inserir password"
-  							name="password"
-  						/>
-  						{this.state.togglePassword === true ? (
-  							<span>
-  								<ImagePassword
-  									src={VisibilityOn}
-  									onClick={this.togglePassword}
-  								/>
-  							</span>
-  						) : (
-  							<span>
-  								<ImagePassword
-  									src={VisibilityOff}
-  									onClick={this.togglePassword}
-  								/>
-  							</span>
-  						)}
-  						{isErrorPassword && <Error>{errorMessage[1]}</Error>}
-  					</Label>
-  					<TextTerms>
-              Clique abaixo para concordar com os
-  						<strong onClick={this.props.handleModalTerms}>
-                Termos de Serviço
-  						</strong>
+							{isEmpty && <Error>{errorMessage[3]}</Error>}
+						</Label>
+						<Label>
+							<p>telefone</p>
+							<Input
+								type="tel"
+								onChange={ev => this.handleChange('telefone', ev)}
+								value={this.state.telefone}
+								placeholder="(00) 00000-0000"
+								name="telefone"
+							/>
+							{isEmpty && <Error>{errorMessage[3]}</Error>}
+						</Label>
+						<Label>
+							<p>senha</p>
+							<Input
+								className="input-password"
+								type={this.state.togglePassword === true ? 'text' : 'password'}
+								onChange={ev => this.handleChange('senha', ev)}
+								value={this.state.senha}
+								placeholder="Inserir senha"
+								name="password"
+							/>
+							{this.state.togglePassword === true ? (
+								<span>
+									<ImagePassword
+										src={VisibilityOn}
+										onClick={this.togglePassword}
+									/>
+								</span>
+							) : (
+								<span>
+									<ImagePassword
+										src={VisibilityOff}
+										onClick={this.togglePassword}
+									/>
+								</span>
+							)}
+							{isErrorPassword && <Error>{errorMessage[1]}</Error>}
+						</Label>
+						<TextTerms>
+								Clique abaixo para concordar com os
+							<strong onClick={this.props.handleModalTerms}>
+										Termos de Serviço
+							</strong>
               e registrar.
-  					</TextTerms>
-  					<Button
-  						text="concordar e criar conta"
-  						type="submit"
-  						// onClick={this.handleSubmit}
-  					/>
-  				</Form>
-  			)}
-  		</>
-  	);
-  }
+						</TextTerms>
+						<Button
+							text="concordar e criar conta"
+							type="submit"
+							onClick={this.handleSubmit}
+						/>
+					</Form>
+				)}
+			</>
+		);
+	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FisicalPersonForm);

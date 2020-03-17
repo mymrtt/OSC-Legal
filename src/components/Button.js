@@ -4,11 +4,12 @@ import styled from 'styled-components';
 export const MyButton = styled.button`
   width: ${props => (props.login ? '62%' : '87%')};
   height: 50px;
-  text-transform: uppercase;
   color: #fff;
   background-color: #ff4136;
   border: 0;
+  border-radius: 3px;
   font-weight: 600;
+  text-transform: uppercase;
   margin: ${props => (props.login ? '1.7rem' : '0.5rem 0')};
   font-family: Overpass, Bold;
   
@@ -16,7 +17,7 @@ export const MyButton = styled.button`
     width: ${props => (props.login ? '70%' : '87%')};
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: 400px) {
     width: ${props => (props.login ? '83%' : '87%')};
   }
 `;

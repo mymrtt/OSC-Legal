@@ -16,27 +16,27 @@ export const Container = styled.div`
 `;
 
 class CreateFisicalPersonScreen extends Component {
-  state = {
-  	modalTerms: false,
-  };
+	state = {
+		modalTerms: false,
+	};
 
-  handleModalTerms = () => {
-  	this.setState({
-  		modalTerms: !this.state.modalTerms,
-  	});
-  };
+	handleModalTerms = () => {
+		this.setState({
+			modalTerms: !this.state.modalTerms,
+		});
+	};
 
-  render() {
-  	return (
-  		<Container>
-  			{this.state.modalTerms === true ? (
-  				<FisicalPersonTerms handleModalTerms={this.handleModalTerms} />
-  			) : (
-  				<FisicalPersonForm handleModalTerms={this.handleModalTerms} />
-  			)}
-  		</Container>
-  	);
-  }
+	render() {
+		return (
+			<Container>
+				{this.state.modalTerms === true ? (
+					<FisicalPersonTerms handleModalTerms={this.handleModalTerms} />
+				) : (
+					<FisicalPersonForm handleModalTerms={this.handleModalTerms} />
+				)}
+			</Container>
+		);
+	}
 }
 
 export default CreateFisicalPersonScreen;
