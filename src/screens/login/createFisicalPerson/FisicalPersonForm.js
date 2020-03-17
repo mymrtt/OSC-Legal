@@ -1,23 +1,23 @@
 /* eslint-disable indent */
 /* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 // Components
-import Button from "../../../components/Button";
-import Input from "../../../components/Input";
-import ImageLogo from "../../../components/ImageLogo";
-import FisicalPersonSucess from "./FisicalPersonSucess";
-import { Container } from "./CreateFisicalPersonScreen";
+import Button from '../../../components/Button';
+import Input from '../../../components/Input';
+import ImageLogo from '../../../components/ImageLogo';
+import FisicalPersonSucess from './FisicalPersonSucess';
+import { Container } from './CreateFisicalPersonScreen';
 
 // Images
-import VisibilityOff from "../../../assets/visibility-off.svg";
-import VisibilityOn from "../../../assets/visibility-on.svg";
+import VisibilityOff from '../../../assets/visibility-off.svg';
+import VisibilityOn from '../../../assets/visibility-on.svg';
 
 // Redux
-import { addNewUser } from "../../../dataflow/modules/sign-up-modules";
+import { addNewUser } from '../../../dataflow/modules/sign-up-modules';
 
 const mapStateToProps = state => ({
   signup: state.signup
@@ -42,7 +42,7 @@ export const Form = styled.form`
 
   input {
     border: ${props =>
-      props.withError === true ? "1px solid #f00" : "1px solid #ffcfcd;"};
+    props.withError === true ? "1px solid #f00" : "1px solid #ffcfcd;"};
   }
 
   @media (max-width: 500px) {
@@ -164,22 +164,22 @@ class FisicalPersonForm extends Component {
     togglePassword: false,
     modalSucess: false,
     user: {
-      nome: "",
-      sobrenome: "",
-      rg: "",
-      orgao: "",
-      uf: "",
-      nascimento: "",
-      cpf: "",
-      email: "",
-      telefone: "",
-      senha: ""
+      nome: '',
+      sobrenome: '',
+      rg: '',
+      orgao: '',
+      uf: '',
+      nascimento: '',
+      cpf: '',
+      email: '',
+      telefone: '',
+      senha: ''
     },
-    email2: "gabriel@test.com",
-    cpf2: "12345678901",
-    rg2: "123456789",
-    orgao2: "detran",
-    uf2: "rj",
+    email2: 'gabriel@test.com',
+    cpf2: '12345678901',
+    rg2: '123456789',
+    orgao2: 'detran',
+    uf2: 'rj',
     isErrorRg: false,
     isErrorPassword: false,
     isErrorCpf: false,
@@ -211,8 +211,8 @@ class FisicalPersonForm extends Component {
   handleSubmit = ev => {
     ev.preventDefault();
     this.errors();
-    this.props.addNewUser(this.state.user);
-    this.handleModalSucess();
+    // this.props.addNewUser(this.state.user);
+    // this.handleModalSucess();
   };
 
   errors = () => {
@@ -229,6 +229,29 @@ class FisicalPersonForm extends Component {
       telefone,
       senha
     } = this.state.user;
+
+    if (email !== this.state.email2) {
+      this.setState({ isErrorEmail: true })
+    } else if (rg !== this.state.rg2) {
+      this.setState({ isErrorRg: true })
+    } else if (cpf !== this.state.cpf2) {
+      this.setState({ isErrorCpf: true })
+    } else if (nome, sobrenome, rg, orgao, uf, nascimento, cpf, email, telefone, senha === '') {
+      this.setState({
+        isEmpty: true,
+        isErrorCpf: false,
+        isErrorRg: false,
+        isErrorEmail: false,
+      })
+    } else {
+      this.setState({
+        isEmpty: false,
+        isErrorCpf: false,
+        isErrorEmail: false,
+      })
+      this.props.addNewUser(user)
+      this.handleModalSucess()
+    }
   };
 
   render() {
@@ -260,162 +283,161 @@ class FisicalPersonForm extends Component {
             <FisicalPersonSucess handleModalSucess={this.handleModalSucess} />
           </Container>
         ) : (
-          <Container>
-            <Form onSubmit={this.handleSubmit} withError={this.state.isEmpty}>
-              <ImageLogo />
-              <h1>cadastrar pessoa física</h1>
-              <Label>
-                <p>Nome</p>
-                <Input
-                  type="text"
-                  onChange={ev => this.handleChange("nome", ev)}
-                  value={this.state.nome}
-                  placeholder="Nome"
-                  name="nome"
-                />
-                {isEmpty && <Error>{errorMessage[3]}</Error>}
-              </Label>
-              <Label>
-                <p>Sobrenome</p>
-                <Input
-                  type="text"
-                  onChange={ev => this.handleChange("sobrenome", ev)}
-                  value={this.state.sobrenome}
-                  placeholder="Sobrenome"
-                  name="sobrenome"
-                />
-                {isEmpty && <Error>{errorMessage[3]}</Error>}
-              </Label>
-              <span>
+            <Container>
+              <Form onSubmit={this.handleSubmit} withError={isEmpty, isErrorEmail, isErrorRg, isErrorCpf, isErrorOrgao, isErrorUf, isErrorPassword}>
+                <ImageLogo />
+                <h1>cadastrar pessoa física</h1>
                 <Label>
-                  <p>rg</p>
-                  <InputForm
+                  <p>Nome</p>
+                  <Input
+                    type="text"
+                    onChange={ev => this.handleChange("nome", ev)}
+                    value={this.state.nome}
+                    placeholder="Nome"
+                    name="nome"
+                  />
+                  {isEmpty && <Error>{errorMessage[3]}</Error>}
+                </Label>
+                <Label>
+                  <p>Sobrenome</p>
+                  <Input
+                    type="text"
+                    onChange={ev => this.handleChange("sobrenome", ev)}
+                    value={this.state.sobrenome}
+                    placeholder="Sobrenome"
+                    name="sobrenome"
+                  />
+                  {isEmpty && <Error>{errorMessage[3]}</Error>}
+                </Label>
+                <span>
+                  <Label>
+                    <p>rg</p>
+                    <InputForm
+                      type="number"
+                      onChange={ev => this.handleChange("rg", ev)}
+                      value={this.state.rg}
+                      placeholder="000000-0"
+                      name="rg"
+                    />
+                    {isEmpty && <Error>{errorMessage[3]}</Error>}
+                    {isErrorRg && <Error>{errorMessage[0]}</Error>}
+                  </Label>
+                  <Label>
+                    <p>Orgão expedidor</p>
+                    <InputForm
+                      type="text"
+                      onChange={ev => this.handleChange("orgao", ev)}
+                      value={this.state.orgao}
+                      name="orgao"
+                      placeholder="Detran"
+                    />
+                    {isEmpty && <Error>{errorMessage[3]}</Error>}
+                  </Label>
+                </span>
+                <span>
+                  <Label>
+                    <p>uf</p>
+                    <InputForm
+                      type="text"
+                      onChange={ev => this.handleChange("uf", ev)}
+                      value={this.state.uf}
+                      placeholder="RJ"
+                      name="uf"
+                    />
+                    {isEmpty && <Error>{errorMessage[3]}</Error>}
+                  </Label>
+                  <Label>
+                    <p>data de nascimento</p>
+                    <InputForm
+                      type="number"
+                      onChange={ev => this.handleChange("nascimento", ev)}
+                      value={this.state.nascimento}
+                      placeholder="02/01/2020"
+                      name="nascimento"
+                    />
+                    {isEmpty && <Error>{errorMessage[3]}</Error>}
+                  </Label>
+                </span>
+                <Label>
+                  <p>cpf</p>
+                  <Input
                     type="number"
-                    onChange={ev => this.handleChange("rg", ev)}
-                    value={this.state.rg}
+                    onChange={ev => this.handleChange("cpf", ev)}
+                    value={this.state.cpf}
                     placeholder="000000-0"
-                    name="rg"
+                    name="cpf"
                   />
-                  {isErrorRg && <Error>{errorMessage[0]}</Error>}
-                </Label>
-                <Label>
-                  <p>Orgão expedidor</p>
-                  <InputForm
-                    type="text"
-                    onChange={ev => this.handleChange("orgao", ev)}
-                    value={this.state.orgao}
-                    name="orgao"
-                    placeholder="Detran"
-                  />
-                  {isErrorOrgao && <Error>{errorMessage[6]}</Error>}
                   {isEmpty && <Error>{errorMessage[3]}</Error>}
+                  {isErrorCpf && <Error>{errorMessage[2]}</Error>}
                 </Label>
-              </span>
-              <span>
                 <Label>
-                  <p>uf</p>
-                  <InputForm
-                    type="text"
-                    onChange={ev => this.handleChange("uf", ev)}
-                    value={this.state.uf}
-                    placeholder="RJ"
-                    name="uf"
+                  <p>email</p>
+                  <Input
+                    type="email"
+                    onChange={ev => this.handleChange("email", ev)}
+                    value={this.state.email}
+                    name="email"
+                    placeholder="nome@mail.com"
+                    require
                   />
-                  {isErrorUf && <Error>{errorMessage[5]}</Error>}
+                  {isErrorEmail && <Error>{errorMessage[4]}</Error>}
                   {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
                 <Label>
-                  <p>data de nascimento</p>
-                  <InputForm
-                    type="number"
-                    onChange={ev => this.handleChange("nascimento", ev)}
-                    value={this.state.nascimento}
-                    placeholder="02/01/2020"
-                    name="nascimento"
+                  <p>telefone</p>
+                  <Input
+                    type="tel"
+                    onChange={ev => this.handleChange("telefone", ev)}
+                    value={this.state.telefone}
+                    placeholder="(00) 00000-0000"
+                    name="telefone"
                   />
                   {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
-              </span>
-              <Label>
-                <p>cpf</p>
-                <Input
-                  type="number"
-                  onChange={ev => this.handleChange("cpf", ev)}
-                  value={this.state.cpf}
-                  placeholder="000000-0"
-                  name="cpf"
-                />
-
-                {isErrorCpf && <Error>{errorMessage[2]}</Error>}
-              </Label>
-              <Label>
-                <p>email</p>
-                <Input
-                  type="email"
-                  onChange={ev => this.handleChange("email", ev)}
-                  value={this.state.email}
-                  name="email"
-                  placeholder="nome@mail.com"
-                  require
-                />
-                {isErrorEmail && <Error>{errorMessage[4]}</Error>}
-                {isEmpty && <Error>{errorMessage[3]}</Error>}
-              </Label>
-              <Label>
-                <p>telefone</p>
-                <Input
-                  type="tel"
-                  onChange={ev => this.handleChange("telefone", ev)}
-                  value={this.state.telefone}
-                  placeholder="(00) 00000-0000"
-                  name="telefone"
-                />
-                {isEmpty && <Error>{errorMessage[3]}</Error>}
-              </Label>
-              <Label>
-                <p>senha</p>
-                <Input
-                  className="input-password"
-                  type={
-                    this.state.togglePassword === true ? "text" : "password"
-                  }
-                  onChange={ev => this.handleChange("senha", ev)}
-                  value={this.state.senha}
-                  placeholder="Inserir senha"
-                  name="password"
-                />
-                {this.state.togglePassword === true ? (
-                  <span>
-                    <ImagePassword
-                      src={VisibilityOn}
-                      onClick={this.togglePassword}
-                    />
-                  </span>
-                ) : (
-                  <span>
-                    <ImagePassword
-                      src={VisibilityOff}
-                      onClick={this.togglePassword}
-                    />
-                  </span>
-                )}
-                {isErrorPassword && <Error>{errorMessage[1]}</Error>}
-              </Label>
-              <TextTerms>
-                Clique abaixo para concordar com os
+                <Label>
+                  <p>senha</p>
+                  <Input
+                    className="input-password"
+                    type={
+                      this.state.togglePassword === true ? "text" : "password"
+                    }
+                    onChange={ev => this.handleChange("senha", ev)}
+                    value={this.state.senha}
+                    placeholder="Inserir senha"
+                    name="password"
+                  />
+                  {this.state.togglePassword === true ? (
+                    <span>
+                      <ImagePassword
+                        src={VisibilityOn}
+                        onClick={this.togglePassword}
+                      />
+                    </span>
+                  ) : (
+                      <span>
+                        <ImagePassword
+                          src={VisibilityOff}
+                          onClick={this.togglePassword}
+                        />
+                      </span>
+                    )}
+                  {isEmpty && <Error>{errorMessage[3]}</Error>}
+                </Label>
+                <TextTerms>
+                  Clique abaixo para concordar com os
                 <strong onClick={() => this.props.handleModalTerms()}>
-                  Termos de Serviço
+                    Termos de Serviço
                 </strong>
-                e registrar.
+                  e registrar.
               </TextTerms>
-              <Button
-                text="concordar e criar conta"
-                type="submit"
-                onClick={this.handleSubmit}
-              />
-            </Form>
-          </Container>
-        )}
+                <Button
+                  text="concordar e criar conta"
+                  type="submit"
+                  onClick={this.handleSubmit}
+                />
+              </Form>
+            </Container>
+          )}
       </>
     );
   }

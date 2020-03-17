@@ -1,11 +1,11 @@
 // Libs
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // Components
-import CreateFisicalPersonScreen from "../screens/login/createFisicalPerson/CreateFisicalPersonScreen";
-import NoMatch from "../NoMatch";
-import Login from "../screens/login/createAccount/login";
+import CreateFisicalPersonScreen from '../screens/login/createFisicalPerson/CreateFisicalPersonScreen';
+import NoMatch from '../NoMatch';
+import Login from '../screens/login/createAccount/login';
 
 const Routes = () => (
   <BrowserRouter>

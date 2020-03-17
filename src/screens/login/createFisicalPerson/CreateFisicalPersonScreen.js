@@ -1,10 +1,10 @@
 // Libs
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // Components
-import FisicalPersonForm from "./FisicalPersonForm";
-import FisicalPersonTerms from "./FisicalPersonTerms";
+import FisicalPersonForm from './FisicalPersonForm';
+import FisicalPersonTerms from './FisicalPersonTerms';
 
 export const Container = styled.div`
   width: 100%;
@@ -32,8 +32,8 @@ class CreateFisicalPersonScreen extends Component {
         {this.state.modalTerms !== true ? (
           <FisicalPersonForm handleModalTerms={this.handleModalTerms} />
         ) : (
-          <FisicalPersonTerms handleModalTerms={this.handleModalTerms} />
-        )}
+            <FisicalPersonTerms handleModalTerms={this.handleModalTerms} />
+          )}
       </Container>
     );
   }

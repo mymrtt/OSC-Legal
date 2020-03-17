@@ -1,12 +1,12 @@
 // Libs
-import React from "react";
-import styled from "styled-components";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // Images
-import Sucess from "../../../assets/sucess.svg";
-import Button from "../../../components/Button";
+import Sucess from '../../../assets/sucess.svg';
+import Button from '../../../components/Button';
 
 const mapStateToProps = state => ({
   signup: state.signup

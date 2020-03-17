@@ -1,4 +1,3 @@
-
 // Libs
 import React from 'react';
 import styled from 'styled-components';
@@ -88,16 +87,16 @@ export const Terms = styled.p`
 `;
 
 export default function ModalTerms(props) {
-	return (
-		<Overlay>
-			<img src={Logo} alt="Osc Logo" />
-			<Modal>
-				<h1>temos de serviço</h1>
-				<BlockTerms>
-					<h3>OSC Legal</h3>
-					<h4>LAST UPDATE: December 06,2019</h4>
-					<h3>1. Acceptance of OSC Legal terms of servisse.</h3>
-					<Terms>
+  return (
+    <Overlay>
+      <img src={Logo} alt="Osc Logo" />
+      <Modal>
+        <h1>temos de serviço</h1>
+        <BlockTerms>
+          <h3>OSC Legal</h3>
+          <h4>LAST UPDATE: December 06,2019</h4>
+          <h3>1. Acceptance of OSC Legal terms of servisse.</h3>
+          <Terms>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac
             consectetur massa. Pellentesque at vestibulum justo. Donec sed nibh
             dignissim, vestibulum neque sed, ornare ex. In purus odio, sodales
@@ -109,10 +108,10 @@ export default function ModalTerms(props) {
             nisi viverra gravida. Fusce sed lacus lorem. Ut sit amet luctus est.
             Donec facilisis justo mi, ut consequat urna blandit at. Quisque
             eleifend rutrum felis.
-					</Terms>
-				</BlockTerms>
-				<ButtonTerms onClick={() => props.handleModalTerms()}>OK</ButtonTerms>
-			</Modal>
-		</Overlay>
-	);
+          </Terms>
+        </BlockTerms>
+        <ButtonTerms onClick={() => props.handleModalTerms()}>OK</ButtonTerms>
+      </Modal>
+    </Overlay>
+  );
 }
