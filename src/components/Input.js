@@ -1,6 +1,7 @@
 // Libs
-import React from "react";
+import React from 'react';
 import styled from "styled-components";
+
 
 export const InputForm = styled.input`
   width: ${props => (props.login ? "100%" : "95%")};
@@ -13,7 +14,6 @@ export const InputForm = styled.input`
   border-radius: 3px;
   font-family: Overpass, Light;
   position: relative;
-
   @media (max-width: 425px) {
     width: 100%;
   }

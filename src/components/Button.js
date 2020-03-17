@@ -16,10 +16,19 @@ export const MyButton = styled.button`
   margin: ${props => (props.login ? "1.7rem" : "1.5rem 0")};
   font-family: Overpass, Bold;
   
+  @media (max-width: 648px) {
+    width: ${props => (props.login ? '70%' : '87%')};
+  }
+
   @media (max-width: 320px) {
+<<<<<<< HEAD
     width: ${props => (props.login ? "83%" : "87%")};
       }
     }
+=======
+    width: ${props => (props.login ? '83%' : '87%')};
+  }
+>>>>>>> 7aa6d3affe95c395021584ac9eed043d7702c5e7
 `;
 
 export default function Button(props) {
