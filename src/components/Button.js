@@ -15,13 +15,11 @@ export const MyButton = styled.button`
   
   @media (max-width: 648px) {
     width: ${props => (props.login ? '70%' : '87%')};
-      }
-    }
+  }
 
   @media (max-width: 400px) {
     width: ${props => (props.login ? '83%' : '87%')};
-      }
-    }
+  }
 `;
 
 export default function Button(props) {
