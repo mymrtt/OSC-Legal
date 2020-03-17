@@ -55,7 +55,7 @@ export const Erro = styled.p`
   justify-content: center;
 `;
 
-export const Span= styled.span` 
+export const Span = styled.span` 
   color: #231F20;
   display: flex;
   align-items: center;
@@ -70,25 +70,24 @@ export const SpanParagraph = styled.span`
 `;
 
 class ErroPassoword extends React.Component {
-
-  render() {
-  	return (
-		  <ContainerForm>
-		  <ImageLogo/>
-  			<Form onSubmit={this.handleSubmit}>
-         	<Title>Here is your password reset</Title>
-  				<BoxErro>
-  					<Erro>210704</Erro>
-  				</BoxErro>
-  				<Span>
-  					<SpanParagraph>A password reset was required for your email address:
-                        name@email.com. If you did not perform this request,
-                        you can access your account normally.</SpanParagraph>
-  				</Span>
-  			</Form>
-  		</ContainerForm>
-  	);
-  }
+	render() {
+		return (
+			<ContainerForm>
+				<ImageLogo />
+				<Form onSubmit={this.handleSubmit}>
+					<Title>Here is your password reset</Title>
+					<BoxErro>
+						<Erro>210704</Erro>
+					</BoxErro>
+					<Span>
+						<SpanParagraph>A password reset was required for your email address:
+            name@email.com. If you did not perform this request,
+            you can access your account normally.</SpanParagraph>
+					</Span>
+				</Form>
+			</ContainerForm>
+		);
+	}
 }
 
 export default ErroPassoword;

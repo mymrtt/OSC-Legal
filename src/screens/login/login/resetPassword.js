@@ -85,40 +85,40 @@ class ResetPassoword extends React.Component {
 		};
 	}
 
-  handleChangeEmail = (ev) => {
-  	this.setState({
-  		email: ev.target.value,
-  	});
-  };
+	handleChangeEmail = (ev) => {
+		this.setState({
+			email: ev.target.value,
+		});
+	};
 
-  render() {
-  	console.log(this.state.email);
-  	return (
-		  <ContainerForm>
-		  <ImageLogo/>
-  			<Form onSubmit={this.handleSubmit}>
-         	<Title>PASSWORD RESET</Title>
-  				<Box>
-  					<Label>E-MAIL</Label>
-  					<Input
-  						type="email"
-  						onChange={this.handleChangeEmail}
-  						placeholder="name@email.com"
-  					/>
-  				<BoxButton>
-  					<Button
-  						text="REQUESTA PASSWORD RESET"
-  						type="submit"
-						  />
-  				</BoxButton>
-  				</Box>
-  				<VoltarLogin>
-  					<buttonText>BACK TO LOGIN</buttonText>
-  				</VoltarLogin>
-  			</Form>
-  		</ContainerForm>
-  	);
-  }
+	render() {
+		console.log(this.state.email);
+		return (
+			<ContainerForm>
+				<ImageLogo />
+				<Form onSubmit={this.handleSubmit}>
+					<Title>PASSWORD RESET</Title>
+					<Box>
+						<Label>E-MAIL</Label>
+						<Input
+							type="email"
+							onChange={this.handleChangeEmail}
+							placeholder="name@email.com"
+						/>
+						<BoxButton>
+							<Button
+								text="REQUESTA PASSWORD RESET"
+								type="submit"
+							/>
+						</BoxButton>
+					</Box>
+					<VoltarLogin>
+						<buttonText>BACK TO LOGIN</buttonText>
+					</VoltarLogin>
+				</Form>
+			</ContainerForm>
+		);
+	}
 }
 
 export default ResetPassoword;
