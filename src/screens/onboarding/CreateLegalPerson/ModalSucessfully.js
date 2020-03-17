@@ -5,7 +5,7 @@ import Barcode from '../../../assets/Barcode.svg';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,7 +23,7 @@ export const Container = styled.div`
 }
 `;
 
-export const Modal = styled.div`
+const Modal = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -100,7 +100,7 @@ export const Modal = styled.div`
   }
 `;
 
-export const TextoDeAviso = styled.div`
+const WarningText = styled.div`
   padding: 0 4rem;
   width: 100%;
 
@@ -133,14 +133,14 @@ export default class ModalSucessfully extends Component {
 				<Modal>
           <h1>O Nome da empresa foi associada com sucesso!</h1>
           <img src={Barcode} alt="Barcode"/>
-          <TextoDeAviso>
+          <WarningText>
             <p>
               O acesso ao sistema será liberado após o pagamento do <span>boleto gerado.</span>
             </p>
             <p>
               Caso você tenha um código de desconto, você pode adiciona-lo antes de gerar o boleto de pagamento clicando no campo abaixo.
             </p>
-          </TextoDeAviso>
+          </WarningText>
           <h2>Código de Desconto</h2>
           <Input placeholder="Inserir Código"/>
           <Button text="Gerar Boleto" />
