@@ -64,11 +64,11 @@ const FisicalPersonSucess = props => (
 		<Modal>
 			<h1>Cadastro de Pessoa física concluído!</h1>
 			<img src={Sucess} alt="Sucess" />
-			<p>
+			{/* <p>
           Enviamos um e-mail de confirmação para
 				<b>{props.users.email}</b>. Verifique sua caixa de entrada para
           prosseguir.
-			</p>
+			</p> */}
 			<p>
           Caso não tenha recebido a confirmação, clique em
 				<strong>Reenviar email.</strong>
