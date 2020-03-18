@@ -1,15 +1,18 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import ErrorPassword from './ErrorPassword';
+import CreateFisicalPersonScreen from '../CreateFisicalPerson/CreateFisicalPersonScreen';
 // import { InputBox } from './login';
 
+
 export const ContainerForm = styled.div`
-  width: 100%;
   height: 100vh;
   background-color: #FFCFCD;
   display: flex;
@@ -17,32 +20,58 @@ export const ContainerForm = styled.div`
   flex-direction: column; 
   margin: 0;
   padding: 5rem;
+
+	@media (max-width: 648px) {
+			background-color: #fff;
+			padding: 1rem;
+			justify-content: center;
+	 	}
+	}
 `;
 
 export const Form = styled.form`
   width: 40%;
-  height: 35vh;
+  height: 40vh;
   background-color: #fff;
-	padding: 2rem;
-	margin: 2rem;
+  margin: 2rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
+
+  @media (max-width: 945px) {
+			width: 55%;
+	 	}
+	}
+
+	@media (max-width: 786px) {
+			width: 70%;
+	 	}
+	}
+
+	@media (max-width: 648px) {
+			width: 90%;
+			margin: 0;
+	 	}
+	}
 `;
 
 export const Title = styled.h1`
   width: 80%;
-  font-size: 1rem;
-  margin-top: 0.9rem;
+  font-size: 1.2rem;
+  /* margin-top: 0.9rem; */
+	font-family: Overpass, ExtraBold;
 `;
-
 
 export const Box = styled.span`
 	width: 80%;
 	display: flex;
 	flex-direction: column;
 
+	@media (max-width: 648px) {
+			width: 100%;
+	 	}
+	}
 `;
 
 export const Label = styled.label`
@@ -51,6 +80,7 @@ export const Label = styled.label`
   margin: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
+	font-family: Overpass, Regular; 
 `;
 
 export const BoxButton = styled.div`
@@ -59,6 +89,12 @@ export const BoxButton = styled.div`
 
 	Button {
 		width: 95%;
+		font-size: 1rem;
+		font-family: Eurostile, Bold; 
+
+		@media (max-width: 425px) {
+			width: 100%;
+	 	}
 	}
 `;
 
@@ -70,18 +106,25 @@ export const VoltarLogin = styled.span`
   justify-content: space-around;
   margin: 1rem;
 
+	@media (max-width: 648px) {
+			margin: 0;
+	 	}
+  }
+
   buttonText {
     color: #85144B;
-    font-size: 0.75rem; 
+    font-size: 1rem; 
+		font-family: Eurostile, Regular; 
   }
 `;
 
-class ResetPassowordScreen extends React.Component {
+class ResetPasswordEmailScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			value: '',
 			email: '',
+			redirect: null,
 		};
 	}
 
@@ -90,6 +133,18 @@ class ResetPassowordScreen extends React.Component {
 			email: ev.target.value,
 		});
 	};
+
+	handleSubmit = () => {
+		console.log('cliquei');
+		if (this.state.redirect) {
+			return <Redirect to={this.state.redirect}/>;
+		}
+		return null;
+	}
+
+	handleInsertCodeScreen = () => {
+		this.setState({ redirect: '/errorPassword' });
+	}
 
 	render() {
 		return (
@@ -106,8 +161,10 @@ class ResetPassowordScreen extends React.Component {
 						/>
 						<BoxButton>
 							<Button
-								text="REQUESTA PASSWORD RESET"
-								type="submit"
+								onClick={this.handleInsertCodeScreen}
+								to={'/errorPassword'}
+								text="REQUEST PASSWORD RESET"
+								type= "submit"
 							/>
 						</BoxButton>
 					</Box>
@@ -120,4 +177,4 @@ class ResetPassowordScreen extends React.Component {
 	}
 }
 
-export default ResetPassowordScreen;
+export default ResetPasswordEmailScreen;
