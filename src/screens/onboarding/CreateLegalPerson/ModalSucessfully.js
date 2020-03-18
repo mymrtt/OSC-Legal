@@ -1,9 +1,15 @@
+// Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
+// Components
 import ImageLogo from '../../../components/ImageLogo';
-import Barcode from '../../../assets/Barcode.svg';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+
+// Images
+import Barcode from '../../../assets/Barcode.svg';
+
 
 export const Container = styled.div`
   display: flex;

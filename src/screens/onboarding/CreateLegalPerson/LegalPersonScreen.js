@@ -1,7 +1,10 @@
 /* eslint-disable indent */
 /* eslint-disable no-mixed-spaces-and-tabs */
+// Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
+// Components
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import ImagemLogo from '../../../components/ImageLogo';

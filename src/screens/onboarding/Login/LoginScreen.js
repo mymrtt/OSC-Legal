@@ -3,11 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, } from 'react-router-dom';
 
-
 // Components
-import ImageLogo from '../../../components/ImageLogo';
-import Input from '../../../components/Input';
-import Button from '../../../components/Button';
+import ImageLogo from "../../../components/ImageLogo";
+import Input from "../../../components/Input";
+import Button from "../../../components/Button";
 
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
@@ -66,19 +65,32 @@ export const ImagePassword = styled.img`
 `;
 
 export const Label = styled.label`
-  color: #85144B;
+  color: #85144b;
   font-size: 0.7rem;
   font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 `;
 
-export const Span = styled.span` 
-  width: 98%;
+export const Span = styled.span`
+  width: 95%;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-around;
+  margin-top: 0.8rem;
+
+@media(max-width: 648px) {
+  span {
+    width: 76 %;
+  }
+}
+  margin-top: 0.5rem;
+
+buttonText {
+  color: #85144b;
+  font-size: 0.75rem;
+}
   margin-top: 0.5rem;
 `;
 
@@ -88,21 +100,20 @@ export const ButtonText = styled(Link)`
   font-size: 0.75rem; 
 `;
 
-export const Error = styled.h2`
+export const Error = styled.h4`
+  width: 25vw;
+  color: #d53b40;
   width: 43%;
   display: flex;
   color: #D53B40;
   font-family: Eurostile, Medium;
   font-size: 0.75rem;
   align-self: flex-end;
-
-  @media (max-width: 648px) {
-		width: 40%;
-		  }
-		}
 `;
 
+
 class LoginScreen extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -113,12 +124,39 @@ class LoginScreen extends React.Component {
 			type: 'password',
 		};
 	}
-
 	handleChangeType = () => {
 		this.setState({
 			type: this.state.type === 'password' ? 'text' : 'password',
 		});
 	}
+
+  handleSubmit = (ev) => {
+    ev.preventDefault();
+    if (this.state.email !== this.state.email2) {
+      this.setState({
+        error: true
+      })
+    }
+    else {
+      this.setState({
+        error: false
+
+      })
+    }
+  }
+
+  handleChangeEmail = (ev) => {
+    this.setState({
+      email: ev.target.value,
+    });
+  };
+
+  handleChangePassword = ev => {
+    this.setState({
+      password: ev.target.value
+    });
+  };
+
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
@@ -185,7 +223,7 @@ class LoginScreen extends React.Component {
 						type="submit"
 					/>
 					<Span>
-						<ButtonText to={'/createfisicalperson'}>CRIAR CONTA</ButtonText>
+						<ButtonText to={'/createuser'}>CRIAR CONTA</ButtonText>
 						<ButtonText to={'/resetPasswordScreen'}>RESETAR SENHA</ButtonText>
 					</Span>
 				</Form>
