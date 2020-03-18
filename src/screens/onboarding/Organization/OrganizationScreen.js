@@ -28,6 +28,10 @@ const Container = styled.div`
     padding: 3rem 0 1rem 0;
     margin: 1rem 1rem 2rem 1rem;
     background: #ffffff;
+
+    img {
+      width: inherit;
+    }
   }
 `;
 
@@ -57,10 +61,6 @@ const ContainerFisicalPerson = styled.label`
       h2 {
         margin: 0 0 0.4rem 0;
       }
-
-      p {
-        margin: 0 0 1.6rem 0;
-      }
     }
 
     @media (max-width: 425px) {
@@ -74,7 +74,7 @@ const ContainerFisicalPerson = styled.label`
       margin-bottom: 0.4rem;
       color: #85144b;
       text-transform: uppercase;
-      margin-left: 3.4rem;
+      margin-left: 3.9rem;
       font-family: "Overpass", sans-serif;
       font-weight: 700;
     }
@@ -84,21 +84,28 @@ const ContainerFisicalPerson = styled.label`
         margin: 0;
       }
     }
-
-    p {
-      font-size: 1rem;
-      margin: 0 0 1.6rem 3.4rem;
-      font-family: "Overpass", sans-serif;
-      font-weight: 300;
-    }
-
-    @media (max-width: 425px) {
-      p {
-        margin: 0 0 1.6rem 0;
-      }
-    }
   }
 `;
+
+const Text = styled.p`
+
+  font-size: 1rem;
+  margin: 0 0 1.6rem 3.9rem;
+  font-family: "Overpass", sans-serif;
+  font-weight: 300;
+
+  @media (max-width: 425px) {
+    & {
+      margin: 0 0 1.6rem 0;
+    }
+  };
+`;
+
+const TextSpan = styled.p`
+
+  margin: 0 0 1.6rem 0;
+`;
+
 
 const ContainerLegalPerson = styled.label`
   h1 {
@@ -153,7 +160,6 @@ const ContainerLegalPerson = styled.label`
     background-color: #FFFFFF;
     color: #85144B;
     box-shadow: inherit;
-    /* border-radius: 3px; */
     font-family: "Overpass", sans-serif;
     font-weight: 700;
   }
@@ -233,18 +239,18 @@ export default class LegalPerson extends Component {
             <h1>pessoa física</h1>
             <div>
               <h2>nome</h2>
-              <p>Yasmin Miranda</p>
+              <Text>Yasmin Miranda</Text>
               <h2>rg</h2>
-              <p>0000000-0</p>
+              <Text>0000000-0</Text>
               <h2>email</h2>
-              <p>nome@email.com</p>
+              <Text>nome@email.com</Text>
               <h2>telefone</h2>
-              <p>(99) 99999-9999</p>
+              <Text>(99) 99999-9999</Text>
               <span>
                 <h2>data de nascimento</h2>
-                <p>22/02/2020</p>
+                <TextSpan>22/02/2020</TextSpan>
                 <h2>cpf</h2>
-                <p>0000000-00</p>
+                <TextSpan>0000000-00</TextSpan>
               </span>
             </div>
           </ContainerFisicalPerson>
@@ -258,7 +264,7 @@ export default class LegalPerson extends Component {
                   onChange={ev => this.handleChange('fantasyName', ev)}
                   value={this.state.fantasyName}
                 />
-                {this.state.nomeError && <p>{error[0]}</p>}
+                {this.state.nomeError && <span>{error[0]}</span>}
               </label>
               <label>
                 <h2>razão social</h2>
@@ -276,7 +282,7 @@ export default class LegalPerson extends Component {
                   onChange={ev => this.handleChange('cnpj', ev)}
                   value={this.state.cnpj}
                 />
-                {this.state.nomeError && <p>{error[1]}</p>}
+                {this.state.nomeError && <span>{error[1]}</span>}
               </label>
               <label>
                 <h2>email</h2>

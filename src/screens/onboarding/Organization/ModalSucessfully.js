@@ -117,18 +117,18 @@ const WarningText = styled.div`
     }
   }
 
-  p {
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
-    color: #231F20;
-    font-family: 'Overpass', sans-serif;
-		font-weight: 300;
-  }
-
   span {
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
   }
+`;
+
+const Text = styled.p`
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  color: #231F20;
+  font-family: 'Overpass', sans-serif;
+  font-weight: 300;
 `;
 
 export default class ModalSucessfully extends Component {
@@ -140,12 +140,12 @@ export default class ModalSucessfully extends Component {
           <h1>O Nome da empresa foi associada com sucesso!</h1>
           <img src={Barcode} alt="Barcode"/>
           <WarningText>
-            <p>
+            <Text>
               O acesso ao sistema será liberado após o pagamento do <span>boleto gerado.</span>
-            </p>
-            <p>
+            </Text>
+            <Text>
               Caso você tenha um código de desconto, você pode adiciona-lo antes de gerar o boleto de pagamento clicando no campo abaixo.
-            </p>
+            </Text>
           </WarningText>
           <h2>Código de Desconto</h2>
           <Input placeholder="Inserir Código"/>
