@@ -7,13 +7,12 @@ export const InputForm = styled.input`
   height: 56px;
   height: 45px;
   border: 1px solid #ffcfcd;
-  background: #fafafa;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
   border-radius: 3px;
+  background: #fafafa;
+  font-size: 0.9rem;
   font-family: Overpass, Light;
   position: relative;
-
+  padding: 0.5rem 1rem;
   @media (max-width: 425px) {
     width: 100%;
   }
