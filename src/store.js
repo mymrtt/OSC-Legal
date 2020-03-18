@@ -1,9 +1,6 @@
 // Libs
 import {
-	compose,
-	createStore,
-	applyMiddleware,
-	combineReducers,
+	compose, createStore, applyMiddleware, combineReducers,
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
