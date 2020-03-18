@@ -7,7 +7,7 @@ import Login from '../screens/onboarding/Login/LoginScreen';
 import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 import ErrorPassword from '../screens/onboarding/Login/ErrorPassword';
 import ResetPasswordScreen from '../screens/onboarding/Login/ResetPasswordScreen';
-import CreateLegalPerson from '../screens/onboarding/CreateLegalPerson/LegalPersonScreen';
+import Organization from '../screens/onboarding/Organization/OrganizationScreen';
 import NoMatch from '../NoMatch';
 
 const Routes = () => (
@@ -18,7 +18,7 @@ const Routes = () => (
 			<Route exact path='/errorPassword' component={ErrorPassword} />
 			<Route exact path='/resetPasswordScreen' component={ResetPasswordScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
-			<Route path='/createlegalperson' component={CreateLegalPerson} />
+			<Route path='/organization' component={Organization} />
 			<Route component={NoMatch} />
 			{/* <PrivateRoute component = {Dashboard} /> */}
 		</Switch>

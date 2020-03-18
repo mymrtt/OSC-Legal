@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // Components
-import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
 // Images
+import ImageLogo from '../../../components/ImageLogo';
 import Barcode from '../../../assets/Barcode.svg';
 
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,7 +29,7 @@ export const Container = styled.div`
 }
 `;
 
-export const Modal = styled.div`
+const Modal = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -106,7 +106,7 @@ export const Modal = styled.div`
   }
 `;
 
-export const TextoDeAviso = styled.div`
+const WarningText = styled.div`
   padding: 0 4rem;
   width: 100%;
 
@@ -117,18 +117,18 @@ export const TextoDeAviso = styled.div`
     }
   }
 
-  p {
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
-    color: #231F20;
-    font-family: 'Overpass', sans-serif;
-		font-weight: 300;
-  }
-
   span {
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
   }
+`;
+
+const Text = styled.p`
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  color: #231F20;
+  font-family: 'Overpass', sans-serif;
+  font-weight: 300;
 `;
 
 export default class ModalSucessfully extends Component {
@@ -139,14 +139,14 @@ export default class ModalSucessfully extends Component {
 				<Modal>
           <h1>O Nome da empresa foi associada com sucesso!</h1>
           <img src={Barcode} alt="Barcode"/>
-          <TextoDeAviso>
-            <p>
+          <WarningText>
+            <Text>
               O acesso ao sistema será liberado após o pagamento do <span>boleto gerado.</span>
-            </p>
-            <p>
+            </Text>
+            <Text>
               Caso você tenha um código de desconto, você pode adiciona-lo antes de gerar o boleto de pagamento clicando no campo abaixo.
-            </p>
-          </TextoDeAviso>
+            </Text>
+          </WarningText>
           <h2>Código de Desconto</h2>
           <Input placeholder="Inserir Código"/>
           <Button text="Gerar Boleto" />
