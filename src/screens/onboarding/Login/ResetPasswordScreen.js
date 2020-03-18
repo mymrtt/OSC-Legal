@@ -17,18 +17,18 @@ export const ContainerForm = styled.div`
   flex-direction: column; 
   margin: 0;
   padding: 5rem;
-
 `;
 
 export const Form = styled.form`
   width: 40%;
   height: 35vh;
   background-color: #fff;
+	padding: 2rem;
+	margin: 2rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
-
 `;
 
 export const Title = styled.h1`
@@ -53,14 +53,13 @@ export const Label = styled.label`
   margin-bottom: 0.3rem;
 `;
 
-
-// export const input = styled.input`
-// 	width: 87%;
-// `;
-
 export const BoxButton = styled.div`
 	width: 100%;
   margin-top: 0.5rem;
+
+	Button {
+		width: 95%;
+	}
 `;
 
 export const VoltarLogin = styled.span` 
@@ -86,39 +85,39 @@ class ResetPassowordScreen extends React.Component {
 		};
 	}
 
-  handleChangeEmail = (ev) => {
-  	this.setState({
-  		email: ev.target.value,
-  	});
-  };
+	handleChangeEmail = (ev) => {
+		this.setState({
+			email: ev.target.value,
+		});
+	};
 
-  render() {
-  	return (
-		  <ContainerForm>
-		  <ImageLogo/>
-  			<Form onSubmit={this.handleSubmit}>
-         	<Title>PASSWORD RESET</Title>
-  				<Box>
-  					<Label>E-MAIL</Label>
-  					<Input
-  						type="email"
-  						onChange={this.handleChangeEmail}
-  						placeholder="name@email.com"
-  					/>
-  				<BoxButton>
-  					<Button
-  						text="REQUESTA PASSWORD RESET"
-  						type="submit"
-						  />
-  				</BoxButton>
-  				</Box>
-  				<VoltarLogin>
-  					<buttonText>BACK TO LOGIN</buttonText>
-  				</VoltarLogin>
-  			</Form>
-  		</ContainerForm>
-  	);
-  }
+	render() {
+		return (
+			<ContainerForm>
+				<ImageLogo />
+				<Form onSubmit={this.handleSubmit}>
+					<Title>PASSWORD RESET</Title>
+					<Box>
+						<Label>E-MAIL</Label>
+						<Input
+							type="email"
+							onChange={this.handleChangeEmail}
+							placeholder="name@email.com"
+						/>
+						<BoxButton>
+							<Button
+								text="REQUESTA PASSWORD RESET"
+								type="submit"
+							/>
+						</BoxButton>
+					</Box>
+					<VoltarLogin>
+						<buttonText>BACK TO LOGIN</buttonText>
+					</VoltarLogin>
+				</Form>
+			</ContainerForm>
+		);
+	}
 }
 
 export default ResetPassowordScreen;
