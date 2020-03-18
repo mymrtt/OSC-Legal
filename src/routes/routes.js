@@ -1,8 +1,6 @@
 // Libs
-import React from 'react';
-import {
-	BrowserRouter, Route, Switch,
-} from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // Components
 import Login from '../screens/onboarding/Login/LoginScreen';

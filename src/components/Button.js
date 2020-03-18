@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 export const MyButton = styled.button`
-  width: ${props => (props.login ? '62%' : '87%')};
+  width: ${props => (props.login ? "62%" : "87%")};
   height: 50px;
   color: #fff;
   background-color: #ff4136;
@@ -23,9 +23,9 @@ export const MyButton = styled.button`
 `;
 
 export default function Button(props) {
-	return (
-		<MyButton onClick={props.onClick} login={props.login} type={props.type}>
-			{props.text}
-		</MyButton>
-	);
+  return (
+    <MyButton onClick={props.onClick} login={props.login} type={props.type}>
+      {props.text}
+    </MyButton>
+  );
 }

@@ -1,10 +1,10 @@
 // Libs
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 
 // Components
-import FisicalPersonForm from './FisicalPersonForm';
-import FisicalPersonTerms from './FisicalPersonTerms';
+import FisicalPersonForm from "./FisicalPersonForm";
+import FisicalPersonTerms from "./FisicalPersonTerms";
 
 export const Container = styled.div`
   width: 100%;

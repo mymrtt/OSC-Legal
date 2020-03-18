@@ -3,46 +3,46 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 
 // Libs
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
 // Components
-import Button from '../../../components/Button';
-import Input from '../../../components/Input';
-import ImageLogo from '../../../components/ImageLogo';
-import FisicalPersonSucess from './FisicalPersonSucess';
+import Button from "../../../components/Button";
+import Input from "../../../components/Input";
+import ImageLogo from "../../../components/ImageLogo";
+import FisicalPersonSucess from "./FisicalPersonSucess";
+import { Container } from "./CreateFisicalPersonScreen";
 
 // Images
-import VisibilityOff from '../../../assets/visibility-off.svg';
-import VisibilityOn from '../../../assets/visibility-on.svg';
+import VisibilityOff from "../../../assets/visibility-off.svg";
+import VisibilityOn from "../../../assets/visibility-on.svg";
 
 // Redux
-import { addNewUser } from '../../../dataflow/modules/sign-up-modules';
+import { addNewUser } from "../../../dataflow/modules/sign-up-modules";
 
 import { createUser } from '../../../api';
 
 const mapStateToProps = state => ({
-	users: state.users,
+  signup: state.signup
 });
 
 const mapDispatchToProps = dispatch => ({
-	addNewUser: (user) => {
-		dispatch(addNewUser(user));
-	},
+  addNewUser: user => {
+    dispatch(addNewUser(user));
+  }
 });
 
 export const Form = styled.form`
-  min-width: 40%;
+  min-width: 35%;
   min-height: 100vh;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 2rem;
   margin: 1rem 0;
   h1 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-family: "Overpass", ExtraBold;
     text-transform: uppercase;
     margin: 2rem 0 1.5rem 2.5rem;
@@ -91,14 +91,14 @@ export const Label = styled.label`
     text-transform: uppercase;
     color: #85144b;
     font-size: 0.7rem;
-    margin: 0.5rem 1.3rem;
+    margin: 1.5rem 1.3rem 1rem 1.3rem;
     font-family: Overpass, Bold;
     font-weight: bold;
   }
   @media (max-width: 425px) {
     p {
       text-align: left;
-      margin-left: 0;
+      margin-left: 0.2rem;
     }
   }
 `;
@@ -127,13 +127,13 @@ export const InputForm = styled.input`
 
 export const ImagePassword = styled.img`
   position: absolute;
-  bottom: 1.5vh;
+  bottom: 2.5vh;
   right: 0.7rem;
   cursor: pointer;
 `;
 export const TextTerms = styled.p`
-  font-size: 0.7rem;
-  margin: 0.5rem 0;
+  font-size: 0.6rem;
+  margin: 1rem 0;
   color: #505050;
   font-family: Overpass, Regular;
   text-align: center;
@@ -188,20 +188,22 @@ class FisicalPersonForm extends Component {
   };
 
   handleModalSucess = () => {
-  	this.setState({
-  		modalSucess: !this.state.modalSucess,
-  	});
+    this.setState({
+      modalSucess: !this.state.modalSucess
+    });
   };
 
   handleChange = (field, ev) => {
-  	const { user } = this.state;
-  	user[field] = ev.target.value;
-  	this.setState({ user });
+    const { user } = this.state;
+    user[field] = ev.target.value;
+    this.setState({ user });
   };
 
-  handleSubmit = (ev) => {
-  	ev.preventDefault();
-  	this.errors();
+  handleSubmit = ev => {
+    ev.preventDefault();
+    this.errors();
+    this.props.addNewUser(this.state.user);
+    this.handleModalSucess();
   };
 
   errors = () => {
@@ -257,20 +259,15 @@ class FisicalPersonForm extends Component {
   };
 
   render() {
-  	const errorMessage = [
-  		'RG inválido',
-  		'Senha fraca',
-  		'CPF inválido',
-  		'Preencha todos os valores',
-  	];
-
-  	const {
-  		isErrorPassword,
-  		isErrorRg,
-  		isErrorCpf,
-  		modalSucess,
-  		isEmpty,
-  	} = this.state;
+    const errorMessage = [
+      "RG inválido",
+      "Senha fraca",
+      "CPF inválido",
+      "Preencha todos os valores",
+      "E-mail inválido",
+      "Uf inválida",
+      "Orgão expedidor inválido"
+    ];
 
   	return (
   		<>
