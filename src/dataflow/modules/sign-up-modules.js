@@ -1,9 +1,9 @@
-const ADD_NEW_USER = "osc/register/ADD_NEW_USER";
+const ADD_NEW_USER = 'osc/register/ADD_NEW_USER';
 
 const initialState = {
   users: {}
 };
-//REDUCER
+// REDUCER
 export default function SignUpReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_NEW_USER:
@@ -17,7 +17,7 @@ export default function SignUpReducer(state = initialState, action) {
       return state;
   }
 }
-//ACTION TYPE
+// ACTION TYPE
 export const addNewUser = user => ({
   type: ADD_NEW_USER,
   user

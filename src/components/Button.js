@@ -9,6 +9,11 @@ export const MyButton = styled.button`
   border: 0;
   border-radius: 3px;
   font-weight: 600;
+  margin: 1.5rem 0;
+  font-family: Overpass, Bold;
+  box-shadow: 0 3px 6px #00000029;
+  border-radius: 3px;
+  margin: ${props => (props.login ? '1.7rem' : '1.5rem 0')};
   text-transform: uppercase;
   margin: ${props => (props.login ? '1.7rem' : '0.5rem 0')};
   font-family: Overpass, Bold;

@@ -8,7 +8,7 @@ import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import ErrorPassword from './ErrorPassword';
-import CreateFisicalPersonScreen from '../CreateFisicalPerson/CreateFisicalPersonScreen';
+// import CreateFisicalPersonScreen from '../User/CreateUserScreen;
 // import { InputBox } from './login';
 
 
