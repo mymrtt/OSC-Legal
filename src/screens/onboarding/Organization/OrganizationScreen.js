@@ -1,10 +1,16 @@
 /* eslint-disable indent */
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, { Component } from "react";
-import styled from "styled-components";
-import Input from "../../../components/Input";
-import Button from "../../../components/Button";
-import ImagemLogo from "../../../components/ImageLogo";
+
+// Libs
+import React, { Component } from 'react';
+import styled from 'styled-components';
+
+// Components
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
+
+// Images
+import ImagemLogo from '../../../components/ImageLogo';
 
 const Container = styled.div`
   max-width: 100%;
@@ -140,6 +146,17 @@ const ContainerLegalPerson = styled.label`
     font-family: "Overpass", sans-serif;
     font-weight: 700;
   }
+
+  button:nth-last-of-type(1){
+    max-width: 80%;
+    margin:3% 10% 0 10%;
+    background-color: #FFFFFF;
+    color: #85144B;
+    box-shadow: inherit;
+    /* border-radius: 3px; */
+    font-family: "Overpass", sans-serif;
+    font-weight: 700;
+  }
 `;
 
 const WrapLegalPerson = styled.div`
@@ -161,37 +178,38 @@ export default class LegalPerson extends Component {
   state = {
     nomeError: false,
     dataLegalPerson: {
-      fantasyName: "",
-      cnpj: "",
-      email: "",
-      telephone: "",
-      address: "",
-      complement: "",
-      neighborhood: "",
-      city: "",
-      zipCode: ""
-    }
+      fantasyName: '',
+      companyName: '',
+      cnpj: '',
+      email: '',
+      telephone: '',
+      address: '',
+      complement: '',
+      neighborhood: '',
+      city: '',
+      zipCode: '',
+    },
   };
 
-  handleSubmit = ev => {
+  handleSubmit = (ev) => {
     ev.preventDefault();
-    if (this.state.dataLegalPerson.fantasyName === "") {
+    if (this.state.dataLegalPerson.fantasyName === '') {
       this.setState({
-        nomeError: true
+        nomeError: true,
       });
     } else {
       this.setState({
-        nomeError: false
+        nomeError: false,
       });
     }
 
-    if (this.state.dataLegalPerson.cnpj === "") {
+    if (this.state.dataLegalPerson.cnpj === '') {
       this.setState({
-        nomeError: true
+        nomeError: true,
       });
     } else {
       this.setState({
-        nomeError: false
+        nomeError: false,
       });
     }
   };
@@ -200,12 +218,12 @@ export default class LegalPerson extends Component {
     const { dataLegalPerson } = this.state;
     dataLegalPerson[field] = ev.target.value;
     this.setState({
-      dataLegalPerson
+      dataLegalPerson,
     });
   };
 
   render() {
-    const error = ["Nome fantasia invalido", "CNPJ invalido", "Email invalido"];
+    const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
 
     return (
       <Container>
@@ -237,17 +255,25 @@ export default class LegalPerson extends Component {
                 <h2>nome fantasia</h2>
                 <Input
                   placeholder="Nome da empresa"
-                  onChange={ev => this.handleChange("fantasyName", ev)}
+                  onChange={ev => this.handleChange('fantasyName', ev)}
                   value={this.state.fantasyName}
                 />
                 {this.state.nomeError && <p>{error[0]}</p>}
+              </label>
+              <label>
+                <h2>razão social</h2>
+                <Input
+                  placeholder="Razão social"
+                  onChange={ev => this.handleChange('companyName', ev)}
+                  value={this.state.companyName}
+                />
               </label>
               <label>
                 <h2>cnpj</h2>
                 <Input
 									type="number"
                   placeholder="00.000.000/0000-00"
-                  onChange={ev => this.handleChange("cnpj", ev)}
+                  onChange={ev => this.handleChange('cnpj', ev)}
                   value={this.state.cnpj}
                 />
                 {this.state.nomeError && <p>{error[1]}</p>}
@@ -299,7 +325,8 @@ export default class LegalPerson extends Component {
                 </label>
               </Label>
             </WrapLegalPerson>
-            <Button type="submit" text="associar pessoa jurídica"/>
+            <Button type="submit" text="concluir"/>
+            <Button type="submit" text="associar outra pessoa jurídica"/>
           </ContainerLegalPerson>
         </form>
       </Container>

@@ -7,7 +7,7 @@ import {
 // Components
 import Login from '../screens/onboarding/Login/LoginScreen';
 import CreateFisicalPerson from '../screens/onboarding/CreateFisicalPerson/CreateFisicalPersonScreen';
-import CreateLegalPerson from '../screens/onboarding/CreateLegalPerson/LegalPersonScreen';
+import Organization from '../screens/onboarding/Organization/OrganizationScreen';
 import NoMatch from '../NoMatch';
 // import PrivateRoute from './PrivateRoute';
 
@@ -16,7 +16,7 @@ const Routes = () => (
 		<Switch>
 			<Route exact path='/' component={Login} />
 			<Route path='/createfisicalperson' component={CreateFisicalPerson} />
-			<Route path='/createlegalperson' component={CreateLegalPerson} />
+			<Route path='/organization' component={Organization} />
 			<Route component={NoMatch} />
 			{/* <PrivateRoute component = {Dashboard} /> */}
 		</Switch>
