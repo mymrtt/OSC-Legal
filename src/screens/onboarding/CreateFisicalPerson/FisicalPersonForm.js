@@ -173,9 +173,7 @@ class FisicalPersonForm extends Component {
 
   async register(user) {
   	try {
-			const createdUser = await createUser(user);
-			console.log('createdUser', createdUser)
-
+  		const createdUser = await createUser(user);
   	} catch (err) {
   		console.log('err', err);
   	}
