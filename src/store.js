@@ -12,7 +12,6 @@ import SignUp from './dataflow/modules/sign-up-modules';
 
 const reducers = combineReducers({
 	signup: SignUp,
-	// login: Login,
 });
 
 export default function configureStore(initialState) {
