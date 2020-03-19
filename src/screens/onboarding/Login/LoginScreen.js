@@ -111,7 +111,6 @@ export const ButtonText = styled(Link)`
 
 export const Error = styled.h4`
   width: 25vw;
-  color: #d53b40;
   width: 43%;
   color: #D53B40;
   display: flex;

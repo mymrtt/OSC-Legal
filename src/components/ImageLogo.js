@@ -12,5 +12,5 @@ export const LogoImage = styled.img`
 `;
 
 export default function ImageLogo(props) {
-  return <LogoImage src={Logo} loginScreen={props.loginScreen} alt="Osc Logo" />;
+	return <LogoImage src={Logo} loginScreen={props.loginScreen} alt="Osc Logo" />;
 }

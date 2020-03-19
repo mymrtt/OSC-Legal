@@ -9,11 +9,11 @@ export const InputForm = styled.input`
   border: 1px solid #ffcfcd;
   border-radius: 3px;
   background: #fafafa;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: 0.5rem;
   font-size: 0.9rem;
   font-family: Overpass, Light;
   position: relative;
+
   @media (max-width: 425px) {
     width: 100%;
   }
