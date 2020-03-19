@@ -44,11 +44,11 @@ const Form = styled.form`
   box-shadow: 0 1px 2px #00000029;
 
   input {
-    border: ${props =>
-    props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd;'};
+    border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd;')};
   }
 
   @media (max-width: 500px) {
+    margin: 0;
     padding: 0 2rem;
   }
 
@@ -73,7 +73,7 @@ const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-  margin: 2rem 0 1.5rem 2.5rem;
+  margin: 2rem 0 1.5rem 2.6rem;
   align-self: flex-start;
   
   @media (max-width: 425px) {
@@ -98,7 +98,7 @@ const ParagraphInput = styled.p`
     align-self: flex-start;
     text-transform: uppercase;
     color: #85144b;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     margin: 1.5rem 1.3rem 1rem 1.3rem;
     font-family: Overpass;
     font-weight: bold;
@@ -111,7 +111,7 @@ const ParagraphInput = styled.p`
 
 const Error = styled.h6`
   font-size: 0.6rem;
-  color: red;
+  color: #f00;
   align-self: flex-start;
   font-weight: normal;
   margin-left: 1.4rem;
@@ -120,13 +120,22 @@ const Error = styled.h6`
     margin: 0;
   }
 `;
+
+const ErrorEmpty = styled.h6`
+  font-size: 0.7rem;
+  color: #F00;
+  align-self: flex-start;
+  font-weight: normal;
+  margin-left: 2.5rem;
+`;
 const InputForm = styled.input`
   width: 90%;
-  height: 40px;
+  height: 56px;
   border: 1px solid #ffcfcd;
   background: #fafafa;
   padding: 0.5rem;
   font-size: 0.9rem;
+  text-transform: uppercase;
 
   @media (max-width: 425px) {
     width: 100%;
@@ -135,13 +144,14 @@ const InputForm = styled.input`
 
 const ImagePassword = styled.img`
   position: absolute;
-  bottom: 0.8rem;
+  bottom: 1.2rem;
   right: 0.5rem;
   cursor: pointer;
 `;
 const TextTerms = styled.p`
-  font-size: 0.6rem;
-  margin: 1rem 0;
+  font-size: 0.8rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
   color: #505050;
   font-family: Overpass, Regular;
   text-align: center;
@@ -206,9 +216,26 @@ class FisicalPersonForm extends Component {
     this.setState({ user });
   };
 
-  handleSubmit = ev => {
+  handleSubmit = (ev) => {
     ev.preventDefault();
-    this.errors();
+    const { user } = this.state;
+    const { rg, cpf, password } = this.state.user;
+    if (rg.length < 9 || cpf.length < 11 || password.length < 4) {
+      this.errors();
+      this.setState({
+        isErrorCpf: true,
+        isErrorPassword: true,
+        isErrorRg: true,
+      });
+    } else if (rg.length == 9 && cpf.length == 11 && password.length > 4) {
+      this.setState({
+        isErrorRg: false,
+        isErrorPassword: false,
+        isErrorCpf: false,
+      });
+      this.props.addNewUser(user);
+      this.handleModalSucess();
+    }
   };
 
   errors = () => {
@@ -223,9 +250,9 @@ class FisicalPersonForm extends Component {
       cpf,
       email,
       telephone,
-      password
+      password,
     } = this.state.user;
-  
+
     if (
       name,
       surname,
@@ -240,23 +267,21 @@ class FisicalPersonForm extends Component {
     ) {
       this.setState({
         isEmpty: true,
-      })
+      });
     } else {
-      this.props.addNewUser(user);
-      this.handleModalSucess();
+      this.setState({ isEmpty: false });
     }
-
   };
 
   render() {
     const errorMessage = [
-      "RG inválido",
-      "Senha fraca",
-      "CPF inválido",
-      "Preencha todos os valores",
-      "E-mail inválido",
-      "Uf inválida",
-      "Orgão expedidor inválido"
+      'RG inválido',
+      'Senha fraca',
+      'CPF inválido',
+      'Preencha todos os valores',
+      'E-mail inválido',
+      'Uf inválida',
+      'Orgão expedidor inválido',
     ];
 
     const {
@@ -267,7 +292,7 @@ class FisicalPersonForm extends Component {
       isEmpty,
       isErrorOrgao,
       isErrorUf,
-      isErrorEmail
+      isErrorEmail,
     } = this.state;
 
     return (
@@ -285,47 +310,43 @@ class FisicalPersonForm extends Component {
                   <ParagraphInput>Nome</ParagraphInput>
                   <Input
                     type="text"
-                    onChange={ev => this.handleChange("name", ev)}
+                    onChange={ev => this.handleChange('name', ev)}
                     value={this.state.name}
                     placeholder="Nome"
                     name="nome"
                   />
-                  {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
                 <Label>
                   <ParagraphInput>Sobrenome</ParagraphInput>
                   <Input
                     type="text"
-                    onChange={ev => this.handleChange("surname", ev)}
+                    onChange={ev => this.handleChange('surname', ev)}
                     value={this.state.surname}
                     placeholder="Sobrenome"
                     name="sobrenome"
                   />
-                  {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
                 <BlockSmallerInput>
                   <Label>
                     <ParagraphInput>rg</ParagraphInput>
                     <InputForm
                       type="number"
-                      onChange={ev => this.handleChange("rg", ev)}
+                      onChange={ev => this.handleChange('rg', ev)}
                       value={this.state.rg}
                       placeholder="000000-0"
                       name="rg"
                     />
-                    {isEmpty && <Error>{errorMessage[3]}</Error>}
                     {isErrorRg && <Error>{errorMessage[0]}</Error>}
                   </Label>
                   <Label>
                     <ParagraphInput>Orgão expedidor</ParagraphInput>
                     <InputForm
                       type="text"
-                      onChange={ev => this.handleChange("sendingBody", ev)}
+                      onChange={ev => this.handleChange('sendingBody', ev)}
                       value={this.state.sendingBody}
                       name="orgao"
                       placeholder="Detran"
                     />
-                    {isEmpty && <Error>{errorMessage[3]}</Error>}
                   </Label>
                 </BlockSmallerInput>
                 <BlockSmallerInput>
@@ -333,69 +354,63 @@ class FisicalPersonForm extends Component {
                     <ParagraphInput>uf</ParagraphInput>
                     <InputForm
                       type="text"
-                      onChange={ev => this.handleChange("uf", ev)}
+                      onChange={ev => this.handleChange('uf', ev)}
                       value={this.state.uf}
                       placeholder="RJ"
                       name="uf"
                     />
-                    {isEmpty && <Error>{errorMessage[3]}</Error>}
                   </Label>
                   <Label>
                     <ParagraphInput>data de nascimento</ParagraphInput>
                     <InputForm
                       type="number"
-                      onChange={ev => this.handleChange("birth", ev)}
+                      onChange={ev => this.handleChange('birth', ev)}
                       value={this.state.birth}
                       placeholder="02/01/2020"
                       name="nascimento"
                     />
-                    {isEmpty && <Error>{errorMessage[3]}</Error>}
                   </Label>
                 </BlockSmallerInput>
                 <Label>
                   <ParagraphInput>cpf</ParagraphInput>
                   <Input
                     type="number"
-                    onChange={ev => this.handleChange("cpf", ev)}
+                    onChange={ev => this.handleChange('cpf', ev)}
                     value={this.state.cpf}
                     placeholder="000000-0"
                     name="cpf"
                   />
-                  {isEmpty && <Error>{errorMessage[3]}</Error>}
                   {isErrorCpf && <Error>{errorMessage[2]}</Error>}
                 </Label>
                 <Label>
                   <ParagraphInput>email</ParagraphInput>
                   <Input
                     type="email"
-                    onChange={ev => this.handleChange("email", ev)}
+                    onChange={ev => this.handleChange('email', ev)}
                     value={this.state.email}
                     name="email"
                     placeholder="nome@mail.com"
                     require
                   />
-                  {isErrorEmail && <Error>{errorMessage[4]}</Error>}
-                  {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
                 <Label>
                   <ParagraphInput>telefone</ParagraphInput>
                   <Input
                     type="tel"
-                    onChange={ev => this.handleChange("telephone", ev)}
+                    onChange={ev => this.handleChange('telephone', ev)}
                     value={this.state.telephone}
                     placeholder="(00) 00000-0000"
                     name="telefone"
                   />
-                  {isEmpty && <Error>{errorMessage[3]}</Error>}
                 </Label>
                 <Label>
                   <ParagraphInput>senha</ParagraphInput>
                   <Input
                     className="input-password"
                     type={
-                      this.state.togglePassword === true ? "text" : "password"
+                      this.state.togglePassword === true ? 'text' : 'password'
                     }
-                    onChange={ev => this.handleChange("password", ev)}
+                    onChange={ev => this.handleChange('password', ev)}
                     value={this.state.password}
                     placeholder="Inserir senha"
                     name="password"
@@ -415,7 +430,6 @@ class FisicalPersonForm extends Component {
                         />
                       </BlockSmallerInput>
                     )}
-                  {isEmpty && <Error>{errorMessage[3]}</Error>}
                   {isErrorPassword && <Error>{errorMessage[1]}</Error>}
                 </Label>
                 <TextTerms>
@@ -425,6 +439,7 @@ class FisicalPersonForm extends Component {
                 </strong>
                   e registrar.
               </TextTerms>
+              {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}                
                 <Button
                   text="concordar e criar conta"
                   type="submit"

@@ -6,7 +6,6 @@ import styled from "styled-components";
 export const InputForm = styled.input`
   width: ${props => (props.login ? "100%" : "95%")};
   height: 56px;
-  height: 45px;
   border: 1px solid #ffcfcd;
   border-radius: 3px;
   background: #fafafa;
