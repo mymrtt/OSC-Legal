@@ -27,8 +27,9 @@ const Modal = styled.div`
   @media (max-width: 768px) {
     width: 80%;
   }
-  @media (max-width: 425px) {
-    width: 90%;
+  @media (max-width: 648px) {
+    width: 100%;
+    height: 100vh;
     padding: 0.5rem;
   }
 

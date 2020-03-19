@@ -335,6 +335,7 @@ class FisicalPersonForm extends Component {
                       value={this.state.rg}
                       placeholder="000000-0"
                       name="rg"
+                      min="0"
                     />
                     {isErrorRg && <Error>{errorMessage[0]}</Error>}
                   </Label>
@@ -363,7 +364,7 @@ class FisicalPersonForm extends Component {
                   <Label>
                     <ParagraphInput>data de nascimento</ParagraphInput>
                     <InputForm
-                      type="number"
+                      type="text"
                       onChange={ev => this.handleChange('birth', ev)}
                       value={this.state.birth}
                       placeholder="02/01/2020"
@@ -379,6 +380,7 @@ class FisicalPersonForm extends Component {
                     value={this.state.cpf}
                     placeholder="000000-0"
                     name="cpf"
+                    min="0"
                   />
                   {isErrorCpf && <Error>{errorMessage[2]}</Error>}
                 </Label>

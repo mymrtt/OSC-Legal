@@ -22,6 +22,7 @@ export const InputForm = styled.input`
 `;
 
 export default function Input(props) {
+
   return (
     <InputForm
       login={props.login}
@@ -30,7 +31,6 @@ export default function Input(props) {
       value={props.value}
       placeholder={props.placeholder}
       name={props.name}
-      required
     />
   );
 }

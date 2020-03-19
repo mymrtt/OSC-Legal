@@ -67,13 +67,13 @@ export const SpanParagraph = styled.span`
   opacity: 1;   
 `;
 
-class ErroPassoword extends React.Component {
+class ErrorPassword extends React.Component {
 	render() {
 		return (
 			<ContainerForm>
 				<ImageLogo />
 				<Form onSubmit={this.handleSubmit}>
-					<Title>Here is your password reset</Title>
+					<Title>Here is your password reset code:</Title>
 					<BoxErro>
 						<Erro>210704</Erro>
 					</BoxErro>
@@ -88,4 +88,4 @@ class ErroPassoword extends React.Component {
 	}
 }
 
-export default ErroPassoword;
+export default ErrorPassword;
