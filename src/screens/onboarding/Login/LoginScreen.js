@@ -1,12 +1,12 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-import { Link, } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Components
-import ImageLogo from "../../../components/ImageLogo";
-import Input from "../../../components/Input";
-import Button from "../../../components/Button";
+import ImageLogo from '../../../components/ImageLogo';
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
 
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
@@ -18,7 +18,7 @@ export const ContainerForm = styled.div`
   align-items: center;
 	justify-content: center;
   margin: 0;
-  padding: 5rem;
+  /* padding: 5rem; */
 
   @media (max-width: 648px) {
 			background-color: #fff;
@@ -32,7 +32,7 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 50%;
+  width: 30%;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -47,7 +47,6 @@ export const Form = styled.form`
 				width: 100%;
 	  	}
 		}
-
 `;
 
 export const InputBox = styled.span`
@@ -65,7 +64,6 @@ export const InputBox = styled.span`
 				width: 100%;
 		  }
 		}
-
 `;
 
 export const ImagePassword = styled.img`
@@ -78,7 +76,7 @@ export const ImagePassword = styled.img`
 export const Label = styled.label`
   color: #85144b;
   font-size: 0.7rem;
-  font-weight: bold;
+  font-family: Overpass, Bold;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
@@ -93,8 +91,14 @@ export const Span = styled.span`
   margin-top: 0.5rem;
 	margin-bottom: 2rem;
 
-	@media (max-width: 470px) {
-			width: 100%;
+
+	@media (max-width: 648px) {
+			width: 88%;
+	 	 }
+		}
+
+	@media (max-width: 488px) {
+			width: 99%;
 	 	 }
 		}
 `;
@@ -118,13 +122,11 @@ export const Error = styled.h4`
   @media (max-width: 648px) {
 				width: 40%;
 		  }
-		}
-		
+		}	
 `;
 
 
 class LoginScreen extends React.Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -135,38 +137,38 @@ class LoginScreen extends React.Component {
 			type: 'password',
 		};
 	}
+
 	handleChangeType = () => {
 		this.setState({
 			type: this.state.type === 'password' ? 'text' : 'password',
 		});
 	}
 
-  handleSubmit = (ev) => {
-    ev.preventDefault();
-    if (this.state.email !== this.state.email2) {
-      this.setState({
-        error: true
-      })
-    }
-    else {
-      this.setState({
-        error: false
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		if (this.state.email !== this.state.email2) {
+			this.setState({
+				error: true,
+			});
+		} else {
+			this.setState({
+				error: false,
 
-      })
-    }
-  }
+			});
+		}
+	}
 
-  handleChangeEmail = (ev) => {
-    this.setState({
-      email: ev.target.value,
-    });
-  };
+	handleChangeEmail = (ev) => {
+		this.setState({
+			email: ev.target.value,
+		});
+	};
 
-  handleChangePassword = ev => {
-    this.setState({
-      password: ev.target.value
-    });
-  };
+	handleChangePassword = (ev) => {
+		this.setState({
+			password: ev.target.value,
+		});
+	};
 
 
 	handleSubmit = (ev) => {
@@ -200,7 +202,7 @@ class LoginScreen extends React.Component {
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo />
+					<ImageLogo loginScreen />
 					<InputBox>
 						<Label>E-MAIL</Label>
 						<Input

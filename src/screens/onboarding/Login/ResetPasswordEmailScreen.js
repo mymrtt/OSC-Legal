@@ -31,13 +31,13 @@ export const ContainerForm = styled.div`
 
 export const Form = styled.form`
   width: 40%;
-  height: 40vh;
+  /* height: 40vh; */
   background-color: #fff;
-  margin: 2rem;
+  padding: 2rem;
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
 
   @media (max-width: 945px) {
 			width: 55%;
@@ -149,7 +149,7 @@ class ResetPasswordEmailScreen extends React.Component {
 	render() {
 		return (
 			<ContainerForm>
-				<ImageLogo />
+				<ImageLogo loginScreen />
 				<Form onSubmit={this.handleSubmit}>
 					<Title>PASSWORD RESET</Title>
 					<Box>
