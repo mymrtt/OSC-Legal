@@ -15,19 +15,21 @@ const mapStateToProps = state => ({
 });
 
 const Modal = styled.div`
-  width: 45vw;
+  width: 35vw;
   height: 65vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   background: #fff;
+  padding: 0 0.5rem;
 
   @media (max-width: 768px) {
     width: 80%;
   }
-  @media (max-width: 425px) {
-    width: 90%;
+  @media (max-width: 648px) {
+    width: 100%;
+    height: 100vh;
     padding: 0.5rem;
   }
 
@@ -43,7 +45,7 @@ const Modal = styled.div`
 
 const TitleTerms = styled.h1`
     font-family: Overpass, ExtraBold;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
 `;
 
 const TextTerms = styled.p`

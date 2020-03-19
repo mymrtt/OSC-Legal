@@ -15,9 +15,13 @@ import Logo from '../../../assets/logo.svg';
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+
+  img{
+    display: none;
+  }
 `;
  const Modal = styled.div`
-  width: 45vw;
+  width: 35vw;
   min-height: 65vh;
   background: #fff;
   display: flex;
@@ -30,44 +34,52 @@ import Logo from '../../../assets/logo.svg';
   }
   @media (max-width: 425px) {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
   }
 `;
 
 const TitleTerms = styled.h1`
+  align-self: flex-start;
+  margin: 1rem 1rem;
+  font-family: Overpass, Bold;
+  font-size: 1.4rem;    
+  text-transform: uppercase;
 
-    align-self: flex-start;
-    margin: 1rem 1rem;
-    font-family: Overpass, Bold;
-    font-size: 14px;
-    text-transform: uppercase;
-
-
-    @media (max-width: 425px) {
-      margin: 0.5rem;
-    }
+  @media (max-width: 648px) {
+    margin: 2rem 0 0.5rem 1rem;
+  }
 `;
  const ButtonTerms = styled.button`
-  width: 90px;
-  height: 35px;
+  width: 120px;
+  height: 36px;
   background-color: #ff4136;
   color: #fff;
   text-transform: uppercase;
   border: 0;
   border-radius: 4px;
   align-self: flex-end;
-  margin: 1rem;
+  margin: 0.4rem 0.5rem 0.4rem 0;
+  box-shadow: 0 3px 6px #00000029;
 
-  @media (max-width: 425px) {
-    margin: 0.5rem;
+  @media (max-width: 648px) {
+    align-self: center;
+    width: 300px;
+    height: 56px;
+    margin: 0.8rem 0;
+    font-size: 1rem;
+    font-weight: bold;
   }
 `;
 
  const BlockTerms = styled.div`
-  width: 95%;
+  width: 97%;
   height: 90%;
   background: #ffcfcd;
   padding: 1rem 1rem;
+
+  @media(max-width: 648px){
+    background: #FFF;
+  }
 `;
 
 const TextUpdate = styled.h4`
@@ -113,6 +125,7 @@ export default function ModalTerms(props) {
             eleifend rutrum felis.
           </Terms>
         </BlockTerms>
+
         <ButtonTerms onClick={() => props.handleModalTerms()}>OK</ButtonTerms>
       </Modal>
     </Overlay>
