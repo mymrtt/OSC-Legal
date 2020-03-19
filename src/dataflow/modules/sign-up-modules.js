@@ -21,4 +21,4 @@ export default function SignUpReducer(state = initialState, action) {
 export const addNewUser = user => ({
 	type: ADD_NEW_USER,
 	user,
-});
+})

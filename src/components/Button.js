@@ -9,18 +9,18 @@ export const MyButton = styled.button`
   border: 0;
   border-radius: 3px;
   font-weight: 600;
-  margin: 1.5rem 0;
   font-family: Overpass, Bold;
+  font-size: 0.9rem;
   box-shadow: 0 3px 6px #00000029;
-  margin: ${props => (props.login ? '1.7rem' : '1.5rem 0')};
+  margin: ${props => (props.login ? "1.7rem" : "1.5rem 0")};
   text-transform: uppercase;
-  margin: ${props => (props.login ? '1.2rem' : '0.5rem 0')};
-  font-family: Overpass, Bold;
   
   @media (max-width: 648px) {
     width: ${props => (props.login ? '90%' : '87%')};
   }
 
+  @media (max-width: 320px) {
+    width: ${props => (props.login ? "83%" : "87%")};
   @media (max-width: 490px) {
     width: ${props => (props.login ? '90%' : '87%')};
   }
