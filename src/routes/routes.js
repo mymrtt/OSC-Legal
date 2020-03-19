@@ -14,7 +14,7 @@ const Routes = () => (
 
 	<BrowserRouter>
 		<Switch>
-			<Route exact path='/' component={Login} /> 
+			<Route exact path='/' component={Login} />
 			<Route exact path='/errorPassword' component={ErrorPassword} />
 			<Route exact path='/resetPasswordScreen' component={ResetPasswordScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
