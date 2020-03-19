@@ -7,7 +7,6 @@ import { Redirect } from 'react-router-dom';
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-import ErrorPassword from './ErrorPassword';
 // import CreateFisicalPersonScreen from '../User/CreateUserScreen;
 // import { InputBox } from './login';
 
@@ -134,7 +133,7 @@ class ResetPasswordEmailScreen extends React.Component {
 	}
 
 	handleInsertCodeScreen = () => {
-		this.setState({ redirect: '/errorPassword' });
+		this.setState({ redirect: '/resetcode' });
 	}
 
 	render() {
@@ -153,7 +152,7 @@ class ResetPasswordEmailScreen extends React.Component {
 						<BoxButton>
 							<Button
 								onClick={this.handleInsertCodeScreen}
-								to={'/errorPassword'}
+								to={'/resetcode'}
 								text="REQUEST PASSWORD RESET"
 								type= "submit"
 							/>

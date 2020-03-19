@@ -7,7 +7,6 @@ import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
-
 export const ContainerForm = styled.div`
   height: 100vh;
   background-color: #FFCFCD;
@@ -115,7 +114,7 @@ export const VoltarLogin = styled.span`
 `;
 
 
-class PasswordResetCodeScreen extends React.Component {
+class NewPasswordScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -139,7 +138,6 @@ class PasswordResetCodeScreen extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.email);
 		return (
 			<ContainerForm>
 				<ImageLogo loginScreen/>
@@ -183,4 +181,4 @@ class PasswordResetCodeScreen extends React.Component {
 	}
 }
 
-export default PasswordResetCodeScreen;
+export default NewPasswordScreen;

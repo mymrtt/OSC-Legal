@@ -131,7 +131,6 @@ class LoginResetPasswordScreen extends React.Component {
 
 
   render() {
-  	console.log(this.state.email);
   	return (
   		<ContainerForm>
   			<Form onSubmit={this.handleSubmit}>

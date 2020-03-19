@@ -236,7 +236,7 @@ class LoginScreen extends React.Component {
 					/>
 					<Span>
 						<ButtonText to={'/createuser'}>CRIAR CONTA</ButtonText>
-						<ButtonText to={'/resetPasswordEmailScreen'}>RESETAR SENHA</ButtonText>
+						<ButtonText to={'/resetpassword'}>RESETAR SENHA</ButtonText>
 					</Span>
 				</Form>
 			</ContainerForm>
