@@ -6,10 +6,11 @@ import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 
 export const LogoImage = styled.img`
-  margin: 3rem 0;
-  width: 180px;
+  width: ${props => (props.loginScreen ? '110px' : '180px')};
+  margin: ${props => (props.loginScreen ? '3rem' : '1.5rem 0')};
+
 `;
 
-export default function ImageLogo() {
-	return <LogoImage src={Logo} alt="Osc Logo" />;
+export default function ImageLogo(props) {
+	return <LogoImage src={Logo} loginScreen={props.loginScreen} alt="Osc Logo" />;
 }
