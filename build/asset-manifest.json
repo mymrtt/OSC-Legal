@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/OSC-Legal/static/css/main.c0180cdc.chunk.css",
-    "main.js": "/OSC-Legal/static/js/main.9f866592.chunk.js",
-    "main.js.map": "/OSC-Legal/static/js/main.9f866592.chunk.js.map",
+    "main.js": "/OSC-Legal/static/js/main.f884a90f.chunk.js",
+    "main.js.map": "/OSC-Legal/static/js/main.f884a90f.chunk.js.map",
     "runtime-main.js": "/OSC-Legal/static/js/runtime-main.6c64655e.js",
     "runtime-main.js.map": "/OSC-Legal/static/js/runtime-main.6c64655e.js.map",
     "static/js/2.f84a4f54.chunk.js": "/OSC-Legal/static/js/2.f84a4f54.chunk.js",
     "static/js/2.f84a4f54.chunk.js.map": "/OSC-Legal/static/js/2.f84a4f54.chunk.js.map",
     "index.html": "/OSC-Legal/index.html",
-    "precache-manifest.eb470aee0c5736d136b7e6bc74162e1f.js": "/OSC-Legal/precache-manifest.eb470aee0c5736d136b7e6bc74162e1f.js",
+    "precache-manifest.59d9fd45f7a5a97d7238e68c2a5aedf1.js": "/OSC-Legal/precache-manifest.59d9fd45f7a5a97d7238e68c2a5aedf1.js",
     "service-worker.js": "/OSC-Legal/service-worker.js",
     "static/css/main.c0180cdc.chunk.css.map": "/OSC-Legal/static/css/main.c0180cdc.chunk.css.map",
     "static/js/2.f84a4f54.chunk.js.LICENSE.txt": "/OSC-Legal/static/js/2.f84a4f54.chunk.js.LICENSE.txt",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.6c64655e.js",
     "static/js/2.f84a4f54.chunk.js",
     "static/css/main.c0180cdc.chunk.css",
-    "static/js/main.9f866592.chunk.js"
+    "static/js/main.f884a90f.chunk.js"
   ]
 }
