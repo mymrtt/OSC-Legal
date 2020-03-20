@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c0180cdc.chunk.css",
+    "main.js": "/static/js/main.16ae6625.chunk.js",
+    "main.js.map": "/static/js/main.16ae6625.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ef21926c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ef21926c.js.map",
+    "static/js/2.bfc2c6fb.chunk.js": "/static/js/2.bfc2c6fb.chunk.js",
+    "static/js/2.bfc2c6fb.chunk.js.map": "/static/js/2.bfc2c6fb.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.baca15327eba45f58c6d44517b8f9fc1.js": "/precache-manifest.baca15327eba45f58c6d44517b8f9fc1.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.c0180cdc.chunk.css.map": "/static/css/main.c0180cdc.chunk.css.map",
+    "static/js/2.bfc2c6fb.chunk.js.LICENSE.txt": "/static/js/2.bfc2c6fb.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/static/media/logo.e049bfe2.svg",
+    "static/media/sucess.svg": "/static/media/sucess.c5fe52db.svg",
+    "static/media/visibility-off.svg": "/static/media/visibility-off.f95eae64.svg",
+    "static/media/visibility-on.svg": "/static/media/visibility-on.54d5a3d6.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ef21926c.js",
+    "static/js/2.bfc2c6fb.chunk.js",
+    "static/css/main.c0180cdc.chunk.css",
+    "static/js/main.16ae6625.chunk.js"
+  ]
+}
