@@ -278,7 +278,7 @@ class FisicalPersonForm extends Component {
       'RG inválido',
       'Senha fraca',
       'CPF inválido',
-      'Preencha todos os valores',
+      'Preencha todos os campos',
       'E-mail inválido',
       'Uf inválida',
       'Orgão expedidor inválido',
