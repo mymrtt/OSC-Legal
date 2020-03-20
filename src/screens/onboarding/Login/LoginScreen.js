@@ -172,6 +172,7 @@ class LoginScreen extends React.Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
+		ev.stopPropagation();
 		if (this.state.email !== this.state.email2) {
 			this.setState({
 				error: true,
@@ -197,7 +198,6 @@ class LoginScreen extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.email);
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
