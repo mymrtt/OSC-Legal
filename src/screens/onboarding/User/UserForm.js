@@ -441,7 +441,7 @@ class FisicalPersonForm extends Component {
                 </strong>
                   e registrar.
               </TextTerms>
-              {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}                
+              {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
                 <Button
                   text="concordar e criar conta"
                   type="submit"

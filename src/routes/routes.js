@@ -23,6 +23,7 @@ import NoMatch from '../NoMatch';
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
+			{/* <Route exact path='/' component={NewPassowrdScreen} /> */}
 			<Route exact path='/' component={Login} />
 			<Route path='/login' component={Login} />
 			<Route path='/loginreset' component={LoginResetPasswordScreen} />

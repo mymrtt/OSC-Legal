@@ -129,7 +129,6 @@ class LoginResetPasswordScreen extends React.Component {
   	});
   }
 
-
   render() {
   	return (
   		<ContainerForm>
@@ -171,6 +170,5 @@ class LoginResetPasswordScreen extends React.Component {
   	);
   }
 }
-
 
 export default LoginResetPasswordScreen;

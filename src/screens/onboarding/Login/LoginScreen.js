@@ -18,7 +18,6 @@ export const ContainerForm = styled.div`
   align-items: center;
 	justify-content: center;
   margin: 0;
-  /* padding: 5rem; */
 
   @media (max-width: 648px) {
 			background-color: #fff;
@@ -89,11 +88,12 @@ export const Span = styled.span`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 0.5rem;
-	margin-bottom: 2rem;
+	margin-bottom: 2.3rem;
 
 
 	@media (max-width: 648px) {
 			width: 88%;
+			margin: 2rem;
 	 	 }
 		}
 
@@ -110,8 +110,7 @@ export const ButtonText = styled(Link)`
 `;
 
 export const Error = styled.h4`
-  width: 25vw;
-  width: 43%;
+  width: 55%;
   color: #D53B40;
   display: flex;
   align-self: flex-end;
@@ -217,7 +216,7 @@ class LoginScreen extends React.Component {
 							login
 							type={this.state.type}
 							onChange={this.handleChangePassword}
-							placeholder="Insert password"
+							placeholder="Inserir senha"
 						/>
 						<span>
 							<ImagePassword

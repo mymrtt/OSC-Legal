@@ -1,6 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
+import { Link, Redirect } from 'react-router-dom';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -57,8 +58,8 @@ export const Span = styled.span`
 `;
 
 export const Title = styled.h1`
-	color: #231F20;
-	font-size: 1rem;
+  color: #231F20;
+  font-size: 1rem;
   font-family: Overpass, ExtraBold;
   margin: 1rem 0 1rem 0;
 
@@ -87,10 +88,10 @@ export const Error = styled.h4`
 `;
 
 export const Label = styled.label`
-	color: #85144B;
+  color: #85144B;
   font-size: 0.7rem;
   margin: 0.9rem;
-	font-family: Overpass;
+  font-family: Overpass;
   font-weight: bold;
 `;
 
@@ -104,78 +105,99 @@ export const InputBox = styled.input`
 export const VoltarLogin = styled.span` 
   display: flex;
   justify-content: center;
-
-  buttonText {
-    color: #85144B;
-    font-size: 1rem; 
-		font-family: Overpass, Regular;
-    margin-bottom: 1rem;
-  }
 `;
 
+export const button = styled(Link)` 
+  
+`;
+
+export const ButtonText = styled(Link)`
+    color: #85144B;
+    font-size: 1rem; 
+	  font-family: Overpass, Regular;
+    margin: 1rem;
+    text-decoration: none;
+`;
 
 class NewPasswordScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: '',
-			email: '',
-			password: '',
-			type: 'password',
+			confirmationCode: '',
+			newPassword: '',
+			repetPassword: '',
+			error: undefined,
+			redirect: false,
 		};
 	}
 
-	handleChangeNumber = (ev) => {
-		this.setState({
-			number: ev.target.value,
-		});
-	};
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		const { confirmationCode, newPassword, repetPassword } = this.state;
+		if (
+			confirmationCode.length < 6 || newPassword.length < 4 || repetPassword.length < 4
+		) {
+			this.setState({
+				error: true,
+			});
+		} else {
+			this.setState({
+				error: false,
+				redirect: true,
+			});
+		}
+	}
 
-	handleChangePassword = (ev) => {
+	handleChange = (type, ev) => {
 		this.setState({
-			password: ev.target.value,
+			[type]: ev.target.value,
 		});
 	}
 
 	render() {
 		return (
 			<ContainerForm>
-				<ImageLogo loginScreen/>
+				<ImageLogo loginScreen />
 				<Form onSubmit={this.handleSubmit}>
 					<Span>
-						<Title>PASSWORD RESET</Title>
-						<Paragraph>A confirmation code sent to name@email.com, please, paste it bellow:</Paragraph>
+						<Title>REDEFINIÇÃO DE SENHA</Title>
+						<Paragraph>Um código de confirmação enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
 						{this.state.error && <Error>Confirmation code incorrect</Error>}
-						<Label>CONFIRMATION CODE</Label>
+						<Label>CÓDIGO DE CONFIRMAÇÃO</Label>
 						<Input
 							login
-							onChange={this.handleChangeNumber}
-							placeholder="Insert here the code"
+							value={this.state.confirmationCode}
+							type='number'
+							onChange={ev => this.handleChange('confirmationCode', ev)}
+							placeholder="Insira aqui o código"
 						/>
-						<Label>NEW PASSWORD</Label>
+						<Label>NOVA SENHA</Label>
 						<Input
 							login
-							type={this.state.type}
-							onChange={this.handleChangePassword}
-							placeholder="Insert here the code"
+							value={this.state.newPassword}
+							type='password'
+							onChange={ev => this.handleChange('newPassword', ev)}
+							placeholder="Insira aqui o código"
 						/>
-						<Label>REPEAT NEW PASSWORD</Label>
+						<Label>REPITA NOVA SENHA</Label>
 						<Input
 							login
-							type={this.state.type}
-							onChange={this.handleChangePassword}
-							placeholder="Insert here the code"
+							value={this.state.repetPassword}
+							type='password'
+							onChange={ev => this.handleChange('repetPassword', ev)}
+							placeholder="Insira aqui o código"
 						/>
 					</Span>
 					<Button
 						login
-						text="PROCEED WITH NEW PASSWORD"
+						text="PROSSIGA COM NOVA SENHA"
 						type="submit"
 					/>
 					<VoltarLogin>
-						<buttonText>RESEND EMAIL</buttonText>
+						<ButtonText to={'/resetcode'}>REENVIAR E-MAIL</ButtonText>
 					</VoltarLogin>
 				</Form>
+				{this.state.redirect && <Redirect to={'/loginreset'}/>}
 			</ContainerForm>
 		);
 	}
