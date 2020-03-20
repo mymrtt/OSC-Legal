@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export const InputForm = styled.input`
   width: ${props => (props.login ? '100%' : '95%')};
-  height: 45px;
+  height: 56px;
   border: 1px solid #ffcfcd;
   border-radius: 3px;
   background: #fafafa;
@@ -14,8 +14,9 @@ export const InputForm = styled.input`
   font-family: Overpass, Light;
   position: relative;
 
-  @media (max-width: 425px) {
+  @media (max-width: 648px) {
     width: 100%;
+    height: 65px;
   }
 `;
 
