@@ -12,10 +12,10 @@ import NewPassowrdScreen from '../screens/onboarding/Login/NewPasswordScreen';
 import ResetPasswordEmailScreen from '../screens/onboarding/Login/ResetPasswordScreen';
 
 import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
-// import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 
 // dashboard
 import Dashboard from '../screens/dashboard/index';
+// import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -23,7 +23,7 @@ const Routes = () => (
 	<BrowserRouter>
 		<Switch>
 			<Route exact path='/' component={Login} />
-			<Route exact path='/OSC-Legal' component={Login} />
+			<Route path='/OSC-Legal' component={Login} />
 			<Route path='/login' component={Login} />
 			<Route path='/loginreset' component={LoginResetPasswordScreen} />
 			<Route path='/resetcode' component={ResetPasswordCode} />
