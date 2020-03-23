@@ -7,7 +7,7 @@ import { Link, Redirect } from 'react-router-dom';
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-import ResetPasswordCode from './ResetPasswordCode';
+// // import ResetPasswordCode from './ResetPasswordCode';
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -19,8 +19,7 @@ export const ContainerForm = styled.div`
   margin: 0;
 
   @media (max-width: 648px) {
-			background-color: #fff;
-	 	}
+		background-color: #fff;
 	}
 `;
 
@@ -32,19 +31,16 @@ export const Form = styled.form`
   flex-direction: column;
 
   @media (max-width: 980px) {
-			width: 40%;
-	 	}
+		width: 40%;
 	}
 
 	@media (max-width: 786px) {
-			width: 45%;
-	 	}
+		width: 45%;
 	}
 
 	@media (max-width: 648px) {
-			width: 90%;
-			margin: 0;
-	 	}
+		width: 90%;
+		margin: 0;
 	}
 `;
 
@@ -53,8 +49,7 @@ export const Span = styled.span`
   margin-top: 0.3rem;
 
   @media (max-width: 648px) {
-			width: 90%;
-	 	}
+		width: 90%;
 	}
 `;
 
@@ -118,7 +113,7 @@ class NewPasswordScreen extends React.Component {
 		super(props);
 		this.state = {
 			confirmationCode: '',
-  		    confirmationCodeError: '',
+			confirmationCodeError: '',
 			newPassword: '',
 			newPasswordError: '',
 			repetPassword: '',
@@ -202,7 +197,6 @@ class NewPasswordScreen extends React.Component {
 
 	render() {
 		const { confirmationCodeError, newPasswordError, repetPasswordError } = this.state;
-		console.log(this.state);
 		return (
 			<ContainerForm>
 				<ImageLogo loginScreen />

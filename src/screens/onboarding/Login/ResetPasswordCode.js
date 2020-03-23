@@ -18,10 +18,9 @@ export const ContainerForm = styled.div`
   padding: 5rem;
 
   @media (max-width: 648px) {
-      padding: 1rem;
-			background-color: #fff;
-			justify-content: center;
-	 	}
+		padding: 1rem;
+		background-color: #fff;
+		justify-content: center;
 	}
 `;
 
@@ -35,19 +34,16 @@ export const Form = styled.form`
   justify-content: space-evenly;
 
   @media (max-width: 980px) {
-			width: 65%;
-	 	}
+		width: 65%;
 	}
 
 	@media (max-width: 786px) {
-			width: 70%;
-	 	}
+		width: 70%;
 	}
 
 	@media (max-width: 648px) {
-			width: 90%;
-			margin: 0;
-	 	}
+		width: 90%;
+		margin: 0;
 	}
 `;
 
@@ -63,8 +59,7 @@ export const Title = styled.h1`
   justify-content: center;
 
   @media (max-width: 648px) {
-			width: 95%;
-	 	}
+		width: 95%;
 	}
 `;
 

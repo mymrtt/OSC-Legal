@@ -20,14 +20,13 @@ export const ContainerForm = styled.div`
   margin: 0;
 
   @media (max-width: 648px) {
-			background-color: #fff;
-	 	 }
-		}
+		background-color: #fff;
+		
+	}
 
-		@media (max-width: 550px) {
-			padding: 1rem;
-	 	 }
-		}
+	@media (max-width: 550px) {
+		padding: 1rem;
+	}
 `;
 
 export const Form = styled.form`
@@ -38,14 +37,12 @@ export const Form = styled.form`
   flex-direction: column;
 
 	@media (max-width: 980px) {
-			width: 70%;
-	 	 }
-		}
+		width: 70%;
+	}
 
   @media (max-width: 648px) {
-				width: 100%;
-	  	}
-		}
+		width: 100%;
+	}
 `;
 
 export const InputBox = styled.span`
@@ -55,14 +52,12 @@ export const InputBox = styled.span`
 	position: relative;
 
 	@media (max-width: 648px) {
-				width: 90%;
-		  }
-		}
+		width: 90%;
+	}
 
 	@media (max-width: 490px) {
-				width: 100%;
-		  }
-		}
+		width: 100%;
+	}
 `;
 
 export const ImagePassword = styled.img`
@@ -92,15 +87,13 @@ export const Span = styled.span`
 
 
 	@media (max-width: 648px) {
-			width: 88%;
-			margin: 2rem;
-	 	 }
-		}
+		width: 88%;
+		margin: 2rem;
+	}
 
 	@media (max-width: 488px) {
-			width: 99%;
-	 	 }
-		}
+		width: 99%;
+	}
 `;
 
 export const ButtonText = styled(Link)`
@@ -118,9 +111,8 @@ export const Error = styled.h4`
   font-family: Eurostile, Medium;
 
   @media (max-width: 648px) {
-				width: 85%;
-		  }
-		}	
+		width: 85%;
+	}	
 `;
 
 
@@ -147,7 +139,6 @@ class LoginScreen extends React.Component {
   	} else {
   		this.setState({
   			error: false,
-
   		});
   	}
   }
@@ -171,7 +162,6 @@ class LoginScreen extends React.Component {
   }
 
   render() {
-  	console.log('error', this.state.error);
   	return (
   		<ContainerForm>
   			<Form onSubmit={this.handleSubmit}>
