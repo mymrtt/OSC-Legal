@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 
 export const LogoImage = styled.img`
-  width: ${props => (props.loginScreen ? '110px' : '180px')};
-  margin: ${props => (props.loginScreen ? '3rem' : '1.5rem 0')};
+  width: ${props => (props.loginScreen ? '110px' : '150px')};
+  margin: ${props => (props.loginScreen ? '3rem' : '2.5rem 0')};
 
 `;
 
