@@ -22,6 +22,7 @@ import PrivateRoute from './PrivateRoute';
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
+			{/* <Route exact path='/' component={NewPassowrdScreen} /> */}
 			<Route exact path='/' component={Login} />
 			<Route path='/OSC-Legal' component={Login} />
 			<Route path='/login' component={Login} />

@@ -129,14 +129,13 @@ class LoginResetPasswordScreen extends React.Component {
   	});
   }
 
-
   render() {
   	return (
   		<ContainerForm>
   			<Form onSubmit={this.handleSubmit}>
   				<ImageLogo loginScreen />
   				<InputBox>
-  					<Paragraph>The (name@email.com) password has been reseted, login to access you dashboard</Paragraph>
+  					<Paragraph>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Paragraph>
   					<Label>E-MAIL</Label>
   					<Input
   						login
@@ -151,7 +150,7 @@ class LoginResetPasswordScreen extends React.Component {
   						login
   						type={this.state.type}
   						onChange={this.handleChangePassword}
-  						placeholder="Insert password"
+  						placeholder="Insira sua senha"
   					/>
   					<span>
   						<ImagePassword
@@ -171,6 +170,5 @@ class LoginResetPasswordScreen extends React.Component {
   	);
   }
 }
-
 
 export default LoginResetPasswordScreen;

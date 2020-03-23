@@ -47,13 +47,16 @@ const Form = styled.form`
     border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd;')};
   }
 
-  @media (max-width: 500px) {
-    margin: 0;
+  @media (max-width: 768px) {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
     padding: 0 2rem;
   }
 
-  @media (max-width: 375px) {
-    padding: 1rem;
+  @media (max-width: 648px) {
+    width: 100vw;
+    min-height: 106vh;
+    margin: 0;
   }
 `;
 
@@ -62,23 +65,19 @@ const BlockSmallerInput = styled.span`
     display: flex;
     justify-content: space-between;
     position: relative;
-
-    @media(max-width: 425px){
-      width: 100%;
-      flex-direction: column;
-    }
 `;
 
 const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-  margin: 2rem 0 1.5rem 2.6rem;
+  margin: 1.3rem 0 1rem 2.6rem;
   align-self: flex-start;
   
-  @media (max-width: 425px) {
+  @media (max-width: 648px) {
       margin: 2rem 0;
       font-size: 1.3rem;
+      align-self: center;
     }
 `;
 
@@ -89,8 +88,16 @@ const Label = styled.label`
   align-items: center;
   flex-direction: column;
 
-  @media (max-width: 425px) {
-    width: 100%;
+    @media(max-width: 768px){
+      width: 95%;
+    }
+
+  @media (max-width: 648px) {
+      width: 95%;
+      margin-left: 0.3rem;
+  }
+  @media(max-width: 425px){
+      width: 100%;
   }
 `;
 
@@ -99,11 +106,12 @@ const ParagraphInput = styled.p`
     text-transform: uppercase;
     color: #85144b;
     font-size: 0.8rem;
-    margin: 1.5rem 1.3rem 1rem 1.3rem;
+    margin: 1rem 1.3rem;
     font-family: Overpass;
     font-weight: bold;
 
     @media (max-width: 425px) {
+      font-size: 0.7rem;
       text-align: left;
       margin-left: 0.2rem;
     }
@@ -128,20 +136,6 @@ const ErrorEmpty = styled.h6`
   font-weight: normal;
   margin-left: 2.5rem;
 `;
-const InputForm = styled.input`
-  width: 90%;
-  height: 56px;
-  border: 1px solid #ffcfcd;
-  background: #fafafa;
-  padding: 0.5rem;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-
-  @media (max-width: 425px) {
-    width: 100%;
-  }
-`;
-
 const ImagePassword = styled.img`
   position: absolute;
   bottom: 1.2rem;
@@ -150,8 +144,7 @@ const ImagePassword = styled.img`
 `;
 const TextTerms = styled.p`
   font-size: 0.8rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1.25rem ;
   color: #505050;
   font-family: Overpass, Regular;
   text-align: center;
@@ -164,6 +157,10 @@ const TextTerms = styled.p`
     margin: 0 0.2rem;
     font-family: Overpass, Regular;
   }
+
+  @media(max-width: 648px){
+    font-size: 0.6rem;
+  }
 `;
 
 
@@ -174,20 +171,12 @@ class FisicalPersonForm extends Component {
     user: {
       name: '',
       surname: '',
-      rg: '',
-      sendingBody: '',
-      uf: '',
-      birth: '',
-      cpf: '',
       email: '',
       telephone: '',
       password: '',
     },
-    isErrorRg: false,
     isErrorPassword: false,
-    isErrorCpf: false,
     isEmpty: false,
-    dataUser: [],
   };
 
   togglePassword = (ev) => {
@@ -219,23 +208,7 @@ class FisicalPersonForm extends Component {
   handleSubmit = (ev) => {
     ev.preventDefault();
     const { user } = this.state;
-    const { rg, cpf, password } = this.state.user;
-    if (rg.length < 9 || cpf.length < 11 || password.length < 4) {
-      this.errors();
-      this.setState({
-        isErrorCpf: true,
-        isErrorPassword: true,
-        isErrorRg: true,
-      });
-    } else if (rg.length == 9 && cpf.length == 11 && password.length > 4) {
-      this.setState({
-        isErrorRg: false,
-        isErrorPassword: false,
-        isErrorCpf: false,
-      });
-      this.props.addNewUser(user);
-      this.handleModalSucess();
-    }
+    this.errors()
   };
 
   errors = () => {
@@ -243,11 +216,6 @@ class FisicalPersonForm extends Component {
     const {
       name,
       surname,
-      rg,
-      sendingBody,
-      uf,
-      birth,
-      cpf,
       email,
       telephone,
       password,
@@ -256,11 +224,6 @@ class FisicalPersonForm extends Component {
     if (
       name,
       surname,
-      rg,
-      sendingBody,
-      uf,
-      birth,
-      cpf,
       email,
       telephone,
       password === ''
@@ -270,6 +233,8 @@ class FisicalPersonForm extends Component {
       });
     } else {
       this.setState({ isEmpty: false });
+      this.props.addNewUser(user);
+      this.handleModalSucess();
     }
   };
 
@@ -286,12 +251,8 @@ class FisicalPersonForm extends Component {
 
     const {
       isErrorPassword,
-      isErrorRg,
-      isErrorCpf,
       modalSucess,
       isEmpty,
-      isErrorOrgao,
-      isErrorUf,
       isErrorEmail,
     } = this.state;
 
@@ -303,7 +264,7 @@ class FisicalPersonForm extends Component {
           </Container>
         ) : (
             <Container>
-              <Form onSubmit={this.handleSubmit} withError={isEmpty, isErrorEmail, isErrorRg, isErrorCpf, isErrorOrgao, isErrorUf, isErrorPassword}>
+              <Form onSubmit={this.handleSubmit} withError={isEmpty, isErrorEmail,isErrorPassword}>
                 <ImageLogo />
                 <TitleForm>cadastrar pessoa física</TitleForm>
                 <Label>
@@ -326,52 +287,6 @@ class FisicalPersonForm extends Component {
                     name="sobrenome"
                   />
                 </Label>
-                <BlockSmallerInput>
-                  <Label>
-                    <ParagraphInput>rg</ParagraphInput>
-                    <InputForm
-                      type="number"
-                      onChange={ev => this.handleChange('rg', ev)}
-                      value={this.state.rg}
-                      placeholder="000000-0"
-                      name="rg"
-                      min="0"
-                    />
-                    {isErrorRg && <Error>{errorMessage[0]}</Error>}
-                  </Label>
-                  <Label>
-                    <ParagraphInput>Orgão expedidor</ParagraphInput>
-                    <InputForm
-                      type="text"
-                      onChange={ev => this.handleChange('sendingBody', ev)}
-                      value={this.state.sendingBody}
-                      name="orgao"
-                      placeholder="Detran"
-                    />
-                  </Label>
-                </BlockSmallerInput>
-                <BlockSmallerInput>
-                  <Label>
-                    <ParagraphInput>uf</ParagraphInput>
-                    <InputForm
-                      type="text"
-                      onChange={ev => this.handleChange('uf', ev)}
-                      value={this.state.uf}
-                      placeholder="RJ"
-                      name="uf"
-                    />
-                  </Label>
-                  <Label>
-                    <ParagraphInput>data de nascimento</ParagraphInput>
-                    <InputForm
-                      type="text"
-                      onChange={ev => this.handleChange('birth', ev)}
-                      value={this.state.birth}
-                      placeholder="02/01/2020"
-                      name="nascimento"
-                    />
-                  </Label>
-                </BlockSmallerInput>
                 <Label>
                   <ParagraphInput>cpf</ParagraphInput>
                   <Input
@@ -382,7 +297,6 @@ class FisicalPersonForm extends Component {
                     name="cpf"
                     min="0"
                   />
-                  {isErrorCpf && <Error>{errorMessage[2]}</Error>}
                 </Label>
                 <Label>
                   <ParagraphInput>email</ParagraphInput>
@@ -441,7 +355,7 @@ class FisicalPersonForm extends Component {
                 </strong>
                   e registrar.
               </TextTerms>
-              {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}                
+              {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
                 <Button
                   text="concordar e criar conta"
                   type="submit"

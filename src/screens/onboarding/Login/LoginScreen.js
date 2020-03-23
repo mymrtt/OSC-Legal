@@ -18,17 +18,15 @@ export const ContainerForm = styled.div`
   align-items: center;
 	justify-content: center;
   margin: 0;
-  /* padding: 5rem; */
 
   @media (max-width: 648px) {
-			background-color: #fff;
-	 	 }
-		}
+		background-color: #fff;
+		
+	}
 
-		@media (max-width: 550px) {
-			padding: 1rem;
-	 	 }
-		}
+	@media (max-width: 550px) {
+		padding: 1rem;
+	}
 `;
 
 export const Form = styled.form`
@@ -39,14 +37,12 @@ export const Form = styled.form`
   flex-direction: column;
 
 	@media (max-width: 980px) {
-			width: 70%;
-	 	 }
-		}
+		width: 70%;
+	}
 
   @media (max-width: 648px) {
-				width: 100%;
-	  	}
-		}
+		width: 100%;
+	}
 `;
 
 export const InputBox = styled.span`
@@ -56,14 +52,12 @@ export const InputBox = styled.span`
 	position: relative;
 
 	@media (max-width: 648px) {
-				width: 90%;
-		  }
-		}
+		width: 90%;
+	}
 
 	@media (max-width: 490px) {
-				width: 100%;
-		  }
-		}
+		width: 100%;
+	}
 `;
 
 export const ImagePassword = styled.img`
@@ -89,18 +83,17 @@ export const Span = styled.span`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 0.5rem;
-	margin-bottom: 2rem;
+	margin-bottom: 2.3rem;
 
 
 	@media (max-width: 648px) {
-			width: 88%;
-	 	 }
-		}
+		width: 88%;
+		margin: 2rem;
+	}
 
 	@media (max-width: 488px) {
-			width: 99%;
-	 	 }
-		}
+		width: 99%;
+	}
 `;
 
 export const ButtonText = styled(Link)`
@@ -110,18 +103,16 @@ export const ButtonText = styled(Link)`
 `;
 
 export const Error = styled.h4`
-  width: 25vw;
-  width: 43%;
+  width: 63%;
   color: #D53B40;
   display: flex;
-  align-self: flex-end;
-  font-size: 0.75rem;
+  justify-content: flex-end;
+  font-size: 0.6rem;
   font-family: Eurostile, Medium;
 
   @media (max-width: 648px) {
-				width: 40%;
-		  }
-		}	
+		width: 85%;
+	}	
 `;
 
 
@@ -132,116 +123,92 @@ class LoginScreen extends React.Component {
 			value: '',
 			email: '',
 			password: '',
-			error: false,
+			passwordError: '',
+			error: undefined,
 			type: 'password',
 		};
 	}
 
-	handleChangeType = () => {
-		this.setState({
-			type: this.state.type === 'password' ? 'text' : 'password',
-		});
-	}
+  handleSubmit = (ev) => {
+  	ev.preventDefault();
+  	const { password } = this.state;
+  	if (password.length < 4) {
+  		this.setState({
+  			error: true,
+  		});
+  	} else {
+  		this.setState({
+  			error: false,
+  		});
+  	}
+  }
 
-	handleSubmit = (ev) => {
-		ev.preventDefault();
-		if (this.state.email !== this.state.email2) {
-			this.setState({
-				error: true,
-			});
-		} else {
-			this.setState({
-				error: false,
+  handleChangeEmail = (ev) => {
+  	this.setState({
+  		email: ev.target.value,
+  	});
+  };
 
-			});
-		}
-	}
+  handleChangePassword = (ev) => {
+  	this.setState({
+  		password: ev.target.value,
+  	});
+  }
 
-	handleChangeEmail = (ev) => {
-		this.setState({
-			email: ev.target.value,
-		});
-	};
+  handleChangeType = () => {
+  	this.setState({
+  		type: this.state.type === 'password' ? 'text' : 'password',
+  	});
+  }
 
-	handleChangePassword = (ev) => {
-		this.setState({
-			password: ev.target.value,
-		});
-	};
-
-
-	handleSubmit = (ev) => {
-		ev.preventDefault();
-		ev.stopPropagation();
-		if (this.state.email !== this.state.email2) {
-			this.setState({
-				error: true,
-			});
-		} else {
-			this.setState({
-				error: false,
-
-			});
-		}
-	}
-
-	handleChangeEmail = (ev) => {
-		this.setState({
-			email: ev.target.value,
-		});
-	};
-
-	handleChangePassword = (ev) => {
-		this.setState({
-			password: ev.target.value,
-		});
-	}
-
-	render() {
-		return (
-			<ContainerForm>
-				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo loginScreen />
-					<InputBox>
-						<Label>E-MAIL</Label>
-						<Input
-							login
-							type="email"
-							onChange={this.handleChangeEmail}
-							placeholder="name@email.com"
-						/>
-					</InputBox>
-					<InputBox>
-						<Label>SENHA</Label>
-						<Input
-							login
-							type={this.state.type}
-							onChange={this.handleChangePassword}
-							placeholder="Insert password"
-						/>
-						<span>
-							<ImagePassword
-								src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
-								onClick={this.handleChangeType}
-								off={this.state.type === 'password'}
-							/>
-						</span>
-					</InputBox>
-					{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
-					{/* {this.state.error && <Error>Endereço de email inválido</Error> */}
-					<Button
-						login
-						text="ENTRAR"
-						type="submit"
-					/>
-					<Span>
-						<ButtonText to={'/createuser'}>CRIAR CONTA</ButtonText>
-						<ButtonText to={'/resetpassword'}>RESETAR SENHA</ButtonText>
-					</Span>
-				</Form>
-			</ContainerForm>
-		);
-	}
+  render() {
+  	return (
+  		<ContainerForm>
+  			<Form onSubmit={this.handleSubmit}>
+  				<ImageLogo loginScreen />
+  				<InputBox>
+  					<Label>E-MAIL</Label>
+  					<Input
+  						login
+  						type="email"
+  						onChange={this.handleChangeEmail}
+  						placeholder="name@email.com"
+  						required
+  					/>
+  				</InputBox>
+  				<InputBox>
+  					<Label>SENHA</Label>
+  					<Input
+  						login
+  						type={this.state.type}
+  						onChange={this.handleChangePassword}
+  						placeholder="Inserir senha"
+  						isError={this.state.error}
+  						required
+  					/>
+  					<span>
+  						<ImagePassword
+  							src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
+  							onClick={this.handleChangeType}
+  							off={this.state.type === 'password'}
+  						/>
+  					</span>
+  				</InputBox>
+  				{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
+  				{/* {this.state.error && <Error>Endereço de email inválido</Error> */}
+  				<Button
+  					login
+  					text="ENTRAR"
+  					type="submit"
+  				/>
+  				<Span>
+  					<ButtonText to={'/createuser'}>CRIAR CONTA</ButtonText>
+  					<ButtonText to={'/resetpassword'}>RESETAR SENHA</ButtonText>
+  				</Span>
+  			</Form>
+  		</ContainerForm>
+  	);
+  }
 }
 
 export default LoginScreen;
