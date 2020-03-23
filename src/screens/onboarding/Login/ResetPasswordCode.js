@@ -1,9 +1,11 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
+import { Link, Redirect } from 'react-router-dom';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
+import Button from '../../../components/Button';
 
 export const ContainerForm = styled.div`
   width: 100%;
@@ -14,43 +16,70 @@ export const ContainerForm = styled.div`
   flex-direction: column; 
   margin: 0;
   padding: 5rem;
+
+  @media (max-width: 648px) {
+      padding: 1rem;
+			background-color: #fff;
+			justify-content: center;
+	 	}
+	}
 `;
 
 export const Form = styled.form`
   width: 40%;
-  height: 40vh;
+  height: 45vh;
   background-color: #fff;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
+
+  @media (max-width: 980px) {
+			width: 65%;
+	 	}
+	}
+
+	@media (max-width: 786px) {
+			width: 70%;
+	 	}
+	}
+
+	@media (max-width: 648px) {
+			width: 90%;
+			margin: 0;
+	 	}
+	}
 `;
 
 export const Title = styled.h1`
-  width: 63%;
+  width: 70%;
   color: #85144B;
   font-size: 1rem;
   font-weight: bold;
+  text-align: center;
   margin-top: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 648px) {
+			width: 95%;
+	 	}
+	}
 `;
 
-
 export const BoxErro = styled.div`
-	width: 62%;
-	display: flex;
-	flex-direction: column;
+
 `;
 
 export const Erro = styled.p`
   color: #FF4136;
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 1rem;
 `;
 
 export const Span = styled.span` 
@@ -62,30 +91,44 @@ export const Span = styled.span`
 `;
 
 export const SpanParagraph = styled.span`
-  width: 80%;
-  font-size: 0.8rem;
-  opacity: 1;   
+  width: 90%;
+  font-size: 0.7rem;
+  font-family: Overpass, Regular;
+  opacity: 1;
 `;
 
-class ErrorPassword extends React.Component {
+class ResetPasswordCode extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			redirect: false,
+		};
+	}
+
 	render() {
 		return (
 			<ContainerForm>
-				<ImageLogo />
+				<ImageLogo loginScreen />
 				<Form onSubmit={this.handleSubmit}>
-					<Title>Here is your password reset code:</Title>
+					<Title>Aqui está o seu código de redefinição de senha:</Title>
 					<BoxErro>
 						<Erro>210704</Erro>
 					</BoxErro>
 					<Span>
-						<SpanParagraph>A password reset was required for your email address:
-            name@email.com. If you did not perform this request,
-            you can access your account normally.</SpanParagraph>
+						<SpanParagraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: nome@email.com.
+               Se você não realizou essa solicitação,
+               pode acessar sua conta normalmente.</SpanParagraph>
 					</Span>
+					<Button
+						login
+						text="REDEFINIR SENHA"
+						type="submit"
+					/>
 				</Form>
+				{this.state.redirect && <Redirect to={'/newpassword'}/>}
 			</ContainerForm>
 		);
 	}
 }
 
-export default ErrorPassword;
+export default ResetPasswordCode;
