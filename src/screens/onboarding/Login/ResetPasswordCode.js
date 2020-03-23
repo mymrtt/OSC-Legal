@@ -1,7 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-import { Link, Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -97,8 +97,14 @@ export const SpanParagraph = styled.span`
   opacity: 1;
 `;
 
-
 class ResetPasswordCode extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			redirect: false,
+		};
+	}
+
 	render() {
 		return (
 			<ContainerForm>
@@ -119,7 +125,7 @@ class ResetPasswordCode extends React.Component {
 						type="submit"
 					/>
 				</Form>
-        {this.state.redirect && <Redirect to={'/loginreset'}/>}
+				{this.state.redirect && <Redirect to={'/newpassword'}/>}
 			</ContainerForm>
 		);
 	}

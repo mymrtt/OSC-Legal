@@ -12,7 +12,7 @@ export const MyButton = styled.button`
   font-family: Overpass, Bold;
   font-size: 0.9rem;
   box-shadow: 0 3px 6px #00000029;
-  margin: ${props => (props.login ? "0.7rem" : "1rem 0")};
+  margin: ${props => (props.login ? "1.7rem" : "1rem 0")};
   text-transform: uppercase;
   
   @media (max-width: 648px) {

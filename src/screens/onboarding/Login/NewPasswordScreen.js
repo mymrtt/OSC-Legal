@@ -7,6 +7,7 @@ import { Link, Redirect } from 'react-router-dom';
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import ResetPasswordCode from './ResetPasswordCode';
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -66,25 +67,18 @@ export const Title = styled.h1`
 `;
 
 export const Paragraph = styled.p`
-	font-size: 0.8rem;
-	color: #231F20;
+  font-size: 0.8rem;
+  color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1rem;
 `;
 
 export const Error = styled.h4`
-  width: 25vw;
-  width: 43%;
   color: #D53B40;
   display: flex;
-  align-self: flex-end;
-  font-size: 0.75rem;
+  justify-content: flex-end;
+  font-size: 0.6rem;
   font-family: Overpass, Regular;
-
-  @media (max-width: 648px) {
-				width: 40%;
-		  }
-		}	
 `;
 
 export const Label = styled.label`
@@ -124,8 +118,11 @@ class NewPasswordScreen extends React.Component {
 		super(props);
 		this.state = {
 			confirmationCode: '',
+  		    confirmationCodeError: '',
 			newPassword: '',
+			newPasswordError: '',
 			repetPassword: '',
+			repetPasswordError: '',
 			error: undefined,
 			redirect: false,
 		};
@@ -137,8 +134,37 @@ class NewPasswordScreen extends React.Component {
 		if (
 			confirmationCode.length < 6 || newPassword.length < 4 || repetPassword.length < 4
 		) {
+			if (
+				confirmationCode.length < 6
+			) {
+				this.setState({
+					confirmationCodeError: 'Por favor digite um código válido',
+					isErrorConfirmationCode: true,
+				});
+			}
+			if (
+				newPassword.length < 4
+			) {
+				this.setState({
+					newPasswordError: 'Use 4 caracteres ou mais para a sua senha',
+					isErrorNewPassword: true,
+				});
+			}
+			if (
+				repetPassword.length < 4
+			) {
+				this.setState({
+					repetPasswordError: 'Confirme sua senha',
+					isErrorRepetPassword: true,
+				});
+			}
 			this.setState({
-				error: true,
+				error: 'Código de confirmação incorreto',
+			});
+		} else if (newPassword !== repetPassword) {
+			this.setState({
+				repetPasswordError: 'Essa senha não se coincidem. Tente novamente',
+				isErrorRepetPassword: true,
 			});
 		} else {
 			this.setState({
@@ -148,13 +174,35 @@ class NewPasswordScreen extends React.Component {
 		}
 	}
 
-	handleChange = (type, ev) => {
+  handleChangeConfirmationCode = (ev) => {
+  	this.setState({
+  		confirmationCode: ev.target.value,
+  		confirmationCodeError: '',
+  		isErrorConfirmationCode: false,
+  	});
+  }
+
+	handleChangeNewPassword = (ev) => {
 		this.setState({
-			[type]: ev.target.value,
+			newPassword: ev.target.value,
+			newPasswordError: '',
+			isErrorNewPassword: false,
 		});
 	}
 
+
+	handleChangeRepetPassword = (ev) => {
+		this.setState({
+			repetPassword: ev.target.value,
+			repetPasswordError: '',
+			isErrorRepetPassword: false,
+		});
+	}
+
+
 	render() {
+		const { confirmationCodeError, newPasswordError, repetPasswordError } = this.state;
+		console.log(this.state);
 		return (
 			<ContainerForm>
 				<ImageLogo loginScreen />
@@ -162,31 +210,36 @@ class NewPasswordScreen extends React.Component {
 					<Span>
 						<Title>REDEFINIÇÃO DE SENHA</Title>
 						<Paragraph>Um código de confirmação enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
-						{this.state.error && <Error>Confirmation code incorrect</Error>}
 						<Label>CÓDIGO DE CONFIRMAÇÃO</Label>
 						<Input
 							login
 							value={this.state.confirmationCode}
 							type='number'
-							onChange={ev => this.handleChange('confirmationCode', ev)}
+							onChange={ev => this.handleChangeConfirmationCode(ev)}
 							placeholder="Insira aqui o código"
+							isError={this.state.isErrorConfirmationCode}
 						/>
+						{confirmationCodeError && <Error>{confirmationCodeError}</Error>}
 						<Label>NOVA SENHA</Label>
 						<Input
 							login
 							value={this.state.newPassword}
 							type='password'
-							onChange={ev => this.handleChange('newPassword', ev)}
-							placeholder="Insira aqui o código"
+							onChange={ev => this.handleChangeNewPassword(ev)}
+							placeholder="Insira aqui sua senha"
+							isError={this.state.isErrorNewPassword}
 						/>
+						{newPasswordError && <Error>{newPasswordError}</Error>}
 						<Label>REPITA NOVA SENHA</Label>
 						<Input
 							login
 							value={this.state.repetPassword}
 							type='password'
-							onChange={ev => this.handleChange('repetPassword', ev)}
-							placeholder="Insira aqui o código"
+							onChange={ev => this.handleChangeRepetPassword(ev)}
+							placeholder="Repita sua senha"
+							isError={this.state.isErrorRepetPassword}
 						/>
+						{repetPasswordError && <Error>{repetPasswordError}</Error>}
 					</Span>
 					<Button
 						login

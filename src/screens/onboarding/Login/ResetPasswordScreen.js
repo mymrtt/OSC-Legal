@@ -1,8 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -126,14 +125,6 @@ class ResetPasswordEmailScreen extends React.Component {
 		});
 	};
 
-	handleSubmit = () => {
-		console.log('cliquei');
-		if (this.state.redirect) {
-			// return <Redirect to={this.state.redirect}/>;
-		}
-		return null;
-	}
-
 	handleInsertCodeScreen = () => {
 		this.setState({ redirect: '/resetcode' });
 	}
@@ -153,7 +144,6 @@ class ResetPasswordEmailScreen extends React.Component {
 						/>
 						<BoxButton>
 							<Button
-								// to={'/resetcode'}
 								text="SOLICITAR REDEFINIÇÃO DE SENHA"
 								type= "submit"
 								onClick={this.handleInsertCodeScreen}
@@ -164,6 +154,7 @@ class ResetPasswordEmailScreen extends React.Component {
 						<ButtonText to={'/login'}>VOLTE AO LOGIN</ButtonText>
 					</VoltarLogin>
 				</Form>
+				{this.state.redirect && <Redirect to={'/resetcode'}/>}
 			</ContainerForm>
 		);
 	}
