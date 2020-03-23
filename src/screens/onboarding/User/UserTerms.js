@@ -16,13 +16,18 @@ import Logo from '../../../assets/logo.svg';
   justify-content: space-evenly;
   align-items: center;
 
+
+  @media(max-width: 648px){
+      justify-content: flex-start;
+
+    }
+
   img{
     display: none;
   }
 `;
  const Modal = styled.div`
   width: 35vw;
-  min-height: 65vh;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -32,9 +37,11 @@ import Logo from '../../../assets/logo.svg';
   @media (max-width: 768px) {
     width: 90%;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 648px) {
     width: 100%;
     min-height: 100vh;
+    align-self: center;
+    justify-content: flex-start;
   }
 `;
 
@@ -47,23 +54,24 @@ const TitleTerms = styled.h1`
 
   @media (max-width: 648px) {
     margin: 2rem 0 0.5rem 1rem;
+    font-size: 1.5rem;
   }
 `;
  const ButtonTerms = styled.button`
-  width: 120px;
-  height: 36px;
-  background-color: #ff4136;
-  color: #fff;
-  text-transform: uppercase;
-  border: 0;
-  border-radius: 4px;
-  align-self: flex-end;
-  margin: 0.4rem 0.5rem 0.4rem 0;
-  box-shadow: 0 3px 6px #00000029;
+    width: 120px;
+    height: 36px;
+    background-color: #ff4136;
+    color: #fff;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 4px;
+    align-self: flex-end;
+    margin: 0.4rem 0.5rem 0.4rem 0;
+    box-shadow: 0 3px 6px #00000029;
 
   @media (max-width: 648px) {
     align-self: center;
-    width: 300px;
+    width: 90%;
     height: 56px;
     margin: 0.8rem 0;
     font-size: 1rem;
@@ -76,28 +84,30 @@ const TitleTerms = styled.h1`
   height: 90%;
   background: #ffcfcd;
   padding: 1rem 1rem;
+  border-radius: 4px;
 
   @media(max-width: 648px){
     background: #FFF;
+    height: 100%; 
+    justify-content: space-between;
   }
-`;
-
-const TextUpdate = styled.h4`
-  color: #f00;
-  font-weight: normal;
-  font-size: 1rem;
-  font-family: Overpass, Regular;
 `;
 
  const Terms = styled.p`
   width: 100%;
   font-family: Overpass, Regular;
   font-size: 0.9rem;
+  margin: 0.9rem 0;
+
+  @media(max-width: 648px){
+    margin: 1.5rem 0;
+    font-size: 1rem;
+  }
 `;
 
 const SubtitleTerms = styled.h3`
     margin: 1rem 0;
-    font-size: 0.8rem;
+    font-size: 0.87rem;
     font-family: Overpass, Bold;
 `;
 
@@ -108,21 +118,18 @@ export default function ModalTerms(props) {
       <Modal>
         <TitleTerms>termos de serviço</TitleTerms>
         <BlockTerms>
-          <SubtitleTerms>OSC Legal</SubtitleTerms>
-          <TextUpdate>LAST UPDATE: December 06,2019</TextUpdate>
-          <SubtitleTerms>1. Acceptance of OSC Legal terms of servisse.</SubtitleTerms>
+          <SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
           <Terms>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac
-            consectetur massa. Pellentesque at vestibulum justo. Donec sed nibh
-            dignissim, vestibulum neque sed, ornare ex. In purus odio, sodales
-            non nibh quis, interdum maximus neque. Proin et imperdiet elit.
-            Aliquam erat volutpat. Etiam luctus libero id neque commodo
-            placerat. Etiam vitae molestie eros. Etiam dui urna, pulvinar eget
-            neque in, pharetra bibendum diam. Donec sit amet sem eu enim
-            sollicitudin consectetur tristique ac nunc. Quisque nec risus id
-            nisi viverra gravida. Fusce sed lacus lorem. Ut sit amet luctus est.
-            Donec facilisis justo mi, ut consequat urna blandit at. Quisque
-            eleifend rutrum felis.
+            Esta é uma ferramenta voltada a fornecer um guia para que as associações possam elaborar ou reformar seus estatutos, documento obrigatório nessas organizações.
+          </Terms>
+          <Terms>
+            Cada senha dará oportunidade para que você possa trabalhar no documento por 30 dias. Ao final desse prazo se considera finalizado o texto, gerando-se o documento equivalente no estado em que estiver.
+          </Terms> 
+          <Terms>
+            De acordo com a legislação brasileira, para registro de estatuto de associação é obrigatória a assinatura de advogad@ inscrito na OAB. Recomendamos que procure um/a profissional especialista.
+           </Terms>
+          <Terms>
+           Qualquer dúvida e/ou esclarecimento entre em contato com nossa equipe: osclegal@gmail.com
           </Terms>
         </BlockTerms>
 

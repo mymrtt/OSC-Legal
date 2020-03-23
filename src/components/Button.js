@@ -16,11 +16,14 @@ export const MyButton = styled.button`
   text-transform: uppercase;
   
   @media (max-width: 648px) {
-    width: ${props => (props.login ? '90%' : '87%')};
+    width: ${props => (props.login ? '90%' : '100%')};
   }
 
+  @media (max-width: 320px) {
+    width: ${props => (props.login ? "83%" : "100%")};
+  }
   @media (max-width: 490px) {
-    width: ${props => (props.login ? '100%' : '87%')};
+    width: ${props => (props.login ? '90%' : '100%')};
   }
     
 `;

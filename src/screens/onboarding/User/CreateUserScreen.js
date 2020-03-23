@@ -13,6 +13,10 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #ffcfcd;
+
+  @media(max-width: 648px){
+    background: #FFF;
+  }
 `;
 
 class CreateFisicalPersonScreen extends Component {
