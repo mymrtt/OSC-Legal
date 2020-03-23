@@ -1,24 +1,23 @@
 // Libs
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 
 export const InputForm = styled.input`
-  width: ${props => (props.login ? "100%" : "95%")};
+  width: ${props => (props.login ? '100%' : '95%')};
   height: 56px;
-  height: 45px;
-  border: 1px solid #ffcfcd;
+  border: 1px solid ;
+  border-color: ${props => (props.isError ? 'tomato' : '#ffcfcd')};
   border-radius: 3px;
   background: #fafafa;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 3px;
+  padding: 0.5rem;
   font-size: 0.9rem;
   font-family: Overpass, Light;
   position: relative;
-  padding: 0.5rem 1rem;
-  @media (max-width: 425px) {
+
+  @media (max-width: 648px) {
     width: 100%;
+    height: 65px;
   }
 `;
 
@@ -32,7 +31,8 @@ export default function Input(props) {
       value={props.value}
       placeholder={props.placeholder}
       name={props.name}
-      required
+      isError={props.isError}
+      required={props.required}
     />
   );
 }
