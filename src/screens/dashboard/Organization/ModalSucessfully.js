@@ -8,7 +8,7 @@ import Button from '../../../components/Button';
 
 // Images
 import ImageLogo from '../../../components/ImageLogo';
-import Barcode from '../../../assets/Barcode.svg';
+import Barcode from '../../../assets/barcode.svg';
 
 
 const Container = styled.div`
