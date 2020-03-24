@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const MyButton = styled.button`
-  width: ${props => (props.login ? '75%' : '87%')};
-  height: 50px;
+  width: ${props => props.width};
+  height: ${props => props.height};
+  margin: ${props => props.margin};
   color: #fff;
   background-color: #ff4136;
   border: 0;
@@ -12,7 +13,6 @@ export const MyButton = styled.button`
   font-family: Overpass, Bold;
   font-size: 0.9rem;
   box-shadow: 0 3px 6px #00000029;
-  margin: ${props => (props.login ? "1.7rem" : "1rem 0")};
   text-transform: uppercase;
   
   @media (max-width: 648px) {
@@ -29,9 +29,9 @@ export const MyButton = styled.button`
 `;
 
 export default function Button(props) {
-	return (
-		<MyButton onClick={props.onClick} login={props.login} type={props.type}>
-			{props.text}
-		</MyButton>
-	);
+  return (
+    <MyButton onClick={props.onClick} login={props.login} type={props.type} width={props.width} height={props.height} margin={props.margin}>
+      {props.text}
+    </MyButton>
+  );
 }
