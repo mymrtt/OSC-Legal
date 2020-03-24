@@ -24,7 +24,7 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 28%;
+  width: 36%;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -35,7 +35,7 @@ export const Form = styled.form`
 	}
 
 	@media (max-width: 786px) {
-		width: 45%;
+		width: 50%;
 	}
 
 	@media (max-width: 648px) {
@@ -45,7 +45,7 @@ export const Form = styled.form`
 `;
 
 export const Span = styled.span`
-	width: 75%;
+	width: 80%;
   margin-top: 0.3rem;
 
   @media (max-width: 648px) {
@@ -55,14 +55,20 @@ export const Span = styled.span`
 
 export const Title = styled.h1`
   color: #231F20;
-  font-size: 1rem;
-  font-family: Overpass, ExtraBold;
-  margin: 1rem 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-family: Overpass;
+  margin: 2rem 0 1rem 0;
+
+
+  @media (max-width: 648px) {
+		display: none;
+	}
 
 `;
 
 export const Paragraph = styled.p`
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1rem;
@@ -85,26 +91,22 @@ export const Label = styled.label`
 `;
 
 export const InputBox = styled.input`
-	width: 75%;
+	/* width: 80%;
 	display: flex;
-	flex-direction: column;
+	flex-direction: column; */
 `;
 
 
-export const VoltarLogin = styled.span` 
+export const BackLogin = styled.span` 
   display: flex;
   justify-content: center;
-`;
-
-export const button = styled(Link)` 
-  
 `;
 
 export const ButtonText = styled(Link)`
     color: #85144B;
     font-size: 1rem; 
 	  font-family: Overpass, Regular;
-    margin: 1rem;
+    margin-bottom: 1.2rem;
     text-decoration: none;
 `;
 
@@ -203,7 +205,7 @@ class NewPasswordScreen extends React.Component {
 				<Form onSubmit={this.handleSubmit}>
 					<Span>
 						<Title>REDEFINIÇÃO DE SENHA</Title>
-						<Paragraph>Um código de confirmação enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
+						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
 						<Label>CÓDIGO DE CONFIRMAÇÃO</Label>
 						<Input
 							login
@@ -240,9 +242,9 @@ class NewPasswordScreen extends React.Component {
 						text="PROSSIGA COM NOVA SENHA"
 						type="submit"
 					/>
-					<VoltarLogin>
+					<BackLogin>
 						<ButtonText to={'/resetcode'}>REENVIAR E-MAIL</ButtonText>
-					</VoltarLogin>
+					</BackLogin>
 				</Form>
 				{this.state.redirect && <Redirect to={'/loginreset'}/>}
 			</ContainerForm>

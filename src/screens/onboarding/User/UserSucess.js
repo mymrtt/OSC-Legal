@@ -11,7 +11,7 @@ import Button from '../../../components/Button';
 import Sucess from '../../../assets/sucess.svg';
 
 const mapStateToProps = state => ({
-  signup: state.signup,
+	signup: state.signup,
 });
 
 const Modal = styled.div`
@@ -29,6 +29,8 @@ const Modal = styled.div`
   }
   @media (max-width: 648px) {
     width: 100%;
+    height: 100vh;
+    justify-content: space-evenly;
     padding: 0.5rem;
   }
 
@@ -48,6 +50,7 @@ const TitleTerms = styled.h1`
     
     @media(max-width: 648px){
       font-size: 1.3rem;
+      text-align: center;
     }
 `;
 
@@ -59,6 +62,7 @@ const TextTerms = styled.p`
 
     @media(max-width: 648px){
       font-size: 1rem;
+      line-height: 1.5rem; 
     }
 `;
 
@@ -69,34 +73,39 @@ const TextTermsBold = styled.strong`
 
 `;
 
-const ButtonLogin = styled.button`
-    text-transform: uppercase;
-    font-size: 1rem;
-    color: #85144b;
-    cursor: pointer;
-    font-family: Overpass, Bold;
-    background: none;
-    border: none;
-    background: #ff4136;
-    width: 87%;
-`;
+// const ButtonLogin = styled.button`
+//     text-transform: uppercase;
+//     font-size: 1rem;
+//     color: #85144b;
+//     cursor: pointer;
+//     font-family: Overpass, Bold;
+//     background: none;
+//     border: none;
+//     background: #ff4136;
+//     width: 87%;
+// `;
 
 const FisicalPersonSucess = props => (
-    <Modal>
-      <TitleTerms>Cadastro de Pessoa física concluído!</TitleTerms>
-      <img src={Sucess} alt="Sucess" />
-      <TextTerms>
-        Enviamos um e-mail de confirmação para
-        <TextTermsBold>{props.signup.users.email}</TextTermsBold>. Verifique sua caixa de entrada para
-        prosseguir.
-      </TextTerms>
-      <TextTerms>
-        Caso não tenha recebido a confirmação, clique em
-        <TextTermsBold>Reenviar email.</TextTermsBold>
-      </TextTerms>
-      <Link to="/">
-        <Button text="fazer login"/>
-      </Link>
-    </Modal>
-  );
+	<Modal>
+		<TitleTerms>Cadastro de Pessoa física concluído!</TitleTerms>
+		<img src={Sucess} alt="Sucess" />
+		<TextTerms>
+      Enviamos um e-mail de confirmação para
+			<TextTermsBold>{props.signup.users.email}</TextTermsBold>. Verifique sua caixa de entrada para
+      prosseguir.
+		</TextTerms>
+		<TextTerms>
+      Caso não tenha recebido a confirmação, clique em
+			<TextTermsBold>Reenviar email.</TextTermsBold>
+		</TextTerms>
+		<Link to="/">
+			<Button
+				width="87%"
+				height="50px"
+				margin="1rem 0"
+				text="fazer login"
+			/>
+		</Link>
+	</Modal>
+);
 export default connect(mapStateToProps)(FisicalPersonSucess);
