@@ -15,7 +15,6 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
 // dashboard
 import Dashboard from '../screens/dashboard/index';
-// import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 
 import PrivateRoute from './PrivateRoute';
 // import NoMatch from '../NoMatch';
@@ -25,12 +24,12 @@ const Routes = () => (
 		<Switch>
 			<Route exact path='/' component={Login} />
 			<Route path='/login' component={Login} />
+			<Route exact path='/OSC-Legal' component={Login} />
 			<Route path='/loginreset' component={LoginResetPasswordScreen} />
 			<Route path='/resetcode' component={ResetPasswordCode} />
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
-			{/* <Route path='/organization' component={Organization} /> */}
 			{/* <Route component={NoMatch} /> */}
 			<PrivateRoute component={Dashboard} />
 		</Switch>
