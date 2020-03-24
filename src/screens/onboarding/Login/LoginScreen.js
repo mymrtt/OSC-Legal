@@ -46,7 +46,7 @@ export const Form = styled.form`
 `;
 
 export const InputBox = styled.span`
-	width: 75%;
+	width: 80%;
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -165,7 +165,7 @@ class LoginScreen extends React.Component {
   	return (
   		<ContainerForm>
   			<Form onSubmit={this.handleSubmit}>
-  				<ImageLogo loginScreen />
+  				<ImageLogo marginLogo='2rem 0 3.5rem' />
   				<InputBox>
   					<Label>E-MAIL</Label>
   					<Input

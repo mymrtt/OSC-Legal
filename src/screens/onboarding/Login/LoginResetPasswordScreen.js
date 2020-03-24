@@ -1,6 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
+import { Link, Redirect } from 'react-router-dom';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -119,14 +120,21 @@ class LoginResetPasswordScreen extends React.Component {
 			email: '',
 			password: '',
 			error: false,
-			type: 'password',
+      type: 'password',
+      redirect: undefined,
 		};
-	}
+  }
 
   handleChangeType = () => {
   	this.setState({
   		type: this.state.type === 'password' ? 'text' : 'password',
   	});
+  }
+
+  hanleClick = () => {
+    this.setState({
+      redirect: true,
+    });
   }
 
   render() {
@@ -135,7 +143,8 @@ class LoginResetPasswordScreen extends React.Component {
   			<Form onSubmit={this.handleSubmit}>
   				<ImageLogo loginScreen />
   				<InputBox>
-  					<Paragraph>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Paragraph>
+  					<Paragraph>A senha (nome@email.com) foi redefinida,
+						   faça login para acessar seu painel.</Paragraph>
   					<Label>E-MAIL</Label>
   					<Input
   						login
@@ -163,9 +172,11 @@ class LoginResetPasswordScreen extends React.Component {
   				<Button
   					login
   					text="ENTRAR"
-  					type="submit"
+            type="button"
+            onClick={this.hanleClick}
   				/>
   			</Form>
+        {this.state.redirect && <Redirect to={'/login'}/>}
   		</ContainerForm>
   	);
   }
