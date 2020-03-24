@@ -12,10 +12,10 @@ import NewPassowrdScreen from '../screens/onboarding/Login/NewPasswordScreen';
 import ResetPasswordEmailScreen from '../screens/onboarding/Login/ResetPasswordScreen';
 
 import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
-import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 
 // dashboard
 import Dashboard from '../screens/dashboard/index';
+// import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 
 import PrivateRoute from './PrivateRoute';
 import NoMatch from '../NoMatch';
@@ -30,7 +30,7 @@ const Routes = () => (
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
-			<Route path='/organization' component={Organization} />
+			{/* <Route path='/organization' component={Organization} /> */}
 
 			<Route component={NoMatch} />
 			<PrivateRoute component={Dashboard} />

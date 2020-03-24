@@ -27,6 +27,7 @@ const Container = styled.div`
     flex-direction: column;
     padding: 1.5rem 0 1rem 0;
     margin: 1rem 1rem 2rem 1rem;
+    border-radius: 3px;
     background: #ffffff;
 
     > img {
@@ -139,6 +140,13 @@ const ContainerLegalPerson = styled.label`
       padding: 1.4rem;
     }
 
+    @media (max-width: 648px) {
+     input {
+        height: 10%;
+        padding: 1rem;
+      }
+    }
+
     label {
       width: 80%;
 
@@ -151,6 +159,13 @@ const ContainerLegalPerson = styled.label`
         margin-top: 1.5rem;
         font-family: "Overpass", sans-serif;
         font-weight: 700;
+      }
+
+      @media (max-width: 648px) {
+        > input {
+          height: 25%;
+          padding: 1rem;
+        }
       }
     }
   }
@@ -333,7 +348,7 @@ export default class LegalPerson extends Component {
               </Label>
             </WrapLegalPerson>
             <Button type="submit" text="concluir"/>
-          </ContainerLegalPerson>;
+          </ContainerLegalPerson>
         </form>
       </Container>
     );
