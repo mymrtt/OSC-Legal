@@ -7,7 +7,7 @@ import { Link, Redirect } from 'react-router-dom';
 import ImageLogo from '../../../components/ImageLogo';
 import Button from '../../../components/Button';
 
-export const ContainerForm = styled.div`
+export const Container = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #FFCFCD;
@@ -15,7 +15,6 @@ export const ContainerForm = styled.div`
   align-items: center;
   flex-direction: column; 
   margin: 0;
-  padding: 5rem;
 
   @media (max-width: 648px) {
 		padding: 1rem;
@@ -24,9 +23,9 @@ export const ContainerForm = styled.div`
 	}
 `;
 
-export const Form = styled.form`
+export const Div = styled.div`
   width: 40%;
-  height: 45vh;
+  height: 55vh;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -48,12 +47,12 @@ export const Form = styled.form`
 `;
 
 export const Title = styled.h1`
-  width: 70%;
+  width: 65%;
   color: #85144B;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
-  margin-top: 0.9rem;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,67 +62,72 @@ export const Title = styled.h1`
 	}
 `;
 
-export const BoxErro = styled.div`
-
-`;
-
-export const Erro = styled.p`
+export const Code = styled.p`
   color: #FF4136;
-  font-size: 2.3rem;
+  font-size: 2.5rem;
   font-weight: bold;
+  margin: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1rem;
 `;
 
 export const Span = styled.span` 
+  width: 90%;
   color: #231F20;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+
+@media (max-width: 648px) {
+  width: 100%;
+}
 `;
 
 export const SpanParagraph = styled.span`
-  width: 90%;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-family: Overpass, Regular;
-  opacity: 1;
-`;
+
+  `;
 
 class ResetPasswordCode extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			redirect: false,
+			redirect: undefined,
 		};
 	}
 
-	render() {
-		return (
-			<ContainerForm>
-				<ImageLogo loginScreen />
-				<Form onSubmit={this.handleSubmit}>
-					<Title>Aqui está o seu código de redefinição de senha:</Title>
-					<BoxErro>
-						<Erro>210704</Erro>
-					</BoxErro>
-					<Span>
-						<SpanParagraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: nome@email.com.
+hanleClick = () => {
+	this.setState({
+		redirect: true,
+	});
+}
+
+render() {
+	return (
+		<Container>
+			<ImageLogo marginLogo='3rem 0 2.5rem 0'/>
+			<Div onSubmit={this.handleSubmit}>
+				<Title>Aqui está o seu código de redefinição de senha:</Title>
+				<Code>210704</Code>
+				<Span>
+					<SpanParagraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: nome@email.com.
                Se você não realizou essa solicitação,
                pode acessar sua conta normalmente.</SpanParagraph>
-					</Span>
-					<Button
-						login
-						text="REDEFINIR SENHA"
-						type="submit"
-					/>
-				</Form>
-				{this.state.redirect && <Redirect to={'/newpassword'}/>}
-			</ContainerForm>
-		);
-	}
+				</Span>
+				<Button
+					login
+					text="REDEFINIR SENHA"
+					type="button"
+					onClick={this.hanleClick}
+				/>
+			</Div>
+			{this.state.redirect && <Redirect to={'/newpassword'}/>}
+		</Container>
+	);
+}
 }
 
 export default ResetPasswordCode;

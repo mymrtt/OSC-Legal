@@ -18,7 +18,7 @@ export const ContainerForm = styled.div`
   align-items: center;
   flex-direction: column; 
   margin: 0;
-  padding: 5rem;
+  padding: 3rem;
 
 	@media (max-width: 648px) {
 			background-color: #fff;
@@ -29,7 +29,7 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 40%;
+  width: 38%;
   background-color: #fff;
   padding: 1rem;
   display: flex;
@@ -56,6 +56,7 @@ export const Title = styled.h1`
   width: 90%;
   font-size: 1.2rem;
   font-family: Overpass, ExtraBold;
+  margin-top: 1rem;
 `;
 
 export const Box = styled.span`
@@ -98,7 +99,7 @@ export const VoltarLogin = styled.span`
   align-items: center;
   flex-direction: row;
   justify-content: space-around;
-  margin: 1rem;
+  /* margin: 1rem; */
 `;
 
 export const ButtonText = styled(Link)` 
@@ -132,7 +133,7 @@ class ResetPasswordEmailScreen extends React.Component {
 	render() {
 		return (
 			<ContainerForm>
-				<ImageLogo loginScreen />
+				<ImageLogo marginLogo='2rem 0 3.2rem' />
 				<Form onSubmit={this.handleSubmit}>
 					<Title>REDEFINIÇÃO DE SENHA</Title>
 					<Box>
