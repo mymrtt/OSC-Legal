@@ -29,6 +29,8 @@ const Modal = styled.div`
   }
   @media (max-width: 648px) {
     width: 100%;
+    height: 100vh;
+    justify-content: space-evenly;
     padding: 0.5rem;
   }
 
@@ -48,6 +50,7 @@ const TitleTerms = styled.h1`
     
     @media(max-width: 648px){
       font-size: 1.3rem;
+      text-align: center;
     }
 `;
 
@@ -59,6 +62,7 @@ const TextTerms = styled.p`
 
     @media(max-width: 648px){
       font-size: 1rem;
+      line-height: 1.5rem; 
     }
 `;
 

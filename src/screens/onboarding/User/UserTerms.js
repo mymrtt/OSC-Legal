@@ -2,10 +2,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// Images
-import Logo from '../../../assets/logo.svg';
+//Components
+import ImageLogo from '../../../components/ImageLogo'
 
- const Overlay = styled.section`
+const Overlay = styled.section`
   min-width: 100%;
   min-height: 100vh;
   background-color: #00000040;
@@ -13,26 +13,28 @@ import Logo from '../../../assets/logo.svg';
   top: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
-
+  padding: 2.5rem 0;
 
   @media(max-width: 648px){
-      justify-content: flex-start;
+      padding: 0;
+
+      img{
+        display: none;
+      }
 
     }
-
-  img{
-    display: none;
-  }
 `;
- const Modal = styled.div`
-  width: 35vw;
+const Modal = styled.div`
+  width: 33%;
+  min-height: 55vh;
   background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 
   @media (max-width: 768px) {
     width: 90%;
@@ -49,7 +51,7 @@ const TitleTerms = styled.h1`
   align-self: flex-start;
   margin: 1rem 1rem;
   font-family: Overpass, Bold;
-  font-size: 1.4rem;    
+  font-size: 1.4rem;
   text-transform: uppercase;
 
   @media (max-width: 648px) {
@@ -57,7 +59,7 @@ const TitleTerms = styled.h1`
     font-size: 1.5rem;
   }
 `;
- const ButtonTerms = styled.button`
+const ButtonTerms = styled.button`
     width: 120px;
     height: 36px;
     background-color: #ff4136;
@@ -79,25 +81,33 @@ const TitleTerms = styled.h1`
   }
 `;
 
- const BlockTerms = styled.div`
+const BlockTerms = styled.div`
   width: 97%;
   height: 90%;
   background: #ffcfcd;
   padding: 1rem 1rem;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 
   @media(max-width: 648px){
     background: #FFF;
-    height: 100%; 
-    justify-content: space-between;
+    height: 100%;
+    justify-content: space-around;
   }
 `;
 
- const Terms = styled.p`
+const Terms = styled.p`
   width: 100%;
   font-family: Overpass, Regular;
   font-size: 0.9rem;
   margin: 0.9rem 0;
+
+  u{
+    color: #f00;
+    margin: 0 0.2rem;
+  }
 
   @media(max-width: 648px){
     margin: 1.5rem 0;
@@ -114,25 +124,27 @@ const SubtitleTerms = styled.h3`
 export default function ModalTerms(props) {
   return (
     <Overlay>
-      <img src={Logo} alt="Osc Logo" />
+      <ImageLogo />
       <Modal>
         <TitleTerms>termos de serviço</TitleTerms>
         <BlockTerms>
           <SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
           <Terms>
             Esta é uma ferramenta voltada a fornecer um guia para que as associações possam elaborar ou reformar seus estatutos, documento obrigatório nessas organizações.
-          </Terms>
+            </Terms>
           <Terms>
             Cada senha dará oportunidade para que você possa trabalhar no documento por 30 dias. Ao final desse prazo se considera finalizado o texto, gerando-se o documento equivalente no estado em que estiver.
-          </Terms> 
+            </Terms>
           <Terms>
             De acordo com a legislação brasileira, para registro de estatuto de associação é obrigatória a assinatura de advogad@ inscrito na OAB. Recomendamos que procure um/a profissional especialista.
-           </Terms>
+            </Terms>
           <Terms>
-           Qualquer dúvida e/ou esclarecimento entre em contato com nossa equipe: osclegal@gmail.com
+            Qualquer dúvida e/ou esclarecimento entre em contato com nossa equipe:
+              <u>
+              osclegal@gmail.com
+              </u>
           </Terms>
         </BlockTerms>
-
         <ButtonTerms onClick={() => props.handleModalTerms()}>OK</ButtonTerms>
       </Modal>
     </Overlay>
