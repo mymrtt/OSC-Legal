@@ -9,13 +9,13 @@ import styled from 'styled-components';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
-// Images
-import ImagemLogo from '../../../components/ImageLogo';
+// Icon
+import Exit from '../../../assets/exit.svg';
 
 const Container = styled.div`
   max-width: 100%;
   max-height: 100%;
-  background: #ffcfcd;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,20 +25,31 @@ const Container = styled.div`
 		min-width: 40%;
     justify-content: center;
     flex-direction: column;
-    padding: 3rem 0 1rem 0;
+    padding: 1.5rem 0 1rem 0;
     margin: 1rem 1rem 2rem 1rem;
+    border-radius: 3px;
     background: #ffffff;
 
-    img {
-      width: inherit;
-    }
+    > img {
+    width: 1.3rem;
+    align-self: flex-end;
+    margin-right: 4%;
+  }
   }
 `;
 
 const ContainerFisicalPerson = styled.label`
+  
   h1 {
+    margin-left: 12%;
+    color: #85144b;
+    font-weight: 800;
+    font-family: "Overpass", sans-serif;
+  }
+  
+  > h2 {
     font-size: 1.3rem;
-    margin: 10% 0 10% 12%;
+    margin: 5% 0 10% 12%;
     text-transform: uppercase;
     font-weight: 800;
     font-family: "Overpass", sans-serif;
@@ -129,6 +140,13 @@ const ContainerLegalPerson = styled.label`
       padding: 1.4rem;
     }
 
+    @media (max-width: 648px) {
+     input {
+        height: 10%;
+        padding: 1rem;
+      }
+    }
+
     label {
       width: 80%;
 
@@ -142,6 +160,13 @@ const ContainerLegalPerson = styled.label`
         font-family: "Overpass", sans-serif;
         font-weight: 700;
       }
+
+      @media (max-width: 648px) {
+        > input {
+          height: 25%;
+          padding: 1rem;
+        }
+      }
     }
   }
 
@@ -152,17 +177,7 @@ const ContainerLegalPerson = styled.label`
     border-radius: 3px;
     font-family: "Overpass", sans-serif;
     font-weight: 700;
-  }
-
-  button:nth-last-of-type(1){
-    max-width: 80%;
-    margin:3% 10% 0 10%;
-    background-color: #FFFFFF;
-    color: #85144B;
-    box-shadow: inherit;
-    font-family: "Overpass", sans-serif;
-    font-weight: 700;
-  }
+  };
 `;
 
 const WrapLegalPerson = styled.div`
@@ -234,9 +249,10 @@ export default class LegalPerson extends Component {
     return (
       <Container>
         <form onSubmit={this.handleSubmit}>
-          <ImagemLogo />
+        <img src={Exit} alt="Exit" />
           <ContainerFisicalPerson>
-            <h1>pessoa física</h1>
+            <h1>Criar organização</h1>
+            <h2>pessoa física</h2>
             <div>
               <h2>nome</h2>
               <Text>Yasmin Miranda</Text>
@@ -260,7 +276,7 @@ export default class LegalPerson extends Component {
               <label>
                 <h2>nome fantasia</h2>
                 <Input
-                  placeholder="Nome da empresa"
+                  placeholder="Nome da organização"
                   onChange={ev => this.handleChange('fantasyName', ev)}
                   value={this.state.fantasyName}
                 />
@@ -286,7 +302,7 @@ export default class LegalPerson extends Component {
               </label>
               <label>
                 <h2>email</h2>
-                <Input placeholder="email@email.com" value={this.state.email} />
+                <Input placeholder="endereçodeemail@email.com" value={this.state.email} />
               </label>
               <label>
                 <h2>telefone</h2>
@@ -332,7 +348,6 @@ export default class LegalPerson extends Component {
               </Label>
             </WrapLegalPerson>
             <Button type="submit" text="concluir"/>
-            <Button type="submit" text="associar outra pessoa jurídica"/>
           </ContainerLegalPerson>
         </form>
       </Container>
