@@ -6,7 +6,8 @@ import styled from 'styled-components';
 export const InputForm = styled.input`
   width: ${props => (props.login ? '100%' : '95%')};
   height: 56px;
-  border: 1px solid #ffcfcd;
+  border: 1px solid ;
+  border-color: ${props => (props.isError ? 'tomato' : '#ffcfcd')};
   border-radius: 3px;
   background: #fafafa;
   padding: 0.5rem;
@@ -30,7 +31,8 @@ export default function Input(props) {
       value={props.value}
       placeholder={props.placeholder}
       name={props.name}
-      maxLength={props.maxLength}
+      isError={props.isError}
+      required={props.required}
     />
   );
 }

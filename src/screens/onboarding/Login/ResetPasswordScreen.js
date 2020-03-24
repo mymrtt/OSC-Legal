@@ -1,7 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -80,7 +80,6 @@ export const Label = styled.label`
 
 export const BoxButton = styled.div`
   width: 100%;
-  margin-top: 0.5rem;
 
 	Button {
 		width: 95%;
@@ -100,12 +99,14 @@ export const VoltarLogin = styled.span`
   flex-direction: row;
   justify-content: space-around;
   margin: 1rem;
+`;
 
-  buttonText {
+export const ButtonText = styled(Link)` 
   color: #85144B;
   font-size: 1rem; 
-	font-family: Eurostile, Regular; 
-  }
+  font-family: Eurostile, Regular;
+  text-decoration: none;
+
 `;
 
 class ResetPasswordEmailScreen extends React.Component {
@@ -124,14 +125,6 @@ class ResetPasswordEmailScreen extends React.Component {
 		});
 	};
 
-	handleSubmit = () => {
-		console.log('cliquei');
-		if (this.state.redirect) {
-			return <Redirect to={this.state.redirect}/>;
-		}
-		return null;
-	}
-
 	handleInsertCodeScreen = () => {
 		this.setState({ redirect: '/resetcode' });
 	}
@@ -141,7 +134,7 @@ class ResetPasswordEmailScreen extends React.Component {
 			<ContainerForm>
 				<ImageLogo loginScreen />
 				<Form onSubmit={this.handleSubmit}>
-					<Title>PASSWORD RESET</Title>
+					<Title>REDEFINIÇÃO DE SENHA</Title>
 					<Box>
 						<Label>E-MAIL</Label>
 						<Input
@@ -151,17 +144,17 @@ class ResetPasswordEmailScreen extends React.Component {
 						/>
 						<BoxButton>
 							<Button
-								onClick={this.handleInsertCodeScreen}
-								to={'/resetcode'}
-								text="REQUEST PASSWORD RESET"
+								text="SOLICITAR REDEFINIÇÃO DE SENHA"
 								type= "submit"
+								onClick={this.handleInsertCodeScreen}
 							/>
 						</BoxButton>
 					</Box>
 					<VoltarLogin>
-						<buttonText>BACK TO LOGIN</buttonText>
+						<ButtonText to={'/login'}>VOLTE AO LOGIN</ButtonText>
 					</VoltarLogin>
 				</Form>
+				{this.state.redirect && <Redirect to={'/resetcode'}/>}
 			</ContainerForm>
 		);
 	}

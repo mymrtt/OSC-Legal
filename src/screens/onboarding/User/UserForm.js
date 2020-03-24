@@ -315,7 +315,7 @@ class FisicalPersonForm extends Component {
                     value={this.state.email}
                     name="email"
                     placeholder="nome@mail.com"
-                    require
+                    required
                   />
                 </Label>
                 <Label>
@@ -366,6 +366,9 @@ class FisicalPersonForm extends Component {
               </TextTerms>
                 {isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
                 <Button
+                  width="87%"
+                  height="50px"
+                  margin="1rem 0"
                   text="concordar e criar conta"
                   type="submit"
                   onClick={this.handleSubmit}
