@@ -18,7 +18,7 @@ import Dashboard from '../screens/dashboard/index';
 // import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 
 import PrivateRoute from './PrivateRoute';
-import NoMatch from '../NoMatch';
+// import NoMatch from '../NoMatch';
 
 const Routes = () => (
 	<BrowserRouter>
@@ -31,8 +31,7 @@ const Routes = () => (
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
 			{/* <Route path='/organization' component={Organization} /> */}
-
-			<Route component={NoMatch} />
+			{/* <Route component={NoMatch} /> */}
 			<PrivateRoute component={Dashboard} />
 		</Switch>
 	</BrowserRouter>
