@@ -141,10 +141,15 @@ const ImagePassword = styled.img`
   bottom: 1.2rem;
   right: 0.5rem;
   cursor: pointer;
+
+  @media(max-width: 648px){
+    bottom: 1.5rem;
+  }
 `;
 const TextTerms = styled.p`
   font-size: 0.8rem;
-  margin-top: 1.25rem ;
+  margin-top: 1.25rem;
+  width: 95%;
   color: #505050;
   font-family: Overpass, Regular;
   text-align: center;
@@ -171,19 +176,14 @@ class FisicalPersonForm extends Component {
     user: {
       name: '',
       surname: '',
+      cpf: '',
       email: '',
       telephone: '',
       password: '',
     },
+    isErrorCpf: false,
     isErrorPassword: false,
     isEmpty: false,
-  };
-
-  togglePassword = (ev) => {
-    ev.preventDefault();
-    this.setState({
-      togglePassword: !this.state.togglePassword,
-    });
   };
 
   togglePassword = (ev) => {
@@ -207,7 +207,6 @@ class FisicalPersonForm extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault();
-    const { user } = this.state;
     this.errors()
   };
 
@@ -219,20 +218,29 @@ class FisicalPersonForm extends Component {
       email,
       telephone,
       password,
+      cpf
     } = this.state.user;
 
     if (
-      name,
-      surname,
-      email,
-      telephone,
+      name === '' ||
+      surname === '' ||
+      email === '' ||
+      telephone === '' ||
       password === ''
     ) {
       this.setState({
         isEmpty: true,
       });
+    } else if (cpf.length < 11 || cpf.length > 11) {
+      this.setState({
+        isErrorCpf: true
+      })
+    } else if (password.length < 4) {
+      this.setState({
+        isErrorPassword: true,
+      })
     } else {
-      this.setState({ isEmpty: false });
+      this.setState({ isEmpty: false, isErrorPassword: false, isErrorCpf: false });
       this.props.addNewUser(user);
       this.handleModalSucess();
     }
@@ -240,20 +248,17 @@ class FisicalPersonForm extends Component {
 
   render() {
     const errorMessage = [
-      'RG inválido',
       'Senha fraca',
       'CPF inválido',
       'Preencha todos os campos',
       'E-mail inválido',
-      'Uf inválida',
-      'Orgão expedidor inválido',
     ];
 
     const {
       isErrorPassword,
       modalSucess,
       isEmpty,
-      isErrorEmail,
+      isErrorCpf
     } = this.state;
 
     return (
@@ -264,7 +269,10 @@ class FisicalPersonForm extends Component {
           </Container>
         ) : (
             <Container>
-              <Form onSubmit={this.handleSubmit} withError={isEmpty, isErrorEmail,isErrorPassword}>
+              <Form
+                onSubmit={this.handleSubmit}
+                withEmpty={isEmpty}
+              >
                 <ImageLogo />
                 <TitleForm>cadastrar pessoa física</TitleForm>
                 <Label>
@@ -295,9 +303,10 @@ class FisicalPersonForm extends Component {
                     value={this.state.cpf}
                     placeholder="000000-0"
                     name="cpf"
-                    min="0"
                   />
+                  {isErrorCpf && <Error>{errorMessage[1]}</Error>}
                 </Label>
+
                 <Label>
                   <ParagraphInput>email</ParagraphInput>
                   <Input
@@ -306,7 +315,7 @@ class FisicalPersonForm extends Component {
                     value={this.state.email}
                     name="email"
                     placeholder="nome@mail.com"
-                    require
+                    required
                   />
                 </Label>
                 <Label>
@@ -346,7 +355,7 @@ class FisicalPersonForm extends Component {
                         />
                       </BlockSmallerInput>
                     )}
-                  {isErrorPassword && <Error>{errorMessage[1]}</Error>}
+                  {isErrorPassword && <Error>{errorMessage[0]}</Error>}
                 </Label>
                 <TextTerms>
                   Clique abaixo para concordar com os
@@ -355,8 +364,11 @@ class FisicalPersonForm extends Component {
                 </strong>
                   e registrar.
               </TextTerms>
-              {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
+                {isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
                 <Button
+                  width="87%"
+                  height="50px"
+                  margin="1rem 0"
                   text="concordar e criar conta"
                   type="submit"
                   onClick={this.handleSubmit}

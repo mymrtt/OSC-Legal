@@ -29,6 +29,8 @@ const Modal = styled.div`
   }
   @media (max-width: 648px) {
     width: 100%;
+    height: 100vh;
+    justify-content: space-evenly;
     padding: 0.5rem;
   }
 
@@ -48,6 +50,7 @@ const TitleTerms = styled.h1`
     
     @media(max-width: 648px){
       font-size: 1.3rem;
+      text-align: center;
     }
 `;
 
@@ -59,6 +62,7 @@ const TextTerms = styled.p`
 
     @media(max-width: 648px){
       font-size: 1rem;
+      line-height: 1.5rem; 
     }
 `;
 
@@ -82,21 +86,26 @@ const ButtonLogin = styled.button`
 `;
 
 const FisicalPersonSucess = props => (
-    <Modal>
-      <TitleTerms>Cadastro de Pessoa física concluído!</TitleTerms>
-      <img src={Sucess} alt="Sucess" />
-      <TextTerms>
-        Enviamos um e-mail de confirmação para
+  <Modal>
+    <TitleTerms>Cadastro de Pessoa física concluído!</TitleTerms>
+    <img src={Sucess} alt="Sucess" />
+    <TextTerms>
+      Enviamos um e-mail de confirmação para
         <TextTermsBold>{props.signup.users.email}</TextTermsBold>. Verifique sua caixa de entrada para
-        prosseguir.
+      prosseguir.
       </TextTerms>
-      <TextTerms>
-        Caso não tenha recebido a confirmação, clique em
+    <TextTerms>
+      Caso não tenha recebido a confirmação, clique em
         <TextTermsBold>Reenviar email.</TextTermsBold>
-      </TextTerms>
-      <Link to="/">
-        <Button text="fazer login"/>
-      </Link>
-    </Modal>
-  );
+    </TextTerms>
+    <Link to="/">
+      <Button
+        width="87%"
+        height="50px"
+        margin="1rem 0"
+        text="fazer login"
+      />
+    </Link>
+  </Modal>
+);
 export default connect(mapStateToProps)(FisicalPersonSucess);
