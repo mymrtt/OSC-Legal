@@ -8,7 +8,8 @@ import FisicalPersonTerms from './UserTerms';
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
+  ${''}
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,13 +22,13 @@ export const Container = styled.div`
 
 class CreateFisicalPersonScreen extends Component {
   state = {
-    modalTerms: false,
+  	modalTerms: false,
   };
 
   handleModalTerms = () => {
-    this.setState({
-      modalTerms: !this.state.modalTerms,
-    });
+  	this.setState({
+  		modalTerms: !this.state.modalTerms,
+  	});
   };
 
   render() {
