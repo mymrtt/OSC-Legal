@@ -171,7 +171,8 @@ const ContainerLegalPerson = styled.label`
   }
 
   button {
-    max-width: 80%;
+    min-width: 80%;
+    padding: 4% 0;
     margin: 0 10%;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 3px;
