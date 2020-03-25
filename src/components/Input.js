@@ -17,7 +17,7 @@ export const InputForm = styled.input`
 
   @media (max-width: 648px) {
     width: 100%;
-    /* height: 65px; */
+    height: 56px;
   }
 `;
 

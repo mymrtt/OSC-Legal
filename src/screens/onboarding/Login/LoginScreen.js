@@ -30,11 +30,15 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 30%;
+  width: 35%;
   background-color: #fff;
   display: flex;
   align-items: center;
   flex-direction: column;
+
+	@media (max-width: 1250px) {
+		width: 55%;
+	}
 
 	@media (max-width: 980px) {
 		width: 70%;
@@ -52,11 +56,11 @@ export const InputBox = styled.span`
 	position: relative;
 
 	@media (max-width: 648px) {
-		width: 90%;
+		width: 95%;
 	}
 
 	@media (max-width: 490px) {
-		width: 100%;
+		width: 95%;
 	}
 `;
 
@@ -64,35 +68,39 @@ export const ImagePassword = styled.img`
   position: absolute;
   bottom: ${props => (props.off ? '1rem' : '0.875rem')};
   right: 0.7rem;
-  cursor: pointer;
+
+	@media (max-width: 648px) {
+		bottom: 1.2rem;
+	}
 `;
 
 export const Label = styled.label`
   color: #85144b;
   font-size: 0.7rem;
-  font-family: Overpass, Bold;
+  font-family: Overpass;
+	font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
 `;
 
 export const Span = styled.span` 
-  width: 75%;
+  width: 80%;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 0.5rem;
-	margin-bottom: 2.3rem;
+	margin-bottom: 2.5rem;
 
 
 	@media (max-width: 648px) {
-		width: 88%;
+		width: 95%;
 		margin: 2rem;
 	}
 
 	@media (max-width: 488px) {
-		width: 99%;
+		width: 95%;
 	}
 `;
 
@@ -100,6 +108,7 @@ export const ButtonText = styled(Link)`
   color: #85144B;
   font-size: 0.75rem; 
   text-decoration: none;
+	text-transform: uppercase;
 `;
 
 export const Error = styled.h4`
@@ -129,86 +138,92 @@ class LoginScreen extends React.Component {
 		};
 	}
 
-  handleSubmit = (ev) => {
-  	ev.preventDefault();
-  	const { password } = this.state;
-  	if (password.length < 4) {
-  		this.setState({
-  			error: true,
-  		});
-  	} else {
-  		this.setState({
-  			error: false,
-  		});
-  	}
-  }
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		const { password } = this.state;
+		if (password.length < 4) {
+			this.setState({
+				error: true,
+			});
+		} else {
+			this.setState({
+				error: false,
+			});
+		}
+	}
 
-  handleChangeEmail = (ev) => {
-  	this.setState({
-  		email: ev.target.value,
-  	});
-  };
+	handleChangeEmail = (ev) => {
+		this.setState({
+			email: ev.target.value,
+		});
+	};
 
-  handleChangePassword = (ev) => {
-  	this.setState({
-  		password: ev.target.value,
-  	});
-  }
+	handleChangePassword = (ev) => {
+		this.setState({
+			password: ev.target.value,
+		});
+	}
 
-  handleChangeType = () => {
-  	this.setState({
-  		type: this.state.type === 'password' ? 'text' : 'password',
-  	});
-  }
+	handleChangeType = () => {
+		this.setState({
+			type: this.state.type === 'password' ? 'text' : 'password',
+		});
+	}
 
-  render() {
-  	return (
-  		<ContainerForm>
-  			<Form onSubmit={this.handleSubmit}>
-  				<ImageLogo marginLogo='2rem 0 3.5rem' />
-  				<InputBox>
-  					<Label>E-MAIL</Label>
-  					<Input
-  						login
-  						type="email"
-  						onChange={this.handleChangeEmail}
-  						placeholder="name@email.com"
-  						required
-  					/>
-  				</InputBox>
-  				<InputBox>
-  					<Label>SENHA</Label>
-  					<Input
-  						login
-  						type={this.state.type}
-  						onChange={this.handleChangePassword}
-  						placeholder="Inserir senha"
-  						isError={this.state.error}
-  						required
-  					/>
-  					<span>
-  						<ImagePassword
-  							src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
-  							onClick={this.handleChangeType}
-  							off={this.state.type === 'password'}
-  						/>
-  					</span>
-  				</InputBox>
-  				{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
-  				{/* {this.state.error && <Error>Endereço de email inválido</Error> */}
-  				<Button
-  					login
-  					text="ENTRAR"
-  					type="submit"
-  				/>
-  				<Span>
-  					<ButtonText to={'/createuser'}>CRIAR CONTA</ButtonText>
-  					<ButtonText to={'/resetpassword'}>RESETAR SENHA</ButtonText>
-  				</Span>
-  			</Form>
-  		</ContainerForm>
-  	);
-  }
+	render() {
+		return (
+			<ContainerForm>
+				<Form onSubmit={this.handleSubmit}>
+					<ImageLogo marginLogo='2rem 0 4rem' />
+					<InputBox>
+						<Label>EMAIL</Label>
+						<Input
+							login
+							type="email"
+							onChange={this.handleChangeEmail}
+							placeholder="name@email.com"
+							required
+						/>
+					</InputBox>
+					<InputBox>
+						<Label>SENHA</Label>
+						<Input
+							login
+							type={this.state.type}
+							onChange={this.handleChangePassword}
+							placeholder="Inserir senha"
+							isError={this.state.error}
+							required
+						/>
+						<span>
+							<ImagePassword
+								src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
+								onClick={this.handleChangeType}
+								off={this.state.type === 'password'}
+							/>
+						</span>
+					</InputBox>
+					{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
+					{/* {this.state.error && <Error>Endereço de email inválido</Error> */}
+					<Button
+						width='80%'
+						widthMobile='95%'
+						widthMobileSmall='95%'
+						height='9vh'
+						heightMobile='10vh'
+						margin='1.5rem 0 1rem'
+						marginMobile='3.5rem 0 1rem'
+						text="entrar"
+						type="submit"
+					/>
+					<Span>
+						<ButtonText to={'/createuser'}>criar conta</ButtonText>
+						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
+					</Span>
+				</Form>
+			</ContainerForm>
+		);
+	}
 }
 
 export default LoginScreen;
