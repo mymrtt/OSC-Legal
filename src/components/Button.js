@@ -28,21 +28,20 @@ export const MyButton = styled.button`
 `;
 
 export default function Button(props) {
-  console.log('props', props)
+	console.log('props', props);
 	return (
 		<MyButton
 			onClick={props.onClick}
 			type={props.type}
-      width={props.width}
-      widthMobile={props.widthMobile}
-      height={props.height}
-      heightMobile={props.heightMobile}
-      margin={props.margin}
-      marginMobile={props.marginMobile}
+			width={props.width}
+			widthMobile={props.widthMobile}
+			height={props.height}
+			heightMobile={props.heightMobile}
+			margin={props.margin}
+			marginMobile={props.marginMobile}
 			padding={props.padding}
 		>
 			{props.text}
 		</MyButton>
 	);
 }
-
