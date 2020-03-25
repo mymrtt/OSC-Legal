@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 export const MyButton = styled.button`
   margin: ${props => props.margin};
@@ -17,36 +17,15 @@ export const MyButton = styled.button`
 `;
 
 export default function Button(props) {
-  return (
-    <MyButton
-      onClick={props.onClick}
-      login={props.login}
-      type={props.type}
-      width={props.width}
-      margin={props.margin}
-      padding={props.padding}
-    >
-      {props.text}
-    </MyButton>
-  );
-  
-  ${'' /* @media (max-width: 648px) {
-    width: ${props => (props.login ? '90%' : '100%')};
-  }
-
-  @media (max-width: 490px) {
-    width: ${props => (props.login ? '90%' : '100%')};
-  }
-  
-  @media (max-width: 320px) {
-    width: ${props => (props.login ? '83%' : '100%')};
-  } */}
-    
-`;
-
-export default function Button(props) {
 	return (
-		<MyButton onClick={props.onClick} login={props.login} type={props.type} width={props.width} height={props.height} margin={props.margin}>
+		<MyButton
+			onClick={props.onClick}
+			login={props.login}
+			type={props.type}
+			width={props.width}
+			margin={props.margin}
+			padding={props.padding}
+		>
 			{props.text}
 		</MyButton>
 	);
