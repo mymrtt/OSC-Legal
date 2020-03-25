@@ -10,23 +10,38 @@ export const MyButton = styled.button`
   font-weight: 600;
   font-family: Overpass, Bold;
   border: 0;
-  border-radius: 5px;
+  border-radius: 3px;
   background-color: #ff4136;
   box-shadow: 0 3px 6px #00000029;
   text-transform: uppercase;
+
+  @media (max-width: 648px) {
+    width: ${props => (props.widthMobile)};
+    height: ${props => (props.heightMobile)};
+    margin: ${props => (props.marginMobile)};
+  }
+
+  @media (max-width: 488px){
+    width: ${props => (props.widthMobileSmall)};
+
+  }
 `;
 
 export default function Button(props) {
-  return (
-    <MyButton
-      onClick={props.onClick}
-      login={props.login}
-      type={props.type}
-      width={props.width}
-      margin={props.margin}
-      padding={props.padding}
-    >
-      {props.text}
-    </MyButton>
-  );
+	console.log('props', props);
+	return (
+		<MyButton
+			onClick={props.onClick}
+			type={props.type}
+			width={props.width}
+			widthMobile={props.widthMobile}
+			height={props.height}
+			heightMobile={props.heightMobile}
+			margin={props.margin}
+			marginMobile={props.marginMobile}
+			padding={props.padding}
+		>
+			{props.text}
+		</MyButton>
+	);
 }

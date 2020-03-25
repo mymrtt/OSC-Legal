@@ -24,7 +24,7 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 36%;
+  width: 31%;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -59,19 +59,22 @@ export const Title = styled.h1`
   font-weight: bold;
   font-family: Overpass;
   margin: 2rem 0 1rem 0;
-
+	text-transform: uppercase;
 
   @media (max-width: 648px) {
 		display: none;
 	}
-
 `;
 
 export const Paragraph = styled.p`
-  font-size: 1rem;
+  /* font-size: 1rem; */
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1rem;
+
+	@media (max-width: 648px) {
+		font-size: 0.85rem;
+	}
 `;
 
 export const Error = styled.h4`
@@ -88,6 +91,7 @@ export const Label = styled.label`
   margin: 0.9rem;
   font-family: Overpass;
   font-weight: bold;
+	text-transform: uppercase;
 `;
 
 export const InputBox = styled.input`
@@ -106,8 +110,9 @@ export const ButtonText = styled(Link)`
     color: #85144B;
     font-size: 1rem; 
 	  font-family: Overpass, Regular;
-    margin-bottom: 1.2rem;
+    margin-bottom: 2rem;
     text-decoration: none;
+		text-transform: uppercase;
 `;
 
 class NewPasswordScreen extends React.Component {
@@ -171,13 +176,13 @@ class NewPasswordScreen extends React.Component {
 		}
 	}
 
-  handleChangeConfirmationCode = (ev) => {
-  	this.setState({
-  		confirmationCode: ev.target.value,
-  		confirmationCodeError: '',
-  		isErrorConfirmationCode: false,
-  	});
-  }
+	handleChangeConfirmationCode = (ev) => {
+		this.setState({
+			confirmationCode: ev.target.value,
+			confirmationCodeError: '',
+			isErrorConfirmationCode: false,
+		});
+	}
 
 	handleChangeNewPassword = (ev) => {
 		this.setState({
@@ -204,9 +209,9 @@ class NewPasswordScreen extends React.Component {
 				<ImageLogo loginScreen />
 				<Form onSubmit={this.handleSubmit}>
 					<Span>
-						<Title>REDEFINIÇÃO DE SENHA</Title>
+						<Title>redefinição de senha</Title>
 						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
-						<Label>CÓDIGO DE CONFIRMAÇÃO</Label>
+						<Label>código de confirmação</Label>
 						<Input
 							login
 							value={this.state.confirmationCode}
@@ -216,7 +221,7 @@ class NewPasswordScreen extends React.Component {
 							isError={this.state.isErrorConfirmationCode}
 						/>
 						{confirmationCodeError && <Error>{confirmationCodeError}</Error>}
-						<Label>NOVA SENHA</Label>
+						<Label>nova senha</Label>
 						<Input
 							login
 							value={this.state.newPassword}
@@ -226,7 +231,7 @@ class NewPasswordScreen extends React.Component {
 							isError={this.state.isErrorNewPassword}
 						/>
 						{newPasswordError && <Error>{newPasswordError}</Error>}
-						<Label>REPITA NOVA SENHA</Label>
+						<Label>repita nova senha</Label>
 						<Input
 							login
 							value={this.state.repetPassword}
@@ -238,15 +243,20 @@ class NewPasswordScreen extends React.Component {
 						{repetPasswordError && <Error>{repetPasswordError}</Error>}
 					</Span>
 					<Button
-						login
-						text="PROSSIGA COM NOVA SENHA"
+						width='80%'
+						widthMobile='90%'
+						height='8vh'
+						heightMobile='10vh'
+						margin='1rem 0 1.5rem 0;'
+						marginMobile='1rem 0 2.5rem'
+						text="prossiga com nova senha"
 						type="submit"
 					/>
 					<BackLogin>
-						<ButtonText to={'/resetcode'}>REENVIAR E-MAIL</ButtonText>
+						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
 					</BackLogin>
 				</Form>
-				{this.state.redirect && <Redirect to={'/loginreset'}/>}
+				{this.state.redirect && <Redirect to={'/loginreset'} />}
 			</ContainerForm>
 		);
 	}

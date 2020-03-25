@@ -20,36 +20,41 @@ export const ContainerForm = styled.div`
   margin: 0;
   padding: 3rem;
 
-	@media (max-width: 648px) {
-			background-color: #fff;
-			padding: 1rem;
-			justify-content: center;
-	 	}
-	}
+  @media (max-width: 648px) {
+      background-color: #fff;
+      padding: 1rem;
+      justify-content: center;
+     }
+  }
 `;
 
 export const Form = styled.form`
-  width: 38%;
+  width: 33%;
   background-color: #fff;
   padding: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
 
-  @media (max-width: 980px) {
-			width: 55%;
-	 	}
-	}
+  @media (max-width: 1300px) {
+      width: 40%;
+     }
+  }
 
-	@media (max-width: 786px) {
-			width: 70%;
-	 	}
-	}
+  @media (max-width: 986px) {
+      width: 50%;
+     }
+  }
 
-	@media (max-width: 520px) {
-			width: 100%;
-	 	}
-	}
+  @media (max-width: 786px) {
+      width: 70%;
+     }
+  }
+
+  @media (max-width: 648px) {
+      width: 100%;
+     }
+  }
 `;
 
 export const Title = styled.h1`
@@ -57,6 +62,12 @@ export const Title = styled.h1`
   font-size: 1.2rem;
   font-family: Overpass, ExtraBold;
   margin-top: 1rem;
+  text-transform: uppercase;
+
+  @media (max-width: 648px) {
+     margin: 0 0 3rem 0;
+     }
+  }
 `;
 
 export const Box = styled.span`
@@ -64,10 +75,10 @@ export const Box = styled.span`
    display: flex;
    flex-direction: column;
 
-	@media (max-width: 648px) {
-			width: 100%;
-	 	}
-	}
+  @media (max-width: 648px) {
+      width: 100%;
+     }
+   }
 `;
 
 export const Label = styled.label`
@@ -77,36 +88,35 @@ export const Label = styled.label`
   margin-top: 1rem;
   margin-bottom: 0.3rem;
   font-family: Overpass, Regular; 
+  text-transform: uppercase;
 `;
 
 export const BoxButton = styled.div`
   width: 100%;
 
-	Button {
-		width: 95%;
-		font-size: 0.9rem;
-		font-family: Eurostile, Bold; 
+  Button {
+    font-family: Overpass, Bold; 
 
-		@media (max-width: 425px) {
-			width: 100%;
-	 	}
-	}
+    @media (max-width: 425px) {
+      width: 100%;
+     }
+  }
 `;
 
-export const VoltarLogin = styled.span` 
-  width: 95%;
+export const BackLogin = styled.span` 
+  /* width: 95%; */
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-around;
-  /* margin: 1rem; */
 `;
 
 export const ButtonText = styled(Link)` 
   color: #85144B;
   font-size: 1rem; 
-  font-family: Eurostile, Regular;
+  font-family: Overpass, Regular;
   text-decoration: none;
+  text-transform: uppercase;
 
 `;
 
@@ -120,45 +130,52 @@ class ResetPasswordEmailScreen extends React.Component {
 		};
 	}
 
-	handleChangeEmail = (ev) => {
-		this.setState({
-			email: ev.target.value,
-		});
-	};
+  handleChangeEmail = (ev) => {
+  	this.setState({
+  		email: ev.target.value,
+  	});
+  };
 
-	handleInsertCodeScreen = () => {
-		this.setState({ redirect: '/resetcode' });
-	}
+  handleInsertCodeScreen = () => {
+  	this.setState({ redirect: '/resetcode' });
+  }
 
-	render() {
-		return (
-			<ContainerForm>
-				<ImageLogo marginLogo='2rem 0 3.2rem' />
-				<Form onSubmit={this.handleSubmit}>
-					<Title>REDEFINIÇÃO DE SENHA</Title>
-					<Box>
-						<Label>E-MAIL</Label>
-						<Input
-							type="email"
-							onChange={this.handleChangeEmail}
-							placeholder="name@email.com"
-						/>
-						<BoxButton>
-							<Button
-								text="SOLICITAR REDEFINIÇÃO DE SENHA"
-								type= "submit"
-								onClick={this.handleInsertCodeScreen}
-							/>
-						</BoxButton>
-					</Box>
-					<VoltarLogin>
-						<ButtonText to={'/login'}>VOLTE AO LOGIN</ButtonText>
-					</VoltarLogin>
-				</Form>
-				{this.state.redirect && <Redirect to={'/resetcode'}/>}
-			</ContainerForm>
-		);
-	}
+  render() {
+  	return (
+  		<ContainerForm>
+  			<ImageLogo marginLogo='0 0 4rem' />
+  			<Form onSubmit={this.handleSubmit}>
+  				<Title>redefinição de senha</Title>
+  				<Box>
+  					<Label>email</Label>
+  					<Input
+  						login
+  						type="email"
+  						onChange={this.handleChangeEmail}
+  						placeholder="name@email.com"
+  					/>
+  					<BoxButton>
+  						<Button
+  							width='100%'
+  							widthMobile='100%'
+  							height='9vh'
+  							heightMobile='10vh'
+  							margin='1rem 0 1.5rem 0'
+  							marginMobile='5rem 0 2.5rem 0'
+  							text="solicitar redefinição de senha"
+  							type="submit"
+  							onClick={this.handleInsertCodeScreen}
+  						/>
+  					</BoxButton>
+  				</Box>
+  				<BackLogin>
+  					<ButtonText to={'/login'}>volte ao login</ButtonText>
+  				</BackLogin>
+  			</Form>
+  			{this.state.redirect && <Redirect to={'/resetcode'} />}
+  		</ContainerForm>
+  	);
+  }
 }
 
 export default ResetPasswordEmailScreen;

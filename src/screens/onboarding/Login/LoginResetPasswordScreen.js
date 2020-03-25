@@ -53,7 +53,7 @@ export const Paragraph = styled.p`
   color: #231F20;
   font-size: 0.8rem;
   font-family: Overpass, Regular;
-  margin-left: 1rem;
+  margin-left: 0.8rem;
 
 `;
 
@@ -69,7 +69,7 @@ export const InputBox = styled.span`
 		}
 
 	@media (max-width: 490px) {
-				width: 100%;
+				
 		  }
 		}
 `;
@@ -88,6 +88,7 @@ export const Label = styled.label`
   margin-top: 1rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
+	text-transform: uppercase;
 `;
 
 export const Span = styled.span` 
@@ -120,10 +121,10 @@ class LoginResetPasswordScreen extends React.Component {
 			email: '',
 			password: '',
 			error: false,
-      type: 'password',
-      redirect: undefined,
+			type: 'password',
+			redirect: undefined,
 		};
-  }
+	}
 
   handleChangeType = () => {
   	this.setState({
@@ -132,9 +133,9 @@ class LoginResetPasswordScreen extends React.Component {
   }
 
   hanleClick = () => {
-    this.setState({
-      redirect: true,
-    });
+  	this.setState({
+  		redirect: true,
+  	});
   }
 
   render() {
@@ -145,7 +146,7 @@ class LoginResetPasswordScreen extends React.Component {
   				<InputBox>
   					<Paragraph>A senha (nome@email.com) foi redefinida,
 						   faça login para acessar seu painel.</Paragraph>
-  					<Label>E-MAIL</Label>
+  					<Label>e-mail</Label>
   					<Input
   						login
   						type="email"
@@ -154,7 +155,7 @@ class LoginResetPasswordScreen extends React.Component {
   					/>
   				</InputBox>
   				<InputBox>
-  					<Label>SENHA</Label>
+  					<Label>senha</Label>
   					<Input
   						login
   						type={this.state.type}
@@ -170,13 +171,19 @@ class LoginResetPasswordScreen extends React.Component {
   					</span>
   				</InputBox>
   				<Button
-  					login
-  					text="ENTRAR"
-            type="button"
-            onClick={this.hanleClick}
+  					width='75%'
+  					widthMobile='90%'
+  					widthMobileSmall='100%'
+  					height='9vh'
+  					heightMobile='10vh'
+  					margin='1.5rem 0 5rem 0'
+  					marginMobile='3.5rem 0 1rem'
+  					text="entrar"
+  					type="button"
+  					onClick={this.hanleClick}
   				/>
   			</Form>
-        {this.state.redirect && <Redirect to={'/login'}/>}
+  			{this.state.redirect && <Redirect to={'/login'}/>}
   		</ContainerForm>
   	);
   }
