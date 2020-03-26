@@ -6,7 +6,7 @@ export const MyButton = styled.button`
   width: ${props => props.width};
   height: ${props => props.height};
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   font-family: Overpass, Bold;
   border: 0;
@@ -17,11 +17,12 @@ export const MyButton = styled.button`
 
   @media (max-width: 648px) {
     width: ${props => (props.widthMobile)};
-    height: ${props => (props.heightMobile)};
+    /* height: ${props => (props.heightMobile)}; */
     margin: ${props => (props.marginMobile)};
+    padding: ${props => (props.paddingMobile)};
   }
 
-  @media (max-width: 488px){
+  @media (max-width: 490px){
     width: ${props => (props.widthMobileSmall)};
 
   }
@@ -34,12 +35,14 @@ export default function Button(props) {
 			onClick={props.onClick}
 			type={props.type}
 			width={props.width}
-			widthMobile={props.widthMobile}
+      widthMobile={props.widthMobile}
+      widthMobileSmall={props.widthMobileSmall}
 			height={props.height}
 			heightMobile={props.heightMobile}
 			margin={props.margin}
 			marginMobile={props.marginMobile}
 			padding={props.padding}
+			paddingMobile={props.paddingMobile}
 		>
 			{props.text}
 		</MyButton>

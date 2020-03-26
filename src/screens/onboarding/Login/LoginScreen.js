@@ -50,13 +50,13 @@ export const Form = styled.form`
 `;
 
 export const InputBox = styled.span`
-	width: 80%;
+	width: 70%;
 	display: flex;
 	flex-direction: column;
 	position: relative;
 
 	@media (max-width: 648px) {
-		width: 95%;
+		width: 80%;
 	}
 
 	@media (max-width: 490px) {
@@ -76,7 +76,7 @@ export const ImagePassword = styled.img`
 
 export const Label = styled.label`
   color: #85144b;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-family: Overpass;
 	font-weight: bold;
   margin-top: 1rem;
@@ -85,17 +85,16 @@ export const Label = styled.label`
 `;
 
 export const Span = styled.span` 
-  width: 80%;
+  width: 70%;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 0.5rem;
-	margin-bottom: 2.5rem;
+  margin: 1rem 0 3rem;
 
 
 	@media (max-width: 648px) {
-		width: 95%;
+		width: 80%;
 		margin: 2rem;
 	}
 
@@ -106,7 +105,7 @@ export const Span = styled.span`
 
 export const ButtonText = styled(Link)`
   color: #85144B;
-  font-size: 0.75rem; 
+  font-size: 0.9rem; 
   text-decoration: none;
 	text-transform: uppercase;
 `;
@@ -174,7 +173,7 @@ class LoginScreen extends React.Component {
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo marginLogo='2rem 0 4rem' />
+					<ImageLogo marginLogo='3rem 0 6rem' />
 					<InputBox>
 						<Label>EMAIL</Label>
 						<Input
@@ -206,13 +205,12 @@ class LoginScreen extends React.Component {
 					{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
 					{/* {this.state.error && <Error>Endereço de email inválido</Error> */}
 					<Button
-						width='80%'
-						widthMobile='95%'
-						widthMobileSmall='95%'
-						height='9vh'
-						heightMobile='10vh'
-						margin='1.5rem 0 1rem'
-						marginMobile='3.5rem 0 1rem'
+						width='70%'
+						widthMobile='80%'
+						widthMobileSmall='98%'
+						height='3.5rem'
+						padding='1rem'
+						margin='2rem 0 1rem'
 						text="entrar"
 						type="submit"
 					/>

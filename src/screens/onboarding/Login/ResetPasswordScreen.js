@@ -16,9 +16,9 @@ export const ContainerForm = styled.div`
   background-color: #FFCFCD;
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
+  justify-content: center; 
   margin: 0;
-  padding: 3rem;
 
   @media (max-width: 648px) {
       background-color: #fff;
@@ -29,7 +29,7 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 33%;
+  width: 30%;
   background-color: #fff;
   padding: 1rem;
   display: flex;
@@ -59,13 +59,16 @@ export const Form = styled.form`
 
 export const Title = styled.h1`
   width: 90%;
-  font-size: 1.2rem;
-  font-family: Overpass, ExtraBold;
+  font-size: 1.37rem;
+  font-family: Overpass;
+  font-weight: 900;
   margin-top: 1rem;
   text-transform: uppercase;
 
   @media (max-width: 648px) {
+     width: 100%;
      margin: 0 0 3rem 0;
+     font-size: 1.25rem;
      }
   }
 `;
@@ -83,11 +86,12 @@ export const Box = styled.span`
 
 export const Label = styled.label`
   color: #85144B;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   margin: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
-  font-family: Overpass, Regular; 
+  font-family: Overpass;
+  font-weight: bold; 
   text-transform: uppercase;
 `;
 
@@ -104,7 +108,6 @@ export const BoxButton = styled.div`
 `;
 
 export const BackLogin = styled.span` 
-  /* width: 95%; */
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -136,7 +139,7 @@ class ResetPasswordEmailScreen extends React.Component {
   	});
   };
 
-  handleInsertCodeScreen = () => {
+  handleSubmit= () => {
   	this.setState({ redirect: '/resetcode' });
   }
 
@@ -153,15 +156,16 @@ class ResetPasswordEmailScreen extends React.Component {
   						type="email"
   						onChange={this.handleChangeEmail}
   						placeholder="name@email.com"
+  						required
   					/>
   					<BoxButton>
   						<Button
   							width='100%'
   							widthMobile='100%'
-  							height='9vh'
-  							heightMobile='10vh'
+  							height='3.5rem'
+  							heightMobile='3.5rem'
   							margin='1rem 0 1.5rem 0'
-  							marginMobile='5rem 0 2.5rem 0'
+  							marginMobile='6.2rem 0 3rem 0'
   							text="solicitar redefinição de senha"
   							type="submit"
   							onClick={this.handleInsertCodeScreen}
