@@ -25,7 +25,7 @@ export const MyButton = styled.button`
   @media (max-width: 490px){
     width: ${props => (props.widthMobileSmall)};
 
-  }
+    }
 `;
 
 export default function Button(props) {
