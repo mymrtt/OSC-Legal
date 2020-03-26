@@ -184,7 +184,7 @@ class LoginResetPasswordScreen extends React.Component {
 						onClick={this.hanleClick}
 					/>
 				</Form>
-				{this.state.redirect && <Redirect to={'/login'} />}
+				{this.state.redirect && <Redirect to={'/loginreset'} />}
 			</ContainerForm>
 		);
 	}
