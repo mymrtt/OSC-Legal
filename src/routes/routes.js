@@ -15,14 +15,14 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
 // dashboard
 import Dashboard from '../screens/dashboard/index';
-import Organization from '../screens/dashboard/Organization/OrganizationScreen';
+// import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 import PrivateRoute from './PrivateRoute';
 // import NoMatch from '../NoMatch';
 
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
-		<Route path='/organization' component={Organization} />
+			{/* <Route path='/organization' component={Organization} /> */}
 			<Route exact path='/' component={Login} />
 			<Route path='/login' component={Login} />
 			<Route exact path='/OSC-Legal' component={Login} />

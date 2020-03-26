@@ -57,8 +57,7 @@ const TitleTerms = styled.h1`
 const TextTerms = styled.p`
     font-family: Overpass;
     width: 80%;
-    font-size: 0.8rem;
-    line-height: 1rem;
+    font-size: 1rem;
 
     @media(max-width: 648px){
       font-size: 1rem;
@@ -72,18 +71,6 @@ const TextTermsBold = styled.strong`
     cursor: pointer;
 
 `;
-
-// const ButtonLogin = styled.button`
-//     text-transform: uppercase;
-//     font-size: 1rem;
-//     color: #85144b;
-//     cursor: pointer;
-//     font-family: Overpass, Bold;
-//     background: none;
-//     border: none;
-//     background: #ff4136;
-//     width: 87%;
-// `;
 
 const FisicalPersonSucess = props => (
 	<Modal>

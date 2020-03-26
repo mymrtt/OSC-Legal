@@ -24,25 +24,23 @@ export const Container = styled.div`
 `;
 
 export const Div = styled.div`
-  width: 40%;
-  height: 55vh;
+  width: 35%;
+  height: 50vh;
   background-color: #fff;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
 
-  @media (max-width: 980px) {
-		width: 65%;
-	}
-
-	@media (max-width: 786px) {
-		width: 70%;
+  
+	@media (max-width: 1030px) {
+    width: 50%
 	}
 
 	@media (max-width: 648px) {
-		width: 90%;
-		margin: 0;
+    width: 80%;
+		height: 79vh;
+		/* margin: 0; */
 	}
 `;
 
@@ -66,14 +64,18 @@ export const Code = styled.p`
   color: #FF4136;
   font-size: 2.5rem;
   font-weight: bold;
-  margin: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: Overpass;
+
+  @media (max-width: 648px) {
+    margin: 3rem;
+}
 `;
 
 export const Span = styled.span` 
-  width: 90%;
+  width: 85%;
   color: #231F20;
   text-align: center;
   display: flex;
@@ -118,8 +120,12 @@ render() {
                pode acessar sua conta normalmente.</SpanParagraph>
 				</Span>
 				<Button
-					login
-					text="REDEFINIR SENHA"
+          width='75%'
+          widthMobile='100%'
+          height='9vh'
+          heightMobile='10vh'
+					marginMobile='3rem 0 2rem 0'
+					text="redefinir senha"
 					type="button"
 					onClick={this.hanleClick}
 				/>
