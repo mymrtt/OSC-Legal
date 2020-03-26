@@ -46,7 +46,6 @@ export const Form = styled.form`
 
 export const Span = styled.span`
 	width: 80%;
-  margin-top: 0.3rem;
 
   @media (max-width: 648px) {
 		width: 90%;
@@ -56,9 +55,9 @@ export const Span = styled.span`
 export const Title = styled.h1`
   color: #231F20;
   font-size: 1.25rem;
-  font-weight: bold;
+  font-weight: 900;
   font-family: Overpass;
-  margin: 2rem 0 1rem 0;
+  margin: 2rem 0 1.5rem 0;
 	text-transform: uppercase;
 
   @media (max-width: 648px) {
@@ -70,7 +69,7 @@ export const Paragraph = styled.p`
   /* font-size: 1rem; */
   color: #231F20;
   font-family: Overpass, Regular;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
 	@media (max-width: 648px) {
 		font-size: 0.85rem;
@@ -87,7 +86,7 @@ export const Error = styled.h4`
 
 export const Label = styled.label`
   color: #85144B;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   margin: 0.9rem;
   font-family: Overpass;
   font-weight: bold;
@@ -245,8 +244,8 @@ class NewPasswordScreen extends React.Component {
 					<Button
 						width='80%'
 						widthMobile='90%'
-						height='8vh'
-						heightMobile='10vh'
+						height='3.5rem'
+						heightMobile='3.5rem'
 						margin='1rem 0 1.5rem 0;'
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
