@@ -83,7 +83,7 @@ export const ImagePassword = styled.img`
 
 export const Label = styled.label`
   color: #85144b;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-family: Overpass, Bold;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
@@ -126,67 +126,68 @@ class LoginResetPasswordScreen extends React.Component {
 		};
 	}
 
-  handleChangeType = () => {
-  	this.setState({
-  		type: this.state.type === 'password' ? 'text' : 'password',
-  	});
-  }
+	handleChangeType = () => {
+		this.setState({
+			type: this.state.type === 'password' ? 'text' : 'password',
+		});
+	}
 
-  hanleClick = () => {
-  	this.setState({
-  		redirect: true,
-  	});
-  }
+	hanleClick = () => {
+		this.setState({
+			redirect: true,
+		});
+	}
 
-  render() {
-  	return (
-  		<ContainerForm>
-  			<Form onSubmit={this.handleSubmit}>
-  				<ImageLogo loginScreen />
-  				<InputBox>
-  					<Paragraph>A senha (nome@email.com) foi redefinida,
-						   faça login para acessar seu painel.</Paragraph>
-  					<Label>e-mail</Label>
-  					<Input
-  						login
-  						type="email"
-  						onChange={this.handleChangeEmail}
-  						placeholder="name@email.com"
-  					/>
-  				</InputBox>
-  				<InputBox>
-  					<Label>senha</Label>
-  					<Input
-  						login
-  						type={this.state.type}
-  						onChange={this.handleChangePassword}
-  						placeholder="Insira sua senha"
-  					/>
-  					<span>
-  						<ImagePassword
-  							src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
-  							onClick={this.handleChangeType}
-  							off={this.state.type === 'password'}
-  						/>
-  					</span>
-  				</InputBox>
-  				<Button
-  					width='75%'
-  					widthMobile='90%'
-  					widthMobileSmall='100%'
-  					height='9vh'
-  					heightMobile='10vh'
-  					margin='1.5rem 0 5rem 0'
-  					marginMobile='3.5rem 0 1rem'
-  					text="entrar"
-  					type="button"
-  					onClick={this.hanleClick}
-  				/>
-  			</Form>
-  			{this.state.redirect && <Redirect to={'/login'}/>}
-  		</ContainerForm>
-  	);
-  }
+	render() {
+		return (
+			<ContainerForm>
+				<Form onSubmit={this.handleSubmit}>
+					<ImageLogo loginScreen />
+					<InputBox>
+						<Paragraph>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Paragraph>
+						<Label>e-mail</Label>
+						<Input
+							login
+							type="email"
+							onChange={this.handleChangeEmail}
+							placeholder="name@email.com"
+							required
+						/>
+					</InputBox>
+					<InputBox>
+						<Label>senha</Label>
+						<Input
+							login
+							type={this.state.type}
+							onChange={this.handleChangePassword}
+							placeholder="Insira sua senha"
+							required
+						/>
+						<span>
+							<ImagePassword
+								src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
+								onClick={this.handleChangeType}
+								off={this.state.type === 'password'}
+							/>
+						</span>
+					</InputBox>
+					<Button
+						width='75%'
+						widthMobile='90%'
+						widthMobileSmall='100%'
+						height='3.5rem'
+						heightMobile='3.5rem'
+						margin='1.5rem 0 5rem 0'
+						marginMobile='3.5rem 0 1rem'
+						text="entrar"
+						type="button"
+						onClick={this.hanleClick}
+					/>
+				</Form>
+				{this.state.redirect && <Redirect to={'/login'} />}
+			</ContainerForm>
+		);
+	}
 }
 
 export default LoginResetPasswordScreen;
