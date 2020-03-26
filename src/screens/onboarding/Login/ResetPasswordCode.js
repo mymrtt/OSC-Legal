@@ -122,7 +122,7 @@ render() {
 				<Button
           width='75%'
           widthMobile='100%'
-          height='9vh'
+          height='3.15rem'
           heightMobile='10vh'
 					marginMobile='3rem 0 2rem 0'
 					text="redefinir senha"
