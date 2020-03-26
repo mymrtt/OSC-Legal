@@ -68,19 +68,18 @@ const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-  margin: 1.3rem 0 1rem 2.6rem;
+  margin: 1.3rem 0 1rem 2.4rem;
   align-self: flex-start;
   
   @media (max-width: 648px) {
-      margin: 2rem 0;
+      margin: 2rem 0 1rem 0.3rem;
       font-size: 1.3rem;
-      align-self: center;
     }
 `;
 
 const Label = styled.label`
   position: relative;
-  width: 90%;
+  width: 92%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -103,7 +102,7 @@ const ParagraphInput = styled.p`
     text-transform: uppercase;
     color: #85144b;
     font-size: 0.8rem;
-    margin: 1rem 1.3rem;
+    margin: 1.5rem 0 0.5rem 1.4rem;
     font-family: Overpass;
     font-weight: bold;
 
@@ -135,12 +134,12 @@ const ErrorEmpty = styled.h6`
 `;
 const ImagePassword = styled.img`
   position: absolute;
-  bottom: 1.2rem;
+  bottom: 1rem;
   right: 0.5rem;
   cursor: pointer;
 
   @media(max-width: 648px){
-    bottom: 1.5rem;
+    bottom: 1rem;
   }
 `;
 const TextTerms = styled.p`
@@ -161,7 +160,8 @@ const TextTerms = styled.p`
   }
 
   @media(max-width: 648px){
-    font-size: 0.6rem;
+    font-size: 0.8rem;
+	width: 63%;
   }
 `;
 
@@ -270,8 +270,8 @@ class FisicalPersonForm extends Component {
   						onSubmit={this.handleSubmit}
   						withEmpty={isEmpty}
   					>
-  						<ImageLogo />
-  						<TitleForm>cadastrar pessoa física</TitleForm>
+  						<ImageLogo margin="3rem 0 2rem 0"/>
+  						<TitleForm> criar conta </TitleForm>
   						<Label>
   							<ParagraphInput>Nome</ParagraphInput>
   							<Input
@@ -369,6 +369,7 @@ class FisicalPersonForm extends Component {
   							text="concordar e criar conta"
   							type="submit"
   							onClick={this.handleSubmit}
+  							widthMobile="100%"
   						/>
   					</Form>
   				</Container>

@@ -13,7 +13,7 @@ const Overlay = styled.section`
   top: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
   padding: 2.5rem 0;
 
@@ -34,7 +34,7 @@ const Modal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  border-radius: 4px;
 
   @media (max-width: 768px) {
     width: 90%;
@@ -44,6 +44,7 @@ const Modal = styled.div`
     min-height: 100vh;
     align-self: center;
     justify-content: flex-start;
+    padding-bottom: 4rem;
   }
 `;
 
@@ -55,13 +56,14 @@ const TitleTerms = styled.h1`
   text-transform: uppercase;
 
   @media (max-width: 648px) {
-    margin: 2rem 0 0.5rem 1rem;
+    margin: 3rem 0 0.5rem 0;
     font-size: 1.5rem;
+    align-self: center;
   }
 `;
 const ButtonTerms = styled.button`
-    width: 120px;
-    height: 36px;
+    width: 7.5rem;
+    height: 2.25rem;
     background-color: #ff4136;
     color: #fff;
     text-transform: uppercase;
@@ -70,6 +72,12 @@ const ButtonTerms = styled.button`
     align-self: flex-end;
     margin: 0.4rem 0.5rem 0.4rem 0;
     box-shadow: 0 3px 6px #00000029;
+
+    @media(max-width: 648px){
+      position: fixed;
+      bottom: 0;
+      height: 3.5rem;
+    }
 
   @media (max-width: 648px) {
     align-self: center;
@@ -112,6 +120,8 @@ const Terms = styled.p`
   @media(max-width: 648px){
     margin: 1.5rem 0;
     font-size: 1rem;
+    width: 90%;
+    align-self: center;
   }
 `;
 
@@ -119,6 +129,12 @@ const SubtitleTerms = styled.h3`
     margin: 1rem 0;
     font-size: 0.87rem;
     font-family: Overpass, Bold;
+
+  @media(max-width: 648px){
+    width: 75%;
+    align-self: center;
+    text-align: center;
+  }
 `;
 
 export default function ModalTerms(props) {

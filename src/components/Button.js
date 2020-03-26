@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const MyButton = styled.button`
   margin: ${props => props.margin};
   width: ${props => props.width};
-  height: ${props => props.height};
+  height: 3.5rem;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -29,7 +29,6 @@ export const MyButton = styled.button`
 `;
 
 export default function Button(props) {
-	console.log('props', props);
 	return (
 		<MyButton
 			onClick={props.onClick}
