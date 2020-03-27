@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -10,6 +11,11 @@ import Button from '../../../components/Button';
 
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
+
+// Redux
+const mapStateToProps = state => ({
+	email: state.signup.users.email,
+});
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -135,7 +141,7 @@ class LoginScreen extends React.Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: '',
+			email: this.props.email || '',
 			password: '',
 			passwordError: '',
 			error: undefined,
@@ -176,6 +182,7 @@ class LoginScreen extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.email);
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
@@ -185,6 +192,7 @@ class LoginScreen extends React.Component {
 						<Input
 							login
 							type="email"
+							value={this.state.email}
 							onChange={this.handleChangeEmail}
 							placeholder="name@email.com"
 							required
@@ -229,4 +237,4 @@ class LoginScreen extends React.Component {
 	}
 }
 
-export default LoginScreen;
+export default connect(mapStateToProps)(LoginScreen);

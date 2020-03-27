@@ -6,11 +6,14 @@ import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 
 export const LogoImage = styled.img`
-  width: ${props => (props.widthImage ? '130px' : '150px')};
+  width: ${props => props.width};
   margin: ${props => props.margin};
-
 `;
 
 export default function ImageLogo(props) {
-	return <LogoImage src={Logo} margin={props.margin} alt="Osc Logo" />;
+	return <LogoImage src={Logo}
+		margin={props.margin}
+		alt="Osc Logo"
+		width={props.width}
+	/>;
 }
