@@ -1,10 +1,15 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // Components
-import FisicalPersonForm from './UserForm';
-import FisicalPersonTerms from './UserTerms';
+import UserForm from './UserForm';
+import ModalTerms from './UserTerms';
+import ConfirmEmail from './ConfirmEmail';
 
 export const Container = styled.div`
   width: 100%;
@@ -32,13 +37,11 @@ class CreateFisicalPersonScreen extends Component {
 
   render() {
   	return (
-  		<Container>
-  			{this.state.modalTerms === true ? (
-  				<FisicalPersonTerms handleModalTerms={this.handleModalTerms} />
-  			) : (
-  				<FisicalPersonForm handleModalTerms={this.handleModalTerms} />
-  			)}
-  		</Container>
+  		<div>
+  			{this.state.modalTerms && <ModalTerms handleModalTerms={this.handleModalTerms}/>}
+  			<UserForm handleModalTerms={this.handleModalTerms}/>
+  		</div>
+
   	);
   }
 }

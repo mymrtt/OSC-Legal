@@ -15,17 +15,19 @@ export const MyButton = styled.button`
   box-shadow: 0 3px 6px #00000029;
   text-transform: uppercase;
 
+  @media(max-width: 768px){
+    height: ${props => props.heightMobile};
+  }
+
   @media (max-width: 648px) {
     width: ${props => (props.widthMobile)};
-    /* height: ${props => (props.heightMobile)}; */
     margin: ${props => (props.marginMobile)};
     padding: ${props => (props.paddingMobile)};
   }
 
   @media (max-width: 490px){
     width: ${props => (props.widthMobileSmall)};
-
-    }
+  }
 `;
 
 export default function Button(props) {

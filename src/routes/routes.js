@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // Components
 
-// onboarding
+// Onboarding
 import Login from '../screens/onboarding/Login/LoginScreen';
 import LoginResetPasswordScreen from '../screens/onboarding/Login/LoginResetPasswordScreen';
 import ResetPasswordCode from '../screens/onboarding/Login/ResetPasswordCode';
@@ -13,7 +13,7 @@ import ResetPasswordEmailScreen from '../screens/onboarding/Login/ResetPasswordS
 
 import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
-// dashboard
+// Dashboard
 import Dashboard from '../screens/dashboard/index';
 // import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 import PrivateRoute from './PrivateRoute';
@@ -22,7 +22,7 @@ import PrivateRoute from './PrivateRoute';
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
-			<Route exact path='/' component={LoginResetPasswordScreen} />
+			<Route exact path='/' component={Login} />
 			<Route path='/login' component={Login} />
 			<Route exact path='/OSC-Legal' component={Login} />
 			<Route path='/loginreset' component={LoginResetPasswordScreen} />
