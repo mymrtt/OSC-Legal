@@ -110,7 +110,7 @@ hanleClick = () => {
 render() {
 	return (
 		<Container>
-			<ImageLogo marginLogo='3rem 0 2.5rem 0'/>
+			<ImageLogo margin='3rem 0 2.5rem 0'/>
 			<Div onSubmit={this.handleSubmit}>
 				<Title>Aqui está o seu código de redefinição de senha:</Title>
 				<Code>210704</Code>

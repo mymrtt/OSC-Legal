@@ -30,18 +30,23 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 35%;
+  width: 26%;
+	border-radius: 5px;
   background-color: #fff;
   display: flex;
   align-items: center;
   flex-direction: column;
 
+	@media (max-width: 1440px) {
+		width: 34%;
+	}
+
 	@media (max-width: 1250px) {
-		width: 55%;
+		width: 43%;
 	}
 
 	@media (max-width: 980px) {
-		width: 70%;
+		width: 53%;
 	}
 
   @media (max-width: 648px) {
@@ -173,7 +178,7 @@ class LoginScreen extends React.Component {
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo marginLogo='3rem 0 6rem' />
+					<ImageLogo margin='3rem 0 6rem' />
 					<InputBox>
 						<Label>EMAIL</Label>
 						<Input

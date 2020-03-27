@@ -29,12 +29,17 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 30%;
+  width: 26%;
+  border-radius: 5px;
   background-color: #fff;
   padding: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  @media (max-width: 1440px) {
+		width: 32%;
+	}
 
   @media (max-width: 1300px) {
       width: 40%;
@@ -47,7 +52,7 @@ export const Form = styled.form`
   }
 
   @media (max-width: 786px) {
-      width: 70%;
+      width: 65%;
      }
   }
 
@@ -66,7 +71,7 @@ export const Title = styled.h1`
   text-transform: uppercase;
 
   @media (max-width: 648px) {
-     width: 100%;
+     width: 92%;
      margin: 0 0 3rem 0;
      font-size: 1.25rem;
      }
@@ -79,7 +84,7 @@ export const Box = styled.span`
    flex-direction: column;
 
   @media (max-width: 648px) {
-      width: 100%;
+      width: 96%;
      }
    }
 `;
@@ -90,8 +95,7 @@ export const Label = styled.label`
   margin: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
-  font-family: Overpass;
-  font-weight: bold; 
+  font-family: Overpass, Regular;
   text-transform: uppercase;
 `;
 
@@ -116,10 +120,11 @@ export const BackLogin = styled.span`
 
 export const ButtonText = styled(Link)` 
   color: #85144B;
-  font-size: 1rem; 
+  font-size: 1rem;
   font-family: Overpass, Regular;
   text-decoration: none;
   text-transform: uppercase;
+  margin-bottom: 0.5rem;
 
 `;
 
@@ -146,7 +151,7 @@ class ResetPasswordEmailScreen extends React.Component {
   render() {
   	return (
   		<ContainerForm>
-  			<ImageLogo marginLogo='0 0 4rem' />
+  			<ImageLogo margin='0 0 4rem' />
   			<Form onSubmit={this.handleSubmit}>
   				<Title>redefinição de senha</Title>
   				<Box>
@@ -165,7 +170,7 @@ class ResetPasswordEmailScreen extends React.Component {
   							height='3.5rem'
   							heightMobile='3.5rem'
   							margin='1rem 0 1.5rem 0'
-  							marginMobile='6.2rem 0 3rem 0'
+  							marginMobile='5.5rem 0 3rem 0'
   							text="solicitar redefinição de senha"
   							type="submit"
   							onClick={this.handleInsertCodeScreen}
