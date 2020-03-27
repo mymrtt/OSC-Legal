@@ -34,6 +34,7 @@ export const ContainerForm = styled.div`
 export const Form = styled.form`
   width: 30%;
   background-color: #fff;
+	border-radius: 5px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -49,11 +50,12 @@ export const Form = styled.form`
 		}
 `;
 
-export const Paragraph = styled.p`
+export const Title = styled.p`
   color: #231F20;
-  font-size: 0.8rem;
+  font-size: 0.959rem;
   font-family: Overpass, Regular;
-  margin-left: 0.8rem;
+  /* margin-left: 0.8rem; */
+	margin: 0 0 1rem 0.8rem;
 
 `;
 
@@ -76,15 +78,29 @@ export const InputBox = styled.span`
 
 export const ImagePassword = styled.img`
   position: absolute;
-  bottom: ${props => (props.off ? '1rem' : '0.875rem')};
+  bottom: ${props => (props.off ? '1.2rem' : '0.875rem')};
   right: 0.7rem;
   cursor: pointer;
 `;
 
+export const Error = styled.h4`
+  width: 63%;
+  color: #D53B40;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.6rem;
+  font-family: Eurostile, Medium;
+
+  @media (max-width: 648px) {
+		width: 85%;
+	}	
+`;
+
 export const Label = styled.label`
   color: #85144b;
-  font-size: 0.8rem;
-  font-family: Overpass, Bold;
+  font-size: 0.9rem;
+  font-family: Overpass;
+	font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
@@ -120,10 +136,37 @@ class LoginResetPasswordScreen extends React.Component {
 			value: '',
 			email: '',
 			password: '',
-			error: false,
+			passwordError: '',
+			error: undefined,
 			type: 'password',
 			redirect: undefined,
 		};
+	}
+
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		const { password } = this.state;
+		if (password.length < 6) {
+			this.setState({
+				error: true,
+			});
+		} else {
+			this.setState({
+				error: false,
+			});
+		}
+	}
+
+	handleChangeEmail = (ev) => {
+		this.setState({
+			email: ev.target.value,
+		});
+	};
+
+	handleChangePassword = (ev) => {
+		this.setState({
+			password: ev.target.value,
+		});
 	}
 
 	handleChangeType = () => {
@@ -132,19 +175,19 @@ class LoginResetPasswordScreen extends React.Component {
 		});
 	}
 
-	hanleClick = () => {
-		this.setState({
-			redirect: true,
-		});
-	}
+	// hanleClick = () => {
+	// 	this.setState({
+	// 		redirect: true,
+	// 	});
+	// }
 
 	render() {
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo loginScreen />
+					<ImageLogo margin='3rem' />
 					<InputBox>
-						<Paragraph>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Paragraph>
+						<Title>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Title>
 						<Label>e-mail</Label>
 						<Input
 							login
@@ -160,7 +203,8 @@ class LoginResetPasswordScreen extends React.Component {
 							login
 							type={this.state.type}
 							onChange={this.handleChangePassword}
-							placeholder="Insira sua senha"
+							placeholder="Insira senha"
+							isError={this.state.error}
 							required
 						/>
 						<span>
@@ -171,17 +215,16 @@ class LoginResetPasswordScreen extends React.Component {
 							/>
 						</span>
 					</InputBox>
+					{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
 					<Button
 						width='75%'
 						widthMobile='90%'
 						widthMobileSmall='100%'
-						height='3.5rem'
-						heightMobile='3.5rem'
 						margin='1.5rem 0 5rem 0'
 						marginMobile='3.5rem 0 1rem'
 						text="entrar"
-						type="button"
-						onClick={this.hanleClick}
+						type="submit"
+						// onClick={this.hanleClick}
 					/>
 				</Form>
 				{this.state.redirect && <Redirect to={'/loginreset'} />}

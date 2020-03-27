@@ -27,6 +27,7 @@ export const Div = styled.div`
   width: 35%;
   height: 50vh;
   background-color: #fff;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -40,7 +41,6 @@ export const Div = styled.div`
 	@media (max-width: 648px) {
     width: 80%;
 		height: 79vh;
-		/* margin: 0; */
 	}
 `;
 
@@ -120,10 +120,8 @@ render() {
                pode acessar sua conta normalmente.</SpanParagraph>
 				</Span>
 				<Button
-          width='75%'
-          widthMobile='100%'
-          height='3.15rem'
-          heightMobile='10vh'
+					width='75%'
+					widthMobile='100%'
 					marginMobile='3rem 0 2rem 0'
 					text="redefinir senha"
 					type="button"
