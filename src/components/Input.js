@@ -6,7 +6,7 @@ import styled from 'styled-components';
 export const InputForm = styled.input`
   width: ${props => (props.login ? '100%' : '95%')};
   height: 3.5rem;
-  border: 1px solid ;
+  border: 1px solid;
   border-color: ${props => (props.isError ? 'tomato' : '#ffcfcd')};
   border-radius: 3px;
   background: #fafafa;
@@ -17,6 +17,7 @@ export const InputForm = styled.input`
 
   @media (max-width: 648px) {
     width: 100%;
+    height: 3.5rem;
   }
 `;
 

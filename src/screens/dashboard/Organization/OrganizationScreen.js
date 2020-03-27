@@ -22,11 +22,11 @@ const Container = styled.div`
 
   form {
     display: flex;
-		min-width: 40%;
+		min-width: 32%;
     justify-content: center;
     flex-direction: column;
-    padding: 1.5rem 0 1rem 0;
-    margin: 1rem 1rem 2rem 1rem;
+    padding: 1.5rem 0 2rem 0;
+    margin: 1rem;
     border-radius: 3px;
     background: #ffffff;
 
@@ -41,7 +41,7 @@ const Container = styled.div`
 const ContainerFisicalPerson = styled.label`
   
   h1 {
-    margin-left: 12%;
+    margin: 0 11.2%;
     color: #85144b;
     font-weight: 800;
     font-family: "Overpass", sans-serif;
@@ -49,7 +49,7 @@ const ContainerFisicalPerson = styled.label`
   
   > h2 {
     font-size: 1.3rem;
-    margin: 5% 0 10% 12%;
+    margin: 5% 0 10% 11.8%;
     text-transform: uppercase;
     font-weight: 800;
     font-family: "Overpass", sans-serif;
@@ -58,13 +58,13 @@ const ContainerFisicalPerson = styled.label`
   div {
     display: flex;
     flex-flow: wrap column;
-    height: 300px;
+    height: 270px;
 
     @media (max-width: 425px) {
       & {
         height: initial;
         align-items: flex-start;
-        padding-left: 13%;
+        padding-left: 11.7%;
       }
     }
 
@@ -85,14 +85,20 @@ const ContainerFisicalPerson = styled.label`
       margin-bottom: 0.4rem;
       color: #85144b;
       text-transform: uppercase;
-      margin-left: 3.9rem;
+      margin-left: 3.2rem;
       font-family: "Overpass", sans-serif;
       font-weight: 700;
     }
 
+    @media (max-width: 648px) {
+      h2 {
+        margin-left: 3.5rem;
+      }
+    }
+
     @media (max-width: 425px) {
       h2 {
-        margin: 0;
+        margin-left: 0;
       }
     }
   }
@@ -101,9 +107,15 @@ const ContainerFisicalPerson = styled.label`
 const Text = styled.p`
 
   font-size: 1rem;
-  margin: 0 0 1.6rem 3.9rem;
+  margin: 0 0 1.6rem 3.2rem;
   font-family: "Overpass", sans-serif;
   font-weight: 300;
+
+  @media (max-width: 648px) {
+    & {
+      margin: 0 0 1.6rem 3.5rem;
+    }
+  };
 
   @media (max-width: 425px) {
     & {
@@ -123,7 +135,7 @@ const ContainerLegalPerson = styled.label`
     font-size: 1.3rem;
     align-self: flex-start;
     text-transform: uppercase;
-    margin: 0 0 0 12.2%;
+    margin: 0 11.8%;
     font-family: "Overpass", sans-serif;
     font-weight: 800;
   }
@@ -137,7 +149,7 @@ const ContainerLegalPerson = styled.label`
       width: 100%;
       font-family: "Overpass", sans-serif;
       font-weight: 300;
-      padding: 1.4rem;
+      padding: 0.5rem;
     }
 
     @media (max-width: 648px) {
@@ -155,7 +167,7 @@ const ContainerLegalPerson = styled.label`
         color: #85144b;
         text-transform: uppercase;
         font-size: 0.7rem;
-        margin-left: 0.7rem;
+        margin-left: 0.5rem;
         margin-top: 1.5rem;
         font-family: "Overpass", sans-serif;
         font-weight: 700;
@@ -171,9 +183,9 @@ const ContainerLegalPerson = styled.label`
   }
 
   button {
-    min-width: 80%;
+    min-width: 78%;
     padding: 4% 0;
-    margin: 0 10%;
+    margin: 0 11.2%;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 3px;
     font-family: "Overpass", sans-serif;
