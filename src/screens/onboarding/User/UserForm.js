@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-mixed-spaces-and-tabs */
 
@@ -64,15 +65,31 @@ const BlockSmallerInput = styled.span`
     position: relative;
 `;
 
+const BlockTitle = styled.span`
+	width: 90%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+
+	@media(max-width: 648px){
+		width: 100%;
+	}
+`;
+
 const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-  margin: 1.3rem 0 1rem 2.4rem;
+  margin: 1.5rem 0 1rem 1.17rem;
   align-self: flex-start;
   
+  @media(max-width: 768px){
+	  margin-left: 0.7rem;
+  }
+
   @media (max-width: 648px) {
-      margin: 2rem 0 1rem 0.3rem;
+	  
+      margin: 2rem 0 1rem 0.25rem;
       font-size: 1.3rem;
     }
 `;
@@ -270,8 +287,13 @@ class FisicalPersonForm extends Component {
   						onSubmit={this.handleSubmit}
   						withEmpty={isEmpty}
   					>
-  						<ImageLogo margin="3rem 0 2rem 0"/>
-  						<TitleForm> criar conta </TitleForm>
+  						<ImageLogo
+  							margin="3rem 0 2rem 0"
+  							width=" 150px"
+  						/>
+  						<BlockTitle>
+  							<TitleForm> criar conta </TitleForm>
+  						</BlockTitle>
   						<Label>
   							<ParagraphInput>Nome</ParagraphInput>
   							<Input

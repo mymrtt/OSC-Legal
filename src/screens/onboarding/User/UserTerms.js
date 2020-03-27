@@ -1,43 +1,42 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 // Libs
 import React from 'react';
 import styled from 'styled-components';
 
-//Components
-import ImageLogo from '../../../components/ImageLogo'
+// Components
+import ImageLogo from '../../../components/ImageLogo';
 
 const Overlay = styled.section`
   min-width: 100%;
   min-height: 100vh;
-  background-color: #00000040;
-  position: sticky;
+  background-color: #00000060;
+  position: fixed;
   top: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   padding: 2.5rem 0;
+  z-index: 99;
 
-  @media(max-width: 648px){
-      padding: 0;
-
-      img{
-        display: none;
-      }
-
-    }
 `;
 const Modal = styled.div`
   width: 33%;
-  min-height: 55vh;
   background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
+  z-index: 99;
+
+  @media(max-width: 1024px){
+    width: 40%;
+  }
 
   @media (max-width: 768px) {
-    width: 90%;
+    width: 60%;
   }
   @media (max-width: 648px) {
     width: 100%;
@@ -138,31 +137,30 @@ const SubtitleTerms = styled.h3`
 `;
 
 export default function ModalTerms(props) {
-  return (
-    <Overlay>
-      <ImageLogo />
-      <Modal>
-        <TitleTerms>termos de serviço</TitleTerms>
-        <BlockTerms>
-          <SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
-          <Terms>
+	return (
+		<Overlay>
+			<Modal>
+				<TitleTerms>termos de serviço</TitleTerms>
+				<BlockTerms>
+					<SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
+					<Terms>
             Esta é uma ferramenta voltada a fornecer um guia para que as associações possam elaborar ou reformar seus estatutos, documento obrigatório nessas organizações.
-            </Terms>
-          <Terms>
+					</Terms>
+					<Terms>
             Cada senha dará oportunidade para que você possa trabalhar no documento por 30 dias. Ao final desse prazo se considera finalizado o texto, gerando-se o documento equivalente no estado em que estiver.
-            </Terms>
-          <Terms>
+					</Terms>
+					<Terms>
             De acordo com a legislação brasileira, para registro de estatuto de associação é obrigatória a assinatura de advogad@ inscrito na OAB. Recomendamos que procure um/a profissional especialista.
-            </Terms>
-          <Terms>
+					</Terms>
+					<Terms>
             Qualquer dúvida e/ou esclarecimento entre em contato com nossa equipe:
-              <u>
+						<u>
               osclegal@gmail.com
-              </u>
-          </Terms>
-        </BlockTerms>
-        <ButtonTerms onClick={() => props.handleModalTerms()}>OK</ButtonTerms>
-      </Modal>
-    </Overlay>
-  );
+						</u>
+					</Terms>
+				</BlockTerms>
+				<ButtonTerms onClick={() => props.handleModalTerms()}>OK</ButtonTerms>
+			</Modal>
+		</Overlay>
+	);
 }
