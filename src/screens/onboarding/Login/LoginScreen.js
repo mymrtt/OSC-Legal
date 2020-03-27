@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -10,6 +11,11 @@ import Button from '../../../components/Button';
 
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
+
+// Redux
+const mapStateToProps = state => ({
+	email: state.signup.users.email,
+});
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -30,24 +36,24 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 26%;
-	border-radius: 5px;
+  width: 32%;
   background-color: #fff;
+	border-radius: 5px;
   display: flex;
   align-items: center;
   flex-direction: column;
 
-	@media (max-width: 1440px) {
+	/* @media (max-width: 1440px) {
 		width: 34%;
+	} */
+
+	@media (max-width: 1024px) {
+		min-width: 50%;
 	}
 
-	@media (max-width: 1250px) {
-		width: 43%;
-	}
-
-	@media (max-width: 980px) {
+	/* @media (max-width: 980px) {
 		width: 53%;
-	}
+	}  */
 
   @media (max-width: 648px) {
 		width: 100%;
@@ -71,8 +77,9 @@ export const InputBox = styled.span`
 
 export const ImagePassword = styled.img`
   position: absolute;
-  bottom: ${props => (props.off ? '1rem' : '0.875rem')};
+  bottom: ${props => (props.off ? '1.2rem' : '0.875rem')};
   right: 0.7rem;
+	cursor: pointer;
 
 	@media (max-width: 648px) {
 		bottom: 1.2rem;
@@ -103,7 +110,7 @@ export const Span = styled.span`
 		margin: 2rem;
 	}
 
-	@media (max-width: 488px) {
+	@media (max-width: 490px) {
 		width: 95%;
 	}
 `;
@@ -134,7 +141,7 @@ class LoginScreen extends React.Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: '',
+			email: this.props.email || '',
 			password: '',
 			passwordError: '',
 			error: undefined,
@@ -145,7 +152,7 @@ class LoginScreen extends React.Component {
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 		const { password } = this.state;
-		if (password.length < 4) {
+		if (password.length < 6) {
 			this.setState({
 				error: true,
 			});
@@ -175,6 +182,7 @@ class LoginScreen extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.email);
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
@@ -184,6 +192,7 @@ class LoginScreen extends React.Component {
 						<Input
 							login
 							type="email"
+							value={this.state.email}
 							onChange={this.handleChangeEmail}
 							placeholder="name@email.com"
 							required
@@ -212,7 +221,7 @@ class LoginScreen extends React.Component {
 					<Button
 						width='70%'
 						widthMobile='80%'
-						widthMobileSmall='98%'
+						widthMobileSmall='95%'
 						padding='1rem'
 						margin='2rem 0 1rem'
 						text="entrar"
@@ -228,4 +237,4 @@ class LoginScreen extends React.Component {
 	}
 }
 
-export default LoginScreen;
+export default connect(mapStateToProps)(LoginScreen);

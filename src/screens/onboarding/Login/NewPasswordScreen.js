@@ -23,7 +23,8 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 31%;
+  width: 28%;
+	border-radius: 5px;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -147,7 +148,7 @@ class NewPasswordScreen extends React.Component {
 				});
 			}
 			if (
-				newPassword.length < 4
+				newPassword.length < 6
 			) {
 				this.setState({
 					newPasswordError: 'Use 4 caracteres ou mais para a sua senha',
@@ -206,7 +207,7 @@ class NewPasswordScreen extends React.Component {
 		const { confirmationCodeError, newPasswordError, repetPasswordError } = this.state;
 		return (
 			<ContainerForm>
-				<ImageLogo loginScreen />
+				<ImageLogo margin='3rem' />
 				<Form onSubmit={this.handleSubmit}>
 					<Span>
 						<Title>redefinição de senha</Title>
@@ -246,8 +247,6 @@ class NewPasswordScreen extends React.Component {
 						to={'/loginreset'}
 						width='80%'
 						widthMobile='90%'
-						height='3.5rem'
-						heightMobile='3.5rem'
 						margin='1rem 0 1.5rem 0;'
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
