@@ -213,7 +213,6 @@ class LoginScreen extends React.Component {
 						width='70%'
 						widthMobile='80%'
 						widthMobileSmall='98%'
-						height='3.5rem'
 						padding='1rem'
 						margin='2rem 0 1rem'
 						text="entrar"

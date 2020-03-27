@@ -167,8 +167,6 @@ class ResetPasswordEmailScreen extends React.Component {
   						<Button
   							width='100%'
   							widthMobile='100%'
-  							height='3.5rem'
-  							heightMobile='3.5rem'
   							margin='1rem 0 1.5rem 0'
   							marginMobile='5.5rem 0 3rem 0'
   							text="solicitar redefinição de senha"
