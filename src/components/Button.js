@@ -24,7 +24,6 @@ export const MyButton = styled.button`
 
   @media (max-width: 490px){
     width: ${props => (props.widthMobileSmall)};
-
   }
 `;
 
@@ -34,8 +33,8 @@ export default function Button(props) {
 			onClick={props.onClick}
 			type={props.type}
 			width={props.width}
-      widthMobile={props.widthMobile}
-      widthMobileSmall={props.widthMobileSmall}
+			widthMobile={props.widthMobile}
+			widthMobileSmall={props.widthMobileSmall}
 			height={props.height}
 			heightMobile={props.heightMobile}
 			margin={props.margin}
