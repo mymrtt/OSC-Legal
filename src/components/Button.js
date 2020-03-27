@@ -34,8 +34,8 @@ export default function Button(props) {
 			onClick={props.onClick}
 			type={props.type}
 			width={props.width}
-      widthMobile={props.widthMobile}
-      widthMobileSmall={props.widthMobileSmall}
+			widthMobile={props.widthMobile}
+			widthMobileSmall={props.widthMobileSmall}
 			height={props.height}
 			heightMobile={props.heightMobile}
 			margin={props.margin}
