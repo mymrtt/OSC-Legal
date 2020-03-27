@@ -38,6 +38,8 @@ export default function Button(props) {
 			width={props.width}
 			widthMobile={props.widthMobile}
 			widthMobileSmall={props.widthMobileSmall}
+			height={props.height}
+			heightMobile={props.heightMobile}
 			margin={props.margin}
 			marginMobile={props.marginMobile}
 			padding={props.padding}

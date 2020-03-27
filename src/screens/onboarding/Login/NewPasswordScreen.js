@@ -7,7 +7,6 @@ import { Link, Redirect } from 'react-router-dom';
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-// // import ResetPasswordCode from './ResetPasswordCode';
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -29,6 +28,8 @@ export const Form = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
+	margin: 3rem;
+	border-radius: 3px;
 
   @media (max-width: 980px) {
 		width: 40%;
@@ -41,6 +42,10 @@ export const Form = styled.form`
 	@media (max-width: 648px) {
 		width: 90%;
 		margin: 0;
+	}
+
+	input {
+		margin: 0.3rem 0 0.6rem 0;
 	}
 `;
 
@@ -66,18 +71,22 @@ export const Title = styled.h1`
 `;
 
 export const Paragraph = styled.p`
-  /* font-size: 1rem; */
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1.5rem;
 
 	@media (max-width: 648px) {
-		font-size: 0.85rem;
+		margin-top: 3rem;
+	}
+
+	@media (max-width: 460px) {
+		font-size: 0.9rem;
+		width: 90%;
 	}
 `;
 
 export const Error = styled.h4`
-  color: #D53B40;
+  color: #D63434;
   display: flex;
   justify-content: flex-end;
   font-size: 0.6rem;
@@ -91,12 +100,6 @@ export const Label = styled.label`
   font-family: Overpass;
   font-weight: bold;
 	text-transform: uppercase;
-`;
-
-export const InputBox = styled.input`
-	/* width: 80%;
-	display: flex;
-	flex-direction: column; */
 `;
 
 
@@ -191,7 +194,6 @@ class NewPasswordScreen extends React.Component {
 		});
 	}
 
-
 	handleChangeRepetPassword = (ev) => {
 		this.setState({
 			repetPassword: ev.target.value,
@@ -199,7 +201,6 @@ class NewPasswordScreen extends React.Component {
 			isErrorRepetPassword: false,
 		});
 	}
-
 
 	render() {
 		const { confirmationCodeError, newPasswordError, repetPasswordError } = this.state;
@@ -214,7 +215,7 @@ class NewPasswordScreen extends React.Component {
 						<Input
 							login
 							value={this.state.confirmationCode}
-							type='number'
+							type='text'
 							onChange={ev => this.handleChangeConfirmationCode(ev)}
 							placeholder="Insira aqui o código"
 							isError={this.state.isErrorConfirmationCode}
@@ -242,6 +243,7 @@ class NewPasswordScreen extends React.Component {
 						{repetPasswordError && <Error>{repetPasswordError}</Error>}
 					</Span>
 					<Button
+						to={'/loginreset'}
 						width='80%'
 						widthMobile='90%'
 						height='3.5rem'

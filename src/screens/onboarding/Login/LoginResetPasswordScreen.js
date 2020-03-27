@@ -8,9 +8,9 @@ import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
+// Images
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
-
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -21,12 +21,8 @@ export const ContainerForm = styled.div`
   margin: 0;
 
   @media (max-width: 648px) {
+		&{
 			background-color: #fff;
-	 	 }
-		}
-
-		@media (max-width: 550px) {
-			padding: 1rem;
 	 	 }
 		}
 `;
@@ -37,24 +33,28 @@ export const Form = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
+	padding-top: 3rem;
+	border-radius: 3px;
 
 	@media (max-width: 980px) {
+		&{
 			width: 70%;
-	 	 }
-		}
+		 }
+	}
 
   @media (max-width: 648px) {
-				width: 100%;
-	  	}
+		&{
+			width: 100%;
 		}
+	}
 `;
 
 export const Paragraph = styled.p`
   color: #231F20;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-family: Overpass, Regular;
   margin-left: 0.8rem;
-
+	margin-top: 2.5rem;
 `;
 
 export const InputBox = styled.span`
@@ -62,16 +62,6 @@ export const InputBox = styled.span`
 	display: flex;
 	flex-direction: column;
 	position: relative;
-
-	@media (max-width: 648px) {
-				width: 90%;
-		  }
-		}
-
-	@media (max-width: 490px) {
-				
-		  }
-		}
 `;
 
 export const ImagePassword = styled.img`
@@ -99,19 +89,7 @@ export const Span = styled.span`
   justify-content: space-between;
   margin-top: 0.5rem;
 	margin-bottom: 2rem;
-
-
-	@media (max-width: 648px) {
-			width: 88%;
-	 	 }
-		}
-
-	@media (max-width: 488px) {
-			width: 99%;
-	 	 }
-		}
 `;
-
 
 class LoginResetPasswordScreen extends React.Component {
 	constructor(props) {
@@ -142,7 +120,7 @@ class LoginResetPasswordScreen extends React.Component {
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo loginScreen />
+					<ImageLogo />
 					<InputBox>
 						<Paragraph>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Paragraph>
 						<Label>e-mail</Label>
@@ -173,8 +151,6 @@ class LoginResetPasswordScreen extends React.Component {
 					</InputBox>
 					<Button
 						width='75%'
-						widthMobile='90%'
-						widthMobileSmall='100%'
 						height='3.5rem'
 						heightMobile='3.5rem'
 						margin='1.5rem 0 5rem 0'
