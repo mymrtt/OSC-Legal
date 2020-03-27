@@ -32,8 +32,7 @@ const mapDispatchToProps = dispatch => ({
 
 const Container = styled.div`
   width: 100%;
-  ${''}
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -164,12 +163,12 @@ const ErrorEmpty = styled.h6`
 `;
 const ImagePassword = styled.img`
   position: absolute;
-  bottom: 1rem;
+  bottom: 1.3rem;
   right: 0.5rem;
   cursor: pointer;
 
   @media(max-width: 648px){
-    bottom: 1rem;
+    bottom: 1.2rem;
   }
 `;
 const TextTerms = styled.p`
@@ -465,7 +464,7 @@ class CreateFisicalPersonScreen extends Component {
   				<Container>
   					<Form
   						onSubmit={this.handleSubmit}
-  						withEmpty={isEmpty}
+  						withError={isEmpty}
   					>
   						<ImageLogo
   							margin="3rem 0 2rem 0"
@@ -542,14 +541,14 @@ class CreateFisicalPersonScreen extends Component {
   							{this.state.togglePassword === true ? (
   								<BlockSmallerInput>
   									<ImagePassword
-  										src={VisibilityOn}
+  										src={VisibilityOff}
   										onClick={this.togglePassword}
   									/>
   								</BlockSmallerInput>
   							) : (
   								<BlockSmallerInput>
   									<ImagePassword
-  										src={VisibilityOff}
+  										src={VisibilityOn}
   										onClick={this.togglePassword}
   									/>
   								</BlockSmallerInput>
