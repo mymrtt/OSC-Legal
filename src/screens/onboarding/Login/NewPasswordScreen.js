@@ -29,6 +29,7 @@ export const Form = styled.form`
   align-items: center;
   flex-direction: column;
 	margin: 3rem;
+	border-radius: 3px;
 
   @media (max-width: 980px) {
 		width: 40%;
