@@ -2,11 +2,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+
+
+const mapStateToProps = state => ({
+	signup: state.signup,
+});
+
+const mapDispatchToProps = dispatch => ({
+	addNewPassword: (newPassword) => {
+		dispatch(addNewPassword(newPassword));
+	},
+});
+
+
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -134,6 +149,10 @@ class NewPasswordScreen extends React.Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
+		const { password } = this.props.signup.users;
+
+		console.log(password);
+
 		const { confirmationCode, newPassword, repetPassword } = this.state;
 		if (
 			confirmationCode.length < 6 || newPassword.length < 4 || repetPassword.length < 4
@@ -146,7 +165,7 @@ class NewPasswordScreen extends React.Component {
 					isErrorConfirmationCode: true,
 				});
 			}
-			if (
+			else if (
 				newPassword.length < 4
 			) {
 				this.setState({
@@ -154,7 +173,7 @@ class NewPasswordScreen extends React.Component {
 					isErrorNewPassword: true,
 				});
 			}
-			if (
+			else if (
 				repetPassword.length < 4
 			) {
 				this.setState({
@@ -171,6 +190,8 @@ class NewPasswordScreen extends React.Component {
 				isErrorRepetPassword: true,
 			});
 		} else {
+			this.props.addNewPassword({ password: this.state.newPassword });
+
 			this.setState({
 				error: false,
 				redirect: true,
@@ -252,6 +273,7 @@ class NewPasswordScreen extends React.Component {
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
 						type="submit"
+						onClick={this.handleSubmit}
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
@@ -263,4 +285,4 @@ class NewPasswordScreen extends React.Component {
 	}
 }
 
-export default NewPasswordScreen;
+export default connect(mapStateToProps, mapDispatchToProps) (NewPasswordScreen);
