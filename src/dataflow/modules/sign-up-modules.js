@@ -32,7 +32,6 @@ export const addNewUser = user => ({
 	type: ADD_NEW_USER,
 	user,
 });
-
 export const addNewPassword = newPassword => ({
 	type: ADD_NEW_PASSWORD,
 	newPassword,

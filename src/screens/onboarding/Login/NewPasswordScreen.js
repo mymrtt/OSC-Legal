@@ -9,6 +9,7 @@ import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
+
 // Redux
 import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
 
@@ -22,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
 		dispatch(addNewPassword(newPassword));
 	},
 });
+
 
 export const ContainerForm = styled.div`
   background-color: #FFCFCD;
@@ -148,6 +150,10 @@ class NewPasswordScreen extends React.Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
+		const { password } = this.props.signup.users;
+
+		console.log(password);
+
 		const { confirmationCode, newPassword, repetPassword } = this.state;
 
 		if (
@@ -160,24 +166,15 @@ class NewPasswordScreen extends React.Component {
 					confirmationCodeError: 'Por favor digite um código válido',
 					isErrorConfirmationCode: true,
 				});
-			} else if (
+			}
+			else if (
 				newPassword.length < 6
 			) {
 				this.setState({
 					newPasswordError: 'Use 4 caracteres ou mais para a sua senha',
 					isErrorNewPassword: true,
 				});
-			} else if (
-				repetPassword.length < 4
-			) {
-				this.setState({
-					repetPasswordError: 'Confirme sua senha',
-					isErrorRepetPassword: true,
-				});
 			}
-			this.setState({
-				error: 'Código de confirmação incorreto',
-			});
 		} else if (newPassword !== repetPassword) {
 			this.setState({
 				repetPasswordError: 'Essa senha não se coincidem. Tente novamente',
@@ -264,6 +261,7 @@ class NewPasswordScreen extends React.Component {
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
 						type="submit"
+						onClick={this.handleSubmit}
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
@@ -275,4 +273,4 @@ class NewPasswordScreen extends React.Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
+export default connect(mapStateToProps, mapDispatchToProps) (NewPasswordScreen);
