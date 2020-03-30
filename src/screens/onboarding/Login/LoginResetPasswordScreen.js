@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -11,6 +12,11 @@ import Button from '../../../components/Button';
 // Images
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
+
+// Redux
+const mapStateToProps = state => ({
+	email: state.signup.users.email,
+});
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -55,7 +61,7 @@ export const Title = styled.p`
   font-size: 1rem;
   font-family: Overpass, Regular;
   margin-left: 0.8rem;
-	margin-top: 2.5rem;
+	margin-top: 2rem;
 `;
 
 export const InputBox = styled.span`
@@ -111,7 +117,7 @@ class LoginResetPasswordScreen extends React.Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: '',
+			email: this.props.email || '',
 			password: '',
 			passwordError: '',
 			error: undefined,
@@ -152,12 +158,6 @@ class LoginResetPasswordScreen extends React.Component {
 		});
 	}
 
-	// hanleClick = () => {
-	// 	this.setState({
-	// 		redirect: true,
-	// 	});
-	// }
-
 	render() {
 		return (
 			<ContainerForm>
@@ -171,6 +171,7 @@ class LoginResetPasswordScreen extends React.Component {
 							type="email"
 							onChange={this.handleChangeEmail}
 							placeholder="name@email.com"
+							value={this.state.email}
 							required
 						/>
 					</InputBox>
@@ -201,7 +202,6 @@ class LoginResetPasswordScreen extends React.Component {
 						marginMobile='3.5rem 0 1rem'
 						text="entrar"
 						type="submit"
-						// onClick={this.hanleClick}
 					/>
 				</Form>
 				{this.state.redirect && <Redirect to={'/loginreset'} />}
@@ -210,4 +210,4 @@ class LoginResetPasswordScreen extends React.Component {
 	}
 }
 
-export default LoginResetPasswordScreen;
+export default connect(mapStateToProps)(LoginResetPasswordScreen);
