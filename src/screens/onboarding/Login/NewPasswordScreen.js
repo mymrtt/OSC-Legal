@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -11,8 +10,12 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
 
+// Redux
+import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
+
+
 const mapStateToProps = state => ({
-	signup: state.signup,
+	singup: state.singup,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -22,9 +25,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-
 export const ContainerForm = styled.div`
-  height: 100vh;
   background-color: #FFCFCD;
   display: flex;
   align-items: center;
@@ -38,7 +39,8 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 31%;
+  width: 28%;
+	border-radius: 5px;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -117,7 +119,6 @@ export const Label = styled.label`
 	text-transform: uppercase;
 `;
 
-
 export const BackLogin = styled.span` 
   display: flex;
   justify-content: center;
@@ -154,6 +155,7 @@ class NewPasswordScreen extends React.Component {
 		console.log(password);
 
 		const { confirmationCode, newPassword, repetPassword } = this.state;
+
 		if (
 			confirmationCode.length < 6 || newPassword.length < 4 || repetPassword.length < 4
 		) {
@@ -166,24 +168,13 @@ class NewPasswordScreen extends React.Component {
 				});
 			}
 			else if (
-				newPassword.length < 4
+				newPassword.length < 6
 			) {
 				this.setState({
 					newPasswordError: 'Use 4 caracteres ou mais para a sua senha',
 					isErrorNewPassword: true,
 				});
 			}
-			else if (
-				repetPassword.length < 4
-			) {
-				this.setState({
-					repetPasswordError: 'Confirme sua senha',
-					isErrorRepetPassword: true,
-				});
-			}
-			this.setState({
-				error: 'Código de confirmação incorreto',
-			});
 		} else if (newPassword !== repetPassword) {
 			this.setState({
 				repetPasswordError: 'Essa senha não se coincidem. Tente novamente',
@@ -191,7 +182,6 @@ class NewPasswordScreen extends React.Component {
 			});
 		} else {
 			this.props.addNewPassword({ password: this.state.newPassword });
-
 			this.setState({
 				error: false,
 				redirect: true,
@@ -227,7 +217,7 @@ class NewPasswordScreen extends React.Component {
 		const { confirmationCodeError, newPasswordError, repetPasswordError } = this.state;
 		return (
 			<ContainerForm>
-				<ImageLogo loginScreen />
+				<ImageLogo margin='3rem' />
 				<Form onSubmit={this.handleSubmit}>
 					<Span>
 						<Title>redefinição de senha</Title>
@@ -267,8 +257,6 @@ class NewPasswordScreen extends React.Component {
 						to={'/loginreset'}
 						width='80%'
 						widthMobile='90%'
-						height='3.5rem'
-						heightMobile='3.5rem'
 						margin='1rem 0 1.5rem 0;'
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"

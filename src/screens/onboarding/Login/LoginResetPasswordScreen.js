@@ -1,7 +1,8 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -12,8 +13,10 @@ import Button from '../../../components/Button';
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
 
-
-
+// Redux
+const mapStateToProps = state => ({
+	email: state.signup.users.email,
+});
 
 export const ContainerForm = styled.div`
   height: 100vh;
@@ -33,6 +36,7 @@ export const ContainerForm = styled.div`
 export const Form = styled.form`
   width: 30%;
   background-color: #fff;
+	border-radius: 5px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -52,12 +56,12 @@ export const Form = styled.form`
 	}
 `;
 
-export const Paragraph = styled.p`
+export const Title = styled.p`
   color: #231F20;
   font-size: 1rem;
   font-family: Overpass, Regular;
   margin-left: 0.8rem;
-	margin-top: 2.5rem;
+	margin-top: 2rem;
 `;
 
 export const InputBox = styled.span`
@@ -69,15 +73,29 @@ export const InputBox = styled.span`
 
 export const ImagePassword = styled.img`
   position: absolute;
-  bottom: ${props => (props.off ? '1rem' : '0.875rem')};
+  bottom: ${props => (props.off ? '1.2rem' : '0.875rem')};
   right: 0.7rem;
   cursor: pointer;
 `;
 
+export const Error = styled.h4`
+  width: 63%;
+  color: #D53B40;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.6rem;
+  font-family: Eurostile, Medium;
+
+  @media (max-width: 648px) {
+		width: 85%;
+	}	
+`;
+
 export const Label = styled.label`
   color: #85144b;
-  font-size: 0.8rem;
-  font-family: Overpass, Bold;
+  font-size: 0.9rem;
+  font-family: Overpass;
+	font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
@@ -99,23 +117,44 @@ class LoginResetPasswordScreen extends React.Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: '',
+			email: this.props.email || '',
 			password: '',
-			error: false,
+			passwordError: '',
+			error: undefined,
 			type: 'password',
 			redirect: undefined,
 		};
 	}
 
-	handleChangeType = () => {
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		const { password } = this.state;
+		if (password.length < 6) {
+			this.setState({
+				error: true,
+			});
+		} else {
+			this.setState({
+				error: false,
+			});
+		}
+	}
+
+	handleChangeEmail = (ev) => {
 		this.setState({
-			type: this.state.type === 'password' ? 'text' : 'password',
+			email: ev.target.value,
+		});
+	};
+
+	handleChangePassword = (ev) => {
+		this.setState({
+			password: ev.target.value,
 		});
 	}
 
-	hanleClick = () => {
+	handleChangeType = () => {
 		this.setState({
-			redirect: true,
+			type: this.state.type === 'password' ? 'text' : 'password',
 		});
 	}
 
@@ -125,13 +164,14 @@ class LoginResetPasswordScreen extends React.Component {
 				<Form onSubmit={this.handleSubmit}>
 					<ImageLogo />
 					<InputBox>
-						<Paragraph>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Paragraph>
+						<Title>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Title>
 						<Label>e-mail</Label>
 						<Input
 							login
 							type="email"
 							onChange={this.handleChangeEmail}
 							placeholder="name@email.com"
+							value={this.state.email}
 							required
 						/>
 					</InputBox>
@@ -141,7 +181,8 @@ class LoginResetPasswordScreen extends React.Component {
 							login
 							type={this.state.type}
 							onChange={this.handleChangePassword}
-							placeholder="Insira sua senha"
+							placeholder="Insira senha"
+							isError={this.state.error}
 							required
 						/>
 						<span>
@@ -152,6 +193,7 @@ class LoginResetPasswordScreen extends React.Component {
 							/>
 						</span>
 					</InputBox>
+					{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
 					<Button
 						width='75%'
 						height='3.5rem'
@@ -159,8 +201,7 @@ class LoginResetPasswordScreen extends React.Component {
 						margin='1.5rem 0 5rem 0'
 						marginMobile='3.5rem 0 1rem'
 						text="entrar"
-						type="button"
-						onClick={this.hanleClick}
+						type="submit"
 					/>
 				</Form>
 				{this.state.redirect && <Redirect to={'/loginreset'} />}
@@ -169,4 +210,4 @@ class LoginResetPasswordScreen extends React.Component {
 	}
 }
 
-export default LoginResetPasswordScreen;
+export default connect(mapStateToProps)(LoginResetPasswordScreen);
