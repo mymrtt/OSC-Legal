@@ -1,4 +1,5 @@
 const ADD_NEW_USER = 'osc/register/ADD_NEW_USER';
+const ADD_NEW_PASSWORD = 'osc/register/ADD_NEW_PASSWORD';
 
 const initialState = {
 	users: {email: 'erlane@gmail.com', password: 1234567},
@@ -14,6 +15,13 @@ export default function SignUpReducer(state = initialState, action) {
 				...action.user,
 			},
 		});
+	case ADD_NEW_PASSWORD:
+		return Object.assign({}, state, {
+			users: {
+				...state.users,
+				...action.newPassword,
+			},
+		});
 	default:
 		return state;
 	}
@@ -23,4 +31,8 @@ export default function SignUpReducer(state = initialState, action) {
 export const addNewUser = user => ({
 	type: ADD_NEW_USER,
 	user,
-})
+});
+export const addNewPassword = newPassword => ({
+	type: ADD_NEW_PASSWORD,
+	newPassword,
+});

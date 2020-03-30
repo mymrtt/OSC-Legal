@@ -400,7 +400,7 @@ class CreateFisicalPersonScreen extends Component {
   		this.setState({
   			isErrorCpf: true,
   		});
-  	} else if (password.length < 4) {
+  	} else if (password.length < 6) {
   		this.setState({
   			isErrorPassword: true,
   		});
