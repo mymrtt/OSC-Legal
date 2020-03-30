@@ -130,13 +130,12 @@ const ParagraphInput = styled.p`
     align-self: flex-start;
     text-transform: uppercase;
     color: #85144b;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     margin: 1.5rem 0 0.5rem 1.4rem;
     font-family: Overpass;
     font-weight: bold;
 
     @media (max-width: 425px) {
-      font-size: 0.7rem;
       text-align: left;
       margin-left: 0.2rem;
     }

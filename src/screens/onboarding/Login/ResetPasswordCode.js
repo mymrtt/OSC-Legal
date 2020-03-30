@@ -50,10 +50,9 @@ export const Title = styled.h1`
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
-  margin-top: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 
   @media (max-width: 648px) {
 		width: 95%;

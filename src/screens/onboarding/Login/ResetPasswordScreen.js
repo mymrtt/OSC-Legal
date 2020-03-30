@@ -63,7 +63,7 @@ export const Form = styled.form`
 `;
 
 export const Title = styled.h1`
-	width: 88%;
+	width: 85%;
 	font-size: 1.37rem;
 	font-family: Overpass;
 	font-weight: 900;
@@ -72,14 +72,14 @@ export const Title = styled.h1`
 
 	@media (max-width: 648px) {
 		 width: 92%;
-		 margin: 0 0 2rem 0;
+		 margin: 0 0 3rem 0;
 		 font-size: 1.25rem;
 		 }
 	}
 `;
 
 export const Box = styled.span`
-	 width: 88%;
+	 width: 85%;
 	 display: flex;
 	 flex-direction: column;
 
@@ -98,15 +98,6 @@ export const Label = styled.label`
 `;
 
 export const BoxButton = styled.div`
-	width: 100%;
-
-	Button {
-		font-family: Overpass, Bold; 
-
-		@media (max-width: 425px) {
-			width: 100%;
-		 }
-	}
 `;
 
 export const BackLogin = styled.span` 
@@ -118,12 +109,9 @@ export const BackLogin = styled.span`
 
 export const ButtonText = styled(Link)` 
 	color: #85144B;
-	font-size: 1rem;
 	font-family: Overpass, Regular;
 	text-decoration: none;
 	text-transform: uppercase;
-	margin-bottom: 0.5rem;
-
 `;
 
 class ResetPasswordEmailScreen extends React.Component {
@@ -164,9 +152,8 @@ class ResetPasswordEmailScreen extends React.Component {
 						<BoxButton>
 							<Button
 								width='100%'
-								widthMobile='100%'
 								margin='1rem 0 1.5rem 0'
-								marginMobile='5.5rem 0 3rem 0'
+								marginMobile='5.9rem 0 2.7rem 0'
 								text="solicitar redefinição de senha"
 								type="submit"
 								onClick={this.handleInsertCodeScreen}
