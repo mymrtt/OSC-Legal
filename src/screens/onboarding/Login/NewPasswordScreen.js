@@ -2,14 +2,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
+// Redux
+import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
+
+
+const mapStateToProps = state => ({
+	singup: state.singup,
+});
+
+const mapDispatchToProps = dispatch => ({
+	addNewPassword: (newPassword) => {
+		dispatch(addNewPassword(newPassword));
+	},
+});
+
 export const ContainerForm = styled.div`
-  height: 100vh;
   background-color: #FFCFCD;
   display: flex;
   align-items: center;
@@ -103,7 +117,6 @@ export const Label = styled.label`
 	text-transform: uppercase;
 `;
 
-
 export const BackLogin = styled.span` 
   display: flex;
   justify-content: center;
@@ -136,6 +149,7 @@ class NewPasswordScreen extends React.Component {
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 		const { confirmationCode, newPassword, repetPassword } = this.state;
+
 		if (
 			confirmationCode.length < 6 || newPassword.length < 4 || repetPassword.length < 4
 		) {
@@ -146,16 +160,14 @@ class NewPasswordScreen extends React.Component {
 					confirmationCodeError: 'Por favor digite um código válido',
 					isErrorConfirmationCode: true,
 				});
-			}
-			if (
+			} else if (
 				newPassword.length < 6
 			) {
 				this.setState({
 					newPasswordError: 'Use 4 caracteres ou mais para a sua senha',
 					isErrorNewPassword: true,
 				});
-			}
-			if (
+			} else if (
 				repetPassword.length < 4
 			) {
 				this.setState({
@@ -172,6 +184,7 @@ class NewPasswordScreen extends React.Component {
 				isErrorRepetPassword: true,
 			});
 		} else {
+			this.props.addNewPassword({ password: this.state.newPassword });
 			this.setState({
 				error: false,
 				redirect: true,
@@ -262,4 +275,4 @@ class NewPasswordScreen extends React.Component {
 	}
 }
 
-export default NewPasswordScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
