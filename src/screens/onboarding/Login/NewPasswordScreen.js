@@ -26,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 export const ContainerForm = styled.div`
+  height: 100vh;
   background-color: #FFCFCD;
   display: flex;
   align-items: center;
