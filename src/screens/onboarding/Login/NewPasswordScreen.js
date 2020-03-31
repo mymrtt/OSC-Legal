@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 export const ContainerForm = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   background-color: #FFCFCD;
 	height: 100vh;
   display: flex;
@@ -143,8 +143,6 @@ class NewPasswordScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			confirmationCode: '',
-			confirmationCodeError: false,
 			newPassword: '',
 			newPasswordError: false,
 			repetPassword: '',
@@ -161,10 +159,7 @@ class NewPasswordScreen extends React.Component {
 
 	errors = () => {
 		// const { password } = this.props.signup.users;
-		const { confirmationCode, newPassword, repetPassword } = this.state;
-
-		// eslint-disable-next-line no-unused-expressions
-		confirmationCode.length < 6 ? this.setState({ confirmationCodeError: true, empty: true }) : this.setState({ confirmationCodeError: false, empty: false });
+		const { newPassword, repetPassword } = this.state;
 		// eslint-disable-next-line no-unused-expressions
 		newPassword.length < 6 ? this.setState({ newPasswordError: true, empty: true }) : this.setState({ newPasswordError: false, empty: false });
 		// eslint-disable-next-line no-unused-expressions
@@ -172,12 +167,6 @@ class NewPasswordScreen extends React.Component {
 		if (newPassword.length >= 6 && newPassword === repetPassword) {
 			this.props.addNewPassword({ password: newPassword });
 		}
-	}
-
-	handleChangeConfirmationCode = (ev) => {
-		this.setState({
-			confirmationCode: ev.target.value,
-		});
 	}
 
 	handleChangeNewPassword = (ev) => {
@@ -193,22 +182,19 @@ class NewPasswordScreen extends React.Component {
 	}
 
 	changeRedirect = () => {
-		const { confirmationCode, newPassword, repetPassword } = this.state;
-		if (confirmationCode.length >= 6 && newPassword.length >= 6 && newPassword === repetPassword) {
+		const { newPassword, repetPassword } = this.state;
+		if (newPassword.length >= 6 && newPassword === repetPassword) {
 			this.setState({ redirect: true });
 		}
 	}
 
 	render() {
 		const {
-			confirmationCodeError, newPasswordError, repetPasswordError, empty, redirect,
+			newPasswordError, repetPasswordError, empty, redirect,
 		} = this.state;
 
 		const errorMenssages = [
-			'Por favor digite um código válido',
 			'Use 6 caracteres ou mais para a sua senha',
-			'Confirme sua senha',
-			'Código de confirmação incorreto',
 			'Essa senha não se coincidem. Tente novamente',
 		];
 		return (
@@ -223,12 +209,9 @@ class NewPasswordScreen extends React.Component {
 							login
 							value={this.state.confirmationCode}
 							type='text'
-							onChange={ev => this.handleChangeConfirmationCode(ev)}
 							placeholder="Insira aqui o código"
 							required
-							// isError={this.state.isErrorConfirmationCode}
 						/>
-						{confirmationCodeError && <Error>{errorMenssages[0]}</Error>}
 						<Label>nova senha</Label>
 						<Input
 							login
@@ -236,10 +219,9 @@ class NewPasswordScreen extends React.Component {
 							type='password'
 							onChange={ev => this.handleChangeNewPassword(ev)}
 							placeholder="Insira aqui sua senha"
-							// isError={this.state.isErrorNewPassword}
 							required
 						/>
-						{newPasswordError && <Error>{errorMenssages[1]}</Error>}
+						{newPasswordError && <Error>{errorMenssages[0]}</Error>}
 						<Label>repita nova senha</Label>
 						<Input
 							login
@@ -247,10 +229,9 @@ class NewPasswordScreen extends React.Component {
 							type='password'
 							onChange={ev => this.handleChangeRepetPassword(ev)}
 							placeholder="Repita sua senha"
-							// isError={this.state.isErrorRepetPassword}
 							required
 						/>
-						{repetPasswordError && <Error>{errorMenssages[4]}</Error>}
+						{repetPasswordError && <Error>{errorMenssages[1]}</Error>}
 					</Span>
 					<Button
 						width='80%'
