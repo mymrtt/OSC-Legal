@@ -66,7 +66,7 @@ export const Form = styled.form`
 
 	input{
 		margin: 0.3rem 0 0.6rem 0;
-		border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd')};
+		border: ${props => (props.withError === true ? '1px solid #FF4136' : '1px solid #ffcfcd')};
 	}
 `;
 
@@ -112,7 +112,7 @@ export const Error = styled.h4`
   color: #D63434;
   display: flex;
   justify-content: flex-end;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   font-family: Overpass, Regular;
 `;
 
