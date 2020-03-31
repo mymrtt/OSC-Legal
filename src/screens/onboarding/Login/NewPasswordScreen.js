@@ -10,6 +10,7 @@ import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
+
 // Redux
 import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
 
@@ -24,7 +25,9 @@ const mapDispatchToProps = dispatch => ({
 	},
 });
 
+
 export const ContainerForm = styled.div`
+  height: 100vh;
   background-color: #FFCFCD;
 	height: 100vh;
   display: flex;
@@ -268,4 +271,4 @@ class NewPasswordScreen extends React.Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
+export default connect(mapStateToProps, mapDispatchToProps) (NewPasswordScreen);

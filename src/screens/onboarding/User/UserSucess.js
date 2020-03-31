@@ -74,7 +74,7 @@ const TextTermsBold = styled.strong`
 
 const FisicalPersonSucess = props => (
 	<Modal>
-		<TitleTerms>Cadastro de Pessoa física concluído!</TitleTerms>
+		<TitleTerms>Cadastro concluído!</TitleTerms>
 		<img src={Sucess} alt="Sucess" />
 		<TextTerms>
       Enviamos um e-mail de confirmação para

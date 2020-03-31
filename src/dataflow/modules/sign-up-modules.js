@@ -2,7 +2,7 @@ const ADD_NEW_USER = 'osc/register/ADD_NEW_USER';
 const ADD_NEW_PASSWORD = 'osc/register/ADD_NEW_PASSWORD';
 
 const initialState = {
-	users: {},
+	users: {email: 'erlane@gmail.com', password: 1234567},
 };
 
 // REDUCER
@@ -32,7 +32,6 @@ export const addNewUser = user => ({
 	type: ADD_NEW_USER,
 	user,
 });
-
 export const addNewPassword = newPassword => ({
 	type: ADD_NEW_PASSWORD,
 	newPassword,
