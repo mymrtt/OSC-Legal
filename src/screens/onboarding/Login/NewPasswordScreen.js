@@ -148,7 +148,6 @@ class NewPasswordScreen extends React.Component {
 			repetPassword: '',
 			repetPasswordError: false,
 			redirect: false,
-			empty: false,
 		};
 	}
 
@@ -160,11 +159,28 @@ class NewPasswordScreen extends React.Component {
 	errors = () => {
 		// const { password } = this.props.signup.users;
 		const { newPassword, repetPassword } = this.state;
-		// eslint-disable-next-line no-unused-expressions
-		newPassword.length < 6 ? this.setState({ newPasswordError: true, empty: true }) : this.setState({ newPasswordError: false, empty: false });
-		// eslint-disable-next-line no-unused-expressions
-		newPassword !== repetPassword ? this.setState({ repetPasswordError: true, empty: true }) : this.setState({ repetPasswordError: false, empty: false });
-		if (newPassword.length >= 6 && newPassword === repetPassword) {
+
+		if (newPassword.length < 6) {
+			this.setState({
+				newPasswordError: true,
+			});
+		} else {
+			this.setState({
+				newPasswordError: false,
+			});
+		}
+
+		if (newPassword !== repetPassword) {
+			this.setState({
+				repetPasswordError: true,
+			});
+		} else {
+			this.setState({
+				repetPasswordError: false,
+			});
+		}
+
+		if (newPassword.length > 5 && newPassword === repetPassword) {
 			this.props.addNewPassword({ password: newPassword });
 		}
 	}
@@ -183,14 +199,14 @@ class NewPasswordScreen extends React.Component {
 
 	changeRedirect = () => {
 		const { newPassword, repetPassword } = this.state;
-		if (newPassword.length >= 6 && newPassword === repetPassword) {
+		if (newPassword.length > 5 && newPassword === repetPassword) {
 			this.setState({ redirect: true });
 		}
 	}
 
 	render() {
 		const {
-			newPasswordError, repetPasswordError, empty, redirect,
+			newPasswordError, repetPasswordError, redirect,
 		} = this.state;
 
 		const errorMenssages = [
@@ -200,7 +216,7 @@ class NewPasswordScreen extends React.Component {
 		return (
 			<ContainerForm>
 				<ImageLogo margin='3rem 0 0 0' />
-				<Form onSubmit={this.handleSubmit} withError={empty}>
+				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
 						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
@@ -252,4 +268,4 @@ class NewPasswordScreen extends React.Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (NewPasswordScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
