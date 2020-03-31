@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // Libs
 import React from 'react';
 import styled from 'styled-components';
@@ -15,7 +16,7 @@ import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
 
 
 const mapStateToProps = state => ({
-	singup: state.singup,
+	signup: state.signup,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -32,6 +33,7 @@ export const ContainerForm = styled.div`
   justify-content: center;
   flex-direction: column;
   margin: 0;
+  min-height: 100vh;
 
   @media (max-width: 648px) {
 		background-color: #fff;
@@ -62,6 +64,7 @@ export const Form = styled.form`
 	}
 
 	input {
+		border: ${props => (props.withError === true ? '1px solid #f00' : '1 px solid #ffcfcd')};
 		margin: 0.3rem 0 0.6rem 0;
 	}
 `;
@@ -138,54 +141,35 @@ class NewPasswordScreen extends React.Component {
 		super(props);
 		this.state = {
 			confirmationCode: '',
-			confirmationCodeError: '',
 			newPassword: '',
-			newPasswordError: '',
 			repetPassword: '',
-			repetPasswordError: '',
 			error: undefined,
 			redirect: false,
+			isEmpty: false,
+			confirmationCodeError: false,
+			newPasswordError: false,
+			confirmationPasswordError: false,
 		};
 	}
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
+		this.errors();
+	}
+
+	errors = () => {
 		const { password } = this.props.signup.users;
-
-		console.log(password);
-
 		const { confirmationCode, newPassword, repetPassword } = this.state;
-
-		if (
-			confirmationCode.length < 6 || newPassword.length < 4 || repetPassword.length < 4
-		) {
-			if (
-				confirmationCode.length < 6
-			) {
-				this.setState({
-					confirmationCodeError: 'Por favor digite um código válido',
-					isErrorConfirmationCode: true,
-				});
-			}
-			else if (
-				newPassword.length < 6
-			) {
-				this.setState({
-					newPasswordError: 'Use 4 caracteres ou mais para a sua senha',
-					isErrorNewPassword: true,
-				});
-			}
+		if (confirmationCode === '' || newPassword === '' || repetPassword === '') {
+			this.setState({ isEmpty: true });
+		} else if (confirmationCode.length < 6) {
+			this.setState({ confirmationCodeError: true });
+		} else if (newPassword.length < 6) {
+			this.setState({ newPasswordError: true });
 		} else if (newPassword !== repetPassword) {
-			this.setState({
-				repetPasswordError: 'Essa senha não se coincidem. Tente novamente',
-				isErrorRepetPassword: true,
-			});
+			this.setState({ confirmationPasswordError: true });
 		} else {
-			this.props.addNewPassword({ password: this.state.newPassword });
-			this.setState({
-				error: false,
-				redirect: true,
-			});
+			this.props.addNewPassword({ password: newPassword });
 		}
 	}
 
@@ -214,11 +198,19 @@ class NewPasswordScreen extends React.Component {
 	}
 
 	render() {
-		const { confirmationCodeError, newPasswordError, repetPasswordError } = this.state;
+
+		const errorMessages = [
+			'Senhas não coincidem',
+			'Preencha todos os campos',
+			'Código de confirmção inválido',
+			'Senha fraca',
+		];
+
+		const { confirmationCodeError, newPasswordError, confirmationPasswordError, isEmpty } = this.state;
 		return (
 			<ContainerForm>
 				<ImageLogo margin='3rem' />
-				<Form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit} withError={this.state.isEmpty}>
 					<Span>
 						<Title>redefinição de senha</Title>
 						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
@@ -231,7 +223,7 @@ class NewPasswordScreen extends React.Component {
 							placeholder="Insira aqui o código"
 							isError={this.state.isErrorConfirmationCode}
 						/>
-						{confirmationCodeError && <Error>{confirmationCodeError}</Error>}
+						{confirmationCodeError && <Error>{errorMessages[2]}</Error>}
 						<Label>nova senha</Label>
 						<Input
 							login
@@ -241,7 +233,7 @@ class NewPasswordScreen extends React.Component {
 							placeholder="Insira aqui sua senha"
 							isError={this.state.isErrorNewPassword}
 						/>
-						{newPasswordError && <Error>{newPasswordError}</Error>}
+						{newPasswordError && <Error>{errorMessages[3]}</Error>}
 						<Label>repita nova senha</Label>
 						<Input
 							login
@@ -251,7 +243,8 @@ class NewPasswordScreen extends React.Component {
 							placeholder="Repita sua senha"
 							isError={this.state.isErrorRepetPassword}
 						/>
-						{repetPasswordError && <Error>{repetPasswordError}</Error>}
+						{confirmationPasswordError && <Error>{errorMessages[0]}</Error>}
+						{isEmpty && <Error>{errorMessages[1]}</Error>}
 					</Span>
 					<Button
 						to={'/loginreset'}

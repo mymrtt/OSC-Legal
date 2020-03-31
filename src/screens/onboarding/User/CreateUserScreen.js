@@ -160,6 +160,11 @@ const ErrorEmpty = styled.h6`
   align-self: flex-start;
   font-weight: normal;
   margin-left: 2.5rem;
+
+  @media(max-width: 648px){
+	  align-self: flex-start;
+	  margin: 1rem 0 1rem 0.3rem;
+  }
 `;
 const ImagePassword = styled.img`
   position: absolute;
