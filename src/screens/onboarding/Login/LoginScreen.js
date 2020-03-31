@@ -92,11 +92,12 @@ export const Label = styled.label`
   font-size: 0.75rem;
   font-family: Overpass;
 	font-weight: bold;
-  margin-top: 1rem;
+  margin-top: 0.6rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
 
 	@media (max-width: 648px) {
+		margin-top: 1rem;
 		margin-bottom: 0.6rem;
 	}
 `;
@@ -112,7 +113,7 @@ export const Span = styled.span`
 
 	@media (max-width: 648px) {
 		width: 80%;
-		margin: 2rem;
+		margin: 1.8rem;
 	}
 
 	@media (max-width: 490px) {
@@ -251,7 +252,7 @@ class LoginScreen extends React.Component {
 						widthMobile='80%'
 						widthMobileSmall='95%'
 						padding='1rem'
-						margin='2rem 0 1rem'
+						margin='2.5rem 0 1rem'
 						marginMobile='3.7rem 0 1.5rem'
 						text="entrar"
 						type="submit"

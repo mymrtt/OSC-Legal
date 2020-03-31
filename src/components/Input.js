@@ -10,7 +10,7 @@ export const InputForm = styled.input`
   border-color: ${props => (props.isError ? 'tomato' : '#ffcfcd')};
   border-radius: 3px;
   background: #fafafa;
-  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+  padding: 0.7rem 0.5rem 0.5rem 0.8rem;
   font-size: 0.9rem;
   font-family: Overpass, Light;
   position: relative;

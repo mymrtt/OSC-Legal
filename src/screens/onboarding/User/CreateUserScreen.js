@@ -162,7 +162,7 @@ const ErrorEmpty = styled.h6`
 `;
 const ImagePassword = styled.img`
   position: absolute;
-  bottom: 1.3rem;
+  bottom: 1.2rem;
   right: 0.5rem;
   cursor: pointer;
 

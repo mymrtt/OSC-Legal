@@ -29,7 +29,7 @@ export const ContainerForm = styled.div`
 `;
 
 export const Form = styled.form`
-	width: 28%;
+	width: 25%;
 	border-radius: 5px;
 	background-color: #fff;
 	padding: 2rem 0 ;
