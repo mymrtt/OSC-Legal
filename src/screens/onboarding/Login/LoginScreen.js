@@ -1,7 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -164,6 +164,9 @@ class LoginScreen extends React.Component {
 		ev.preventDefault();
 
 		this.handleError();
+
+		this.setState({ redirect: '/dashboard' });
+
 	}
 
 	handleError = () => {
@@ -262,6 +265,7 @@ class LoginScreen extends React.Component {
 						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
 					</Span>
 				</Form>
+				{this.state.redirect && <Redirect to={'./dashboard'} />}
 			</ContainerForm>
 		);
 	}
