@@ -2,14 +2,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-// Components
-
 // Onboarding
 import Login from '../screens/onboarding/Login/LoginScreen';
 import LoginResetPasswordScreen from '../screens/onboarding/Login/LoginResetPasswordScreen';
 import ResetPasswordCode from '../screens/onboarding/Login/ResetPasswordCode';
 import NewPassowrdScreen from '../screens/onboarding/Login/NewPasswordScreen';
 import ResetPasswordEmailScreen from '../screens/onboarding/Login/ResetPasswordScreen';
+// import Documentos from '../screens/onboarding/Login/Documentos';
 
 import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
@@ -22,6 +21,7 @@ import PrivateRoute from './PrivateRoute';
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
+			{/* <Route exact path='/' component={Documentos} /> */}
 			<Route exact path='/' component={Login} />
 			<Route path='/login' component={Login} />
 			<Route exact path='/OSC-Legal' component={Login} />
@@ -31,7 +31,7 @@ const Routes = () => (
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
 			{/* <Route component={NoMatch} /> */}
-			<PrivateRoute component={Dashboard} />
+			<PrivateRoute path='/dashboard' component={Dashboard} />
 		</Switch>
 	</BrowserRouter>
 );
