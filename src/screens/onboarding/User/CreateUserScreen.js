@@ -147,10 +147,10 @@ const Error = styled.h6`
   color: #f00;
   align-self: flex-start;
   font-weight: normal;
-  margin-left: 1.4rem;
+  margin: 0.5rem 0 0.5rem 0.8rem;
 
   @media (max-width: 425px) {
-    margin: 0;
+    margin: 0.5rem 0 0.5rem 0;
   }
 `;
 
@@ -159,11 +159,11 @@ const ErrorEmpty = styled.h6`
   color: #F00;
   align-self: flex-start;
   font-weight: normal;
-  margin-left: 2.5rem;
+  margin: 0.5rem 0 0.5rem 1.9rem;
 
   @media(max-width: 648px){
 	  align-self: flex-start;
-	  margin: 1rem 0 1rem 0.3rem;
+	  margin: 1rem 0 1rem 0.2rem;
   }
 `;
 const ImagePassword = styled.img`
@@ -468,8 +468,8 @@ class CreateFisicalPersonScreen extends Component {
   			) : (
   				<Container>
   					<Form
-  						onSubmit={this.handleSubmit}
-  						withError={isEmpty}
+						onSubmit={this.handleSubmit}
+						withError={isEmpty || isErrorPassword || isErrorCpf}
   					>
   						<ImageLogo
   							margin="3rem 0 2rem 0"
@@ -559,7 +559,8 @@ class CreateFisicalPersonScreen extends Component {
   								</BlockSmallerInput>
   							)}
   							{isErrorPassword && <Error>{errorMessage[0]}</Error>}
-  						</Label>
+							</Label>
+							{isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
   						<TextTerms>
                   Clique abaixo para concordar com os
   							<strong onClick={this.handleModalTerms}>
@@ -567,7 +568,6 @@ class CreateFisicalPersonScreen extends Component {
   							</strong>
                   e registrar.
   						</TextTerms>
-  						{isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
   						<Button
   							width="87%"
   							height="50px"
