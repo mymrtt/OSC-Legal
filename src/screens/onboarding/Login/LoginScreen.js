@@ -163,34 +163,26 @@ class LoginScreen extends React.Component {
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 
-		this.handleError();
-
-		this.setState({ redirect: '/dashboard' });
-
+		if (!this.handleError()) {
+			this.setState({ redirect: '/dashboard' });
+		}
 	}
 
 	handleError = () => {
 		const { email, password } = this.state;
 		const registeredEmail = this.props.email;
 		const registeredPassword = this.props.password;
+		let error = false;
 
-		if (email !== registeredEmail) {
-			this.setState({
-				error: true,
-			});
+		if (email !== registeredEmail || password.length < 6 || password !== registeredPassword) {
+			error = true;
 		}
 
-		if (password.length < 6) {
-			this.setState({
-				error: true,
-			});
-		}
+		this.setState({
+			error,
+		});
 
-		if (password != registeredPassword) {
-			this.setState({
-				error: true,
-			});
-		}
+		return error;
 	}
 
 	handleChangeEmail = (ev) => {
