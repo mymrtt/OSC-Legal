@@ -29,13 +29,12 @@ const mapDispatchToProps = dispatch => ({
 export const ContainerForm = styled.div`
   min-height: 100vh;
   background-color: #FFCFCD;
-	height: 100vh;
+	min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: 0;
-
   @media (max-width: 648px) {
 		background-color: #fff;
 	}
@@ -50,20 +49,16 @@ export const Form = styled.form`
   flex-direction: column;
 	margin: 3rem;
 	border-radius: 4px;
-
   @media (max-width: 980px) {
 		width: 40%;
 	}
-
 	@media (max-width: 786px) {
 		width: 50%;
 	}
-
 	@media (max-width: 648px) {
 		width: 90%;
 		margin: 0;
 	}
-
 	input{
 		margin: 0.3rem 0 0.6rem 0;
 		border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd')};
@@ -72,7 +67,6 @@ export const Form = styled.form`
 
 export const Span = styled.span`
 	width: 80%;
-
   @media (max-width: 648px) {
 		& {
 			width: 90%;
@@ -87,7 +81,6 @@ export const Title = styled.h1`
   font-family: Overpass;
   margin: 2rem 0 1.5rem 0;
 	text-transform: uppercase;
-
   @media (max-width: 648px) {
 		display: none;
 	}
@@ -97,11 +90,9 @@ export const Paragraph = styled.p`
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1.5rem;
-
 	@media (max-width: 648px) {
 		margin-top: 3rem;
 	}
-
 	@media (max-width: 460px) {
 		font-size: 0.9rem;
 		width: 90%;
@@ -269,3 +260,4 @@ class NewPasswordScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
+
