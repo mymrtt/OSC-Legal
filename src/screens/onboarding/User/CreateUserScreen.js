@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-mixed-spaces-and-tabs */
@@ -93,7 +92,7 @@ const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-  margin: 1.5rem 0 1rem 1.17rem;
+  margin: 1.5rem 0 1rem 1.1rem;
   align-self: flex-start;
   
   @media(max-width: 768px){
@@ -404,23 +403,24 @@ class CreateFisicalPersonScreen extends Component {
   		});
   	} else {
   		this.setState({ isEmpty: false });
-	}
-  	if (cpf.length < 11 || cpf.length > 11) {
+  	}
+  	if (cpf.length < 11 && cpf.length > 1) {
   		this.setState({
   			isErrorCpf: true,
   		});
   	} else {
   		this.setState({ isErrorCpf: false });
   	}
-  	if (password.length < 6) {
+  	if (password.length < 6 && password.length > 1) {
   		this.setState({
   			isErrorPassword: true,
-  		});
-  	} else {
-  		this.setState({ isErrorPassword: false });
-  		this.props.addNewUser(user);
-  		this.handleModalSucess();
-  	}
+		  });
+  	} else if (this.state.isEmpty === true) {
+		this.setState({
+			isErrorPassword: false,
+			isErrorCpf: false,
+		});
+  	} 
   };
 
 	renderTerms = () => (
