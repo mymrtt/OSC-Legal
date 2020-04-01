@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/OSC-Legal/static/css/main.c0180cdc.chunk.css",
-    "main.js": "/OSC-Legal/static/js/main.ce907807.chunk.js",
-    "main.js.map": "/OSC-Legal/static/js/main.ce907807.chunk.js.map",
+    "main.js": "/OSC-Legal/static/js/main.e300e96a.chunk.js",
+    "main.js.map": "/OSC-Legal/static/js/main.e300e96a.chunk.js.map",
     "runtime-main.js": "/OSC-Legal/static/js/runtime-main.6c64655e.js",
     "runtime-main.js.map": "/OSC-Legal/static/js/runtime-main.6c64655e.js.map",
-    "static/js/2.69974cf9.chunk.js": "/OSC-Legal/static/js/2.69974cf9.chunk.js",
-    "static/js/2.69974cf9.chunk.js.map": "/OSC-Legal/static/js/2.69974cf9.chunk.js.map",
+    "static/js/2.368a78ef.chunk.js": "/OSC-Legal/static/js/2.368a78ef.chunk.js",
+    "static/js/2.368a78ef.chunk.js.map": "/OSC-Legal/static/js/2.368a78ef.chunk.js.map",
     "index.html": "/OSC-Legal/index.html",
-    "precache-manifest.db33382950cd2412be8951740c2faf3f.js": "/OSC-Legal/precache-manifest.db33382950cd2412be8951740c2faf3f.js",
+    "precache-manifest.5248b48144d75211b9abc032350e0481.js": "/OSC-Legal/precache-manifest.5248b48144d75211b9abc032350e0481.js",
     "service-worker.js": "/OSC-Legal/service-worker.js",
     "static/css/main.c0180cdc.chunk.css.map": "/OSC-Legal/static/css/main.c0180cdc.chunk.css.map",
-    "static/js/2.69974cf9.chunk.js.LICENSE.txt": "/OSC-Legal/static/js/2.69974cf9.chunk.js.LICENSE.txt",
+    "static/js/2.368a78ef.chunk.js.LICENSE.txt": "/OSC-Legal/static/js/2.368a78ef.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/OSC-Legal/static/media/logo.e049bfe2.svg",
     "static/media/sucess.svg": "/OSC-Legal/static/media/sucess.e237ad43.svg",
     "static/media/visibility-off.svg": "/OSC-Legal/static/media/visibility-off.f95eae64.svg",
@@ -19,8 +19,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.6c64655e.js",
-    "static/js/2.69974cf9.chunk.js",
+    "static/js/2.368a78ef.chunk.js",
     "static/css/main.c0180cdc.chunk.css",
-    "static/js/main.ce907807.chunk.js"
+    "static/js/main.e300e96a.chunk.js"
   ]
 }
