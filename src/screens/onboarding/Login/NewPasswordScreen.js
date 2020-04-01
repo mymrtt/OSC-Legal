@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 // Libs
 import React from 'react';
 import styled from 'styled-components';
@@ -16,7 +16,7 @@ import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
 
 
 const mapStateToProps = state => ({
-	signup: state.signup,
+	singup: state.singup,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -27,53 +27,50 @@ const mapDispatchToProps = dispatch => ({
 
 
 export const ContainerForm = styled.div`
+  min-height: 100vh;
   background-color: #FFCFCD;
+	min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: 0;
-  min-height: 100vh;
-
   @media (max-width: 648px) {
 		background-color: #fff;
 	}
 `;
 
 export const Form = styled.form`
-  width: 28%;
+  width: 30%;
 	border-radius: 5px;
   background-color: #fff;
   display: flex;
   align-items: center;
   flex-direction: column;
 	margin: 3rem;
-	border-radius: 3px;
-
+	border-radius: 4px;
   @media (max-width: 980px) {
 		width: 40%;
 	}
-
 	@media (max-width: 786px) {
 		width: 50%;
 	}
-
 	@media (max-width: 648px) {
 		width: 90%;
 		margin: 0;
 	}
-
-	input {
-		border: ${props => (props.withError === true ? '1px solid #f00' : '1 px solid #ffcfcd')};
+	input{
 		margin: 0.3rem 0 0.6rem 0;
+		border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd')};
 	}
 `;
 
 export const Span = styled.span`
 	width: 80%;
-
   @media (max-width: 648px) {
-		width: 90%;
+		& {
+			width: 90%;
+		}	
 	}
 `;
 
@@ -84,7 +81,6 @@ export const Title = styled.h1`
   font-family: Overpass;
   margin: 2rem 0 1.5rem 0;
 	text-transform: uppercase;
-
   @media (max-width: 648px) {
 		display: none;
 	}
@@ -94,11 +90,9 @@ export const Paragraph = styled.p`
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1.5rem;
-
 	@media (max-width: 648px) {
 		margin-top: 3rem;
 	}
-
 	@media (max-width: 460px) {
 		font-size: 0.9rem;
 		width: 90%;
@@ -140,15 +134,11 @@ class NewPasswordScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			confirmationCode: '',
 			newPassword: '',
-			repetPassword: '',
-			error: undefined,
-			redirect: false,
-			isEmpty: false,
-			confirmationCodeError: false,
 			newPasswordError: false,
-			confirmationPasswordError: false,
+			repetPassword: '',
+			repetPasswordError: false,
+			redirect: false,
 		};
 	}
 
@@ -158,59 +148,66 @@ class NewPasswordScreen extends React.Component {
 	}
 
 	errors = () => {
-		const { password } = this.props.signup.users;
-		const { confirmationCode, newPassword, repetPassword } = this.state;
-		if (confirmationCode === '' || newPassword === '' || repetPassword === '') {
-			this.setState({ isEmpty: true });
-		} else if (confirmationCode.length < 6) {
-			this.setState({ confirmationCodeError: true });
-		} else if (newPassword.length < 6) {
-			this.setState({ newPasswordError: true });
-		} else if (newPassword !== repetPassword) {
-			this.setState({ confirmationPasswordError: true });
+		// const { password } = this.props.signup.users;
+		const { newPassword, repetPassword } = this.state;
+
+		if (newPassword.length < 6) {
+			this.setState({
+				newPasswordError: true,
+			});
 		} else {
+			this.setState({
+				newPasswordError: false,
+			});
+		}
+
+		if (newPassword !== repetPassword) {
+			this.setState({
+				repetPasswordError: true,
+			});
+		} else {
+			this.setState({
+				repetPasswordError: false,
+			});
+		}
+
+		if (newPassword.length > 5 && newPassword === repetPassword) {
 			this.props.addNewPassword({ password: newPassword });
 		}
-	}
-
-	handleChangeConfirmationCode = (ev) => {
-		this.setState({
-			confirmationCode: ev.target.value,
-			confirmationCodeError: '',
-			isErrorConfirmationCode: false,
-		});
 	}
 
 	handleChangeNewPassword = (ev) => {
 		this.setState({
 			newPassword: ev.target.value,
-			newPasswordError: '',
-			isErrorNewPassword: false,
 		});
 	}
 
 	handleChangeRepetPassword = (ev) => {
 		this.setState({
 			repetPassword: ev.target.value,
-			repetPasswordError: '',
-			isErrorRepetPassword: false,
 		});
 	}
 
+	changeRedirect = () => {
+		const { newPassword, repetPassword } = this.state;
+		if (newPassword.length > 5 && newPassword === repetPassword) {
+			this.setState({ redirect: true });
+		}
+	}
+
 	render() {
+		const {
+			newPasswordError, repetPasswordError, redirect,
+		} = this.state;
 
-		const errorMessages = [
-			'Senhas não coincidem',
-			'Preencha todos os campos',
-			'Código de confirmção inválido',
-			'Senha fraca',
+		const errorMenssages = [
+			'Use 6 caracteres ou mais para a sua senha',
+			'Essa senha não se coincidem. Tente novamente',
 		];
-
-		const { confirmationCodeError, newPasswordError, confirmationPasswordError, isEmpty } = this.state;
 		return (
 			<ContainerForm>
-				<ImageLogo margin='3rem' />
-				<Form onSubmit={this.handleSubmit} withError={this.state.isEmpty}>
+				<ImageLogo margin='3rem 0 0 0' />
+				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
 						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
@@ -219,11 +216,9 @@ class NewPasswordScreen extends React.Component {
 							login
 							value={this.state.confirmationCode}
 							type='text'
-							onChange={ev => this.handleChangeConfirmationCode(ev)}
 							placeholder="Insira aqui o código"
-							isError={this.state.isErrorConfirmationCode}
+							required
 						/>
-						{confirmationCodeError && <Error>{errorMessages[2]}</Error>}
 						<Label>nova senha</Label>
 						<Input
 							login
@@ -231,9 +226,9 @@ class NewPasswordScreen extends React.Component {
 							type='password'
 							onChange={ev => this.handleChangeNewPassword(ev)}
 							placeholder="Insira aqui sua senha"
-							isError={this.state.isErrorNewPassword}
+							required
 						/>
-						{newPasswordError && <Error>{errorMessages[3]}</Error>}
+						{newPasswordError && <Error>{errorMenssages[0]}</Error>}
 						<Label>repita nova senha</Label>
 						<Input
 							login
@@ -241,29 +236,28 @@ class NewPasswordScreen extends React.Component {
 							type='password'
 							onChange={ev => this.handleChangeRepetPassword(ev)}
 							placeholder="Repita sua senha"
-							isError={this.state.isErrorRepetPassword}
+							required
 						/>
-						{confirmationPasswordError && <Error>{errorMessages[0]}</Error>}
-						{isEmpty && <Error>{errorMessages[1]}</Error>}
+						{repetPasswordError && <Error>{errorMenssages[1]}</Error>}
 					</Span>
 					<Button
-						to={'/loginreset'}
 						width='80%'
 						widthMobile='90%'
 						margin='1rem 0 1.5rem 0;'
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
 						type="submit"
-						onClick={this.handleSubmit}
+						onClick={() => this.changeRedirect()}
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
 					</BackLogin>
 				</Form>
-				{this.state.redirect && <Redirect to={'/loginreset'} />}
+				{redirect && <Redirect to={'/loginreset'} />}
 			</ContainerForm>
 		);
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (NewPasswordScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
+

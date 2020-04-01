@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-mixed-spaces-and-tabs */
@@ -130,13 +131,12 @@ const ParagraphInput = styled.p`
     align-self: flex-start;
     text-transform: uppercase;
     color: #85144b;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     margin: 1.5rem 0 0.5rem 1.4rem;
     font-family: Overpass;
     font-weight: bold;
 
     @media (max-width: 425px) {
-      font-size: 0.7rem;
       text-align: left;
       margin-left: 0.2rem;
     }
@@ -168,7 +168,7 @@ const ErrorEmpty = styled.h6`
 `;
 const ImagePassword = styled.img`
   position: absolute;
-  bottom: 1.3rem;
+  bottom: 1.2rem;
   right: 0.5rem;
   cursor: pointer;
 
@@ -402,16 +402,22 @@ class CreateFisicalPersonScreen extends Component {
   		this.setState({
   			isEmpty: true,
   		});
-  	} else if (cpf.length < 11 || cpf.length > 11) {
+  	} else {
+  		this.setState({ isEmpty: false });
+	}
+  	if (cpf.length < 11 || cpf.length > 11) {
   		this.setState({
   			isErrorCpf: true,
   		});
-  	} else if (password.length < 6) {
+  	} else {
+  		this.setState({ isErrorCpf: false });
+  	}
+  	if (password.length < 6) {
   		this.setState({
   			isErrorPassword: true,
   		});
   	} else {
-  		this.setState({ isEmpty: false, isErrorPassword: false, isErrorCpf: false });
+  		this.setState({ isErrorPassword: false });
   		this.props.addNewUser(user);
   		this.handleModalSucess();
   	}
@@ -468,8 +474,8 @@ class CreateFisicalPersonScreen extends Component {
   			) : (
   				<Container>
   					<Form
-						onSubmit={this.handleSubmit}
-						withError={isEmpty || isErrorPassword || isErrorCpf}
+							onSubmit={this.handleSubmit}
+							withError={isEmpty || isErrorPassword || isErrorCpf}
   					>
   						<ImageLogo
   							margin="3rem 0 2rem 0"

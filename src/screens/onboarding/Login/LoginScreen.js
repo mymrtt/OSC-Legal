@@ -1,7 +1,7 @@
 // Libs
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -15,6 +15,7 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 // Redux
 const mapStateToProps = state => ({
 	email: state.signup.users.email,
+	password: state.signup.users.password,
 });
 
 export const ContainerForm = styled.div`
@@ -47,13 +48,13 @@ export const Form = styled.form`
 		width: 34%;
 	} */
 
-	@media (max-width: 1024px) {
-		min-width: 50%;
+	@media (max-width: 1200px) {
+		min-width: 40%;
 	}
 
-	/* @media (max-width: 980px) {
+	@media (max-width: 982px) {
 		width: 53%;
-	}  */
+	} 
 
   @media (max-width: 648px) {
 		width: 100%;
@@ -88,12 +89,17 @@ export const ImagePassword = styled.img`
 
 export const Label = styled.label`
   color: #85144b;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-family: Overpass;
 	font-weight: bold;
-  margin-top: 1rem;
+  margin-top: 0.6rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
+
+	@media (max-width: 648px) {
+		margin-top: 1rem;
+		margin-bottom: 0.6rem;
+	}
 `;
 
 export const Span = styled.span` 
@@ -107,7 +113,7 @@ export const Span = styled.span`
 
 	@media (max-width: 648px) {
 		width: 80%;
-		margin: 2rem;
+		margin: 1.8rem;
 	}
 
 	@media (max-width: 490px) {
@@ -124,14 +130,19 @@ export const ButtonText = styled(Link)`
 
 export const Error = styled.h4`
   width: 63%;
-  color: #D53B40;
-  display: flex;
+  color: #D63434; 
+	display: flex;
   justify-content: flex-end;
   font-size: 0.6rem;
   font-family: Eurostile, Medium;
 
-  @media (max-width: 648px) {
+  @media (max-width: 499px) {
 		width: 85%;
+	}	
+
+
+  @media (max-width: 465px) {
+		width: 83%;
 	}	
 `;
 
@@ -151,14 +162,33 @@ class LoginScreen extends React.Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		const { password } = this.state;
+
+		this.handleError();
+
+		this.setState({ redirect: '/dashboard' });
+
+	}
+
+	handleError = () => {
+		const { email, password } = this.state;
+		const registeredEmail = this.props.email;
+		const registeredPassword = this.props.password;
+
+		if (email !== registeredEmail) {
+			this.setState({
+				error: true,
+			});
+		}
+
 		if (password.length < 6) {
 			this.setState({
 				error: true,
 			});
-		} else {
+		}
+
+		if (password != registeredPassword) {
 			this.setState({
-				error: false,
+				error: true,
 			});
 		}
 	}
@@ -166,12 +196,14 @@ class LoginScreen extends React.Component {
 	handleChangeEmail = (ev) => {
 		this.setState({
 			email: ev.target.value,
+			error: false,
 		});
 	};
 
 	handleChangePassword = (ev) => {
 		this.setState({
 			password: ev.target.value,
+			error: false,
 		});
 	}
 
@@ -182,7 +214,6 @@ class LoginScreen extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.email);
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
@@ -203,6 +234,7 @@ class LoginScreen extends React.Component {
 						<Input
 							login
 							type={this.state.type}
+							value={this.state.password}
 							onChange={this.handleChangePassword}
 							placeholder="Inserir senha"
 							isError={this.state.error}
@@ -223,7 +255,8 @@ class LoginScreen extends React.Component {
 						widthMobile='80%'
 						widthMobileSmall='95%'
 						padding='1rem'
-						margin='2rem 0 1rem'
+						margin='2.5rem 0 1rem'
+						marginMobile='3.7rem 0 1.5rem'
 						text="entrar"
 						type="submit"
 					/>
@@ -232,6 +265,7 @@ class LoginScreen extends React.Component {
 						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
 					</Span>
 				</Form>
+				{this.state.redirect && <Redirect to={'./dashboard'} />}
 			</ContainerForm>
 		);
 	}
