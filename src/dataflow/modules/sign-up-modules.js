@@ -2,7 +2,7 @@ const ADD_NEW_USER = 'osc/register/ADD_NEW_USER';
 const ADD_NEW_PASSWORD = 'osc/register/ADD_NEW_PASSWORD';
 
 const initialState = {
-	users: {email: 'erlane@gmail.com', password: 1234567},
+	users: {},
 };
 
 // REDUCER
