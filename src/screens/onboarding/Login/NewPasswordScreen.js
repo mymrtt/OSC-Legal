@@ -1,6 +1,5 @@
-/* eslint-disable max-len */
 // Libs
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -10,10 +9,8 @@ import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
-
 // Redux
-import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
-
+import { addNewPassword } from '../../../dataflow/modules/onboarding-modules';
 
 const mapStateToProps = state => ({
 	singup: state.singup,
@@ -26,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export const ContainerForm = styled.div`
+const ContainerForm = styled.div`
   min-height: 100vh;
   background-color: #FFCFCD;
 	min-height: 100vh;
@@ -40,7 +37,7 @@ export const ContainerForm = styled.div`
 	}
 `;
 
-export const Form = styled.form`
+const Form = styled.form`
   width: 30%;
 	border-radius: 5px;
   background-color: #fff;
@@ -65,16 +62,14 @@ export const Form = styled.form`
 	}
 `;
 
-export const Span = styled.span`
+const Span = styled.span`
 	width: 80%;
   @media (max-width: 648px) {
-		& {
-			width: 90%;
-		}	
+		width: 90%;
 	}
 `;
 
-export const Title = styled.h1`
+const Title = styled.h1`
   color: #231F20;
   font-size: 1.25rem;
   font-weight: 900;
@@ -86,7 +81,7 @@ export const Title = styled.h1`
 	}
 `;
 
-export const Paragraph = styled.p`
+const Paragraph = styled.p`
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1.5rem;
@@ -99,7 +94,7 @@ export const Paragraph = styled.p`
 	}
 `;
 
-export const Error = styled.h4`
+const ErrorMessage = styled.h4`
   color: #D63434;
   display: flex;
   justify-content: flex-end;
@@ -107,7 +102,7 @@ export const Error = styled.h4`
   font-family: Overpass, Regular;
 `;
 
-export const Label = styled.label`
+const Label = styled.label`
   color: #85144B;
   font-size: 0.8rem;
   margin: 0.9rem;
@@ -116,27 +111,27 @@ export const Label = styled.label`
 	text-transform: uppercase;
 `;
 
-export const BackLogin = styled.span` 
+const BackLogin = styled.span` 
   display: flex;
   justify-content: center;
 `;
 
-export const ButtonText = styled(Link)`
-    color: #85144B;
-    font-size: 1rem; 
-	  font-family: Overpass, Regular;
-    margin-bottom: 2rem;
-    text-decoration: none;
-		text-transform: uppercase;
+const ButtonText = styled(Link)`
+	color: #85144B;
+	font-size: 1rem; 
+	font-family: Overpass, Regular;
+	margin-bottom: 2rem;
+	text-decoration: none;
+	text-transform: uppercase;
 `;
 
-class NewPasswordScreen extends React.Component {
+class NewPasswordScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			newPassword: '',
 			newPasswordError: false,
-			repetPassword: '',
+			repeatPassword: '',
 			repetPasswordError: false,
 			redirect: false,
 		};
@@ -144,12 +139,11 @@ class NewPasswordScreen extends React.Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		this.errors();
+		this.handleErrors();
 	}
 
-	errors = () => {
-		// const { password } = this.props.signup.users;
-		const { newPassword, repetPassword } = this.state;
+	handleErrors = () => {
+		const { newPassword, repeatPassword } = this.state;
 
 		if (newPassword.length < 6) {
 			this.setState({
@@ -161,7 +155,7 @@ class NewPasswordScreen extends React.Component {
 			});
 		}
 
-		if (newPassword !== repetPassword) {
+		if (newPassword !== repeatPassword) {
 			this.setState({
 				repetPasswordError: true,
 			});
@@ -171,7 +165,7 @@ class NewPasswordScreen extends React.Component {
 			});
 		}
 
-		if (newPassword.length > 5 && newPassword === repetPassword) {
+		if (newPassword.length > 5 && newPassword === repeatPassword) {
 			this.props.addNewPassword({ password: newPassword });
 		}
 	}
@@ -184,23 +178,23 @@ class NewPasswordScreen extends React.Component {
 
 	handleChangeRepetPassword = (ev) => {
 		this.setState({
-			repetPassword: ev.target.value,
+			repeatPassword: ev.target.value,
 		});
 	}
 
-	changeRedirect = () => {
-		const { newPassword, repetPassword } = this.state;
-		if (newPassword.length > 5 && newPassword === repetPassword) {
+	handleChangeRedirect = () => {
+		const { newPassword, repeatPassword } = this.state;
+		if (newPassword.length > 5 && newPassword === repeatPassword) {
 			this.setState({ redirect: true });
 		}
 	}
 
 	render() {
 		const {
-			newPasswordError, repetPasswordError, redirect,
+			newPasswordError, repetPasswordError, redirect, newPassword, confirmationCode, repeatPassword,
 		} = this.state;
 
-		const errorMenssages = [
+		const errorMessages = [
 			'Use 6 caracteres ou mais para a sua senha',
 			'Essa senha não se coincidem. Tente novamente',
 		];
@@ -214,7 +208,7 @@ class NewPasswordScreen extends React.Component {
 						<Label>código de confirmação</Label>
 						<Input
 							login
-							value={this.state.confirmationCode}
+							value={confirmationCode}
 							type='text'
 							placeholder="Insira aqui o código"
 							required
@@ -222,23 +216,23 @@ class NewPasswordScreen extends React.Component {
 						<Label>nova senha</Label>
 						<Input
 							login
-							value={this.state.newPassword}
+							value={newPassword}
 							type='password'
 							onChange={ev => this.handleChangeNewPassword(ev)}
 							placeholder="Insira aqui sua senha"
 							required
 						/>
-						{newPasswordError && <Error>{errorMenssages[0]}</Error>}
+						{newPasswordError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
 						<Label>repita nova senha</Label>
 						<Input
 							login
-							value={this.state.repetPassword}
+							value={repeatPassword}
 							type='password'
 							onChange={ev => this.handleChangeRepetPassword(ev)}
 							placeholder="Repita sua senha"
 							required
 						/>
-						{repetPasswordError && <Error>{errorMenssages[1]}</Error>}
+						{repetPasswordError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
 					</Span>
 					<Button
 						width='80%'
@@ -247,7 +241,7 @@ class NewPasswordScreen extends React.Component {
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
 						type="submit"
-						onClick={() => this.changeRedirect()}
+						onClick={() => this.handleChangeRedirect()}
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
@@ -260,4 +254,3 @@ class NewPasswordScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
-

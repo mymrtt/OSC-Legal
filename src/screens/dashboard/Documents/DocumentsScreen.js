@@ -1,56 +1,48 @@
 // Libs
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 
-
-export const Container = styled.div`
+const Container = styled.div`
   width: 80%;
-
 `;
 
-export const Span = styled.span`
+const Span = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-
 `;
 
-export const InputSearch = styled.span`
+const InputSearch = styled.span`
   display: flex;
   justify-content: flex-end;
-  
 `;
 
-export const Label = styled.label`
+const Label = styled.label`
   font-size: 1.5rem;
   margin-right: 0.8rem;
-  
 `;
 
-export const Input = styled.input`
+const Input = styled.input`
   width: 15%;
   border-color: #85144B;
   border-radius: 3px;
-  
 `;
 
-export const Title = styled.h2`
+const Title = styled.h2`
   color: #85144B;
   font-family: Overpass-Black;
-
 `;
 
-export const Paragraph = styled.h2`
+const Paragraph = styled.h2`
   width: 40%;]
   font-size: 1.5rem;
   font-family: Overpass-Regular;
-
 `;
 
-export const Button = styled.button`
+const Button = styled.button`
   width: 10%;
   height: 7vh;
   background-color: #FF4136;
@@ -63,7 +55,7 @@ export const Button = styled.button`
 
 
 
-class Documentos extends React.Component {
+class Documents extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,7 +76,7 @@ class Documentos extends React.Component {
           </div>
         </Span>
         <div>
-          <h1>Modelos de Documentos</h1>
+          <h1>Modelos de Documents</h1>
           <Button>Adicionar Modelo</Button>
         </div>
         <InputSearch>
@@ -127,4 +119,4 @@ class Documentos extends React.Component {
   }
 }
 
-export default Documentos;
+export default Documents;

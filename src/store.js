@@ -5,10 +5,10 @@ import {
 import thunkMiddleware from 'redux-thunk';
 
 // Reducers
-import SignUp from './dataflow/modules/sign-up-modules';
+import Onboarding from './dataflow/modules/onboarding-modules';
 
 const reducers = combineReducers({
-	signup: SignUp,
+	onboarding: Onboarding,
 });
 
 export default function configureStore(initialState) {

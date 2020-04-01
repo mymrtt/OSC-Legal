@@ -1,8 +1,4 @@
-/* eslint-disable indent */
-/* eslint-disable import/no-cycle */
-/* eslint-disable class-methods-use-this */
 /* eslint-disable no-mixed-spaces-and-tabs */
-
 // Libs
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -12,14 +8,14 @@ import styled from 'styled-components';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import ImageLogo from '../../../components/ImageLogo';
-import FisicalPersonSucess from './UserSucess';
+import CreateUserSucess from './CreateUserSucessScreen';
 
 // Images
 import VisibilityOff from '../../../assets/visibility-off.svg';
 import VisibilityOn from '../../../assets/visibility-on.svg';
 
 // Redux
-import { addNewUser } from '../../../dataflow/modules/sign-up-modules';
+import { addNewUser } from '../../../dataflow/modules/onboarding-modules';
 
 const mapStateToProps = state => ({
 	signup: state.signup,
@@ -72,10 +68,10 @@ const Form = styled.form`
 `;
 
 const BlockSmallerInput = styled.span`
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
+	width: 90%;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
 `;
 
 const BlockTitle = styled.span`
@@ -101,10 +97,9 @@ const TitleForm = styled.h1`
   }
 
   @media (max-width: 648px) {
-	  
-      margin: 2rem 0 1rem 0.25rem;
-      font-size: 1.3rem;
-    }
+		margin: 2rem 0 1rem 0.25rem;
+		font-size: 1.3rem;
+	}
 `;
 
 const Label = styled.label`
@@ -114,35 +109,35 @@ const Label = styled.label`
   align-items: center;
   flex-direction: column;
 
-    @media(max-width: 768px){
-      width: 95%;
-    }
+	@media(max-width: 768px){
+		width: 95%;
+	}
 
   @media (max-width: 648px) {
-      width: 95%;
-      margin-left: 0.3rem;
+		width: 95%;
+		margin-left: 0.3rem;
   }
   @media(max-width: 425px){
-      width: 100%;
+		width: 100%;
   }
 `;
 
 const ParagraphInput = styled.p`
-    align-self: flex-start;
-    text-transform: uppercase;
-    color: #85144b;
-    font-size: 0.75rem;
-    margin: 1.5rem 0 0.5rem 1.4rem;
-    font-family: Overpass;
-    font-weight: bold;
+	align-self: flex-start;
+	text-transform: uppercase;
+	color: #85144b;
+	font-size: 0.75rem;
+	margin: 1.5rem 0 0.5rem 1.4rem;
+	font-family: Overpass;
+	font-weight: bold;
 
-    @media (max-width: 425px) {
-      text-align: left;
-      margin-left: 0.2rem;
-    }
+	@media (max-width: 425px) {
+		text-align: left;
+		margin-left: 0.2rem;
+	}
 `;
 
-const Error = styled.h6`
+const ErrorMessage = styled.h6`
   font-size: 0.6rem;
   color: #f00;
   align-self: flex-start;
@@ -195,7 +190,7 @@ const TextTerms = styled.p`
 
   @media(max-width: 648px){
     font-size: 0.8rem;
-	width: 63%;
+		width: 63%;
   }
 `;
 
@@ -218,7 +213,7 @@ const Overlay = styled.div`
 	}
 `;
 const Modal = styled.div`
-   width: 33%;
+	width: 33%;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -257,22 +252,22 @@ const TitleTerms = styled.h1`
   }
 `;
 const ButtonTerms = styled.button`
-    width: 7.5rem;
-    height: 2.25rem;
-    background-color: #ff4136;
-    color: #fff;
-    text-transform: uppercase;
-    border: 0;
-    border-radius: 4px;
-    align-self: flex-end;
-    margin: 0.4rem 0.5rem 0.4rem 0;
-    box-shadow: 0 3px 6px #00000029;
+	width: 7.5rem;
+	height: 2.25rem;
+	background-color: #ff4136;
+	color: #fff;
+	text-transform: uppercase;
+	border: 0;
+	border-radius: 4px;
+	align-self: flex-end;
+	margin: 0.4rem 0.5rem 0.4rem 0;
+	box-shadow: 0 3px 6px #00000029;
 
-    @media(max-width: 648px){
-      position: fixed;
-      bottom: 0;
-      height: 3.5rem;
-    }
+	@media(max-width: 648px){
+		position: fixed;
+		bottom: 0;
+		height: 3.5rem;
+	}
 
   @media (max-width: 648px) {
     align-self: center;
@@ -404,7 +399,7 @@ class CreateFisicalPersonScreen extends Component {
   		});
   	} else {
   		this.setState({ isEmpty: false });
-	}
+  	}
   	if (cpf.length < 11 || cpf.length > 11) {
   		this.setState({
   			isErrorCpf: true,
@@ -445,7 +440,7 @@ class CreateFisicalPersonScreen extends Component {
 						</u>
 					</Terms>
 				</BlockTerms>
-				<ButtonTerms onClick={this.handleModalTerms}>OK</ButtonTerms>
+				<ButtonTerms onClick={this.handleModalTerms}>ok</ButtonTerms>
 			</Modal>
 		</Overlay>
 	)
@@ -462,14 +457,22 @@ class CreateFisicalPersonScreen extends Component {
   		isErrorPassword,
   		modalSucess,
   		isEmpty,
-  		isErrorCpf,
+			isErrorCpf,
+			togglePassword,
+			name,
+			surname,
+			cpf,
+			email,
+			telephone,
+			password,
+			isTermsOpen,
   	} = this.state;
 
   	return (
   		<>
   			{modalSucess === true ? (
   				<Container>
-  					<FisicalPersonSucess handleModalSucess={this.handleModalSucess} />
+  					<CreateUserSucess handleModalSucess={this.handleModalSucess} />
   				</Container>
   			) : (
   				<Container>
@@ -482,14 +485,14 @@ class CreateFisicalPersonScreen extends Component {
   							width=" 150px"
   						/>
   						<BlockTitle>
-  							<TitleForm> criar conta </TitleForm>
+  							<TitleForm>criar conta</TitleForm>
   						</BlockTitle>
   						<Label>
   							<ParagraphInput>Nome</ParagraphInput>
   							<Input
   								type="text"
   								onChange={ev => this.handleChange('name', ev)}
-  								value={this.state.name}
+  								value={name}
   								placeholder="Nome"
   								name="nome"
   							/>
@@ -499,7 +502,7 @@ class CreateFisicalPersonScreen extends Component {
   							<Input
   								type="text"
   								onChange={ev => this.handleChange('surname', ev)}
-  								value={this.state.surname}
+  								value={surname}
   								placeholder="Sobrenome"
   								name="sobrenome"
   							/>
@@ -509,19 +512,18 @@ class CreateFisicalPersonScreen extends Component {
   							<Input
   								type="number"
   								onChange={ev => this.handleChange('cpf', ev)}
-  								value={this.state.cpf}
+  								value={cpf}
   								placeholder="000000-0"
   								name="cpf"
   							/>
-  							{isErrorCpf && <Error>{errorMessage[1]}</Error>}
+  							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
   						</Label>
-
   						<Label>
   							<ParagraphInput>email</ParagraphInput>
   							<Input
   								type="email"
   								onChange={ev => this.handleChange('email', ev)}
-  								value={this.state.email}
+  								value={email}
   								name="email"
   								placeholder="nome@mail.com"
   								required
@@ -532,7 +534,7 @@ class CreateFisicalPersonScreen extends Component {
   							<Input
   								type="tel"
   								onChange={ev => this.handleChange('telephone', ev)}
-  								value={this.state.telephone}
+  								value={telephone}
   								placeholder="(00) 00000-0000"
   								name="telefone"
   							/>
@@ -542,14 +544,14 @@ class CreateFisicalPersonScreen extends Component {
   							<Input
   								className="input-password"
   								type={
-  									this.state.togglePassword === true ? 'text' : 'password'
+  									togglePassword === true ? 'text' : 'password'
   								}
   								onChange={ev => this.handleChange('password', ev)}
-  								value={this.state.password}
+  								value={password}
   								placeholder="Inserir senha"
   								name="password"
   							/>
-  							{this.state.togglePassword === true ? (
+  							{togglePassword === true ? (
   								<BlockSmallerInput>
   									<ImagePassword
   										src={VisibilityOff}
@@ -564,15 +566,15 @@ class CreateFisicalPersonScreen extends Component {
   									/>
   								</BlockSmallerInput>
   							)}
-  							{isErrorPassword && <Error>{errorMessage[0]}</Error>}
+  							{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
 							{isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
   						<TextTerms>
-                  Clique abaixo para concordar com os
+								Clique abaixo para concordar com os
   							<strong onClick={this.handleModalTerms}>
-                    Termos de Serviço
+									Termos de Serviço
   							</strong>
-                  e registrar.
+								e registrar.
   						</TextTerms>
   						<Button
   							width="87%"
@@ -584,7 +586,7 @@ class CreateFisicalPersonScreen extends Component {
   							widthMobile="100%"
   						/>
   					</Form>
-						{ this.state.isTermsOpen && this.renderTerms() }
+						{ isTermsOpen && this.renderTerms() }
   				</Container>
   			)}
   		</>
