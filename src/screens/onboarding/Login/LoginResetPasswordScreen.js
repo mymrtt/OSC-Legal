@@ -1,5 +1,5 @@
 // Libs
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 	email: state.signup.users.email,
 });
 
-export const ContainerForm = styled.div`
+const ContainerForm = styled.div`
   height: 100vh;
   background-color: #FFCFCD;
   display: flex;
@@ -27,13 +27,11 @@ export const ContainerForm = styled.div`
   margin: 0;
 
   @media (max-width: 648px) {
-		&{
-			background-color: #fff;
-	 	 }
-		}
+		background-color: #fff;
+	}
 `;
 
-export const Form = styled.form`
+const Form = styled.form`
   width: 30%;
   background-color: #fff;
 	border-radius: 5px;
@@ -44,19 +42,15 @@ export const Form = styled.form`
 	border-radius: 3px;
 
 	@media (max-width: 980px) {
-		&{
-			width: 70%;
-		 }
+		width: 70%;
 	}
 
   @media (max-width: 648px) {
-		&{
-			width: 100%;
-		}
+		width: 100%;
 	}
 `;
 
-export const Title = styled.p`
+const Title = styled.p`
   color: #231F20;
   font-size: 1rem;
   font-family: Overpass, Regular;
@@ -64,21 +58,21 @@ export const Title = styled.p`
 	margin-top: 2rem;
 `;
 
-export const InputBox = styled.span`
+const InputBox = styled.span`
 	width: 75%;
 	display: flex;
 	flex-direction: column;
 	position: relative;
 `;
 
-export const ImagePassword = styled.img`
+const ImagePassword = styled.img`
   position: absolute;
   bottom: ${props => (props.off ? '1.2rem' : '0.875rem')};
   right: 0.7rem;
   cursor: pointer;
 `;
 
-export const Error = styled.h4`
+const ErrorMessage = styled.h4`
   width: 63%;
   color: #D53B40;
   display: flex;
@@ -91,7 +85,7 @@ export const Error = styled.h4`
 	}	
 `;
 
-export const Label = styled.label`
+const Label = styled.label`
   color: #85144b;
   font-size: 0.9rem;
   font-family: Overpass;
@@ -102,17 +96,17 @@ export const Label = styled.label`
 	text-transform: uppercase;
 `;
 
-export const Span = styled.span` 
-  width: 75%;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-	margin-bottom: 2rem;
-`;
+// const Span = styled.span`
+//   width: 75%;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   margin-top: 0.5rem;
+// 	margin-bottom: 2rem;
+// `;
 
-class LoginResetPasswordScreen extends React.Component {
+class LoginResetPasswordScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -128,8 +122,8 @@ class LoginResetPasswordScreen extends React.Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		const { password } = this.state;
-		if (password.length < 6) {
+
+		if (this.state.password.length < 6) {
 			this.setState({
 				error: true,
 			});
@@ -159,6 +153,9 @@ class LoginResetPasswordScreen extends React.Component {
 	}
 
 	render() {
+		const {
+			email, error, type, redirect,
+		} = this.state;
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
@@ -171,7 +168,7 @@ class LoginResetPasswordScreen extends React.Component {
 							type="email"
 							onChange={this.handleChangeEmail}
 							placeholder="name@email.com"
-							value={this.state.email}
+							value={email}
 							required
 						/>
 					</InputBox>
@@ -179,21 +176,21 @@ class LoginResetPasswordScreen extends React.Component {
 						<Label>senha</Label>
 						<Input
 							login
-							type={this.state.type}
+							type={type}
 							onChange={this.handleChangePassword}
 							placeholder="Insira senha"
-							isError={this.state.error}
+							isError={error}
 							required
 						/>
 						<span>
 							<ImagePassword
-								src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
+								src={type === 'password' ? VisibilityOn : VisibilityOff}
 								onClick={this.handleChangeType}
-								off={this.state.type === 'password'}
+								off={type === 'password'}
 							/>
 						</span>
 					</InputBox>
-					{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
+					{error && <ErrorMessage>Email e/ ou senha incorreta</ErrorMessage>}
 					<Button
 						width='75%'
 						height='3.5rem'
@@ -204,7 +201,7 @@ class LoginResetPasswordScreen extends React.Component {
 						type="submit"
 					/>
 				</Form>
-				{this.state.redirect && <Redirect to={'/loginreset'} />}
+				{redirect && <Redirect to={'/loginreset'} />}
 			</ContainerForm>
 		);
 	}
