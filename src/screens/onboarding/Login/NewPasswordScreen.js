@@ -22,7 +22,6 @@ const mapDispatchToProps = dispatch => ({
 	},
 });
 
-
 const ContainerForm = styled.div`
   min-height: 100vh;
   background-color: #FFCFCD;

@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import ImageLogo from '../../../components/ImageLogo';
 import Button from '../../../components/Button';
 
-
+// Redux
 const mapStateToProps = state => ({
-  onboarding: state.onboarding,
+	onboarding: state.onboarding,
 });
 
 const Container = styled.div`
@@ -56,8 +56,6 @@ const Title = styled.h1`
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
-  display: flex;
-  align-items: center;
 
   @media (max-width: 648px) {
 		width: 95%;
@@ -105,37 +103,38 @@ class ResetPasswordCode extends Component {
 	}
 
   handleRedirect = () => {
-	this.setState({
-		redirect: true,
-	});
-}
+  	this.setState({
+  		redirect: true,
+  	});
+  }
 
-render() {
-	return (
-		<Container>
-			<ImageLogo margin='3rem 0 2.5rem 0'/>
-			<Content>
-				<Title>Aqui está o seu código de redefinição de senha:</Title>
-				<Code>210704</Code>
-				<ContainerParagraph>
-					<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: {this.props.onboarding.emailReset}.
+  render() {
+  	return (
+  		<Container>
+  			<ImageLogo margin='3rem 0 2.5rem 0'/>
+  			<Content>
+  				<Title>Aqui está o seu código de redefinição de senha:</Title>
+  				<Code>210704</Code>
+  				<ContainerParagraph>
+  					<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail:
+  						{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' name@email.com. '}
             Se você não realizou essa solicitação,
             pode acessar sua conta normalmente.
-					</Paragraph>
-				</ContainerParagraph>
-				<Button
-					width='75%'
-					widthMobile='100%'
-					marginMobile='3rem 0 2rem 0'
-					text="redefinir senha"
-					type="button"
-					onClick={this.handleRedirect}
-				/>
-			</Content>
-			{this.state.redirect && <Redirect to={'/newpassword'}/>}
-		</Container>
-	);
-}
+  					</Paragraph>
+  				</ContainerParagraph>
+  				<Button
+  					width='75%'
+  					widthMobile='100%'
+  					marginMobile='3rem 0 2rem 0'
+  					text="redefinir senha"
+  					type="button"
+  					onClick={this.handleRedirect}
+  				/>
+  			</Content>
+  			{this.state.redirect && <Redirect to={'/newpassword'}/>}
+  		</Container>
+  	);
+  }
 }
 
-export default connect(mapStateToProps) (ResetPasswordCode);
+export default connect(mapStateToProps)(ResetPasswordCode);
