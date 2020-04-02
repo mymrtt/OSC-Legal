@@ -15,7 +15,7 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 
 // Redux
 const mapStateToProps = state => ({
-	email: state.signup.users.email,
+	email: state.onboarding.users.email,
 });
 
 const ContainerForm = styled.div`
