@@ -2,18 +2,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
-import {connect} from 'react-redux';
-
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
-
 // Redux
 import { emailReset } from '../../../dataflow/modules/onboarding-modules';
-
 
 const mapDispatchToProps = dispatch => ({
 	emailReset: (email) => {
@@ -166,4 +163,4 @@ class ResetPasswordEmailScreen extends Component {
 	}
 }
 
-export default connect(null, mapDispatchToProps) (ResetPasswordEmailScreen);
+export default connect(null, mapDispatchToProps)(ResetPasswordEmailScreen);
