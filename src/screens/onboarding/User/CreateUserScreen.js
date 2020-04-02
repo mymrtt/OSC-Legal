@@ -1,7 +1,4 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable class-methods-use-this */
 /* eslint-disable no-mixed-spaces-and-tabs */
-
 // Libs
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -141,7 +138,7 @@ const ParagraphInput = styled.p`
     }
 `;
 
-const Error = styled.h6`
+const ErrorMessage = styled.h6`
   font-size: 0.6rem;
   color: #f00;
   align-self: flex-start;
@@ -415,12 +412,10 @@ class CreateFisicalPersonScreen extends Component {
   		this.setState({
   			isErrorPassword: true,
 		  });
-  	} else if (this.state.isEmpty === true) {
-		this.setState({
-			isErrorPassword: false,
-			isErrorCpf: false,
-		});
-  	} 
+  	} else {
+  		this.props.addNewUser(user);
+  		this.handleModalSucess();
+  	}
   };
 
 	renderTerms = () => (
@@ -513,7 +508,7 @@ class CreateFisicalPersonScreen extends Component {
   								placeholder="000000-0"
   								name="cpf"
   							/>
-  							{isErrorCpf && <Error>{errorMessage[1]}</Error>}
+  							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
   						</Label>
 
   						<Label>
@@ -564,7 +559,7 @@ class CreateFisicalPersonScreen extends Component {
   									/>
   								</BlockSmallerInput>
   							)}
-  							{isErrorPassword && <Error>{errorMessage[0]}</Error>}
+  							{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
 							{isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
   						<TextTerms>
