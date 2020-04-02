@@ -81,7 +81,7 @@ const Box = styled.span`
 
 const Label = styled.label`
 	color: #85144B;
-	font-size: 0.8rem;
+	font-size: 0.75rem;
 	margin: 1.6rem 0rem 0.3rem 0.9rem;
 	font-family: Overpass, Regular;
 	text-transform: uppercase;

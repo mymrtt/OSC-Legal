@@ -14,8 +14,8 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 
 // Redux
 const mapStateToProps = state => ({
-	email: state.signup.users.email,
-	password: state.signup.users.password,
+	email: state.onboarding.users.email,
+	password: state.onboarding.users.password,
 });
 
 const ContainerForm = styled.div`
@@ -83,14 +83,14 @@ const ImagePassword = styled.img`
 `;
 
 const Label = styled.label`
-  margin-top: 0.6rem;
-  margin-bottom: 0.3rem;
-	padding-left: 0.8rem;
   color: #85144b;
-	text-transform: uppercase;
   font-size: 0.75rem;
   font-family: Overpass;
 	font-weight: bold;
+  margin-top: 0.6rem;
+  margin-bottom: 0.3rem;
+	padding-left: 0.8rem;
+	text-transform: uppercase;
 
 	@media (max-width: 648px) {
 		margin-top: 1rem;

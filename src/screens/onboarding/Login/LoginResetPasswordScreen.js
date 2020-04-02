@@ -15,7 +15,7 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 
 // Redux
 const mapStateToProps = state => ({
-	email: state.signup.users.email,
+	email: state.onboarding.users.email,
 });
 
 const ContainerForm = styled.div`
@@ -32,14 +32,13 @@ const ContainerForm = styled.div`
 `;
 
 const Form = styled.form`
-  width: 30%;
+  width: 32%;
   background-color: #fff;
 	border-radius: 5px;
   display: flex;
   align-items: center;
   flex-direction: column;
 	padding-top: 3rem;
-	border-radius: 3px;
 
 	@media (max-width: 980px) {
 		width: 70%;
@@ -87,7 +86,7 @@ const ErrorMessage = styled.h4`
 
 const Label = styled.label`
   color: #85144b;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-family: Overpass;
 	font-weight: bold;
   margin-top: 1rem;
