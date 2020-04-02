@@ -12,6 +12,11 @@ import Button from '../../../components/Button';
 // Redux
 import { emailReset } from '../../../dataflow/modules/onboarding-modules';
 
+
+const mapStateToProps = state => ({
+	onboarding: state.onboarding,
+});
+
 const mapDispatchToProps = dispatch => ({
 	emailReset: (email) => {
 		dispatch(emailReset(email));
@@ -42,6 +47,10 @@ const Form = styled.form`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+
+	input{
+		border: ${props => props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd'};
+	}
 
 	@media (max-width: 1440px) {
 		width: 32%;
@@ -77,6 +86,13 @@ const Title = styled.h1`
 		margin: 0 0 3rem 0;
 		font-size: 1.25rem;
 	}
+`;
+
+const ErrorMessage = styled.p`
+	font-size: 0.7rem;
+	color: #f00;
+	align-self: flex-start;
+	margin-top: 0.5rem;
 `;
 
 const Box = styled.span`
@@ -116,6 +132,7 @@ class ResetPasswordEmailScreen extends Component {
 		value: '',
 		email: '',
 		redirect: null,
+		isErrorEmail: false,
 	}
 
 	handleChangeEmail = (ev) => {
@@ -126,15 +143,25 @@ class ResetPasswordEmailScreen extends Component {
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.props.emailReset(this.state.email);
-		this.setState({ redirect: '/resetcode' });
+		if (this.state.email !== this.props.onboarding.users.email) {
+			this.setState({
+				isErrorEmail: true,
+			})
+		} else {
+			this.setState({
+				isErrorEmail: false,
+			});
+			this.props.emailReset(this.state.email);
+			this.setState({ redirect: '/resetcode' });
+		}
+
 	}
 
 	render() {
 		return (
 			<ContainerForm>
 				<ImageLogo margin='0 0 4rem' />
-				<Form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit} withError={this.state.isErrorEmail}>
 					<Title>redefinição de senha</Title>
 					<Box>
 						<Label>email</Label>
@@ -145,6 +172,7 @@ class ResetPasswordEmailScreen extends Component {
 							placeholder="name@email.com"
 							required
 						/>
+						{this.state.isErrorEmail && <ErrorMessage>E-mail não encontrado</ErrorMessage>}
 						<Button
 							width='100%'
 							margin='1rem 0 1.5rem 0'
@@ -163,4 +191,5 @@ class ResetPasswordEmailScreen extends Component {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(ResetPasswordEmailScreen);
+export default connect(mapStateToProps, mapDispatchToProps) (ResetPasswordEmailScreen);
+

@@ -211,7 +211,7 @@ class NewPasswordScreen extends Component {
 							value={confirmationCode}
 							type='text'
 							placeholder="Insira aqui o código"
-							// required
+							required
 						/>
 						<Label>nova senha</Label>
 						<Input
@@ -220,7 +220,7 @@ class NewPasswordScreen extends Component {
 							type='password'
 							onChange={ev => this.handleChangeNewPassword(ev)}
 							placeholder="Insira aqui sua senha"
-							// required
+							required
 						/>
 						{newPasswordError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
 						<Label>repita nova senha</Label>
@@ -230,7 +230,7 @@ class NewPasswordScreen extends Component {
 							type='password'
 							onChange={ev => this.handleChangeRepetPassword(ev)}
 							placeholder="Repita sua senha"
-							// required
+							required
 						/>
 						{repetPasswordError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
 					</Span>
