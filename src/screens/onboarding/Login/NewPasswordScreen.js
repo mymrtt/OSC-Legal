@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import { addNewPassword } from '../../../dataflow/modules/onboarding-modules';
 
 const mapStateToProps = state => ({
-	singup: state.singup,
+	onboarding: state.onboarding,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -21,7 +21,6 @@ const mapDispatchToProps = dispatch => ({
 		dispatch(addNewPassword(newPassword));
 	},
 });
-
 
 const ContainerForm = styled.div`
   min-height: 100vh;
@@ -144,6 +143,7 @@ class NewPasswordScreen extends Component {
 
 	handleErrors = () => {
 		const { newPassword, repeatPassword } = this.state;
+		const { password } = this.props.onboarding.users.password;
 
 		if (newPassword.length < 6) {
 			this.setState({
@@ -204,7 +204,7 @@ class NewPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
+						<Paragraph>Um código de confirmação foi enviado para {this.props.onboarding.emailReset}, por favor, cole-o abaixo:</Paragraph>
 						<Label>código de confirmação</Label>
 						<Input
 							login
