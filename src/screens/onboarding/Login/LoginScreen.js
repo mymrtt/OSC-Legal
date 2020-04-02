@@ -14,7 +14,8 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 
 // Redux
 const mapStateToProps = state => ({
-	onboarding: state.onboarding.users,
+	email: state.onboarding.users.email,
+	password: state.onboarding.users.password,
 });
 
 const ContainerForm = styled.div`
@@ -82,14 +83,14 @@ const ImagePassword = styled.img`
 `;
 
 const Label = styled.label`
-  margin-top: 0.6rem;
-  margin-bottom: 0.3rem;
-	padding-left: 0.8rem;
   color: #85144b;
-	text-transform: uppercase;
   font-size: 0.75rem;
   font-family: Overpass;
 	font-weight: bold;
+  margin-top: 0.6rem;
+  margin-bottom: 0.3rem;
+	padding-left: 0.8rem;
+	text-transform: uppercase;
 
 	@media (max-width: 648px) {
 		margin-top: 1rem;
@@ -145,7 +146,7 @@ class LoginScreen extends Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: this.props.email || '',
+			email: '',
 			password: '',
 			passwordError: '',
 			error: undefined,
@@ -155,22 +156,16 @@ class LoginScreen extends Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		// const registeredEmail = this.props.onboarding.email;
-		// const registeredPassword = this.props.onborading.password;
-		console.log(this.props.onboarding.password)
-		console.log(this.props.onboarding.email)
 
-		// console.log(registeredEmail);
-		// console.log(registeredPassword);
-		// if (!this.handleError()) {
-		// 	this.setState({ redirect: '/dashboard' });
-		// }
+		if (!this.handleError()) {
+			this.setState({ redirect: '/dashboard' });
+		}
 	}
 
 	handleError = () => {
 		const { email, password } = this.state;
-		const registeredEmail = this.props.onboarding.email;
-		const registeredPassword = this.props.onborading.password;
+		const registeredEmail = this.props.email;
+		const registeredPassword = this.props.password;
 		let error = false;
 
 		if (email !== registeredEmail || password.length < 6 || password !== registeredPassword) {

@@ -2,11 +2,24 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
+
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+
+
+// Redux
+import { emailReset } from '../../../dataflow/modules/onboarding-modules';
+
+
+const mapDispatchToProps = dispatch => ({
+	emailReset: (email) => {
+		dispatch(emailReset(email));
+	},
+});
 
 export const ContainerForm = styled.div`
 	height: 100vh;
@@ -81,7 +94,7 @@ const Box = styled.span`
 
 const Label = styled.label`
 	color: #85144B;
-	font-size: 0.8rem;
+	font-size: 0.75rem;
 	margin: 1.6rem 0rem 0.3rem 0.9rem;
 	font-family: Overpass, Regular;
 	text-transform: uppercase;
@@ -114,7 +127,9 @@ class ResetPasswordEmailScreen extends Component {
 		});
 	};
 
-	handleSubmit = () => {
+	handleSubmit = (e) => {
+		e.preventDefault();
+		this.props.emailReset(this.state.email);
 		this.setState({ redirect: '/resetcode' });
 	}
 
@@ -151,4 +166,4 @@ class ResetPasswordEmailScreen extends Component {
 	}
 }
 
-export default ResetPasswordEmailScreen;
+export default connect(null, mapDispatchToProps) (ResetPasswordEmailScreen);
