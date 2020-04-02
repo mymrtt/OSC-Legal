@@ -8,6 +8,10 @@ import Logo from '../assets/logo.svg';
 export const LogoImage = styled.img`
   width: ${props => props.width};
   margin: ${props => props.margin};
+
+	@media(max-width: 648px) {
+		margin: ${props => props.marginMobile};
+	}
 `;
 
 export default function ImageLogo(props) {

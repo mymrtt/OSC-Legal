@@ -219,7 +219,7 @@ class LoginScreen extends Component {
 							type="email"
 							value={email}
 							onChange={this.handleChangeEmail}
-							placeholder="name@email.com"
+							placeholder="nome@email.com"
 							required
 						/>
 					</InputBox>

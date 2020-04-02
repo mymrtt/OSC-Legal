@@ -164,12 +164,12 @@ class ResetPasswordEmailScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={this.state.isErrorEmail}>
 					<Title>redefinição de senha</Title>
 					<Box>
-						<Label>email</Label>
+						<Label>e-mail</Label>
 						<Input
 							login
 							type="email"
 							onChange={this.handleChangeEmail}
-							placeholder="name@email.com"
+							placeholder="nome@email.com"
 							required
 						/>
 						{this.state.isErrorEmail && <ErrorMessage>E-mail não encontrado</ErrorMessage>}

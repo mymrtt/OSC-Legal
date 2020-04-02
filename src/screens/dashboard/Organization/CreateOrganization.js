@@ -208,7 +208,7 @@ const Label = styled.label`
   }
 `;
 
-export default class LegalPerson extends Component {
+export default class CreateOrganization extends Component {
   state = {
     nomeError: false,
     dataLegalPerson: {
@@ -271,7 +271,7 @@ export default class LegalPerson extends Component {
               <Text>Yasmin Miranda</Text>
               <h2>rg</h2>
               <Text>0000000-0</Text>
-              <h2>email</h2>
+              <h2>e-mail</h2>
               <Text>nome@email.com</Text>
               <h2>telefone</h2>
               <Text>(99) 99999-9999</Text>
