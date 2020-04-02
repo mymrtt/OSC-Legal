@@ -196,7 +196,7 @@ class NewPasswordScreen extends Component {
 
 		const errorMessages = [
 			'Use 6 caracteres ou mais para a sua senha',
-			'Essa senha não se coincidem. Tente novamente',
+			'Os valores digitados não coincidem. Tente novamente',
 		];
 		return (
 			<ContainerForm>
