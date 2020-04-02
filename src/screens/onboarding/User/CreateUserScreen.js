@@ -89,7 +89,7 @@ const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-  margin: 1.5rem 0 1rem 1.17rem;
+	margin: 1.5rem 0 1rem 1.12rem;
   align-self: flex-start;
   
   @media(max-width: 768px){
@@ -103,11 +103,11 @@ const TitleForm = styled.h1`
 `;
 
 const Label = styled.label`
-  position: relative;
   width: 92%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  position: relative;
 
 	@media(max-width: 768px){
 		width: 95%;
@@ -117,19 +117,20 @@ const Label = styled.label`
 		width: 95%;
 		margin-left: 0.3rem;
   }
+
   @media(max-width: 425px){
 		width: 100%;
   }
 `;
 
 const ParagraphInput = styled.p`
-	align-self: flex-start;
-	text-transform: uppercase;
 	color: #85144b;
+	align-self: flex-start;
 	font-size: 0.75rem;
-	margin: 1.5rem 0 0.5rem 1.4rem;
 	font-family: Overpass;
 	font-weight: bold;
+	margin: 1rem 0 0.2rem 1.4rem;
+	text-transform: uppercase;
 
 	@media (max-width: 425px) {
 		text-align: left;
@@ -400,19 +401,18 @@ class CreateFisicalPersonScreen extends Component {
   	} else {
   		this.setState({ isEmpty: false });
   	}
-  	if (cpf.length < 11 || cpf.length > 11) {
+  	if (cpf.length < 11 && cpf.length > 11) {
   		this.setState({
   			isErrorCpf: true,
   		});
   	} else {
   		this.setState({ isErrorCpf: false });
   	}
-  	if (password.length < 6) {
+  	if (password.length < 6 && password.length > 1) {
   		this.setState({
   			isErrorPassword: true,
-  		});
+		  });
   	} else {
-  		this.setState({ isErrorPassword: false });
   		this.props.addNewUser(user);
   		this.handleModalSucess();
   	}

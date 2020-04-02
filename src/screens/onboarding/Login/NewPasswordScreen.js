@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import { addNewPassword } from '../../../dataflow/modules/onboarding-modules';
 
 const mapStateToProps = state => ({
-	singup: state.singup,
+	onboarding: state.onboarding,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -45,7 +45,7 @@ const Form = styled.form`
   align-items: center;
   flex-direction: column;
 	margin: 3rem;
-	border-radius: 4px;
+
   @media (max-width: 980px) {
 		width: 40%;
 	}
@@ -104,10 +104,10 @@ const ErrorMessage = styled.h4`
 
 const Label = styled.label`
   color: #85144B;
-  font-size: 0.8rem;
-  margin: 0.9rem;
+  font-size: 0.75rem;
   font-family: Overpass;
   font-weight: bold;
+  margin: 0.9rem;
 	text-transform: uppercase;
 `;
 
@@ -144,6 +144,7 @@ class NewPasswordScreen extends Component {
 
 	handleErrors = () => {
 		const { newPassword, repeatPassword } = this.state;
+		const { password } = this.props.onboarding.users.password;
 
 		if (newPassword.length < 6) {
 			this.setState({
@@ -204,14 +205,14 @@ class NewPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
+						<Paragraph>Um código de confirmação foi enviado para {this.props.onboarding.emailReset}, por favor, cole-o abaixo:</Paragraph>
 						<Label>código de confirmação</Label>
 						<Input
 							login
 							value={confirmationCode}
 							type='text'
 							placeholder="Insira aqui o código"
-							required
+							// required
 						/>
 						<Label>nova senha</Label>
 						<Input
@@ -220,7 +221,7 @@ class NewPasswordScreen extends Component {
 							type='password'
 							onChange={ev => this.handleChangeNewPassword(ev)}
 							placeholder="Insira aqui sua senha"
-							required
+							// required
 						/>
 						{newPasswordError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
 						<Label>repita nova senha</Label>
@@ -230,7 +231,7 @@ class NewPasswordScreen extends Component {
 							type='password'
 							onChange={ev => this.handleChangeRepetPassword(ev)}
 							placeholder="Repita sua senha"
-							required
+							// required
 						/>
 						{repetPasswordError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
 					</Span>
