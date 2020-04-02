@@ -45,7 +45,7 @@ const Form = styled.form`
   align-items: center;
   flex-direction: column;
 	margin: 3rem;
-	border-radius: 4px;
+
   @media (max-width: 980px) {
 		width: 40%;
 	}
@@ -104,10 +104,10 @@ const ErrorMessage = styled.h4`
 
 const Label = styled.label`
   color: #85144B;
-  font-size: 0.8rem;
-  margin: 0.9rem;
+  font-size: 0.75rem;
   font-family: Overpass;
   font-weight: bold;
+  margin: 0.9rem;
 	text-transform: uppercase;
 `;
 

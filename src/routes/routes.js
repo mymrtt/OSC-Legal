@@ -12,7 +12,7 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
 // Dashboard
 import Dashboard from '../screens/dashboard/index';
-// import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
+import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 // import Organization from '../screens/dashboard/Organization/OrganizationScreen';
 
 import PrivateRoute from './PrivateRoute';
@@ -30,7 +30,7 @@ const Routes = () => (
 			<Route path='/createuser' component={CreateUserScreen} />
 
 			<PrivateRoute path='/dashboard' component={Dashboard} />
-			{/* <Route exact path='/' component={DocumentsScreen} /> */}
+			<Route exact path='/' component={DocumentsScreen} />
 		</Switch>
 	</BrowserRouter>
 );
