@@ -17,13 +17,13 @@ const mapStateToProps = state => ({
 const Modal = styled.div`
   width: 35vw;
   height: 65vh;
+  background: #fff;
+	border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  background: #fff;
   padding: 0 0.5rem;
-	border-radius: 5px;
 
   @media (max-width: 768px) {
     width: 80%;
