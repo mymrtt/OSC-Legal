@@ -81,6 +81,7 @@ const Title = styled.h1`
 `;
 
 const Paragraph = styled.p`
+	width: ${props => props.width};
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1.5rem;
@@ -204,7 +205,7 @@ class NewPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						<Paragraph>Um código de confirmação foi enviado para {this.props.onboarding.emailReset}, por favor, cole-o abaixo:</Paragraph>
+						<Paragraph width='100%'>Um código de confirmação foi enviado para {this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'}, por favor, cole-o abaixo:</Paragraph>
 						<Label>código de confirmação</Label>
 						<Input
 							login

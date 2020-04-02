@@ -81,12 +81,12 @@ const CreateUserSucessScreen = props => (
 		<SucessImage src={sucessImage} alt="sucess image" />
 		<TextTerms>
       Enviamos um e-mail de confirmação para
-			<TextTermsBold>{props.onboarding.users.email}</TextTermsBold>. Verifique sua caixa de entrada para
+			<TextTermsBold>{props.onboarding.users.email ? props.onboarding.users.email : 'nome@email.com'}</TextTermsBold>. Verifique sua caixa de entrada para
       prosseguir.
 		</TextTerms>
 		<TextTerms>
       Caso não tenha recebido a confirmação, clique em
-			<TextTermsBold>Reenviar email.</TextTermsBold>
+			<TextTermsBold>Reenviar e-mail.</TextTermsBold>
 		</TextTerms>
 		<Link to="/">
 			<Button

@@ -72,7 +72,7 @@ const ImagePassword = styled.img`
 `;
 
 const ErrorMessage = styled.h4`
-  width: 63%;
+  width: 75%;
   color: #D53B40;
   display: flex;
   justify-content: flex-end;
@@ -150,15 +150,15 @@ class LoginResetPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit}>
 					<ImageLogo />
 					<InputBox>
-						<Title>A senha
-							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' name@email.com. '} {}
-							foi redefinida, faça login para acessar seu painel.</Title>
+						<Title>A senha de {}
+							({this.props.onboarding.emailReset ? this.props.onboarding.emailReset : 'nome@email.com'}) {}
+							foi redefinida, faça login para acessar o seu painel.</Title>
 						<Label>e-mail</Label>
 						<Input
 							login
 							type="email"
 							onChange={this.handleChangeEmail}
-							placeholder="name@email.com"
+							placeholder="nome@email.com"
 							value={email}
 							required
 						/>
@@ -168,20 +168,20 @@ class LoginResetPasswordScreen extends Component {
 						<Input
 							login
 							type={type}
-							onChange={this.handleChangePassword}
-							placeholder="Insira senha"
 							isError={error}
 							required
+							placeholder="Insira senha"
+							onChange={this.handleChangePassword}
 						/>
 						<span>
 							<ImagePassword
 								src={type === 'password' ? VisibilityOn : VisibilityOff}
-								onClick={this.handleChangeType}
 								off={type === 'password'}
+								onClick={this.handleChangeType}
 							/>
 						</span>
 					</InputBox>
-					{error && <ErrorMessage>Email e/ ou senha incorreta</ErrorMessage>}
+					{error && <ErrorMessage>E-mail e/ ou senha incorreta</ErrorMessage>}
 					<Button
 						width='75%'
 						height='3.5rem'

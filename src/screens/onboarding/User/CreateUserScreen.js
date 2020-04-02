@@ -29,41 +29,41 @@ const mapDispatchToProps = dispatch => ({
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
-  background-color: #ffcfcd;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background-color: #ffcfcd;
 
   @media(max-width: 648px){
     background: #FFF;
-    /* height: auto; */
+    height: auto;
   }
 `;
 
 const Form = styled.form`
   min-width: 32%;
   background-color: #fff;
-  border-radius: 5px;
-  /* box-shadow: 0 1px 2px #00000029; */
   display: flex;
+  flex-direction: column;
   align-items: center;
-	flex-direction: column;
-	/* padding: 1rem; */
   margin: 1rem 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px #00000029;
 
   input {
     border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd;')};
   }
 
   @media (max-width: 768px) {
-		margin-bottom: 0.5rem;
-		margin-top: 0.5rem
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0 2rem;
   }
 
   @media (max-width: 648px) {
     margin: 0;
-		width: 90%;
+		width: 100%;
   }
 `;
 
@@ -75,7 +75,7 @@ const BlockSmallerInput = styled.span`
 `;
 
 const BlockTitle = styled.span`
-	width: 88%;
+	width: 90%;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
@@ -89,20 +89,16 @@ const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-	margin: 1.5rem 0 1rem 0;
-	padding-left: 1rem;
+	margin: 1.5rem 0 1rem 1.12rem;
   align-self: flex-start;
   
+  @media(max-width: 768px){
+	  margin-left: 0.7rem;
+  }
+
   @media (max-width: 648px) {
-		padding-left: 2rem;
-	}
-
-	@media(max-width: 499px) {
-		padding-left: 1.5rem;
-	}
-
-	@media(max-width: 425px) {
-		padding-left: 1.6rem;
+		margin: 2rem 0 1rem 0.25rem;
+		font-size: 1.3rem;
 	}
 `;
 
@@ -111,7 +107,20 @@ const Label = styled.label`
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* position: relative; */
+  position: relative;
+
+	@media(max-width: 768px){
+		width: 95%;
+	}
+
+  @media (max-width: 648px) {
+		width: 95%;
+		margin-left: 0.3rem;
+  }
+
+  @media(max-width: 425px){
+		width: 100%;
+  }
 `;
 
 const ParagraphInput = styled.p`
@@ -120,26 +129,21 @@ const ParagraphInput = styled.p`
 	font-size: 0.75rem;
 	font-family: Overpass;
 	font-weight: bold;
-	margin-top: 0.6rem;
-  margin-bottom: 0.3rem;
-	padding-left: 1.8rem;
+	margin: 1rem 0 0.2rem 1.4rem;
 	text-transform: uppercase;
 
-	@media (max-width: 1440px) {
-		padding-left: 1.6rem;
-	}
-
-	@media (max-width: 648px) {
-		padding-left: 0.8rem;
+	@media (max-width: 425px) {
+		text-align: left;
+		margin-left: 0.2rem;
 	}
 `;
 
 const ErrorMessage = styled.h6`
+  font-size: 0.6rem;
   color: #f00;
   align-self: flex-start;
-  font-size: 0.6rem;
-	font-family: Overpass, Regular;
-  margin: 0.2rem 0 0.5rem 0.8rem;
+  font-weight: normal;
+  margin: 0.5rem 0 0.5rem 0.8rem;
 
   @media (max-width: 425px) {
     margin: 0.5rem 0 0.5rem 0;
@@ -168,26 +172,27 @@ const ImagePassword = styled.img`
     bottom: 1.2rem;
   }
 `;
+
 const TextTerms = styled.p`
-  width: 90%;
-  color: #505050;
   font-size: 0.8rem;
-  font-family: Overpass, Regular;
   margin-top: 1.25rem;
+  width: 95%;
+  color: #505050;
+  font-family: Overpass, Regular;
   text-align: center;
 
   strong {
     color: #85144b;
-    font-size: 0.75rem;
-    font-family: Overpass, Regular;
-    margin: 0 0.2rem;
-    text-decoration: underline;
+    font-size: 0.7rem;
     cursor: pointer;
+    text-decoration: underline;
+    margin: 0 0.2rem;
+    font-family: Overpass, Regular;
   }
 
   @media(max-width: 648px){
     font-size: 0.8rem;
-		width: 100%;
+		width: 63%;
   }
 `;
 
@@ -209,6 +214,7 @@ const Overlay = styled.div`
 		padding: 0;
 	}
 `;
+
 const Modal = styled.div`
 	width: 33%;
   background: #fff;
@@ -248,19 +254,18 @@ const TitleTerms = styled.h1`
     align-self: center;
   }
 `;
+
 const ButtonTerms = styled.button`
 	width: 7.5rem;
 	height: 2.25rem;
-	color: #fff;
 	background-color: #ff4136;
-	border: 0;
-	box-shadow: 0 3px 6px #00000029;
-	border-radius: 4px;
-	font-family: Overpass;
-	font-weight: bold;
-	margin: 0.4rem 0.5rem 0.4rem 0;
-	align-self: flex-end;
+	color: #fff;
 	text-transform: uppercase;
+	border: 0;
+	border-radius: 4px;
+	align-self: flex-end;
+	margin: 0.4rem 0.5rem 0.4rem 0;
+	box-shadow: 0 3px 6px #00000029;
 
 	@media(max-width: 648px){
 		position: fixed;
@@ -327,30 +332,30 @@ const SubtitleTerms = styled.h3`
 `;
 
 
-class CreateFisicalPersonScreen extends Component {
-	state = {
-		togglePassword: false,
-		modalSucess: false,
-		user: {
-			name: '',
-			surname: '',
-			cpf: '',
-			email: '',
-			telephone: '',
-			password: '',
-		},
-		isErrorCpf: false,
-		isErrorPassword: false,
-		isEmpty: false,
-		isTermsOpen: false,
-	};
+class CreateUserScreen extends Component {
+  state = {
+  	togglePassword: false,
+  	modalSucess: false,
+  	user: {
+  		name: '',
+  		surname: '',
+  		cpf: '',
+  		email: '',
+  		telephone: '',
+  		password: '',
+  	},
+  	isErrorCpf: false,
+  	isErrorPassword: false,
+  	isEmpty: false,
+  	isTermsOpen: false,
+  };
 
-	togglePassword = (ev) => {
-		ev.preventDefault();
-		this.setState({
-			togglePassword: !this.state.togglePassword,
-		});
-	};
+  togglePassword = (ev) => {
+  	ev.preventDefault();
+  	this.setState({
+  		togglePassword: !this.state.togglePassword,
+  	});
+  };
 
 	handleModalTerms = () => {
 		this.setState({
@@ -358,63 +363,65 @@ class CreateFisicalPersonScreen extends Component {
 		});
 	};
 
-	handleModalSucess = () => {
-		this.setState({
-			modalSucess: !this.state.modalSucess,
-		});
-	};
+  handleModalSucess = () => {
+  	this.setState({
+  		modalSucess: !this.state.modalSucess,
+  	});
+  };
 
-	handleChange = (field, ev) => {
-		const { user } = this.state;
-		user[field] = ev.target.value;
-		this.setState({ user });
-	};
+  handleChange = (field, ev) => {
+  	const { user } = this.state;
+  	user[field] = ev.target.value;
+  	this.setState({ user });
+  };
 
-	handleSubmit = (ev) => {
-		ev.preventDefault();
-		this.errors();
-	};
+  handleSubmit = (ev) => {
+  	ev.preventDefault();
+  	this.handleErrors();
+  };
 
-	errors = () => {
-		const { user } = this.state;
-		const {
-			name,
-			surname,
-			email,
-			telephone,
-			password,
-			cpf,
-		} = this.state.user;
+  handleErrors = () => {
+  	const { user } = this.state;
+  	const {
+  		name,
+  		surname,
+  		email,
+  		telephone,
+  		password,
+  		cpf,
+  	} = this.state.user;
 
-		if (
-			name === ''
-			|| surname === ''
-			|| email === ''
-			|| telephone === ''
-			|| password === ''
-		) {
-			this.setState({
-				isEmpty: true,
-			});
-		} else {
-			this.setState({ isEmpty: false });
-		}
-		if (cpf.length < 11 && cpf.length > 1) {
-			this.setState({
-				isErrorCpf: true,
-			});
-		} else {
-			this.setState({ isErrorCpf: false });
-		}
-		if (password.length < 6) {
-			this.setState({
-				isErrorPassword: true,
-			});
-		} else {
-			this.props.addNewUser(user);
-			this.handleModalSucess();
-		}
-	};
+  	if (
+  		name === ''
+      || surname === ''
+      || email === ''
+      || telephone === ''
+      || password === ''
+  	) {
+  		this.setState({
+  			isEmpty: true,
+  		});
+  	} else {
+  		this.setState({ isEmpty: false });
+  	}
+
+  	if (cpf.length < 11 && cpf.length > 11) {
+  		this.setState({
+  			isErrorCpf: true,
+  		});
+  	} else {
+  		this.setState({ isErrorCpf: false });
+  	}
+
+  	if (password.length < 6 && password.length > 1) {
+  		this.setState({
+  			isErrorPassword: true,
+		  });
+  	} else {
+  		this.props.addNewUser(user);
+  		this.handleModalSucess();
+  	}
+  };
 
 	renderTerms = () => (
 		<Overlay>
@@ -423,18 +430,18 @@ class CreateFisicalPersonScreen extends Component {
 				<BlockTerms>
 					<SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
 					<Terms>
-						Esta é uma ferramenta voltada a fornecer um guia para que as associações possam elaborar ou reformar seus estatutos, documento obrigatório nessas organizações.
+            Esta é uma ferramenta voltada a fornecer um guia para que as associações possam elaborar ou reformar seus estatutos, documento obrigatório nessas organizações.
 					</Terms>
 					<Terms>
-						Cada senha dará oportunidade para que você possa trabalhar no documento por 30 dias. Ao final desse prazo se considera finalizado o texto, gerando-se o documento equivalente no estado em que estiver.
+            Cada senha dará oportunidade para que você possa trabalhar no documento por 30 dias. Ao final desse prazo se considera finalizado o texto, gerando-se o documento equivalente no estado em que estiver.
 					</Terms>
 					<Terms>
-						De acordo com a legislação brasileira, para registro de estatuto de associação é obrigatória a assinatura de advogad@ inscrito na OAB. Recomendamos que procure um/a profissional especialista.
+            De acordo com a legislação brasileira, para registro de estatuto de associação é obrigatória a assinatura de advogad@ inscrito na OAB. Recomendamos que procure um/a profissional especialista.
 					</Terms>
 					<Terms>
-						Qualquer dúvida e/ou esclarecimento entre em contato com nossa equipe:
+            Qualquer dúvida e/ou esclarecimento entre em contato com nossa equipe:
 						<u>
-							osclegal@gmail.com
+              osclegal@gmail.com
 						</u>
 					</Terms>
 				</BlockTerms>
@@ -444,17 +451,17 @@ class CreateFisicalPersonScreen extends Component {
 	)
 
 	render() {
-		const errorMessage = [
-			'Senha fraca',
-			'CPF inválido',
-			'Preencha todos os campos',
-			'E-mail inválido',
-		];
+  	const errorMessage = [
+  		'Senha fraca',
+  		'CPF inválido',
+  		'Preencha todos os campos',
+  		'E-mail inválido',
+  	];
 
-		const {
-			isErrorPassword,
-			modalSucess,
-			isEmpty,
+  	const {
+  		isErrorPassword,
+  		modalSucess,
+  		isEmpty,
 			isErrorCpf,
 			togglePassword,
 			name,
@@ -464,132 +471,138 @@ class CreateFisicalPersonScreen extends Component {
 			telephone,
 			password,
 			isTermsOpen,
-		} = this.state;
+  	} = this.state;
 
-		return (
-			<>
-				{modalSucess === true ? (
-					<Container>
-						<CreateUserSucess handleModalSucess={this.handleModalSucess} />
-					</Container>
-				) : (
-					<Container>
-						<Form
+  	return (
+  		<>
+  			{modalSucess === true ? (
+  				<Container>
+  					<CreateUserSucess handleModalSucess={this.handleModalSucess} />
+  				</Container>
+  			) : (
+  				<Container>
+  					<Form
 							onSubmit={this.handleSubmit}
 							withError={isEmpty || isErrorPassword || isErrorCpf}
-						>
-							<ImageLogo
-								margin="3rem 0 2rem 0"
-								width=" 150px"
-							/>
-							<BlockTitle>
-								<TitleForm>criar conta</TitleForm>
-							</BlockTitle>
-							<Label>
-								<ParagraphInput>Nome</ParagraphInput>
-								<Input
-									type="text"
-									onChange={ev => this.handleChange('name', ev)}
-									value={name}
-									placeholder="Nome"
-									name="nome"
-								/>
-							</Label>
-							<Label>
-								<ParagraphInput>Sobrenome</ParagraphInput>
-								<Input
-									type="text"
-									onChange={ev => this.handleChange('surname', ev)}
-									value={surname}
-									placeholder="Sobrenome"
-									name="sobrenome"
-								/>
-							</Label>
-							<Label>
-								<ParagraphInput>cpf</ParagraphInput>
-								<Input
-									type="number"
-									onChange={ev => this.handleChange('cpf', ev)}
-									value={cpf}
-									placeholder="000000-0"
-									name="cpf"
-								/>
-								{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
-							</Label>
-							<Label>
-								<ParagraphInput>email</ParagraphInput>
-								<Input
-									type="email"
-									onChange={ev => this.handleChange('email', ev)}
-									value={email}
-									name="email"
-									placeholder="nome@mail.com"
+  					>
+  						<ImageLogo
+  							margin="3rem 0 2rem 0"
+								marginMobile="15rem 0 2rem 0"
+  							width=" 150px"
+  						/>
+  						<BlockTitle>
+  							<TitleForm>criar conta</TitleForm>
+  						</BlockTitle>
+  						<Label>
+  							<ParagraphInput>Nome</ParagraphInput>
+  							<Input
+  								type="text"
+  								onChange={ev => this.handleChange('name', ev)}
+  								value={name}
+  								placeholder="Nome"
+  								name="nome"
 									required
-								/>
-							</Label>
-							<Label>
-								<ParagraphInput>telefone</ParagraphInput>
-								<Input
-									type="tel"
-									onChange={ev => this.handleChange('telephone', ev)}
-									value={telephone}
-									placeholder="(00) 00000-0000"
-									name="telefone"
-								/>
-							</Label>
-							<Label>
-								<ParagraphInput>senha</ParagraphInput>
-								<Input
-									className="input-password"
-									type={
-										togglePassword === true ? 'text' : 'password'
-									}
-									onChange={ev => this.handleChange('password', ev)}
-									value={password}
-									placeholder="Inserir senha"
-									name="password"
-								/>
-								{togglePassword === true ? (
-									<BlockSmallerInput>
-										<ImagePassword
-											src={VisibilityOff}
-											onClick={this.togglePassword}
-										/>
-									</BlockSmallerInput>
-								) : (
-									<BlockSmallerInput>
-										<ImagePassword
-											src={VisibilityOn}
-											onClick={this.togglePassword}
-										/>
-									</BlockSmallerInput>
-								)}
-								{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
+  							/>
+  						</Label>
+  						<Label>
+  							<ParagraphInput>Sobrenome</ParagraphInput>
+  							<Input
+  								type="text"
+  								onChange={ev => this.handleChange('surname', ev)}
+  								value={surname}
+  								placeholder="Sobrenome"
+  								name="sobrenome"
+									required
+  							/>
+  						</Label>
+  						<Label>
+  							<ParagraphInput>cpf</ParagraphInput>
+  							<Input
+  								type="number"
+  								onChange={ev => this.handleChange('cpf', ev)}
+  								value={cpf}
+  								placeholder="000000-0"
+  								name="cpf"
+									required
+  							/>
+  							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
+  						</Label>
+  						<Label>
+  							<ParagraphInput>e-mail</ParagraphInput>
+  							<Input
+  								type="email"
+  								onChange={ev => this.handleChange('email', ev)}
+  								value={email}
+  								name="email"
+  								placeholder="nome@email.com"
+  								required
+  							/>
+  						</Label>
+  						<Label>
+  							<ParagraphInput>telefone</ParagraphInput>
+  							<Input
+  								type="tel"
+  								onChange={ev => this.handleChange('telephone', ev)}
+  								value={telephone}
+  								placeholder="(00) 00000-0000"
+  								name="telefone"
+									required
+  							/>
+  						</Label>
+  						<Label>
+  							<ParagraphInput>senha</ParagraphInput>
+  							<Input
+  								className="input-password"
+  								type={
+  									togglePassword === true ? 'text' : 'password'
+  								}
+  								onChange={ev => this.handleChange('password', ev)}
+  								value={password}
+  								placeholder="Inserir senha"
+  								name="password"
+									required
+  							/>
+  							{togglePassword === true ? (
+  								<BlockSmallerInput>
+  									<ImagePassword
+  										src={VisibilityOff}
+  										onClick={this.togglePassword}
+  									/>
+  								</BlockSmallerInput>
+  							) : (
+  								<BlockSmallerInput>
+  									<ImagePassword
+  										src={VisibilityOn}
+  										onClick={this.togglePassword}
+  									/>
+  								</BlockSmallerInput>
+  							)}
+  							{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
 							{isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
-							<TextTerms>
-									Clique abaixo para concordar com os
+  						<TextTerms>
+								Clique abaixo para concordar com os
   							<strong onClick={this.handleModalTerms}>
-										Termos de Serviço
+									Termos de Serviço
   							</strong>
 								e registrar.
   						</TextTerms>
-							<Button
-								width="87%"
-								height="50px"
-								margin="1.5rem 0 2.8rem"
-								text="concordar e criar conta"
-								type="submit"
-								onClick={this.handleSubmit}
-								widthMobile="92%"
-							/>
-						</Form>
-						{isTermsOpen && this.renderTerms()}
-					</Container>
-				)}
-			</>
-		);
+  						<Button
+  							width="87%"
+  							height="50px"
+  							margin="1rem 0"
+  							text="concordar e criar conta"
+  							type="submit"
+  							onClick={this.handleSubmit}
+  							widthMobile="100%"
+  						/>
+  					</Form>
+						{ isTermsOpen && this.renderTerms() }
+  				</Container>
+  			)}
+  		</>
+  	);
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateFisicalPersonScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUserScreen);
