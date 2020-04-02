@@ -8,20 +8,18 @@ import LoginResetPasswordScreen from '../screens/onboarding/Login/LoginResetPass
 import ResetPasswordCode from '../screens/onboarding/Login/ResetPasswordCode';
 import NewPassowrdScreen from '../screens/onboarding/Login/NewPasswordScreen';
 import ResetPasswordEmailScreen from '../screens/onboarding/Login/ResetPasswordScreen';
-// import Documentos from '../screens/onboarding/Login/Documentos';
-
 import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
 // Dashboard
 import Dashboard from '../screens/dashboard/index';
+// import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 // import Organization from '../screens/dashboard/Organization/OrganizationScreen';
+
 import PrivateRoute from './PrivateRoute';
-// import NoMatch from '../NoMatch';
 
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
-			{/* <Route exact path='/' component={Documentos} /> */}
 			<Route exact path='/' component={Login} />
 			<Route path='/login' component={Login} />
 			<Route exact path='/OSC-Legal' component={Login} />
@@ -30,8 +28,9 @@ const Routes = () => (
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
-			{/* <Route component={NoMatch} /> */}
+
 			<PrivateRoute path='/dashboard' component={Dashboard} />
+			{/* <Route exact path='/' component={DocumentsScreen} /> */}
 		</Switch>
 	</BrowserRouter>
 );
