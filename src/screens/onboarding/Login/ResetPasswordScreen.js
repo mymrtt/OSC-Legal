@@ -15,6 +15,10 @@ import Button from '../../../components/Button';
 import { emailReset } from '../../../dataflow/modules/onboarding-modules';
 
 
+const mapStateToProps = state => ({
+	onboarding: state.onboarding,
+});
+
 const mapDispatchToProps = dispatch => ({
 	emailReset: (email) => {
 		dispatch(emailReset(email));
@@ -119,6 +123,7 @@ class ResetPasswordEmailScreen extends Component {
 		value: '',
 		email: '',
 		redirect: null,
+		isErrorEmail: false,
 	}
 
 	handleChangeEmail = (ev) => {
@@ -129,8 +134,19 @@ class ResetPasswordEmailScreen extends Component {
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.props.emailReset(this.state.email);
-		this.setState({ redirect: '/resetcode' });
+		console.log(this.props.onboarding.users.email);
+		if (this.state.email !== this.props.onboarding.users.email) {
+			this.setState({
+				isErrorEmail: true,
+			})
+		} else {
+			this.setState({
+				isErrorEmail: false,
+			});
+			this.props.emailReset(this.state.email);
+			// this.setState({ redirect: '/resetcode' });
+		}
+
 	}
 
 	render() {
@@ -166,4 +182,4 @@ class ResetPasswordEmailScreen extends Component {
 	}
 }
 
-export default connect(null, mapDispatchToProps) (ResetPasswordEmailScreen);
+export default connect(mapStateToProps, mapDispatchToProps) (ResetPasswordEmailScreen);

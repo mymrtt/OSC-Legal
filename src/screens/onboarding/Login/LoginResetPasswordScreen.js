@@ -15,7 +15,7 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 
 // Redux
 const mapStateToProps = state => ({
-	email: state.onboarding.users.email,
+	onboarding: state.onboarding,
 });
 
 const ContainerForm = styled.div`
@@ -110,7 +110,7 @@ class LoginResetPasswordScreen extends Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: this.props.email || '',
+			email: '',
 			password: '',
 			passwordError: '',
 			error: undefined,
@@ -160,7 +160,7 @@ class LoginResetPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit}>
 					<ImageLogo />
 					<InputBox>
-						<Title>A senha (nome@email.com) foi redefinida, faça login para acessar seu painel.</Title>
+						<Title>A senha {this.props.onboarding.emailReset} foi redefinida, faça login para acessar seu painel.</Title>
 						<Label>e-mail</Label>
 						<Input
 							login
