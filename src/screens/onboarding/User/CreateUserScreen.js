@@ -89,7 +89,7 @@ const TitleForm = styled.h1`
   font-size: 1.3rem;
   font-family: "Overpass", ExtraBold;
   text-transform: uppercase;
-  margin: 1.5rem 0 1rem 1.12rem;
+	margin: 1.5rem 0 1rem 1.12rem;
   align-self: flex-start;
   
   @media(max-width: 768px){
@@ -411,9 +411,8 @@ class CreateFisicalPersonScreen extends Component {
   	if (password.length < 6 && password.length > 1) {
   		this.setState({
   			isErrorPassword: true,
-  		});
+		  });
   	} else {
-  		this.setState({ isErrorPassword: false });
   		this.props.addNewUser(user);
   		this.handleModalSucess();
   	}

@@ -146,7 +146,7 @@ class LoginScreen extends Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: this.props.email || '',
+			email: '',
 			password: '',
 			passwordError: '',
 			error: undefined,

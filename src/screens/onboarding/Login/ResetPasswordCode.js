@@ -2,10 +2,16 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Button from '../../../components/Button';
+
+
+const mapStateToProps = state => ({
+  onboarding: state.onboarding,
+});
 
 const Container = styled.div`
   width: 100%;
@@ -98,7 +104,7 @@ class ResetPasswordCode extends Component {
 		};
 	}
 
-handleRedirect = () => {
+  handleRedirect = () => {
 	this.setState({
 		redirect: true,
 	});
@@ -112,7 +118,7 @@ render() {
 				<Title>Aqui está o seu código de redefinição de senha:</Title>
 				<Code>210704</Code>
 				<ContainerParagraph>
-					<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: nome@email.com.
+					<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: {this.props.onboarding.emailReset}.
             Se você não realizou essa solicitação,
             pode acessar sua conta normalmente.
 					</Paragraph>
@@ -132,4 +138,4 @@ render() {
 }
 }
 
-export default ResetPasswordCode;
+export default connect(mapStateToProps) (ResetPasswordCode);
