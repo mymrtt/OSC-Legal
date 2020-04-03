@@ -391,6 +391,7 @@ class CreateUserScreen extends Component {
   		cpf,
   	} = this.state.user;
 
+
   	if (
   		name === ''
       || surname === ''
@@ -404,7 +405,6 @@ class CreateUserScreen extends Component {
   	} else {
   		this.setState({ isEmpty: false });
   	}
-
   	if (cpf.length < 11 && cpf.length > 11) {
   		this.setState({
   			isErrorCpf: true,
@@ -418,8 +418,11 @@ class CreateUserScreen extends Component {
   			isErrorPassword: true,
 		  });
   	} else {
-  		this.props.addNewUser(user);
-  		this.handleModalSucess();
+  		this.setState({ isErrorPassword: false });
+  	}
+	  if (password.length >= 6 && cpf.length >= 11) {
+		  this.props.addNewUser(user);
+		  this.handleModalSucess();
   	}
   };
 
@@ -511,7 +514,7 @@ class CreateUserScreen extends Component {
   								onChange={ev => this.handleChange('surname', ev)}
   								value={surname}
   								placeholder="Sobrenome"
-  								name="sobrenome"
+									name="sobrenome"
 									required
   							/>
   						</Label>
@@ -545,7 +548,7 @@ class CreateUserScreen extends Component {
   								onChange={ev => this.handleChange('telephone', ev)}
   								value={telephone}
   								placeholder="(00) 00000-0000"
-  								name="telefone"
+									name="telefone"
 									required
   							/>
   						</Label>
@@ -559,7 +562,7 @@ class CreateUserScreen extends Component {
   								onChange={ev => this.handleChange('password', ev)}
   								value={password}
   								placeholder="Inserir senha"
-  								name="password"
+									name="password"
 									required
   							/>
   							{togglePassword === true ? (
