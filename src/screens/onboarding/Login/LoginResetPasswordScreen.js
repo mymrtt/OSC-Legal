@@ -50,11 +50,13 @@ const Form = styled.form`
 `;
 
 const Title = styled.p`
-  color: #231F20;
-  font-size: 1rem;
-  font-family: Overpass, Regular;
-  margin-left: 0.8rem;
-	margin-top: 2rem;
+	width: 70%;
+	color: #231F20;
+	font-size: 1rem;
+	font-family: Overpass,Regular;
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: center;
 `;
 
 const InputBox = styled.span`

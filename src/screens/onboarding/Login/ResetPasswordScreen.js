@@ -49,7 +49,7 @@ const Form = styled.form`
 	flex-direction: column;
 
 	input{
-		border: ${props => props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd'};
+		border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd')};
 	}
 
 	@media (max-width: 1440px) {
@@ -146,7 +146,7 @@ class ResetPasswordEmailScreen extends Component {
 		if (this.state.email !== this.props.onboarding.users.email) {
 			this.setState({
 				isErrorEmail: true,
-			})
+			});
 		} else {
 			this.setState({
 				isErrorEmail: false,
@@ -154,7 +154,8 @@ class ResetPasswordEmailScreen extends Component {
 			this.props.emailReset(this.state.email);
 			this.setState({ redirect: '/resetcode' });
 		}
-
+		this.props.emailReset(this.state.email);
+			this.setState({ redirect: '/resetcode' });
 	}
 
 	render() {
@@ -191,5 +192,4 @@ class ResetPasswordEmailScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (ResetPasswordEmailScreen);
-
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordEmailScreen);
