@@ -10,7 +10,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
 // Redux
-import { addNewPassword } from '../../../dataflow/modules/onboarding-modules';
+import { addNewPassword, isResetPassword } from '../../../dataflow/modules/onboarding-modules';
 
 const mapStateToProps = state => ({
 	onboarding: state.onboarding,
@@ -19,6 +19,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	addNewPassword: (newPassword) => {
 		dispatch(addNewPassword(newPassword));
+	},
+	isResetPassword: (info) => {
+		dispatch(isResetPassword(info));
 	},
 });
 
@@ -138,14 +141,17 @@ class NewPasswordScreen extends Component {
 	}
 
 	handleSubmit = (ev) => {
+
 		ev.preventDefault();
 		this.handleErrors();
+		// this.props.addNewPassword({ password: this.state.newPassword });
+		// this.props.isResetPassword(true);
+		// this.setState({ redirect: true });
 	}
 
 	handleErrors = () => {
 		const { newPassword, repeatPassword } = this.state;
-		const { password } = this.props.onboarding.users.password;
-
+		const { password } = this.props.onboarding.users;
 		if (newPassword.length < 6) {
 			this.setState({
 				newPasswordError: true,
@@ -168,6 +174,8 @@ class NewPasswordScreen extends Component {
 
 		if (newPassword.length > 5 && newPassword === repeatPassword) {
 			this.props.addNewPassword({ password: newPassword });
+			this.props.isResetPassword(true);
+			this.setState({ redirect: true });
 		}
 	}
 
@@ -183,13 +191,6 @@ class NewPasswordScreen extends Component {
 		});
 	}
 
-	handleChangeRedirect = () => {
-		const { newPassword, repeatPassword } = this.state;
-		if (newPassword.length > 5 && newPassword === repeatPassword) {
-			this.setState({ redirect: true });
-		}
-	}
-
 	render() {
 		const {
 			newPasswordError, repetPasswordError, redirect, newPassword, confirmationCode, repeatPassword,
@@ -199,6 +200,7 @@ class NewPasswordScreen extends Component {
 			'Use 6 caracteres ou mais para a sua senha',
 			'Os valores digitados não coincidem. Tente novamente',
 		];
+
 		return (
 			<ContainerForm>
 				<ImageLogo margin='3rem 0 0 0' />
@@ -242,13 +244,12 @@ class NewPasswordScreen extends Component {
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
 						type="submit"
-						onClick={() => this.handleChangeRedirect()}
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
 					</BackLogin>
 				</Form>
-				{redirect && <Redirect to={'/loginreset'} />}
+				{redirect && <Redirect to={'/'} />}
 			</ContainerForm>
 		);
 	}

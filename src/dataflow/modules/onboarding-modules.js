@@ -1,9 +1,11 @@
 const ADD_NEW_USER = 'osc/register/ADD_NEW_USER';
 const ADD_NEW_PASSWORD = 'osc/register/ADD_NEW_PASSWORD';
 const UPDATE_RESET_PASSWORD = 'osc/resetpassword/UPDATE_RESET_PASSWORD';
+const IS_RESET_PASSWORD = 'osc/resetpassword/IS_RESET_PASSWORD';
 
 const initialState = {
 	users: {},
+	isResetPassword: undefined,
 	emailReset: '',
 };
 
@@ -29,6 +31,10 @@ export default function SignUpReducer(state = initialState, action) {
 			...state,
 			emailReset: action.email,
 		};
+	case IS_RESET_PASSWORD:
+		return Object.assign({}, state, {
+			isResetPassword: action.info,
+		});
 	default:
 		return state;
 	}
@@ -47,4 +53,9 @@ export const addNewPassword = newPassword => ({
 export const emailReset = email => ({
 	type: UPDATE_RESET_PASSWORD,
 	email,
+});
+
+export const isResetPassword = info => ({
+	type: IS_RESET_PASSWORD,
+	info,
 });
