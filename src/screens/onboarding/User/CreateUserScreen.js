@@ -388,6 +388,8 @@ class CreateFisicalPersonScreen extends Component {
   		cpf,
   	} = this.state.user;
 
+	  const { isEmpty, isErrorCpf, isErrorPassword } = this.state;
+
   	if (
   		name === ''
       || surname === ''
@@ -401,7 +403,7 @@ class CreateFisicalPersonScreen extends Component {
   	} else {
   		this.setState({ isEmpty: false });
   	}
-  	if (cpf.length < 11 && cpf.length > 11) {
+  	if (cpf.length < 11 && cpf.length > 1) {
   		this.setState({
   			isErrorCpf: true,
   		});
@@ -413,8 +415,11 @@ class CreateFisicalPersonScreen extends Component {
   			isErrorPassword: true,
 		  });
   	} else {
-  		this.props.addNewUser(user);
-  		this.handleModalSucess();
+  		this.setState({ isErrorPassword: false });
+  	}
+	  if (password.length >= 6 && cpf.length >= 11) {
+		  this.props.addNewUser(user);
+		  this.handleModalSucess();
   	}
   };
 
@@ -494,7 +499,8 @@ class CreateFisicalPersonScreen extends Component {
   								onChange={ev => this.handleChange('name', ev)}
   								value={name}
   								placeholder="Nome"
-  								name="nome"
+									name="nome"
+									required
   							/>
   						</Label>
   						<Label>
@@ -504,7 +510,9 @@ class CreateFisicalPersonScreen extends Component {
   								onChange={ev => this.handleChange('surname', ev)}
   								value={surname}
   								placeholder="Sobrenome"
-  								name="sobrenome"
+									name="sobrenome"
+									required
+
   							/>
   						</Label>
   						<Label>
@@ -514,7 +522,9 @@ class CreateFisicalPersonScreen extends Component {
   								onChange={ev => this.handleChange('cpf', ev)}
   								value={cpf}
   								placeholder="000000-0"
-  								name="cpf"
+									name="cpf"
+									required
+
   							/>
   							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
   						</Label>
@@ -536,7 +546,9 @@ class CreateFisicalPersonScreen extends Component {
   								onChange={ev => this.handleChange('telephone', ev)}
   								value={telephone}
   								placeholder="(00) 00000-0000"
-  								name="telefone"
+									name="telefone"
+									required
+
   							/>
   						</Label>
   						<Label>
@@ -549,7 +561,9 @@ class CreateFisicalPersonScreen extends Component {
   								onChange={ev => this.handleChange('password', ev)}
   								value={password}
   								placeholder="Inserir senha"
-  								name="password"
+									name="password"
+									required
+
   							/>
   							{togglePassword === true ? (
   								<BlockSmallerInput>
