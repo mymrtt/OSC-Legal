@@ -116,8 +116,8 @@ class ResetPasswordCode extends Component {
   				<Title>Aqui está o seu código de redefinição de senha:</Title>
   				<Code>210704</Code>
   				<ContainerParagraph>
-  					<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail:
-  						{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com. '}
+  					<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: { }
+  						{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com. '} { }
             Se você não realizou essa solicitação,
             pode acessar sua conta normalmente.
   					</Paragraph>

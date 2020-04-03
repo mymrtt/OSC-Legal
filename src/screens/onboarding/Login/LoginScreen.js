@@ -17,6 +17,8 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
+	isResetPassword: state.onboarding.isResetPassword,
+	emailReset: state.onboarding.emailReset,
 });
 
 const ContainerForm = styled.div`
@@ -54,6 +56,24 @@ const Form = styled.form`
 
   @media (max-width: 648px) {
 		width: 100%;
+	}
+`;
+
+const Title = styled.p`
+	width: 70%;
+	color: #231F20;
+	font-size: 1rem;
+	font-family: Overpass,Regular;
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: center;
+
+	@media (max-width: 648px) {
+		width: 80%;
+	}
+
+	@media (max-width: 490px) {
+		width: 95%;
 	}
 `;
 
@@ -211,7 +231,9 @@ class LoginScreen extends Component {
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo margin='3rem 0 6rem' />
+					<ImageLogo margin={this.props.isResetPassword ? '3rem 0 3rem' : '3rem 0 6rem'} />
+					{this.props.isResetPassword && <Title>A senha ({this.props.emailReset}) 
+					foi redefinida, faça login para acessar o seu dashboard.</Title>}
 					<InputBox>
 						<Label>e-mail</Label>
 						<Input
@@ -248,15 +270,15 @@ class LoginScreen extends Component {
 						widthMobile='80%'
 						widthMobileSmall='95%'
 						padding='1rem'
-						margin='2.5rem 0 1rem'
-						marginMobile='3.7rem 0 1.5rem'
+						margin={this.props.isResetPassword ? '2.5rem 0 3.5rem' : '2.5rem 0 1rem'}
+						marginMobile={this.props.isResetPassword ? '3.7rem 0 3rem' : '3.7rem 0 1.5rem'}
 						text="entrar"
 						type="submit"
 					/>
-					<Span>
+					{!this.props.isResetPassword && <Span>
 						<ButtonText to={'/createuser'}>criar conta</ButtonText>
 						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
-					</Span>
+					</Span>}
 				</Form>
 				{redirect && <Redirect to={'/dashboard'} />}
 			</ContainerForm>
