@@ -20,11 +20,13 @@ export default function SignUpReducer(state = initialState, action) {
 			},
 		});
 	case ADD_NEW_PASSWORD:
+		console.log('chegou no redux', state.users);
 		return Object.assign({}, state, {
 			users: {
 				...state.users,
 				...action.newPassword,
 			},
+
 		});
 	case UPDATE_RESET_PASSWORD:
 		return {

@@ -144,9 +144,10 @@ class NewPasswordScreen extends Component {
 
 		ev.preventDefault();
 		this.handleErrors();
-		// this.props.addNewPassword({ password: this.state.newPassword });
-		// this.props.isResetPassword(true);
-		// this.setState({ redirect: true });
+
+		// if (!this.handleError()) {
+		// 	this.setState({ redirect: '/loginreset' });
+		// }
 	}
 
 	handleErrors = () => {
@@ -173,9 +174,10 @@ class NewPasswordScreen extends Component {
 		}
 
 		if (newPassword.length > 5 && newPassword === repeatPassword) {
-			this.props.addNewPassword({ password: newPassword });
-			this.props.isResetPassword(true);
-			this.setState({ redirect: true });
+			// console.log('newpassword', newPassword);
+			const teste = this.props.addNewPassword({ newPassword });
+			// this.setState({ redirect: true });
+			// console.log('newPassword enviado', teste);
 		}
 	}
 
