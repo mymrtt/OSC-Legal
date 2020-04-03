@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
@@ -124,20 +125,24 @@ const ButtonText = styled(Link)`
 `;
 
 const Error = styled.h4`
-  width: 63%;
+  width: 70%;
   color: #D63434; 
 	display: flex;
   justify-content: flex-end;
   font-size: 0.6rem;
-  font-family: Eurostile, Medium;
-
-  @media (max-width: 499px) {
-		width: 85%;
+	font-family: Overpass, Regular;
+	
+	@media (max-width: 648px) {
+		width: 80%;
 	}	
 
-  @media (max-width: 465px) {
-		width: 83%;
+  @media (max-width: 490px) {
+		width: 95%;
 	}	
+
+  /* @media (max-width: 465px) {
+		width: 94%;
+	}	 */
 `;
 
 
@@ -214,7 +219,7 @@ class LoginScreen extends Component {
 							type="email"
 							value={email}
 							onChange={this.handleChangeEmail}
-							placeholder="name@email.com"
+							placeholder="nome@email.com"
 							required
 						/>
 					</InputBox>

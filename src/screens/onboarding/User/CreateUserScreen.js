@@ -172,6 +172,7 @@ const ImagePassword = styled.img`
     bottom: 1.2rem;
   }
 `;
+
 const TextTerms = styled.p`
   font-size: 0.8rem;
   margin-top: 1.25rem;
@@ -213,6 +214,7 @@ const Overlay = styled.div`
 		padding: 0;
 	}
 `;
+
 const Modal = styled.div`
 	width: 33%;
   background: #fff;
@@ -252,6 +254,7 @@ const TitleTerms = styled.h1`
     align-self: center;
   }
 `;
+
 const ButtonTerms = styled.button`
 	width: 7.5rem;
 	height: 2.25rem;
@@ -329,7 +332,7 @@ const SubtitleTerms = styled.h3`
 `;
 
 
-class CreateFisicalPersonScreen extends Component {
+class CreateUserScreen extends Component {
   state = {
   	togglePassword: false,
   	modalSucess: false,
@@ -374,10 +377,10 @@ class CreateFisicalPersonScreen extends Component {
 
   handleSubmit = (ev) => {
   	ev.preventDefault();
-  	this.errors();
+  	this.handleErrors();
   };
 
-  errors = () => {
+  handleErrors = () => {
   	const { user } = this.state;
   	const {
   		name,
@@ -388,7 +391,6 @@ class CreateFisicalPersonScreen extends Component {
   		cpf,
   	} = this.state.user;
 
-	  const { isEmpty, isErrorCpf, isErrorPassword } = this.state;
 
   	if (
   		name === ''
@@ -403,13 +405,14 @@ class CreateFisicalPersonScreen extends Component {
   	} else {
   		this.setState({ isEmpty: false });
   	}
-  	if (cpf.length < 11 && cpf.length > 1) {
+  	if (cpf.length < 11 && cpf.length > 11) {
   		this.setState({
   			isErrorCpf: true,
   		});
   	} else {
   		this.setState({ isErrorCpf: false });
   	}
+
   	if (password.length < 6 && password.length > 1) {
   		this.setState({
   			isErrorPassword: true,
@@ -487,6 +490,7 @@ class CreateFisicalPersonScreen extends Component {
   					>
   						<ImageLogo
   							margin="3rem 0 2rem 0"
+								marginMobile="15rem 0 2rem 0"
   							width=" 150px"
   						/>
   						<BlockTitle>
@@ -499,7 +503,7 @@ class CreateFisicalPersonScreen extends Component {
   								onChange={ev => this.handleChange('name', ev)}
   								value={name}
   								placeholder="Nome"
-									name="nome"
+  								name="nome"
 									required
   							/>
   						</Label>
@@ -512,7 +516,6 @@ class CreateFisicalPersonScreen extends Component {
   								placeholder="Sobrenome"
 									name="sobrenome"
 									required
-
   							/>
   						</Label>
   						<Label>
@@ -522,20 +525,19 @@ class CreateFisicalPersonScreen extends Component {
   								onChange={ev => this.handleChange('cpf', ev)}
   								value={cpf}
   								placeholder="000000-0"
-									name="cpf"
+  								name="cpf"
 									required
-
   							/>
   							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
   						</Label>
   						<Label>
-  							<ParagraphInput>email</ParagraphInput>
+  							<ParagraphInput>e-mail</ParagraphInput>
   							<Input
   								type="email"
   								onChange={ev => this.handleChange('email', ev)}
   								value={email}
   								name="email"
-  								placeholder="nome@mail.com"
+  								placeholder="nome@email.com"
   								required
   							/>
   						</Label>
@@ -548,7 +550,6 @@ class CreateFisicalPersonScreen extends Component {
   								placeholder="(00) 00000-0000"
 									name="telefone"
 									required
-
   							/>
   						</Label>
   						<Label>
@@ -563,7 +564,6 @@ class CreateFisicalPersonScreen extends Component {
   								placeholder="Inserir senha"
 									name="password"
 									required
-
   							/>
   							{togglePassword === true ? (
   								<BlockSmallerInput>
@@ -608,4 +608,4 @@ class CreateFisicalPersonScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateFisicalPersonScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUserScreen);
