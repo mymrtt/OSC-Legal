@@ -140,11 +140,15 @@ class NewPasswordScreen extends Component {
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 		this.handleErrors();
+
+		// if (!this.handleError()) {
+		// 	this.setState({ redirect: '/loginreset' });
+		// }
 	}
 
 	handleErrors = () => {
 		const { newPassword, repeatPassword } = this.state;
-		const { password } = this.props.onboarding.users.password;
+		const { password } = this.props.onboarding.users;
 
 		if (newPassword.length < 6) {
 			this.setState({
@@ -167,7 +171,10 @@ class NewPasswordScreen extends Component {
 		}
 
 		if (newPassword.length > 5 && newPassword === repeatPassword) {
-			this.props.addNewPassword({ password: newPassword });
+			console.log('newpassword', newPassword);
+			const teste = this.props.addNewPassword({ newPassword });
+			// this.setState({ redirect: true });
+			console.log('newPassword enviado', teste);
 		}
 	}
 
@@ -181,13 +188,6 @@ class NewPasswordScreen extends Component {
 		this.setState({
 			repeatPassword: ev.target.value,
 		});
-	}
-
-	handleChangeRedirect = () => {
-		const { newPassword, repeatPassword } = this.state;
-		if (newPassword.length > 5 && newPassword === repeatPassword) {
-			this.setState({ redirect: true });
-		}
 	}
 
 	render() {
@@ -242,7 +242,6 @@ class NewPasswordScreen extends Component {
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
 						type="submit"
-						onClick={() => this.handleChangeRedirect()}
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>

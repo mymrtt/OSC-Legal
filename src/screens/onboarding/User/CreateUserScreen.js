@@ -138,7 +138,7 @@ const ParagraphInput = styled.p`
 	}
 `;
 
-const ErrorMessage = styled.h6`
+const ErrorMessage = styled.p`
   font-size: 0.6rem;
   color: #f00;
   align-self: flex-start;
@@ -150,12 +150,16 @@ const ErrorMessage = styled.h6`
   }
 `;
 
-const ErrorEmpty = styled.h6`
+const ErrorEmpty = styled.p`
   font-size: 0.7rem;
   color: #F00;
   align-self: flex-start;
   font-weight: normal;
   margin: 0.5rem 0 0.5rem 1.9rem;
+
+	@media(max-width: 2560px){
+		margin: 0.5rem 0 0.5rem 3.2rem;
+	}
 
   @media(max-width: 648px){
 	  align-self: flex-start;
@@ -391,7 +395,6 @@ class CreateUserScreen extends Component {
   		cpf,
   	} = this.state.user;
 
-
   	if (
   		name === ''
       || surname === ''
@@ -420,7 +423,7 @@ class CreateUserScreen extends Component {
   	} else {
   		this.setState({ isErrorPassword: false });
   	}
-	  if (password.length >= 6 && cpf.length >= 11) {
+	  if (password.length >= 6 && cpf.length === 11) {
 		  this.props.addNewUser(user);
 		  this.handleModalSucess();
   	}
@@ -593,7 +596,7 @@ class CreateUserScreen extends Component {
   						<Button
   							width="87%"
   							height="50px"
-  							margin="1rem 0"
+  							margin="1rem 0 1.5rem 0"
   							text="concordar e criar conta"
   							type="submit"
   							onClick={this.handleSubmit}
