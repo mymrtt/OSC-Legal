@@ -4,7 +4,10 @@ const UPDATE_RESET_PASSWORD = 'osc/resetpassword/UPDATE_RESET_PASSWORD';
 const IS_RESET_PASSWORD = 'osc/resetpassword/IS_RESET_PASSWORD';
 
 const initialState = {
-	users: {},
+	users: {
+		email: 'erlane@gmail.com',
+		password: '123456',
+	},
 	isResetPassword: undefined,
 	emailReset: '',
 };
@@ -19,15 +22,14 @@ export default function SignUpReducer(state = initialState, action) {
 				...action.user,
 			},
 		});
-	case ADD_NEW_PASSWORD:
-		console.log('chegou no redux', state.users);
-		return Object.assign({}, state, {
-			users: {
-				...state.users,
-				...action.newPassword,
-			},
-
-		});
+	// case ADD_NEW_PASSWORD:
+	// 	return Object.assign({}, state, {
+	// 		users: {
+	// 			...state.users,
+	// 			email: action.emailReset,
+	// 			password: action.newPassword,
+	// 		},
+	// 	});
 	case UPDATE_RESET_PASSWORD:
 		return {
 			...state,
