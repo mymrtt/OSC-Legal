@@ -12,9 +12,7 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
 // Dashboard
 import Dashboard from '../screens/dashboard/index';
-import Header from '../screens/dashboard/components/Header';
-import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
-// import Organization from '../screens/dashboard/Organization/OrganizationScreen';
+// import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -24,7 +22,6 @@ const Routes = () => (
 			<Route exact path='/' component={Login} />
 			{/* <Route path='/login' component={Login} /> */}
 			<Route exact path='/OSC-Legal' component={Login} />
-			{/* <Route path='/loginreset' component={LoginResetPasswordScreen} /> */}
 			<Route path='/resetcode' component={ResetPasswordCode} />
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
