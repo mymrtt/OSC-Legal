@@ -154,8 +154,6 @@ class ResetPasswordEmailScreen extends Component {
 			this.props.emailReset(this.state.email);
 			this.setState({ redirect: '/resetcode' });
 		}
-		this.props.emailReset(this.state.email);
-			this.setState({ redirect: '/resetcode' });
 	}
 
 	render() {

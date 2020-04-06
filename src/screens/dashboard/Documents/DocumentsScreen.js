@@ -10,26 +10,39 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const Span = styled.span`
-  /* display: flex;
-  flex-direction: row;
-  justify-content: space-around; */
-`;
-
 const InputSearch = styled.span`
   display: flex;
-  /* justify-content: flex-end; */
+  justify-content: space-between;
+  margin-top: 2rem;
+`;
+
+const Model = styled.p`
+  color: #85144B;
+  font-size: 2rem;
+  font-family: Overpass-Black;
+  font-weight: 600;
+  margin-left: 5.5rem;
+  
+`;
+
+const Span = styled.span`
+  width: 30%;
+  margin-top: 0.5rem;
+  margin-right: 4.2rem;
 `;
 
 const Label = styled.label`
-  font-size: 1.5rem;
+  color: #231F20;
+  font-size: 1.375rem;
+  font-family: Overpass, Bold;
   margin-right: 0.8rem;
 `;
 
 const Input = styled.input`
-  width: 15%;
-  border-color: #85144B;
+  width: 68%;
+  border: 0.5px solid #85144B;;
   border-radius: 3px;
+  padding: 0.7rem;
 `;
 
 const Title = styled.h2`
@@ -44,7 +57,7 @@ const Paragraph = styled.h2`
 `;
 
 const Button = styled.button`
-  width: 10%;
+  width: 15%;
   height: 7vh;
   background-color: #FF4136;
   border: 0;
@@ -55,7 +68,7 @@ const Button = styled.button`
 `;
 
 
-class Documents extends Component {
+class DocumentsScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -68,18 +81,20 @@ class Documents extends Component {
 		return (
 			<Container>
 				<Header/>
-				<Span>
-					<p>Modelos de Documentos</p>
-				</Span>
 				<InputSearch>
-					<Label>Pesquisar</Label>
-					<Input
+					<Model>Modelos de Documentos</Model>
+					<Span>
+						<Label>Pesquisar</Label>
+						<Input
 						/* type="pesquisa"
             onChange={this.handleChange} */
-						placeholder="Digite aqui para pesquisar"
-            />
+							placeholder="Digite aqui para pesquisar"
+						/>
+					</Span>
 				</InputSearch>
-            <Button>Adicionar Modelo</Button>
+				<div>
+					<Button>Adicionar Modelo</Button>
+				</div>
 				{/* <div>
 					<Title> 1 Modelo Estatuto Associação </Title>
 					<Paragraph>Documentação básica de uma associação,
@@ -112,4 +127,4 @@ class Documents extends Component {
 	}
 }
 
-export default Documents;
+export default DocumentsScreen;

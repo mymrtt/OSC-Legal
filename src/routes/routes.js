@@ -22,7 +22,7 @@ const Routes = () => (
 	<BrowserRouter>
 		<Switch>
 			<Route exact path='/' component={Login} />
-			<Route path='/login' component={Login} />
+			{/* <Route path='/login' component={Login} /> */}
 			<Route exact path='/OSC-Legal' component={Login} />
 			{/* <Route path='/loginreset' component={LoginResetPasswordScreen} /> */}
 			<Route path='/resetcode' component={ResetPasswordCode} />
@@ -31,8 +31,7 @@ const Routes = () => (
 			<Route path='/createuser' component={CreateUserScreen} />
 
 			<PrivateRoute path='/dashboard' component={Dashboard} />
-			{/* <Route exact path='/' component={DocumentsScreen} /> */}
-			{/* <Route exact path='/' component={Header} /> */}
+			{/* <Route exact path='/documents' component={DocumentsScreen} /> */}
 		</Switch>
 	</BrowserRouter>
 );
