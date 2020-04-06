@@ -279,7 +279,7 @@ export default class CreateOrganization extends Component {
                 <h2>data de nascimento</h2>
                 <TextSpan>22/02/2020</TextSpan>
                 <h2>cpf</h2>
-                <TextSpan>0000000-00</TextSpan>
+                <TextSpan>000000000-00</TextSpan>
               </span>
             </div>
           </ContainerFisicalPerson>

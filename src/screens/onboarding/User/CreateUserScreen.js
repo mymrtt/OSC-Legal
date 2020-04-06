@@ -347,7 +347,8 @@ class CreateUserScreen extends Component {
   		email: '',
   		telephone: '',
   		password: '',
-  	},
+		},
+		nameError: false,
   	isErrorCpf: false,
   	isErrorPassword: false,
   	isEmpty: false,
@@ -379,6 +380,36 @@ class CreateUserScreen extends Component {
   	this.setState({ user });
   };
 
+
+ isValidCPF = () => {
+	 const { cpf } = this.state.user;
+	 let numeros; let digitos; let soma; let i; let resultado;
+	 let	digitos_iguais;
+ 	digitos_iguais = 1;
+ 	if (cpf.length < 11) return false;
+ 	for (i = 0; i < cpf.length - 1; i++) {
+ 		if (cpf.charAt(i) != cpf.charAt(i + 1)) {
+ 			digitos_iguais = 0;
+ 			break;
+ 		}
+ 	}
+ 	if (!digitos_iguais) {
+ 		numeros = cpf.substring(0, 9);
+ 		digitos = cpf.substring(9);
+ 		soma = 0;
+ 		for (i = 10; i > 1; i--) soma += numeros.charAt(10 - i) * i;
+ 		resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+ 		if (resultado != digitos.charAt(0)) return false;
+ 		numeros = cpf.substring(0, 10);
+ 		soma = 0;
+ 		for (i = 11; i > 1; i--) soma += numeros.charAt(11 - i) * i;
+ 		resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+ 		if (resultado != digitos.charAt(1)) return false;
+ 		return true;
+ 	}
+ 	return false;
+ }
+
   handleSubmit = (ev) => {
   	ev.preventDefault();
   	this.handleErrors();
@@ -396,11 +427,11 @@ class CreateUserScreen extends Component {
   	} = this.state.user;
 
   	if (
-  		name === ''
-      || surname === ''
-      || email === ''
-      || telephone === ''
-      || password === ''
+  		name
+      || surname
+      || email
+      || telephone
+      || password
   	) {
   		this.setState({
   			isEmpty: true,
@@ -408,13 +439,23 @@ class CreateUserScreen extends Component {
   	} else {
   		this.setState({ isEmpty: false });
   	}
-  	if (cpf.length < 11 && cpf.length > 11) {
+  	if (name) {
   		this.setState({
-  			isErrorCpf: true,
+  			nameError: true,
   		});
   	} else {
-  		this.setState({ isErrorCpf: false });
+  		this.setState({
+  			nameError: false,
+  		});
   	}
+  	if (cpf.length < 11 && cpf.length > 11) {
+  		this.setState({
+  			isErrorCpf: !this.isValidCPF(),
+  		});
+  	} else {
+  		this.setState({ isErrorCpf: !this.isValidCPF() });
+  	}
+
 
   	if (password.length < 6 && password.length > 1) {
   		this.setState({
@@ -467,7 +508,8 @@ class CreateUserScreen extends Component {
   	const {
   		isErrorPassword,
   		modalSucess,
-  		isEmpty,
+			isEmpty,
+			nameError,
 			isErrorCpf,
 			togglePassword,
 			name,
@@ -489,7 +531,7 @@ class CreateUserScreen extends Component {
   				<Container>
   					<Form
 							onSubmit={this.handleSubmit}
-							withError={isEmpty || isErrorPassword || isErrorCpf}
+							withError={isEmpty || nameError || isErrorPassword || isErrorCpf}
   					>
   						<ImageLogo
   							margin="3rem 0 2rem 0"
