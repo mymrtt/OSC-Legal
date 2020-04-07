@@ -51,16 +51,11 @@ const Form = styled.form`
   border-radius: 5px;
   box-shadow: 0 1px 2px #00000029;
 
-  /* input {
-    border: ${props => (props.withError === true ? 'black' : 'red')};
-  } */
-
   @media (max-width: 768px) {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
     padding: 0 2rem;
   }
-
   @media (max-width: 648px) {
     margin: 0;
 		width: 100%;
@@ -79,7 +74,6 @@ const BlockTitle = styled.span`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-
 	@media(max-width: 648px){
 		width: 100%;
 	}
@@ -95,7 +89,6 @@ const TitleForm = styled.h1`
   @media(max-width: 768px){
 	  margin-left: 0.7rem;
   }
-
   @media (max-width: 648px) {
 		margin: 2rem 0 1rem 0.25rem;
 		font-size: 1.3rem;
@@ -108,16 +101,13 @@ const Label = styled.label`
   align-items: center;
   flex-direction: column;
   position: relative;
-
 	@media(max-width: 768px){
 		width: 95%;
 	}
-
   @media (max-width: 648px) {
 		width: 95%;
 		margin-left: 0.3rem;
   }
-
   @media(max-width: 425px){
 		width: 100%;
   }
@@ -131,7 +121,6 @@ const ParagraphInput = styled.p`
 	font-weight: bold;
 	margin: 1rem 0 0.2rem 1.4rem;
 	text-transform: uppercase;
-
 	@media (max-width: 425px) {
 		text-align: left;
 		margin-left: 0.2rem;
@@ -144,7 +133,6 @@ const ErrorMessage = styled.p`
   align-self: flex-start;
   font-weight: normal;
   margin: 0.5rem 0 0.5rem 0.8rem;
-
   @media (max-width: 425px) {
     margin: 0.5rem 0 0.5rem 0;
   }
@@ -156,11 +144,9 @@ const ErrorEmpty = styled.p`
   align-self: flex-start;
   font-weight: normal;
   margin: 0.5rem 0 0.5rem 1.9rem;
-
 	@media(max-width: 2560px){
 		margin: 0.5rem 0 0.5rem 3.2rem;
 	}
-
   @media(max-width: 648px){
 	  align-self: flex-start;
 	  margin: 1rem 0 1rem 0.2rem;
@@ -171,7 +157,6 @@ const ImagePassword = styled.img`
   bottom: 1.2rem;
   right: 0.5rem;
   cursor: pointer;
-
   @media(max-width: 648px){
     bottom: 1.2rem;
   }
@@ -184,7 +169,6 @@ const TextTerms = styled.p`
   color: #505050;
   font-family: Overpass, Regular;
   text-align: center;
-
   strong {
     color: #85144b;
     font-size: 0.7rem;
@@ -193,14 +177,13 @@ const TextTerms = styled.p`
     margin: 0 0.2rem;
     font-family: Overpass, Regular;
   }
-
   @media(max-width: 648px){
     font-size: 0.8rem;
 		width: 63%;
   }
 `;
 
-// Terms
+// Terms of Service
 const Overlay = styled.div`
 	min-width: 100%;
   min-height: 100vh;
@@ -213,7 +196,6 @@ const Overlay = styled.div`
   align-items: center;
   padding: 2.5rem 0;
   z-index: 99;
-
 	@media(max-width: 648px) {
 		padding: 0;
 	}
@@ -228,7 +210,6 @@ const Modal = styled.div`
   align-items: center;
   border-radius: 4px;
   z-index: 99;
-
   @media(max-width: 1024px){
     width: 40%;
   }
@@ -251,7 +232,6 @@ const TitleTerms = styled.h1`
   font-family: Overpass, Bold;
   font-size: 1.4rem;
   text-transform: uppercase;
-
   @media (max-width: 648px) {
     margin: 3rem 0 0.5rem 0;
     font-size: 1.5rem;
@@ -270,13 +250,11 @@ const ButtonTerms = styled.button`
 	align-self: flex-end;
 	margin: 0.4rem 0.5rem 0.4rem 0;
 	box-shadow: 0 3px 6px #00000029;
-
 	@media(max-width: 648px){
 		position: fixed;
 		bottom: 0;
 		height: 3.5rem;
 	}
-
   @media (max-width: 648px) {
     align-self: center;
     width: 90%;
@@ -296,7 +274,6 @@ const BlockTerms = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
   @media(max-width: 648px){
     background: #FFF;
     height: 100%;
@@ -309,12 +286,10 @@ const Terms = styled.p`
   font-family: Overpass, Regular;
   font-size: 0.9rem;
   margin: 0.9rem 0;
-
   u{
     color: #f00;
     margin: 0 0.2rem;
   }
-
   @media(max-width: 648px){
     margin: 1.5rem 0;
     font-size: 1rem;
@@ -327,7 +302,6 @@ const SubtitleTerms = styled.h3`
     margin: 1rem 0;
     font-size: 0.87rem;
     font-family: Overpass, Bold;
-
   @media(max-width: 648px){
     width: 75%;
     align-self: center;
@@ -457,6 +431,7 @@ class CreateUserScreen extends Component {
   			isErrorPassword: false,
   		});
   	}
+
 	  if (password.length >= 6 && cpf.length === 11) {
   		this.props.addNewUser(user);
 		  this.handleModalSucess();
@@ -496,10 +471,8 @@ class CreateUserScreen extends Component {
 
 	render() {
 		const errorMessage = [
-			'Senha fraca',
-  		'CPF inválido',
-  		'E-mail inválido',
-  		'Preencha todos os campos',
+			'Use 6 caracteres ou mais para a sua senha.',
+  		'CPF inválido.',
   	];
 
   	const {
@@ -525,10 +498,7 @@ class CreateUserScreen extends Component {
   				</Container>
   			) : (
   				<Container>
-  					<Form
-							onSubmit={this.handleSubmit}
-							// withError={isEmpty || nameError || isErrorPassword || isErrorCpf}
-  					>
+  					<Form onSubmit={this.handleSubmit}>
   						<ImageLogo
   							margin="3rem 0 2rem 0"
 								marginMobile="15rem 0 2rem 0"
@@ -538,7 +508,7 @@ class CreateUserScreen extends Component {
   							<TitleForm>criar conta</TitleForm>
   						</BlockTitle>
   						<Label>
-  							<ParagraphInput>Nome</ParagraphInput>
+  							<ParagraphInput>nome</ParagraphInput>
   							<Input
   								type="text"
   								onChange={ev => this.handleChange('name', ev)}
@@ -549,7 +519,7 @@ class CreateUserScreen extends Component {
   							/>
   						</Label>
   						<Label>
-  							<ParagraphInput>Sobrenome</ParagraphInput>
+  							<ParagraphInput>sobrenome</ParagraphInput>
   							<Input
   								type="text"
   								onChange={ev => this.handleChange('surname', ev)}
@@ -582,7 +552,6 @@ class CreateUserScreen extends Component {
 									placeholder="nome@email.com"
   								required
   							/>
-								{/* {emailError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>} */}
   						</Label>
   						<Label>
   							<ParagraphInput>telefone</ParagraphInput>
@@ -635,13 +604,12 @@ class CreateUserScreen extends Component {
 								e registrar.
   						</TextTerms>
   						<Button
-  							width="87%"
-  							height="50px"
   							margin="1rem 0 1.5rem 0"
+  							width="87%"
+  							widthMobile="100%"
+  							height="50px"
   							text="concordar e criar conta"
   							type="submit"
-  							// onClick={this.handleSubmit}
-  							widthMobile="100%"
   						/>
   					</Form>
 						{ isTermsOpen && this.renderTerms() }
