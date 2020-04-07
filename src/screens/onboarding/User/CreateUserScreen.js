@@ -640,7 +640,6 @@ class CreateUserScreen extends Component {
   							margin="1rem 0 1.5rem 0"
   							text="concordar e criar conta"
   							type="submit"
-  							// onClick={this.handleSubmit}
   							widthMobile="100%"
   						/>
   					</Form>
