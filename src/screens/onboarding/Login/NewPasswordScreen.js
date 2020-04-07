@@ -195,8 +195,8 @@ class NewPasswordScreen extends Component {
 		} = this.state;
 
 		const errorMessages = [
-			'Use 6 caracteres ou mais para a sua senha',
-			'Os valores digitados não coincidem. Tente novamente',
+			'Use 6 caracteres ou mais para a sua senha.',
+			'Os valores digitados não coincidem. Tente novamente.',
 		];
 
 		return (
@@ -205,7 +205,11 @@ class NewPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						<Paragraph width='100%'>Um código de confirmação foi enviado para {this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'}, por favor, cole-o abaixo:</Paragraph>
+						<Paragraph width='100%'>
+							Um código de confirmação foi enviado para
+							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'},
+							por favor, cole-o abaixo:
+						</Paragraph>
 						<Label>código de confirmação</Label>
 						<Input
 							login
@@ -238,7 +242,7 @@ class NewPasswordScreen extends Component {
 					<Button
 						width='80%'
 						widthMobile='90%'
-						margin='1rem 0 1.5rem 0;'
+						margin='1rem 0 1.5rem 0'
 						marginMobile='1rem 0 2.5rem'
 						text="prossiga com nova senha"
 						type="submit"
