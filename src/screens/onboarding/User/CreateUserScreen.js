@@ -51,9 +51,9 @@ const Form = styled.form`
   border-radius: 5px;
   box-shadow: 0 1px 2px #00000029;
 
-  input {
-    border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd')};
-  }
+  /* input {
+    border: ${props => (props.withError === true ? 'black' : 'red')};
+  } */
 
   @media (max-width: 768px) {
     margin-top: 1rem;
@@ -424,13 +424,12 @@ class CreateUserScreen extends Component {
   		password,
   		cpf,
   	} = this.state.user;
-
   	if (
   		name === ''
-      || surname === ''
-      || email === ''
-      || telephone === ''
-      || password === ''
+  	  || surname === ''
+  	  || email === ''
+  	  || telephone === ''
+  	  || password === ''
   	) {
   		this.setState({
   			isEmpty: true,
@@ -438,15 +437,6 @@ class CreateUserScreen extends Component {
   	} else {
   		this.setState({
   			isEmpty: false,
-  		});
-  	}
-  	if (name) {
-  		this.setState({
-  			nameError: true,
-  		});
-  	} else {
-  		this.setState({
-  			nameError: false,
   		});
   	}
   	if (cpf.length < 11 && cpf.length > 11) {
@@ -458,7 +448,7 @@ class CreateUserScreen extends Component {
   			isErrorCpf: !this.isValidCPF(),
   		});
   	}
-  	if (password.length < 6 && password.length > 1) {
+  	if (!password || password.length < 6) {
   		this.setState({
   			isErrorPassword: true,
 		  });
@@ -467,8 +457,6 @@ class CreateUserScreen extends Component {
   			isErrorPassword: false,
   		});
   	}
-
-
 	  if (password.length >= 6 && cpf.length === 11) {
   		this.props.addNewUser(user);
 		  this.handleModalSucess();
@@ -510,15 +498,14 @@ class CreateUserScreen extends Component {
 		const errorMessage = [
 			'Senha fraca',
   		'CPF inválido',
-  		'Preencha todos os campos',
   		'E-mail inválido',
-		];
+  		'Preencha todos os campos',
+  	];
 
   	const {
 			isErrorPassword,
   		modalSucess,
 			isEmpty,
-			nameError,
 			isErrorCpf,
 			togglePassword,
 			name,
@@ -540,7 +527,7 @@ class CreateUserScreen extends Component {
   				<Container>
   					<Form
 							onSubmit={this.handleSubmit}
-							withError={isEmpty || nameError || isErrorPassword || isErrorCpf}
+							// withError={isEmpty || nameError || isErrorPassword || isErrorCpf}
   					>
   						<ImageLogo
   							margin="3rem 0 2rem 0"
@@ -557,7 +544,7 @@ class CreateUserScreen extends Component {
   								onChange={ev => this.handleChange('name', ev)}
   								value={name}
   								placeholder="Nome"
-  								name="nome"
+									name="nome"
 									required
   							/>
   						</Label>
@@ -578,11 +565,12 @@ class CreateUserScreen extends Component {
   								type="number"
   								onChange={ev => this.handleChange('cpf', ev)}
   								value={cpf}
-  								placeholder="000000-0"
-  								name="cpf"
+  								placeholder="00000000000"
+									name="cpf"
+									isError={isErrorCpf}
 									required
   							/>
-  							{isEmpty ? this.state.isEmpty : isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
+  							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
   						</Label>
   						<Label>
   							<ParagraphInput>e-mail</ParagraphInput>
@@ -591,9 +579,10 @@ class CreateUserScreen extends Component {
   								onChange={ev => this.handleChange('email', ev)}
   								value={email}
   								name="email"
-  								placeholder="nome@email.com"
+									placeholder="nome@email.com"
   								required
   							/>
+								{/* {emailError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>} */}
   						</Label>
   						<Label>
   							<ParagraphInput>telefone</ParagraphInput>
@@ -617,6 +606,7 @@ class CreateUserScreen extends Component {
   								value={password}
   								placeholder="Inserir senha"
 									name="password"
+									isError={isErrorPassword}
 									required
   							/>
   							{togglePassword === true ? (
@@ -636,7 +626,7 @@ class CreateUserScreen extends Component {
   							)}
   							{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
-							{isEmpty && <ErrorEmpty>{errorMessage[2]}</ErrorEmpty>}
+							{isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
   						<TextTerms>
 								Clique abaixo para concordar com os
   							<strong onClick={this.handleModalTerms}>
@@ -650,7 +640,7 @@ class CreateUserScreen extends Component {
   							margin="1rem 0 1.5rem 0"
   							text="concordar e criar conta"
   							type="submit"
-  							onClick={this.handleSubmit}
+  							// onClick={this.handleSubmit}
   							widthMobile="100%"
   						/>
   					</Form>
