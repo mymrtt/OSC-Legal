@@ -51,15 +51,9 @@ const Form = styled.form`
   border-radius: 5px;
   box-shadow: 0 1px 2px #00000029;
 
-<<<<<<< HEAD
   /* input {
-    border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd;')};
+    border: ${props => (props.withError === true ? 'black' : 'red')};
   } */
-=======
-  input {
-    border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd')};
-  }
->>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
 
   @media (max-width: 768px) {
     margin-top: 1rem;
@@ -385,12 +379,8 @@ class CreateUserScreen extends Component {
   	this.setState({ user });
   };
 
-<<<<<<< HEAD
- isValidCPF = () => {
-=======
 
  	isValidCPF = () => {
->>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
 	 const { cpf } = this.state.user;
 	 let numbers; let digits; let sum; let i; let result;
 	 let digitsEqual;
@@ -419,15 +409,6 @@ class CreateUserScreen extends Component {
  		return false;
  	}
 
-  	isValideEmail = (email) => {
-  		const reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
-
-  		if (reg.test(email) === false) {
-  			return false;
-  		}
-  		return true;
-  	};
-
   handleSubmit = (ev) => {
   	ev.preventDefault();
   	this.handleErrors();
@@ -445,17 +426,10 @@ class CreateUserScreen extends Component {
   	} = this.state.user;
   	if (
   		name === ''
-<<<<<<< HEAD
   	  || surname === ''
   	  || email === ''
   	  || telephone === ''
   	  || password === ''
-=======
-      || surname === ''
-      || email === ''
-      || telephone === ''
-      || password === ''
->>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
   	) {
   		this.setState({
   			isEmpty: true,
@@ -463,24 +437,6 @@ class CreateUserScreen extends Component {
   	} else {
   		this.setState({
   			isEmpty: false,
-  		});
-  	}
-  	if (!name) {
-  		this.setState({
-  			nameError: true,
-  		});
-  	} else {
-  		this.setState({
-  			nameError: false,
-  		});
-  	}
-  	if (!surname) {
-  		this.setState({
-  			surnameError: true,
-  		});
-  	} else {
-  		this.setState({
-  			surnameError: false,
   		});
   	}
   	if (cpf.length < 11 && cpf.length > 11) {
@@ -492,29 +448,7 @@ class CreateUserScreen extends Component {
   			isErrorCpf: !this.isValidCPF(),
   		});
   	}
-<<<<<<< HEAD
-  	if (!email) {
-  		this.setState({
-  			emailError: !this.isValideEmail(),
-  		});
-  	} else {
-  		this.setState({
-  			emailError: !this.isValideEmail(),
-  		});
-  	}
-  	if (!telephone) {
-  		this.setState({
-  			telephoneError: true,
-  		});
-  	} else {
-  		this.setState({
-  			telephoneError: false,
-  		});
-  	}
   	if (!password || password.length < 6) {
-=======
-  	if (password.length < 6 && password.length > 1) {
->>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
   		this.setState({
   			isErrorPassword: true,
 		  });
@@ -523,8 +457,6 @@ class CreateUserScreen extends Component {
   			isErrorPassword: false,
   		});
   	}
-
-
 	  if (password.length >= 6 && cpf.length === 11) {
   		this.props.addNewUser(user);
 		  this.handleModalSucess();
@@ -574,11 +506,7 @@ class CreateUserScreen extends Component {
 			isErrorPassword,
   		modalSucess,
 			isEmpty,
-			nameError,
-			surnameError,
 			isErrorCpf,
-			emailError,
-			telephoneError,
 			togglePassword,
 			name,
 			surname,
@@ -617,7 +545,6 @@ class CreateUserScreen extends Component {
   								value={name}
   								placeholder="Nome"
 									name="nome"
-									isError={nameError}
 									required
   							/>
   						</Label>
@@ -629,7 +556,6 @@ class CreateUserScreen extends Component {
   								value={surname}
   								placeholder="Sobrenome"
 									name="sobrenome"
-									isError={surnameError}
 									required
   							/>
   						</Label>
@@ -644,7 +570,7 @@ class CreateUserScreen extends Component {
 									isError={isErrorCpf}
 									required
   							/>
-  							{isEmpty ? this.state.isEmpty : isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
+  							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
   						</Label>
   						<Label>
   							<ParagraphInput>e-mail</ParagraphInput>
@@ -654,10 +580,9 @@ class CreateUserScreen extends Component {
   								value={email}
   								name="email"
 									placeholder="nome@email.com"
-									isError={emailError}
   								required
   							/>
-								{emailError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
+								{/* {emailError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>} */}
   						</Label>
   						<Label>
   							<ParagraphInput>telefone</ParagraphInput>
@@ -667,7 +592,6 @@ class CreateUserScreen extends Component {
   								value={telephone}
   								placeholder="(00) 00000-0000"
 									name="telefone"
-									isError={telephoneError}
 									required
   							/>
   						</Label>
@@ -716,7 +640,7 @@ class CreateUserScreen extends Component {
   							margin="1rem 0 1.5rem 0"
   							text="concordar e criar conta"
   							type="submit"
-  							onClick={this.handleSubmit}
+  							// onClick={this.handleSubmit}
   							widthMobile="100%"
   						/>
   					</Form>
