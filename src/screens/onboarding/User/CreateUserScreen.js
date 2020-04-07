@@ -51,10 +51,6 @@ const Form = styled.form`
   border-radius: 5px;
   box-shadow: 0 1px 2px #00000029;
 
-  /* input {
-    border: ${props => (props.withError === true ? 'black' : 'red')};
-  } */
-
   @media (max-width: 768px) {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
@@ -508,14 +504,16 @@ class CreateUserScreen extends Component {
 			isEmpty,
 			isErrorCpf,
 			togglePassword,
+			isTermsOpen,
+		} = this.state;
+		const {
 			name,
 			surname,
 			cpf,
 			email,
 			telephone,
 			password,
-			isTermsOpen,
-  	} = this.state;
+		} = this.state.user;
 
   	return (
   		<>
@@ -563,7 +561,7 @@ class CreateUserScreen extends Component {
   							<ParagraphInput>cpf</ParagraphInput>
   							<Input
   								type="number"
-  								onChange={ev => this.handleChange('cpf', ev)}
+									onChange={ev => this.handleChange('cpf', ev)}
   								value={cpf}
   								placeholder="00000000000"
 									name="cpf"

@@ -18,6 +18,13 @@ const Container = styled.div`
   opacity: 1;
 `;
 
+// const Form = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-evenly;
+
+// `;
+
 const ParagraphContainer = styled.p`
   margin-top: 1.2rem;
   font-size: 1.375rem;
@@ -31,6 +38,7 @@ const ParagraphContainer = styled.p`
 `;
 
 const ContainerAdm = styled.div`
+  width: 30%;
   margin-bottom: 0.8rem;
   display: flex;
   align-items: flex-end;
@@ -56,9 +64,11 @@ export default class Header extends Component {
 		return (
 			<div>
 				<Container>
+          {/* <Form> */}
 					<ImageLogo/>
-					<ParagraphContainer>organizações</ParagraphContainer>
-					<ParagraphContainer>documentos</ParagraphContainer>
+            <ParagraphContainer>organizações</ParagraphContainer>
+            <ParagraphContainer>documentos</ParagraphContainer>
+          {/* </Form> */}
 					<ContainerAdm>
 						<ParagraphContainer>administrador</ParagraphContainer>
 						<ParagraphSair>sair</ParagraphSair>
