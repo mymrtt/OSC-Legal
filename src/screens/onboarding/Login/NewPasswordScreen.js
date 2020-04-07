@@ -144,17 +144,12 @@ class NewPasswordScreen extends Component {
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 		this.handleErrors();
-
-		// if (!this.handleError()) {
-		// 	this.setState({ redirect: '/loginreset' });
-		// }
 	}
 
 	handleErrors = () => {
 		const { newPassword, repeatPassword } = this.state;
 		const { emailReset } = this.props;
 
-		const { password } = this.props.onboarding.users;
 		if (newPassword.length < 6) {
 			this.setState({
 				newPasswordError: true,
@@ -175,12 +170,10 @@ class NewPasswordScreen extends Component {
 			});
 		}
 
-		if (newPassword.length > 5 && newPassword === repeatPassword) {
-			// console.log('newpassword', newPassword);
+		if (newPassword.length >= 6 && newPassword === repeatPassword) {
 			this.props.addNewUser({ email: emailReset, password: newPassword });
 			this.props.isResetPassword(true);
 			this.setState({ redirect: true });
-			// console.log('newPassword enviado', teste);
 		}
 	}
 

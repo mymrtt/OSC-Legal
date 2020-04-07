@@ -51,9 +51,15 @@ const Form = styled.form`
   border-radius: 5px;
   box-shadow: 0 1px 2px #00000029;
 
+<<<<<<< HEAD
   /* input {
     border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd;')};
   } */
+=======
+  input {
+    border: ${props => (props.withError === true ? '1px solid #f00' : '1px solid #ffcfcd')};
+  }
+>>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
 
   @media (max-width: 768px) {
     margin-top: 1rem;
@@ -335,7 +341,6 @@ const SubtitleTerms = styled.h3`
   }
 `;
 
-
 class CreateUserScreen extends Component {
   state = {
   	togglePassword: false,
@@ -380,34 +385,39 @@ class CreateUserScreen extends Component {
   	this.setState({ user });
   };
 
+<<<<<<< HEAD
  isValidCPF = () => {
+=======
+
+ 	isValidCPF = () => {
+>>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
 	 const { cpf } = this.state.user;
 	 let numbers; let digits; let sum; let i; let result;
 	 let digitsEqual;
- 	digitsEqual = 1;
- 	if (cpf.length < 11) return false;
- 	for (i = 0; i < cpf.length - 1; i++) {
- 		if (cpf.charAt(i) != cpf.charAt(i + 1)) {
- 			digitsEqual = 0;
- 			break;
+ 		digitsEqual = 1;
+ 		if (cpf.length < 11) return false;
+ 		for (i = 0; i < cpf.length - 1; i++) {
+ 			if (cpf.charAt(i) != cpf.charAt(i + 1)) {
+ 				digitsEqual = 0;
+ 				break;
+ 			}
  		}
+ 		if (!digitsEqual) {
+ 			numbers = cpf.substring(0, 9);
+ 			digits = cpf.substring(9);
+ 			sum = 0;
+ 			for (i = 10; i > 1; i--) sum += numbers.charAt(10 - i) * i;
+ 			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+ 			if (result != digits.charAt(0)) return false;
+ 			numbers = cpf.substring(0, 10);
+ 			sum = 0;
+ 			for (i = 11; i > 1; i--) sum += numbers.charAt(11 - i) * i;
+ 			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+ 			if (result != digits.charAt(1)) return false;
+ 			return true;
+ 		}
+ 		return false;
  	}
- 	if (!digitsEqual) {
- 		numbers = cpf.substring(0, 9);
- 		digits = cpf.substring(9);
- 		sum = 0;
- 		for (i = 10; i > 1; i--) sum += numbers.charAt(10 - i) * i;
- 		result = sum % 11 < 2 ? 0 : 11 - sum % 11;
- 		if (result != digits.charAt(0)) return false;
- 		numbers = cpf.substring(0, 10);
- 		sum = 0;
- 		for (i = 11; i > 1; i--) sum += numbers.charAt(11 - i) * i;
- 		result = sum % 11 < 2 ? 0 : 11 - sum % 11;
- 		if (result != digits.charAt(1)) return false;
- 		return true;
- 	}
- 	return false;
- }
 
   	isValideEmail = (email) => {
   		const reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -435,16 +445,25 @@ class CreateUserScreen extends Component {
   	} = this.state.user;
   	if (
   		name === ''
+<<<<<<< HEAD
   	  || surname === ''
   	  || email === ''
   	  || telephone === ''
   	  || password === ''
+=======
+      || surname === ''
+      || email === ''
+      || telephone === ''
+      || password === ''
+>>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
   	) {
   		this.setState({
   			isEmpty: true,
   		});
   	} else {
-  		this.setState({ isEmpty: false });
+  		this.setState({
+  			isEmpty: false,
+  		});
   	}
   	if (!name) {
   		this.setState({
@@ -469,8 +488,11 @@ class CreateUserScreen extends Component {
   			isErrorCpf: !this.isValidCPF(),
   		});
   	} else {
-  		this.setState({ isErrorCpf: !this.isValidCPF() });
+  		this.setState({
+  			isErrorCpf: !this.isValidCPF(),
+  		});
   	}
+<<<<<<< HEAD
   	if (!email) {
   		this.setState({
   			emailError: !this.isValideEmail(),
@@ -490,14 +512,21 @@ class CreateUserScreen extends Component {
   		});
   	}
   	if (!password || password.length < 6) {
+=======
+  	if (password.length < 6 && password.length > 1) {
+>>>>>>> 64af56259bfabb8260559029aeac8540f59bb956
   		this.setState({
   			isErrorPassword: true,
 		  });
   	} else {
-  		this.setState({ isErrorPassword: false });
+  		this.setState({
+  			isErrorPassword: false,
+  		});
   	}
+
+
 	  if (password.length >= 6 && cpf.length === 11) {
-		  this.props.addNewUser(user);
+  		this.props.addNewUser(user);
 		  this.handleModalSucess();
   	}
   };
@@ -509,13 +538,17 @@ class CreateUserScreen extends Component {
 				<BlockTerms>
 					<SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
 					<Terms>
-            Esta é uma ferramenta voltada a fornecer um guia para que as associações possam elaborar ou reformar seus estatutos, documento obrigatório nessas organizações.
+            Esta é uma ferramenta voltada a fornecer um guia para que as associações possam elaborar ou
+						reformar seus estatutos, documento obrigatório nessas organizações.
 					</Terms>
 					<Terms>
-            Cada senha dará oportunidade para que você possa trabalhar no documento por 30 dias. Ao final desse prazo se considera finalizado o texto, gerando-se o documento equivalente no estado em que estiver.
+            Cada senha dará oportunidade para que você possa trabalhar no documento por 30 dias.
+						Ao final desse prazo se considera finalizado o texto,
+						gerando-se o documento equivalente no estado em que estiver.
 					</Terms>
 					<Terms>
-            De acordo com a legislação brasileira, para registro de estatuto de associação é obrigatória a assinatura de advogad@ inscrito na OAB. Recomendamos que procure um/a profissional especialista.
+            De acordo com a legislação brasileira, para registro de estatuto de associação é obrigatória a
+						assinatura de advogad@ inscrito na OAB. Recomendamos que procure um/a profissional especialista.
 					</Terms>
 					<Terms>
             Qualquer dúvida e/ou esclarecimento entre em contato com nossa equipe:
@@ -530,15 +563,15 @@ class CreateUserScreen extends Component {
 	)
 
 	render() {
-  	const errorMessage = [
-  		'Senha fraca',
+		const errorMessage = [
+			'Senha fraca',
   		'CPF inválido',
   		'E-mail inválido',
   		'Preencha todos os campos',
   	];
 
   	const {
-  		isErrorPassword,
+			isErrorPassword,
   		modalSucess,
 			isEmpty,
 			nameError,
@@ -611,7 +644,7 @@ class CreateUserScreen extends Component {
 									isError={isErrorCpf}
 									required
   							/>
-  							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
+  							{isEmpty ? this.state.isEmpty : isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
   						</Label>
   						<Label>
   							<ParagraphInput>e-mail</ParagraphInput>
