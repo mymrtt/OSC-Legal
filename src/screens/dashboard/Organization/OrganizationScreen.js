@@ -66,9 +66,7 @@ const TableTitle = styled.th`
 
 const TableList = styled.td`
 	color: #404040;
-
 `;
-
 
 const TableList1 = styled.td`
 	background-color: #FFCFCD;

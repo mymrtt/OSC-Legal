@@ -7,6 +7,7 @@ import ImageLogo from '../../../components/ImageLogo';
 
 const Container = styled.div`
   width: 100%;
+  background-color: #FFFFFF;
   color: #231F20;
   font-family: Overpass, Light;
   display: flex;

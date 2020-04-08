@@ -14,6 +14,9 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 import Dashboard from '../screens/dashboard/index';
 // import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
+import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCreateOrganization';
+import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
+import CreateOrganization from '../screens/dashboard/Organization/CreateOrganization';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -30,7 +33,9 @@ const Routes = () => (
 
 			<PrivateRoute path='/dashboard' component={Dashboard} />
 			{/* <Route exact path='/documents' component={DocumentsScreen} /> */}
-			<Route exact path='/' component={OrganizationScreen} />
+			{/* <Route exact path='/' component={OrganizationScreen} /> */}
+			{/* <Route exact path='/' component={ModalCreateOrganization} /> */}
+			<Route exact path='/' component={CreateOrganization} />
 		</Switch>
 	</BrowserRouter>
 );
