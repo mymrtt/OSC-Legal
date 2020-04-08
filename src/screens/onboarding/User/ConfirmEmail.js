@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-unused-vars */
 // Libs
 import React from 'react';
 import styled from 'styled-components';
@@ -51,18 +48,25 @@ const Paragraph = styled.p`
     @media(max-width: 648px){
         font-size: 0.8rem;
     }
-
 `;
 
-export default function ConfirmEmail(props) {
-	return (
-		<Container>
-			<ImageLogo width="200px" margin="0 0  3.35rem 0"/>
-			<Modal>
-				<Title>bem vindo ao osc legal</Title>
-				<Paragraph>pedrogualandi@mail.com se registrou no sistema OSC Legal. Confirme a assinatura e acesse o sistema.</Paragraph>
-				<Button text="confirmar e acessar" width="75%" heightMobile="4rem" widthMobile="100%"/>
-			</Modal>
-		</Container>
-	);
-}
+const ConfirmEmail = () => (
+	<Container>
+		<ImageLogo width="200px" margin="0 0  3.35rem 0"/>
+		<Modal>
+			<Title>bem vindo ao osc legal</Title>
+			<Paragraph>
+                pedrogualandi@mail.com se registrou no sistema OSC Legal.
+                Confirme a assinatura e acesse o sistema.
+			</Paragraph>
+			<Button
+				width="75%"
+				widthMobile="100%"
+				heightMobile="4rem"
+				text="confirmar e acessar"
+			/>
+		</Modal>
+	</Container>
+);
+
+export default ConfirmEmail;

@@ -85,7 +85,7 @@ const TitleForm = styled.h1`
   text-transform: uppercase;
 	margin: 1.5rem 0 1rem 1.12rem;
   align-self: flex-start;
-  
+
   @media(max-width: 768px){
 	  margin-left: 0.7rem;
   }

@@ -12,7 +12,6 @@ import Button from '../../../components/Button';
 // Redux
 import { emailReset } from '../../../dataflow/modules/onboarding-modules';
 
-
 const mapStateToProps = state => ({
 	onboarding: state.onboarding,
 });
@@ -29,7 +28,7 @@ export const ContainerForm = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	justify-content: center; 
+	justify-content: center;
 	margin: 0;
 
 	@media (max-width: 648px) {
@@ -113,14 +112,14 @@ const Label = styled.label`
 	text-transform: uppercase;
 `;
 
-const BackLogin = styled.span` 
+const BackLogin = styled.span`
 	display: flex;
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-around;
 `;
 
-const ButtonText = styled(Link)` 
+const ButtonText = styled(Link)`
 	color: #85144B;
 	font-family: Overpass, Regular;
 	text-decoration: none;
