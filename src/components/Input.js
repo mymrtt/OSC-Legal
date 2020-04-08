@@ -21,17 +21,17 @@ export const InputForm = styled.input`
   }
 `;
 
-export default function Input(props) {
-	return (
-		<InputForm
-			login={props.login}
-			type={props.type}
-			onChange={props.onChange}
-			value={props.value}
-			placeholder={props.placeholder}
-			name={props.name}
-			isError={props.isError}
-			required={props.required}
-		/>
-	);
-}
+const Input = props => (
+	<InputForm
+		login={props.login}
+		type={props.type}
+		onChange={props.onChange}
+		value={props.value}
+		placeholder={props.placeholder}
+		name={props.name}
+		isError={props.isError}
+		required={props.required}
+	/>
+);
+
+export default Input;
