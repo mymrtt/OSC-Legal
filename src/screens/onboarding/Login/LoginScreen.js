@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
