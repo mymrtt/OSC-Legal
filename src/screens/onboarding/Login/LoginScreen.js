@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
@@ -52,7 +51,7 @@ const Form = styled.form`
 
 	@media (max-width: 982px) {
 		width: 53%;
-	} 
+	}
 
   @media (max-width: 648px) {
 		width: 100%;
@@ -119,7 +118,7 @@ const Label = styled.label`
 	}
 `;
 
-const Span = styled.span` 
+const Span = styled.span`
   width: 70%;
   display: flex;
   align-items: center;
@@ -139,26 +138,26 @@ const Span = styled.span`
 
 const ButtonText = styled(Link)`
   color: #85144B;
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
   text-decoration: none;
 	text-transform: uppercase;
 `;
 
 const Error = styled.h4`
   width: 70%;
-  color: #D63434; 
+  color: #D63434;
 	display: flex;
   justify-content: flex-end;
   font-size: 0.6rem;
 	font-family: Overpass, Regular;
-	
+
 	@media (max-width: 648px) {
 		width: 80%;
-	}	
+	}
 
   @media (max-width: 490px) {
 		width: 95%;
-	}	
+	}
 
   /* @media (max-width: 465px) {
 		width: 94%;
@@ -232,8 +231,11 @@ class LoginScreen extends Component {
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
 					<ImageLogo margin={this.props.isResetPassword ? '3rem 0 3rem' : '3rem 0 6rem'} />
-					{this.props.isResetPassword && <Title>A senha ({this.props.emailReset}) 
-					foi redefinida, faça login para acessar o seu dashboard.</Title>}
+					{this.props.isResetPassword
+						&& <Title>A senha ({this.props.emailReset ? this.props.emailReset : 'nome@email.com'})
+					foi redefinida, faça login para acessar a sua dashboard.
+						</Title>
+					}
 					<InputBox>
 						<Label>e-mail</Label>
 						<Input
