@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
+import CreateOrganization from '../dashboard/Organization/CreateOrganization';
 
-export default class Index extends Component {
-  render() {
-    return (
-      <div>
-        <p>Essa tela está ligada como uma rota privada.</p>
-      </div>
-    );
-  }
-}
+const Index = () => (
+	<div>
+		<CreateOrganization/>
+	</div>
+);
+
+export default Index;

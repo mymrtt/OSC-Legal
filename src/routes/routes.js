@@ -11,30 +11,35 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
 // Dashboard
 import Dashboard from '../screens/dashboard/index';
-// import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
+import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
 import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCreateOrganization';
 import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
 import CreateOrganization from '../screens/dashboard/Organization/CreateOrganization';
+import ModalOrganization from '../screens/dashboard/Organization/ModalOrganization';
+import Header from '../screens/dashboard/components/Header';
 
 import PrivateRoute from './PrivateRoute';
 
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
-			<Route exact path='/' component={Login} />
-			<Route path='/login' component={Login} />
-			<Route exact path='/OSC-Legal' component={Login} />
+			{/* <Route exact path='/' component={Login} /> */}
+			{/* <Route path='/login' component={Login} /> */}
+			{/* <Route exact path='/OSC-Legal' component={Login} /> */}
 			<Route path='/resetcode' component={ResetPasswordCode} />
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
 
 			<PrivateRoute path='/dashboard' component={Dashboard} />
-			{/* <Route exact path='/documents' component={DocumentsScreen} /> */}
-			{/* <Route exact path='/' component={OrganizationScreen} /> */}
-			{/* <Route exact path='/' component={ModalCreateOrganization} /> */}
-			<Route exact path='/' component={CreateOrganization} />
+			<Route path='/documentsScreen' component={DocumentsScreen} />
+			<Route path='/organizationScreen' component={OrganizationScreen} />
+			<Route path='/modalCreateOrganization' component={ModalCreateOrganization} />
+			{/* <Route path='/' component={ModalOrganization} /> */}
+			<Route exact path='/' component={Header} />
+			<Route path='/modalSucessfully' component={ModalSucessfully} />
+			<Route path='/createOrganization' component={CreateOrganization} />
 		</Switch>
 	</BrowserRouter>
 );

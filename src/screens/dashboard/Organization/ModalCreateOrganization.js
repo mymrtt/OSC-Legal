@@ -39,14 +39,14 @@ const Container = styled.div`
 `;
 
 const ContainerFisicalPerson = styled.label`
-  
+
   h1 {
     margin: 0 11.2%;
     color: #85144b;
     font-weight: 800;
     font-family: "Overpass", sans-serif;
   }
-  
+
   > h2 {
     font-size: 1.3rem;
     margin: 5% 0 10% 11.8%;
@@ -360,7 +360,7 @@ export default class CreateOrganization extends Component {
                 </label>
               </Label>
             </WrapLegalPerson>
-            <Button type="submit" text="concluir"/>
+            <Button to={'/modalSucessfully'} type="submit" text="concluir"/>
           </ContainerLegalPerson>
         </form>
       </Container>

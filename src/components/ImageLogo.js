@@ -8,6 +8,7 @@ import Logo from '../assets/logo.svg';
 const LogoImage = styled.img`
   width: ${props => props.width};
   margin: ${props => props.margin};
+	height: ${props => props.height};
 
 	@media(max-width: 648px) {
 		margin: ${props => props.marginMobile};
@@ -19,6 +20,7 @@ const ImageLogo = props => (
 		margin={props.margin}
 		alt="Osc Logo"
 		width={props.width}
+		height={props.height}
 	/>
 );
 

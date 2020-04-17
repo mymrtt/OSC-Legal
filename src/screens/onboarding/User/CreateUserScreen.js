@@ -1,8 +1,11 @@
+/* eslint-disable no-mixed-operators */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+
 
 // Components
 import Button from '../../../components/Button';
@@ -152,6 +155,7 @@ const ErrorEmpty = styled.p`
 	  margin: 1rem 0 1rem 0.2rem;
   }
 `;
+
 const ImagePassword = styled.img`
   position: absolute;
   bottom: 1.2rem;
@@ -210,6 +214,7 @@ const Modal = styled.div`
   align-items: center;
   border-radius: 4px;
   z-index: 99;
+
   @media(max-width: 1024px){
     width: 40%;
   }
@@ -232,6 +237,7 @@ const TitleTerms = styled.h1`
   font-family: Overpass, Bold;
   font-size: 1.4rem;
   text-transform: uppercase;
+
   @media (max-width: 648px) {
     margin: 3rem 0 0.5rem 0;
     font-size: 1.5rem;
@@ -250,6 +256,7 @@ const ButtonTerms = styled.button`
 	align-self: flex-end;
 	margin: 0.4rem 0.5rem 0.4rem 0;
 	box-shadow: 0 3px 6px #00000029;
+
 	@media(max-width: 648px){
 		position: fixed;
 		bottom: 0;
@@ -274,6 +281,7 @@ const BlockTerms = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
   @media(max-width: 648px){
     background: #FFF;
     height: 100%;
@@ -361,7 +369,7 @@ class CreateUserScreen extends Component {
  		digitsEqual = 1;
  		if (cpf.length < 11) return false;
  		for (i = 0; i < cpf.length - 1; i++) {
- 			if (cpf.charAt(i) != cpf.charAt(i + 1)) {
+ 			if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
  				digitsEqual = 0;
  				break;
  			}
@@ -372,12 +380,12 @@ class CreateUserScreen extends Component {
  			sum = 0;
  			for (i = 10; i > 1; i--) sum += numbers.charAt(10 - i) * i;
  			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
- 			if (result != digits.charAt(0)) return false;
+ 			if (result !== digits.charAt(0)) return false;
  			numbers = cpf.substring(0, 10);
  			sum = 0;
  			for (i = 11; i > 1; i--) sum += numbers.charAt(11 - i) * i;
  			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
- 			if (result != digits.charAt(1)) return false;
+ 			if (result !== digits.charAt(1)) return false;
  			return true;
  		}
  		return false;
@@ -413,13 +421,13 @@ class CreateUserScreen extends Component {
   			isEmpty: false,
   		});
   	}
-  	if (cpf.length < 11 && cpf.length > 11) {
+  	if (cpf.length === 11) {
   		this.setState({
   			isErrorCpf: !this.isValidCPF(),
   		});
   	} else {
   		this.setState({
-  			isErrorCpf: !this.isValidCPF(),
+  			isErrorCpf: true,
   		});
   	}
   	if (!password || password.length < 6) {
@@ -536,8 +544,8 @@ class CreateUserScreen extends Component {
   							<Input
   								type="number"
 									onChange={ev => this.handleChange('cpf', ev)}
-  								value={cpf}
-  								placeholder="00000000000"
+									value={cpf}
+									placeholder="000.000.000-00"
 									name="cpf"
 									isError={isErrorCpf}
 									required
@@ -557,14 +565,14 @@ class CreateUserScreen extends Component {
   						</Label>
   						<Label>
   							<ParagraphInput>telefone</ParagraphInput>
-  							<Input
+								<Input
   								type="tel"
-  								onChange={ev => this.handleChange('telephone', ev)}
-  								value={telephone}
-  								placeholder="(00) 00000-0000"
+									onChange={ev => this.handleChange('telephone', ev)}
+									value={telephone}
+									placeholder="(00) 00000-0000"
 									name="telefone"
 									required
-  							/>
+								/>
   						</Label>
   						<Label>
   							<ParagraphInput>senha</ParagraphInput>
