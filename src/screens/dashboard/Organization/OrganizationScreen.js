@@ -129,26 +129,80 @@ class OrganizationScreen extends Component {
 		super(props);
 		this.state = {
 			isModal: undefined,
-			isModalCategory: undefined,
+			// isModalCategory: undefined,
 			redirect: 'organization',
+			tableTitles: [
+				'Organização',
+				'CNPJ',
+				'Usuário',
+				'E-mail',
+				'Telefone',
+				'Criado em',
+				'Autorização',
+				'Vencimento',
+				'Status',
+			],
+			tableDatas: [
+				{
+					organization: 'Instituto PrecisaSer',
+					cnpj: '00.000.000/0000-00',
+					user: 'Jorge Amado da Silva',
+					email: 'organização@email.com',
+					telephone: '(11)11111-1111',
+					createdIn: '19/05/19',
+					authorization: '-',
+					dueDate: '-',
+					status: 'PENDENTE',
+				},
+				{
+					organization: 'Vai na Web',
+					cnpj: '00.000.000/0000-00',
+					user: 'Yasmin Miranda',
+					email: 'nome@email.com',
+					telephone: '(99) 99999-9999',
+					createdIn: '18/06/19',
+					authorization: '-',
+					dueDate: '-',
+					status: 'PAGO',
+				},
+				{
+					organization: 'Casa de Rui Barbosa',
+					cnpj: '00.000.000/0000-00',
+					user: 'Alice Barbosa Souza',
+					email: 'organização@email.com',
+					telephone: '(77)77777-7777',
+					createdIn: '17/06/19',
+					authorization: '02/06/19',
+					dueDate: '02/07/19',
+					status: 'PENDENTE',
+				},
+				{
+					organization: 'Biblioteca da Maré',
+					cnpj: '00.000.000/0000-00',
+					user: 'Vinicius Almeida Rodrigues',
+					email: 'organização@email.com',
+					telephone: '(22)22222-2222',
+					createdIn: '15/06/19',
+					authorization: '15/07/19',
+					dueDate: '-',
+					status: 'ISENTO',
+				},
+				{
+					organization: 'Museu de Arte ZO',
+					cnpj: '00.000.000/0000-00',
+					user: 'Tarcila do Amaral Gonçalves',
+					email: 'organização@email.com',
+					telephone: '(44)44444-4444',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'VENCIDO',
+				},
+			],
 		};
 	}
 
-		isOpen = (event) => {
-			event.stopPropagation();
-			this.setState({
-				isModal: true,
-			});
-		}
-
-		isClose = (event) => {
-			event.stopPropagation();
-			this.setState({
-				isModal: false,
-			});
-		}
-
-		handleIsModal = (event) => {
+		isModalOpen = (event) => {
 			event.stopPropagation();
 			this.setState({
 				isModal: !this.state.isModal,
@@ -156,19 +210,15 @@ class OrganizationScreen extends Component {
 		}
 
 		handleClick = (item) => {
-			console.log('item', item);
 			this.setState({
 				redirect: item,
 			});
 		};
 
 		render() {
-			console.log('000000000000', this.state.redirect)
-			console.log('000000000000')
-
 			return (
 				<Container>
-					{this.state.isModal && <ModalOrganization handleCloseModal={this.isClose}/> }
+					{this.state.isModal && <ModalOrganization handleCloseModal={this.isModalOpen}/> }
 					<Header handleClick={this.handleClick} />
 					{this.state.redirect === 'organization' ? (
 						<>
@@ -191,71 +241,23 @@ class OrganizationScreen extends Component {
 							</InputSearch>
 							<Table>
 								<Tr>
-									<TableTitle>Organização</TableTitle>
-									<TableTitle>CPJ</TableTitle>
-									<TableTitle>Usuário</TableTitle>
-									<TableTitle>E-mail</TableTitle>
-									<TableTitle>Telefone</TableTitle>
-									<TableTitle>Criado em</TableTitle>
-									<TableTitle>Autorização</TableTitle>
-									<TableTitle>Vencimento</TableTitle>
-									<TableTitle>Status</TableTitle>
+									{this.state.tableTitles.map(title => (
+										<TableTitle key={title}>{title}</TableTitle>
+									))}
 								</Tr>
-								<Tr>
-									<TableList>Instituto PrecisaSer</TableList>
-									<TableList>00.000.000/0000-00</TableList>
-									<TableList>Jorge Amado da Silva</TableList>
-									<TableList>organização@email.com</TableList>
-									<TableList>(11)11111-1111</TableList>
-									<TableList>19/05/19</TableList>
-									<TableList> - </TableList>
-									<TableList> - </TableList>
-									<TableList onClick={this.isOpen}>PENDENTE</TableList>
-								</Tr>
-								<Tr>
-									<TableList1>Vai na Web</TableList1>
-									<TableList1>00.000.000/0000-00</TableList1>
-									<TableList1>Yasmin Miranda</TableList1>
-									<TableList1>nome@email.com</TableList1>
-									<TableList1>(99) 99999-9999</TableList1>
-									<TableList1>18/06/19</TableList1>
-									<TableList1> - </TableList1>
-									<TableList1> - </TableList1>
-									<TableList1>PAGO</TableList1>
-								</Tr>
-								<Tr>
-									<TableList>Casa de Rui Barbosa</TableList>
-									<TableList>00.000.000/0000-00</TableList>
-									<TableList>Alice Barbosa Souza</TableList>
-									<TableList>organização@email.com</TableList>
-									<TableList>(77)77777-7777</TableList>
-									<TableList>17/06/19</TableList>
-									<TableList>02/06/19</TableList>
-									<TableList>02/07/19</TableList>
-									<TableList>PENDENTE</TableList>
-								</Tr>
-								<Tr>
-									<TableList1>Biblioteca da Maré</TableList1>
-									<TableList1>00.000.000/0000-00</TableList1>
-									<TableList1>Vinicius Almeida Rodrigues</TableList1>
-									<TableList1>organização@email.com</TableList1>
-									<TableList1>(22)22222-2222</TableList1>
-									<TableList1>15/06/19</TableList1>
-									<TableList1>26/05/19</TableList1>
-									<TableList1> - </TableList1>
-									<TableList1> ISENTO </TableList1>
-								</Tr>
-								<Tr>
-									<TableList>Museu de Arte ZO</TableList>
-									<TableList>00.000.000/0000-00</TableList>
-									<TableList>Tarcila do Amaral Gonçalves</TableList>
-									<TableList>organização@email.com</TableList>
-									<TableList>(44)44444-4444</TableList>
-									<TableList>12/06/19</TableList>
-									<TableList>15/06/19</TableList>
-									<TableList>15/07/19</TableList>
-									<TableList>VENCIDO</TableList>
-								</Tr>
+								{this.state.tableDatas.map(item => (
+									<Tr key={item}>
+										<TableList>{item.organization}</TableList>
+										<TableList>{item.cnpj}</TableList>
+										<TableList>{item.user}</TableList>
+										<TableList>{item.email}</TableList>
+										<TableList>{item.telephone}</TableList>
+										<TableList>{item.createdIn}</TableList>
+										<TableList>{item.authorization}</TableList>
+										<TableList>{item.dueDate}</TableList>
+										<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+									</Tr>
+								))}
 							</Table>
 						</>
 					) : <DocumentsScreen />
