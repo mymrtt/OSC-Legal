@@ -15,7 +15,7 @@ import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
 import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCreateOrganization';
 import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
-import CreateOrganization from '../screens/dashboard/Organization/CreateOrganization';
+// import CreateOrganization from '../screens/dashboard/Organization/teste';
 import ModalOrganization from '../screens/dashboard/Organization/ModalOrganization';
 import Header from '../screens/dashboard/components/Header';
 
@@ -28,7 +28,6 @@ const Routes = () => (
 			<Route path='/login' component={Login} />
 			<Route exact path='/OSC-Legal' component={Login} />
 
-
 			<Route path='/resetcode' component={ResetPasswordCode} />
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
@@ -39,9 +38,8 @@ const Routes = () => (
 			<Route path='/organizationScreen' component={OrganizationScreen} />
 			<Route path='/modalCreateOrganization' component={ModalCreateOrganization} />
 			<Route path='/' component={ModalOrganization} />
-			<Route exact path='/' component={Header} />
 			<Route path='/modalSucessfully' component={ModalSucessfully} />
-			<Route path='/createOrganization' component={CreateOrganization} />
+			{/* <Route path='/createOrganization' component={CreateOrganization} /> */}
 		</Switch>
 	</BrowserRouter>
 );
