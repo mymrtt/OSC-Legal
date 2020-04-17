@@ -1,9 +1,9 @@
 import React from 'react';
-import CreateOrganization from '../dashboard/Organization/CreateOrganization';
+import OrganizationScreen from './Organization/OrganizationScreen';
 
 const Index = () => (
 	<div>
-		<CreateOrganization/>
+		<OrganizationScreen/>
 	</div>
 );
 

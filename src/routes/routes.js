@@ -24,9 +24,11 @@ import PrivateRoute from './PrivateRoute';
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
-			{/* <Route exact path='/' component={Login} /> */}
-			{/* <Route path='/login' component={Login} /> */}
-			{/* <Route exact path='/OSC-Legal' component={Login} /> */}
+			<Route exact path='/' component={Login} />
+			<Route path='/login' component={Login} />
+			<Route exact path='/OSC-Legal' component={Login} />
+
+
 			<Route path='/resetcode' component={ResetPasswordCode} />
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
@@ -36,7 +38,7 @@ const Routes = () => (
 			<Route path='/documentsScreen' component={DocumentsScreen} />
 			<Route path='/organizationScreen' component={OrganizationScreen} />
 			<Route path='/modalCreateOrganization' component={ModalCreateOrganization} />
-			{/* <Route path='/' component={ModalOrganization} /> */}
+			<Route path='/' component={ModalOrganization} />
 			<Route exact path='/' component={Header} />
 			<Route path='/modalSucessfully' component={ModalSucessfully} />
 			<Route path='/createOrganization' component={CreateOrganization} />
