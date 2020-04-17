@@ -17,7 +17,7 @@ import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCrea
 import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
 // import CreateOrganization from '../screens/dashboard/Organization/teste';
 import ModalOrganization from '../screens/dashboard/Organization/ModalOrganization';
-import Header from '../screens/dashboard/components/Header';
+// import Header from '../screens/dashboard/components/Header';
 
 import PrivateRoute from './PrivateRoute';
 
