@@ -101,7 +101,14 @@ const Tr = styled.span`
   }
 	&:nth-child(odd) {
     background-color: #FFCFCD;
-  }
+	}
+
+	@media (max-width: 648px) {
+		width: 100%;
+		height: auto;
+		display: flex;
+		flex-wrap: wrap;
+	}
 `;
 
 const TableTitle = styled.p`
@@ -122,7 +129,8 @@ const TableTitle = styled.p`
 
 	@media (max-width: 648px) {
 		display: ${props => (props.titleMob === 'CPF' || props.titleMob === 'Usuário' ? 'none' : 'flex')};
-	}
+		width: ${props => (props.width ? '15rem' : 'auto' )};
+}
 `;
 
 const TableList = styled.p`
@@ -259,7 +267,7 @@ class OrganizationScreen extends Component {
 								</Tr>
 								{this.state.tableDatas.map(item => (
 									<Tr key={item}>
-										<TableList>{item.organization}</TableList>
+										<TableList width >{item.organization}</TableList>
 										<TableList mob>{item.cpf}</TableList>
 										<TableList mob>{item.user}</TableList>
 										<TableList>{item.email}</TableList>
