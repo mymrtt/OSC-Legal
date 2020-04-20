@@ -13,11 +13,9 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 import Dashboard from '../screens/dashboard/index';
 import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
-import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCreateOrganization';
-import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
-// import CreateOrganization from '../screens/dashboard/Organization/teste';
-import ModalOrganization from '../screens/dashboard/Organization/ModalOrganization';
-// import Header from '../screens/dashboard/components/Header';
+// import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCreateOrganization';
+// import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
+// import ModalOrganization from '../screens/dashboard/Organization/ModalOrganization';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -26,19 +24,16 @@ const Routes = () => (
 		<Switch>
 			<Route exact path='/' component={Login} />
 			<Route path='/login' component={Login} />
-			{/* <Route exact path='/OSC-Legal' component={Login} /> */}
+			<Route exact path='/OSC-Legal' component={Login} />
+
 			<Route path='/resetcode' component={ResetPasswordCode} />
 			<Route path='/resetpassword' component={ResetPasswordEmailScreen} />
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
 
 			<PrivateRoute path='/dashboard' component={Dashboard} />
-			{/* <Route path='/documentsScreen' component={DocumentsScreen} /> */}
-			<Route path='/organizationScreen' component={OrganizationScreen} />
-			{/* <Route path='/modalCreateOrganization' component={ModalCreateOrganization} /> */}
-			{/* <Route path='/' component={ModalOrganization} /> */}
-			{/* <Route path='/modalSucessfully' component={ModalSucessfully} /> */}
-			{/* <Route path='/createOrganization' component={CreateOrganization} /> */}
+			<Route path='/organizations' component={OrganizationScreen} />
+			<Route path='/documents' component={DocumentsScreen} />
 		</Switch>
 	</BrowserRouter>
 );

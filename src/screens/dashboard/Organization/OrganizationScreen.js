@@ -12,23 +12,28 @@ import DocumentsScreen from '../Documents/DocumentsScreen';
 
 const Container = styled.div`
 	width: 100%;
-	height: 100vh;
 `;
 
 const InputSearch = styled.span`
-	width: 100%;
+	width: 90%;
 	display: flex;
 	justify-content: space-between;
-	padding: 2rem 3rem 0 3rem;
+	margin: 2rem 3rem 0 3rem;
+
+	@media (max-width: 1125px) {
+	}
+
+	@media (max-width: 940px) {
+		/* width: 40%; */
+
+	}
 `;
 
-const Title = styled.p`
+const Model = styled.p`
 	color: #85144B;
 	font-size: 2rem;
 	font-family: Overpass-Black;
 	font-weight: 600;
-	/* margin-left: 5.5rem; */
-
 
 	@media (max-width: 648px) {
 		display: none;
@@ -64,76 +69,48 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-	width: 74%;
+	width: 70%;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.7rem;
 `;
 
-const Image = styled.img`
-	/* width: 15%; */
-
-`;
-
-const ParagraphInput = styled.p`
-	font-size: 0.9rem;
-	font-family: Overpass, Regular;
-`;
-
 const Table = styled.div`
-	padding: 2rem 3rem 0 3rem;
+	max-width: 100%;
+	width: 100%;
+	border-spacing: 0;
+`;
+
+const Thead = styled.thead`
+	text-align: left;
 
 	@media (max-width: 785px) {
 		display: flex;
 		flex-direction: column;
 	}
+
 `;
 
-const Tr = styled.span`
+const Tr = styled.tr`
 	height: 2rem;
-	text-align: left;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  font-family: Overpass, Regular;
-	&:nth-child(even) {
-    background-color: #FFFFFF;
-  }
-	&:nth-child(odd) {
-    background-color: #FFCFCD;
-  }
 `;
 
-const TableTitle = styled.p`
-	width: 100%;
+const TableTitle = styled.th`
 	background-color: #85144B;
 	color: #FFFFFF;
 	font-size: 0.8rem;
 	font-family: Overpass, Regular;
-	height: 2rem;
-  display: flex;
-  align-items: center;
-  padding-left: 0.7rem;
 
 	@media (max-width: 785px) {
 		background-color: #FFFFFF;
 		color: #85144B;
 	}
 
-	@media (max-width: 648px) {
-		display: ${props => (props.titleMob === 'CPF' || props.titleMob === 'Usuário' ? 'none' : 'flex')};
-	}
 `;
 
-const TableList = styled.p`
+const TableList = styled.td`
 	color: #404040;
-	padding-left: 0.7rem;
-
-	@media (max-width: 648px) {
-		display: ${props => (props.mob ? 'none' : 'flex')};
-	}
 `;
-
 
 class OrganizationScreen extends Component {
 	constructor(props) {
@@ -144,7 +121,7 @@ class OrganizationScreen extends Component {
 			redirect: 'organization',
 			tableTitles: [
 				'Organização',
-				'CPF',
+				'CNPJ',
 				'Usuário',
 				'E-mail',
 				'Telefone',
@@ -156,7 +133,7 @@ class OrganizationScreen extends Component {
 			tableDatas: [
 				{
 					organization: 'Instituto PrecisaSer',
-					cpf: '00.000.000/0000-00',
+					cnpj: '00.000.000/0000-00',
 					user: 'Jorge Amado da Silva',
 					email: 'organização@email.com',
 					telephone: '(11)11111-1111',
@@ -167,7 +144,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Vai na Web',
-					cpf: '00.000.000/0000-00',
+					cnpj: '00.000.000/0000-00',
 					user: 'Yasmin Miranda',
 					email: 'nome@email.com',
 					telephone: '(99) 99999-9999',
@@ -178,7 +155,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Casa de Rui Barbosa',
-					cpf: '00.000.000/0000-00',
+					cnpj: '00.000.000/0000-00',
 					user: 'Alice Barbosa Souza',
 					email: 'organização@email.com',
 					telephone: '(77)77777-7777',
@@ -189,7 +166,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Biblioteca da Maré',
-					cpf: '00.000.000/0000-00',
+					cnpj: '00.000.000/0000-00',
 					user: 'Vinicius Almeida Rodrigues',
 					email: 'organização@email.com',
 					telephone: '(22)22222-2222',
@@ -200,7 +177,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Museu de Arte ZO',
-					cpf: '00.000.000/0000-00',
+					cnpj: '00.000.000/0000-00',
 					user: 'Tarcila do Amaral Gonçalves',
 					email: 'organização@email.com',
 					telephone: '(44)44444-4444',
@@ -234,7 +211,7 @@ class OrganizationScreen extends Component {
 					{this.state.redirect === 'organization' ? (
 						<>
 							<InputSearch>
-								<Title>Gerenciar organizações</Title>
+								<Model>Gerenciar organizações</Model>
 								<Span>
 									<Label>Vizualizar por:</Label>
 									<Input
@@ -251,25 +228,28 @@ class OrganizationScreen extends Component {
 								</Span>
 							</InputSearch>
 							<Table>
-								<Tr>
-									{this.state.tableTitles.map(title => (
-										<TableTitle key={title} titleMob={title}> {title}</TableTitle>
-									))}
-
-								</Tr>
-								{this.state.tableDatas.map(item => (
-									<Tr key={item}>
-										<TableList>{item.organization}</TableList>
-										<TableList mob>{item.cpf}</TableList>
-										<TableList mob>{item.user}</TableList>
-										<TableList>{item.email}</TableList>
-										<TableList>{item.telephone}</TableList>
-										<TableList>{item.createdIn}</TableList>
-										<TableList>{item.authorization}</TableList>
-										<TableList>{item.dueDate}</TableList>
-										<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+								<Thead>
+									<Tr>
+										{this.state.tableTitles.map(title => (
+											<TableTitle key={title}>{title}</TableTitle>
+										))}
 									</Tr>
-								))}
+								</Thead>
+								<tbody>
+									{this.state.tableDatas.map(item => (
+										<Tr key={item}>
+											<TableList>{item.organization}</TableList>
+											<TableList>{item.cnpj}</TableList>
+											<TableList>{item.user}</TableList>
+											<TableList>{item.email}</TableList>
+											<TableList>{item.telephone}</TableList>
+											<TableList>{item.createdIn}</TableList>
+											<TableList>{item.authorization}</TableList>
+											<TableList>{item.dueDate}</TableList>
+											<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+										</Tr>
+									))}
+								</tbody>
 							</Table>
 						</>
 					) : <DocumentsScreen />
