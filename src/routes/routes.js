@@ -15,9 +15,9 @@ import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
 import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCreateOrganization';
 import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
-import CreateOrganization from '../screens/dashboard/Organization/CreateOrganization';
+// import CreateOrganization from '../screens/dashboard/Organization/teste';
 import ModalOrganization from '../screens/dashboard/Organization/ModalOrganization';
-import Header from '../screens/dashboard/components/Header';
+// import Header from '../screens/dashboard/components/Header';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -36,10 +36,9 @@ const Routes = () => (
 			<Route path='/documentsScreen' component={DocumentsScreen} />
 			<Route path='/organizationScreen' component={OrganizationScreen} />
 			<Route path='/modalCreateOrganization' component={ModalCreateOrganization} />
-			{/* <Route path='/' component={ModalOrganization} /> */}
-			<Route exact path='/' component={Header} />
+			<Route path='/' component={ModalOrganization} />
 			<Route path='/modalSucessfully' component={ModalSucessfully} />
-			<Route path='/createOrganization' component={CreateOrganization} />
+			{/* <Route path='/createOrganization' component={CreateOrganization} /> */}
 		</Switch>
 	</BrowserRouter>
 );
