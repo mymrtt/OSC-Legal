@@ -7,13 +7,15 @@ import ImageLogo from '../../../components/ImageLogo';
 
 const Container = styled.div`
   width: 100%;
+	height: 11vh;
   background-color: #FFFFFF;
   color: #231F20;
   font-family: Overpass, Light;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
   align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+	padding: 0 2.5rem;
   text-transform: uppercase;
   opacity: 1;
 
@@ -23,11 +25,8 @@ const Container = styled.div`
 `;
 
 const WrapButton = styled.div`
-	/* width: 40%; */
 	display: flex;
 	flex-direction: row;
-	padding-top: 1rem;
-	/* justify-content: space-evenly; */
 
 	@media (max-width: 1080px) {
 		width: 36%;
@@ -45,9 +44,10 @@ const WrapButton = styled.div`
 `;
 
 const Border = styled.span`
-	height: 6rem;
+	height: 4.7rem;
 	margin-right: 3rem;
 	border-bottom: ${props => (props.border && '5px solid #231F20')};
+	cursor: pointer;
 
 	@media (max-width: 859px) {
 		margin-right: 1.5rem;
@@ -138,10 +138,10 @@ class Header extends Component {
 		return (
 			<div>
 				<Container>
-					<ImageLogo height='2.7rem'/>
+					<ImageLogo height='2.8rem'/>
 					<WrapButton>
-						{this.renderButtons('documentos')}
 						{this.renderButtons('organization')}
+						{this.renderButtons('documentos')}
 					</WrapButton>
 					<ContainerAdm>
 						<ParagraphContainer1>administrador</ParagraphContainer1>

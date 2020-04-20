@@ -20,6 +20,11 @@ const InputSearch = styled.span`
 	margin: 2rem 0 0 3.3rem;
 `;
 
+const Image = styled.img`
+	width: 20%;
+	padding: 2rem 0 1rem 7rem;
+`;
+
 const Model = styled.p`
   color: #85144B;
   font-size: 2rem;
@@ -104,7 +109,6 @@ class DocumentsScreen extends Component {
 		return (
 			<Container>
 				{/* <Header/> */}
-				<img src={ImageDocument}/>
 				<InputSearch>
 					<Model>Modelos de Documentos</Model>
 					<Span>
@@ -114,6 +118,7 @@ class DocumentsScreen extends Component {
 						/>
 					</Span>
 				</InputSearch>
+				<Image src={ImageDocument}/>
 				<div>
 					<Button>Adicionar Modelo</Button>
 				</div>

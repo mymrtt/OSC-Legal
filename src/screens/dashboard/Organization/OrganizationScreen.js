@@ -12,6 +12,7 @@ import DocumentsScreen from '../Documents/DocumentsScreen';
 
 const Container = styled.div`
 	width: 100%;
+	height: 100vh;
 `;
 
 const InputSearch = styled.span`
@@ -71,7 +72,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-	width: 70%;
+	width: 72%;
 	border: 0.5px solid #85144B;;
 	border-radius: 3px;
 	padding: 0.7rem;
