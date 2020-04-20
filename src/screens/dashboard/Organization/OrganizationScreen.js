@@ -12,24 +12,17 @@ import DocumentsScreen from '../Documents/DocumentsScreen';
 
 const Container = styled.div`
 	width: 100%;
+	height: 100vh;
 `;
 
 const InputSearch = styled.span`
-	width: 90%;
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	margin: 2rem 3rem 0 3rem;
-
-	@media (max-width: 1125px) {
-	}
-
-	@media (max-width: 940px) {
-		/* width: 40%; */
-
-	}
+	padding: 2rem 3rem 0 3rem;
 `;
 
-const Model = styled.p`
+const Title = styled.p`
 	color: #85144B;
 	font-size: 2rem;
 	font-family: Overpass-Black;
@@ -71,8 +64,8 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-	width: 70%;
-	border: 0.5px solid #85144B;;
+	width: 74%;
+	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.7rem;
 `;
@@ -87,42 +80,60 @@ const ParagraphInput = styled.p`
 	font-family: Overpass, Regular;
 `;
 
-const Table = styled.table`
-	width: 90%;
-	margin: 2rem 3rem 0 3rem;
+const Table = styled.div`
+	padding: 2rem 3rem 0 3rem;
 
 	@media (max-width: 785px) {
 		display: flex;
 		flex-direction: column;
 	}
-
 `;
 
-const Tr = styled.tr`
+const Tr = styled.span`
 	height: 2rem;
+	text-align: left;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-family: Overpass, Regular;
+	&:nth-child(even) {
+    background-color: #FFFFFF;
+  }
+	&:nth-child(odd) {
+    background-color: #FFCFCD;
+  }
 `;
 
-const TableTitle = styled.th`
+const TableTitle = styled.p`
+	width: 100%;
 	background-color: #85144B;
 	color: #FFFFFF;
 	font-size: 0.8rem;
 	font-family: Overpass, Regular;
+	height: 2rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.7rem;
 
 	@media (max-width: 785px) {
 		background-color: #FFFFFF;
 		color: #85144B;
 	}
 
+	@media (max-width: 648px) {
+		display: ${props => (props.titleMob === 'CPF' || props.titleMob === 'Usuário' ? 'none' : 'flex')};
+	}
 `;
 
-const TableList = styled.td`
+const TableList = styled.p`
 	color: #404040;
+	padding-left: 0.7rem;
+
+	@media (max-width: 648px) {
+		display: ${props => (props.mob ? 'none' : 'flex')};
+	}
 `;
 
-const TableList1 = styled.td`
-	background-color: #FFCFCD;
-	color: #404040;
-`;
 
 class OrganizationScreen extends Component {
 	constructor(props) {
@@ -133,7 +144,7 @@ class OrganizationScreen extends Component {
 			redirect: 'organization',
 			tableTitles: [
 				'Organização',
-				'CNPJ',
+				'CPF',
 				'Usuário',
 				'E-mail',
 				'Telefone',
@@ -145,7 +156,7 @@ class OrganizationScreen extends Component {
 			tableDatas: [
 				{
 					organization: 'Instituto PrecisaSer',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Jorge Amado da Silva',
 					email: 'organização@email.com',
 					telephone: '(11)11111-1111',
@@ -156,7 +167,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Vai na Web',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Yasmin Miranda',
 					email: 'nome@email.com',
 					telephone: '(99) 99999-9999',
@@ -167,7 +178,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Casa de Rui Barbosa',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Alice Barbosa Souza',
 					email: 'organização@email.com',
 					telephone: '(77)77777-7777',
@@ -178,7 +189,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Biblioteca da Maré',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Vinicius Almeida Rodrigues',
 					email: 'organização@email.com',
 					telephone: '(22)22222-2222',
@@ -189,7 +200,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Museu de Arte ZO',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Tarcila do Amaral Gonçalves',
 					email: 'organização@email.com',
 					telephone: '(44)44444-4444',
@@ -223,7 +234,7 @@ class OrganizationScreen extends Component {
 					{this.state.redirect === 'organization' ? (
 						<>
 							<InputSearch>
-								<Model>Gerenciar organizações</Model>
+								<Title>Gerenciar organizações</Title>
 								<Span>
 									<Label>Vizualizar por:</Label>
 									<Input
@@ -242,14 +253,15 @@ class OrganizationScreen extends Component {
 							<Table>
 								<Tr>
 									{this.state.tableTitles.map(title => (
-										<TableTitle key={title}>{title}</TableTitle>
+										<TableTitle key={title} titleMob={title}> {title}</TableTitle>
 									))}
+
 								</Tr>
 								{this.state.tableDatas.map(item => (
 									<Tr key={item}>
 										<TableList>{item.organization}</TableList>
-										<TableList>{item.cnpj}</TableList>
-										<TableList>{item.user}</TableList>
+										<TableList mob>{item.cpf}</TableList>
+										<TableList mob>{item.user}</TableList>
 										<TableList>{item.email}</TableList>
 										<TableList>{item.telephone}</TableList>
 										<TableList>{item.createdIn}</TableList>

@@ -12,6 +12,7 @@ const LogoImage = styled.img`
 
 	@media(max-width: 648px) {
 		margin: ${props => props.marginMobile};
+		height: ${props => props.heightMobile};
 	}
 `;
 
@@ -21,6 +22,7 @@ const ImageLogo = props => (
 		alt="Osc Logo"
 		width={props.width}
 		height={props.height}
+		heightMobile={props.heightMobile}
 	/>
 );
 
