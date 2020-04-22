@@ -17,7 +17,7 @@ const Overlay = styled.div`
   justify-content: center;
   align-items: center;
 	position: absolute;
-	/* opacity: 0.5; */
+	z-index: 2;
 
 	@media (max-width: 648px) {
 		/* background-color: #FFFFFF; */

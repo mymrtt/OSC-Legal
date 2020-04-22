@@ -15,7 +15,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-	padding: 0 2.5rem;
+	padding: 0 3rem;
   text-transform: uppercase;
 	border-bottom: 2px solid  #707070;
 	opacity: 1;
@@ -66,7 +66,7 @@ const Border = styled.span`
 `;
 
 const ParagraphContainer = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.375rem;
 	font-weight: ${props => props.bold && '700'};
 	margin-top: 2.2rem;
 `;
@@ -90,8 +90,8 @@ const ContainerAdm = styled.div`
 `;
 
 const ParagraphContainer1 = styled.p`
-	font-size: 1.3rem;
-	font-family: Overpass, Light;
+	font-size: 1.25rem;
+	font-family: "Overpass", Light;
 	margin-top: 1.2rem;
 
 	@media (max-width: 685px) {
