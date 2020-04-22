@@ -85,14 +85,15 @@ const Table = styled.table`
 const Thead = styled.thead`
 	text-align: left;
 
-	@media (max-width: 785px) {
-		display: flex;
-		flex-direction: column;
-	}
-
-	@media(max-width: 648px) {
+	@media (max-width: 768px) {
+		${'' /* display: flex;
+		flex-direction: column; */}
 		display: none;
 	}
+
+	${'' /* @media(max-width: 648px) {
+		display: none;
+	} */}
 `;
 
 const Tr = styled.tr`
@@ -105,13 +106,21 @@ const Tr = styled.tr`
     background-color: #FFFFFF;
 	}
 
-	@media(max-width: 648px) {
+	@media(max-width: 768px) {
 		margin-bottom: 1rem;
 		padding: 1rem 1rem 0 1rem;
 		height: 13rem;
 		display: flex;
     flex-wrap: wrap;
 	}
+
+	${'' /* @media(max-width: 648px) {
+		margin-bottom: 1rem;
+		padding: 1rem 1rem 0 1rem;
+		height: 13rem;
+		display: flex;
+    flex-wrap: wrap;
+	} */}
 `;
 
 const TableTitle = styled.th`
@@ -120,12 +129,16 @@ const TableTitle = styled.th`
 	font-family: Overpass, Regular;
 	background-color: #85144B;
 
-	@media (max-width: 785px) {
+	${'' /* @media (max-width: 785px) {
 		color: #85144B;
 		background-color: #FFFFFF;
-	}
+	} */}
 
-	@media (max-width: 648px) {
+	${'' /* @media (max-width: 648px) {
+		display: none;
+	} */}
+
+	@media (max-width: 768px) {
 		display: none;
 	}
 `;
@@ -133,7 +146,14 @@ const TableTitle = styled.th`
 const ContainerTableTitleMob = styled.span`
 	display: none;
 
-	@media(max-width: 648px) {
+	${'' /* @media(max-width: 648px) {
+		padding-right: 1rem;
+		padding-bottom: 1rem;
+		display: flex;
+		flex-direction: column;
+	} */}
+
+	@media(max-width: 768px) {
 		padding-right: 1rem;
 		padding-bottom: 1rem;
 		display: flex;
@@ -144,7 +164,14 @@ const ContainerTableTitleMob = styled.span`
 const TableTitleMob = styled.th`
 	display: none;
 
-	@media(max-width: 648px) {
+	${'' /* @media(max-width: 648px) {
+		display: flex;
+		color: #85144B;
+		font-size: 0.8rem;
+		font-family: Overpass, Regular;
+	} */}
+
+	@media(max-width: 768px) {
 		display: flex;
 		color: #85144B;
 		font-size: 0.8rem;
@@ -155,12 +182,16 @@ const TableTitleMob = styled.th`
 const TableList = styled.td`
 	color: #404040;
 
-	@media (max-width: 785px) {
+	${'' /* @media (max-width: 785px) {
 		display: flex;
 		flex-direction: column;
-	}
+	} */}
 
-	@media (max-width: 648px) {
+	${'' /* @media (max-width: 648px) {
+		display: ${props => (props.mob ? 'none' : 'flex')};
+	} */}
+
+	@media (max-width: 768px) {
 		display: ${props => (props.mob ? 'none' : 'flex')};
 	}
 `;
@@ -257,7 +288,7 @@ class OrganizationScreen extends Component {
 	};
 
 	render() {
-		const widthMob = (window.matchMedia('(max-width: 648px)').matches);
+		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 
 		return (
 			<Container>
