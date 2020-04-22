@@ -43,7 +43,7 @@ const WrapButton = styled.div`
 	}
 
 	@media (max-width: 648px) {
-		width: 95%;
+		width: 100%;
 		justify-content: space-between;
 		order: 3;
 	}
@@ -66,7 +66,7 @@ const Border = styled.span`
 `;
 
 const ParagraphContainer = styled.p`
-  font-size: 1.375rem;
+  font-size: 1.2rem;
 	font-weight: ${props => props.bold && '700'};
 	margin-top: 2.2rem;
 `;
@@ -83,7 +83,7 @@ const ContainerAdm = styled.div`
 	}
 
 	@media (max-width: 648px) {
-		padding-right: 1.3rem;
+		padding-top: 0.7rem;
 		margin-bottom: 0;
 		order: 2;
 	}
@@ -99,7 +99,7 @@ const ParagraphContainer1 = styled.p`
 	}
 
 	@media (max-width: 648px) {
-		font-size: 1rem;
+		font-size: 0.8rem;
 	}
 `;
 
@@ -110,7 +110,7 @@ const ParagraphSair = styled.p`
   opacity: 1;
 
 	@media (max-width: 859px) {
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 `;
 
@@ -126,7 +126,6 @@ class Header extends Component {
 		this.setState({
 			redirect: item,
 		});
-		console.log('oiiii');
 		this.props.handleClick(item);
 	};
 

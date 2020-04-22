@@ -16,10 +16,17 @@ const Container = styled.div`
 `;
 
 const InputSearch = styled.span`
-	width: 100%;
+	width: 93%;
 	display: flex;
 	justify-content: space-between;
-	padding: 2rem 3rem 0 3rem;
+	margin: 2rem 3rem 0 3rem;
+
+	@media (max-width: 1125px) {
+	}
+
+	@media (max-width: 940px) {
+		/* width: 40%; */
+	}
 `;
 
 const Title = styled.p`
@@ -27,8 +34,6 @@ const Title = styled.p`
 	font-size: 2rem;
 	font-family: Overpass-Black;
 	font-weight: 600;
-	/* margin-left: 5.5rem; */
-
 
 	@media (max-width: 648px) {
 		display: none;
@@ -42,11 +47,9 @@ const Span = styled.span`
 	@media (max-width: 1125px) {
 		width: 45%;
 	}
-
 	@media (max-width: 940px) {
 		width: 47%;
 	}
-
 	@media (max-width: 648px) {
 		width: 100%;
 	}
@@ -70,18 +73,15 @@ const Input = styled.input`
 	padding: 0.7rem;
 `;
 
-const Image = styled.img`
-	/* width: 15%; */
-
-`;
-
-const ParagraphInput = styled.p`
-	font-size: 0.9rem;
-	font-family: Overpass, Regular;
-`;
-
-const Table = styled.div`
+const Table = styled.table`
+	max-width: 100%;
+	width: 100%;
+	border-spacing: 0;
 	padding: 2rem 3rem 0 3rem;
+`;
+
+const Thead = styled.thead`
+	text-align: left;
 
 	@media (max-width: 785px) {
 		display: flex;
@@ -89,38 +89,21 @@ const Table = styled.div`
 	}
 `;
 
-const Tr = styled.span`
+const Tr = styled.tr`
 	height: 2rem;
-	text-align: left;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  font-family: Overpass, Regular;
 	&:nth-child(even) {
-    background-color: #FFFFFF;
+    background-color: #FFCFCD;
   }
 	&:nth-child(odd) {
-    background-color: #FFCFCD;
-	}
-
-	@media (max-width: 648px) {
-		width: 100%;
-		height: auto;
-		display: flex;
-		flex-wrap: wrap;
+    background-color: #FFFFFF;
 	}
 `;
 
-const TableTitle = styled.p`
-	width: 100%;
+const TableTitle = styled.th`
 	background-color: #85144B;
 	color: #FFFFFF;
 	font-size: 0.8rem;
 	font-family: Overpass, Regular;
-	height: 2rem;
-  display: flex;
-  align-items: center;
-  padding-left: 0.7rem;
 
 	@media (max-width: 785px) {
 		background-color: #FFFFFF;
@@ -129,19 +112,22 @@ const TableTitle = styled.p`
 
 	@media (max-width: 648px) {
 		display: ${props => (props.titleMob === 'CPF' || props.titleMob === 'Usuário' ? 'none' : 'flex')};
-		width: ${props => (props.width ? '15rem' : 'auto' )};
-}
+		width: ${props => (props.width ? '15rem' : 'auto')};
+	}
 `;
 
-const TableList = styled.p`
+const TableList = styled.td`
 	color: #404040;
-	padding-left: 0.7rem;
+
+	@media (max-width: 785px) {
+		display: flex;
+		flex-direction: column;
+	}
 
 	@media (max-width: 648px) {
 		display: ${props => (props.mob ? 'none' : 'flex')};
 	}
 `;
-
 
 class OrganizationScreen extends Component {
 	constructor(props) {
@@ -259,25 +245,28 @@ class OrganizationScreen extends Component {
 								</Span>
 							</InputSearch>
 							<Table>
-								<Tr>
-									{this.state.tableTitles.map(title => (
-										<TableTitle key={title} titleMob={title}> {title}</TableTitle>
-									))}
-
-								</Tr>
-								{this.state.tableDatas.map(item => (
-									<Tr key={item}>
-										<TableList width >{item.organization}</TableList>
-										<TableList mob>{item.cpf}</TableList>
-										<TableList mob>{item.user}</TableList>
-										<TableList>{item.email}</TableList>
-										<TableList>{item.telephone}</TableList>
-										<TableList>{item.createdIn}</TableList>
-										<TableList>{item.authorization}</TableList>
-										<TableList>{item.dueDate}</TableList>
-										<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+								<Thead>
+									<Tr>
+										{this.state.tableTitles.map(title => (
+											<TableTitle key={title} titleMob={title}>{title}</TableTitle>
+										))}
 									</Tr>
-								))}
+								</Thead>
+								<tbody>
+									{this.state.tableDatas.map(item => (
+										<Tr key={item}>
+											<TableList>{item.organization}</TableList>
+											<TableList mob>{item.cpf}</TableList>
+											<TableList mob>{item.user}</TableList>
+											<TableList>{item.email}</TableList>
+											<TableList>{item.telephone}</TableList>
+											<TableList>{item.createdIn}</TableList>
+											<TableList>{item.authorization}</TableList>
+											<TableList>{item.dueDate}</TableList>
+											<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+										</Tr>
+									))}
+								</tbody>
 							</Table>
 						</>
 					) : <DocumentsScreen />
