@@ -12,10 +12,11 @@ import DocumentsScreen from '../Documents/DocumentsScreen';
 
 const Container = styled.div`
 	width: 100%;
+	height: 100vh;
 `;
 
 const InputSearch = styled.span`
-	width: 90%;
+	width: 93%;
 	display: flex;
 	justify-content: space-between;
 	margin: 2rem 3rem 0 3rem;
@@ -25,11 +26,10 @@ const InputSearch = styled.span`
 
 	@media (max-width: 940px) {
 		/* width: 40%; */
-
 	}
 `;
 
-const Model = styled.p`
+const Title = styled.p`
 	color: #85144B;
 	font-size: 2rem;
 	font-family: Overpass-Black;
@@ -47,11 +47,9 @@ const Span = styled.span`
 	@media (max-width: 1125px) {
 		width: 45%;
 	}
-
 	@media (max-width: 940px) {
 		width: 47%;
 	}
-
 	@media (max-width: 648px) {
 		width: 100%;
 	}
@@ -69,16 +67,17 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-	width: 70%;
+	width: 74%;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.7rem;
 `;
 
-const Table = styled.div`
+const Table = styled.table`
 	max-width: 100%;
 	width: 100%;
 	border-spacing: 0;
+	padding: 2rem 3rem 0 3rem;
 `;
 
 const Thead = styled.thead`
@@ -88,11 +87,16 @@ const Thead = styled.thead`
 		display: flex;
 		flex-direction: column;
 	}
-
 `;
 
 const Tr = styled.tr`
 	height: 2rem;
+	&:nth-child(even) {
+    background-color: #FFCFCD;
+  }
+	&:nth-child(odd) {
+    background-color: #FFFFFF;
+	}
 `;
 
 const TableTitle = styled.th`
@@ -106,10 +110,23 @@ const TableTitle = styled.th`
 		color: #85144B;
 	}
 
+	@media (max-width: 648px) {
+		display: ${props => (props.titleMob === 'CPF' || props.titleMob === 'Usuário' ? 'none' : 'flex')};
+		width: ${props => (props.width ? '15rem' : 'auto')};
+	}
 `;
 
 const TableList = styled.td`
 	color: #404040;
+
+	@media (max-width: 785px) {
+		display: flex;
+		flex-direction: column;
+	}
+
+	@media (max-width: 648px) {
+		display: ${props => (props.mob ? 'none' : 'flex')};
+	}
 `;
 
 class OrganizationScreen extends Component {
@@ -121,7 +138,7 @@ class OrganizationScreen extends Component {
 			redirect: 'organization',
 			tableTitles: [
 				'Organização',
-				'CNPJ',
+				'CPF',
 				'Usuário',
 				'E-mail',
 				'Telefone',
@@ -133,7 +150,7 @@ class OrganizationScreen extends Component {
 			tableDatas: [
 				{
 					organization: 'Instituto PrecisaSer',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Jorge Amado da Silva',
 					email: 'organização@email.com',
 					telephone: '(11)11111-1111',
@@ -144,7 +161,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Vai na Web',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Yasmin Miranda',
 					email: 'nome@email.com',
 					telephone: '(99) 99999-9999',
@@ -155,7 +172,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Casa de Rui Barbosa',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Alice Barbosa Souza',
 					email: 'organização@email.com',
 					telephone: '(77)77777-7777',
@@ -166,7 +183,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Biblioteca da Maré',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Vinicius Almeida Rodrigues',
 					email: 'organização@email.com',
 					telephone: '(22)22222-2222',
@@ -177,7 +194,7 @@ class OrganizationScreen extends Component {
 				},
 				{
 					organization: 'Museu de Arte ZO',
-					cnpj: '00.000.000/0000-00',
+					cpf: '00.000.000/0000-00',
 					user: 'Tarcila do Amaral Gonçalves',
 					email: 'organização@email.com',
 					telephone: '(44)44444-4444',
@@ -211,7 +228,7 @@ class OrganizationScreen extends Component {
 					{this.state.redirect === 'organization' ? (
 						<>
 							<InputSearch>
-								<Model>Gerenciar organizações</Model>
+								<Title>Gerenciar organizações</Title>
 								<Span>
 									<Label>Vizualizar por:</Label>
 									<Input
@@ -231,7 +248,7 @@ class OrganizationScreen extends Component {
 								<Thead>
 									<Tr>
 										{this.state.tableTitles.map(title => (
-											<TableTitle key={title}>{title}</TableTitle>
+											<TableTitle key={title} titleMob={title}>{title}</TableTitle>
 										))}
 									</Tr>
 								</Thead>
@@ -239,8 +256,8 @@ class OrganizationScreen extends Component {
 									{this.state.tableDatas.map(item => (
 										<Tr key={item}>
 											<TableList>{item.organization}</TableList>
-											<TableList>{item.cnpj}</TableList>
-											<TableList>{item.user}</TableList>
+											<TableList mob>{item.cpf}</TableList>
+											<TableList mob>{item.user}</TableList>
 											<TableList>{item.email}</TableList>
 											<TableList>{item.telephone}</TableList>
 											<TableList>{item.createdIn}</TableList>
