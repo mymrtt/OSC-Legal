@@ -88,7 +88,9 @@ const Thead = styled.thead`
 		display: flex;
 		flex-direction: column;
 	}
+`;
 
+const Th = styled.th`
 `;
 
 const Tr = styled.tr`
@@ -229,11 +231,11 @@ class OrganizationScreen extends Component {
 							</InputSearch>
 							<Table>
 								<Thead>
-									<Tr>
+									<Th>
 										{this.state.tableTitles.map(title => (
 											<TableTitle key={title}>{title}</TableTitle>
 										))}
-									</Tr>
+									</Th>
 								</Thead>
 								<tbody>
 									{this.state.tableDatas.map(item => (
