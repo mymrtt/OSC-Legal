@@ -255,8 +255,16 @@ const TableList = styled.td`
 	}
 `;
 
-const Image = styled.img`
-	width: 1rem;
+const ContainerStatus = styled.div`
+	margin-top: .5rem;
+	display: flex;
+	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
+	align-items: center;
+`;
+
+const ImageStatus = styled.img`
+	width: 1.3rem;
+	cursor: pointer;
 `;
 
 class OrganizationScreen extends Component {
@@ -344,6 +352,25 @@ class OrganizationScreen extends Component {
 					status: 'VENCIDO',
 				},
 			],
+			statusImgs: [
+				{
+					img: authorizationIcon,
+					desc: 'Autorizar',
+				},
+				{
+					img: payIcon,
+					desc: 'Pago',
+				},
+				{
+					img: freeIcon,
+					desc: 'Isento',
+				},
+				{
+					img: extendDeadlineIcon,
+					desc: 'Prorrogar Prazo',
+				},
+			],
+			selectedStatusImgs: undefined,
 		};
 	}
 
@@ -372,6 +399,34 @@ class OrganizationScreen extends Component {
 			redirect: item,
 		});
 	};
+
+	handleSelectedStatus = (item) => {
+		this.setState({
+			selectedStatusImgs: item,
+		});
+
+		// const { desc } = item;
+
+		// this.teste(desc);
+		console.log('item', item);
+	}
+
+	// teste = (desc) => {
+	// 	console.log('desc', desc);
+
+	// 	switch (desc) {
+	// 	case 'authorization':
+	// 		return console.log('autorizaçao');
+	// 	case 'pay':
+	// 		return <p>pago</p>;
+	// 	case 'free':
+	// 		return <p>isento</p>;
+	// 	case 'extendDeadline':
+	// 		return <p>prorrogar prazo</p>;
+	// 	default:
+	// 		return undefined;
+	// 	}
+	// }
 
 	renderSelected = () => (
 		<ContainerSelected>
@@ -481,12 +536,18 @@ class OrganizationScreen extends Component {
 											</ContainerTableTitleMob>
 											: <>
 												{/* <TableList onClick={this.isModalOpen}>{item.status}</TableList> */}
-												<div>
-													<Image src={authorizationIcon} alt="authorization" />
-													<Image src={payIcon} alt="pay" />
-													<Image src={freeIcon} alt="free" />
-													<Image src={extendDeadlineIcon} alt="extendDeadline" />
-												</div>
+												<ContainerStatus desc={this.state.selectedStatusImgs}>
+													{ this.state.selectedStatusImgs === undefined
+														? this.state.statusImgs.map((item, index) => (
+															<ImageStatus
+																key={index}
+																src={item.img}
+																alt={item.desc}
+																onClick={() => this.handleSelectedStatus(item)}
+															/>
+														))
+														: <p>{this.state.selectedStatusImgs.desc}</p>}
+												</ContainerStatus>
 											</>
 										}
 									</Tr>
