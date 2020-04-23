@@ -10,6 +10,7 @@ import ImageDelete from '../../../assets/delete.svg';
 import ImageSeta from '../../../assets/setaLado.svg';
 
 const Overlay = styled.div`
+	max-height: 100vh;
 	width: 100vw;
 	height: 100vh;
 	background-color: #707070a1;
@@ -17,16 +18,17 @@ const Overlay = styled.div`
   justify-content: center;
   align-items: center;
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 
-	@media (max-width: 648px) {
+	@media (max-width: 768px) {
+		position: fixed;
 		/* background-color: #FFFFFF; */
 	}
 `;
 
 const Container = styled.div`
-	width: 83%;
-	height: 75%;
+	width: 80%;
+	height: 80%;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -36,7 +38,7 @@ const Container = styled.div`
 
 	@media (max-width: 935px) {
 		width: 90%;
-		height: 50%;
+		height: 80%;
 	}
 
 	@media (max-width: 648px) {
@@ -51,6 +53,11 @@ const Image = styled.img`
 	padding: 1rem;
 	cursor: pointer;
 
+
+	@media (max-width: 798px) {
+		padding: 0.8rem 0.5rem;
+	}
+
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -62,7 +69,7 @@ const ImageS = styled.img`
 	@media (max-width: 648px) {
 		width: 4%;
 		display: flex;
-		margin: 0 0 1rem 1rem;
+		margin: 0 0 3rem 1rem;
 	}
 `;
 
@@ -75,8 +82,13 @@ const ContentConsultorItem = styled.div`
 
 	@media (max-width: 935px) {
 		width: 98%;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	@media (max-width: 410px) {
 	}
 `;
 
@@ -87,11 +99,12 @@ const ContentConsultorDetails = styled.div`
 
 const Title = styled.h2`
 	color: #231F20;
-	display: flex;
+	/* display: flex; */
+	font-size: 1.25rem;
+	font-family: Overpass, ExtraBold;
 	padding-top: 2rem;
 	padding-bottom: 1.7rem;
 	margin-left: 3.4rem;
-	font-family: Overpass, ExtraBold;
 	text-transform: uppercase;
 
 	@media (max-width: 935px) {
@@ -148,7 +161,7 @@ const ImageEdite = styled.img`
 `;
 
 const ContentSubTitle = styled.div`
-	width: 60%;
+	/* width: 60%; */
 
 	@media (max-width: 648px) {
 		width: 100%;
@@ -192,7 +205,7 @@ const SpanContainer = styled.span`
 const ContainerOption = styled.p`
 	color: #85144B;
 	font-family: Overpass, Regular;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 	display: flex;
   align-items: center;
 	margin-left: 0.3rem;
@@ -200,20 +213,20 @@ const ContainerOption = styled.p`
 
 const SubTitle = styled.p`
   color: #85144B;
-	font-size: 1rem;
+	font-size: 0.75rem;
 	font-family: Overpass, Bold;
 	font-weight: 600;
   text-transform: uppercase;
 
 	@media (max-width: 648px) {
-		font-size: 1.2rem;
+		/* font-size: 1.2rem; */
 	}
 `;
 
 const SubAnswer = styled.p`
 	color: #231F20;
 	font-size: 0.9rem;
-	font-family: Overpass, Light;
+	font-family: "Overpass", Light;
 	margin: 0.5rem 0 0.8rem 0;
 
 	@media (max-width: 648px) {
@@ -253,7 +266,7 @@ const ContainerEditImage = styled.div`
 	display: none;
 
 	@media (max-width: 648px) {
-		height: 5vh;
+		height: 7vh;
 		display: flex;
 		justify-content: center;
 		justify-content: space-evenly;
@@ -264,7 +277,6 @@ const ContainerEditImage = styled.div`
 const SpanContainerImage = styled.div`
 	  display: flex;
     flex-direction: row;
-
 `;
 
 
@@ -388,17 +400,17 @@ class ModalOrganization extends Component {
 								<SubAnswer>Rio de Janeiro</SubAnswer>
 							</SeparationMobile>
 						</SpanOrganization>
-						<ContainerEditImage>
-							<SpanContainerImage>
-								<ImageEdite src={ImageEdit}/>
-								<ContainerOption>Editar</ContainerOption>
-							</SpanContainerImage>
-							<SpanContainerImage>
-								<img src={ImageDelete}/>
-								<ContainerOption>Excluir</ContainerOption>
-							</SpanContainerImage>
-						</ContainerEditImage>
 					</Parte2>
+					<ContainerEditImage>
+						<SpanContainerImage>
+							<ImageEdite src={ImageEdit}/>
+							<ContainerOption>Editar</ContainerOption>
+						</SpanContainerImage>
+						<SpanContainerImage>
+							<img src={ImageDelete}/>
+							<ContainerOption>Excluir</ContainerOption>
+						</SpanContainerImage>
+					</ContainerEditImage>
 				</Container>
 			</Overlay>
 		);

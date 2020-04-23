@@ -56,17 +56,13 @@ const WrapButton = styled.div`
 const Border = styled.span`
 	height: 5.2rem;
 	margin-right: 3rem;
-	border-bottom: ${props => (props.border && '5px solid #231F20')};
+	border-bottom: ${props => (props.border && '5px solid #231F20' )};
 	cursor: pointer;
 
 	@media (max-width: 859px) {
 		margin-right: 2.5rem;
 		/* padding-right: 1.5rem; */
 	}
-
-	/* @media (max-width: 768px) {
-		padding-right: 1.5rem;
-	} */
 
 	@media (max-width: 648px) {
 		margin-right: 0.5rem;
@@ -133,6 +129,7 @@ const ParagraphSair = styled.p`
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
   opacity: 1;
+	cursor: pointer;
 
 	@media (max-width: 859px) {
 		font-size: 1rem;
@@ -143,7 +140,7 @@ class Header extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			redirect: false,
+			redirect: 'organization',
 		};
 	}
 
