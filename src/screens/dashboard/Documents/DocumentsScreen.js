@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 // Components
 import ImageDocument from '../../../assets/document.png';
-import Header from '../components/Header';
 
 const Container = styled.div`
   width: 100%;
@@ -27,16 +26,12 @@ const Image = styled.img`
 const TitleSearch = styled.p`
   color: #85144B;
   font-size: 2rem;
-  font-family: "Overpass"-Black;
+  font-family: "Overpass", Black;
   font-weight: 600;
-  /* margin-left: 5.5rem; */
-
 `;
 
 const Span = styled.span`
   width: 44%;
-  /* margin-top: 0.5rem; */
-  /* margin-right: 4.2rem; */
 `;
 
 const Label = styled.label`
@@ -98,16 +93,13 @@ const Button = styled.button`
 class DocumentsScreen extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-		};
-	}
 
-	// class Documents extends Component {
+		this.state = {};
+	}
 
 	render() {
 		return (
 			<Container>
-				{/* <Header/> */}
 				<InputSearch>
 					<TitleSearch>Modelos de Documentos</TitleSearch>
 					<Span>
@@ -133,7 +125,8 @@ class DocumentsScreen extends Component {
           organização interna etc.</Paragraph>
 					<Number> 3 </Number>
 					<Title>Modelo Estatuto Fundação</Title>
-					<Paragraph>  Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações
+					<Paragraph>  Documentação básica de uma fundação, deve-se atentar para todas as exigências legais,
+					para as implicações
           relacionadas à dotação inicial de bens, além daquelas eventualmente
           sugeridas pelo Ministério Público. </Paragraph>
 					<Number> 4 </Number>
@@ -160,3 +153,4 @@ class DocumentsScreen extends Component {
 }
 
 export default DocumentsScreen;
+

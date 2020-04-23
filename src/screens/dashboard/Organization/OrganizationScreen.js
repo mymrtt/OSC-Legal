@@ -399,7 +399,7 @@ class OrganizationScreen extends Component {
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
 						<SelectedViewByText>{this.state.selectedValue}</SelectedViewByText>
-						<img src={ImageCaminho} />
+						<img src={ImageCaminho} alt="arrow" />
 					</InputSelect>
 					{this.state.isSelected && (
 						<InputSelectedItem>
