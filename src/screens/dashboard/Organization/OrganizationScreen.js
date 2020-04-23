@@ -1,14 +1,17 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
 
 // Components
-// import ImageLogo from '../../../components/ImageLogo';
 import Header from '../components/Header';
-// import ImageCaminho from '../../../assets/caminho.svg';
 import ModalOrganization from './ModalOrganization';
 import DocumentsScreen from '../Documents/DocumentsScreen';
+
+// Image
+import authorizationIcon from '../../../assets/authorization.svg';
+import payIcon from '../../../assets/pay.svg';
+import freeIcon from '../../../assets/free.svg';
+import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const Container = styled.div`
 	width: 100%;
@@ -194,6 +197,10 @@ const TableList = styled.td`
 	@media (max-width: 768px) {
 		display: ${props => (props.mob ? 'none' : 'flex')};
 	}
+`;
+
+const Image = styled.img`
+	width: 1rem;
 `;
 
 class OrganizationScreen extends Component {
@@ -386,7 +393,13 @@ class OrganizationScreen extends Component {
 												<TableList onClick={this.isModalOpen}>{item.status}</TableList>
 											</ContainerTableTitleMob>
 											: <>
-												<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+												{/* <TableList onClick={this.isModalOpen}>{item.status}</TableList> */}
+												<div>
+													<Image src={authorizationIcon} alt="authorization" />
+													<Image src={payIcon} alt="pay" />
+													<Image src={freeIcon} alt="free" />
+													<Image src={extendDeadlineIcon} alt="extendDeadline" />
+												</div>
 											</>
 										}
 									</Tr>
