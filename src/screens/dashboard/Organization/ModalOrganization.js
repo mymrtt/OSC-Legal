@@ -1,7 +1,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
+// import { Link, Redirect } from 'react-router-dom';
 
 // Components
 import ImageClose from '../../../assets/fechar.svg';
