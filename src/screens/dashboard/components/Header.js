@@ -64,10 +64,6 @@ const Border = styled.span`
 		/* padding-right: 1.5rem; */
 	}
 
-	/* @media (max-width: 768px) {
-		padding-right: 1.5rem;
-	} */
-
 	@media (max-width: 648px) {
 		margin-right: 0.5rem;
 		padding-right: 0;
