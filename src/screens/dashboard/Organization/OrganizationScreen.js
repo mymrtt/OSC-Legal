@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 // Components
 import Header from '../components/Header';
+import ImageCaminho from '../../../assets/caminho.svg';
 import ModalOrganization from './ModalOrganization';
 import DocumentsScreen from '../Documents/DocumentsScreen';
 
