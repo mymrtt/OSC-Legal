@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // Components
-import ImageLogo from '../../../components/ImageLogo';
 import ImageDocument from '../../../assets/document.png';
 import Header from '../components/Header';
 
@@ -25,10 +24,10 @@ const Image = styled.img`
 	padding: 2rem 0 1rem 7rem;
 `;
 
-const Model = styled.p`
+const TitleSearch = styled.p`
   color: #85144B;
   font-size: 2rem;
-  font-family: Overpass-Black;
+  font-family: "Overpass"-Black;
   font-weight: 600;
   /* margin-left: 5.5rem; */
 
@@ -71,7 +70,7 @@ const Number = styled.h2`
 
 const Title = styled.h2`
   color: #85144B;
-  font-family: Overpass-Black;
+  font-family: "Overpass"-Black;
 `;
 
 const Paragraph = styled.p`
@@ -110,7 +109,7 @@ class DocumentsScreen extends Component {
 			<Container>
 				{/* <Header/> */}
 				<InputSearch>
-					<Model>Modelos de Documentos</Model>
+					<TitleSearch>Modelos de Documentos</TitleSearch>
 					<Span>
 						<Label>Pesquisar</Label>
 						<Input
