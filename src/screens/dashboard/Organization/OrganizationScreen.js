@@ -1,13 +1,18 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
 
 // Components
 import Header from '../components/Header';
 import ImageCaminho from '../../../assets/caminho.svg';
 import ModalOrganization from './ModalOrganization';
 import DocumentsScreen from '../Documents/DocumentsScreen';
+
+// Image
+import authorizationIcon from '../../../assets/authorization.svg';
+import payIcon from '../../../assets/pay.svg';
+import freeIcon from '../../../assets/free.svg';
+import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const Container = styled.div`
 	width: 100%;
@@ -250,6 +255,18 @@ const TableList = styled.td`
 	}
 `;
 
+const ContainerStatus = styled.div`
+	margin-top: .5rem;
+	display: flex;
+	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
+	align-items: center;
+`;
+
+const ImageStatus = styled.img`
+	width: 1.3rem;
+	cursor: pointer;
+`;
+
 class OrganizationScreen extends Component {
 	constructor(props) {
 		super(props);
@@ -335,6 +352,25 @@ class OrganizationScreen extends Component {
 					status: 'VENCIDO',
 				},
 			],
+			statusImgs: [
+				{
+					img: authorizationIcon,
+					desc: 'Autorizar',
+				},
+				{
+					img: payIcon,
+					desc: 'Pago',
+				},
+				{
+					img: freeIcon,
+					desc: 'Isento',
+				},
+				{
+					img: extendDeadlineIcon,
+					desc: 'Prorrogar Prazo',
+				},
+			],
+			selectedStatusImgs: undefined,
 		};
 	}
 
@@ -363,6 +399,34 @@ class OrganizationScreen extends Component {
 			redirect: item,
 		});
 	};
+
+	handleSelectedStatus = (item) => {
+		this.setState({
+			selectedStatusImgs: item,
+		});
+
+		// const { desc } = item;
+
+		// this.teste(desc);
+		console.log('item', item);
+	}
+
+	// teste = (desc) => {
+	// 	console.log('desc', desc);
+
+	// 	switch (desc) {
+	// 	case 'authorization':
+	// 		return console.log('autorizaçao');
+	// 	case 'pay':
+	// 		return <p>pago</p>;
+	// 	case 'free':
+	// 		return <p>isento</p>;
+	// 	case 'extendDeadline':
+	// 		return <p>prorrogar prazo</p>;
+	// 	default:
+	// 		return undefined;
+	// 	}
+	// }
 
 	renderSelected = () => (
 		<ContainerSelected>
@@ -471,7 +535,19 @@ class OrganizationScreen extends Component {
 												<TableList onClick={this.isModalOpen}>{item.status}</TableList>
 											</ContainerTableTitleMob>
 											: <>
-												<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+												{/* <TableList onClick={this.isModalOpen}>{item.status}</TableList> */}
+												<ContainerStatus desc={this.state.selectedStatusImgs}>
+													{ this.state.selectedStatusImgs === undefined
+														? this.state.statusImgs.map((item, index) => (
+															<ImageStatus
+																key={index}
+																src={item.img}
+																alt={item.desc}
+																onClick={() => this.handleSelectedStatus(item)}
+															/>
+														))
+														: <p>{this.state.selectedStatusImgs.desc}</p>}
+												</ContainerStatus>
 											</>
 										}
 									</Tr>
