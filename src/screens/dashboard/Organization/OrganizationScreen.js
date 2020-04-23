@@ -370,7 +370,8 @@ class OrganizationScreen extends Component {
 			<Select>
 				<Label>Vizualizar por:</Label>
 				<SpanSelect>
-					<InputSelect onClick={this.isSelectOpen}>
+					<InputSelect onClick={this.isSelectOpen}
+						onMouseLeave="mouseOver()">
 						<p>{this.state.selectedValue}</p>
 						<img src={ImageCaminho} />
 					</InputSelect>
