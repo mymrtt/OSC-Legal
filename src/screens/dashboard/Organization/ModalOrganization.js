@@ -188,19 +188,19 @@ const Div = styled.div`
 	}
 `;
 
-const ContainerEdit = styled.div`
-	display: flex;
-	flex-direction: column;
+// const ContainerEdit = styled.div`
+// 	display: flex;
+// 	flex-direction: column;
 
-	@media (max-width: 648px) {
-		display: none;
-	}
-`;
+// 	@media (max-width: 648px) {
+// 		display: none;
+// 	}
+// `;
 
-const SpanContainer = styled.span`
-	display: flex;
-	flex-direction: row;
-`;
+// const SpanContainer = styled.span`
+// 	display: flex;
+// 	flex-direction: row;
+// `;
 
 const ContainerOption = styled.p`
 	color: #85144B;

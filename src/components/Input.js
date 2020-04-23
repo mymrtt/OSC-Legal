@@ -2,8 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
-export const InputForm = styled.input`
+const InputForm = styled.input`
   width: ${props => (props.login ? '100%' : '95%')};
   height: 3.5rem;
   border: 1px solid;

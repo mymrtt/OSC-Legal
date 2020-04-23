@@ -19,59 +19,56 @@ const Container = styled.div`
 	height: 100vh;
 `;
 
-const ContainerSelected = styled.span`
-	/* width: 93%; */
+const ContainerSelectedViewBy = styled.div`
+	margin: 3rem 4rem 0 4rem;
 	display: flex;
 	justify-content: space-between;
-	margin: 2rem 4rem 0 4rem;
+	align-items: center;
 	z-index: 4;
 
+	@media(max-width: 1024px) {
+		margin: 3rem 0 0 4rem;
+	}
+
 	@media (max-width: 768px) {
+		margin: 2rem 4rem 0 4rem;
 		flex-direction: column;
 		align-items: center;
 	}
 
 	@media (max-width: 648px) {
-		margin: 1rem 2rem 0 2rem;
+		margin: 1rem 2rem 1rem 2rem;
 	}
 `;
 
-const Title = styled.p`
+const TitleManageOrgs = styled.h2`
 	color: #85144B;
-	font-size: 2rem;
-	font-family: "Overpass"-Black;
-	font-weight: 600;
+	font-size: 2.2rem;
+	font-family: "Overpass", Black;
+	font-weight: 900;
 
 	@media (max-width: 648px) {
 		display: none;
 	}
 `;
 
-const Select = styled.span`
-	width: 35%;
+const SelectViewBy = styled.div`
 	display: flex;
 	flex-direction: row;
-
-	@media (max-width: 1129px) {
-		width: 42%;
-	}
 
 	@media (max-width: 768px) {
 		width: 100%;
 	}
 `;
 
-const SpanSelect = styled.span`
-	width: 65%;
+const SpanSelect = styled.div`
+	width: 15rem;
 	margin-top: 0.5rem;
 	display: flex;
   flex-direction: column;
 	position: relative;
 	z-index: 2;
 
-	@media (max-width: 1125px) {
-		width: 65%;
-	}
 	@media (max-width: 940px) {
 		width: 47%;
 	}
@@ -80,7 +77,7 @@ const SpanSelect = styled.span`
 	}
 `;
 
-const Label = styled.label`
+const TitleViewBy = styled.h2`
 	color: #231F20;
 	font-size: 1.125rem;
 	font-family: Overpass;
@@ -95,17 +92,23 @@ const Label = styled.label`
 `;
 
 const InputSelect = styled.div`
+	padding: 0.5rem;
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	color: #959595;
 	background-color: #FFFFFF;
 	border: 0.5px solid #85144B;
 	border-radius: 3px 3px 0 0;
 	font-size: 0.875rem;
-	padding: 0.7rem;
-	display: flex;
-	justify-content: space-between;
 	cursor: pointer;
 	z-index: 2;
+`;
+
+const SelectedViewByText = styled.p`
+	width: 100%;
+	text-align: center;
+	color: #85144B;
 `;
 
 const Overlay = styled.div`
@@ -119,17 +122,18 @@ const Overlay = styled.div`
 `;
 
 const InputSelectedItem = styled.div`
+	position: absolute;
+	top: 32px;
 	width: 100%;
-	background-color: #FFFFFF;
 	border: 0.5px solid #85144B;
 	border-radius: 0 0 3px 3px;
-	position: absolute;
-	top: 40px;
+	background-color: #FFFFFF;
+	cursor: pointer;
 `;
 
 const SelectedItem = styled.p`
 	font-size: 0.9rem;
-	color: #231F20;
+	color: #85144B;
 	font-family: Overpass, Regular;
 	padding: 0.4rem;
 
@@ -144,9 +148,12 @@ const Table = styled.table`
 	width: 100%;
 	border-spacing: 0;
 	padding: 2rem 4rem 0 4rem;
-	/* padding: 2rem 3.5rem 0 3.5rem; */
 
-	@media(max-width: 648px) {
+	@media (max-width: 768px) {
+		padding: 2rem 0 0 0;
+	}
+
+	@media (max-width: 648px) {
 		padding: 0;
 		padding-top: 1rem;
 	}
@@ -156,19 +163,14 @@ const Thead = styled.thead`
 	text-align: left;
 
 	@media (max-width: 768px) {
-		${'' /* display: flex;
-		flex-direction: column; */}
 		display: none;
 	}
-
-	${'' /* @media(max-width: 648px) {
-		display: none;
-	} */}
 `;
 
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
+	cursor: pointer;
 
 	&:nth-child(even) {
     background-color: #FFCFCD;
@@ -179,36 +181,18 @@ const Tr = styled.tr`
 
 	@media(max-width: 768px) {
 		margin-bottom: 1rem;
-		padding: 1rem 1rem 0 1rem;
-		height: 13rem;
+		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
     flex-wrap: wrap;
 	}
-
-	${'' /* @media(max-width: 648px) {
-		margin-bottom: 1rem;
-		padding: 1rem 1rem 0 1rem;
-		height: 13rem;
-		display: flex;
-    flex-wrap: wrap;
-	} */}
 `;
 
 const TableTitle = styled.th`
 	color: #FFFFFF;
-	font-size: 0.875rem;
+	font-size: 0.90rem;
 	font-family: Overpass, Regular;
 	background-color: #85144B;
 	padding-left: 0.7rem;
-
-	${'' /* @media (max-width: 785px) {
-		color: #85144B;
-		background-color: #FFFFFF;
-	} */}
-
-	${'' /* @media (max-width: 648px) {
-		display: none;
-	} */}
 
 	@media (max-width: 768px) {
 		display: none;
@@ -218,14 +202,7 @@ const TableTitle = styled.th`
 const ContainerTableTitleMob = styled.span`
 	display: none;
 
-	${'' /* @media(max-width: 648px) {
-		padding-right: 1rem;
-		padding-bottom: 1rem;
-		display: flex;
-		flex-direction: column;
-	} */}
-
-	@media(max-width: 768px) {
+	@media (max-width: 768px) {
 		padding-right: 1rem;
 		padding-bottom: 1rem;
 		display: flex;
@@ -235,13 +212,6 @@ const ContainerTableTitleMob = styled.span`
 
 const TableTitleMob = styled.th`
 	display: none;
-
-	${'' /* @media(max-width: 648px) {
-		display: flex;
-		color: #85144B;
-		font-size: 0.8rem;
-		font-family: Overpass, Regular;
-	} */}
 
 	@media(max-width: 768px) {
 		display: flex;
@@ -253,33 +223,33 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	color: #404040;
-	font-size: 0.8rem;
+	font-size: 0.95rem;
 	padding: 0.5rem;
 
-	${'' /* @media (max-width: 785px) {
-		display: flex;
-		flex-direction: column;
-	} */}
-
-	${'' /* @media (max-width: 648px) {
-		display: ${props => (props.mob ? 'none' : 'flex')};
-	} */}
-
 	@media (max-width: 768px) {
+		padding: 0;
 		display: ${props => (props.mob ? 'none' : 'flex')};
 	}
 `;
 
 const ContainerStatus = styled.div`
-	margin-top: .5rem;
+	padding: 0.5rem;
 	display: flex;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
 	align-items: center;
+
+	@media(max-width: 768px) {
+		padding: 0;
+	}
 `;
 
 const ImageStatus = styled.img`
 	width: 1.3rem;
 	cursor: pointer;
+
+	@media(max-width: 1024px) {
+		margin-right: .3rem;
+	}
 `;
 
 class OrganizationScreen extends Component {
@@ -297,7 +267,6 @@ class OrganizationScreen extends Component {
 				'Pago',
 				'Vencida',
 			],
-			// isModalCategory: undefined,
 			redirect: 'organization',
 			tableTitles: [
 				'Organização',
@@ -420,50 +389,34 @@ class OrganizationScreen extends Component {
 		this.setState({
 			selectedStatusImgs: item,
 		});
-
-		// const { desc } = item;
-
-		// this.teste(desc);
-		console.log('item', item);
 	}
 
-	// teste = (desc) => {
-	// 	console.log('desc', desc);
-
-	// 	switch (desc) {
-	// 	case 'authorization':
-	// 		return console.log('autorizaçao');
-	// 	case 'pay':
-	// 		return <p>pago</p>;
-	// 	case 'free':
-	// 		return <p>isento</p>;
-	// 	case 'extendDeadline':
-	// 		return <p>prorrogar prazo</p>;
-	// 	default:
-	// 		return undefined;
-	// 	}
-	// }
-
-	renderSelected = () => (
-		<ContainerSelected>
-			<Title>Gerenciar organizações</Title>
-			<Select>
-				<Label>Visualizar por:</Label>
+	renderSelectedViewby = () => (
+		<ContainerSelectedViewBy>
+			<TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
+			<SelectViewBy>
+				<TitleViewBy>Visualizar por:</TitleViewBy>
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
-						<p>{this.state.selectedValue}</p>
+						<SelectedViewByText>{this.state.selectedValue}</SelectedViewByText>
 						<img src={ImageCaminho} />
 					</InputSelect>
 					{this.state.isSelected && (
-						<InputSelectedItem >
+						<InputSelectedItem>
 							{this.state.selectedItems.map((item, index) => (
-								<SelectedItem onClick={() => this.handleSelectedValue(item)} key={index} hover={item}>{item}</SelectedItem>
+								<SelectedItem
+									onClick={() => this.handleSelectedValue(item)}
+									key={index}
+									hover={item}
+								>
+									{item}
+								</SelectedItem>
 							))}
 						</InputSelectedItem>
 					)}
 				</SpanSelect>
-			</Select>
-		</ContainerSelected>
+			</SelectViewBy>
+		</ContainerSelectedViewBy>
 	)
 
 	render() {
@@ -476,12 +429,12 @@ class OrganizationScreen extends Component {
 				<Header handleClick={this.handleClick} />
 				{this.state.redirect === 'organization' ? (
 					<>
-						{this.renderSelected()}
+						{this.renderSelectedViewby()}
 						<Table>
 							<Thead>
 								<Tr>
 									{this.state.tableTitles.map(title => (
-										<TableTitle key={title} first={title[0]}>{title}</TableTitle>
+										<TableTitle key={title}>{title}</TableTitle>
 									))}
 								</Tr>
 							</Thead>
@@ -489,32 +442,32 @@ class OrganizationScreen extends Component {
 								{this.state.tableDatas.map(item => (
 									<Tr key={item}>
 										{widthMob
-											? <ContainerTableTitleMob>
+											? <ContainerTableTitleMob onClick={this.isModalOpen}>
 												<TableTitleMob>Organização</TableTitleMob>
 												<TableList>{item.organization}</TableList>
 											</ContainerTableTitleMob>
 											: <>
-												<TableList>{item.organization}</TableList>
+												<TableList onClick={this.isModalOpen}>{item.organization}</TableList>
 											</>
 										}
-										<TableList mob>{item.cpf}</TableList>
-										<TableList mob>{item.user}</TableList>
+										<TableList mob onClick={this.isModalOpen}>{item.cpf}</TableList>
+										<TableList mob onClick={this.isModalOpen}>{item.user}</TableList>
 										{widthMob
-											? <ContainerTableTitleMob>
+											? <ContainerTableTitleMob onClick={this.isModalOpen}>
 												<TableTitleMob>E-mail</TableTitleMob>
 												<TableList>{item.email}</TableList>
 											</ContainerTableTitleMob>
 											: <>
-												<TableList>{item.email}</TableList>
+												<TableList onClick={this.isModalOpen}>{item.email}</TableList>
 											</>
 										}
 										{widthMob
-											? <ContainerTableTitleMob>
+											? <ContainerTableTitleMob onClick={this.isModalOpen}>
 												<TableTitleMob>Telefone</TableTitleMob>
 												<TableList>{item.telephone}</TableList>
 											</ContainerTableTitleMob>
 											: <>
-												<TableList>{item.telephone}</TableList>
+												<TableList onClick={this.isModalOpen}>{item.telephone}</TableList>
 											</>
 										}
 										{widthMob
@@ -547,10 +500,20 @@ class OrganizationScreen extends Component {
 										{widthMob
 											? <ContainerTableTitleMob>
 												<TableTitleMob>Status</TableTitleMob>
-												<TableList onClick={this.isModalOpen}>{item.status}</TableList>
+												<ContainerStatus desc={this.state.selectedStatusImgs}>
+													{ this.state.selectedStatusImgs === undefined
+														? this.state.statusImgs.map((item, index) => (
+															<ImageStatus
+																key={index}
+																src={item.img}
+																alt={item.desc}
+																onClick={() => this.handleSelectedStatus(item)}
+															/>
+														))
+														: <p>{this.state.selectedStatusImgs.desc}</p>}
+												</ContainerStatus>
 											</ContainerTableTitleMob>
 											: <>
-												{/* <TableList onClick={this.isModalOpen}>{item.status}</TableList> */}
 												<ContainerStatus desc={this.state.selectedStatusImgs}>
 													{ this.state.selectedStatusImgs === undefined
 														? this.state.statusImgs.map((item, index) => (
