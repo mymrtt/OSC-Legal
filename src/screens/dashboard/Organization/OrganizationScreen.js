@@ -19,6 +19,7 @@ const ContainerSelected = styled.span`
 	display: flex;
 	justify-content: space-between;
 	margin: 2rem 4rem 0 4rem;
+	z-index: 4;
 
 	@media (max-width: 768px) {
 		flex-direction: column;
@@ -41,7 +42,6 @@ const Title = styled.p`
 	}
 `;
 
-
 const Select = styled.span`
 	width: 35%;
 	display: flex;
@@ -62,6 +62,7 @@ const SpanSelect = styled.span`
 	display: flex;
   flex-direction: column;
 	position: relative;
+	z-index: 2;
 
 	@media (max-width: 1125px) {
 		width: 65%;
@@ -76,7 +77,7 @@ const SpanSelect = styled.span`
 
 const Label = styled.label`
 	color: #231F20;
-	font-size: 1.2rem;
+	font-size: 1.125rem;
 	font-family: Overpass;
 	font-weight: bold;
 	margin: 0.8rem 0.8rem 0 0;
@@ -98,8 +99,18 @@ const InputSelect = styled.div`
 	padding: 0.7rem;
 	display: flex;
 	justify-content: space-between;
-	z-index: 1;
+	cursor: pointer;
+	z-index: 2;
+`;
 
+const Overlay = styled.div`
+	width: 100vw;
+	height: 100vh;
+	background-color: transparent;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
 `;
 
 const InputSelectedItem = styled.div`
@@ -117,17 +128,17 @@ const SelectedItem = styled.p`
 	font-family: Overpass, Regular;
 	padding: 0.4rem;
 
-	:hover{
-		background-color: ${props => (props.hover ? '#FFCFCD' : '#FFFFFF')};
+	&:hover {
+		background-color: #FFCFCD;
 		border: 0.5px solid #85144B;
 	}
 `;
 
 const Table = styled.table`
-	padding: 2rem 3rem 0 3rem;
 	max-width: 100%;
 	width: 100%;
 	border-spacing: 0;
+	padding: 2rem 4rem 0 4rem;
 	/* padding: 2rem 3.5rem 0 3.5rem; */
 
 	@media(max-width: 648px) {
@@ -151,7 +162,8 @@ const Thead = styled.thead`
 `;
 
 const Tr = styled.tr`
-	height: 2rem;
+	height: 2.3rem;
+	padding-left: 0.7rem;
 
 	&:nth-child(even) {
     background-color: #FFCFCD;
@@ -179,9 +191,10 @@ const Tr = styled.tr`
 
 const TableTitle = styled.th`
 	color: #FFFFFF;
-	font-size: 0.8rem;
+	font-size: 0.875rem;
 	font-family: Overpass, Regular;
 	background-color: #85144B;
+	padding-left: 0.7rem;
 
 	${'' /* @media (max-width: 785px) {
 		color: #85144B;
@@ -235,6 +248,8 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	color: #404040;
+	font-size: 0.8rem;
+	padding: 0.5rem;
 
 	${'' /* @media (max-width: 785px) {
 		display: flex;
@@ -255,7 +270,7 @@ class OrganizationScreen extends Component {
 		super(props);
 		this.state = {
 			isModal: undefined,
-			isSelect: undefined,
+			isSelected: undefined,
 			selectedValue: 'Selecionar status',
 			selectedItems: [
 				'Selecionar status',
@@ -348,13 +363,14 @@ class OrganizationScreen extends Component {
 	isSelectOpen = (event) => {
 		event.stopPropagation();
 		this.setState({
-			isSelect: !this.state.isSelect,
+			isSelected: !this.state.isSelected,
 		});
 	}
 
 	handleSelectedValue = (item) => {
 		this.setState({
 			selectedValue: item,
+			isSelected: false,
 		});
 	}
 
@@ -368,17 +384,16 @@ class OrganizationScreen extends Component {
 		<ContainerSelected>
 			<Title>Gerenciar organizações</Title>
 			<Select>
-				<Label>Vizualizar por:</Label>
+				<Label>Visualizar por:</Label>
 				<SpanSelect>
-					<InputSelect onClick={this.isSelectOpen}
-						onMouseLeave="mouseOver()">
+					<InputSelect onClick={this.isSelectOpen}>
 						<p>{this.state.selectedValue}</p>
 						<img src={ImageCaminho} />
 					</InputSelect>
-					{this.state.isSelect && (
+					{this.state.isSelected && (
 						<InputSelectedItem >
 							{this.state.selectedItems.map((item, index) => (
-								<SelectedItem onClick={() => this.handleSelectedValue(item)} key={index} hover>{item}</SelectedItem>
+								<SelectedItem onClick={() => this.handleSelectedValue(item)} key={index} hover={item}>{item}</SelectedItem>
 							))}
 						</InputSelectedItem>
 					)}
@@ -392,12 +407,12 @@ class OrganizationScreen extends Component {
 
 		return (
 			<Container>
-				{this.state.isModal && <ModalOrganization handleCloseModal={this.isModalOpen}/> }
+				{this.state.isSelected && (<Overlay onClick={this.isSelectOpen} />)}
+				{this.state.isModal && <ModalOrganization handleCloseModal={this.isModalOpen} />}
 				<Header handleClick={this.handleClick} />
 				{this.state.redirect === 'organization' ? (
 					<>
 						{this.renderSelected()}
-
 						<Table>
 							<Thead>
 								<Tr>
