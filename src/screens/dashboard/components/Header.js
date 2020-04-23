@@ -15,14 +15,17 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-	padding: 0 2.5rem;
+	padding: 0 3rem;
   text-transform: uppercase;
 	border-bottom: 2px solid  #707070;
 	opacity: 1;
 
+	@media (max-width: 890px) {
+		padding: 0 2rem;
+	}
 
-	@media (max-width: 865px) {
-		padding: 0 1.5rem;
+	@media (max-width: 785px) {
+		padding: 0 1.2rem;
 	}
 
 	@media (max-width: 648px) {
@@ -31,15 +34,16 @@ const Container = styled.div`
 `;
 
 const WrapButton = styled.div`
+	width: 36%;
 	display: flex;
 	flex-direction: row;
 
-	@media (max-width: 1080px) {
-		width: 36%;
+	@media (max-width: 785px) {
+		width: 20%;
 	}
 
-	@media (max-width: 785px) {
-		width: 26%;
+	@media (max-width: 686px) {
+		width: 40%;
 	}
 
 	@media (max-width: 648px) {
@@ -56,19 +60,32 @@ const Border = styled.span`
 	cursor: pointer;
 
 	@media (max-width: 859px) {
-		margin-right: 0;
-		padding-right: 1.5rem;
+		margin-right: 2.5rem;
+		/* padding-right: 1.5rem; */
 	}
 
+	/* @media (max-width: 768px) {
+		padding-right: 1.5rem;
+	} */
+
 	@media (max-width: 648px) {
+		margin-right: 0.5rem;
 		padding-right: 0;
+	}
+
+	@media (max-width: 320px) {
+		margin-right: 0;
 	}
 `;
 
 const ParagraphContainer = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.375rem;
 	font-weight: ${props => props.bold && '700'};
 	margin-top: 2.2rem;
+
+	@media (max-width: 768px) {
+		font-size: 1rem;
+	}
 `;
 
 const ContainerAdm = styled.div`
@@ -82,6 +99,10 @@ const ContainerAdm = styled.div`
 		width: 40%;
 	}
 
+	@media (max-width: 750px) {
+		width: 20%;
+	}
+
 	@media (max-width: 648px) {
 		padding-top: 0.7rem;
 		margin-bottom: 0;
@@ -90,9 +111,13 @@ const ContainerAdm = styled.div`
 `;
 
 const ParagraphContainer1 = styled.p`
-	font-size: 1.3rem;
-	font-family: Overpass, Light;
+	font-size: 1.25rem;
+	font-family: "Overpass", Light;
 	margin-top: 1.2rem;
+
+	@media (max-width: 859px) {
+		font-size: 1rem;
+	}
 
 	@media (max-width: 685px) {
 		margin-top: 0;
