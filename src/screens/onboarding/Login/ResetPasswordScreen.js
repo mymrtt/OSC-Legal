@@ -180,7 +180,7 @@ class ResetPasswordEmailScreen extends Component {
 						/>
 					</Box>
 					<BackLogin>
-						<ButtonText to={'/login'}>volte ao login</ButtonText>
+						<ButtonText to={'/'}>volte ao login</ButtonText>
 					</BackLogin>
 				</Form>
 				{this.state.redirect && <Redirect to={'/resetcode'} />}

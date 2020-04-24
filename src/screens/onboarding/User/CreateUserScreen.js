@@ -1,11 +1,7 @@
-/* eslint-disable no-mixed-operators */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-
 
 // Components
 import Button from '../../../components/Button';
@@ -239,7 +235,7 @@ const TitleTerms = styled.h1`
   text-transform: uppercase;
 
   @media (max-width: 648px) {
-    margin: 3rem 0 0.5rem 0;
+    margin: 3rem 0 1rem 0;
     font-size: 1.5rem;
     align-self: center;
   }
@@ -283,9 +279,10 @@ const BlockTerms = styled.div`
   justify-content: space-evenly;
 
   @media(max-width: 648px){
-    background: #FFF;
+		padding-bottom: 3rem;
     height: 100%;
     justify-content: space-around;
+    background: #FFF;
   }
 `;
 
@@ -294,7 +291,7 @@ const Terms = styled.p`
   font-family: Overpass, Regular;
   font-size: 0.9rem;
   margin: 0.9rem 0;
-  u{
+  u {
     color: #f00;
     margin: 0 0.2rem;
   }
@@ -318,30 +315,30 @@ const SubtitleTerms = styled.h3`
 `;
 
 class CreateUserScreen extends Component {
-  state = {
-  	togglePassword: false,
-  	modalSucess: false,
-  	user: {
-  		name: '',
-  		surname: '',
-  		cpf: '',
-  		email: '',
-  		telephone: '',
-  		password: '',
-  	},
-  	nameError: false,
-  	isErrorCpf: false,
-  	isErrorPassword: false,
-  	isEmpty: false,
-  	isTermsOpen: false,
-  };
+	state = {
+		togglePassword: false,
+		modalSucess: false,
+		user: {
+			name: '',
+			// surname: '',
+			cpf: '',
+			email: '',
+			telephone: '',
+			password: '',
+		},
+		nameError: false,
+		isErrorCpf: false,
+		isErrorPassword: false,
+		isEmpty: false,
+		isTermsOpen: false,
+	};
 
-  togglePassword = (ev) => {
-  	ev.preventDefault();
-  	this.setState({
-  		togglePassword: !this.state.togglePassword,
-  	});
-  };
+	togglePassword = (ev) => {
+		ev.preventDefault();
+		this.setState({
+			togglePassword: !this.state.togglePassword,
+		});
+	};
 
 	handleModalTerms = () => {
 		this.setState({
@@ -349,102 +346,102 @@ class CreateUserScreen extends Component {
 		});
 	};
 
-  handleModalSucess = () => {
-  	this.setState({
-  		modalSucess: !this.state.modalSucess,
-  	});
-  };
+	handleModalSucess = () => {
+		this.setState({
+			modalSucess: !this.state.modalSucess,
+		});
+	};
 
-  handleChange = (field, ev) => {
-  	const { user } = this.state;
-  	user[field] = ev.target.value;
-  	this.setState({ user });
-  };
+	handleChange = (field, ev) => {
+		const { user } = this.state;
+		user[field] = ev.target.value;
+		this.setState({ user });
+	};
 
 
- 	isValidCPF = () => {
-	 const { cpf } = this.state.user;
-	 let numbers; let digits; let sum; let i; let result;
-	 let digitsEqual;
- 		digitsEqual = 1;
- 		if (cpf.length < 11) return false;
- 		for (i = 0; i < cpf.length - 1; i++) {
- 			if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
- 				digitsEqual = 0;
- 				break;
- 			}
- 		}
- 		if (!digitsEqual) {
- 			numbers = cpf.substring(0, 9);
- 			digits = cpf.substring(9);
- 			sum = 0;
- 			for (i = 10; i > 1; i--) sum += numbers.charAt(10 - i) * i;
- 			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
- 			if (result !== digits.charAt(0)) return false;
- 			numbers = cpf.substring(0, 10);
- 			sum = 0;
- 			for (i = 11; i > 1; i--) sum += numbers.charAt(11 - i) * i;
- 			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
- 			if (result !== digits.charAt(1)) return false;
- 			return true;
- 		}
- 		return false;
- 	}
+	isValidCPF = () => {
+		const { cpf } = this.state.user;
+		let numbers; let digits; let sum; let i; let result;
+		let digitsEqual;
+		digitsEqual = 1;
+		if (cpf.length < 11) return false;
+		for (i = 0; i < cpf.length - 1; i++) {
+			if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
+				digitsEqual = 0;
+				break;
+			}
+		}
+		if (!digitsEqual) {
+			numbers = cpf.substring(0, 9);
+			digits = cpf.substring(9);
+			sum = 0;
+			for (i = 10; i > 1; i--) sum += numbers.charAt(10 - i) * i;
+			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+			if (result !== digits.charAt(0)) return false;
+			numbers = cpf.substring(0, 10);
+			sum = 0;
+			for (i = 11; i > 1; i--) sum += numbers.charAt(11 - i) * i;
+			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+			if (result !== digits.charAt(1)) return false;
+			return true;
+		}
+		return false;
+	}
 
-  handleSubmit = (ev) => {
-  	ev.preventDefault();
-  	this.handleErrors();
-  };
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		this.handleErrors();
+	};
 
-  handleErrors = () => {
-  	const { user } = this.state;
-  	const {
-  		name,
-  		surname,
-  		email,
-  		telephone,
-  		password,
-  		cpf,
-  	} = this.state.user;
-  	if (
-  		name === ''
-  	  || surname === ''
-  	  || email === ''
-  	  || telephone === ''
-  	  || password === ''
-  	) {
-  		this.setState({
-  			isEmpty: true,
-  		});
-  	} else {
-  		this.setState({
-  			isEmpty: false,
-  		});
-  	}
-  	if (cpf.length === 11) {
-  		this.setState({
-  			isErrorCpf: !this.isValidCPF(),
-  		});
-  	} else {
-  		this.setState({
-  			isErrorCpf: true,
-  		});
-  	}
-  	if (!password || password.length < 6) {
-  		this.setState({
-  			isErrorPassword: true,
-		  });
-  	} else {
-  		this.setState({
-  			isErrorPassword: false,
-  		});
-  	}
+	handleErrors = () => {
+		const { user } = this.state;
+		const {
+			name,
+			// surname,
+			email,
+			telephone,
+			password,
+			cpf,
+		} = this.state.user;
+		if (
+			name === ''
+			// || surname === ''
+			|| email === ''
+			|| telephone === ''
+			|| password === ''
+		) {
+			this.setState({
+				isEmpty: true,
+			});
+		} else {
+			this.setState({
+				isEmpty: false,
+			});
+		}
+		if (cpf.length === 11) {
+			this.setState({
+				isErrorCpf: !this.isValidCPF(),
+			});
+		} else {
+			this.setState({
+				isErrorCpf: true,
+			});
+		}
+		if (!password || password.length < 6) {
+			this.setState({
+				isErrorPassword: true,
+			});
+		} else {
+			this.setState({
+				isErrorPassword: false,
+			});
+		}
 
-	  if (password.length >= 6 && cpf.length === 11) {
-  		this.props.addNewUser(user);
-		  this.handleModalSucess();
-  	}
-  };
+		if (password.length >= 6 && cpf.length === 11) {
+			this.props.addNewUser(user);
+			this.handleModalSucess();
+		}
+	};
 
 	renderTerms = () => (
 		<Overlay>
@@ -480,12 +477,12 @@ class CreateUserScreen extends Component {
 	render() {
 		const errorMessage = [
 			'Use 6 caracteres ou mais para a sua senha.',
-  		'CPF inválido.',
-  	];
+			'CPF inválido.',
+		];
 
-  	const {
+		const {
 			isErrorPassword,
-  		modalSucess,
+			modalSucess,
 			isEmpty,
 			isErrorCpf,
 			togglePassword,
@@ -493,140 +490,140 @@ class CreateUserScreen extends Component {
 		} = this.state;
 		const {
 			name,
-			surname,
+			// surname,
 			cpf,
 			email,
 			telephone,
 			password,
 		} = this.state.user;
 
-  	return (
-  		<>
-  			{modalSucess === true ? (
-  				<Container>
-  					<CreateUserSucess handleModalSucess={this.handleModalSucess} />
-  				</Container>
-  			) : (
-  				<Container>
-  					<Form onSubmit={this.handleSubmit}>
-  						<ImageLogo
-  							margin="3rem 0 2rem 0"
+		return (
+			<>
+				{modalSucess === true ? (
+					<Container>
+						<CreateUserSucess handleModalSucess={this.handleModalSucess} />
+					</Container>
+				) : (
+					<Container>
+						<Form onSubmit={this.handleSubmit}>
+							<ImageLogo
+								margin="3rem 0 2rem 0"
 								marginMobile="15rem 0 2rem 0"
-  							width=" 150px"
-  						/>
-  						<BlockTitle>
-  							<TitleForm>criar conta</TitleForm>
-  						</BlockTitle>
-  						<Label>
-  							<ParagraphInput>nome</ParagraphInput>
-  							<Input
-  								type="text"
-  								onChange={ev => this.handleChange('name', ev)}
-  								value={name}
-  								placeholder="Nome"
-									name="nome"
+								width=" 150px"
+							/>
+							<BlockTitle>
+								<TitleForm>criar conta</TitleForm>
+							</BlockTitle>
+							<Label>
+								<ParagraphInput>Nome completo</ParagraphInput>
+								<Input
+									type="text"
+									onChange={ev => this.handleChange('name', ev)}
+									value={name}
+									placeholder="Nome completo"
+									name="nomeCompleto"
 									required
-  							/>
-  						</Label>
-  						<Label>
-  							<ParagraphInput>sobrenome</ParagraphInput>
-  							<Input
-  								type="text"
-  								onChange={ev => this.handleChange('surname', ev)}
-  								value={surname}
-  								placeholder="Sobrenome"
-									name="sobrenome"
-									required
-  							/>
-  						</Label>
-  						<Label>
-  							<ParagraphInput>cpf</ParagraphInput>
-  							<Input
-  								type="number"
+								/>
+							</Label>
+							{/* <Label>
+							<ParagraphInput>sobrenome</ParagraphInput>
+							<Input
+								type="text"
+								onChange={ev => this.handleChange('surname', ev)}
+								value={surname}
+								placeholder="Sobrenome"
+								name="sobrenome"
+								required
+							/>
+						</Label> */}
+							<Label>
+								<ParagraphInput>cpf</ParagraphInput>
+								<Input
+									type="number"
 									onChange={ev => this.handleChange('cpf', ev)}
 									value={cpf}
 									placeholder="000.000.000-00"
 									name="cpf"
 									isError={isErrorCpf}
 									required
-  							/>
-  							{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
-  						</Label>
-  						<Label>
-  							<ParagraphInput>e-mail</ParagraphInput>
-  							<Input
-  								type="email"
-  								onChange={ev => this.handleChange('email', ev)}
-  								value={email}
-  								name="email"
-									placeholder="nome@email.com"
-  								required
-  							/>
-  						</Label>
-  						<Label>
-  							<ParagraphInput>telefone</ParagraphInput>
+								/>
+								{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
+							</Label>
+							<Label>
+								<ParagraphInput>e-mail</ParagraphInput>
 								<Input
-  								type="tel"
+									type="email"
+									onChange={ev => this.handleChange('email', ev)}
+									value={email}
+									name="email"
+									placeholder="nome@email.com"
+									required
+								/>
+							</Label>
+							<Label>
+								<ParagraphInput>telefone</ParagraphInput>
+								<Input
+									type="tel"
 									onChange={ev => this.handleChange('telephone', ev)}
 									value={telephone}
 									placeholder="(00) 00000-0000"
 									name="telefone"
 									required
 								/>
-  						</Label>
-  						<Label>
-  							<ParagraphInput>senha</ParagraphInput>
-  							<Input
-  								className="input-password"
-  								type={
-  									togglePassword === true ? 'text' : 'password'
-  								}
-  								onChange={ev => this.handleChange('password', ev)}
-  								value={password}
-  								placeholder="Inserir senha"
+							</Label>
+							<Label>
+								<ParagraphInput>senha</ParagraphInput>
+								<Input
+									className="input-password"
+									type={
+										togglePassword === true ? 'text' : 'password'
+									}
+									onChange={ev => this.handleChange('password', ev)}
+									value={password}
+									placeholder="Inserir senha"
 									name="password"
 									isError={isErrorPassword}
 									required
-  							/>
-  							{togglePassword === true ? (
-  								<BlockSmallerInput>
-  									<ImagePassword
-  										src={VisibilityOff}
-  										onClick={this.togglePassword}
-  									/>
-  								</BlockSmallerInput>
-  							) : (
-  								<BlockSmallerInput>
-  									<ImagePassword
-  										src={VisibilityOn}
-  										onClick={this.togglePassword}
-  									/>
-  								</BlockSmallerInput>
-  							)}
-  							{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
+								/>
+								{togglePassword === true ? (
+									<BlockSmallerInput>
+										<ImagePassword
+											src={VisibilityOff}
+											onClick={this.togglePassword}
+										/>
+									</BlockSmallerInput>
+								) : (
+									<BlockSmallerInput>
+										<ImagePassword
+											src={VisibilityOn}
+											onClick={this.togglePassword}
+										/>
+									</BlockSmallerInput>
+								)}
+								{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
 							{isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
-  						<TextTerms>
-								Clique abaixo para concordar com os
-  							<strong onClick={this.handleModalTerms}>
-									Termos de Serviço
-  							</strong>
-								e registrar.
-  						</TextTerms>
-  						<Button
-  							margin="1rem 0 1.5rem 0"
-  							width="87%"
-  							widthMobile="100%"
-  							height="50px"
-  							text="concordar e criar conta"
-  							type="submit"
-  						/>
-  					</Form>
+							<TextTerms>
+							Clique abaixo para concordar com os
+								<strong onClick={this.handleModalTerms}>
+								Termos de Serviço
+								</strong>
+							e registrar.
+							</TextTerms>
+							<Button
+								margin="1rem 0 1.5rem 0"
+								width="87%"
+								widthMobile="100%"
+								height="50px"
+								text="concordar e criar conta"
+								type="submit"
+							/>
+						</Form>
 						{ isTermsOpen && this.renderTerms() }
-  				</Container>
-  			)}
-  		</>
-  	);
+					</Container>
+				)}
+			</>
+		);
 	}
 }
 
