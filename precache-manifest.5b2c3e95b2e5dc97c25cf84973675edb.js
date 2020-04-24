@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6805dda223f9df54494c2cc5136dca16",
+    "revision": "3750847cf927e0ddb6f3b3ab7a904b8d",
     "url": "/OSC-Legal/index.html"
   },
   {
-    "revision": "2ae43711406cdeb68674",
+    "revision": "ffdd13530824452e72c2",
     "url": "/OSC-Legal/static/css/main.c0180cdc.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/OSC-Legal/static/js/2.0cf4593d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2ae43711406cdeb68674",
-    "url": "/OSC-Legal/static/js/main.667ad9ba.chunk.js"
+    "revision": "ffdd13530824452e72c2",
+    "url": "/OSC-Legal/static/js/main.1e645bd4.chunk.js"
   },
   {
     "revision": "566b1579a03fae3d130a",
