@@ -329,7 +329,7 @@ class ModalOrganization extends Component {
 										<SubAnswer> - </SubAnswer>
 									</div>
 								</ContentSubTitle>
-								{/* <ContainerEdit>
+								<ContainerEdit>
 									<SpanContainer>
 										<ImageEdite src={ImageEdit}/>
 										<ContainerOption>Editar</ContainerOption>
@@ -338,7 +338,7 @@ class ModalOrganization extends Component {
 										<img src={ImageDelete}/>
 										<ContainerOption>Excluir</ContainerOption>
 									</SpanContainer>
-								</ContainerEdit> */}
+								</ContainerEdit>
 							</ContentConsultorDetails>
 						</Div>
 					</Span>

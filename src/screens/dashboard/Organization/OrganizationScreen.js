@@ -108,6 +108,11 @@ const InputSelect = styled.div`
 	z-index: 2;
 `;
 
+const TextSelect = styled.p`
+	color: ${props => (props.color === 'Selecionar status' ? '#959595' : '#85144B')};
+	font-family: Overpass, Regular;
+`;
+
 const Overlay = styled.div`
 	width: 100vw;
 	height: 100vh;
@@ -277,6 +282,13 @@ const ContainerStatus = styled.div`
 	align-items: center;
 `;
 
+const SelectedImgs = styled.p`
+	color: ${props => (props.color)};
+	font-size: 0.8rem;
+	font-family: Overpass, Light;
+	text-transform: uppercase;
+`;
+
 const ImageStatus = styled.img`
 	width: 1.3rem;
 	cursor: pointer;
@@ -444,6 +456,22 @@ class OrganizationScreen extends Component {
 	// 	}
 	// }
 
+	chooseColor = (item) => {
+		console.log( 'item ---------------------', item);
+		switch (item) {
+		case 'Autorizar':
+			return '#231F20';
+		case 'Pago':
+			return '#85144B';
+		case 'Isento':
+			return '#85144B';
+		case 'Prorrogar Prazo':
+			return 'black';
+		default:
+			return 'purple';
+		}
+	}
+
 	renderSelected = () => (
 		<ContainerSelected>
 			<Title>Gerenciar organizações</Title>
@@ -451,13 +479,13 @@ class OrganizationScreen extends Component {
 				<Label>Visualizar por:</Label>
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
-						<p>{this.state.selectedValue}</p>
+						<TextSelect color={this.state.selectedValue}>{this.state.selectedValue}</TextSelect>
 						<img src={ImageCaminho} />
 					</InputSelect>
 					{this.state.isSelected && (
 						<InputSelectedItem >
 							{this.state.selectedItems.map((item, index) => (
-								<SelectedItem onClick={() => this.handleSelectedValue(item)} key={index} hover={item}>{item}</SelectedItem>
+								<SelectedItem onClick={() => this.handleSelectedValue(item)} key={index} hover>{item}</SelectedItem>
 							))}
 						</InputSelectedItem>
 					)}
@@ -561,7 +589,7 @@ class OrganizationScreen extends Component {
 																onClick={() => this.handleSelectedStatus(item)}
 															/>
 														))
-														: <p>{this.state.selectedStatusImgs.desc}</p>}
+														: <SelectedImgs color={this.chooseColor(this.state.selectedStatusImgs.desc)}>{this.state.selectedStatusImgs.desc}</SelectedImgs>}
 												</ContainerStatus>
 											</>
 										}
