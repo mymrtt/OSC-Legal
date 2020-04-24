@@ -17,7 +17,7 @@ const Container = styled.div`
   justify-content: space-between;
 	padding: 0 3rem;
   text-transform: uppercase;
-	border-bottom: 2px solid  #707070;
+	border-bottom: 1px solid  #707070;
 	opacity: 1;
 
 	@media (max-width: 890px) {
@@ -54,7 +54,7 @@ const WrapButton = styled.div`
 `;
 
 const Border = styled.span`
-	height: 5.2rem;
+	height: 5.3rem;
 	margin-right: 3rem;
 	border-bottom: ${props => (props.border && '5px solid #231F20' )};
 	cursor: pointer;

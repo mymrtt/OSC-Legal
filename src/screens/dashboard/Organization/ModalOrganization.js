@@ -5,9 +5,15 @@ import styled from 'styled-components';
 
 // Components
 import ImageClose from '../../../assets/fechar.svg';
-import ImageEdit from '../../../assets/edit.svg';
-import ImageDelete from '../../../assets/delete.svg';
+// import ImageEdit from '../../../assets/edit.svg';
+// import ImageDelete from '../../../assets/delete.svg';
 import ImageSeta from '../../../assets/setaLado.svg';
+
+// Image
+import authorizationIcon from '../../../assets/authorization.svg';
+import payIcon from '../../../assets/pay.svg';
+import freeIcon from '../../../assets/free.svg';
+import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const Overlay = styled.div`
 	max-height: 100vh;
@@ -94,12 +100,13 @@ const ContentConsultorItem = styled.div`
 
 const ContentConsultorDetails = styled.div`
 	display: flex;
+	margin-left
 	flex-direction: row;
+	/* justify-content: space-around; */
 `;
 
 const Title = styled.h2`
 	color: #231F20;
-	/* display: flex; */
 	font-size: 1.25rem;
 	font-family: Overpass, ExtraBold;
 	padding-top: 2rem;
@@ -155,10 +162,11 @@ const ContentConsultor = styled.span`
 	}
 `;
 
-const ImageEdite = styled.img`
-	display: flex;
-  flex-direction: row;
-`;
+// const ImageEdite = styled.img`
+// 	display: flex;
+//   flex-direction: row;
+// 	padding-bottom: 1rem;
+// `;
 
 const ContentSubTitle = styled.div`
 	/* width: 60%; */
@@ -188,28 +196,26 @@ const Div = styled.div`
 	}
 `;
 
-const ContainerEdit = styled.div`
-	display: flex;
-	flex-direction: column;
+// const ContainerEdit = styled.div`
+// 	display: flex;
+// 	flex-direction: column;
 
-	@media (max-width: 648px) {
-		display: none;
-	}
-`;
+// 	@media (max-width: 648px) {
+// 		display: none;
+// 	}
+// `;
 
-const SpanContainer = styled.span`
-	display: flex;
-	flex-direction: row;
-`;
+// const SpanContainer = styled.span`
+// 	display: flex;
+// 	flex-direction: row;
+// `;
 
-const ContainerOption = styled.p`
-	color: #85144B;
-	font-family: Overpass, Regular;
-	font-size: 1.4rem;
-	display: flex;
-  align-items: center;
-	margin-left: 0.3rem;
-`;
+// const ContainerOption = styled.p`
+// 	color: #85144B;
+// 	font-family: Overpass, Regular;
+// 	font-size: 1.2rem;
+// 	margin-left: 0.3rem;
+// `;
 
 const SubTitle = styled.p`
   color: #85144B;
@@ -219,7 +225,7 @@ const SubTitle = styled.p`
   text-transform: uppercase;
 
 	@media (max-width: 648px) {
-		/* font-size: 1.2rem; */
+		/* font-size: 0.625rem; */
 	}
 `;
 
@@ -262,25 +268,80 @@ const Parte2 = styled.span`
 	}
 `;
 
-const ContainerEditImage = styled.div`
-	display: none;
+// const ContainerEditImage = styled.div`
+// 	display: none;
 
-	@media (max-width: 648px) {
-		height: 7vh;
-		display: flex;
-		justify-content: center;
-		justify-content: space-evenly;
-		background-color: #FFFFFF;
-	}
+// 	@media (max-width: 648px) {
+//     width: 100%;
+// 		height: 7vh;
+// 		display: flex;
+// 		justify-content: center;
+// 		justify-content: space-evenly;
+// 		background-color: #FFFFFF;
+// 		bottom: 0;
+//    align-items: center;
+//    position: fixed;
+// 	}
+// `;
+
+// const SpanContainerImage = styled.div`
+// 	  display: flex;
+//    flex-direction: row;
+// `;
+
+const ContainerPaymentMethod = styled.div`
+	display: flex;
+	flex-direction: row;
+	/* padding-left: 0.7rem; */
 `;
 
-const SpanContainerImage = styled.div`
-	  display: flex;
-    flex-direction: row;
+const ContainerSelected = styled.div`
+		display: none;
+
+		@media (max-width: 648px) {
+			width: 100%;
+			height: 7vh;
+			display: flex;
+			justify-content: center;
+			justify-content: space-evenly;
+			background-color: #FFFFFF;
+			bottom: 0;
+			align-items: center;
+			position: fixed;
+ 	}
+`;
+
+const PaymentMethodText = styled.p`
+	color: ${props => (props.color)};
+	padding-left: 0.3rem;
 `;
 
 
 class ModalOrganization extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			paymentMethodList: [
+				{
+					img: authorizationIcon,
+					desc: 'Autorizar',
+				},
+				{
+					img: payIcon,
+					desc: 'Pago',
+				},
+				{
+					img: freeIcon,
+					desc: 'Isento',
+				},
+				{
+					img: extendDeadlineIcon,
+					desc: 'Prorrogar',
+				},
+			],
+		};
+	}
+
 	render() {
 		return (
 			<Overlay>
@@ -310,9 +371,9 @@ class ModalOrganization extends Component {
 							</ContentConsultorItem>
 						</ContentConsultor>
 						<Div>
-							<Image src={ImageClose} onClick={this.props.handleCloseModal}/>
+							<Image src={ImageClose} onClick={this.props.handleCloseModal} />
 							<div>
-								<ImageS src={ImageSeta}/>
+								<ImageS src={ImageSeta} onClick={this.props.handleCloseModal} />
 							</div>
 							<ContentConsultorDetails>
 								<ContentSubTitle>
@@ -329,7 +390,7 @@ class ModalOrganization extends Component {
 										<SubAnswer> - </SubAnswer>
 									</div>
 								</ContentSubTitle>
-								<ContainerEdit>
+								{/* <ContainerEdit>
 									<SpanContainer>
 										<ImageEdite src={ImageEdit}/>
 										<ContainerOption>Editar</ContainerOption>
@@ -338,7 +399,7 @@ class ModalOrganization extends Component {
 										<img src={ImageDelete}/>
 										<ContainerOption>Excluir</ContainerOption>
 									</SpanContainer>
-								</ContainerEdit>
+								</ContainerEdit> */}
 							</ContentConsultorDetails>
 						</Div>
 					</Span>
@@ -401,16 +462,23 @@ class ModalOrganization extends Component {
 							</SeparationMobile>
 						</SpanOrganization>
 					</Parte2>
-					<ContainerEditImage>
+					{/* <ContainerEditImage>
 						<SpanContainerImage>
-							<ImageEdite src={ImageEdit}/>
+							<img src={ImageEdit}/>
 							<ContainerOption>Editar</ContainerOption>
 						</SpanContainerImage>
 						<SpanContainerImage>
 							<img src={ImageDelete}/>
 							<ContainerOption>Excluir</ContainerOption>
 						</SpanContainerImage>
-					</ContainerEditImage>
+					</ContainerEditImage> */}
+					<ContainerSelected>
+						{this.state.paymentMethodList.map(item =>
+						<ContainerPaymentMethod>
+							<img src={item.img}></img>
+							<PaymentMethodText>{item.desc}</PaymentMethodText>
+						</ContainerPaymentMethod>)}
+					</ContainerSelected>
 				</Container>
 			</Overlay>
 		);
