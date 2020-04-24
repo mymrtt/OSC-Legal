@@ -235,7 +235,7 @@ const TitleTerms = styled.h1`
   text-transform: uppercase;
 
   @media (max-width: 648px) {
-    margin: 3rem 0 0.5rem 0;
+    margin: 3rem 0 1rem 0;
     font-size: 1.5rem;
     align-self: center;
   }
@@ -279,9 +279,10 @@ const BlockTerms = styled.div`
   justify-content: space-evenly;
 
   @media(max-width: 648px){
-    background: #FFF;
+		padding-bottom: 3rem;
     height: 100%;
     justify-content: space-around;
+    background: #FFF;
   }
 `;
 
@@ -290,7 +291,7 @@ const Terms = styled.p`
   font-family: Overpass, Regular;
   font-size: 0.9rem;
   margin: 0.9rem 0;
-  u{
+  u {
     color: #f00;
     margin: 0 0.2rem;
   }
