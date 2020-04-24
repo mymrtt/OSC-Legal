@@ -19,7 +19,7 @@ const Container = styled.div`
   background-color: #FFCFCD;
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
   margin: 0;
 
   @media (max-width: 648px) {
@@ -39,7 +39,7 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
 
-  
+
 	@media (max-width: 1030px) {
     width: 50%
 	}
@@ -76,7 +76,7 @@ const Code = styled.p`
   }
 `;
 
-const ContainerParagraph = styled.span` 
+const ContainerParagraph = styled.span`
   width: 85%;
   color: #231F20;
   text-align: center;
@@ -95,46 +95,43 @@ const Paragraph = styled.span`
 `;
 
 class ResetPasswordCode extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			redirect: undefined,
-		};
+	state = {
+		redirect: undefined,
+	};
+
+	handleRedirect = () => {
+		this.setState({
+			redirect: true,
+		});
 	}
 
-  handleRedirect = () => {
-  	this.setState({
-  		redirect: true,
-  	});
-  }
-
-  render() {
-  	return (
-  		<Container>
-  			<ImageLogo margin='3rem 0 2.5rem 0'/>
-  			<Content>
-  				<Title>Aqui está o seu código de redefinição de senha:</Title>
-  				<Code>210704</Code>
-  				<ContainerParagraph>
-  					<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: { }
-  						{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com. '} { }
-            Se você não realizou essa solicitação,
-            pode acessar sua conta normalmente.
-  					</Paragraph>
-  				</ContainerParagraph>
-  				<Button
-  					width='75%'
-  					widthMobile='100%'
-  					marginMobile='3rem 0 2rem 0'
-  					text="redefinir senha"
-  					type="button"
-  					onClick={this.handleRedirect}
-  				/>
-  			</Content>
-  			{this.state.redirect && <Redirect to={'/newpassword'}/>}
-  		</Container>
-  	);
-  }
+	render() {
+		return (
+			<Container>
+				<ImageLogo margin='3rem 0 2.5rem 0'/>
+				<Content>
+					<Title>Aqui está o seu código de redefinição de senha:</Title>
+					<Code>210704</Code>
+					<ContainerParagraph>
+						<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: { }
+							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com. '} { }
+							Se você não realizou essa solicitação,
+							pode acessar sua conta normalmente.
+						</Paragraph>
+					</ContainerParagraph>
+					<Button
+						width='75%'
+						widthMobile='100%'
+						marginMobile='3rem 0 2rem 0'
+						text="redefinir senha"
+						type="button"
+						onClick={this.handleRedirect}
+					/>
+				</Content>
+				{this.state.redirect && <Redirect to={'/newpassword'}/>}
+			</Container>
+		);
+	}
 }
 
 export default connect(mapStateToProps)(ResetPasswordCode);

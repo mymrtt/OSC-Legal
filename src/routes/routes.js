@@ -23,7 +23,6 @@ const Routes = () => (
 	<BrowserRouter>
 		<Switch>
 			<Route exact path='/' component={Login} />
-			<Route path='/login' component={Login} />
 			<Route exact path='/OSC-Legal' component={Login} />
 
 			<Route path='/resetcode' component={ResetPasswordCode} />

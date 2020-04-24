@@ -233,7 +233,7 @@ const TableList = styled.td`
 	}
 `;
 
-const ContainerStatus = styled.div`
+const ContainerStatus = styled.td`
 	padding: 0.5rem;
 	display: flex;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
@@ -430,8 +430,8 @@ class OrganizationScreen extends Component {
 				<TitleViewBy>Visualizar por:</TitleViewBy>
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
-						<SelectedViewByText color={this.state.selectedValue}>{this.state.selectedValue}</SelectedViewByText>
-						<img src={ImageCaminho} />
+						<SelectedViewByText>{this.state.selectedValue}</SelectedViewByText>
+						<img src={ImageCaminho} alt="arrow" />
 					</InputSelect>
 					{this.state.isSelected && (
 						<InputSelectedItem>
@@ -485,47 +485,32 @@ class OrganizationScreen extends Component {
 										<TableList mob onClick={this.isModalOpen}>{item.cpf}</TableList>
 										<TableList mob onClick={this.isModalOpen}>{item.user}</TableList>
 										{widthMob
-											? <ContainerTableTitleMob onClick={this.isModalOpen}>
+											? <> <ContainerTableTitleMob onClick={this.isModalOpen}>
 												<TableTitleMob>E-mail</TableTitleMob>
 												<TableList>{item.email}</TableList>
 											</ContainerTableTitleMob>
-											: <>
-												<TableList onClick={this.isModalOpen}>{item.email}</TableList>
-											</>
-										}
-										{widthMob
-											? <ContainerTableTitleMob onClick={this.isModalOpen}>
+											<ContainerTableTitleMob onClick={this.isModalOpen}>
 												<TableTitleMob>Telefone</TableTitleMob>
 												<TableList>{item.telephone}</TableList>
 											</ContainerTableTitleMob>
-											: <>
-												<TableList onClick={this.isModalOpen}>{item.telephone}</TableList>
-											</>
-										}
-										{widthMob
-											? <ContainerTableTitleMob>
+											<ContainerTableTitleMob>
 												<TableTitleMob>Criado em</TableTitleMob>
 												<TableList>{item.createdIn}</TableList>
 											</ContainerTableTitleMob>
-											: <>
-												<TableList>{item.createdIn}</TableList>
-											</>
-										}
-										{widthMob
-											? <ContainerTableTitleMob>
+											<ContainerTableTitleMob>
 												<TableTitleMob>Autorização</TableTitleMob>
 												<TableList>{item.authorization}</TableList>
 											</ContainerTableTitleMob>
-											: <>
-												<TableList>{item.authorization}</TableList>
-											</>
-										}
-										{widthMob
-											? <ContainerTableTitleMob>
+											<ContainerTableTitleMob>
 												<TableTitleMob>Vencimento</TableTitleMob>
 												<TableList>{item.dueDate}</TableList>
 											</ContainerTableTitleMob>
+											</>
 											: <>
+												<TableList onClick={this.isModalOpen}>{item.email}</TableList>
+												<TableList onClick={this.isModalOpen}>{item.telephone}</TableList>
+												<TableList>{item.createdIn}</TableList>
+												<TableList>{item.authorization}</TableList>
 												<TableList>{item.dueDate}</TableList>
 											</>
 										}
