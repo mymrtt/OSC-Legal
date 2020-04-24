@@ -107,8 +107,9 @@ const InputSelect = styled.div`
 
 const SelectedViewByText = styled.p`
 	width: 100%;
-	text-align: center;
-	color: #85144B;
+	padding-left: 0.3rem;
+	/* text-align: center; */
+	color: ${props => (props.color === 'Selecionar status' ? '#959595' : '#85144B')};
 `;
 
 const Overlay = styled.div`
@@ -181,7 +182,7 @@ const Tr = styled.tr`
 
 	@media(max-width: 768px) {
 		margin-bottom: 1rem;
-		padding: 1rem 1rem 10rem 1rem;
+		padding: 1rem 1rem 13rem 1rem;
 		display: flex;
     flex-wrap: wrap;
 	}
@@ -204,7 +205,7 @@ const ContainerTableTitleMob = styled.span`
 
 	@media (max-width: 768px) {
 		padding-right: 1rem;
-		padding-bottom: 1rem;
+		padding-bottom: 0.7rem;
 		display: flex;
 		flex-direction: column;
 	}
@@ -243,8 +244,16 @@ const ContainerStatus = styled.td`
 	}
 `;
 
+const SelectedImgs = styled.p`
+	color: ${props => (props.color)};
+	font-size: 0.8rem;
+	font-family: Overpass, Light;
+	text-transform: uppercase;
+`;
+
 const ImageStatus = styled.img`
 	width: 1.3rem;
+  padding-right: 0.3rem;
 	cursor: pointer;
 
 	@media(max-width: 1024px) {
@@ -256,7 +265,7 @@ class OrganizationScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isModal: undefined,
+			isModal: true,
 			isSelected: undefined,
 			selectedValue: 'Selecionar status',
 			selectedItems: [
@@ -281,6 +290,7 @@ class OrganizationScreen extends Component {
 			],
 			tableDatas: [
 				{
+					id: 1,
 					organization: 'Instituto PrecisaSer',
 					cpf: '00.000.000/0000-00',
 					user: 'Jorge Amado da Silva',
@@ -292,6 +302,7 @@ class OrganizationScreen extends Component {
 					status: 'PENDENTE',
 				},
 				{
+					id: 2,
 					organization: 'Vai na Web',
 					cpf: '00.000.000/0000-00',
 					user: 'Yasmin Miranda',
@@ -303,6 +314,7 @@ class OrganizationScreen extends Component {
 					status: 'PAGO',
 				},
 				{
+					id: 3,
 					organization: 'Casa de Rui Barbosa',
 					cpf: '00.000.000/0000-00',
 					user: 'Alice Barbosa Souza',
@@ -314,6 +326,7 @@ class OrganizationScreen extends Component {
 					status: 'PENDENTE',
 				},
 				{
+					id: 4,
 					organization: 'Biblioteca da Maré',
 					cpf: '00.000.000/0000-00',
 					user: 'Vinicius Almeida Rodrigues',
@@ -325,6 +338,7 @@ class OrganizationScreen extends Component {
 					status: 'ISENTO',
 				},
 				{
+					id: 5,
 					organization: 'Museu de Arte ZO',
 					cpf: '00.000.000/0000-00',
 					user: 'Tarcila do Amaral Gonçalves',
@@ -355,6 +369,7 @@ class OrganizationScreen extends Component {
 				},
 			],
 			selectedStatusImgs: undefined,
+			selectedStatusOrg: undefined,
 		};
 	}
 
@@ -385,10 +400,27 @@ class OrganizationScreen extends Component {
 		});
 	};
 
-	handleSelectedStatus = (item) => {
+	handleSelectedStatus = (status, item) => {
 		this.setState({
-			selectedStatusImgs: item,
+			selectedStatusImgs: status,
+			selectedStatusOrg: item.id,
+
 		});
+	}
+
+	chooseColor = (item) => {
+		switch (item) {
+		case 'Autorizar':
+			return '#231F20';
+		case 'Pago':
+			return '#85144B';
+		case 'Isento':
+			return '#FF4136';
+		case 'Prorrogar Prazo':
+			return '#231F20';
+		default:
+			return '#959595';
+		}
 	}
 
 	renderSelectedViewby = () => (
@@ -404,7 +436,7 @@ class OrganizationScreen extends Component {
 					{this.state.isSelected && (
 						<InputSelectedItem>
 							{this.state.selectedItems.map((item, index) => (
-								<SelectedItem
+								<SelectedItem color
 									onClick={() => this.handleSelectedValue(item)}
 									key={index}
 									hover={item}
@@ -487,12 +519,12 @@ class OrganizationScreen extends Component {
 												<TableTitleMob>Status</TableTitleMob>
 												<ContainerStatus desc={this.state.selectedStatusImgs}>
 													{ this.state.selectedStatusImgs === undefined
-														? this.state.statusImgs.map((item, index) => (
+														? this.state.statusImgs.map((status, index) => (
 															<ImageStatus
 																key={index}
-																src={item.img}
-																alt={item.desc}
-																onClick={() => this.handleSelectedStatus(item)}
+																src={status.img}
+																alt={status.desc}
+																onClick={() => this.handleSelectedStatus(status)}
 															/>
 														))
 														: <p>{this.state.selectedStatusImgs.desc}</p>}
@@ -500,16 +532,16 @@ class OrganizationScreen extends Component {
 											</ContainerTableTitleMob>
 											: <>
 												<ContainerStatus desc={this.state.selectedStatusImgs}>
-													{ this.state.selectedStatusImgs === undefined
-														? this.state.statusImgs.map((item, index) => (
+													{ this.state.selectedStatusOrg === item.id
+														? <SelectedImgs color={this.chooseColor(this.state.selectedStatusImgs.desc)}>{this.state.selectedStatusImgs.desc}</SelectedImgs>
+														:														this.state.statusImgs.map((status, index) => (
 															<ImageStatus
 																key={index}
-																src={item.img}
-																alt={item.desc}
-																onClick={() => this.handleSelectedStatus(item)}
+																src={status.img}
+																alt={status.desc}
+																onClick={() => this.handleSelectedStatus(status, item)}
 															/>
-														))
-														: <p>{this.state.selectedStatusImgs.desc}</p>}
+														))}
 												</ContainerStatus>
 											</>
 										}
