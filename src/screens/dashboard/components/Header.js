@@ -1,9 +1,17 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
+
+// Redux
+const mapStateToProps = state => ({
+	email: state.onboarding.users.email,
+	password: state.onboarding.users.password,
+	name: state.onboarding.users.name,
+});
 
 const Container = styled.div`
   width: 100%;
@@ -56,7 +64,7 @@ const WrapButton = styled.div`
 const Border = styled.span`
 	height: 5.2rem;
 	margin-right: 3rem;
-	border-bottom: ${props => (props.border && '5px solid #231F20' )};
+	border-bottom: ${props => (props.border && '6px solid #231F20')};
 	cursor: pointer;
 
 	@media (max-width: 859px) {
@@ -137,12 +145,10 @@ const ParagraphSair = styled.p`
 `;
 
 class Header extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			redirect: 'organization',
-		};
-	}
+	state = {
+		redirect: 'organization',
+	};
+
 
 	handleChangeClick = (item) => {
 		this.setState({
@@ -152,11 +158,11 @@ class Header extends Component {
 	};
 
 	renderButtons = item => (
-		<Border border={this.state.redirect === item}>
-			<ParagraphContainer
-				onClick={() => this.handleChangeClick(item)}
-				bold={this.state.redirect === item}
-			>
+		<Border
+			border={this.state.redirect === item}
+			onClick={() => this.handleChangeClick(item)}
+		>
+			<ParagraphContainer bold={this.state.redirect === item}>
 				{item === 'documentos' ? item : 'organizações'}
 			</ParagraphContainer>
 		</Border>
@@ -171,7 +177,10 @@ class Header extends Component {
 					{this.renderButtons('documentos')}
 				</WrapButton>
 				<ContainerAdm>
-					<ParagraphContainer1>administrador</ParagraphContainer1>
+					<ParagraphContainer1>
+						{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+						&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
+					</ParagraphContainer1>
 					<ParagraphSair>sair</ParagraphSair>
 				</ContainerAdm>
 			</Container>
@@ -179,4 +188,5 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+// export default Header;
+export default connect(mapStateToProps)(Header);

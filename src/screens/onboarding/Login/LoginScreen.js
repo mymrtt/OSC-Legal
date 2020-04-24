@@ -158,10 +158,6 @@ const Error = styled.h4`
   @media (max-width: 490px) {
 		width: 95%;
 	}
-
-  /* @media (max-width: 465px) {
-		width: 94%;
-	}	 */
 `;
 
 
