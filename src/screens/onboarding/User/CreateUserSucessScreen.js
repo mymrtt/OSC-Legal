@@ -8,20 +8,21 @@ import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 
 // Images
-import Sucess from '../../../assets/sucess.svg';
+import sucessImage from '../../../assets/sucess.svg';
 
 const mapStateToProps = state => ({
-	signup: state.signup,
+	onboarding: state.onboarding,
 });
 
 const Modal = styled.div`
   width: 35vw;
   height: 65vh;
+  background: #fff;
+	border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  background: #fff;
   padding: 0 0.5rem;
 
   @media (max-width: 768px) {
@@ -34,56 +35,58 @@ const Modal = styled.div`
     padding: 0.5rem;
   }
 
-
   a{
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-decoration: none;
-    }
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-decoration: none;
+	}
 `;
 
 const TitleTerms = styled.h1`
-    font-family: Overpass, ExtraBold;
-    font-size: 1.25rem;
-    
-    @media(max-width: 648px){
-      font-size: 1.3rem;
-      text-align: center;
-    }
+	font-family: Overpass, ExtraBold;
+	font-size: 1.25rem;
+	
+	@media(max-width: 648px){
+		font-size: 1.3rem;
+		text-align: center;
+	}
+`;
+
+const SucessImage = styled.img`
+	width: 9rem;
 `;
 
 const TextTerms = styled.p`
-    font-family: Overpass;
-    width: 80%;
-    font-size: 1rem;
+	font-family: Overpass;
+	width: 80%;
+	font-size: 1rem;
 
-    @media(max-width: 648px){
-      font-size: 1rem;
-      line-height: 1.5rem; 
-    }
+	@media(max-width: 648px){
+		font-size: 1rem;
+		line-height: 1.5rem; 
+	}
 `;
 
 const TextTermsBold = styled.strong`
-    margin-left: 0.5rem;
-    text-decoration: underline;
-    cursor: pointer;
-
+	margin-left: 0.5rem;
+	text-decoration: underline;
+	cursor: pointer;
 `;
 
-const FisicalPersonSucess = props => (
+const CreateUserSucessScreen = props => (
 	<Modal>
 		<TitleTerms>Cadastro concluído!</TitleTerms>
-		<img src={Sucess} alt="Sucess" />
+		<SucessImage src={sucessImage} alt="sucess image" />
 		<TextTerms>
       Enviamos um e-mail de confirmação para
-			<TextTermsBold>{props.signup.users.email}</TextTermsBold>. Verifique sua caixa de entrada para
+			<TextTermsBold>{props.onboarding.users.email ? props.onboarding.users.email : 'nome@email.com'}</TextTermsBold>. Verifique sua caixa de entrada para
       prosseguir.
 		</TextTerms>
 		<TextTerms>
       Caso não tenha recebido a confirmação, clique em
-			<TextTermsBold>Reenviar email.</TextTermsBold>
+			<TextTermsBold>Reenviar e-mail.</TextTermsBold>
 		</TextTerms>
 		<Link to="/">
 			<Button
@@ -95,4 +98,4 @@ const FisicalPersonSucess = props => (
 		</Link>
 	</Modal>
 );
-export default connect(mapStateToProps)(FisicalPersonSucess);
+export default connect(mapStateToProps)(CreateUserSucessScreen);

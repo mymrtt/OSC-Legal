@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
+// Libs
+import React from 'react';
+import styled from 'styled-components';
 
-export default class Index extends Component {
-  render() {
-    return (
-      <div>
-        <p>Essa tela está ligada como uma rota privada.</p>
-      </div>
-    );
-  }
-}
+// Components
+import OrganizationScreen from './Organization/OrganizationScreen';
+
+const Container = styled.div`
+	width: 100%;
+`;
+
+const Index = () => (
+	<Container>
+		<OrganizationScreen/>
+	</Container>
+);
+
+export default Index;

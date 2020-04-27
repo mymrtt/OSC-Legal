@@ -1,5 +1,5 @@
 // Libs
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -14,11 +14,13 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 
 // Redux
 const mapStateToProps = state => ({
-	email: state.signup.users.email,
-	password: state.signup.users.password,
+	email: state.onboarding.users.email,
+	password: state.onboarding.users.password,
+	isResetPassword: state.onboarding.isResetPassword,
+	emailReset: state.onboarding.emailReset,
 });
 
-export const ContainerForm = styled.div`
+const ContainerForm = styled.div`
   height: 100vh;
   background-color: #FFCFCD;
   display: flex;
@@ -28,7 +30,6 @@ export const ContainerForm = styled.div`
 
   @media (max-width: 648px) {
 		background-color: #fff;
-		
 	}
 
 	@media (max-width: 550px) {
@@ -36,7 +37,7 @@ export const ContainerForm = styled.div`
 	}
 `;
 
-export const Form = styled.form`
+const Form = styled.form`
   width: 32%;
   background-color: #fff;
 	border-radius: 5px;
@@ -44,24 +45,38 @@ export const Form = styled.form`
   align-items: center;
   flex-direction: column;
 
-	/* @media (max-width: 1440px) {
-		width: 34%;
-	} */
-
 	@media (max-width: 1200px) {
 		min-width: 40%;
 	}
 
 	@media (max-width: 982px) {
 		width: 53%;
-	} 
+	}
 
   @media (max-width: 648px) {
 		width: 100%;
 	}
 `;
 
-export const InputBox = styled.span`
+const Title = styled.p`
+	width: 70%;
+	color: #231F20;
+	font-size: 1rem;
+	font-family: Overpass,Regular;
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: center;
+
+	@media (max-width: 648px) {
+		width: 80%;
+	}
+
+	@media (max-width: 490px) {
+		width: 95%;
+	}
+`;
+
+const InputBox = styled.span`
 	width: 70%;
 	display: flex;
 	flex-direction: column;
@@ -76,7 +91,7 @@ export const InputBox = styled.span`
 	}
 `;
 
-export const ImagePassword = styled.img`
+const ImagePassword = styled.img`
   position: absolute;
   bottom: ${props => (props.off ? '1.2rem' : '0.875rem')};
   right: 0.7rem;
@@ -87,7 +102,7 @@ export const ImagePassword = styled.img`
 	}
 `;
 
-export const Label = styled.label`
+const Label = styled.label`
   color: #85144b;
   font-size: 0.75rem;
   font-family: Overpass;
@@ -95,6 +110,7 @@ export const Label = styled.label`
   margin-top: 0.6rem;
   margin-bottom: 0.3rem;
 	padding-left: 0.8rem;
+	text-transform: uppercase;
 
 	@media (max-width: 648px) {
 		margin-top: 1rem;
@@ -102,14 +118,13 @@ export const Label = styled.label`
 	}
 `;
 
-export const Span = styled.span` 
+const Span = styled.span`
   width: 70%;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
   margin: 1rem 0 3rem;
-
 
 	@media (max-width: 648px) {
 		width: 80%;
@@ -121,38 +136,37 @@ export const Span = styled.span`
 	}
 `;
 
-export const ButtonText = styled(Link)`
+const ButtonText = styled(Link)`
   color: #85144B;
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
   text-decoration: none;
 	text-transform: uppercase;
 `;
 
-export const Error = styled.h4`
-  width: 63%;
-  color: #D63434; 
+const Error = styled.h4`
+  width: 70%;
+  color: #D63434;
 	display: flex;
   justify-content: flex-end;
   font-size: 0.6rem;
-  font-family: Eurostile, Medium;
+	font-family: Overpass, Regular;
 
-  @media (max-width: 499px) {
-		width: 85%;
-	}	
+	@media (max-width: 648px) {
+		width: 80%;
+	}
 
-
-  @media (max-width: 465px) {
-		width: 83%;
-	}	
+  @media (max-width: 490px) {
+		width: 95%;
+	}
 `;
 
 
-class LoginScreen extends React.Component {
+class LoginScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			value: '',
-			email: this.props.email || '',
+			email: '',
 			password: '',
 			passwordError: '',
 			error: undefined,
@@ -163,34 +177,26 @@ class LoginScreen extends React.Component {
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 
-		this.handleError();
-
-		this.setState({ redirect: '/dashboard' });
-
+		if (!this.handleError()) {
+			this.setState({ redirect: '/dashboard' });
+		}
 	}
 
 	handleError = () => {
 		const { email, password } = this.state;
 		const registeredEmail = this.props.email;
 		const registeredPassword = this.props.password;
+		let error = false;
 
-		if (email !== registeredEmail) {
-			this.setState({
-				error: true,
-			});
+		if (email !== registeredEmail || password.length < 6 || password !== registeredPassword) {
+			error = true;
 		}
 
-		if (password.length < 6) {
-			this.setState({
-				error: true,
-			});
-		}
+		this.setState({
+			error,
+		});
 
-		if (password != registeredPassword) {
-			this.setState({
-				error: true,
-			});
-		}
+		return error;
 	}
 
 	handleChangeEmail = (ev) => {
@@ -214,58 +220,65 @@ class LoginScreen extends React.Component {
 	}
 
 	render() {
+		const {
+			email, type, error, password, redirect,
+		} = this.state;
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo margin='3rem 0 6rem' />
+					<ImageLogo margin={this.props.isResetPassword ? '3rem 0 3rem' : '3rem 0 6rem'} />
+					{this.props.isResetPassword
+						&& <Title>A senha ({this.props.emailReset ? this.props.emailReset : 'nome@email.com'})
+					foi redefinida, faça login para acessar a sua dashboard.
+						</Title>
+					}
 					<InputBox>
-						<Label>EMAIL</Label>
+						<Label>e-mail</Label>
 						<Input
 							login
 							type="email"
-							value={this.state.email}
+							value={email}
 							onChange={this.handleChangeEmail}
-							placeholder="name@email.com"
+							placeholder="nome@email.com"
 							required
 						/>
 					</InputBox>
 					<InputBox>
-						<Label>SENHA</Label>
+						<Label>senha</Label>
 						<Input
 							login
-							type={this.state.type}
-							value={this.state.password}
+							type={type}
+							value={password}
 							onChange={this.handleChangePassword}
 							placeholder="Inserir senha"
-							isError={this.state.error}
+							isError={error}
 							required
 						/>
 						<span>
 							<ImagePassword
-								src={this.state.type === 'password' ? VisibilityOn : VisibilityOff}
+								src={type === 'password' ? VisibilityOn : VisibilityOff}
 								onClick={this.handleChangeType}
-								off={this.state.type === 'password'}
+								off={type === 'password'}
 							/>
 						</span>
 					</InputBox>
-					{this.state.error && <Error>Email e/ ou senha incorreta</Error>}
-					{/* {this.state.error && <Error>Endereço de email inválido</Error> */}
+					{error && <Error>E-mail e/ ou senha incorreta</Error>}
 					<Button
 						width='70%'
 						widthMobile='80%'
 						widthMobileSmall='95%'
 						padding='1rem'
-						margin='2.5rem 0 1rem'
-						marginMobile='3.7rem 0 1.5rem'
+						margin={this.props.isResetPassword ? '2.5rem 0 3.5rem' : '2.5rem 0 1rem'}
+						marginMobile={this.props.isResetPassword ? '3.7rem 0 3rem' : '3.7rem 0 1.5rem'}
 						text="entrar"
 						type="submit"
 					/>
-					<Span>
+					{!this.props.isResetPassword && <Span>
 						<ButtonText to={'/createuser'}>criar conta</ButtonText>
 						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
-					</Span>
+					</Span>}
 				</Form>
-				{this.state.redirect && <Redirect to={'./dashboard'} />}
+				{redirect && <Redirect to={'/dashboard'} />}
 			</ContainerForm>
 		);
 	}

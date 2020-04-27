@@ -5,15 +5,25 @@ import styled from 'styled-components';
 // Images
 import Logo from '../assets/logo.svg';
 
-export const LogoImage = styled.img`
+const LogoImage = styled.img`
   width: ${props => props.width};
   margin: ${props => props.margin};
+	height: ${props => props.height};
+
+	@media(max-width: 648px) {
+		margin: ${props => props.marginMobile};
+		height: ${props => props.heightMobile};
+	}
 `;
 
-export default function ImageLogo(props) {
-	return <LogoImage src={Logo}
+const ImageLogo = props => (
+	<LogoImage src={Logo}
 		margin={props.margin}
 		alt="Osc Logo"
 		width={props.width}
-	/>;
-}
+		height={props.height}
+		heightMobile={props.heightMobile}
+	/>
+);
+
+export default ImageLogo;

@@ -1,6 +1,5 @@
-/* eslint-disable max-len */
 // Libs
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -10,38 +9,38 @@ import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
-
 // Redux
-import { addNewPassword } from '../../../dataflow/modules/sign-up-modules';
-
+import { addNewUser, isResetPassword } from '../../../dataflow/modules/onboarding-modules';
 
 const mapStateToProps = state => ({
-	singup: state.singup,
+	onboarding: state.onboarding,
+	emailReset: state.onboarding.emailReset,
 });
 
 const mapDispatchToProps = dispatch => ({
-	addNewPassword: (newPassword) => {
-		dispatch(addNewPassword(newPassword));
+	addNewUser: (newPassword) => {
+		dispatch(addNewUser(newPassword));
+	},
+	isResetPassword: (info) => {
+		dispatch(isResetPassword(info));
 	},
 });
 
-
-export const ContainerForm = styled.div`
+const ContainerForm = styled.div`
   min-height: 100vh;
   background-color: #FFCFCD;
-	height: 100vh;
+	min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: 0;
-
   @media (max-width: 648px) {
 		background-color: #fff;
 	}
 `;
 
-export const Form = styled.form`
+const Form = styled.form`
   width: 30%;
 	border-radius: 5px;
   background-color: #fff;
@@ -49,66 +48,57 @@ export const Form = styled.form`
   align-items: center;
   flex-direction: column;
 	margin: 3rem;
-	border-radius: 4px;
 
   @media (max-width: 980px) {
 		width: 40%;
 	}
-
 	@media (max-width: 786px) {
 		width: 50%;
 	}
-
 	@media (max-width: 648px) {
 		width: 90%;
 		margin: 0;
 	}
-
 	input{
 		margin: 0.3rem 0 0.6rem 0;
 		border: ${props => (props.withError === true ? '1px solid #FF4136' : '1px solid #ffcfcd')};
 	}
 `;
 
-export const Span = styled.span`
+const Span = styled.span`
 	width: 80%;
-
   @media (max-width: 648px) {
-		& {
-			width: 90%;
-		}	
+		width: 90%;
 	}
 `;
 
-export const Title = styled.h1`
+const Title = styled.h1`
   color: #231F20;
   font-size: 1.25rem;
   font-weight: 900;
   font-family: Overpass;
   margin: 2rem 0 1.5rem 0;
 	text-transform: uppercase;
-
   @media (max-width: 648px) {
 		display: none;
 	}
 `;
 
-export const Paragraph = styled.p`
+const Paragraph = styled.p`
+	width: ${props => props.width};
   color: #231F20;
   font-family: Overpass, Regular;
   margin-bottom: 1.5rem;
-
 	@media (max-width: 648px) {
 		margin-top: 3rem;
 	}
-
 	@media (max-width: 460px) {
 		font-size: 0.9rem;
 		width: 90%;
 	}
 `;
 
-export const Error = styled.h4`
+const ErrorMessage = styled.h4`
   color: #D63434;
   display: flex;
   justify-content: flex-end;
@@ -116,36 +106,36 @@ export const Error = styled.h4`
   font-family: Overpass, Regular;
 `;
 
-export const Label = styled.label`
+const Label = styled.label`
   color: #85144B;
-  font-size: 0.8rem;
-  margin: 0.9rem;
+  font-size: 0.75rem;
   font-family: Overpass;
   font-weight: bold;
+  margin: 0.9rem;
 	text-transform: uppercase;
 `;
 
-export const BackLogin = styled.span` 
+const BackLogin = styled.span`
   display: flex;
   justify-content: center;
 `;
 
-export const ButtonText = styled(Link)`
-    color: #85144B;
-    font-size: 1rem; 
-	  font-family: Overpass, Regular;
-    margin-bottom: 2rem;
-    text-decoration: none;
-		text-transform: uppercase;
+const ButtonText = styled(Link)`
+	color: #85144B;
+	font-size: 1rem;
+	font-family: Overpass, Regular;
+	margin-bottom: 2rem;
+	text-decoration: none;
+	text-transform: uppercase;
 `;
 
-class NewPasswordScreen extends React.Component {
+class NewPasswordScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			newPassword: '',
 			newPasswordError: false,
-			repetPassword: '',
+			repeatPassword: '',
 			repetPasswordError: false,
 			redirect: false,
 		};
@@ -153,12 +143,12 @@ class NewPasswordScreen extends React.Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		this.errors();
+		this.handleErrors();
 	}
 
-	errors = () => {
-		// const { password } = this.props.signup.users;
-		const { newPassword, repetPassword } = this.state;
+	handleErrors = () => {
+		const { newPassword, repeatPassword } = this.state;
+		const { emailReset } = this.props;
 
 		if (newPassword.length < 6) {
 			this.setState({
@@ -170,7 +160,7 @@ class NewPasswordScreen extends React.Component {
 			});
 		}
 
-		if (newPassword !== repetPassword) {
+		if (newPassword !== repeatPassword) {
 			this.setState({
 				repetPasswordError: true,
 			});
@@ -180,8 +170,10 @@ class NewPasswordScreen extends React.Component {
 			});
 		}
 
-		if (newPassword.length > 5 && newPassword === repetPassword) {
-			this.props.addNewPassword({ password: newPassword });
+		if (newPassword.length >= 6 && newPassword === repeatPassword) {
+			this.props.addNewUser({ email: emailReset, password: newPassword });
+			this.props.isResetPassword(true);
+			this.setState({ redirect: true });
 		}
 	}
 
@@ -193,37 +185,35 @@ class NewPasswordScreen extends React.Component {
 
 	handleChangeRepetPassword = (ev) => {
 		this.setState({
-			repetPassword: ev.target.value,
+			repeatPassword: ev.target.value,
 		});
-	}
-
-	changeRedirect = () => {
-		const { newPassword, repetPassword } = this.state;
-		if (newPassword.length > 5 && newPassword === repetPassword) {
-			this.setState({ redirect: true });
-		}
 	}
 
 	render() {
 		const {
-			newPasswordError, repetPasswordError, redirect,
+			newPasswordError, repetPasswordError, redirect, newPassword, confirmationCode, repeatPassword,
 		} = this.state;
 
-		const errorMenssages = [
-			'Use 6 caracteres ou mais para a sua senha',
-			'Essa senha não se coincidem. Tente novamente',
+		const errorMessages = [
+			'Use 6 caracteres ou mais para a sua senha.',
+			'Os valores digitados não coincidem. Tente novamente.',
 		];
+
 		return (
 			<ContainerForm>
 				<ImageLogo margin='3rem 0 0 0' />
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						<Paragraph>Um código de confirmação foi enviado para name@email.com, por favor, cole-o abaixo:</Paragraph>
+						<Paragraph width='100%'>
+							Um código de confirmação foi enviado para
+							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'},
+							por favor, cole-o abaixo:
+						</Paragraph>
 						<Label>código de confirmação</Label>
 						<Input
 							login
-							value={this.state.confirmationCode}
+							value={confirmationCode}
 							type='text'
 							placeholder="Insira aqui o código"
 							required
@@ -231,38 +221,37 @@ class NewPasswordScreen extends React.Component {
 						<Label>nova senha</Label>
 						<Input
 							login
-							value={this.state.newPassword}
+							value={newPassword}
 							type='password'
 							onChange={ev => this.handleChangeNewPassword(ev)}
 							placeholder="Insira aqui sua senha"
 							required
 						/>
-						{newPasswordError && <Error>{errorMenssages[0]}</Error>}
+						{newPasswordError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
 						<Label>repita nova senha</Label>
 						<Input
 							login
-							value={this.state.repetPassword}
+							value={repeatPassword}
 							type='password'
 							onChange={ev => this.handleChangeRepetPassword(ev)}
 							placeholder="Repita sua senha"
 							required
 						/>
-						{repetPasswordError && <Error>{errorMenssages[1]}</Error>}
+						{repetPasswordError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
 					</Span>
 					<Button
 						width='80%'
 						widthMobile='90%'
-						margin='1rem 0 1.5rem 0;'
+						margin='1rem 0 1.5rem 0'
 						marginMobile='1rem 0 2.5rem'
-						text="prossiga com nova senha"
+						text="Prossiga com nova senha"
 						type="submit"
-						onClick={() => this.changeRedirect()}
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
 					</BackLogin>
 				</Form>
-				{redirect && <Redirect to={'/loginreset'} />}
+				{redirect && <Redirect to={'/'} />}
 			</ContainerForm>
 		);
 	}

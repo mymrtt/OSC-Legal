@@ -1,19 +1,25 @@
 // Libs
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Button from '../../../components/Button';
 
-export const Container = styled.div`
+// Redux
+const mapStateToProps = state => ({
+	onboarding: state.onboarding,
+});
+
+const Container = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #FFCFCD;
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
   margin: 0;
 
   @media (max-width: 648px) {
@@ -23,7 +29,7 @@ export const Container = styled.div`
 	}
 `;
 
-export const Div = styled.div`
+const Content = styled.div`
   width: 35%;
   height: 50vh;
   background-color: #fff;
@@ -33,7 +39,7 @@ export const Div = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
 
-  
+
 	@media (max-width: 1030px) {
     width: 50%
 	}
@@ -44,22 +50,19 @@ export const Div = styled.div`
 	}
 `;
 
-export const Title = styled.h1`
+const Title = styled.h1`
   width: 65%;
   color: #85144B;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
 
   @media (max-width: 648px) {
 		width: 95%;
 	}
 `;
 
-export const Code = styled.p`
+const Code = styled.p`
   color: #FF4136;
   font-size: 2.5rem;
   font-weight: bold;
@@ -70,10 +73,10 @@ export const Code = styled.p`
 
   @media (max-width: 648px) {
     margin: 3rem;
-}
+  }
 `;
 
-export const Span = styled.span` 
+const ContainerParagraph = styled.span`
   width: 85%;
   color: #231F20;
   text-align: center;
@@ -81,56 +84,54 @@ export const Span = styled.span`
   align-items: center;
   justify-content: center;
 
-@media (max-width: 648px) {
-  width: 100%;
-}
+  @media (max-width: 648px) {
+    width: 100%;
+  }
 `;
 
-export const SpanParagraph = styled.span`
+const Paragraph = styled.span`
   font-size: 0.8rem;
   font-family: Overpass, Regular;
+`;
 
-  `;
+class ResetPasswordCode extends Component {
+	state = {
+		redirect: undefined,
+	};
 
-class ResetPasswordCode extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			redirect: undefined,
-		};
+	handleRedirect = () => {
+		this.setState({
+			redirect: true,
+		});
 	}
 
-hanleClick = () => {
-	this.setState({
-		redirect: true,
-	});
+	render() {
+		return (
+			<Container>
+				<ImageLogo margin='3rem 0 2.5rem 0'/>
+				<Content>
+					<Title>Aqui está o seu código de redefinição de senha:</Title>
+					<Code>210704</Code>
+					<ContainerParagraph>
+						<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: { }
+							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com. '} { }
+							Se você não realizou essa solicitação,
+							pode acessar sua conta normalmente.
+						</Paragraph>
+					</ContainerParagraph>
+					<Button
+						width='75%'
+						widthMobile='100%'
+						marginMobile='3rem 0 2rem 0'
+						text="redefinir senha"
+						type="button"
+						onClick={this.handleRedirect}
+					/>
+				</Content>
+				{this.state.redirect && <Redirect to={'/newpassword'}/>}
+			</Container>
+		);
+	}
 }
 
-render() {
-	return (
-		<Container>
-			<ImageLogo margin='3rem 0 2.5rem 0'/>
-			<Div onSubmit={this.handleSubmit}>
-				<Title>Aqui está o seu código de redefinição de senha:</Title>
-				<Code>210704</Code>
-				<Span>
-					<SpanParagraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: nome@email.com.
-               Se você não realizou essa solicitação,
-               pode acessar sua conta normalmente.</SpanParagraph>
-				</Span>
-				<Button
-					width='75%'
-					widthMobile='100%'
-					marginMobile='3rem 0 2rem 0'
-					text="redefinir senha"
-					type="button"
-					onClick={this.hanleClick}
-				/>
-			</Div>
-			{this.state.redirect && <Redirect to={'/newpassword'}/>}
-		</Container>
-	);
-}
-}
-
-export default ResetPasswordCode;
+export default connect(mapStateToProps)(ResetPasswordCode);

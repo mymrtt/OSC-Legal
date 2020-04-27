@@ -1,7 +1,8 @@
+// Libs
 import React from 'react';
 import styled from 'styled-components';
 
-export const MyButton = styled.button`
+const MyButton = styled.button`
   margin: ${props => props.margin};
   width: ${props => props.width};
   height: 3.5rem;
@@ -30,22 +31,22 @@ export const MyButton = styled.button`
   }
 `;
 
-export default function Button(props) {
-	return (
-		<MyButton
-			onClick={props.onClick}
-			type={props.type}
-			width={props.width}
-			widthMobile={props.widthMobile}
-			widthMobileSmall={props.widthMobileSmall}
-			height={props.height}
-			heightMobile={props.heightMobile}
-			margin={props.margin}
-			marginMobile={props.marginMobile}
-			padding={props.padding}
-			paddingMobile={props.paddingMobile}
-		>
-			{props.text}
-		</MyButton>
-	);
-}
+const Button = props => (
+	<MyButton
+		onClick={props.onClick}
+		type={props.type}
+		width={props.width}
+		widthMobile={props.widthMobile}
+		widthMobileSmall={props.widthMobileSmall}
+		height={props.height}
+		heightMobile={props.heightMobile}
+		margin={props.margin}
+		marginMobile={props.marginMobile}
+		padding={props.padding}
+		paddingMobile={props.paddingMobile}
+	>
+		{props.text}
+	</MyButton>
+);
+
+export default Button;
