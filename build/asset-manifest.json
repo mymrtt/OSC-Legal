@@ -1,26 +1,35 @@
 {
   "files": {
     "main.css": "/OSC-Legal/static/css/main.c0180cdc.chunk.css",
-    "main.js": "/OSC-Legal/static/js/main.8f7a76b2.chunk.js",
-    "main.js.map": "/OSC-Legal/static/js/main.8f7a76b2.chunk.js.map",
+    "main.js": "/OSC-Legal/static/js/main.1e645bd4.chunk.js",
+    "main.js.map": "/OSC-Legal/static/js/main.1e645bd4.chunk.js.map",
     "runtime-main.js": "/OSC-Legal/static/js/runtime-main.6c64655e.js",
     "runtime-main.js.map": "/OSC-Legal/static/js/runtime-main.6c64655e.js.map",
-    "static/js/2.44ac4eaf.chunk.js": "/OSC-Legal/static/js/2.44ac4eaf.chunk.js",
-    "static/js/2.44ac4eaf.chunk.js.map": "/OSC-Legal/static/js/2.44ac4eaf.chunk.js.map",
+    "static/js/2.0cf4593d.chunk.js": "/OSC-Legal/static/js/2.0cf4593d.chunk.js",
+    "static/js/2.0cf4593d.chunk.js.map": "/OSC-Legal/static/js/2.0cf4593d.chunk.js.map",
     "index.html": "/OSC-Legal/index.html",
-    "precache-manifest.b73658f05abf5479575fd5a8cbf95fc4.js": "/OSC-Legal/precache-manifest.b73658f05abf5479575fd5a8cbf95fc4.js",
+    "precache-manifest.5b2c3e95b2e5dc97c25cf84973675edb.js": "/OSC-Legal/precache-manifest.5b2c3e95b2e5dc97c25cf84973675edb.js",
     "service-worker.js": "/OSC-Legal/service-worker.js",
     "static/css/main.c0180cdc.chunk.css.map": "/OSC-Legal/static/css/main.c0180cdc.chunk.css.map",
-    "static/js/2.44ac4eaf.chunk.js.LICENSE.txt": "/OSC-Legal/static/js/2.44ac4eaf.chunk.js.LICENSE.txt",
+    "static/js/2.0cf4593d.chunk.js.LICENSE.txt": "/OSC-Legal/static/js/2.0cf4593d.chunk.js.LICENSE.txt",
+    "static/media/authorization.svg": "/OSC-Legal/static/media/authorization.3ce4b5b4.svg",
+    "static/media/caminho.svg": "/OSC-Legal/static/media/caminho.fa1297e7.svg",
+    "static/media/delete.svg": "/OSC-Legal/static/media/delete.33d53cbe.svg",
+    "static/media/edit.svg": "/OSC-Legal/static/media/edit.f522e40b.svg",
+    "static/media/extendDeadline.svg": "/OSC-Legal/static/media/extendDeadline.99e97a45.svg",
+    "static/media/fechar.svg": "/OSC-Legal/static/media/fechar.303833dc.svg",
+    "static/media/free.svg": "/OSC-Legal/static/media/free.5defe7c6.svg",
     "static/media/logo.svg": "/OSC-Legal/static/media/logo.e049bfe2.svg",
+    "static/media/pay.svg": "/OSC-Legal/static/media/pay.92a1b9ac.svg",
+    "static/media/setaLado.svg": "/OSC-Legal/static/media/setaLado.7e764e9f.svg",
     "static/media/sucess.svg": "/OSC-Legal/static/media/sucess.e237ad43.svg",
     "static/media/visibility-off.svg": "/OSC-Legal/static/media/visibility-off.f95eae64.svg",
     "static/media/visibility-on.svg": "/OSC-Legal/static/media/visibility-on.54d5a3d6.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.6c64655e.js",
-    "static/js/2.44ac4eaf.chunk.js",
+    "static/js/2.0cf4593d.chunk.js",
     "static/css/main.c0180cdc.chunk.css",
-    "static/js/main.8f7a76b2.chunk.js"
+    "static/js/main.1e645bd4.chunk.js"
   ]
 }

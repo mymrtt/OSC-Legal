@@ -115,14 +115,14 @@ const Label = styled.label`
 	text-transform: uppercase;
 `;
 
-const BackLogin = styled.span` 
+const BackLogin = styled.span`
   display: flex;
   justify-content: center;
 `;
 
 const ButtonText = styled(Link)`
 	color: #85144B;
-	font-size: 1rem; 
+	font-size: 1rem;
 	font-family: Overpass, Regular;
 	margin-bottom: 2rem;
 	text-decoration: none;
@@ -244,7 +244,7 @@ class NewPasswordScreen extends Component {
 						widthMobile='90%'
 						margin='1rem 0 1.5rem 0'
 						marginMobile='1rem 0 2.5rem'
-						text="prossiga com nova senha"
+						text="Prossiga com nova senha"
 						type="submit"
 					/>
 					<BackLogin>
