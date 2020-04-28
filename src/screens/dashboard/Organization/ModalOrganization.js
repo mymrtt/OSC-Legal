@@ -23,18 +23,24 @@ const Overlay = styled.div`
 	display: flex;
   justify-content: center;
   align-items: center;
-	position: absolute;
+	position: fixed;
 	z-index: 3;
 
 	@media (max-width: 768px) {
-		position: fixed;
+		/* position: fixed; */
 		/* background-color: #FFFFFF; */
+	}
+
+	@media (max-width: 400px) {
+		/* max-height: 0;
+		height: 0; */
 	}
 `;
 
 const Container = styled.div`
 	width: 80%;
-	height: 80%;
+	margin: 1rem;
+	/* height: 80%; */
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -43,13 +49,15 @@ const Container = styled.div`
 
 
 	@media (max-width: 935px) {
-		width: 90%;
-		height: 80%;
+		width: 95%;
+		margin: 0;
+		/* height: 80%; */
 	}
 
 	@media (max-width: 648px) {
 		width: 100%;
-		height: 100%;
+		/* height: 100%; */
+		margin: 0;
 	}
 `;
 
@@ -58,7 +66,6 @@ const Image = styled.img`
 	align-self: flex-end;
 	padding: 1rem;
 	cursor: pointer;
-
 
 	@media (max-width: 798px) {
 		padding: 0.8rem 0.5rem;
@@ -69,13 +76,24 @@ const Image = styled.img`
 	}
 `;
 
+const ContentImage = styled.div`
+	background-color: #FFFFFF;
+	/* position: fixed; */
+
+`;
+
 const ImageS = styled.img`
 	display: none;
 
 	@media (max-width: 648px) {
-		width: 4%;
+		/* width: 4%; */
 		display: flex;
-		margin: 0 0 3rem 1rem;
+		padding: 6rem 0 3rem 1rem;
+		/* margin: 0 0 3rem 1rem; */
+	}
+
+	@media (max-width: 410px) {
+		padding: 30rem 0 3rem 1rem;
 	}
 `;
 
@@ -93,14 +111,10 @@ const ContentConsultorItem = styled.div`
 		margin-left: 1rem;
 		padding-right: 1rem;
 	}
-
-	@media (max-width: 410px) {
-	}
 `;
 
 const ContentConsultorDetails = styled.div`
 	display: flex;
-	margin-left
 	flex-direction: row;
 	/* justify-content: space-around; */
 `;
@@ -119,8 +133,9 @@ const Title = styled.h2`
 	}
 `;
 
-const Span = styled.span`
-  height: 50%;
+const Content = styled.span`
+  /* height: 50%; */
+	/* padding: 0 1rem 0 0; */
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -136,11 +151,12 @@ const Span = styled.span`
 `;
 
 const SpanOrganization = styled.span`
-	height: 50%;
+	/* height: 50%; */
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	margin: ${props => (props.margin && '0 3.4rem')};
+	padding: 0 0 2rem;
 
 	@media (max-width: 935px) {
 		margin: ${props => (props.margin && '0 1rem')};
@@ -158,13 +174,15 @@ const ContentConsultor = styled.span`
 
 	@media (max-width: 648px) {
 		width: 100%;
-		height: 30vh;
+		/* height: 30vh; */
+		padding: 0 0 2rem;
+		flex-flow: wrap;
 	}
 `;
 
 // const ImageEdite = styled.img`
 // 	display: flex;
-//   flex-direction: row;
+//  flex-direction: row;
 // 	padding-bottom: 1rem;
 // `;
 
@@ -258,10 +276,11 @@ const SeparationMobile = styled.div`
 `;
 
 const Parte2 = styled.span`
-	height: 50%;
+	/* height: 50%; */
 	background-color: #FFCFCD;
 	display: flex;
 	flex-direction: column;
+	padding-bottom: 1.5rem;
 
 	@media (max-width: 648px) {
 
@@ -293,14 +312,21 @@ const ContainerPaymentMethod = styled.div`
 	display: flex;
 	flex-direction: row;
 	/* padding-left: 0.7rem; */
+
+	:hover {
+		border-bottom: 4px solid #FF4136;
+		color: #FF4136;
+		margin-top: 0.7rem;
+	}
 `;
 
 const ContainerSelected = styled.div`
 		display: none;
 
 		@media (max-width: 648px) {
+			/* height: 7vh; */
 			width: 100%;
-			height: 7vh;
+			padding: 1rem 0;
 			display: flex;
 			justify-content: center;
 			justify-content: space-evenly;
@@ -343,51 +369,53 @@ class ModalOrganization extends Component {
 	}
 
 	render() {
+		const { item } = this.props;
+		console.log('item', this.props.item);
 		return (
-			<Overlay>
+			<Overlay onClick={this.props.handleCloseModal}>
 				<Container>
-					<Span>
+					<Content>
 						<ContentConsultor>
 							<Title>consultor</Title>
 							<ContentConsultorItem>
 								<div>
 									<SubTitle>nome</SubTitle>
-									<SubAnswer>Yasmin Miranda</SubAnswer>
+									<SubAnswer>{item.admin.name}</SubAnswer>
 									<SubTitle>rg</SubTitle>
-									<SubAnswer>00000000-0</SubAnswer>
+									<SubAnswer>{item.admin.rg}</SubAnswer>
 								</div>
 								<div>
 									<SubTitle>data de nascimento</SubTitle>
-									<SubAnswer>22/02/2020</SubAnswer>
+									<SubAnswer>{item.admin.dateOfBirth}</SubAnswer>
 									<SubTitle>cpf</SubTitle>
-									<SubAnswer>000.000.000-00</SubAnswer>
+									<SubAnswer>{item.cpf}</SubAnswer>
 								</div>
 								<div>
 									<SubTitle>email</SubTitle>
-									<SubAnswer>nome@email.com</SubAnswer>
+									<SubAnswer>{item.email}</SubAnswer>
 									<SubTitle>telefone</SubTitle>
-									<SubAnswer>(99) 99999-9999</SubAnswer>
+									<SubAnswer>{item.telephone}</SubAnswer>
 								</div>
 							</ContentConsultorItem>
 						</ContentConsultor>
 						<Div>
 							<Image src={ImageClose} onClick={this.props.handleCloseModal} />
-							<div>
+							<ContentImage>
 								<ImageS src={ImageSeta} onClick={this.props.handleCloseModal} />
-							</div>
+							</ContentImage>
 							<ContentConsultorDetails>
 								<ContentSubTitle>
 									<div>
 										<SubTitle>criado em</SubTitle>
-										<SubAnswer>18/06/19</SubAnswer>
+										<SubAnswer>{item.createdIn}</SubAnswer>
 									</div>
 									<div>
 										<SubTitle>autorizado em</SubTitle>
-										<SubAnswer> - </SubAnswer>
+										<SubAnswer>{item.authorization}</SubAnswer>
 									</div>
 									<div>
 										<SubTitle>vencimento</SubTitle>
-										<SubAnswer> - </SubAnswer>
+										<SubAnswer>{item.dueDate}</SubAnswer>
 									</div>
 								</ContentSubTitle>
 								{/* <ContainerEdit>
@@ -402,63 +430,63 @@ class ModalOrganization extends Component {
 								</ContainerEdit> */}
 							</ContentConsultorDetails>
 						</Div>
-					</Span>
+					</Content>
 					<Parte2>
 						<Title>organização</Title>
 						<SpanOrganization margin>
 							<Separation>
 								<SubTitle>nome fantasia</SubTitle>
-								<SubAnswer>Vai na Web</SubAnswer>
+								<SubAnswer>{item.admin.fantasyName}</SubAnswer>
 								<SubTitle>nome razão</SubTitle>
-								<SubAnswer>Instituto PrecisaSer</SubAnswer>
+								<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>cnpj</SubTitle>
-								<SubAnswer>00.000.000/0000-00</SubAnswer>
+								<SubAnswer>{item.admin.cnpj}</SubAnswer>
 								<SubTitle>telefone</SubTitle>
-								<SubAnswer>(00) 00000-0000</SubAnswer>
+								<SubAnswer>{item.telephone}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>email</SubTitle>
-								<SubAnswer>endereçodeemail@email.com</SubAnswer>
+								<SubAnswer>{item.email}</SubAnswer>
 								<SubTitle>endereço</SubTitle>
-								<SubAnswer>Rua Abóbora Doce, 256</SubAnswer>
+								<SubAnswer>{item.admin.address}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>complemento</SubTitle>
-								<SubAnswer>Complemento</SubAnswer>
+								<SubAnswer>{item.admin.complement}</SubAnswer>
 								<SubTitle>bairro</SubTitle>
-								<SubAnswer>Centro</SubAnswer>
+								<SubAnswer>{item.admin.neighborhood}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>cep</SubTitle>
-								<SubAnswer>00000-000</SubAnswer>
+								<SubAnswer>{item.admin.cep}</SubAnswer>
 								<SubTitle>cidade</SubTitle>
-								<SubAnswer>Rio de Janeiro</SubAnswer>
+								<SubAnswer>{item.admin.city}</SubAnswer>
 							</Separation>
 							<SeparationMobile>
 								<SubTitle>nome fantasia</SubTitle>
-								<SubAnswer>Vai na Web</SubAnswer>
+								<SubAnswer>{item.admin.fantasyName}</SubAnswer>
 								<SubTitle>email</SubTitle>
-								<SubAnswer>endereçodeemail@email.com</SubAnswer>
+								<SubAnswer>{item.email}</SubAnswer>
 								<SubTitle>cnpj</SubTitle>
-								<SubAnswer>00.000.000/0000-00</SubAnswer>
+								<SubAnswer>{item.admin.cnpj}</SubAnswer>
 								<SubTitle>complemento</SubTitle>
-								<SubAnswer>Complemento</SubAnswer>
+								<SubAnswer>{item.admin.complement}</SubAnswer>
 								<SubTitle>bairro</SubTitle>
-								<SubAnswer>Centro</SubAnswer>
+								<SubAnswer>{item.admin.neighborhood}</SubAnswer>
 							</SeparationMobile>
 							<SeparationMobile>
 								<SubTitle>nome razão</SubTitle>
-								<SubAnswer>Instituto PrecisaSer</SubAnswer>
+								<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
 								<SubTitle>telefone</SubTitle>
-								<SubAnswer>(00) 00000-0000</SubAnswer>
+								<SubAnswer>{item.telephone}</SubAnswer>
 								<SubTitle>endereço</SubTitle>
-								<SubAnswer>Rua Abóbora Doce, 256</SubAnswer>
+								<SubAnswer>{item.admin.address}</SubAnswer>
 								<SubTitle>cep</SubTitle>
-								<SubAnswer>00000-000</SubAnswer>
+								<SubAnswer>{item.admin.cep}</SubAnswer>
 								<SubTitle>cidade</SubTitle>
-								<SubAnswer>Rio de Janeiro</SubAnswer>
+								<SubAnswer>{item.admin.city}</SubAnswer>
 							</SeparationMobile>
 						</SpanOrganization>
 					</Parte2>
@@ -472,9 +500,11 @@ class ModalOrganization extends Component {
 							<ContainerOption>Excluir</ContainerOption>
 						</SpanContainerImage>
 					</ContainerEditImage> */}
+					{/* <div>
+						{this.state.admin.map(item =>)}
+					</div> */}
 					<ContainerSelected>
-						{this.state.paymentMethodList.map(item =>
-						<ContainerPaymentMethod>
+						{this.state.paymentMethodList.map(item => <ContainerPaymentMethod>
 							<img src={item.img}></img>
 							<PaymentMethodText>{item.desc}</PaymentMethodText>
 						</ContainerPaymentMethod>)}
