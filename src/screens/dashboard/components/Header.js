@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 
 const Container = styled.div`
   width: 100%;
-	height: auto;
+	/* height: auto; */
   background-color: #FFFFFF;
   color: #231F20;
   font-family: Overpass, Light;
@@ -26,7 +26,7 @@ const Container = styled.div`
 	padding: 0 3rem;
   text-transform: uppercase;
 	border-bottom: 1px solid  #707070;
-	opacity: 1;
+	/* opacity: 1; */
 
 	@media (max-width: 890px) {
 		padding: 0 2rem;
