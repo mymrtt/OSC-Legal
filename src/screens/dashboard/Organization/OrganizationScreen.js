@@ -15,29 +15,31 @@ import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const Container = styled.div`
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	margin: 3rem 4rem 0 4rem;
+	padding: 3rem 4rem 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	z-index: 4;
 
 	@media(max-width: 1024px) {
-		margin: 3rem 0 0 4rem;
+		padding: 3rem 4rem 0;
 	}
 
 	@media (max-width: 768px) {
-		margin: 2rem 4rem 0 4rem;
+		padding: 2rem 4rem 0 4rem;
 		align-items: center;
 		flex-direction: column;
 	}
 
 	@media (max-width: 648px) {
-		margin: 1rem 2rem 1rem 2rem;
+		padding: 1rem 2rem 1rem 2rem;
 	}
 `;
 
@@ -148,7 +150,7 @@ const Table = styled.table`
 	max-width: 100%;
 	width: 100%;
 	border-spacing: 0;
-	padding: 2rem 4rem 0 4rem;
+	padding: 2rem 4rem 0;
 
 	@media (max-width: 768px) {
 		padding: 2rem 0 0 0;
@@ -185,7 +187,7 @@ const Tr = styled.tr`
 
 	@media(max-width: 768px) {
 		margin-bottom: 1rem;
-		padding: 1rem 1rem 13rem 1rem;
+		padding: 1rem 1rem 11rem 1rem;
 		display: flex;
     flex-wrap: wrap;
 	}
@@ -236,7 +238,6 @@ const TextInformation = styled.p`
 		font-size: 1.5rem;
 	}
 `;
-
 
 const Box = styled.div`
 	display: none;
@@ -294,10 +295,6 @@ const ImageStatus = styled.img`
   padding-right: 0.3rem;
 	display: none;
 	cursor: pointer;
-
-	/* @media(max-width: 1024px) {
-		margin-right: .3rem;
-	} */
 `;
 
 class OrganizationScreen extends Component {
@@ -305,7 +302,7 @@ class OrganizationScreen extends Component {
 		super(props);
 		this.state = {
 			hovered: undefined,
-			isModal: undefined,
+			isModal: true,
 			itemSelected: undefined,
 			isSelected: undefined,
 			selectedValue: 'Selecionar status',

@@ -171,7 +171,7 @@ class Header extends Component {
 	render() {
 		return (
 			<Container>
-				<ImageLogo height='2.8rem' heightMobile='2rem' />
+				<ImageLogo marginMobile='0 0 0 -1rem' height='2.8rem' paddingMobile='0.5rem'/>
 				<WrapButton>
 					{this.renderButtons('organization')}
 					{this.renderButtons('documentos')}
