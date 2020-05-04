@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-key */
 /* eslint-disable class-methods-use-this */
 // Libs
@@ -11,6 +12,7 @@ import DownloadIcon from '../../../assets/download.svg';
 import DownloadWhiteIcon from '../../../assets/downloadwhite.svg';
 import Exit from '../../../assets/exit.svg';
 import DeleteIcon from '../../../assets/delete.svg';
+import documentWhite from '../../../assets/documentWhite.svg'
 
 import Header from '../components/Header';
 import Scrollbar from '../components/Scrollbar';
@@ -295,6 +297,7 @@ const Option = styled.button`
 `;
 
 const OptionImage = styled.img`
+
 	@media (max-width: 768px) {
 		width: 15px;
 		height: 15px;
@@ -306,6 +309,10 @@ const OptionText = styled.p`
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
 
+	&:hover {
+		color: #ffffff;
+	}
+
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
@@ -314,7 +321,7 @@ const OptionText = styled.p`
 const Button = styled.button`
   margin: 2rem;
 	padding: 1.3rem;
-  width: 55%;
+  width: 60%;
   border: 0;
   color: #fff;
   box-shadow: 0 3px 6px #00000029;
@@ -325,21 +332,18 @@ const Button = styled.button`
   background-color: #FF4136;
 
 	@media (max-width: 1024px) {
-		font-size: 1rem;
-		width: 60%;
+		padding: 1rem;
+		width: 70%;
 	}
 
 	@media (max-width: 768px) {
-		font-size: .9rem;
-		width: 70%;
-		padding: 1rem;
-		margin: 1.3rem;
+		font-size: 1rem;
+		width: 75%;
 	}
 
 	@media (max-width: 490px) {
-		width: 100%;
 		font-size: 1.2rem;
-
+		width: 100%;
 	}
 `;
 
@@ -360,7 +364,7 @@ const ContainerModal = styled.div`
 	}
 `;
 
-const ModalAddModel = styled.div`
+const ModalAddModel = styled.form`
 	width: 660px;
 	height: 560px;
 	background: #FFFFFF;
@@ -368,10 +372,10 @@ const ModalAddModel = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	border-radius: 4px;
-	padding: 2% 2% 2% 3%;
+	padding: 1% 2% 2% 3%;
 
 	@media (max-width: 1024px) {
-		height: 510px;
+		height: 540px;
 	}
 
 	@media (max-width: 490px) {
@@ -395,15 +399,69 @@ const HeaderAddModel = styled.div`
 const TitleAddModel = styled.h2`
 	color: #85144B;
 	font-size: 2rem;
-	margin-top: 4%;
+	margin-top: 2%;
+	margin-bottom: 1%;
 	margin-left: 1rem;
   font-family: "Overpass", Bold;
   font-weight: 600;
+
+	@media (max-width: 490px) {
+		font-size: 1.8rem;
+	}
 `;
 
 const ContainerInputs = styled.div`
 	display: flex;
 	flex-direction: column;
+`;
+
+const UploadFile = styled.label`
+	width: 100%;
+	display: flex;
+	margin-bottom: 1rem;
+	border-radius: 3px;
+	padding: 3% 2.5%;
+	border: 1px solid #85144B;
+	background: #FAFAFA;
+	font-size: 1.1rem;
+	font-family: "Overpass", SemiBold;
+
+	&:focus {
+		outline: 1px solid #ff4136;
+	}
+
+	input[type='file'] {
+		display: none;
+	}
+
+	img {
+		width: 50px;
+	}
+`;
+
+const TextUploadFile = styled.div`
+	width: 34%;
+	display: flex;
+	flex-direction: column;
+	margin-left: 1rem;
+	font-family: "Overpass", SemiBold;
+	font-size: .9rem;
+	color: #959595;
+
+	h3 {
+		font-family: "Overpass", Bold;
+		margin-bottom: .5rem;
+		font-size: 1.2rem;
+	}
+
+	span {
+		cursor: pointer; 
+		text-decoration: underline;
+	}
+
+	@media (max-width: 490px) {
+		width: 52%;
+	}
 `;
 
 const ContainerInput = styled.label`
@@ -421,9 +479,9 @@ const TitleInputs = styled.h3`
 
 const Input = styled.input`
 	width: 100%;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1rem;
 	border-radius: 3px;
-	padding: 3% 5%;
+	padding: 3% 2.5%;
 	border: 1px solid #85144B;
 	background: #FAFAFA;
 	font-size: 1.1rem;
@@ -438,8 +496,8 @@ const TextArea = styled.textarea`
 	width: 100%;
 	height: 150px;
 	border-radius: 3px;
-	padding: 3% 5%;
-	margin-bottom: 1.5rem;
+	padding: 3% 2.5%;
+	margin-bottom: 1rem;
 	border: 1px solid #85144B;
 	background: #FAFAFA;
 	font-size: 1.1rem;
@@ -447,6 +505,10 @@ const TextArea = styled.textarea`
 
 	&:focus {
 		outline: 1px solid #ff4136;
+	}
+
+	@media (max-width: 490px) {
+		height: 100px;
 	}
 `;
 
@@ -456,8 +518,23 @@ const ButtonAdd = styled(Button)`
 	margin: 0;
 	text-transform: uppercase;
 
-	@media (max-width: 490px) {
+	@media (max-width: 1024px) {
+		font-size: .9rem;
+		width: 55%;
+		padding: .8rem;
+	}
+
+	@media (max-width: 768px) {
+		font-size: .9rem;
+		width: 60%;
+		padding: 1rem;
 		margin: 0;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
+		font-size: 1.2rem;
+
 	}
 `;
 
@@ -502,7 +579,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
-	margin-top: 4% 0 0 0;
+	margin-top: 4%;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
 	color: #404040;
@@ -521,7 +598,7 @@ const TextModal = styled.p`
 const ButtonsModal = styled.div`
 	display: flex;
 	width: 98%;
-	margin-top: 5% 0 0 0;
+	margin-top: 5%;
 
 	@media (max-width: 490px) {
 		margin: 0;
@@ -554,23 +631,24 @@ class DocumentsScreen extends Component {
 			{
 				num: 1,
 				title: 'Modelo Estatuto Associação',
-				descripton: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc.',
+				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc.',
 			},
 			{
 				num: 2,
 				title: 'Modelo Estatuto para Grupo de capoeira',
-				descripton: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc. 3 Modelo Estatuto Fundação Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público. 4 Modelo Estatuto Associação Organização da Sociedade Civil de Interesse Público (OSCIP). documentação básica de associação, cumprindo as exigências da Lei nº 9.790/1999 para qualificação como OSCIP. 5 Modelo Ata Assembleia de Constituição Associação Modelo de ata de Assembleia específica para constituição de Associação, com a aprovação do estatuto e eleição dos cargos diretivos. 6 Modelo Ata Assembleia Geral Associação Modelo de ata de Assembleia Geral de Associação, que poderá ser adaptado e utilizado em diversos contextos, para qualquer pauta. 7 Modelo Registro Público Constituição Fundação Modelo de Escritura Pública de Registro de constituição de Fundação. Atentar para as exigências e rotinas dos cartórios competentes.',
+				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc. 3 Modelo Estatuto Fundação Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público. 4 Modelo Estatuto Associação Organização da Sociedade Civil de Interesse Público (OSCIP). documentação básica de associação, cumprindo as exigências da Lei nº 9.790/1999 para qualificação como OSCIP. 5 Modelo Ata Assembleia de Constituição Associação Modelo de ata de Assembleia específica para constituição de Associação, com a aprovação do estatuto e eleição dos cargos diretivos. 6 Modelo Ata Assembleia Geral Associação Modelo de ata de Assembleia Geral de Associação, que poderá ser adaptado e utilizado em diversos contextos, para qualquer pauta. 7 Modelo Registro Público Constituição Fundação Modelo de Escritura Pública de Registro de constituição de Fundação. Atentar para as exigências e rotinas dos cartórios competentes.',
 			},
 			{
 				num: 3,
 				title: 'Modelo Estatuto Fundação',
-				descripton: 'Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público.',
+				description: 'Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público.',
 			},
 		],
 		changeColorLabel: false,
 		// options: false,
 		modalDelete: false,
 		addModel: false,
+		download: DownloadIcon,
 	};
 
 	handleClickedLabel = (ev) => {
@@ -622,6 +700,42 @@ class DocumentsScreen extends Component {
 			});
 		}
 
+		handleSubmit = (e) => {
+			e.preventDefault();
+			const { num, title, description } = this.state.modelsList;
+
+			if (title && description !== []) {
+				this.state.modelsList.push({ num, title, description });
+				this.setState({
+					addModel: false,
+				});
+			}
+		}
+
+		// handleInputFile = (e) => {
+		// 	this.setState({
+		// 		file: e.target.value,
+		// 	});
+		// }
+
+		handleModelChange = (field, e) => {
+			const { modelsList } = this.state;
+			modelsList[field] = e.target.value;
+			this.setState({ modelsList });
+		}
+
+		handleChangeColor = () => {
+			this.setState({
+				download: DownloadWhiteIcon,
+			});
+		}
+
+		handleChangeColorLeave = () => {
+			this.setState({
+				download: DownloadIcon,
+			});
+		}
+
 		render() {
 			return (
 				<Container onClick={this.handleClickedLabelLeave}>
@@ -647,22 +761,30 @@ class DocumentsScreen extends Component {
 							{this.state.addModel
 							&& <ContainerModal>
 								{window.innerWidth <= 490 && <Header />}
-								<ModalAddModel>
+								<ModalAddModel onSubmit={this.handleSubmit}>
 									<HeaderAddModel>
 										<TitleAddModel>Adicionar Modelo</TitleAddModel>
 										<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
 									</HeaderAddModel>
 									<ContainerInputs>
+										<UploadFile htmlFor='upload-file'>
+											<input id='upload-file' type="file" placeholder="Anexar Modelo"/>
+											<img src={documentWhite} alt="Anexar Documento" />
+											<TextUploadFile>
+												<h3>Anexar Modelo</h3>
+												<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
+											</TextUploadFile>
+										</UploadFile>
 										<ContainerInput>
 											<TitleInputs>Nome do modelo</TitleInputs>
-											<Input type="text" placeholder="Digitar nome do documento"/>
+											<Input onChange={e => this.handleModelChange('title', e)} type="text" placeholder="Digitar nome do documento"/>
 										</ContainerInput>
 										<ContainerInput>
 											<TitleInputs>Descrição</TitleInputs>
-											<TextArea type="text" placeholder="Como esse documento é usado"/>
+											<TextArea onChange={e => this.handleModelChange('description', e)} type="text" placeholder="Como esse documento é usado" />
 										</ContainerInput>
 									</ContainerInputs>
-									<ButtonAdd>Adicionar</ButtonAdd>
+									<ButtonAdd type="submit">Adicionar</ButtonAdd>
 								</ModalAddModel>
 							</ContainerModal>}
 						</ContainerAddModel>
@@ -679,11 +801,12 @@ class DocumentsScreen extends Component {
 												<ModelNumber>{item.num}</ModelNumber>
 												<ModelTitle>{item.title}</ModelTitle>
 											</span>
-											<ModelParagraph>{item.descripton}</ModelParagraph>
+											<ModelParagraph>{item.description}</ModelParagraph>
 										</ContainerModelDescription>
 										<ContainerOptions>
-											<Option>
-												<OptionImage src={DownloadIcon} alt="Download" />
+											<Option onMouseEnter={this.handleChangeColor}	onMouseLeave={this.handleChangeColorLeave}>
+												<OptionImage
+												 src={this.state.download} alt="Download" />
 												<OptionText>Exportar</OptionText>
 											</Option>
 											<Option onClick={this.handleModalDelete}>
@@ -705,7 +828,7 @@ class DocumentsScreen extends Component {
 												Após ser excluido, um modelo não pode ser recuperado.
 											</TextModal>
 											<TextModal>
-												Você deseja excluir o <strong>Modelo Estatuto Associação</strong> permanentemente?
+												Você deseja excluir o <strong>{this.state.modelsList.map(item => (item.title))}</strong> permanentemente?
 											</TextModal>
 										</WrapTextModal>
 										<ButtonsModal>
