@@ -29,7 +29,7 @@ const ContainerSelectedViewBy = styled.div`
 	z-index: 4;
 
 	@media(max-width: 1024px) {
-		padding: 3rem 4rem 0;
+		padding: 3rem 3rem 0 4rem;
 	}
 
 	@media (max-width: 768px) {
@@ -45,7 +45,7 @@ const ContainerSelectedViewBy = styled.div`
 
 const TitleManageOrgs = styled.h2`
 	color: #85144B;
-	font-size: 2.2rem;
+	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
 
@@ -110,7 +110,6 @@ const InputSelect = styled.div`
 const SelectedViewByText = styled.p`
 	width: 100%;
 	padding-left: 0.3rem;
-	/* text-align: center; */
 	color: ${props => (props.color === 'Selecionar status' ? '#959595' : '#85144B')};
 `;
 
@@ -215,7 +214,7 @@ const ContainerTableTitleMob = styled.span`
 		flex-direction: column;
 
 		${({ selected }) => selected && css`
-		img {display: block;}
+		/* img {display: block;} */
 		p {display: none;}
 		div {display: flex;}
 	`}
@@ -242,6 +241,10 @@ const TextInformation = styled.p`
 const Box = styled.div`
 	display: none;
 	flex-direction: row;
+
+	@media(max-width: 768px) {
+		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
+	}
 `;
 
 const TableTitleMob = styled.th`
@@ -288,6 +291,11 @@ const TextStatus = styled.p`
 	font-size: 0.8rem;
 	font-family: Overpass, Light;
 	text-transform: uppercase;
+
+
+	@media(max-width: 768px) {
+		display: ${props => (props.isClickedName ? 'none' : 'flex')};
+	}
 `;
 
 const ImageStatus = styled.img`
@@ -295,6 +303,10 @@ const ImageStatus = styled.img`
   padding-right: 0.3rem;
 	display: none;
 	cursor: pointer;
+
+	@media(max-width: 768px) {
+		display: flex;
+	}
 `;
 
 class OrganizationScreen extends Component {
@@ -302,11 +314,10 @@ class OrganizationScreen extends Component {
 		super(props);
 		this.state = {
 			hovered: undefined,
-			isModal: true,
+			isModal: undefined,
 			itemSelected: undefined,
 			isSelected: undefined,
 			selectedValue: 'Selecionar status',
-			// selectedValue: 'Isento',
 			selectedItems: [
 				'Selecionar status',
 				'Pendente de Autorização',
@@ -705,9 +716,17 @@ class OrganizationScreen extends Component {
 			return data;
 		});
 		this.setState({
+			isClickedStatus: '',
 			tableDatas: newList,
 		});
 	}
+
+	handleClickedImageStatus = (item) => {
+		this.setState({
+			isClickedStatus: item.id,
+		});
+	};
+
 
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
@@ -716,13 +735,13 @@ class OrganizationScreen extends Component {
 				<TitleViewBy>Visualizar por:</TitleViewBy>
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
-						<SelectedViewByText>{this.state.selectedValue}</SelectedViewByText>
+						<SelectedViewByText color={this.state.selectedValue}>{this.state.selectedValue}</SelectedViewByText>
 						<img src={ImageCaminho} alt="arrow" />
 					</InputSelect>
 					{this.state.isSelected && (
 						<InputSelectedItem>
 							{this.state.selectedItems.map((item, index) => (
-								<SelectedItem color
+								<SelectedItem
 									onClick={() => this.handleSelectedValue(item)}
 									key={index}
 									hover={item}
@@ -739,7 +758,7 @@ class OrganizationScreen extends Component {
 
 	renderStatus = item => (
 		<>
-			<Box>
+			<Box isClickedStatus={ item.id === this.state.isClickedStatus}>
 				{this.state.statusImgs.map((status, index) => (
 					<ImageStatus
 						key={index}
@@ -749,7 +768,12 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 			</Box>
-			<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'} >{item.status}</TextStatus>
+			<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
+				isClickedName={ item.id === this.state.isClickedStatus}
+				onClick={() => this.handleClickedImageStatus(item)}
+			>
+				{item.status}
+			</TextStatus>
 		</>
 	)
 
@@ -801,9 +825,7 @@ class OrganizationScreen extends Component {
 				}
 				{widthMob
 					? <ContainerTableTitleMob
-						onMouseEnter={() => this.setState({ hovered: item })}
-						onMouseLeave={() => this.setState({ hovered: undefined })}
-						selected={this.state.hovered === item}
+						// selected={this.state.hovered === item}
 					>
 						<TableTitleMob>Status</TableTitleMob>
 						{this.renderStatus(item)}
@@ -835,8 +857,7 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		console.log('tableDatas', this.state.tableDatas);
-
+		console.log('tableDatas', this.state.isClickedStatus);
 		return (
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}

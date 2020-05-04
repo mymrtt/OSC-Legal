@@ -9,7 +9,7 @@ import ImageClose from '../../../assets/fechar.svg';
 // import ImageDelete from '../../../assets/delete.svg';
 import ImageBackMobile from '../../../assets/setaLado.svg';
 
-// Image
+// ImageClosed
 import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
@@ -23,7 +23,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
 	z-index: 3;
-
+	position: absolute;
 `;
 
 const Container = styled.div`
@@ -52,7 +52,7 @@ const ImageBack = styled.img`
 	@media (max-width: 648px) {
 		display: flex;
 		align-self: end;
-		padding: 1rem 1rem 1rem;
+		padding: 1rem 1rem 2.5rem;
 		/* margin: 0 0 2rem 1rem; */
 	}
 `;
@@ -136,13 +136,13 @@ const SubAnswer = styled.p`
 	color: #231F20;
 	font-size: 0.9rem;
 	font-family: "Overpass", Light;
-	margin: 0.5rem 0 0.8rem 0;
+	margin: 0.5rem 0 1rem 0;
 `;
 
 const ContentCreate = styled.div`
 	width: 35%;
   color: #85144B;
-	padding-left: 3rem;
+	padding: 0 0 2rem 3rem;
   border-left: 1px solid;
 	display: flex;
 	flex-direction: column;
@@ -157,10 +157,10 @@ const ContentCreate = styled.div`
 }
 `;
 
-const Image = styled.img`
+const ImageClosed = styled.img`
 	display: flex;
 	align-self: flex-end;
-	padding: 1rem;
+	padding: 1rem 1rem 0;
 	cursor: pointer;
 
 	@media (max-width: 648px) {
@@ -176,7 +176,7 @@ const ContainerOrganization = styled.span`
 
 	@media (max-width: 648px) {
 		/* height: auto; */
-		padding: 0 1rem;
+		padding: 0 1rem 2rem;
 		order: 3;
 	}
 `;
@@ -194,8 +194,14 @@ const ContentOrganization = styled.div`
 
 	@media (max-width: 648px) {
 		flex-direction: column;
+		margin: 0;
 		order: 4;
 	}
+`;
+
+const ContentOrganizationMobile = styled.div`
+	display: flex;
+	flex-direction: row;
 `;
 
 const ContentConsultorDetails = styled.div`
@@ -222,6 +228,7 @@ const SeparationMobile = styled.div`
 	display: none;
 
 	@media (max-width: 648px) {
+		width: 50%;
 		display: flex;
 		flex-direction: column;
 	}
@@ -232,7 +239,7 @@ const ContainerSelected = styled.div`
 
 		@media (max-width: 648px) {
 			width: 100%;
-			padding: 1rem 0;
+			padding: 1rem 0 0;
 			display: flex;
 			justify-content: center;
 			justify-content: space-evenly;
@@ -244,19 +251,16 @@ const ContainerSelected = styled.div`
 `;
 
 const ContainerPaymentMethod = styled.div`
+	border-bottom: ${props => (props.border && '5px solid #FF4136')};
+	color: #231F20;
+	padding-bottom: 1rem;
 	display: flex;
 	flex-direction: row;
-	/* padding-left: 0.7rem; */
-
-	:hover {
-		border-bottom: 4px solid #FF4136;
-		color: #FF4136;
-		margin-top: 0.7rem;
-	}
+	cursor: pointer;
 `;
 
 const PaymentMethodText = styled.p`
-	color: ${props => (props.color)};
+	color: ${props => (props.color && '#FF4136')};
 	padding-left: 0.3rem;
 `;
 
@@ -285,51 +289,58 @@ class ModalOrganization extends Component {
 		};
 	}
 
+	handleClicked = (item) => {
+		this.setState({
+			selectedStatus: item.desc,
+		});
+	};
+
 	render() {
 		const { item } = this.props;
-		console.log('item', this.props.item);
+		console.log('item render', this.state.selectedStatus);
 		return (
-			<Overlay onClick={this.props.handleCloseModal}>
+			// <Overlay onClick={this.props.handleCloseModal}>
+			<Overlay>
 				<Container>
-					<ImageBack src={ImageBackMobile} onClick={this.props.handleCloseModal} />
+					<ImageBack src={ImageBackMobile} onClick={this.props.isModalClosed} />
 					<ContentAdmin>
 						<ContentConsultor>
 							<Title>consultor</Title>
 							<ContentConsultorItem>
 								<div>
-									<SubTitle>Erlane</SubTitle>
-									<SubAnswer>Erlane Mendes</SubAnswer>
-									<SubTitle>Identidade</SubTitle>
-									<SubAnswer>123456789-3</SubAnswer>
+									<SubTitle>nome</SubTitle>
+									<SubAnswer>{item.admin.name}</SubAnswer>
+									<SubTitle>rg</SubTitle>
+									<SubAnswer>{item.admin.rg}</SubAnswer>
 								</div>
 								<div>
-									<SubTitle>Nascimento</SubTitle>
-									<SubAnswer>12/45/6789</SubAnswer>
-									<SubTitle>Cpf</SubTitle>
-									<SubAnswer>123.456.789-43</SubAnswer>
+									<SubTitle>data de nascimento</SubTitle>
+									<SubAnswer>{item.admin.dateOfBirth}</SubAnswer>
+									<SubTitle>cpf</SubTitle>
+									<SubAnswer>{item.cpf}</SubAnswer>
 								</div>
 								<div>
-									<SubTitle>Email</SubTitle>
-									<SubAnswer>email@gmail.com</SubAnswer>
-									<SubTitle>Celular</SubTitle>
-									<SubAnswer>(12)3456-7893</SubAnswer>
+									<SubTitle>e-mail</SubTitle>
+									<SubAnswer>{item.email}</SubAnswer>
+									<SubTitle>telefone</SubTitle>
+									<SubAnswer>{item.telephone}</SubAnswer>
 								</div>
 							</ContentConsultorItem>
 						</ContentConsultor>
 						<ContentCreate>
-							<Image src={ImageClose} onClick={this.props.handleCloseModal} />
+							<ImageClosed src={ImageClose} onClick={this.props.handleCloseModal} />
 							<ContentConsultorDetails>
 								<div>
-									<SubTitle>Criado em</SubTitle>
-									<SubAnswer>12/34/5678</SubAnswer>
+									<SubTitle>criado em</SubTitle>
+									<SubAnswer>{item.createdIn}</SubAnswer>
 								</div>
 								<div>
-									<SubTitle>Autorizado</SubTitle>
-									<SubAnswer>13/56/7893</SubAnswer>
+									<SubTitle>autorizado em</SubTitle>
+									<SubAnswer>{item.authorization}</SubAnswer>
 								</div>
 								<div>
-									<SubTitle>Vencimento</SubTitle>
-									<SubAnswer>45/67/8931</SubAnswer>
+									<SubTitle>vencimento</SubTitle>
+									<SubAnswer>{item.dueDate}</SubAnswer>
 								</div>
 							</ContentConsultorDetails>
 						</ContentCreate>
@@ -338,66 +349,76 @@ class ModalOrganization extends Component {
 						<Title>organização</Title>
 						<ContentOrganization margin>
 							<Separation>
-								<SubTitle>Fantasia</SubTitle>
-								<SubAnswer>Israel Matheus</SubAnswer>
-								<SubTitle>Razão</SubTitle>
-								<SubAnswer>Princeso</SubAnswer>
+								<SubTitle>nome fantasia</SubTitle>
+								<SubAnswer>{item.admin.fantasyName}</SubAnswer>
+								<SubTitle>razão social</SubTitle>
+								<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>Cnpj</SubTitle>
-								<SubAnswer>1234541656789-3</SubAnswer>
-								<SubTitle>Tel</SubTitle>
-								<SubAnswer>(21)99558-9213</SubAnswer>
+								<SubTitle>cnpj</SubTitle>
+								<SubAnswer>{item.admin.cnpj}</SubAnswer>
+								<SubTitle>telefone</SubTitle>
+								<SubAnswer>{item.telephone}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>E-mail</SubTitle>
-								<SubAnswer>israel@gmail.com</SubAnswer>
-								<SubTitle>Endereço</SubTitle>
-								<SubAnswer>Rua do Beco</SubAnswer>
+								<SubTitle>email</SubTitle>
+								<SubAnswer>{item.email}</SubAnswer>
+								<SubTitle>endereço</SubTitle>
+								<SubAnswer>{item.admin.address}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>Complemento</SubTitle>
-								<SubAnswer>casa</SubAnswer>
-								<SubTitle>Bairro</SubTitle>
-								<SubAnswer>Gamboa</SubAnswer>
+								<SubTitle>complemento</SubTitle>
+								<SubAnswer>{item.admin.complement}</SubAnswer>
+								<SubTitle>bairro</SubTitle>
+								<SubAnswer>{item.admin.neighborhood}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>Cep</SubTitle>
-								<SubAnswer>20.2410-410</SubAnswer>
-								<SubTitle>Cidade</SubTitle>
-								<SubAnswer>Rio de janeiro</SubAnswer>
+								<SubTitle>cep</SubTitle>
+								<SubAnswer>{item.admin.cep}</SubAnswer>
+								<SubTitle>cidade</SubTitle>
+								<SubAnswer>{item.admin.city}</SubAnswer>
 							</Separation>
-							<SeparationMobile>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-							</SeparationMobile>
-							<SeparationMobile>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-								<SubTitle>Identidade</SubTitle>
-								<SubAnswer>123456789-3</SubAnswer>
-							</SeparationMobile>
+							<ContentOrganizationMobile>
+								<SeparationMobile>
+									<SubTitle>nome fantasia</SubTitle>
+									<SubAnswer>{item.admin.fantasyName}</SubAnswer>
+									<SubTitle>email</SubTitle>
+									<SubAnswer>{item.email}</SubAnswer>
+									<SubTitle>cnpj</SubTitle>
+									<SubAnswer>{item.admin.cnpj}</SubAnswer>
+									<SubTitle>complemento</SubTitle>
+									<SubAnswer>{item.admin.complement}</SubAnswer>
+									<SubTitle>bairro</SubTitle>
+									<SubAnswer>{item.admin.neighborhood}</SubAnswer>
+								</SeparationMobile>
+								<SeparationMobile>
+									<SubTitle>razão social</SubTitle>
+									<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
+									<SubTitle>telefone</SubTitle>
+									<SubAnswer>{item.telephone}</SubAnswer>
+									<SubTitle>endereço</SubTitle>
+									<SubAnswer>{item.admin.address}</SubAnswer>
+									<SubTitle>cep</SubTitle>
+									<SubAnswer>{item.admin.cep}</SubAnswer>
+									<SubTitle>cidade</SubTitle>
+									<SubAnswer>{item.admin.city}</SubAnswer>
+								</SeparationMobile>
+							</ContentOrganizationMobile>
 						</ContentOrganization>
 					</ContainerOrganization>
 					<ContainerSelected>
-						{this.state.paymentMethodList.map(item => <ContainerPaymentMethod>
-							<img src={item.img}></img>
-							<PaymentMethodText>{item.desc}</PaymentMethodText>
-						</ContainerPaymentMethod>)}
+						{this.state.paymentMethodList.map(item => (
+							<ContainerPaymentMethod
+								key={item.desc}
+								border={this.state.selectedStatus === item.desc}
+								onClick={() => this.handleClicked(item)}
+							>
+								<img src={item.img}></img>
+								<PaymentMethodText
+									color={this.state.selectedStatus === item.desc}
+								>{item.desc}
+								</PaymentMethodText>
+							</ContainerPaymentMethod>))}
 					</ContainerSelected>
 				</Container>
 			</Overlay>
