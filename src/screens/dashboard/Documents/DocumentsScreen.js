@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-key */
 /* eslint-disable class-methods-use-this */
@@ -12,7 +13,7 @@ import DownloadIcon from '../../../assets/download.svg';
 import DownloadWhiteIcon from '../../../assets/downloadwhite.svg';
 import Exit from '../../../assets/exit.svg';
 import DeleteIcon from '../../../assets/delete.svg';
-import documentWhite from '../../../assets/documentWhite.svg'
+import documentWhite from '../../../assets/documentWhite.svg';
 
 import Header from '../components/Header';
 import Scrollbar from '../components/Scrollbar';
@@ -271,8 +272,8 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		/* display: ${props => props.contOptions}; */
-		display: none;
+		display: ${props => (props.contOptions ? 'flex' : 'none')};
+		/* display: none; */
 	}
 `;
 
@@ -630,25 +631,31 @@ class DocumentsScreen extends Component {
 		modelsList: [
 			{
 				num: 1,
-				title: 'Modelo Estatuto Associação',
+				title: 'titulo 1',
 				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc.',
+				file: '',
 			},
 			{
 				num: 2,
-				title: 'Modelo Estatuto para Grupo de capoeira',
+				title: 'titulo 2',
 				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc. 3 Modelo Estatuto Fundação Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público. 4 Modelo Estatuto Associação Organização da Sociedade Civil de Interesse Público (OSCIP). documentação básica de associação, cumprindo as exigências da Lei nº 9.790/1999 para qualificação como OSCIP. 5 Modelo Ata Assembleia de Constituição Associação Modelo de ata de Assembleia específica para constituição de Associação, com a aprovação do estatuto e eleição dos cargos diretivos. 6 Modelo Ata Assembleia Geral Associação Modelo de ata de Assembleia Geral de Associação, que poderá ser adaptado e utilizado em diversos contextos, para qualquer pauta. 7 Modelo Registro Público Constituição Fundação Modelo de Escritura Pública de Registro de constituição de Fundação. Atentar para as exigências e rotinas dos cartórios competentes.',
+				file: '',
 			},
 			{
 				num: 3,
-				title: 'Modelo Estatuto Fundação',
+				title: 'titulo 3',
 				description: 'Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público.',
+				file: '',
 			},
 		],
 		changeColorLabel: false,
-		// options: false,
+		options: false,
+		selectedOptions: '',
 		modalDelete: false,
 		addModel: false,
 		download: DownloadIcon,
+		modelSelect: '',
+		search: '',
 	};
 
 	handleClickedLabel = (ev) => {
@@ -664,17 +671,19 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	// handleOnOptions = () => {
-	// 	this.setState({
-	// 		options: true,
-	// 	});
-	// }
+	handleOnOptions = (item) => {
+		this.setState({
+			options: true,
+			selectedOptions: item,
+		});
+	}
 
-	// handleOffOptions = () => {
-	// 	this.setState({
-	// 		options: false,
-	// 	});
-	// }
+	handleOffOptions = () => {
+		this.setState({
+			options: false,
+			selectedOptions: '',
+		});
+	}
 
 		handleAddModel = () => {
 			this.setState({
@@ -702,26 +711,33 @@ class DocumentsScreen extends Component {
 
 		handleSubmit = (e) => {
 			e.preventDefault();
-			const { num, title, description } = this.state.modelsList;
-
-			if (title && description !== []) {
-				this.state.modelsList.push({ num, title, description });
+			const {
+				file, num, title, description,
+			} = this.state;
+			if (title !== '' && description !== '' && file !== '') {
+				this.state.modelsList.push({
+					file, num, title, description,
+				});
 				this.setState({
 					addModel: false,
 				});
 			}
+			this.setState({
+				isFile: '',
+				file: '',
+				num: '',
+				title: '',
+				description: '',
+			});
 		}
 
-		// handleInputFile = (e) => {
-		// 	this.setState({
-		// 		file: e.target.value,
-		// 	});
-		// }
-
-		handleModelChange = (field, e) => {
-			const { modelsList } = this.state;
-			modelsList[field] = e.target.value;
-			this.setState({ modelsList });
+		handleModelChange = (e) => {
+			this.setState({
+				title: e.target.value,
+				description: e.target.value,
+				num: this.state.modelsList.length + 1,
+				file: this.state.isFile,
+			 });
 		}
 
 		handleChangeColor = () => {
@@ -736,7 +752,36 @@ class DocumentsScreen extends Component {
 			});
 		}
 
+		uploadFile = (e) => {
+			const file = e.target.files[0];
+			this.setState({
+				isFile: file.name,
+			});
+		}
+
+		handleSelected = (item) => {
+			this.setState({
+				modelSelect: item,
+			});
+		}
+
+		handleDelete = (ev) => {
+			ev.stopPropagation();
+			const list = this.state.modelsList;
+			list.splice(list.indexOf(this.state.modelSelect), 1);
+			this.setState({
+				list,
+			});
+		}
+
+		handleSearch = (e) => {
+			this.setState({
+				search: e.target.value,
+			 });
+		}
+
 		render() {
+			const list = (this.state.search !== '') ? this.state.modelsList.filter			(model => {return !model.title.search(this.state.search)}) : this.state.modelsList;
 			return (
 				<Container onClick={this.handleClickedLabelLeave}>
 					<Header />
@@ -748,6 +793,7 @@ class DocumentsScreen extends Component {
 								onClick={this.handleClickedLabel}
 								clickLabel={this.state.changeColorLabel}>
 								<SearchInput
+									onChange={this.handleSearch}
 									placeholder="Digite aqui para pesquisar"
 								/>
 								<img src={magnifyingGlass} alt="Lupa" />
@@ -768,7 +814,7 @@ class DocumentsScreen extends Component {
 									</HeaderAddModel>
 									<ContainerInputs>
 										<UploadFile htmlFor='upload-file'>
-											<input id='upload-file' type="file" placeholder="Anexar Modelo"/>
+											<input onChange={this.uploadFile} id='upload-file' type="file" placeholder="Anexar Modelo"/>
 											<img src={documentWhite} alt="Anexar Documento" />
 											<TextUploadFile>
 												<h3>Anexar Modelo</h3>
@@ -777,11 +823,11 @@ class DocumentsScreen extends Component {
 										</UploadFile>
 										<ContainerInput>
 											<TitleInputs>Nome do modelo</TitleInputs>
-											<Input onChange={e => this.handleModelChange('title', e)} type="text" placeholder="Digitar nome do documento"/>
+											<Input value={this.state.modelsList.title} onChange={this.handleModelChange} type="text" placeholder="Digitar nome do documento"/>
 										</ContainerInput>
 										<ContainerInput>
 											<TitleInputs>Descrição</TitleInputs>
-											<TextArea onChange={e => this.handleModelChange('description', e)} type="text" placeholder="Como esse documento é usado" />
+											<TextArea value={this.state.modelsList.description} onChange={this.handleModelChange} type="text" placeholder="Como esse documento é usado" />
 										</ContainerInput>
 									</ContainerInputs>
 									<ButtonAdd type="submit">Adicionar</ButtonAdd>
@@ -790,12 +836,12 @@ class DocumentsScreen extends Component {
 						</ContainerAddModel>
 						<Scrollbar maxHeight={'65vh'}>
 							<ContainerModels>
-								{this.state.modelsList.map(item => (
+								{list.map(item => (
 									<ContainerModel key={item}
 										zIndex={this.state.addModel}
-									// onMouseEnter={this.handleOnOptions}
-									// onMouseLeave={this.handleOffOptions}
-									/* contOptions={this.state.options ? 'flex' : 'none'} */>
+										onMouseEnter={() => this.handleOnOptions(item)}
+										onMouseLeave={this.handleOffOptions}
+									>
 										<ContainerModelDescription>
 											<span>
 												<ModelNumber>{item.num}</ModelNumber>
@@ -803,15 +849,15 @@ class DocumentsScreen extends Component {
 											</span>
 											<ModelParagraph>{item.description}</ModelParagraph>
 										</ContainerModelDescription>
-										<ContainerOptions>
+										<ContainerOptions contOptions={this.state.options && (this.state.selectedOptions === item)}>
 											<Option onMouseEnter={this.handleChangeColor}	onMouseLeave={this.handleChangeColorLeave}>
 												<OptionImage
 												 src={this.state.download} alt="Download" />
-												<OptionText>Exportar</OptionText>
+												<OptionText >Exportar</OptionText>
 											</Option>
 											<Option onClick={this.handleModalDelete}>
 												<OptionImage src={DeleteIcon} alt="Deletar" />
-												<OptionText>Excluir</OptionText>
+												<OptionText onClick={() => this.handleSelected(item)}>Excluir</OptionText>
 											</Option>
 										</ContainerOptions>
 									</ContainerModel>
@@ -833,7 +879,7 @@ class DocumentsScreen extends Component {
 										</WrapTextModal>
 										<ButtonsModal>
 											<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
-											<ButtonConfirm>Confirmar</ButtonConfirm>
+											<ButtonConfirm onClick={(ev) => this.handleDelete(ev)}>Confirmar</ButtonConfirm>
 										</ButtonsModal>
 									</ModalDelete>
 								</ContainerModalDelete>}
