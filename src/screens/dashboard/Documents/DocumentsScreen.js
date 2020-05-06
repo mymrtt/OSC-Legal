@@ -13,6 +13,7 @@ import DownloadIcon from '../../../assets/download.svg';
 import DownloadWhiteIcon from '../../../assets/downloadwhite.svg';
 import Exit from '../../../assets/exit.svg';
 import DeleteIcon from '../../../assets/delete.svg';
+import DeleteIconWhite from '../../../assets/deleteWhite.svg';
 import documentWhite from '../../../assets/documentWhite.svg';
 
 import Header from '../components/Header';
@@ -156,6 +157,10 @@ const ContainerModels = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 490px) {
+    margin-bottom: 10rem;
+	}
 `;
 
 const ContainerModel = styled.div`
@@ -168,7 +173,7 @@ const ContainerModel = styled.div`
 	position: relative;
 	z-index: ${props => (props.zIndex ? '-1' : 0)};
 
-	&:hover {
+	& {
 		border:1px solid #85144B;
 
 		&::before {
@@ -185,7 +190,11 @@ const ContainerModel = styled.div`
 			}
 
 			@media (max-width: 490px) {
-				display: none;
+				width: 10rem;
+				height: 1px;
+				z-index: 6;
+				top: 15rem;
+				right: 0;
 			}
 		}	
 	}
@@ -198,6 +207,7 @@ const ContainerModel = styled.div`
 		width: 100%;
 		padding: 1rem;
 		order: 3;
+		/* position: initial; */
 	}
 `;
 
@@ -236,6 +246,10 @@ const ModelNumber = styled.h2`
 	color: #FF4136;
 	font-family: "Overpass", Black;
 	font-size: 1.5rem;
+
+	@media (max-width: 490px) {
+		font-size: 1.2rem;
+	}
 `;
 
 const ModelTitle = styled.h2`
@@ -245,6 +259,10 @@ const ModelTitle = styled.h2`
 
 	@media (max-width: 768px) {
 		font-size: 1.3rem;
+	}
+
+	@media (max-width: 490px) {
+		font-size: 1.2rem;
 	}
 `;
 
@@ -272,7 +290,16 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		display: ${props => (props.contOptions ? 'flex' : 'none')};
+		display: ${props => (props.contOptions ? 'flex' : 'flex')};
+		position: absolute;
+		width: 160px;
+		height: 130px;
+    top: 11rem;
+    right: 0rem;
+    border: 1px solid #85144B;
+		z-index: 5;
+		background: #ffffff;
+		align-items: center;
 		/* display: none; */
 	}
 `;
@@ -295,6 +322,15 @@ const Option = styled.button`
 	@media (max-width: 768px) {
 		width: 6rem;
 	}
+
+	@media (max-width: 490px) {
+		align-self: center;
+		justify-content: space-around;
+		margin-bottom: 0;
+		height: 100%;
+		width: 100%;
+		padding: 0 15%;
+	}
 `;
 
 const OptionImage = styled.img`
@@ -303,19 +339,25 @@ const OptionImage = styled.img`
 		width: 15px;
 		height: 15px;
 	}
+
+	@media (max-width: 490px) {
+		width: 16px;
+		height: 20px;
+	}
 `;
 
 const OptionText = styled.p`
-	color: #85144B;
+	color: ${props => (props.colorTextButton)};
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
 
-	&:hover {
-		color: #ffffff;
-	}
-
 	@media (max-width: 768px) {
 		font-size: 1rem;
+	}
+
+	@media (max-width: 490px) {
+		font-size: 1.3rem;
+    margin-left: 0.8rem;
 	}
 `;
 
@@ -422,7 +464,7 @@ const UploadFile = styled.label`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: 1px solid #85144B;
+	border: ${props => (props.validationModel ? '1px solid #ff4136' : '1px solid #85144B')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
@@ -483,7 +525,7 @@ const Input = styled.input`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: 1px solid #85144B;
+	border: ${props => (props.validationModel ? '1px solid #ff4136' : '1px solid #85144B')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
@@ -499,7 +541,7 @@ const TextArea = styled.textarea`
 	border-radius: 3px;
 	padding: 3% 2.5%;
 	margin-bottom: 1rem;
-	border: 1px solid #85144B;
+	border: ${props => (props.validationModel ? '1px solid #ff4136' : '1px solid #85144B')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
@@ -547,7 +589,7 @@ const ContainerModalDelete = styled(ContainerModal)`
 
 const ModalDelete = styled(ModalAddModel)`
 	width: 460px;
-	height: 325px;
+	height: auto;
 	padding: 1% 1% 1% 2%;
 
 	@media (max-width: 490px) {
@@ -631,19 +673,19 @@ class DocumentsScreen extends Component {
 		modelsList: [
 			{
 				num: 1,
-				title: 'titulo 1',
+				title: 'Modelo Estatuto Associação',
 				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc.',
 				file: '',
 			},
 			{
 				num: 2,
-				title: 'titulo 2',
+				title: 'Modelo Estatuto para Grupo de capoeira',
 				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc. 3 Modelo Estatuto Fundação Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público. 4 Modelo Estatuto Associação Organização da Sociedade Civil de Interesse Público (OSCIP). documentação básica de associação, cumprindo as exigências da Lei nº 9.790/1999 para qualificação como OSCIP. 5 Modelo Ata Assembleia de Constituição Associação Modelo de ata de Assembleia específica para constituição de Associação, com a aprovação do estatuto e eleição dos cargos diretivos. 6 Modelo Ata Assembleia Geral Associação Modelo de ata de Assembleia Geral de Associação, que poderá ser adaptado e utilizado em diversos contextos, para qualquer pauta. 7 Modelo Registro Público Constituição Fundação Modelo de Escritura Pública de Registro de constituição de Fundação. Atentar para as exigências e rotinas dos cartórios competentes.',
 				file: '',
 			},
 			{
 				num: 3,
-				title: 'titulo 3',
+				title: 'Modelo Estatuto Fundação',
 				description: 'Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público.',
 				file: '',
 			},
@@ -653,9 +695,15 @@ class DocumentsScreen extends Component {
 		selectedOptions: '',
 		modalDelete: false,
 		addModel: false,
-		download: DownloadIcon,
+		downloadExport: DownloadIcon,
+		downloadDelete: DeleteIcon,
 		modelSelect: '',
 		search: '',
+		hoverExport: '',
+		hoverDelete: '',
+		colorTextExport: '',
+		colorTextDelete: '',
+		validationModel: false,
 	};
 
 	handleClickedLabel = (ev) => {
@@ -721,6 +769,10 @@ class DocumentsScreen extends Component {
 				this.setState({
 					addModel: false,
 				});
+			} else if (title === '' || description === '' || file === '') {
+				this.setState({
+					validationModel: true,
+				});
 			}
 			this.setState({
 				isFile: '',
@@ -740,15 +792,35 @@ class DocumentsScreen extends Component {
 			 });
 		}
 
-		handleChangeColor = () => {
+		handleChangeColorExport = (item) => {
 			this.setState({
-				download: DownloadWhiteIcon,
+				downloadExport: DownloadWhiteIcon,
+				hoverExport: item,
+				colorTextExport: '#ffffff',
 			});
 		}
 
-		handleChangeColorLeave = () => {
+		handleChangeColorLeaveExport = () => {
 			this.setState({
-				download: DownloadIcon,
+				downloadExport: DownloadIcon,
+				hoverExport: '',
+				colorTextExport: '#85144B',
+			});
+		}
+
+		handleChangeColorDelete = (item) => {
+			this.setState({
+				downloadDelete: DeleteIconWhite,
+				hoverDelete: item,
+				colorTextDelete: '#ffffff',
+			});
+		}
+
+		handleChangeColorLeaveDelete = () => {
+			this.setState({
+				downloadDelete: DeleteIcon,
+				hoverDelete: '',
+				colorTextDelete: '#85144B',
 			});
 		}
 
@@ -766,11 +838,12 @@ class DocumentsScreen extends Component {
 		}
 
 		handleDelete = (ev) => {
-			ev.stopPropagation();
+			ev.preventDefault();
 			const list = this.state.modelsList;
 			list.splice(list.indexOf(this.state.modelSelect), 1);
 			this.setState({
 				list,
+				modalDelete: false,
 			});
 		}
 
@@ -781,7 +854,8 @@ class DocumentsScreen extends Component {
 		}
 
 		render() {
-			const list = (this.state.search !== '') ? this.state.modelsList.filter			(model => {return !model.title.search(this.state.search)}) : this.state.modelsList;
+			const list = (this.state.search !== '') ? this.state.modelsList.filter(model => !model.title.search(this.state.search)) : this.state.modelsList;
+
 			return (
 				<Container onClick={this.handleClickedLabelLeave}>
 					<Header />
@@ -813,7 +887,7 @@ class DocumentsScreen extends Component {
 										<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
 									</HeaderAddModel>
 									<ContainerInputs>
-										<UploadFile htmlFor='upload-file'>
+										<UploadFile validationModel={this.state.validationModel} htmlFor='upload-file'>
 											<input onChange={this.uploadFile} id='upload-file' type="file" placeholder="Anexar Modelo"/>
 											<img src={documentWhite} alt="Anexar Documento" />
 											<TextUploadFile>
@@ -823,11 +897,11 @@ class DocumentsScreen extends Component {
 										</UploadFile>
 										<ContainerInput>
 											<TitleInputs>Nome do modelo</TitleInputs>
-											<Input value={this.state.modelsList.title} onChange={this.handleModelChange} type="text" placeholder="Digitar nome do documento"/>
+											<Input validationModel={this.state.validationModel} value={this.state.modelsList.title} onChange={this.handleModelChange} type="text" placeholder="Digitar nome do documento"/>
 										</ContainerInput>
 										<ContainerInput>
 											<TitleInputs>Descrição</TitleInputs>
-											<TextArea value={this.state.modelsList.description} onChange={this.handleModelChange} type="text" placeholder="Como esse documento é usado" />
+											<TextArea validationModel={this.state.validationModel} value={this.state.modelsList.description} onChange={this.handleModelChange} type="text" placeholder="Como esse documento é usado" />
 										</ContainerInput>
 									</ContainerInputs>
 									<ButtonAdd type="submit">Adicionar</ButtonAdd>
@@ -849,15 +923,27 @@ class DocumentsScreen extends Component {
 											</span>
 											<ModelParagraph>{item.description}</ModelParagraph>
 										</ContainerModelDescription>
-										<ContainerOptions contOptions={this.state.options && (this.state.selectedOptions === item)}>
-											<Option onMouseEnter={this.handleChangeColor}	onMouseLeave={this.handleChangeColorLeave}>
+										<ContainerOptions
+											contOptions={this.state.options && (this.state.selectedOptions === item)}>
+											<Option
+												onMouseEnter={() => this.handleChangeColorExport(item)}	onMouseLeave={this.handleChangeColorLeaveExport}>
 												<OptionImage
-												 src={this.state.download} alt="Download" />
-												<OptionText >Exportar</OptionText>
+												 src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+												 alt="Download" />
+												<OptionText
+													colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}>Exportar
+												</OptionText>
 											</Option>
-											<Option onClick={this.handleModalDelete}>
-												<OptionImage src={DeleteIcon} alt="Deletar" />
-												<OptionText onClick={() => this.handleSelected(item)}>Excluir</OptionText>
+											<Option
+												onMouseEnter={() => this.handleChangeColorDelete(item)}	onMouseLeave={this.handleChangeColorLeaveDelete}
+												onClick={this.handleModalDelete}>
+												<OptionImage
+													src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+													alt="Deletar" />
+												<OptionText
+													colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+													onClick={() => this.handleSelected(item)}>Excluir
+												</OptionText>
 											</Option>
 										</ContainerOptions>
 									</ContainerModel>
@@ -874,12 +960,12 @@ class DocumentsScreen extends Component {
 												Após ser excluido, um modelo não pode ser recuperado.
 											</TextModal>
 											<TextModal>
-												Você deseja excluir o <strong>{this.state.modelsList.map(item => (item.title))}</strong> permanentemente?
+												Você deseja excluir o <strong>{this.state.modelSelect.title}</strong> permanentemente?
 											</TextModal>
 										</WrapTextModal>
 										<ButtonsModal>
 											<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
-											<ButtonConfirm onClick={(ev) => this.handleDelete(ev)}>Confirmar</ButtonConfirm>
+											<ButtonConfirm onClick={ev => this.handleDelete(ev)}>Confirmar</ButtonConfirm>
 										</ButtonsModal>
 									</ModalDelete>
 								</ContainerModalDelete>}
