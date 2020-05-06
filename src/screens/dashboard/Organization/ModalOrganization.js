@@ -7,102 +7,103 @@ import styled from 'styled-components';
 import ImageClose from '../../../assets/fechar.svg';
 // import ImageEdit from '../../../assets/edit.svg';
 // import ImageDelete from '../../../assets/delete.svg';
-import ImageSeta from '../../../assets/setaLado.svg';
+import ImageBackMobile from '../../../assets/setaLado.svg';
 
-// Image
+// ImageClosed
 import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const Overlay = styled.div`
-	max-height: 100vh;
 	width: 100vw;
-	height: 100vh;
+	min-height: 100vh;
 	background-color: #707070a1;
 	display: flex;
-  justify-content: center;
   align-items: center;
-	position: absolute;
+  justify-content: center;
 	z-index: 3;
-
-	@media (max-width: 768px) {
-		position: fixed;
-		/* background-color: #FFFFFF; */
-	}
+	position: absolute;
 `;
 
 const Container = styled.div`
 	width: 80%;
-	height: 80%;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
 	background-color: #FFFFFF;
-	/* opacity: 10; */
-
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 
 	@media (max-width: 935px) {
-		width: 90%;
-		height: 80%;
+		width: 95%;
+		margin: 0;
 	}
 
 	@media (max-width: 648px) {
 		width: 100%;
-		height: 100%;
+		min-height: 100vh;
+		overflow-x: hidden;
+		overflow-y: scroll;
 	}
 `;
 
-const Image = styled.img`
-	display: flex;
-	align-self: flex-end;
-	padding: 1rem;
-	cursor: pointer;
-
-
-	@media (max-width: 798px) {
-		padding: 0.8rem 0.5rem;
-	}
-
-	@media (max-width: 648px) {
-		display: none;
-	}
-`;
-
-const ImageS = styled.img`
+const ImageBack = styled.img`
 	display: none;
 
 	@media (max-width: 648px) {
-		width: 4%;
 		display: flex;
-		margin: 0 0 3rem 1rem;
+		align-self: end;
+		padding: 1rem 1rem 2.5rem;
+		/* margin: 0 0 2rem 1rem; */
+	}
+`;
+
+const ContentAdmin = styled.section`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: ${props => (props.margin && '0 3.4rem')};
+
+	@media (max-width: 935px) {
+		margin: ${props => (props.margin && '0 1rem')};
+	}
+
+	@media (max-width: 648px) {
+		height: auto;
+		margin: 0;
+		flex-direction: column;
+		order: 1;
+	}
+`;
+
+const ContentConsultor = styled.span`
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+
+	@media (max-width: 648px) {
+		width: 100%;
+		padding: 0 1rem;
+		order: 2;
 	}
 `;
 
 const ContentConsultorItem = styled.div`
-	width: 90%;
+	/* width: 90%; */
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	margin-left: 3.4rem;
 
 	@media (max-width: 935px) {
-		width: 98%;
+		width: 100%;
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-left: 1rem;
-		padding-right: 1rem;
 	}
 
-	@media (max-width: 410px) {
+	@media (max-width: 648px) {
+		margin: 0;
 	}
-`;
-
-const ContentConsultorDetails = styled.div`
-	display: flex;
-	margin-left
-	flex-direction: row;
-	/* justify-content: space-around; */
 `;
 
 const Title = styled.h2`
@@ -117,105 +118,11 @@ const Title = styled.h2`
 	@media (max-width: 935px) {
 		margin-left: 1rem;
 	}
-`;
-
-const Span = styled.span`
-  height: 50%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin: ${props => (props.margin && '0 3.4rem')};
-
-	@media (max-width: 935px) {
-		margin: ${props => (props.margin && '0 1rem')};
-	}
 
 	@media (max-width: 648px) {
-		flex-direction: column-reverse;
+		margin: 0;
 	}
 `;
-
-const SpanOrganization = styled.span`
-	height: 50%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin: ${props => (props.margin && '0 3.4rem')};
-
-	@media (max-width: 935px) {
-		margin: ${props => (props.margin && '0 1rem')};
-	}
-
-	@media (max-width: 768px) {
-		flex-flow: wrap;
-	}
-`;
-
-const ContentConsultor = styled.span`
-	width: 60%;
-	display: flex;
-	flex-direction: column;
-
-	@media (max-width: 648px) {
-		width: 100%;
-		height: 30vh;
-	}
-`;
-
-// const ImageEdite = styled.img`
-// 	display: flex;
-//   flex-direction: row;
-// 	padding-bottom: 1rem;
-// `;
-
-const ContentSubTitle = styled.div`
-	/* width: 60%; */
-
-	@media (max-width: 648px) {
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-    justify-content: space-between;
-    margin: 0 1rem;
-	}
-`;
-
-const Div = styled.div`
-	width: 35%;
-  color: #85144B;
-	padding-left: 3rem;
-  border-left: 1px solid;
-	display: flex;
-	flex-direction: column;
-
-	@media (max-width: 648px) {
-    width: 100%;
-		border-left: 0;
-    border-bottom: 1px solid;
-		padding: 1.5rem 0;
-	}
-`;
-
-// const ContainerEdit = styled.div`
-// 	display: flex;
-// 	flex-direction: column;
-
-// 	@media (max-width: 648px) {
-// 		display: none;
-// 	}
-// `;
-
-// const SpanContainer = styled.span`
-// 	display: flex;
-// 	flex-direction: row;
-// `;
-
-// const ContainerOption = styled.p`
-// 	color: #85144B;
-// 	font-family: Overpass, Regular;
-// 	font-size: 1.2rem;
-// 	margin-left: 0.3rem;
-// `;
 
 const SubTitle = styled.p`
   color: #85144B;
@@ -223,20 +130,89 @@ const SubTitle = styled.p`
 	font-family: Overpass, Bold;
 	font-weight: 600;
   text-transform: uppercase;
-
-	@media (max-width: 648px) {
-		/* font-size: 0.625rem; */
-	}
 `;
 
 const SubAnswer = styled.p`
 	color: #231F20;
 	font-size: 0.9rem;
 	font-family: "Overpass", Light;
-	margin: 0.5rem 0 0.8rem 0;
+	margin: 0.5rem 0 1rem 0;
+`;
+
+const ContentCreate = styled.div`
+	width: 35%;
+  color: #85144B;
+	padding: 0 0 2rem 3rem;
+  border-left: 1px solid;
+	display: flex;
+	flex-direction: column;
 
 	@media (max-width: 648px) {
-		font-size: 1rem;
+		width: 100%;
+		border-left: 0;
+		border-bottom: 1px solid;
+		flex-direction: row;
+		padding: 0 1rem;
+		order: 1;
+}
+`;
+
+const ImageClosed = styled.img`
+	display: flex;
+	align-self: flex-end;
+	padding: 1rem 1rem 0;
+	cursor: pointer;
+
+	@media (max-width: 648px) {
+		display: none;
+	}
+`;
+
+const ContainerOrganization = styled.span`
+	background-color: #FFCFCD;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 1.5rem;
+
+	@media (max-width: 648px) {
+		/* height: auto; */
+		padding: 0 1rem 2rem;
+		order: 3;
+	}
+`;
+
+const ContentOrganization = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: ${props => (props.margin && '0 3.4rem')};
+	padding: 0 0 2rem;
+
+	@media (max-width: 935px) {
+		margin: ${props => (props.margin && '0 1rem')};
+	}
+
+	@media (max-width: 648px) {
+		flex-direction: column;
+		margin: 0;
+		order: 4;
+	}
+`;
+
+const ContentOrganizationMobile = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
+const ContentConsultorDetails = styled.div`
+	display: flex;
+	flex-direction: column;
+
+	 @media (max-width: 648px) {
+		width: 100%;
+		flex-direction: row;
+		justify-content: space-between;
+
 	}
 `;
 
@@ -252,47 +228,10 @@ const SeparationMobile = styled.div`
 	display: none;
 
 	@media (max-width: 648px) {
+		width: 50%;
 		display: flex;
 		flex-direction: column;
 	}
-`;
-
-const Parte2 = styled.span`
-	height: 50%;
-	background-color: #FFCFCD;
-	display: flex;
-	flex-direction: column;
-
-	@media (max-width: 648px) {
-
-	}
-`;
-
-// const ContainerEditImage = styled.div`
-// 	display: none;
-
-// 	@media (max-width: 648px) {
-//     width: 100%;
-// 		height: 7vh;
-// 		display: flex;
-// 		justify-content: center;
-// 		justify-content: space-evenly;
-// 		background-color: #FFFFFF;
-// 		bottom: 0;
-//    align-items: center;
-//    position: fixed;
-// 	}
-// `;
-
-// const SpanContainerImage = styled.div`
-// 	  display: flex;
-//    flex-direction: row;
-// `;
-
-const ContainerPaymentMethod = styled.div`
-	display: flex;
-	flex-direction: row;
-	/* padding-left: 0.7rem; */
 `;
 
 const ContainerSelected = styled.div`
@@ -300,7 +239,7 @@ const ContainerSelected = styled.div`
 
 		@media (max-width: 648px) {
 			width: 100%;
-			height: 7vh;
+			padding: 1rem 0 0;
 			display: flex;
 			justify-content: center;
 			justify-content: space-evenly;
@@ -311,11 +250,19 @@ const ContainerSelected = styled.div`
  	}
 `;
 
-const PaymentMethodText = styled.p`
-	color: ${props => (props.color)};
-	padding-left: 0.3rem;
+const ContainerPaymentMethod = styled.div`
+	border-bottom: ${props => (props.border && '5px solid #FF4136')};
+	color: #231F20;
+	padding-bottom: 1rem;
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
 `;
 
+const PaymentMethodText = styled.p`
+	color: ${props => (props.color && '#FF4136')};
+	padding-left: 0.3rem;
+`;
 
 class ModalOrganization extends Component {
 	constructor(props) {
@@ -342,142 +289,136 @@ class ModalOrganization extends Component {
 		};
 	}
 
+	handleClicked = (item) => {
+		this.setState({
+			selectedStatus: item.desc,
+		});
+	};
+
 	render() {
+		const { item } = this.props;
+		console.log('item render', this.state.selectedStatus);
 		return (
+			// <Overlay onClick={this.props.handleCloseModal}>
 			<Overlay>
 				<Container>
-					<Span>
+					<ImageBack src={ImageBackMobile} onClick={this.props.isModalClosed} />
+					<ContentAdmin>
 						<ContentConsultor>
 							<Title>consultor</Title>
 							<ContentConsultorItem>
 								<div>
 									<SubTitle>nome</SubTitle>
-									<SubAnswer>Yasmin Miranda</SubAnswer>
+									<SubAnswer>{item.admin.name}</SubAnswer>
 									<SubTitle>rg</SubTitle>
-									<SubAnswer>00000000-0</SubAnswer>
+									<SubAnswer>{item.admin.rg}</SubAnswer>
 								</div>
 								<div>
 									<SubTitle>data de nascimento</SubTitle>
-									<SubAnswer>22/02/2020</SubAnswer>
+									<SubAnswer>{item.admin.dateOfBirth}</SubAnswer>
 									<SubTitle>cpf</SubTitle>
-									<SubAnswer>000.000.000-00</SubAnswer>
+									<SubAnswer>{item.cpf}</SubAnswer>
 								</div>
 								<div>
-									<SubTitle>email</SubTitle>
-									<SubAnswer>nome@email.com</SubAnswer>
+									<SubTitle>e-mail</SubTitle>
+									<SubAnswer>{item.email}</SubAnswer>
 									<SubTitle>telefone</SubTitle>
-									<SubAnswer>(99) 99999-9999</SubAnswer>
+									<SubAnswer>{item.telephone}</SubAnswer>
 								</div>
 							</ContentConsultorItem>
 						</ContentConsultor>
-						<Div>
-							<Image src={ImageClose} onClick={this.props.handleCloseModal} />
-							<div>
-								<ImageS src={ImageSeta} onClick={this.props.handleCloseModal} />
-							</div>
+						<ContentCreate>
+							<ImageClosed src={ImageClose} onClick={this.props.handleCloseModal} />
 							<ContentConsultorDetails>
-								<ContentSubTitle>
-									<div>
-										<SubTitle>criado em</SubTitle>
-										<SubAnswer>18/06/19</SubAnswer>
-									</div>
-									<div>
-										<SubTitle>autorizado em</SubTitle>
-										<SubAnswer> - </SubAnswer>
-									</div>
-									<div>
-										<SubTitle>vencimento</SubTitle>
-										<SubAnswer> - </SubAnswer>
-									</div>
-								</ContentSubTitle>
-								{/* <ContainerEdit>
-									<SpanContainer>
-										<ImageEdite src={ImageEdit}/>
-										<ContainerOption>Editar</ContainerOption>
-									</SpanContainer>
-									<SpanContainer>
-										<img src={ImageDelete}/>
-										<ContainerOption>Excluir</ContainerOption>
-									</SpanContainer>
-								</ContainerEdit> */}
+								<div>
+									<SubTitle>criado em</SubTitle>
+									<SubAnswer>{item.createdIn}</SubAnswer>
+								</div>
+								<div>
+									<SubTitle>autorizado em</SubTitle>
+									<SubAnswer>{item.authorization}</SubAnswer>
+								</div>
+								<div>
+									<SubTitle>vencimento</SubTitle>
+									<SubAnswer>{item.dueDate}</SubAnswer>
+								</div>
 							</ContentConsultorDetails>
-						</Div>
-					</Span>
-					<Parte2>
+						</ContentCreate>
+					</ContentAdmin>
+					<ContainerOrganization>
 						<Title>organização</Title>
-						<SpanOrganization margin>
+						<ContentOrganization margin>
 							<Separation>
 								<SubTitle>nome fantasia</SubTitle>
-								<SubAnswer>Vai na Web</SubAnswer>
-								<SubTitle>nome razão</SubTitle>
-								<SubAnswer>Instituto PrecisaSer</SubAnswer>
+								<SubAnswer>{item.admin.fantasyName}</SubAnswer>
+								<SubTitle>razão social</SubTitle>
+								<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>cnpj</SubTitle>
-								<SubAnswer>00.000.000/0000-00</SubAnswer>
+								<SubAnswer>{item.admin.cnpj}</SubAnswer>
 								<SubTitle>telefone</SubTitle>
-								<SubAnswer>(00) 00000-0000</SubAnswer>
+								<SubAnswer>{item.telephone}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>email</SubTitle>
-								<SubAnswer>endereçodeemail@email.com</SubAnswer>
+								<SubAnswer>{item.email}</SubAnswer>
 								<SubTitle>endereço</SubTitle>
-								<SubAnswer>Rua Abóbora Doce, 256</SubAnswer>
+								<SubAnswer>{item.admin.address}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>complemento</SubTitle>
-								<SubAnswer>Complemento</SubAnswer>
+								<SubAnswer>{item.admin.complement}</SubAnswer>
 								<SubTitle>bairro</SubTitle>
-								<SubAnswer>Centro</SubAnswer>
+								<SubAnswer>{item.admin.neighborhood}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>cep</SubTitle>
-								<SubAnswer>00000-000</SubAnswer>
+								<SubAnswer>{item.admin.cep}</SubAnswer>
 								<SubTitle>cidade</SubTitle>
-								<SubAnswer>Rio de Janeiro</SubAnswer>
+								<SubAnswer>{item.admin.city}</SubAnswer>
 							</Separation>
-							<SeparationMobile>
-								<SubTitle>nome fantasia</SubTitle>
-								<SubAnswer>Vai na Web</SubAnswer>
-								<SubTitle>email</SubTitle>
-								<SubAnswer>endereçodeemail@email.com</SubAnswer>
-								<SubTitle>cnpj</SubTitle>
-								<SubAnswer>00.000.000/0000-00</SubAnswer>
-								<SubTitle>complemento</SubTitle>
-								<SubAnswer>Complemento</SubAnswer>
-								<SubTitle>bairro</SubTitle>
-								<SubAnswer>Centro</SubAnswer>
-							</SeparationMobile>
-							<SeparationMobile>
-								<SubTitle>nome razão</SubTitle>
-								<SubAnswer>Instituto PrecisaSer</SubAnswer>
-								<SubTitle>telefone</SubTitle>
-								<SubAnswer>(00) 00000-0000</SubAnswer>
-								<SubTitle>endereço</SubTitle>
-								<SubAnswer>Rua Abóbora Doce, 256</SubAnswer>
-								<SubTitle>cep</SubTitle>
-								<SubAnswer>00000-000</SubAnswer>
-								<SubTitle>cidade</SubTitle>
-								<SubAnswer>Rio de Janeiro</SubAnswer>
-							</SeparationMobile>
-						</SpanOrganization>
-					</Parte2>
-					{/* <ContainerEditImage>
-						<SpanContainerImage>
-							<img src={ImageEdit}/>
-							<ContainerOption>Editar</ContainerOption>
-						</SpanContainerImage>
-						<SpanContainerImage>
-							<img src={ImageDelete}/>
-							<ContainerOption>Excluir</ContainerOption>
-						</SpanContainerImage>
-					</ContainerEditImage> */}
+							<ContentOrganizationMobile>
+								<SeparationMobile>
+									<SubTitle>nome fantasia</SubTitle>
+									<SubAnswer>{item.admin.fantasyName}</SubAnswer>
+									<SubTitle>email</SubTitle>
+									<SubAnswer>{item.email}</SubAnswer>
+									<SubTitle>cnpj</SubTitle>
+									<SubAnswer>{item.admin.cnpj}</SubAnswer>
+									<SubTitle>complemento</SubTitle>
+									<SubAnswer>{item.admin.complement}</SubAnswer>
+									<SubTitle>bairro</SubTitle>
+									<SubAnswer>{item.admin.neighborhood}</SubAnswer>
+								</SeparationMobile>
+								<SeparationMobile>
+									<SubTitle>razão social</SubTitle>
+									<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
+									<SubTitle>telefone</SubTitle>
+									<SubAnswer>{item.telephone}</SubAnswer>
+									<SubTitle>endereço</SubTitle>
+									<SubAnswer>{item.admin.address}</SubAnswer>
+									<SubTitle>cep</SubTitle>
+									<SubAnswer>{item.admin.cep}</SubAnswer>
+									<SubTitle>cidade</SubTitle>
+									<SubAnswer>{item.admin.city}</SubAnswer>
+								</SeparationMobile>
+							</ContentOrganizationMobile>
+						</ContentOrganization>
+					</ContainerOrganization>
 					<ContainerSelected>
-						{this.state.paymentMethodList.map(item =>
-						<ContainerPaymentMethod>
-							<img src={item.img}></img>
-							<PaymentMethodText>{item.desc}</PaymentMethodText>
-						</ContainerPaymentMethod>)}
+						{this.state.paymentMethodList.map(item => (
+							<ContainerPaymentMethod
+								key={item.desc}
+								border={this.state.selectedStatus === item.desc}
+								onClick={() => this.handleClicked(item)}
+							>
+								<img src={item.img}></img>
+								<PaymentMethodText
+									color={this.state.selectedStatus === item.desc}
+								>{item.desc}
+								</PaymentMethodText>
+							</ContainerPaymentMethod>))}
 					</ContainerSelected>
 				</Container>
 			</Overlay>

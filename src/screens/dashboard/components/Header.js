@@ -15,7 +15,6 @@ const mapStateToProps = state => ({
 
 const Container = styled.div`
   width: 100%;
-	height: auto;
   background-color: #FFFFFF;
   color: #231F20;
   font-family: Overpass, Light;
@@ -26,7 +25,6 @@ const Container = styled.div`
 	padding: 0 3rem;
   text-transform: uppercase;
 	border-bottom: 1px solid  #707070;
-	opacity: 1;
 
 	@media (max-width: 890px) {
 		padding: 0 2rem;
@@ -84,6 +82,7 @@ const Border = styled.span`
 
 const ParagraphContainer = styled.p`
   font-size: 1.375rem;
+	font-family: Overpass;
 	font-weight: ${props => props.bold && '700'};
 	margin-top: 2.2rem;
 
@@ -171,7 +170,7 @@ class Header extends Component {
 	render() {
 		return (
 			<Container>
-				<ImageLogo height='2.8rem' heightMobile='2rem' />
+				<ImageLogo marginMobile='0 0 0 -1rem' height='2.8rem' paddingMobile='0.5rem'/>
 				<WrapButton>
 					{this.renderButtons('organization')}
 					{this.renderButtons('documentos')}
