@@ -167,13 +167,14 @@ const ContainerModel = styled.div`
 	margin-bottom: 1rem;
 	padding: 2rem;
 	width: 95%;
+	border-radius: 3px;
 	height: 100%;
 	display: flex;
 	cursor: pointer;
 	position: relative;
 	z-index: ${props => (props.zIndex ? '-1' : 0)};
 
-	& {
+	&:hover {
 		border:1px solid #85144B;
 
 		&::before {
@@ -193,8 +194,13 @@ const ContainerModel = styled.div`
 				width: 10rem;
 				height: 1px;
 				z-index: 6;
-				top: 15rem;
+				margin-top: 21.5%;
+    		top: 100%;
 				right: 0;
+			}
+
+			@media (max-width: 375px) {
+				margin-top: 24.2%;
 			}
 		}	
 	}
@@ -207,7 +213,7 @@ const ContainerModel = styled.div`
 		width: 100%;
 		padding: 1rem;
 		order: 3;
-		/* position: initial; */
+		z-index: initial;
 	}
 `;
 
@@ -290,17 +296,18 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		display: ${props => (props.contOptions ? 'flex' : 'flex')};
+		display: ${props => (props.contOptions ? 'flex' : 'none')};
 		position: absolute;
 		width: 160px;
 		height: 130px;
-    top: 11rem;
+    top: 100%;
+		margin-top: 5%;
     right: 0rem;
     border: 1px solid #85144B;
 		z-index: 5;
 		background: #ffffff;
 		align-items: center;
-		/* display: none; */
+		border-radius: 3px;
 	}
 `;
 
@@ -330,6 +337,7 @@ const Option = styled.button`
 		height: 100%;
 		width: 100%;
 		padding: 0 15%;
+		border-radius: initial;
 	}
 `;
 
@@ -748,6 +756,7 @@ class DocumentsScreen extends Component {
 		handleModalDelete = () => {
 			this.setState({
 				modalDelete: true,
+				// options: false,
 			});
 		}
 
