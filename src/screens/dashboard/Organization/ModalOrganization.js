@@ -27,7 +27,7 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.div`
-	width: 80%;
+	width: 70%;
 	background-color: #FFFFFF;
 	display: flex;
 	flex-direction: column;
@@ -46,14 +46,21 @@ const Container = styled.div`
 	}
 `;
 
+const Figure = styled.figure`
+	width: 100%;
+	background-color: #FFFFFF;
+	position: fixed;
+	top: 0;
+`;
+
+
 const ImageBack = styled.img`
 	display: none;
 
 	@media (max-width: 648px) {
 		display: flex;
 		align-self: end;
-		padding: 1rem 1rem 2.5rem;
-		/* margin: 0 0 2rem 1rem; */
+		padding: 1rem 0 2.3rem 1rem;
 	}
 `;
 
@@ -212,6 +219,7 @@ const ContentConsultorDetails = styled.div`
 		width: 100%;
 		flex-direction: row;
 		justify-content: space-between;
+		margin: 5rem 0 0;
 
 	}
 `;
@@ -297,12 +305,12 @@ class ModalOrganization extends Component {
 
 	render() {
 		const { item } = this.props;
-		console.log('item render', this.state.selectedStatus);
 		return (
-			// <Overlay onClick={this.props.handleClosedModal}>
-			<Overlay>
-				<Container>
-					<ImageBack src={ImageBackMobile} onClick={this.props.handleClosedModal} />
+			<Overlay onClick={this.props.handleClosedModal}>
+				<Container onClick={(ev) => ev.stopPropagation()}>
+					<Figure>
+						<ImageBack src={ImageBackMobile} onClick={this.props.handleClosedModal} />
+					</Figure>
 					<ContentAdmin>
 						<ContentConsultor>
 							<Title>consultor</Title>

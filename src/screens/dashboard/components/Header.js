@@ -23,7 +23,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-	padding: 0 3rem;
+	/* padding: 0 4.5rem 0 3rem; */
   text-transform: uppercase;
 	border-bottom: 1px solid  #707070;
 
@@ -43,18 +43,19 @@ const Container = styled.div`
 const WrapButton = styled.div`
 	width: 36%;
 	display: flex;
+	justify-content: space-around;
 	flex-direction: row;
 
-	@media (max-width: 785px) {
+	/* @media (max-width: 785px) {
 		width: 20%;
 	}
 
 	@media (max-width: 686px) {
 		width: 40%;
-	}
+	} */
 
 	@media (max-width: 648px) {
-		width: 100%;
+		/* width: 100%; */
 		justify-content: space-between;
 		order: 3;
 	}
@@ -62,13 +63,12 @@ const WrapButton = styled.div`
 
 const Border = styled.span`
 	height: 5.3rem;
-	margin-right: 3rem;
+	/* margin-right: 3rem; */
 	border-bottom: ${props => (props.border && '6px solid #231F20')};
 	cursor: pointer;
 
 	@media (max-width: 859px) {
 		margin-right: 2.5rem;
-		/* padding-right: 1.5rem; */
 	}
 
 	@media (max-width: 648px) {
@@ -83,8 +83,8 @@ const Border = styled.span`
 
 const ParagraphContainer = styled.p`
   font-size: 1.375rem;
-	font-family: Overpass;
-	font-weight: ${props => props.bold && '700'};
+	font-family: Overpass, ExtraBold;
+	font-weight: ${props => props.bold && '900'};
 	margin-top: 2.2rem;
 
 	@media (max-width: 768px) {
@@ -93,7 +93,7 @@ const ParagraphContainer = styled.p`
 `;
 
 const ContainerAdm = styled.div`
-  width: 30%;
+  /* width: 30%; */
   margin-bottom: 0.8rem;
   display: flex;
   align-items: flex-end;
@@ -136,12 +136,9 @@ const ParagraphSair = styled.p`
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
-  opacity: 1;
+	margin-right: 4.5rem;
 	cursor: pointer;
-
-	@media (max-width: 859px) {
-		font-size: 1rem;
-	}
+  opacity: 1;
 `;
 
 class Header extends Component {
@@ -180,7 +177,7 @@ class Header extends Component {
 		const { redirect } = this.state;
 		return (
 			<Container>
-				<ImageLogo marginMobile='0 0 0 -1rem' height='2.8rem' paddingMobile='0.5rem'/>
+				<ImageLogo margin={'0 0 0 3rem'} marginMobile='0 0 0 -1rem' height='2.8rem' paddingMobile='0.5rem'/>
 				<WrapButton>
 					{this.renderButtons('organization')}
 					{this.renderButtons('documentos')}

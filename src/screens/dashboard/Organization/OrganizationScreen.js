@@ -22,15 +22,15 @@ const Container = styled.div`
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	padding: 3rem 4rem 0;
+	padding: 2rem 4.5rem 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	z-index: 4;
 
-	@media(max-width: 1024px) {
+	/* @media(max-width: 1024px) {
 		padding: 3rem 3rem 0 4rem;
-	}
+	} */
 
 	@media (max-width: 768px) {
 		padding: 2rem 4rem 0 4rem;
@@ -94,23 +94,29 @@ const TitleViewBy = styled.h2`
 `;
 
 const InputSelect = styled.div`
-	padding: 0.5rem;
 	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	color: #959595;
 	background-color: #FFFFFF;
 	border: 0.5px solid #85144B;
 	border-radius: 3px 3px 0 0;
+	display: flex;
+	color: #959595;
+	justify-content: space-between;
 	font-size: 0.875rem;
+	padding: 0.5rem;
 	cursor: pointer;
 	z-index: 2;
+
+	@media (max-width: 768px) {
+		font-size: 1rem;
+	}
 `;
 
 const SelectedViewByText = styled.p`
 	width: 100%;
-	padding-left: 0.3rem;
 	color: ${props => (props.color === 'Selecionar status' ? '#959595' : '#85144B')};
+	font-family: Overpass, Regular;
+	padding-left: 0.3rem;
+
 `;
 
 const Overlay = styled.div`
@@ -143,13 +149,17 @@ const SelectedItem = styled.p`
 		background-color: #FFCFCD;
 		border: 0.5px solid #85144B;
 	}
+
+	@media (max-width: 768px) {
+		font-size: 1rem;
+	}
 `;
 
 const Table = styled.table`
 	max-width: 100%;
 	width: 100%;
 	border-spacing: 0;
-	padding: 2rem 4rem 0;
+	padding: 1.5rem 4.5rem 0;
 
 	@media (max-width: 768px) {
 		padding: 2rem 0 0 0;
@@ -186,7 +196,7 @@ const Tr = styled.tr`
 
 	@media(max-width: 768px) {
 		margin-bottom: 1rem;
-		padding: 1rem 1rem 11rem 1rem;
+		padding: 1rem 1rem 12.5rem 1rem;
 		display: flex;
     flex-wrap: wrap;
 	}
@@ -194,7 +204,7 @@ const Tr = styled.tr`
 
 const TableTitle = styled.th`
 	color: #FFFFFF;
-	font-size: 0.90rem;
+	font-size: 1rem;
 	font-family: Overpass, Regular;
 	background-color: #85144B;
 	padding-left: 0.7rem;
@@ -209,7 +219,7 @@ const ContainerTableTitleMob = styled.span`
 
 	@media (max-width: 768px) {
 		padding-right: 1rem;
-		padding-bottom: 0.7rem;
+		padding-bottom: 1rem;
 		display: flex;
 		flex-direction: column;
 
@@ -253,7 +263,7 @@ const TableTitleMob = styled.th`
 	@media(max-width: 768px) {
 		display: flex;
 		color: #85144B;
-		font-size: 0.8rem;
+		font-size: 1rem;
 		font-family: Overpass, Regular;
 	}
 `;
@@ -320,8 +330,8 @@ class OrganizationScreen extends Component {
 			selectedValue: 'Selecionar status',
 			selectedItems: [
 				'Selecionar status',
-				'Pendente de Autorização',
-				'Pendente de Pagamento',
+				{ select: 'Pendente de Autorização', filter: 'Autorizar' },
+				{ select: 'Pendente de Pagamento', filter: 'Pendente' },
 				'Isento',
 				'Pago',
 				'Vencido',
@@ -352,7 +362,7 @@ class OrganizationScreen extends Component {
 					status: 'Pendente',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Jorge Amado da Silva',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
@@ -375,10 +385,10 @@ class OrganizationScreen extends Component {
 					createdIn: '18/06/19',
 					authorization: '-',
 					dueDate: '-',
-					status: 'Pago',
+					status: 'Autorizar',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Yasmin Miranda',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
@@ -401,14 +411,14 @@ class OrganizationScreen extends Component {
 					createdIn: '17/06/19',
 					authorization: '02/06/19',
 					dueDate: '02/07/19',
-					status: 'Pendente',
+					status: 'Isento',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Alice Barbosa Souza',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Casa de Rui Barbosa',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -427,14 +437,14 @@ class OrganizationScreen extends Component {
 					createdIn: '15/06/19',
 					authorization: '15/07/19',
 					dueDate: '-',
-					status: 'Isento',
+					status: 'Pago',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Vinicius Almeida Rodrigues',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Biblioteca da Maré',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -456,11 +466,11 @@ class OrganizationScreen extends Component {
 					status: 'Vencido',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Tarcila do Amaral Gonçalves',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Museu de Arte ZO',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -479,14 +489,14 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Vencido',
+					status: 'Prorrogar prazo',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Aline Candido Mendes',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Instituto Tamar',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -505,14 +515,14 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Pendente',
+					status: '',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Ronaldo Veiga de Almeida',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Projeto Vida',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -531,14 +541,14 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Autorizar',
+					status: '',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Ana Claudia Ferrari Silva',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Mais Brasil',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -557,14 +567,14 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Isento',
+					status: '',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Marcio Rodrigues Alves',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Pela Vida',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -583,14 +593,14 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Pendente',
+					status: '',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'João Marcos Barbosa',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Casa azul',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -609,14 +619,14 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Isento',
+					status: '',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Caroline Perreira',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Coletivo Denegrir',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -635,14 +645,14 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Pago',
+					status: '',
 					admin:
 					{
-						name: 'Erlane',
+						name: 'Alice Barbosa Souza',
 						rg: '12.526.759-3',
 						dateOfBirth: '10/10/10',
 						fantasyName: 'Vai na Web',
-						reasonSocial: 'Instituto PrecisaSer',
+						reasonSocial: 'Crianças Felizes',
 						cnpj: '00.000.000/0000-00',
 						address: 'Rua Gomes Lopes',
 						complement: 'Casa',
@@ -735,7 +745,7 @@ class OrganizationScreen extends Component {
 				<TitleViewBy>Visualizar por:</TitleViewBy>
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
-						<SelectedViewByText color={this.state.selectedValue}>{this.state.selectedValue}</SelectedViewByText>
+						<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>{this.state.selectedValue.select || this.state.selectedValue}</SelectedViewByText>
 						<img src={ImageCaminho} alt="arrow" />
 					</InputSelect>
 					{this.state.isSelected && (
@@ -746,7 +756,7 @@ class OrganizationScreen extends Component {
 									key={index}
 									hover={item}
 								>
-									{item}
+									{item.select || item}
 								</SelectedItem>
 							))}
 						</InputSelectedItem>
@@ -779,6 +789,7 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
+		console.log('listttttt', listTable)
 
 		return listTable.map(item => (
 			<Tr key={item}>
@@ -846,18 +857,17 @@ class OrganizationScreen extends Component {
 
 	renderAllTable = () => {
 		const { tableDatas, selectedValue } = this.state;
-
 		let listTable = this.renderTable(tableDatas);
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status === selectedValue));
+			console.log('passei e sai correndo', this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue))));
+			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
 		}
 		return listTable;
 	}
 
 	render() {
-		console.log('tableDatas', this.state.isClickedStatus);
 		return (
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
@@ -880,7 +890,7 @@ class OrganizationScreen extends Component {
 						</Table>
 						{this.renderAllTable().length === 0 && (
 							<TextNoOrganitazion>
-								<TextInformation>Não há nenhuma organizações</TextInformation>
+								<TextInformation>Não há organização.</TextInformation>
 							</TextNoOrganitazion>
 						)}
 					</>
