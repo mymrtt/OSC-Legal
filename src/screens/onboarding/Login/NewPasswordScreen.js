@@ -47,7 +47,7 @@ const Form = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
-	margin: 3rem;
+	margin: 2rem 0 3rem;
 
   @media (max-width: 980px) {
 		width: 40%;
@@ -77,7 +77,7 @@ const Title = styled.h1`
   font-size: 1.25rem;
   font-weight: 900;
   font-family: Overpass;
-  margin: 2rem 0 1.5rem 0;
+  margin: 1.5rem 0 1rem 0;
 	text-transform: uppercase;
   @media (max-width: 648px) {
 		display: none;
@@ -124,7 +124,7 @@ const ButtonText = styled(Link)`
 	color: #85144B;
 	font-size: 1rem;
 	font-family: Overpass, Regular;
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem;
 	text-decoration: none;
 	text-transform: uppercase;
 `;
@@ -243,7 +243,7 @@ class NewPasswordScreen extends Component {
 						width='80%'
 						widthMobile='90%'
 						margin='1rem 0 1.5rem 0'
-						marginMobile='1rem 0 2.5rem'
+						marginMobile='0.3rem 0 1.5rem'
 						text="Prossiga com nova senha"
 						type="submit"
 					/>

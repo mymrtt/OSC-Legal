@@ -299,10 +299,10 @@ class ModalOrganization extends Component {
 		const { item } = this.props;
 		console.log('item render', this.state.selectedStatus);
 		return (
-			// <Overlay onClick={this.props.handleCloseModal}>
+			// <Overlay onClick={this.props.handleClosedModal}>
 			<Overlay>
 				<Container>
-					<ImageBack src={ImageBackMobile} onClick={this.props.isModalClosed} />
+					<ImageBack src={ImageBackMobile} onClick={this.props.handleClosedModal} />
 					<ContentAdmin>
 						<ContentConsultor>
 							<Title>consultor</Title>
@@ -328,7 +328,7 @@ class ModalOrganization extends Component {
 							</ContentConsultorItem>
 						</ContentConsultor>
 						<ContentCreate>
-							<ImageClosed src={ImageClose} onClick={this.props.handleCloseModal} />
+							<ImageClosed src={ImageClose} onClick={this.props.handleClosedModal} />
 							<ContentConsultorDetails>
 								<div>
 									<SubTitle>criado em</SubTitle>

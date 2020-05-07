@@ -1,6 +1,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -156,6 +157,14 @@ class Header extends Component {
 		this.props.handleClick(item);
 	};
 
+	handleLogout = (ev) => {
+		ev.preventDefault();
+
+		this.setState({
+			redirect: 'login',
+		});
+	}
+
 	renderButtons = item => (
 		<Border
 			border={this.state.redirect === item}
@@ -168,6 +177,7 @@ class Header extends Component {
 	)
 
 	render() {
+		const { redirect } = this.state;
 		return (
 			<Container>
 				<ImageLogo marginMobile='0 0 0 -1rem' height='2.8rem' paddingMobile='0.5rem'/>
@@ -180,8 +190,9 @@ class Header extends Component {
 						{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
 						&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
 					</ParagraphContainer1>
-					<ParagraphSair>sair</ParagraphSair>
+					<ParagraphSair onClick={this.handleLogout}>sair</ParagraphSair>
 				</ContainerAdm>
+				{redirect === 'login' && <Redirect to={'/'} />}
 			</Container>
 		);
 	}
