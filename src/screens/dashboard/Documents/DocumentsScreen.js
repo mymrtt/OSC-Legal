@@ -5,6 +5,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 // Components
 import ImageDocument from '../../../assets/document.png';
@@ -18,6 +19,19 @@ import documentWhite from '../../../assets/documentWhite.svg';
 
 import Header from '../components/Header';
 import Scrollbar from '../components/Scrollbar';
+
+// Redux
+import { addNewDocument } from '../../../dataflow/modules/dashboard-modules';
+import { deleteDocument } from '../../../dataflow/modules/dashboard-modules';
+
+const mapStateToProps = state => ({
+	documentsList: state.dashboard.documentsList,
+});
+
+const mapDispatchToProps = dispatch => ({
+	addNewDocument: info => dispatch(addNewDocument(info)),
+	deleteDocument: info => dispatch(deleteDocument(info)),
+});
 
 const Container = styled.div`
   width: 100%;
@@ -292,7 +306,7 @@ const ContainerOptions = styled.div`
 	flex-direction: column;
 
 	@media (max-width: 768px) {
-		margin-left: 1.7rem;
+		margin-left: 1.7rem;this.props.documentsList.documentsList;
 	}
 
 	@media (max-width: 490px) {
@@ -417,7 +431,7 @@ const ContainerModal = styled.div`
 
 const ModalAddModel = styled.form`
 	width: 660px;
-	height: 560px;
+	min-height: 560px;
 	background: #FFFFFF;
 	display: flex;
 	flex-direction: column;
@@ -472,14 +486,14 @@ const UploadFile = styled.label`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.validationModel ? '1px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
 
-	&:focus {
+	/* &:focus {
 		outline: 1px solid #ff4136;
-	}
+	} */
 
 	input[type='file'] {
 		display: none;
@@ -533,14 +547,14 @@ const Input = styled.input`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.validationModel ? '1px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
 
-	&:focus {
+	/* &:focus {
 		outline: 1px solid #ff4136;
-	}
+	} */
 `;
 
 const TextArea = styled.textarea`
@@ -548,15 +562,15 @@ const TextArea = styled.textarea`
 	height: 150px;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	margin-bottom: 1rem;
-	border: ${props => (props.validationModel ? '1px solid #ff4136' : '1px solid #85144B')};
+	margin-bottom: .5rem;
+	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
 
-	&:focus {
+	/* &:focus {
 		outline: 1px solid #ff4136;
-	}
+	} */
 
 	@media (max-width: 490px) {
 		height: 100px;
@@ -676,28 +690,16 @@ const ButtonConfirm = styled(Button)`
 	}
 `;
 
+const ErrorText = styled.p`
+	color: #f00;
+	width: 100%;
+	text-align: right;
+	margin-bottom: .5rem;
+	font-size: .9rem;
+`;
+
 class DocumentsScreen extends Component {
 	state = {
-		modelsList: [
-			{
-				num: 1,
-				title: 'Modelo Estatuto Associação',
-				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc.',
-				file: '',
-			},
-			{
-				num: 2,
-				title: 'Modelo Estatuto para Grupo de capoeira',
-				description: 'Documentação básica de uma associação, deve-se atentar para questões como a possibilidade de remuneração dos associados e dirigentes, tempo de mandato, organização interna etc. 3 Modelo Estatuto Fundação Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público. 4 Modelo Estatuto Associação Organização da Sociedade Civil de Interesse Público (OSCIP). documentação básica de associação, cumprindo as exigências da Lei nº 9.790/1999 para qualificação como OSCIP. 5 Modelo Ata Assembleia de Constituição Associação Modelo de ata de Assembleia específica para constituição de Associação, com a aprovação do estatuto e eleição dos cargos diretivos. 6 Modelo Ata Assembleia Geral Associação Modelo de ata de Assembleia Geral de Associação, que poderá ser adaptado e utilizado em diversos contextos, para qualquer pauta. 7 Modelo Registro Público Constituição Fundação Modelo de Escritura Pública de Registro de constituição de Fundação. Atentar para as exigências e rotinas dos cartórios competentes.',
-				file: '',
-			},
-			{
-				num: 3,
-				title: 'Modelo Estatuto Fundação',
-				description: 'Documentação básica de uma fundação, deve-se atentar para todas as exigências legais, para as implicações relacionadas à dotação inicial de bens, além daquelas eventualmente sugeridas pelo Ministério Público.',
-				file: '',
-			},
-		],
 		changeColorLabel: false,
 		options: false,
 		selectedOptions: '',
@@ -711,7 +713,13 @@ class DocumentsScreen extends Component {
 		hoverDelete: '',
 		colorTextExport: '',
 		colorTextDelete: '',
-		validationModel: false,
+		isFile: null,
+		document: {
+			title: '',
+			description: '',
+			num: this.props.documentsList.length + 1,
+		},
+		isError: false,
 	};
 
 	handleClickedLabel = (ev) => {
@@ -720,6 +728,7 @@ class DocumentsScreen extends Component {
 			changeColorLabel: true,
 		});
 	}
+
 
 	handleClickedLabelLeave = () => {
 		this.setState({
@@ -750,6 +759,7 @@ class DocumentsScreen extends Component {
 		handleCancelAddModel = () => {
 			this.setState({
 				addModel: false,
+				isError: false,
 			});
 		}
 
@@ -766,40 +776,15 @@ class DocumentsScreen extends Component {
 			});
 		}
 
-		handleSubmit = (e) => {
-			e.preventDefault();
-			const {
-				file, num, title, description,
-			} = this.state;
-			if (title !== '' && description !== '' && file !== '') {
-				this.state.modelsList.push({
-					file, num, title, description,
-				});
-				this.setState({
-					addModel: false,
-				});
-			} else if (title === '' || description === '' || file === '') {
-				this.setState({
-					validationModel: true,
-				});
-			}
-			this.setState({
-				isFile: '',
-				file: '',
-				num: '',
-				title: '',
-				description: '',
-			});
-		}
-
-		handleModelChange = (e) => {
-			this.setState({
-				title: e.target.value,
-				description: e.target.value,
-				num: this.state.modelsList.length + 1,
-				file: this.state.isFile,
-			 });
-		}
+	handleModelChange = (field, e) => {
+		const { document } = this.state;
+		document[field] = e.target.value;
+		this.setState({
+			document,
+			isError: false,
+			file: this.state.isFile,
+		});
+	}
 
 		handleChangeColorExport = (item) => {
 			this.setState({
@@ -833,12 +818,12 @@ class DocumentsScreen extends Component {
 			});
 		}
 
-		uploadFile = (e) => {
-			const file = e.target.files[0];
-			this.setState({
-				isFile: file.name,
-			});
-		}
+	uploadFile = (e) => {
+		const file = e.target.files[0];
+		this.setState({
+			isFiles: file.name,
+		});
+	}
 
 		handleSelected = (item) => {
 			this.setState({
@@ -848,12 +833,13 @@ class DocumentsScreen extends Component {
 
 		handleDelete = (ev) => {
 			ev.preventDefault();
-			const list = this.state.modelsList;
-			list.splice(list.indexOf(this.state.modelSelect), 1);
-			this.setState({
-				list,
-				modalDelete: false,
-			});
+			this.props.deleteDocument()
+			// const documentsList = this.props;
+			// documentsList.splice(documentsList.indexOf(this.props.documentsList), 1);
+			// this.setState({
+			// 	documentsList,
+			// 	modalDelete: false,
+			// });
 		}
 
 		handleSearch = (e) => {
@@ -862,128 +848,180 @@ class DocumentsScreen extends Component {
 			 });
 		}
 
-		render() {
-			const list = (this.state.search !== '') ? this.state.modelsList.filter(model => !model.title.search(this.state.search)) : this.state.modelsList;
+		handleSubmit = (e) => {
+			e.preventDefault();
+			const { title, description, num } = this.state.document;
+			const { isFiles } = this.state;
+			if (title === '' || description === '' || isFiles === null) {
+				this.setState({
+					isError: true,
+				});
+			} else {
+				this.props.addNewDocument({title, description, num, isFiles});
+				this.handleCancelAddModel();
+			}
+		}
 
-			return (
-				<Container onClick={this.handleClickedLabelLeave}>
-					<Header />
-					<ContainerHeader>
-						<TitleSearch>Modelos de Documentos</TitleSearch>
-						<ContainerSearch>
-							<SearchText>Pesquisar</SearchText>
-							<ContainerSearchInput
-								onClick={this.handleClickedLabel}
-								clickLabel={this.state.changeColorLabel}>
-								<SearchInput
-									onChange={this.handleSearch}
-									placeholder="Digite aqui para pesquisar"
-								/>
-								<img src={magnifyingGlass} alt="Lupa" />
-							</ContainerSearchInput>
-						</ContainerSearch>
-					</ContainerHeader>
-					<ContainerContent>
-						<ContainerAddModel>
-							<AddModelImage src={ImageDocument}/>
-							<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
-							{this.state.addModel
-							&& <ContainerModal>
-								{window.innerWidth <= 490 && <Header />}
-								<ModalAddModel onSubmit={this.handleSubmit}>
-									<HeaderAddModel>
-										<TitleAddModel>Adicionar Modelo</TitleAddModel>
-										<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
-									</HeaderAddModel>
-									<ContainerInputs>
-										<UploadFile validationModel={this.state.validationModel} htmlFor='upload-file'>
-											<input onChange={this.uploadFile} id='upload-file' type="file" placeholder="Anexar Modelo"/>
-											<img src={documentWhite} alt="Anexar Documento" />
-											<TextUploadFile>
-												<h3>Anexar Modelo</h3>
-												<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
-											</TextUploadFile>
-										</UploadFile>
-										<ContainerInput>
-											<TitleInputs>Nome do modelo</TitleInputs>
-											<Input validationModel={this.state.validationModel} value={this.state.modelsList.title} onChange={this.handleModelChange} type="text" placeholder="Digitar nome do documento"/>
-										</ContainerInput>
-										<ContainerInput>
-											<TitleInputs>Descrição</TitleInputs>
-											<TextArea validationModel={this.state.validationModel} value={this.state.modelsList.description} onChange={this.handleModelChange} type="text" placeholder="Como esse documento é usado" />
-										</ContainerInput>
-									</ContainerInputs>
-									<ButtonAdd type="submit">Adicionar</ButtonAdd>
-								</ModalAddModel>
-							</ContainerModal>}
-						</ContainerAddModel>
-						<Scrollbar maxHeight={'65vh'}>
-							<ContainerModels>
-								{list.map(item => (
-									<ContainerModel key={item}
-										zIndex={this.state.addModel}
-										onMouseEnter={() => this.handleOnOptions(item)}
-										onMouseLeave={this.handleOffOptions}
-									>
-										<ContainerModelDescription>
-											<span>
-												<ModelNumber>{item.num}</ModelNumber>
-												<ModelTitle>{item.title}</ModelTitle>
-											</span>
-											<ModelParagraph>{item.description}</ModelParagraph>
-										</ContainerModelDescription>
-										<ContainerOptions
-											contOptions={this.state.options && (this.state.selectedOptions === item)}>
-											<Option
-												onMouseEnter={() => this.handleChangeColorExport(item)}	onMouseLeave={this.handleChangeColorLeaveExport}>
-												<OptionImage
+
+	renderModalModels = () => (
+		<ContainerModal onClick={this.handleCancelAddModel}>
+			{window.innerWidth <= 490 && <Header />}
+			<ModalAddModel
+				onSubmit={this.handleSubmit}
+				onClick={ev => ev.stopPropagation()}
+			>
+				<HeaderAddModel>
+					<TitleAddModel>Adicionar Modelo</TitleAddModel>
+					<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
+				</HeaderAddModel>
+				<ContainerInputs>
+					<UploadFile
+						validationModel={this.state.validationModel}
+						htmlFor='upload-file'
+						isError={this.state.isError}
+					>
+						<input
+							onChange={this.uploadFile}
+							id='upload-file'
+							type="file"
+							placeholder="Anexar Modelo"
+						/>
+						<img src={documentWhite} alt="Anexar Documento" />
+						<TextUploadFile>
+							<h3>Anexar Modelo</h3>
+							<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
+						</TextUploadFile>
+					</UploadFile>
+					<ContainerInput>
+						<TitleInputs>Nome do modelo</TitleInputs>
+						<Input
+							validationModel={this.state.validationModel}
+							value={this.props.documentsList.title}
+							onChange={e => this.handleModelChange('title', e)}
+							type="text"
+							placeholder="Digitar nome do documento"
+							isError={this.state.isError}
+						/>
+					</ContainerInput>
+					<ContainerInput>
+						<TitleInputs>Descrição</TitleInputs>
+						<TextArea
+							validationModel={this.state.validationModel}
+							value={this.props.documentsList.description}
+							onChange={e => this.handleModelChange('description', e)}
+							type="text"
+							placeholder="Como esse documento é usado"
+							isError={this.state.isError}
+						/>
+					</ContainerInput>
+				</ContainerInputs>
+				<span>
+					{this.state.isError && <ErrorText>Preencha todos os valores</ErrorText>}
+				</span>
+				<ButtonAdd type="submit">Adicionar</ButtonAdd>
+			</ModalAddModel>
+		</ContainerModal>
+	)
+
+	renderModalDelete = () => (
+		<ContainerModalDelete onClick={this.handleCancelDelete}>
+			<ModalDelete onClick={e => e.stopPropagation()}>
+				<TitleModal>
+					<TitleDelete>Excluir Modelo</TitleDelete>
+					<img onClick={this.handleCancelDelete} src={Exit} alt="Sair" />
+				</TitleModal>
+				<WrapTextModal>
+					<TextModal>
+						Após ser excluido, um modelo não pode ser recuperado.
+					</TextModal>
+					<TextModal>
+						Você deseja excluir o <strong>{this.state.modelSelect.title}</strong> permanentemente?
+					</TextModal>
+				</WrapTextModal>
+				<ButtonsModal>
+					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
+					<ButtonConfirm onClick={ev => this.handleDelete(ev)}>Confirmar</ButtonConfirm>
+				</ButtonsModal>
+			</ModalDelete>
+		</ContainerModalDelete>
+	)
+
+	render() {
+		const documentsList = (this.state.search !== '') ? this.props.documentsList.filter(model => !model.title.search(this.state.search)) : this.props.documentsList;
+
+		return (
+			<Container onClick={this.handleClickedLabelLeave}>
+				<Header />
+				<ContainerHeader>
+					<TitleSearch>Modelos de Documentos</TitleSearch>
+					<ContainerSearch>
+						<SearchText>Pesquisar</SearchText>
+						<ContainerSearchInput
+							onClick={this.handleClickedLabel}
+							clickLabel={this.state.changeColorLabel}>
+							<SearchInput
+								onChange={this.handleSearch}
+								placeholder="Digite aqui para pesquisar"
+							/>
+							<img src={magnifyingGlass} alt="Lupa" />
+						</ContainerSearchInput>
+					</ContainerSearch>
+				</ContainerHeader>
+				<ContainerContent>
+					<ContainerAddModel>
+						<AddModelImage src={ImageDocument}/>
+						<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
+						{this.state.addModel
+							&& this.renderModalModels()}
+					</ContainerAddModel>
+					<Scrollbar maxHeight={'65vh'}>
+						<ContainerModels>
+							{documentsList.map(item => (
+								<ContainerModel key={item}
+									zIndex={this.state.addModel}
+									onMouseEnter={() => this.handleOnOptions(item)}
+									onMouseLeave={this.handleOffOptions}
+								>
+									<ContainerModelDescription>
+										<span>
+											<ModelNumber>{item.num}</ModelNumber>
+											<ModelTitle>{item.title}</ModelTitle>
+										</span>
+										<ModelParagraph>{item.description}</ModelParagraph>
+									</ContainerModelDescription>
+									<ContainerOptions
+										contOptions={this.state.options && (this.state.selectedOptions === item)}>
+										<Option
+											onMouseEnter={() => this.handleChangeColorExport(item)}	onMouseLeave={this.handleChangeColorLeaveExport}>
+											<OptionImage
 												 src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
 												 alt="Download" />
-												<OptionText
-													colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}>Exportar
-												</OptionText>
-											</Option>
-											<Option
-												onMouseEnter={() => this.handleChangeColorDelete(item)}	onMouseLeave={this.handleChangeColorLeaveDelete}
-												onClick={this.handleModalDelete}>
-												<OptionImage
-													src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
-													alt="Deletar" />
-												<OptionText
-													colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-													onClick={() => this.handleSelected(item)}>Excluir
-												</OptionText>
-											</Option>
-										</ContainerOptions>
-									</ContainerModel>
-								))}
-								{this.state.modalDelete
-								&& <ContainerModalDelete>
-									<ModalDelete>
-										<TitleModal>
-											<TitleDelete>Excluir Modelo</TitleDelete>
-											<img onClick={this.handleCancelDelete} src={Exit} alt="Sair" />
-										</TitleModal>
-										<WrapTextModal>
-											<TextModal>
-												Após ser excluido, um modelo não pode ser recuperado.
-											</TextModal>
-											<TextModal>
-												Você deseja excluir o <strong>{this.state.modelSelect.title}</strong> permanentemente?
-											</TextModal>
-										</WrapTextModal>
-										<ButtonsModal>
-											<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
-											<ButtonConfirm onClick={ev => this.handleDelete(ev)}>Confirmar</ButtonConfirm>
-										</ButtonsModal>
-									</ModalDelete>
-								</ContainerModalDelete>}
-							</ContainerModels>
-						</Scrollbar>
-					</ContainerContent>
-				</Container>
-			);
-		}
+											<OptionText
+												colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}>Exportar
+											</OptionText>
+										</Option>
+										<Option
+											onMouseEnter={() => this.handleChangeColorDelete(item)}	onMouseLeave={this.handleChangeColorLeaveDelete}
+											onClick={this.handleModalDelete}>
+											<OptionImage
+												src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+												alt="Deletar" />
+											<OptionText
+												colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+												onClick={() => this.handleSelected(item)}>Excluir
+											</OptionText>
+										</Option>
+									</ContainerOptions>
+								</ContainerModel>
+							))}
+							{this.state.modalDelete
+								&& this.renderModalDelete()}
+						</ContainerModels>
+					</Scrollbar>
+				</ContainerContent>
+			</Container>
+		);
+	}
 }
 
-export default DocumentsScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentsScreen);
