@@ -48,12 +48,16 @@ const Form = styled.form`
   align-items: center;
   margin: 1rem 0;
   border-radius: 5px;
-  box-shadow: 0 1px 2px #00000029;
+	box-shadow: 0 1px 2px #00000029;
 
+	@media(max-width: 1024px){
+    width: 40%;
+  }
   @media (max-width: 768px) {
+		width: 47%;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
   }
   @media (max-width: 648px) {
     margin: 0;
@@ -89,7 +93,7 @@ const TitleForm = styled.h1`
 	  margin-left: 0.7rem;
   }
   @media (max-width: 648px) {
-		margin: 2rem 0 1rem 0.25rem;
+		margin: 2rem 0 1rem 2.25rem;
 		font-size: 1.3rem;
 	}
 `;
@@ -99,17 +103,19 @@ const Label = styled.label`
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: relative;
+	position: relative;
+
 	@media(max-width: 768px){
 		width: 95%;
 	}
   @media (max-width: 648px) {
-		width: 95%;
-		margin-left: 0.3rem;
-  }
-  @media(max-width: 425px){
 		width: 100%;
+		padding: 0 1rem;
+		/* margin-left: 0.3rem; */
   }
+  /* @media(max-width: 425px){
+		width: 100%;
+  } */
 `;
 
 const ParagraphInput = styled.p`
@@ -118,11 +124,12 @@ const ParagraphInput = styled.p`
 	font-size: 0.75rem;
 	font-family: Overpass;
 	font-weight: bold;
-	margin: 1rem 0 0.2rem 1.4rem;
+	margin: 1rem 0 0.4rem 1.3rem;
+	/* margin: 1rem 0 0.2rem 0.8rem; */
 	text-transform: uppercase;
 	@media (max-width: 425px) {
 		text-align: left;
-		margin-left: 0.2rem;
+		margin-left: 0.9rem;
 	}
 `;
 
@@ -163,23 +170,27 @@ const ImagePassword = styled.img`
 `;
 
 const TextTerms = styled.p`
-  font-size: 0.8rem;
-  margin-top: 1.25rem;
   width: 95%;
   color: #505050;
+  font-size: 0.9rem;
   font-family: Overpass, Regular;
   text-align: center;
+  margin-top: 1.25rem;
   strong {
     color: #85144b;
-    font-size: 0.7rem;
-    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: Overpass, Regular;
     text-decoration: underline;
     margin: 0 0.2rem;
-    font-family: Overpass, Regular;
-  }
+		cursor: pointer;
+		@media(max-width: 648px){
+  	 font-size: 0.8rem;
+   }
+	}
   @media(max-width: 648px){
-    font-size: 0.8rem;
-		width: 63%;
+		width: 100%;
+		font-size: 0.8rem;
+		padding: 0 1rem;
   }
 `;
 
@@ -191,12 +202,13 @@ const Overlay = styled.div`
   position: fixed;
   top: 0;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
-  padding: 2.5rem 0;
+  /* padding: 2.5rem 0; */
   z-index: 99;
 	@media(max-width: 648px) {
+		height: 100vh;
 		padding: 0;
 	}
 `;
@@ -208,7 +220,7 @@ const Modal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 5px;
   z-index: 99;
 
   @media(max-width: 1024px){
@@ -218,12 +230,14 @@ const Modal = styled.div`
     width: 60%;
   }
   @media (max-width: 648px) {
-    padding-bottom: 5rem;
     width: 100%;
     max-height: 100vh;
+    padding-bottom: 8rem;
     justify-content: flex-start;
     align-self: center;
 		overflow-y: auto;
+		/* overflow-x: hidden;
+		overflow-y: scroll; */
   }
 `;
 
@@ -270,7 +284,7 @@ const ButtonTerms = styled.button`
 
 const BlockTerms = styled.div`
   width: 97%;
-  height: 90%;
+  /* height: 90%; */
   background: #ffcfcd;
   padding: 1rem 1rem;
   border-radius: 4px;
@@ -294,6 +308,7 @@ const Terms = styled.p`
   u {
     color: #f00;
     margin: 0 0.2rem;
+		cursor: pointer;
   }
   @media(max-width: 648px){
     margin: 1.5rem 0;
@@ -508,7 +523,7 @@ class CreateUserScreen extends Component {
 						<Form onSubmit={this.handleSubmit}>
 							<ImageLogo
 								margin="3rem 0 2rem 0"
-								marginMobile="15rem 0 2rem 0"
+								// marginMobile="15rem 0 2rem 0"
 								width=" 150px"
 							/>
 							<BlockTitle>
@@ -563,7 +578,7 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>telefone</ParagraphInput>
 								<Input
-									type="tel"
+									type="number"
 									onChange={ev => this.handleChange('telephone', ev)}
 									value={telephone}
 									placeholder="(00) 00000-0000"
@@ -611,9 +626,9 @@ class CreateUserScreen extends Component {
 							e registrar.
 							</TextTerms>
 							<Button
-								margin="1rem 0 1.5rem 0"
+								margin="2rem 0"
 								width="87%"
-								widthMobile="100%"
+								widthMobile="90%"
 								height="50px"
 								text="concordar e criar conta"
 								type="submit"

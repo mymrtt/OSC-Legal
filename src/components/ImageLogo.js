@@ -14,6 +14,7 @@ const LogoImage = styled.img`
 		height: ${props => props.heightMobile};
 		padding-top: ${props => props.paddingMobile};
 		margin: ${props => props.marginMobile};
+		display: ${props => props.displayMobile};
 	}
 `;
 
@@ -23,6 +24,7 @@ const ImageLogo = props => (
 		width={props.width}
 		height={props.height}
 		heightMobile={props.heightMobile}
+		displayMobile={props.displayMobile}
 		paddingMobile={props.paddingMobile}
 		margin={props.margin}
 		marginMobile={props.marginMobile}

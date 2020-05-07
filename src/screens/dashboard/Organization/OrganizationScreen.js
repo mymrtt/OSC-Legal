@@ -861,7 +861,7 @@ class OrganizationScreen extends Component {
 		return (
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
-				{this.state.isModal && <ModalOrganization item={this.state.itemSelected} handleCloseModal={this.isModalOpen} />}
+				{this.state.isModal && <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />}
 				<Header handleClick={this.handleClick} />
 				{this.state.redirect === 'organization' ? (
 					<>
