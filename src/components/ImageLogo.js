@@ -11,18 +11,23 @@ const LogoImage = styled.img`
 	height: ${props => props.height};
 
 	@media(max-width: 648px) {
-		margin: ${props => props.marginMobile};
 		height: ${props => props.heightMobile};
+		padding-top: ${props => props.paddingMobile};
+		margin: ${props => props.marginMobile};
+		display: ${props => props.displayMobile};
 	}
 `;
 
 const ImageLogo = props => (
 	<LogoImage src={Logo}
-		margin={props.margin}
 		alt="Osc Logo"
 		width={props.width}
 		height={props.height}
 		heightMobile={props.heightMobile}
+		displayMobile={props.displayMobile}
+		paddingMobile={props.paddingMobile}
+		margin={props.margin}
+		marginMobile={props.marginMobile}
 	/>
 );
 

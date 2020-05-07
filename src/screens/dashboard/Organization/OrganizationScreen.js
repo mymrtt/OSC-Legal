@@ -1,6 +1,6 @@
 // Libs
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // Components
 import Header from '../components/Header';
@@ -15,35 +15,37 @@ import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const Container = styled.div`
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	margin: 3rem 4rem 0 4rem;
+	padding: 3rem 4rem 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	z-index: 4;
 
 	@media(max-width: 1024px) {
-		margin: 3rem 0 0 4rem;
+		padding: 3rem 3rem 0 4rem;
 	}
 
 	@media (max-width: 768px) {
-		margin: 2rem 4rem 0 4rem;
-		flex-direction: column;
+		padding: 2rem 4rem 0 4rem;
 		align-items: center;
+		flex-direction: column;
 	}
 
 	@media (max-width: 648px) {
-		margin: 1rem 2rem 1rem 2rem;
+		padding: 1rem 2rem 1rem 2rem;
 	}
 `;
 
 const TitleManageOrgs = styled.h2`
 	color: #85144B;
-	font-size: 2.2rem;
+	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
 
@@ -108,7 +110,6 @@ const InputSelect = styled.div`
 const SelectedViewByText = styled.p`
 	width: 100%;
 	padding-left: 0.3rem;
-	/* text-align: center; */
 	color: ${props => (props.color === 'Selecionar status' ? '#959595' : '#85144B')};
 `;
 
@@ -123,12 +124,12 @@ const Overlay = styled.div`
 `;
 
 const InputSelectedItem = styled.div`
-	position: absolute;
-	top: 32px;
 	width: 100%;
 	border: 0.5px solid #85144B;
 	border-radius: 0 0 3px 3px;
 	background-color: #FFFFFF;
+	position: absolute;
+	top: 32px;
 	cursor: pointer;
 `;
 
@@ -148,7 +149,7 @@ const Table = styled.table`
 	max-width: 100%;
 	width: 100%;
 	border-spacing: 0;
-	padding: 2rem 4rem 0 4rem;
+	padding: 2rem 4rem 0;
 
 	@media (max-width: 768px) {
 		padding: 2rem 0 0 0;
@@ -157,6 +158,9 @@ const Table = styled.table`
 	@media (max-width: 648px) {
 		padding: 0;
 		padding-top: 1rem;
+		${({ modal }) => modal && css`
+			display: none;
+		`}
 	}
 `;
 
@@ -182,7 +186,7 @@ const Tr = styled.tr`
 
 	@media(max-width: 768px) {
 		margin-bottom: 1rem;
-		padding: 1rem 1rem 13rem 1rem;
+		padding: 1rem 1rem 11rem 1rem;
 		display: flex;
     flex-wrap: wrap;
 	}
@@ -208,6 +212,38 @@ const ContainerTableTitleMob = styled.span`
 		padding-bottom: 0.7rem;
 		display: flex;
 		flex-direction: column;
+
+		${({ selected }) => selected && css`
+		/* img {display: block;} */
+		p {display: none;}
+		div {display: flex;}
+	`}
+	}
+`;
+
+const TextNoOrganitazion = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 4rem;
+`;
+
+const TextInformation = styled.p`
+	font-size: 2rem;
+	text-align: center;
+
+	@media(max-width: 648px) {
+		font-size: 1.5rem;
+	}
+`;
+
+const Box = styled.div`
+	display: none;
+	flex-direction: row;
+
+	@media(max-width: 768px) {
+		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 	}
 `;
 
@@ -239,25 +275,37 @@ const ContainerStatus = styled.td`
 	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
 	align-items: center;
 
+	${({ selected }) => selected && css`
+		img {display: block;}
+		p {display: none;}
+		div {display: flex;}
+	`}
+
 	@media(max-width: 768px) {
 		padding: 0;
 	}
 `;
 
-const SelectedImgs = styled.p`
+const TextStatus = styled.p`
 	color: ${props => (props.color)};
 	font-size: 0.8rem;
 	font-family: Overpass, Light;
 	text-transform: uppercase;
+
+
+	@media(max-width: 768px) {
+		display: ${props => (props.isClickedName ? 'none' : 'flex')};
+	}
 `;
 
 const ImageStatus = styled.img`
 	width: 1.3rem;
   padding-right: 0.3rem;
+	display: none;
 	cursor: pointer;
 
-	@media(max-width: 1024px) {
-		margin-right: .3rem;
+	@media(max-width: 768px) {
+		display: flex;
 	}
 `;
 
@@ -265,7 +313,9 @@ class OrganizationScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isModal: true,
+			hovered: undefined,
+			isModal: undefined,
+			itemSelected: undefined,
 			isSelected: undefined,
 			selectedValue: 'Selecionar status',
 			selectedItems: [
@@ -274,7 +324,7 @@ class OrganizationScreen extends Component {
 				'Pendente de Pagamento',
 				'Isento',
 				'Pago',
-				'Vencida',
+				'Vencido',
 			],
 			redirect: 'organization',
 			tableTitles: [
@@ -292,64 +342,317 @@ class OrganizationScreen extends Component {
 				{
 					id: 1,
 					organization: 'Instituto PrecisaSer',
-					cpf: '00.000.000/0000-00',
+					cpf: '000.000.000-00',
 					user: 'Jorge Amado da Silva',
 					email: 'organização@email.com',
 					telephone: '(11)11111-1111',
 					createdIn: '19/05/19',
 					authorization: '-',
 					dueDate: '-',
-					status: 'PENDENTE',
+					status: 'Pendente',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
 				},
 				{
 					id: 2,
 					organization: 'Vai na Web',
-					cpf: '00.000.000/0000-00',
+					cpf: '000.000.000-00',
 					user: 'Yasmin Miranda',
 					email: 'nome@email.com',
 					telephone: '(99) 99999-9999',
 					createdIn: '18/06/19',
 					authorization: '-',
 					dueDate: '-',
-					status: 'PAGO',
+					status: 'Pago',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
 				},
 				{
 					id: 3,
 					organization: 'Casa de Rui Barbosa',
-					cpf: '00.000.000/0000-00',
+					cpf: '000.000.000-00',
 					user: 'Alice Barbosa Souza',
 					email: 'organização@email.com',
 					telephone: '(77)77777-7777',
 					createdIn: '17/06/19',
 					authorization: '02/06/19',
 					dueDate: '02/07/19',
-					status: 'PENDENTE',
+					status: 'Pendente',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
 				},
 				{
 					id: 4,
 					organization: 'Biblioteca da Maré',
-					cpf: '00.000.000/0000-00',
+					cpf: '000.000.000-00',
 					user: 'Vinicius Almeida Rodrigues',
 					email: 'organização@email.com',
 					telephone: '(22)22222-2222',
 					createdIn: '15/06/19',
 					authorization: '15/07/19',
 					dueDate: '-',
-					status: 'ISENTO',
+					status: 'Isento',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
 				},
 				{
 					id: 5,
 					organization: 'Museu de Arte ZO',
-					cpf: '00.000.000/0000-00',
+					cpf: '000.000.000-00',
 					user: 'Tarcila do Amaral Gonçalves',
 					email: 'organização@email.com',
 					telephone: '(44)44444-4444',
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'VENCIDO',
+					status: 'Vencido',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
+				},
+				{
+					id: 6,
+					organization: 'Instituto Tamar',
+					cpf: '000.000.000-00',
+					user: 'Aline Candido Mendes',
+					email: 'organização@email.com',
+					telephone: '(55)55555-5555',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'Vencido',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
+				},
+				{
+					id: 7,
+					organization: 'Projeto Vida',
+					cpf: '000.000.000-00',
+					user: 'Ronaldo Veiga de Almeida',
+					email: 'organização@email.com',
+					telephone: '(66)66666-6666',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'Pendente',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
+				},
+				{
+					id: 8,
+					organization: 'Mais Brasil',
+					cpf: '000.000.000-00',
+					user: 'Ana Claudia Ferrari Silva',
+					email: 'organização@email.com',
+					telephone: '(77)77777-7777',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'Autorizar',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
+				},
+				{
+					id: 9,
+					organization: 'Pela Vida',
+					cpf: '000.000.000-00',
+					user: 'Marcio Rodrigues Alves',
+					email: 'organização@email.com',
+					telephone: '(88)88888-8888',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'Isento',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
+				},
+				{
+					id: 10,
+					organization: 'Casa azul',
+					cpf: '000.000.000-00',
+					user: 'João Marcos Barbosa',
+					email: 'organização@email.com',
+					telephone: '(99)99999-9999',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'Pendente',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
+				},
+				{
+					id: 11,
+					organization: 'Coletivo Denegrir',
+					cpf: '000.000.000-00',
+					user: 'Caroline Perreira',
+					email: 'organização@email.com',
+					telephone: '(21)23659-8799',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'Isento',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
+				},
+				{
+					id: 12,
+					organization: 'Crianças Felizes',
+					cpf: '000.000.000-00',
+					user: 'Alice Barbosa Souza',
+					email: 'organização@email.com',
+					telephone: '(21)98956-7856',
+					createdIn: '12/06/19',
+					authorization: '15/06/19',
+					dueDate: '15/07/19',
+					status: 'Pago',
+					admin:
+					{
+						name: 'Erlane',
+						rg: '12.526.759-3',
+						dateOfBirth: '10/10/10',
+						fantasyName: 'Vai na Web',
+						reasonSocial: 'Instituto PrecisaSer',
+						cnpj: '00.000.000/0000-00',
+						address: 'Rua Gomes Lopes',
+						complement: 'Casa',
+						neighborhood: 'Santa Teresa',
+						cep: '20241-410',
+						city: 'Rio de Janeiro',
+					},
 				},
 			],
+
 			statusImgs: [
 				{
 					img: authorizationIcon,
@@ -373,9 +676,9 @@ class OrganizationScreen extends Component {
 		};
 	}
 
-	isModalOpen = (event) => {
-		event.stopPropagation();
+	isModalOpen = (item) => {
 		this.setState({
+			itemSelected: item,
 			isModal: !this.state.isModal,
 		});
 	}
@@ -400,28 +703,30 @@ class OrganizationScreen extends Component {
 		});
 	};
 
-	handleSelectedStatus = (status, item) => {
+	handleSelectedStatus = (newStatus, item) => {
+		const { tableDatas } = this.state;
+		const newList = tableDatas.map((data) => {
+			if (data === item) {
+				return {
+					...data,
+					status: newStatus.desc,
+					isChanged: true,
+				};
+			}
+			return data;
+		});
 		this.setState({
-			selectedStatusImgs: status,
-			selectedStatusOrg: item.id,
-
+			isClickedStatus: '',
+			tableDatas: newList,
 		});
 	}
 
-	chooseColor = (item) => {
-		switch (item) {
-		case 'Autorizar':
-			return '#231F20';
-		case 'Pago':
-			return '#85144B';
-		case 'Isento':
-			return '#FF4136';
-		case 'Prorrogar Prazo':
-			return '#231F20';
-		default:
-			return '#959595';
-		}
-	}
+	handleClickedImageStatus = (item) => {
+		this.setState({
+			isClickedStatus: item.id,
+		});
+	};
+
 
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
@@ -430,13 +735,13 @@ class OrganizationScreen extends Component {
 				<TitleViewBy>Visualizar por:</TitleViewBy>
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
-						<SelectedViewByText>{this.state.selectedValue}</SelectedViewByText>
+						<SelectedViewByText color={this.state.selectedValue}>{this.state.selectedValue}</SelectedViewByText>
 						<img src={ImageCaminho} alt="arrow" />
 					</InputSelect>
 					{this.state.isSelected && (
 						<InputSelectedItem>
 							{this.state.selectedItems.map((item, index) => (
-								<SelectedItem color
+								<SelectedItem
 									onClick={() => this.handleSelectedValue(item)}
 									key={index}
 									hover={item}
@@ -451,18 +756,117 @@ class OrganizationScreen extends Component {
 		</ContainerSelectedViewBy>
 	)
 
-	render() {
+	renderStatus = item => (
+		<>
+			<Box isClickedStatus={ item.id === this.state.isClickedStatus}>
+				{this.state.statusImgs.map((status, index) => (
+					<ImageStatus
+						key={index}
+						src={status.img}
+						alt={status.desc}
+						onClick={() => this.handleSelectedStatus(status, item)}
+					/>
+				))}
+			</Box>
+			<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
+				isClickedName={ item.id === this.state.isClickedStatus}
+				onClick={() => this.handleClickedImageStatus(item)}
+			>
+				{item.status}
+			</TextStatus>
+		</>
+	)
+
+	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 
+		return listTable.map(item => (
+			<Tr key={item}>
+				{widthMob
+					? <ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+						<TableTitleMob>Organização</TableTitleMob>
+						<TableList>{item.organization}</TableList>
+					</ContainerTableTitleMob>
+					: <>
+						<TableList onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
+					</>
+				}
+				<TableList mob onClick={() => this.isModalOpen(item)}>{item.cpf}</TableList>
+				<TableList mob onClick={() => this.isModalOpen(item)}>{item.user}</TableList>
+				{widthMob
+					? <> <ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+						<TableTitleMob>E-mail</TableTitleMob>
+						<TableList>{item.email}</TableList>
+					</ContainerTableTitleMob>
+					<ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+						<TableTitleMob>Telefone</TableTitleMob>
+						<TableList>{item.telephone}</TableList>
+					</ContainerTableTitleMob>
+					<ContainerTableTitleMob>
+						<TableTitleMob>Criado em</TableTitleMob>
+						<TableList>{item.createdIn}</TableList>
+					</ContainerTableTitleMob>
+					<ContainerTableTitleMob>
+						<TableTitleMob>Autorização</TableTitleMob>
+						<TableList>{item.authorization}</TableList>
+					</ContainerTableTitleMob>
+					<ContainerTableTitleMob>
+						<TableTitleMob>Vencimento</TableTitleMob>
+						<TableList>{item.dueDate}</TableList>
+					</ContainerTableTitleMob>
+					</>
+					: <>
+						<TableList onClick={() => this.isModalOpen(item)}>{item.email}</TableList>
+						<TableList onClick={() => this.isModalOpen(item)}>{item.telephone}</TableList>
+						<TableList>{item.createdIn}</TableList>
+						<TableList>{item.authorization}</TableList>
+						<TableList>{item.dueDate}</TableList>
+					</>
+				}
+				{widthMob
+					? <ContainerTableTitleMob
+						// selected={this.state.hovered === item}
+					>
+						<TableTitleMob>Status</TableTitleMob>
+						{this.renderStatus(item)}
+					</ContainerTableTitleMob>
+					: <>
+						<ContainerStatus
+							onMouseEnter={() => this.setState({ hovered: item })}
+							onMouseLeave={() => this.setState({ hovered: undefined })}
+							selected={this.state.hovered === item}
+						>
+							{this.renderStatus(item)}
+						</ContainerStatus>
+					</>
+				}
+			</Tr>
+		));
+	}
+
+	renderAllTable = () => {
+		const { tableDatas, selectedValue } = this.state;
+
+		let listTable = this.renderTable(tableDatas);
+		if (
+			selectedValue !== 'Selecionar status'
+		) {
+			listTable = this.renderTable(tableDatas.filter(item => item.status === selectedValue));
+		}
+		return listTable;
+	}
+
+	render() {
+		console.log('tableDatas', this.state.isClickedStatus);
 		return (
 			<Container>
-				{this.state.isSelected && (<Overlay onClick={this.isSelectOpen} />)}
-				{this.state.isModal && <ModalOrganization handleCloseModal={this.isModalOpen} />}
+				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
+				{this.state.isModal && <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />}
 				<Header handleClick={this.handleClick} />
 				{this.state.redirect === 'organization' ? (
 					<>
 						{this.renderSelectedViewby()}
-						<Table>
+						<Table modal={this.state.isModal}>
 							<Thead>
 								<Tr>
 									{this.state.tableTitles.map(title => (
@@ -471,84 +875,14 @@ class OrganizationScreen extends Component {
 								</Tr>
 							</Thead>
 							<tbody>
-								{this.state.tableDatas.map(item => (
-									<Tr key={item}>
-										{widthMob
-											? <ContainerTableTitleMob onClick={this.isModalOpen}>
-												<TableTitleMob>Organização</TableTitleMob>
-												<TableList>{item.organization}</TableList>
-											</ContainerTableTitleMob>
-											: <>
-												<TableList onClick={this.isModalOpen}>{item.organization}</TableList>
-											</>
-										}
-										<TableList mob onClick={this.isModalOpen}>{item.cpf}</TableList>
-										<TableList mob onClick={this.isModalOpen}>{item.user}</TableList>
-										{widthMob
-											? <> <ContainerTableTitleMob onClick={this.isModalOpen}>
-												<TableTitleMob>E-mail</TableTitleMob>
-												<TableList>{item.email}</TableList>
-											</ContainerTableTitleMob>
-											<ContainerTableTitleMob onClick={this.isModalOpen}>
-												<TableTitleMob>Telefone</TableTitleMob>
-												<TableList>{item.telephone}</TableList>
-											</ContainerTableTitleMob>
-											<ContainerTableTitleMob>
-												<TableTitleMob>Criado em</TableTitleMob>
-												<TableList>{item.createdIn}</TableList>
-											</ContainerTableTitleMob>
-											<ContainerTableTitleMob>
-												<TableTitleMob>Autorização</TableTitleMob>
-												<TableList>{item.authorization}</TableList>
-											</ContainerTableTitleMob>
-											<ContainerTableTitleMob>
-												<TableTitleMob>Vencimento</TableTitleMob>
-												<TableList>{item.dueDate}</TableList>
-											</ContainerTableTitleMob>
-											</>
-											: <>
-												<TableList onClick={this.isModalOpen}>{item.email}</TableList>
-												<TableList onClick={this.isModalOpen}>{item.telephone}</TableList>
-												<TableList>{item.createdIn}</TableList>
-												<TableList>{item.authorization}</TableList>
-												<TableList>{item.dueDate}</TableList>
-											</>
-										}
-										{widthMob
-											? <ContainerTableTitleMob>
-												<TableTitleMob>Status</TableTitleMob>
-												<ContainerStatus desc={this.state.selectedStatusImgs}>
-													{ this.state.selectedStatusImgs === undefined
-														? this.state.statusImgs.map((status, index) => (
-															<ImageStatus
-																key={index}
-																src={status.img}
-																alt={status.desc}
-																onClick={() => this.handleSelectedStatus(status)}
-															/>
-														))
-														: <p>{this.state.selectedStatusImgs.desc}</p>}
-												</ContainerStatus>
-											</ContainerTableTitleMob>
-											: <>
-												<ContainerStatus desc={this.state.selectedStatusImgs}>
-													{ this.state.selectedStatusOrg === item.id
-														? <SelectedImgs color={this.chooseColor(this.state.selectedStatusImgs.desc)}>{this.state.selectedStatusImgs.desc}</SelectedImgs>
-														:														this.state.statusImgs.map((status, index) => (
-															<ImageStatus
-																key={index}
-																src={status.img}
-																alt={status.desc}
-																onClick={() => this.handleSelectedStatus(status, item)}
-															/>
-														))}
-												</ContainerStatus>
-											</>
-										}
-									</Tr>
-								))}
+								{this.renderAllTable()}
 							</tbody>
 						</Table>
+						{this.renderAllTable().length === 0 && (
+							<TextNoOrganitazion>
+								<TextInformation>Não há nenhuma organizações</TextInformation>
+							</TextNoOrganitazion>
+						)}
 					</>
 				) : <DocumentsScreen />
 				}
