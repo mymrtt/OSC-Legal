@@ -83,7 +83,7 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	width: 30%;
+	width: 35%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -92,6 +92,37 @@ const ContainerAddModel = styled.div`
 		display: flex;
 		order: 1;
 		width: 100%;
+	}
+`;
+
+const InitialAddModel = styled.div`
+	width: 61.6%;
+	height: 170px;
+	display: ${(props => (props.initialModel ? 'flex' : 'none'))};
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color: #959595;
+	border: 1px solid #959595;
+	border-radius: 3px;
+`;
+
+const TitleInitialAddModel = styled.h2`
+	font-size: 1.5rem;
+  font-family: "Overpass", Black;
+	font-weight: 900;
+`;
+
+const TextInitialAddModel = styled.p`
+	font-size: 1.2rem;
+  font-family: "Overpass", Regular;
+	font-weight: 300;
+
+	a {
+		color: #85144B;
+		text-decoration: underline;
+		cursor: pointer;
+		text-underline-position: under;
 	}
 `;
 
@@ -155,11 +186,11 @@ const SearchInput = styled.input`
 
 const ContainerModels = styled.div`
 	width: 100%;
-	display: flex;
+	display: ${(props => (props.initialModel ? 'flex' : 'none'))};
 	flex-direction: column;
 
 	@media (max-width: 490px) {
-    margin-bottom: 10rem;
+    height: 55vh;
 	}
 `;
 
@@ -698,6 +729,7 @@ class DocumentsScreen extends Component {
 				file: '',
 			},
 		],
+		initialModel: true,
 		changeColorLabel: false,
 		options: false,
 		selectedOptions: '',
@@ -713,6 +745,14 @@ class DocumentsScreen extends Component {
 		colorTextDelete: '',
 		validationModel: false,
 	};
+
+	componentDidMount() {
+		if (this.state.modelsList.length !== 0) {
+			this.setState({
+				initialModel: false,
+			});
+		}
+	}
 
 	handleClickedLabel = (ev) => {
 		ev.stopPropagation();
@@ -756,7 +796,6 @@ class DocumentsScreen extends Component {
 		handleModalDelete = () => {
 			this.setState({
 				modalDelete: true,
-				// options: false,
 			});
 		}
 
@@ -917,7 +956,11 @@ class DocumentsScreen extends Component {
 								</ModalAddModel>
 							</ContainerModal>}
 						</ContainerAddModel>
-						<Scrollbar maxHeight={'65vh'}>
+						<InitialAddModel initialModel={this.state.initialModel}>
+							<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
+							<TextInitialAddModel>Escolha um modelo de documento clicando em <a onClick={this.handleAddModel}>Adicionar Documento</a></TextInitialAddModel>
+						</InitialAddModel>
+						{/* <Scrollbar maxHeight={'65vh'}> */}
 							<ContainerModels>
 								{list.map(item => (
 									<ContainerModel key={item}
@@ -979,7 +1022,7 @@ class DocumentsScreen extends Component {
 									</ModalDelete>
 								</ContainerModalDelete>}
 							</ContainerModels>
-						</Scrollbar>
+						{/* </Scrollbar> */}
 					</ContainerContent>
 				</Container>
 			);
