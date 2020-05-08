@@ -13,9 +13,6 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 import Dashboard from '../screens/dashboard/index';
 import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
-// import ModalCreateOrganization from '../screens/dashboard/Organization/ModalCreateOrganization';
-// import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
-// import ModalOrganization from '../screens/dashboard/Organization/ModalOrganization';
 
 import PrivateRoute from './PrivateRoute';
 
