@@ -23,7 +23,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-	padding: 0 3rem;
+	/* padding: 0 4.5rem 0 3rem; */
   text-transform: uppercase;
 	border-bottom: 1px solid  #707070;
 
@@ -36,6 +36,7 @@ const Container = styled.div`
 	}
 
 	@media (max-width: 648px) {
+		padding: 0;
 		flex-wrap: wrap;
 	}
 `;
@@ -68,27 +69,32 @@ const Border = styled.span`
 
 	@media (max-width: 859px) {
 		margin-right: 2.5rem;
-		/* padding-right: 1.5rem; */
 	}
 
 	@media (max-width: 648px) {
-		margin-right: 0.5rem;
+		width: 29%;
+		/* margin-right: 0.5rem; */
 		padding-right: 0;
 	}
 
-	@media (max-width: 320px) {
+	@media (max-width: 430px) {
+		width: 50%;
 		margin-right: 0;
 	}
 `;
 
 const ParagraphContainer = styled.p`
   font-size: 1.375rem;
-	font-family: Overpass;
-	font-weight: ${props => props.bold && '700'};
+	font-family: Overpass, ExtraBold;
+	font-weight: ${props => props.bold && '900'};
 	margin-top: 2.2rem;
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
+	}
+
+	@media (max-width: 648px) {
+		text-align: center;
 	}
 `;
 
@@ -136,11 +142,16 @@ const ParagraphSair = styled.p`
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
-  opacity: 1;
+	margin-right: 4.5rem;
 	cursor: pointer;
+  opacity: 1;
 
-	@media (max-width: 859px) {
-		font-size: 1rem;
+	@media (max-width: 768px) {
+		margin-right: 0;
+	}
+
+	@media (max-width: 648px) {
+		margin: 0 1rem 0;
 	}
 `;
 
@@ -180,7 +191,7 @@ class Header extends Component {
 		const { redirect } = this.state;
 		return (
 			<Container>
-				<ImageLogo marginMobile='0 0 0 -1rem' height='2.8rem' paddingMobile='0.5rem'/>
+				<ImageLogo margin={'0 0 0 3rem'} marginMobile='0 0 0 1rem' height='2.8rem' paddingMobile='0.5rem'/>
 				<WrapButton>
 					{this.renderButtons('organization')}
 					{this.renderButtons('documentos')}

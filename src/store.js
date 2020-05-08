@@ -6,9 +6,11 @@ import thunkMiddleware from 'redux-thunk';
 
 // Reducers
 import Onboarding from './dataflow/modules/onboarding-modules';
+import Dashboard from './dataflow/modules/dashboard-modules';
 
 const reducers = combineReducers({
 	onboarding: Onboarding,
+	dashboard: Dashboard,
 });
 
 export default function configureStore(initialState) {
