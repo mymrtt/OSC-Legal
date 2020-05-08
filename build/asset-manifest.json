@@ -1,25 +1,30 @@
 {
   "files": {
     "main.css": "/OSC-Legal/static/css/main.c0180cdc.chunk.css",
-    "main.js": "/OSC-Legal/static/js/main.1e645bd4.chunk.js",
-    "main.js.map": "/OSC-Legal/static/js/main.1e645bd4.chunk.js.map",
+    "main.js": "/OSC-Legal/static/js/main.517bcf93.chunk.js",
+    "main.js.map": "/OSC-Legal/static/js/main.517bcf93.chunk.js.map",
     "runtime-main.js": "/OSC-Legal/static/js/runtime-main.6c64655e.js",
     "runtime-main.js.map": "/OSC-Legal/static/js/runtime-main.6c64655e.js.map",
-    "static/js/2.0cf4593d.chunk.js": "/OSC-Legal/static/js/2.0cf4593d.chunk.js",
-    "static/js/2.0cf4593d.chunk.js.map": "/OSC-Legal/static/js/2.0cf4593d.chunk.js.map",
+    "static/js/2.0dd9f003.chunk.js": "/OSC-Legal/static/js/2.0dd9f003.chunk.js",
+    "static/js/2.0dd9f003.chunk.js.map": "/OSC-Legal/static/js/2.0dd9f003.chunk.js.map",
     "index.html": "/OSC-Legal/index.html",
-    "precache-manifest.5b2c3e95b2e5dc97c25cf84973675edb.js": "/OSC-Legal/precache-manifest.5b2c3e95b2e5dc97c25cf84973675edb.js",
+    "precache-manifest.4aec8abcb9a32388a18da8b0845ac689.js": "/OSC-Legal/precache-manifest.4aec8abcb9a32388a18da8b0845ac689.js",
     "service-worker.js": "/OSC-Legal/service-worker.js",
     "static/css/main.c0180cdc.chunk.css.map": "/OSC-Legal/static/css/main.c0180cdc.chunk.css.map",
-    "static/js/2.0cf4593d.chunk.js.LICENSE.txt": "/OSC-Legal/static/js/2.0cf4593d.chunk.js.LICENSE.txt",
+    "static/js/2.0dd9f003.chunk.js.LICENSE.txt": "/OSC-Legal/static/js/2.0dd9f003.chunk.js.LICENSE.txt",
     "static/media/authorization.svg": "/OSC-Legal/static/media/authorization.3ce4b5b4.svg",
     "static/media/caminho.svg": "/OSC-Legal/static/media/caminho.fa1297e7.svg",
     "static/media/delete.svg": "/OSC-Legal/static/media/delete.33d53cbe.svg",
-    "static/media/edit.svg": "/OSC-Legal/static/media/edit.f522e40b.svg",
+    "static/media/deleteWhite.svg": "/OSC-Legal/static/media/deleteWhite.07b57ec1.svg",
+    "static/media/documentWhite.svg": "/OSC-Legal/static/media/documentWhite.aab63df6.svg",
+    "static/media/download.svg": "/OSC-Legal/static/media/download.2ac44347.svg",
+    "static/media/downloadwhite.svg": "/OSC-Legal/static/media/downloadwhite.4a5d9563.svg",
+    "static/media/exit.svg": "/OSC-Legal/static/media/exit.e8241106.svg",
     "static/media/extendDeadline.svg": "/OSC-Legal/static/media/extendDeadline.99e97a45.svg",
     "static/media/fechar.svg": "/OSC-Legal/static/media/fechar.303833dc.svg",
     "static/media/free.svg": "/OSC-Legal/static/media/free.5defe7c6.svg",
     "static/media/logo.svg": "/OSC-Legal/static/media/logo.e049bfe2.svg",
+    "static/media/magnifyingGlass.svg": "/OSC-Legal/static/media/magnifyingGlass.d778af42.svg",
     "static/media/pay.svg": "/OSC-Legal/static/media/pay.92a1b9ac.svg",
     "static/media/setaLado.svg": "/OSC-Legal/static/media/setaLado.7e764e9f.svg",
     "static/media/sucess.svg": "/OSC-Legal/static/media/sucess.e237ad43.svg",
@@ -28,8 +33,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.6c64655e.js",
-    "static/js/2.0cf4593d.chunk.js",
+    "static/js/2.0dd9f003.chunk.js",
     "static/css/main.c0180cdc.chunk.css",
-    "static/js/main.1e645bd4.chunk.js"
+    "static/js/main.517bcf93.chunk.js"
   ]
 }

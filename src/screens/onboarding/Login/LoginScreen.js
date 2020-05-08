@@ -160,7 +160,6 @@ const Error = styled.h4`
 	}
 `;
 
-
 class LoginScreen extends Component {
 	constructor(props) {
 		super(props);
@@ -171,11 +170,14 @@ class LoginScreen extends Component {
 			passwordError: '',
 			error: undefined,
 			type: 'password',
+			redirect: '',
 		};
 	}
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
+
+		console.log('redirect', this.state.redirect)
 
 		if (!this.handleError()) {
 			this.setState({ redirect: '/dashboard' });

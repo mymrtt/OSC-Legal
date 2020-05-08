@@ -1,5 +1,6 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import {	NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -48,7 +49,7 @@ const WrapButton = styled.div`
 	justify-content: flex-start;
 	align-items: center;
 	flex-direction: row;
-	
+
 	a{
 		display: flex;
 		align-items: flex-end;
@@ -127,34 +128,46 @@ const ParagraphSair = styled.p`
 	cursor: pointer;
 `;
 
-const Header = props => (
-	<Container>
-		<ImageLogo margin={'0 0 0 3rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
-		<WrapButton>
-			<NavLink
-				exact to="/organizations"
-				activeClassName="button-header-dash"
-			>
-					Organizações
-			</NavLink>
-			<NavLink
-				exact to="/documents"
-				activeClassName="button-header-dash"
-			>
-					Documentos
-			</NavLink>
-		</WrapButton>
-		<ContainerAdm>
-			<ParagraphContainer1>
-				{props.email && props.password && props.email === 'teste@gmail.com'
-						&& props.password === '12345678' ? 'Administrador' : props.name}
-			</ParagraphContainer1>
-			<Redirect exact to="/" style={{ textDecoration: 'none' }}>
-				<ParagraphSair>
-						sair
-				</ParagraphSair>
-			</Redirect>
-		</ContainerAdm>
-	</Container>
-);
-export default connect(mapStateToProps)(Header);
+class Header extends Component {
+  state = {
+  	redirect: false,
+  }
+
+  handleRedirect = () => {
+  	this.setState({ redirect: true });
+  }
+
+  render() {
+  	return (
+  		<Container>
+  			<ImageLogo margin={'0 0 0 3rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
+  			<WrapButton>
+  				<NavLink
+  					exact to="/organizations"
+  					activeClassName="button-header-dash"
+  				>
+              Organizações
+  				</NavLink>
+  				<NavLink
+  					exact to="/documents"
+  					activeClassName="button-header-dash"
+  				>
+              Documentos
+  				</NavLink>
+  			</WrapButton>
+  			<ContainerAdm>
+  				<ParagraphContainer1>
+  					{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+                && this.props.password === '12345678' ? 'Administrador' : this.props.name}
+  				</ParagraphContainer1>
+  				<ParagraphSair onClick={this.handleRedirect}>
+              sair
+  				</ParagraphSair>
+  				{this.state.redirect && <Redirect exact to="/" />}
+  			</ContainerAdm>
+	    </Container>
+  	);
+  }
+}
+
+export default connect(mapStateToProps, null)(Header);
