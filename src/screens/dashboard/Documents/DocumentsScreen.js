@@ -21,8 +21,8 @@ import Header from '../components/Header';
 import Scrollbar from '../components/Scrollbar';
 
 // Redux
-import { addNewDocument } from '../../../dataflow/modules/dashboard-modules';
-import { deleteDocument } from '../../../dataflow/modules/dashboard-modules';
+import { addNewDocument } from "../../../dataflow/modules/dashboard-modules";
+import { deleteDocument } from "../../../dataflow/modules/dashboard-modules";
 
 const mapStateToProps = state => ({
 	documentsList: state.dashboard.documentsList,
@@ -306,7 +306,7 @@ const ContainerOptions = styled.div`
 	flex-direction: column;
 
 	@media (max-width: 768px) {
-		margin-left: 1.7rem;this.props.documentsList.documentsList;
+		margin-left: 1.7rem;
 	}
 
 	@media (max-width: 490px) {
@@ -490,10 +490,6 @@ const UploadFile = styled.label`
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
-
-	/* &:focus {
-		outline: 1px solid #ff4136;
-	} */
 
 	input[type='file'] {
 		display: none;
@@ -717,7 +713,7 @@ class DocumentsScreen extends Component {
 		document: {
 			title: '',
 			description: '',
-			num: this.props.documentsList.length + 1,
+			id: this.props.documentsList.length + 1,
 		},
 		isError: false,
 	};
@@ -766,7 +762,6 @@ class DocumentsScreen extends Component {
 		handleModalDelete = () => {
 			this.setState({
 				modalDelete: true,
-				// options: false,
 			});
 		}
 
@@ -831,9 +826,12 @@ class DocumentsScreen extends Component {
 			});
 		}
 
-		handleDelete = (ev) => {
-			ev.preventDefault();
-			this.props.deleteDocument()
+		handleDelete = () => {
+			this.props.deleteDocument(this.state.modelSelect.id);
+			this.setState({
+				modelSelect: '',
+			});
+			this.handleCancelDelete();
 			// const documentsList = this.props;
 			// documentsList.splice(documentsList.indexOf(this.props.documentsList), 1);
 			// this.setState({
@@ -850,14 +848,14 @@ class DocumentsScreen extends Component {
 
 		handleSubmit = (e) => {
 			e.preventDefault();
-			const { title, description, num } = this.state.document;
+			const { title, description, id } = this.state.document;
 			const { isFiles } = this.state;
 			if (title === '' || description === '' || isFiles === null) {
 				this.setState({
 					isError: true,
 				});
 			} else {
-				this.props.addNewDocument({title, description, num, isFiles});
+				this.props.addNewDocument({title, description, id, isFiles});
 				this.handleCancelAddModel();
 			}
 		}
@@ -940,7 +938,7 @@ class DocumentsScreen extends Component {
 				</WrapTextModal>
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
-					<ButtonConfirm onClick={ev => this.handleDelete(ev)}>Confirmar</ButtonConfirm>
+					<ButtonConfirm onClick={this.handleDelete}>Confirmar</ButtonConfirm>
 				</ButtonsModal>
 			</ModalDelete>
 		</ContainerModalDelete>
@@ -984,7 +982,7 @@ class DocumentsScreen extends Component {
 								>
 									<ContainerModelDescription>
 										<span>
-											<ModelNumber>{item.num}</ModelNumber>
+											<ModelNumber>{item.id}</ModelNumber>
 											<ModelTitle>{item.title}</ModelTitle>
 										</span>
 										<ModelParagraph>{item.description}</ModelParagraph>

@@ -524,7 +524,7 @@ class CreateUserScreen extends Component {
 							<ImageLogo
 								margin="3rem 0 2rem 0"
 								// marginMobile="15rem 0 2rem 0"
-								width=" 150px"
+								width=" 180px"
 							/>
 							<BlockTitle>
 								<TitleForm>criar conta</TitleForm>
