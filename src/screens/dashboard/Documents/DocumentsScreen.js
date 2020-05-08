@@ -1,3 +1,8 @@
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-key */
+/* eslint-disable class-methods-use-this */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -14,7 +19,6 @@ import DeleteIconWhite from '../../../assets/deleteWhite.svg';
 import documentWhite from '../../../assets/documentWhite.svg';
 
 import Header from '../components/Header';
-import Scrollbar from '../components/Scrollbar';
 
 // Redux
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/dashboard-modules';
@@ -33,7 +37,7 @@ const Container = styled.div`
 	height: 90%;
 
 	@media (max-width: 490px) {
-		padding-top: 1rem;
+		height: 45%;
 	}
 `;
 
@@ -41,11 +45,9 @@ const ContainerHeader = styled.div`
 	margin: 3rem 4rem 0 4rem;
   display: flex;
   justify-content: space-between;
-
 	@media (max-width: 768px) {
 		margin: 3rem 2rem 0 2rem;
 	}
-
 	@media (max-width: 490px) {
 		margin: 1.2rem;
 	}
@@ -53,7 +55,6 @@ const ContainerHeader = styled.div`
 
 const AddModelImage = styled.img`
 	width: 35%;
-
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -64,11 +65,9 @@ const TitleSearch = styled.p`
   font-size: 2rem;
   font-family: "Overpass", Black;
   font-weight: 600;
-
 	@media (max-width: 768px) {
 		font-size: 1.5rem;
 	}
-
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -79,12 +78,10 @@ const ContainerContent = styled.div`
 	padding-right: 3rem;
 	width: 100%;
 	display: flex;
-
 	@media (max-width: 768px) {
 		padding-right: 1rem;
 		padding-top: 2rem;
 	}
-
 	@media (max-width: 490px) {
 		padding: 0 1.2rem;
 		flex-direction: column;
@@ -92,7 +89,7 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	width: 30%;
+	width: 35%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -101,6 +98,77 @@ const ContainerAddModel = styled.div`
 		display: flex;
 		order: 1;
 		width: 100%;
+		justify-content: flex-end;
+		height: ${props => (props.initialModel ? '60vh' : 'initial')};
+	}
+`;
+
+const InitialAddModel = styled.div`
+	width: 61.4%;
+	height: 170px;
+	display: ${(props => (props.initialModel ? 'flex' : 'none'))};
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color: #959595;
+	border: 1px solid #959595;
+	border-radius: 3px;
+
+	@media (max-width: 1024px) {
+		padding: 0 1%;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0 5%;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
+		padding: 0 6%;
+		margin-bottom: 2rem;
+	}
+`;
+
+
+const ContainerScroll = styled.div`
+	max-height: 60vh;
+	width: 65%;
+	overflow: scroll;
+
+	@media (max-width: 490px) {
+		width: 100%;
+	}
+`;
+
+const TitleInitialAddModel = styled.h2`
+	font-size: 1.5rem;
+  font-family: "Overpass", Black;
+	font-weight: 900;
+
+	@media (max-width: 768px) {
+		font-size: 1.2rem;
+	}
+`;
+
+const TextInitialAddModel = styled.p`
+	font-size: 1.2rem;
+  font-family: "Overpass", Regular;
+	font-weight: 300;
+
+	a {
+		color: #85144B;
+		text-decoration: underline;
+		cursor: pointer;
+		text-underline-position: under;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 1rem;
+	}
+
+	@media (max-width: 490px) {
+		margin-top: 1rem;
 	}
 `;
 
@@ -110,16 +178,13 @@ const ContainerSearch = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-
 	@media (max-width: 1024px) {
 		margin-right: 1.1rem;
 	}
-
 	@media (max-width: 768px) {
 		margin-right: .6rem;
 		width: 40%;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 		margin-right: 0;
@@ -132,7 +197,6 @@ const SearchText = styled.p`
   font-family: Overpass, Bold;
 	font-weight: 600;
   margin-right: 0.8rem;
-
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -144,7 +208,6 @@ const ContainerSearchInput = styled.label`
 	border-radius: 3px;
   padding: 0.7rem;
 	border: ${props => (props.clickLabel ? '1px solid #FF4136' : '0.5px solid #85144B')};
-
 	img {
 		margin: 0 0 0 10px;
 	}
@@ -154,7 +217,6 @@ const SearchInput = styled.input`
   width: 100%;
   border: 0;
 	outline: none;
-
 	@media (max-width: 768px) {
 		&::placeholder {
 			font-size: .7rem;
@@ -164,11 +226,15 @@ const SearchInput = styled.input`
 
 const ContainerModels = styled.div`
 	width: 100%;
-	display: flex;
+	display: ${(props => (props.initialModel ? 'none' : 'flex'))};
 	flex-direction: column;
-
 	@media (max-width: 490px) {
     margin-bottom: 10rem;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
+		margin-bottom: 0;
 	}
 `;
 
@@ -196,15 +262,20 @@ const ContainerModel = styled.div`
 			position: absolute;
 
 			@media (max-width: 1024px) {
-				right: 10rem;
+				right: 10.5rem;
+			}
+
+			@media (max-width: 768px) {
+				right: 9rem;
 			}
 
 			@media (max-width: 490px) {
 				width: 10rem;
 				height: 1px;
-				z-index: 6;
+				display: ${props => (props.displayBefore ? 'none' : 'flex')};
 				margin-top: 21.5%;
     		top: 100%;
+				z-index: 6;
 				right: 0;
 			}
 
@@ -213,11 +284,9 @@ const ContainerModel = styled.div`
 			}
 		}
 	}
-
 	@media (max-width: 768px) {
 		padding: 1.3rem;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
@@ -230,27 +299,21 @@ const ContainerModelDescription = styled.div`
 	width: 85%;
 	display: flex;
 	flex-direction: column;
-
 	span {
 		display: flex;
-
 		@media (max-width: 1024px) {
 			width: 76%;
 		}
-
 		@media (max-width: 768px) {
 			width: 95%;
 		}
-
 		@media (max-width: 490px) {
 			width: 100%;
 		}
 	}
-
 	@media (max-width: 768px) {
 		width: 70%;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 	}
@@ -261,7 +324,6 @@ const ModelNumber = styled.h2`
 	color: #FF4136;
 	font-family: "Overpass", Black;
 	font-size: 1.5rem;
-
 	@media (max-width: 490px) {
 		font-size: 1.2rem;
 	}
@@ -271,13 +333,11 @@ const ModelTitle = styled.h2`
 	margin-bottom: .5rem;
   color: #85144B;
   font-family: "Overpass", Black;
-
 	@media (max-width: 768px) {
 		font-size: 1.3rem;
 	}
-
 	@media (max-width: 490px) {
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 `;
 
@@ -285,13 +345,14 @@ const ModelParagraph = styled.p`
   width: 92%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
-
 	@media (max-width: 768px) {
 		font-size: 1rem;
+		width: 98%;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
+		font-size: .8rem;
+		line-height: 1.3rem;
 	}
 `;
 
@@ -330,7 +391,7 @@ const Option = styled.button`
 	background: transparent;
 	border: none;
 	border-radius: 4px;
-
+	
 	&:hover {
 		background: #FF4136;
 	}
@@ -351,14 +412,8 @@ const Option = styled.button`
 `;
 
 const OptionImage = styled.img`
-
 	@media (max-width: 768px) {
-		width: 15px;
-		height: 15px;
-	}
-
-	@media (max-width: 490px) {
-		width: 16px;
+		width: 20px;
 		height: 20px;
 	}
 `;
@@ -367,11 +422,9 @@ const OptionText = styled.p`
 	color: ${props => (props.colorTextButton)};
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
-
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
-
 	@media (max-width: 490px) {
 		font-size: 1.3rem;
     margin-left: 0.8rem;
@@ -390,17 +443,14 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
   background-color: #FF4136;
-
 	@media (max-width: 1024px) {
 		padding: 1rem;
 		width: 70%;
 	}
-
 	@media (max-width: 768px) {
 		font-size: 1rem;
 		width: 75%;
 	}
-
 	@media (max-width: 490px) {
 		font-size: 1.2rem;
 		width: 100%;
@@ -418,7 +468,6 @@ const ContainerModal = styled.div`
 	align-items: center;
 	z-index: 3;
 	background: rgba(112, 112, 112, 0.5);
-
 	@media (max-width: 490px) {
 		flex-direction: column;
 	}
@@ -433,11 +482,9 @@ const ModalAddModel = styled.form`
 	justify-content: space-between;
 	border-radius: 4px;
 	padding: 1% 2% 2% 3%;
-
 	@media (max-width: 1024px) {
 		height: 540px;
 	}
-
 	@media (max-width: 490px) {
 		height: 100%;
 		width: 100%;
@@ -448,7 +495,6 @@ const ModalAddModel = styled.form`
 const HeaderAddModel = styled.div`
 	display: flex;
 	justify-content: space-between;
-
 	img {
 		width: 20px;
 		height: 20px;
@@ -464,7 +510,6 @@ const TitleAddModel = styled.h2`
 	margin-left: 1rem;
   font-family: "Overpass", Bold;
   font-weight: 600;
-
 	@media (max-width: 490px) {
 		font-size: 1.8rem;
 	}
@@ -489,7 +534,6 @@ const UploadFile = styled.label`
 	input[type='file'] {
 		display: none;
 	}
-
 	img {
 		width: 50px;
 	}
@@ -503,18 +547,15 @@ const TextUploadFile = styled.div`
 	font-family: "Overpass", SemiBold;
 	font-size: .9rem;
 	color: #959595;
-
 	h3 {
 		font-family: "Overpass", Bold;
 		margin-bottom: .5rem;
 		font-size: 1.2rem;
 	}
-
 	span {
 		cursor: pointer;
 		text-decoration: underline;
 	}
-
 	@media (max-width: 490px) {
 		width: 52%;
 	}
@@ -542,7 +583,6 @@ const Input = styled.input`
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
-
 	/* &:focus {
 		outline: 1px solid #ff4136;
 	} */
@@ -558,11 +598,9 @@ const TextArea = styled.textarea`
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
-
 	/* &:focus {
 		outline: 1px solid #ff4136;
 	} */
-
 	@media (max-width: 490px) {
 		height: 100px;
 	}
@@ -573,24 +611,20 @@ const ButtonAdd = styled(Button)`
 	width: 55%;
 	margin: 0;
 	text-transform: uppercase;
-
 	@media (max-width: 1024px) {
 		font-size: .9rem;
 		width: 55%;
 		padding: .8rem;
 	}
-
 	@media (max-width: 768px) {
 		font-size: .9rem;
 		width: 60%;
 		padding: 1rem;
 		margin: 0;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 		font-size: 1.2rem;
-
 	}
 `;
 
@@ -604,7 +638,6 @@ const ModalDelete = styled(ModalAddModel)`
 	width: 460px;
 	height: auto;
 	padding: 1% 1% 1% 2%;
-
 	@media (max-width: 490px) {
 		width: 100%;
 		height: 100vh;
@@ -613,7 +646,6 @@ const ModalDelete = styled(ModalAddModel)`
 `;
 
 const TitleModal = styled(HeaderAddModel)`
-
 	img {
 		width: 20px;
 		height: 20px;
@@ -644,7 +676,6 @@ const TextModal = styled.p`
 		font-family: 'Overpass', Bold;
 		color: #404040;
 	}
-
 	@media (max-width: 490px) {
 		margin: 0;
 		font-size: 1.3rem;
@@ -655,7 +686,6 @@ const ButtonsModal = styled.div`
 	display: flex;
 	width: 98%;
 	margin-top: 5%;
-
 	@media (max-width: 490px) {
 		margin: 0;
 		width: 100%;
@@ -667,7 +697,6 @@ const ButtonCancel = styled(Button)`
 	background: #ffffff;
 	margin: 5% 0 0 0;
 	box-shadow: none;
-
 	@media (max-width: 490px) {
 		margin: 0;
 	}
@@ -675,7 +704,6 @@ const ButtonCancel = styled(Button)`
 
 const ButtonConfirm = styled(Button)`
 	margin: 5% 0 0 0;
-
 	@media (max-width: 490px) {
 		margin: 0;
 	}
@@ -691,6 +719,7 @@ const ErrorText = styled.p`
 
 class DocumentsScreen extends Component {
 	state = {
+		initialModel: true,
 		changeColorLabel: false,
 		options: false,
 		selectedOptions: '',
@@ -712,6 +741,14 @@ class DocumentsScreen extends Component {
 		},
 		isError: false,
 	};
+
+	componentDidMount() {
+		if (this.props.documentsList.length !== 0) {
+			this.setState({
+				initialModel: false,
+			});
+		}
+	}
 
 	handleClickedLabel = (ev) => {
 		ev.stopPropagation();
@@ -757,6 +794,7 @@ class DocumentsScreen extends Component {
 		handleModalDelete = () => {
 			this.setState({
 				modalDelete: true,
+				options: false,
 			});
 		}
 
@@ -822,6 +860,7 @@ class DocumentsScreen extends Component {
 		}
 
 		handleDelete = () => {
+			// ev.preventDefault();
 			this.props.deleteDocument(this.state.modelSelect.id);
 			this.setState({
 				modelSelect: '',
@@ -830,7 +869,7 @@ class DocumentsScreen extends Component {
 			// const documentsList = this.props;
 			// documentsList.splice(documentsList.indexOf(this.props.documentsList), 1);
 			// this.setState({
-			// 	documentsList,
+			// 	list,
 			// 	modalDelete: false,
 			// });
 		}
@@ -964,20 +1003,25 @@ class DocumentsScreen extends Component {
 					</ContainerSearch>
 				</ContainerHeader>
 				<ContainerContent>
-					<ContainerAddModel>
+					<ContainerAddModel initialModel={this.state.initialModel}>
 						<AddModelImage src={ImageDocument}/>
 						<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
 						{this.state.addModel
 							&& this.renderModalModels()}
 					</ContainerAddModel>
-					<Scrollbar maxHeight={'65vh'}>
-						<ContainerModels>
-							{documentsList.map(item => (
+					<InitialAddModel initialModel={this.state.initialModel}>
+						<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
+						<TextInitialAddModel>Escolha um modelo de documento clicando em <a onClick={this.handleAddModel}>Adicionar Documento</a></TextInitialAddModel>
+					</InitialAddModel>
+					<ContainerScroll>
+						<ContainerModels initialModel={this.state.initialModel}>
+							{documentsList.map((item, index) => (
 								<ContainerModel key={item}
+									style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
 									zIndex={this.state.addModel}
+									displayBefore={this.state.modalDelete}
 									onMouseEnter={() => this.handleOnOptions(item)}
-									onMouseLeave={this.handleOffOptions}
-								>
+									onMouseLeave={this.handleOffOptions}>
 									<ContainerModelDescription>
 										<span>
 											<ModelNumber>{item.id}</ModelNumber>
@@ -993,8 +1037,7 @@ class DocumentsScreen extends Component {
 										>
 											<OptionImage
 												src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-												alt="Download"
-											/>
+												alt="Download" />
 											<OptionText
 												colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
 											>
@@ -1020,9 +1063,9 @@ class DocumentsScreen extends Component {
 								</ContainerModel>
 							))}
 							{this.state.modalDelete
-								&& this.renderModalDelete()}
+									&& this.renderModalDelete()}
 						</ContainerModels>
-					</Scrollbar>
+					</ContainerScroll>
 				</ContainerContent>
 			</Container>
 		);
