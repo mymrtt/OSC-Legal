@@ -1,6 +1,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
+import { connect } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
@@ -13,6 +14,14 @@ import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
+import selectMaisMobile from '../../../assets/selectMais.svg';
+import Button from '../../../components/Button';
+
+// Redux
+const mapStateToProps = state => ({
+	typeAccount: state.onboarding.users.typeAccount,
+});
+
 
 const Container = styled.div`
 	width: 100vw;
@@ -185,6 +194,7 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
+	position: relative;
 	cursor: pointer;
 
 	&:nth-child(even) {
@@ -196,13 +206,28 @@ const Tr = styled.tr`
 
 	@media(max-width: 768px) {
 		margin-bottom: 1rem;
-		padding: 1rem 1rem 12.5rem 1rem;
+		padding: 1rem 1rem 15.5rem 1rem;
 		display: flex;
     flex-wrap: wrap;
+	}
+
+	@media(max-width: 768px) {
+		/* margin-bottom: 1rem; */
+		padding: 1rem 1rem 10rem 1rem;
+		display: flex;
+    flex-wrap: wrap;
+	}
+	@media(max-width: 648px) {
+		padding: 1rem 1rem 12.5rem 1rem;
+	}
+
+	@media(max-width: 420px) {
+		padding: 1rem 1rem 16rem 1rem;
 	}
 `;
 
 const TableTitle = styled.th`
+	/* width: 7rem; */
 	color: #FFFFFF;
 	font-size: 1rem;
 	font-family: Overpass, Regular;
@@ -213,6 +238,17 @@ const TableTitle = styled.th`
 		display: none;
 	}
 `;
+
+const ImageMore = styled.img`
+	display: none;
+
+	@media(max-width: 648px) {
+		display: flex;
+		position: absolute;
+		right: 15px;
+	}
+`;
+
 
 const ContainerTableTitleMob = styled.span`
 	display: none;
@@ -257,6 +293,13 @@ const Box = styled.div`
 	}
 `;
 
+const BoxButton = styled.button`
+	width: 100%;
+	height: 100%;
+	border: none;
+	background: none;
+`;
+
 const TableTitleMob = styled.th`
 	display: none;
 
@@ -280,10 +323,11 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
+	width: 6rem;
 	padding: 0.5rem;
 	display: flex;
-	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
 	align-items: center;
+	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
 
 	${({ selected }) => selected && css`
 		img {display: block;}
@@ -359,7 +403,7 @@ class OrganizationScreen extends Component {
 					createdIn: '19/05/19',
 					authorization: '-',
 					dueDate: '-',
-					status: 'Pendente',
+					status: 'pendente',
 					admin:
 					{
 						name: 'Jorge Amado da Silva',
@@ -385,7 +429,7 @@ class OrganizationScreen extends Component {
 					createdIn: '18/06/19',
 					authorization: '-',
 					dueDate: '-',
-					status: 'Autorizar',
+					status: 'isento',
 					admin:
 					{
 						name: 'Yasmin Miranda',
@@ -411,7 +455,7 @@ class OrganizationScreen extends Component {
 					createdIn: '17/06/19',
 					authorization: '02/06/19',
 					dueDate: '02/07/19',
-					status: 'Isento',
+					status: '',
 					admin:
 					{
 						name: 'Alice Barbosa Souza',
@@ -437,7 +481,7 @@ class OrganizationScreen extends Component {
 					createdIn: '15/06/19',
 					authorization: '15/07/19',
 					dueDate: '-',
-					status: 'Pago',
+					status: '',
 					admin:
 					{
 						name: 'Vinicius Almeida Rodrigues',
@@ -463,7 +507,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Vencido',
+					status: '',
 					admin:
 					{
 						name: 'Tarcila do Amaral Gonçalves',
@@ -489,7 +533,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: 'Prorrogar prazo',
+					status: '',
 					admin:
 					{
 						name: 'Aline Candido Mendes',
@@ -740,9 +784,15 @@ class OrganizationScreen extends Component {
 
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
-			<TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
+			{this.props.typeAccount === 'admin'
+				? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
+				: <h1>Minhas organizações</h1>
+			}
 			<SelectViewBy>
-				<TitleViewBy>Visualizar por:</TitleViewBy>
+				{this.props.typeAccount === 'admin'
+					? <TitleViewBy>Visualizar por:</TitleViewBy>
+					: <p>Pesquisar</p>
+				}
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
 						<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>{this.state.selectedValue.select || this.state.selectedValue}</SelectedViewByText>
@@ -768,7 +818,7 @@ class OrganizationScreen extends Component {
 
 	renderStatus = item => (
 		<>
-			<Box isClickedStatus={ item.id === this.state.isClickedStatus}>
+			<Box isClickedStatus={item.id === this.state.isClickedStatus}>
 				{this.state.statusImgs.map((status, index) => (
 					<ImageStatus
 						key={index}
@@ -778,23 +828,24 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 			</Box>
-			<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
-				isClickedName={ item.id === this.state.isClickedStatus}
-				onClick={() => this.handleClickedImageStatus(item)}
-			>
-				{item.status}
-			</TextStatus>
+			<BoxButton onClick={() => this.handleClickedImageStatus(item)}>
+				<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
+					isClickedName={item.id === this.state.isClickedStatus}
+				>
+					{item.status}
+				</TextStatus>
+			</BoxButton>
 		</>
 	)
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-		console.log('listttttt', listTable)
 
 		return listTable.map(item => (
 			<Tr key={item}>
+				{/* <ImageMore src={selectMaisMobile} /> */}
 				{widthMob
-					? <ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
 						<TableList>{item.organization}</TableList>
 					</ContainerTableTitleMob>
@@ -802,14 +853,14 @@ class OrganizationScreen extends Component {
 						<TableList onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
 					</>
 				}
-				<TableList mob onClick={() => this.isModalOpen(item)}>{item.cpf}</TableList>
-				<TableList mob onClick={() => this.isModalOpen(item)}>{item.user}</TableList>
+				<TableList mob onClick>{item.cpf}</TableList>
+				<TableList mob onClick>{item.user}</TableList>
 				{widthMob
-					? <> <ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
 						<TableList>{item.email}</TableList>
 					</ContainerTableTitleMob>
-					<ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
 						<TableList>{item.telephone}</TableList>
 					</ContainerTableTitleMob>
@@ -836,7 +887,7 @@ class OrganizationScreen extends Component {
 				}
 				{widthMob
 					? <ContainerTableTitleMob
-						// selected={this.state.hovered === item}
+					// selected={this.state.hovered === item}
 					>
 						<TableTitleMob>Status</TableTitleMob>
 						{this.renderStatus(item)}
@@ -851,6 +902,7 @@ class OrganizationScreen extends Component {
 						</ContainerStatus>
 					</>
 				}
+				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)}/>
 			</Tr>
 		));
 	}
@@ -861,15 +913,19 @@ class OrganizationScreen extends Component {
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			console.log('passei e sai correndo', this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue))));
 			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
 		}
 		return listTable;
 	}
 
 	render() {
+		console.log('typeAccount', this.props.typeAccount);
 		return (
 			<Container>
+				{/* {this.props.typeAccount === 'admin'
+					? <button> - </button>
+					: <button> Criar Organização </button>
+				} */}
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal && <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />}
 				<Header handleClick={this.handleClick} />
@@ -901,4 +957,4 @@ class OrganizationScreen extends Component {
 	}
 }
 
-export default OrganizationScreen;
+export default connect(mapStateToProps, null)(OrganizationScreen);

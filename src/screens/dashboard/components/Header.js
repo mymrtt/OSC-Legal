@@ -36,6 +36,7 @@ const Container = styled.div`
 	}
 
 	@media (max-width: 648px) {
+		padding: 0;
 		flex-wrap: wrap;
 	}
 `;
@@ -43,19 +44,18 @@ const Container = styled.div`
 const WrapButton = styled.div`
 	width: 36%;
 	display: flex;
-	justify-content: space-around;
 	flex-direction: row;
 
-	/* @media (max-width: 785px) {
+	@media (max-width: 785px) {
 		width: 20%;
 	}
 
 	@media (max-width: 686px) {
 		width: 40%;
-	} */
+	}
 
 	@media (max-width: 648px) {
-		/* width: 100%; */
+		width: 100%;
 		justify-content: space-between;
 		order: 3;
 	}
@@ -63,7 +63,7 @@ const WrapButton = styled.div`
 
 const Border = styled.span`
 	height: 5.3rem;
-	/* margin-right: 3rem; */
+	margin-right: 3rem;
 	border-bottom: ${props => (props.border && '6px solid #231F20')};
 	cursor: pointer;
 
@@ -72,11 +72,13 @@ const Border = styled.span`
 	}
 
 	@media (max-width: 648px) {
-		margin-right: 0.5rem;
+		width: 29%;
+		/* margin-right: 0.5rem; */
 		padding-right: 0;
 	}
 
-	@media (max-width: 320px) {
+	@media (max-width: 430px) {
+		width: 50%;
 		margin-right: 0;
 	}
 `;
@@ -90,10 +92,14 @@ const ParagraphContainer = styled.p`
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
+
+	@media (max-width: 648px) {
+		text-align: center;
+	}
 `;
 
 const ContainerAdm = styled.div`
-  /* width: 30%; */
+  width: 30%;
   margin-bottom: 0.8rem;
   display: flex;
   align-items: flex-end;
@@ -139,6 +145,14 @@ const ParagraphSair = styled.p`
 	margin-right: 4.5rem;
 	cursor: pointer;
   opacity: 1;
+
+	@media (max-width: 768px) {
+		margin-right: 0;
+	}
+
+	@media (max-width: 648px) {
+		margin: 0 1rem 0;
+	}
 `;
 
 class Header extends Component {
@@ -177,7 +191,7 @@ class Header extends Component {
 		const { redirect } = this.state;
 		return (
 			<Container>
-				<ImageLogo margin={'0 0 0 3rem'} marginMobile='0 0 0 -1rem' height='2.8rem' paddingMobile='0.5rem'/>
+				<ImageLogo margin={'0 0 0 3rem'} marginMobile='0 0 0 1rem' height='2.8rem' paddingMobile='0.5rem'/>
 				<WrapButton>
 					{this.renderButtons('organization')}
 					{this.renderButtons('documentos')}

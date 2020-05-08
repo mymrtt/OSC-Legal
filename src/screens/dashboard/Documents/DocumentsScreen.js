@@ -216,7 +216,7 @@ const ContainerModel = styled.div`
 			@media (max-width: 375px) {
 				margin-top: 24.2%;
 			}
-		}	
+		}
 	}
 
 	@media (max-width: 768px) {
@@ -520,7 +520,7 @@ const TextUploadFile = styled.div`
 	}
 
 	span {
-		cursor: pointer; 
+		cursor: pointer;
 		text-decoration: underline;
 	}
 
@@ -648,7 +648,7 @@ const TextModal = styled.p`
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
 	color: #404040;
-	
+
 	strong {
 		font-family: 'Overpass', Bold;
 		color: #404040;
