@@ -36,6 +36,7 @@ const Container = styled.div`
 	}
 
 	@media (max-width: 648px) {
+		padding: 0;
 		flex-wrap: wrap;
 	}
 `;
@@ -124,43 +125,36 @@ const ParagraphSair = styled.p`
 	font-size: 1.25rem;
 	margin-right: 4.5rem;
 	cursor: pointer;
-	opacity: 1;
-	
-	@media(max-width: 768px){
-		margin: 0;
-	}
 `;
 
-const Header = (props) => {
-	return (
-		<Container>
-			<ImageLogo margin={'0 0 0 3rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
-			<WrapButton>
-				<NavLink
-					exact to="/organizations"
-					activeClassName="button-header-dash"
-				>
+const Header = props => (
+	<Container>
+		<ImageLogo margin={'0 0 0 3rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
+		<WrapButton>
+			<NavLink
+				exact to="/organizations"
+				activeClassName="button-header-dash"
+			>
 					Organizações
-				</NavLink>
-				<NavLink
-					exact to="/documents"
-					activeClassName="button-header-dash"
-				>
+			</NavLink>
+			<NavLink
+				exact to="/documents"
+				activeClassName="button-header-dash"
+			>
 					Documentos
-				</NavLink>
-			</WrapButton>
-			<ContainerAdm>
-				<ParagraphContainer1>
-					{props.email && props.password && props.email === 'teste@gmail.com'
+			</NavLink>
+		</WrapButton>
+		<ContainerAdm>
+			<ParagraphContainer1>
+				{props.email && props.password && props.email === 'teste@gmail.com'
 						&& props.password === '12345678' ? 'Administrador' : props.name}
-				</ParagraphContainer1>
-				<Redirect exact to="/" style={{ textDecoration: 'none' }}>
-					<ParagraphSair>
+			</ParagraphContainer1>
+			<Redirect exact to="/" style={{ textDecoration: 'none' }}>
+				<ParagraphSair>
 						sair
-					</ParagraphSair>
-				</Redirect>
-			</ContainerAdm>
-		</Container>
-	);
-};
+				</ParagraphSair>
+			</Redirect>
+		</ContainerAdm>
+	</Container>
+);
 export default connect(mapStateToProps)(Header);
