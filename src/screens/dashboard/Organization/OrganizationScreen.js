@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ImageCaminho from '../../../assets/caminho.svg';
 import ModalOrganization from './ModalOrganization';
-import DocumentsScreen from '../Documents/DocumentsScreen';
 
 // Image
 import authorizationIcon from '../../../assets/authorization.svg';
@@ -15,13 +14,12 @@ import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
-import Button from '../../../components/Button';
+// import Button from '../../../components/Button';
 
 // Redux
 const mapStateToProps = state => ({
 	typeAccount: state.onboarding.users.typeAccount,
 });
-
 
 const Container = styled.div`
 	width: 100vw;
@@ -330,9 +328,9 @@ const ContainerStatus = styled.td`
 	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
 
 	${({ selected }) => selected && css`
-		img {display: block;}
-		p {display: none;}
-		div {display: flex;}
+		img {display: block}
+		p {display: none}
+		div {display: flex}
 	`}
 
 	@media(max-width: 768px) {
@@ -781,7 +779,6 @@ class OrganizationScreen extends Component {
 		});
 	};
 
-
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
 			{this.props.typeAccount === 'admin'
@@ -795,7 +792,9 @@ class OrganizationScreen extends Component {
 				}
 				<SpanSelect>
 					<InputSelect onClick={this.isSelectOpen}>
-						<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>{this.state.selectedValue.select || this.state.selectedValue}</SelectedViewByText>
+						<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
+							{this.state.selectedValue.select || this.state.selectedValue}
+						</SelectedViewByText>
 						<img src={ImageCaminho} alt="arrow" />
 					</InputSelect>
 					{this.state.isSelected && (
@@ -842,8 +841,7 @@ class OrganizationScreen extends Component {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 
 		return listTable.map(item => (
-			<Tr key={item}>
-				{/* <ImageMore src={selectMaisMobile} /> */}
+			<Tr key={item.organization}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
@@ -853,8 +851,8 @@ class OrganizationScreen extends Component {
 						<TableList onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
 					</>
 				}
-				<TableList mob onClick>{item.cpf}</TableList>
-				<TableList mob onClick>{item.user}</TableList>
+				<TableList mob>{item.cpf}</TableList>
+				<TableList mob>{item.user}</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
@@ -919,7 +917,6 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		console.log('typeAccount', this.props.typeAccount);
 		return (
 			<Container>
 				{/* {this.props.typeAccount === 'admin'
@@ -927,31 +924,28 @@ class OrganizationScreen extends Component {
 					: <button> Criar Organização </button>
 				} */}
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
-				{this.state.isModal && <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />}
-				<Header handleClick={this.handleClick} />
-				{this.state.redirect === 'organization' ? (
-					<>
-						{this.renderSelectedViewby()}
-						<Table modal={this.state.isModal}>
-							<Thead>
-								<Tr>
-									{this.state.tableTitles.map(title => (
-										<TableTitle key={title}>{title}</TableTitle>
-									))}
-								</Tr>
-							</Thead>
-							<tbody>
-								{this.renderAllTable()}
-							</tbody>
-						</Table>
-						{this.renderAllTable().length === 0 && (
-							<TextNoOrganitazion>
-								<TextInformation>Não há organização.</TextInformation>
-							</TextNoOrganitazion>
-						)}
-					</>
-				) : <DocumentsScreen />
+				{this.state.isModal
+				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
+				<Header />
+				{this.renderSelectedViewby()}
+				<Table modal={this.state.isModal}>
+					<Thead>
+						<Tr>
+							{this.state.tableTitles.map(title => (
+								<TableTitle key={title}>{title}</TableTitle>
+							))}
+						</Tr>
+					</Thead>
+					<tbody>
+						{this.renderAllTable()}
+					</tbody>
+				</Table>
+				{this.renderAllTable().length === 0 && (
+					<TextNoOrganitazion>
+						<TextInformation>Não há organização.</TextInformation>
+					</TextNoOrganitazion>
+				)}
 			</Container>
 		);
 	}

@@ -123,7 +123,7 @@ const ParagraphInput = styled.p`
 	align-self: flex-start;
 	font-size: 0.75rem;
 	font-family: Overpass;
-	font-weight: bold;
+	font-weight: 900;
 	margin: 1rem 0 0.4rem 1.3rem;
 	/* margin: 1rem 0 0.2rem 0.8rem; */
 	text-transform: uppercase;

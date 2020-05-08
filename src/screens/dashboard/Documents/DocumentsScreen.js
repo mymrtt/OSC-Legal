@@ -1,7 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-/* eslint-disable max-len */
-/* eslint-disable react/jsx-key */
-/* eslint-disable class-methods-use-this */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -21,8 +17,7 @@ import Header from '../components/Header';
 import Scrollbar from '../components/Scrollbar';
 
 // Redux
-import { addNewDocument } from "../../../dataflow/modules/dashboard-modules";
-import { deleteDocument } from "../../../dataflow/modules/dashboard-modules";
+import { addNewDocument, deleteDocument } from '../../../dataflow/modules/dashboard-modules';
 
 const mapStateToProps = state => ({
 	documentsList: state.dashboard.documentsList,
@@ -843,7 +838,7 @@ class DocumentsScreen extends Component {
 		handleSearch = (e) => {
 			this.setState({
 				search: e.target.value,
-			 });
+			});
 		}
 
 		handleSubmit = (e) => {
@@ -855,7 +850,9 @@ class DocumentsScreen extends Component {
 					isError: true,
 				});
 			} else {
-				this.props.addNewDocument({title, description, id, isFiles});
+				this.props.addNewDocument({
+					title, description, id, isFiles,
+				});
 				this.handleCancelAddModel();
 			}
 		}
@@ -945,7 +942,8 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
-		const documentsList = (this.state.search !== '') ? this.props.documentsList.filter(model => !model.title.search(this.state.search)) : this.props.documentsList;
+		const documentsList = (this.state.search !== '')
+			? this.props.documentsList.filter(model => !model.title.search(this.state.search)) : this.props.documentsList;
 
 		return (
 			<Container onClick={this.handleClickedLabelLeave}>
@@ -990,23 +988,32 @@ class DocumentsScreen extends Component {
 									<ContainerOptions
 										contOptions={this.state.options && (this.state.selectedOptions === item)}>
 										<Option
-											onMouseEnter={() => this.handleChangeColorExport(item)}	onMouseLeave={this.handleChangeColorLeaveExport}>
+											onMouseEnter={() => this.handleChangeColorExport(item)}
+											onMouseLeave={this.handleChangeColorLeaveExport}
+										>
 											<OptionImage
-												 src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-												 alt="Download" />
+												src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+												alt="Download"
+											/>
 											<OptionText
-												colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}>Exportar
+												colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+											>
+												Exportar
 											</OptionText>
 										</Option>
 										<Option
-											onMouseEnter={() => this.handleChangeColorDelete(item)}	onMouseLeave={this.handleChangeColorLeaveDelete}
-											onClick={this.handleModalDelete}>
+											onMouseEnter={() => this.handleChangeColorDelete(item)}
+											onMouseLeave={this.handleChangeColorLeaveDelete}
+											onClick={this.handleModalDelete}
+										>
 											<OptionImage
 												src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
 												alt="Deletar" />
 											<OptionText
 												colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-												onClick={() => this.handleSelected(item)}>Excluir
+												onClick={() => this.handleSelected(item)}
+											>
+												Excluir
 											</OptionText>
 										</Option>
 									</ContainerOptions>

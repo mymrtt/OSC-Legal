@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3750847cf927e0ddb6f3b3ab7a904b8d",
+    "revision": "8c0d763f8610cf3f37de48ab6dec6704",
     "url": "/OSC-Legal/index.html"
   },
   {
-    "revision": "ffdd13530824452e72c2",
+    "revision": "8c65aff7c70b8db3b1ee",
     "url": "/OSC-Legal/static/css/main.c0180cdc.chunk.css"
   },
   {
-    "revision": "baa6aadce4d7f24c5ecd",
-    "url": "/OSC-Legal/static/js/2.0cf4593d.chunk.js"
+    "revision": "5aedffd0c7e9431157fe",
+    "url": "/OSC-Legal/static/js/2.0dd9f003.chunk.js"
   },
   {
     "revision": "f231859d6585c4cd5f80c344783ed269",
-    "url": "/OSC-Legal/static/js/2.0cf4593d.chunk.js.LICENSE.txt"
+    "url": "/OSC-Legal/static/js/2.0dd9f003.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ffdd13530824452e72c2",
-    "url": "/OSC-Legal/static/js/main.1e645bd4.chunk.js"
+    "revision": "8c65aff7c70b8db3b1ee",
+    "url": "/OSC-Legal/static/js/main.517bcf93.chunk.js"
   },
   {
     "revision": "566b1579a03fae3d130a",
@@ -36,8 +36,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/OSC-Legal/static/media/delete.33d53cbe.svg"
   },
   {
-    "revision": "f522e40b6ed209a70cf1c723f8a25043",
-    "url": "/OSC-Legal/static/media/edit.f522e40b.svg"
+    "revision": "07b57ec14fa92c2dafef4f8264cd0dec",
+    "url": "/OSC-Legal/static/media/deleteWhite.07b57ec1.svg"
+  },
+  {
+    "revision": "aab63df6009b4b833f25d3fb2f48e511",
+    "url": "/OSC-Legal/static/media/documentWhite.aab63df6.svg"
+  },
+  {
+    "revision": "2ac44347597ce66e9133adfd48e69249",
+    "url": "/OSC-Legal/static/media/download.2ac44347.svg"
+  },
+  {
+    "revision": "4a5d956353c6ddfcce455c00cec9bb92",
+    "url": "/OSC-Legal/static/media/downloadwhite.4a5d9563.svg"
+  },
+  {
+    "revision": "e824110658084015d390b922f014127e",
+    "url": "/OSC-Legal/static/media/exit.e8241106.svg"
   },
   {
     "revision": "99e97a45baa377d860702b46f8447f33",
@@ -54,6 +70,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "e049bfe2356ee3f9dde758622c704ef6",
     "url": "/OSC-Legal/static/media/logo.e049bfe2.svg"
+  },
+  {
+    "revision": "d778af42247e1a7f118f9129a94cc3d1",
+    "url": "/OSC-Legal/static/media/magnifyingGlass.d778af42.svg"
   },
   {
     "revision": "92a1b9acfc969829207c06d1ecf2f60b",
