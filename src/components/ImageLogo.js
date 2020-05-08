@@ -10,6 +10,10 @@ const LogoImage = styled.img`
   margin: ${props => props.margin};
 	height: ${props => props.height};
 
+	@media(max-width: 768px){
+		margin: ${props => props.marginMobile};
+	}
+
 	@media(max-width: 648px) {
 		height: ${props => props.heightMobile};
 		padding-top: ${props => props.paddingMobile};
