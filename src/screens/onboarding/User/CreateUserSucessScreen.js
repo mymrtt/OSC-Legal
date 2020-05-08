@@ -71,10 +71,12 @@ const TitleTerms = styled.h1`
 	font-family: Overpass, ExtraBold;
 	font-size: 1.25rem;
 	margin-top: 1rem;
+	font-weight: 900;
 
 	@media(max-width: 648px){
 		font-size: 1.3rem;
 		text-align: center;
+		width: 200px;
 	}
 `;
 
@@ -124,7 +126,7 @@ const CreateUserSucessScreen = props => (
 			<Link to="/">
 				<Button
 					width="87%"
-					height="50px"
+					height="3.5rem"
 					margin="2rem 0 1.5rem"
 					text="fazer login"
 				/>

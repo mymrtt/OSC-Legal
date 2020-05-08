@@ -226,7 +226,7 @@ class LoginScreen extends Component {
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
-					<ImageLogo margin={this.props.isResetPassword ? '3rem 0 3rem' : '3rem 0 6rem'} />
+					<ImageLogo margin={this.props.isResetPassword ? '3rem 0 3rem' : '3rem 0 6rem'} width="180px"/>
 					{this.props.isResetPassword
 						&& <Title>A senha ({this.props.emailReset ? this.props.emailReset : 'nome@email.com'})
 					foi redefinida, faça login para acessar a sua dashboard.

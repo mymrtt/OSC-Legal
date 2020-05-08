@@ -21,8 +21,8 @@ import documentWhite from '../../../assets/documentWhite.svg';
 import Header from '../components/Header';
 
 // Redux
-import { addNewDocument } from '../../../dataflow/modules/dashboard-modules';
-import { deleteDocument } from '../../../dataflow/modules/dashboard-modules';
+import { addNewDocument } from "../../../dataflow/modules/dashboard-modules";
+import { deleteDocument } from "../../../dataflow/modules/dashboard-modules";
 
 const mapStateToProps = state => ({
 	documentsList: state.dashboard.documentsList,
@@ -283,7 +283,7 @@ const ContainerModel = styled.div`
 			@media (max-width: 375px) {
 				margin-top: 24.2%;
 			}
-		}	
+		}
 	}
 	@media (max-width: 768px) {
 		padding: 1.3rem;
@@ -531,9 +531,7 @@ const UploadFile = styled.label`
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
-	/* &:focus {
-		outline: 1px solid #ff4136;
-	} */
+
 	input[type='file'] {
 		display: none;
 	}
@@ -556,7 +554,7 @@ const TextUploadFile = styled.div`
 		font-size: 1.2rem;
 	}
 	span {
-		cursor: pointer; 
+		cursor: pointer;
 		text-decoration: underline;
 	}
 	@media (max-width: 490px) {
@@ -674,7 +672,7 @@ const TextModal = styled.p`
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
 	color: #404040;
-	
+
 	strong {
 		font-family: 'Overpass', Bold;
 		color: #404040;
@@ -740,7 +738,7 @@ class DocumentsScreen extends Component {
 		document: {
 			title: '',
 			description: '',
-			num: this.props.documentsList.length + 1,
+			id: this.props.documentsList.length + 1,
 		},
 		isError: false,
 	};
@@ -862,11 +860,15 @@ class DocumentsScreen extends Component {
 			});
 		}
 
-		handleDelete = (ev) => {
-			ev.preventDefault();
-			this.props.deleteDocument();
-			// const list = this.state.modelsList;
-			// list.splice(list.indexOf(this.state.modelSelect), 1);
+		handleDelete = () => {
+			// ev.preventDefault();
+			this.props.deleteDocument(this.state.modelSelect.id);
+			this.setState({
+				modelSelect: '',
+			});
+			this.handleCancelDelete();
+			// const documentsList = this.props;
+			// documentsList.splice(documentsList.indexOf(this.props.documentsList), 1);
 			// this.setState({
 			// 	list,
 			// 	modalDelete: false,
@@ -881,16 +883,14 @@ class DocumentsScreen extends Component {
 
 		handleSubmit = (e) => {
 			e.preventDefault();
-			const { title, description, num } = this.state.document;
+			const { title, description, id } = this.state.document;
 			const { isFiles } = this.state;
 			if (title === '' || description === '' || isFiles === null) {
 				this.setState({
 					isError: true,
 				});
 			} else {
-				this.props.addNewDocument({
-					title, description, num, isFiles,
-				});
+				this.props.addNewDocument({title, description, id, isFiles});
 				this.handleCancelAddModel();
 			}
 		}
@@ -973,7 +973,7 @@ class DocumentsScreen extends Component {
 				</WrapTextModal>
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
-					<ButtonConfirm onClick={ev => this.handleDelete(ev)}>Confirmar</ButtonConfirm>
+					<ButtonConfirm onClick={this.handleDelete}>Confirmar</ButtonConfirm>
 				</ButtonsModal>
 			</ModalDelete>
 		</ContainerModalDelete>
@@ -1015,14 +1015,14 @@ class DocumentsScreen extends Component {
 						<ContainerModels initialModel={this.state.initialModel}>
 							{documentsList.map((item, index) => (
 								<ContainerModel key={item}
-									style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0'}}
+									style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
 									zIndex={this.state.addModel}
 									displayBefore={this.state.modalDelete}
 									onMouseEnter={() => this.handleOnOptions(item)}
 									onMouseLeave={this.handleOffOptions}>
 									<ContainerModelDescription>
 										<span>
-											<ModelNumber>{item.num}</ModelNumber>
+											<ModelNumber>{item.id}</ModelNumber>
 											<ModelTitle>{item.title}</ModelTitle>
 										</span>
 										<ModelParagraph>{item.description}</ModelParagraph>
