@@ -194,6 +194,7 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
+	position: relative;
 	cursor: pointer;
 
 	&:nth-child(even) {
@@ -221,12 +222,12 @@ const Tr = styled.tr`
 	}
 
 	@media(max-width: 420px) {
-		padding: 1rem 1rem 15.5rem 1rem;
+		padding: 1rem 1rem 16rem 1rem;
 	}
 `;
 
 const TableTitle = styled.th`
-	width: 8rem;
+	/* width: 7rem; */
 	color: #FFFFFF;
 	font-size: 1rem;
 	font-family: Overpass, Regular;
@@ -243,9 +244,8 @@ const ImageMore = styled.img`
 
 	@media(max-width: 648px) {
 		display: flex;
-		align-self: flex-start;
-		/* position: absolute; */
-		/* right: 0; */
+		position: absolute;
+		right: 15px;
 	}
 `;
 
@@ -293,6 +293,13 @@ const Box = styled.div`
 	}
 `;
 
+const BoxButton = styled.button`
+	width: 100%;
+	height: 100%;
+	border: none;
+	background: none;
+`;
+
 const TableTitleMob = styled.th`
 	display: none;
 
@@ -316,7 +323,7 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
-	width: 8rem;
+	width: 6rem;
 	padding: 0.5rem;
 	display: flex;
 	align-items: center;
@@ -396,7 +403,7 @@ class OrganizationScreen extends Component {
 					createdIn: '19/05/19',
 					authorization: '-',
 					dueDate: '-',
-					status: '',
+					status: 'pendente',
 					admin:
 					{
 						name: 'Jorge Amado da Silva',
@@ -422,7 +429,7 @@ class OrganizationScreen extends Component {
 					createdIn: '18/06/19',
 					authorization: '-',
 					dueDate: '-',
-					status: '',
+					status: 'isento',
 					admin:
 					{
 						name: 'Yasmin Miranda',
@@ -821,12 +828,13 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 			</Box>
-			<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
-				isClickedName={item.id === this.state.isClickedStatus}
-				onClick={() => this.handleClickedImageStatus(item)}
-			>
-				{item.status}
-			</TextStatus>
+			<BoxButton onClick={() => this.handleClickedImageStatus(item)}>
+				<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
+					isClickedName={item.id === this.state.isClickedStatus}
+				>
+					{item.status}
+				</TextStatus>
+			</BoxButton>
 		</>
 	)
 
@@ -835,26 +843,24 @@ class OrganizationScreen extends Component {
 
 		return listTable.map(item => (
 			<Tr key={item}>
-					<ImageMore src={selectMaisMobile} />
+				{/* <ImageMore src={selectMaisMobile} /> */}
 				{widthMob
-					? (
-						<>
-							<ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
-								<TableTitleMob>Organização</TableTitleMob>
-								<TableList>{item.organization}</TableList>
-							</ContainerTableTitleMob> </>)
+					? <ContainerTableTitleMob>
+						<TableTitleMob>Organização</TableTitleMob>
+						<TableList>{item.organization}</TableList>
+					</ContainerTableTitleMob>
 					: <>
 						<TableList onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
 					</>
 				}
-				<TableList mob onClick={() => this.isModalOpen(item)}>{item.cpf}</TableList>
-				<TableList mob onClick={() => this.isModalOpen(item)}>{item.user}</TableList>
+				<TableList mob onClick>{item.cpf}</TableList>
+				<TableList mob onClick>{item.user}</TableList>
 				{widthMob
-					? <> <ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
 						<TableList>{item.email}</TableList>
 					</ContainerTableTitleMob>
-					<ContainerTableTitleMob onClick={() => this.isModalOpen(item)}>
+					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
 						<TableList>{item.telephone}</TableList>
 					</ContainerTableTitleMob>
@@ -896,6 +902,7 @@ class OrganizationScreen extends Component {
 						</ContainerStatus>
 					</>
 				}
+				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)}/>
 			</Tr>
 		));
 	}
