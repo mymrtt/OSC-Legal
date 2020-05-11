@@ -24,12 +24,14 @@ const mapStateToProps = state => ({
 const Container = styled.div`
 	width: 100vw;
 	height: 100vh;
+	padding: 0 0 2rem;
+	/* overflow: hidden; */
 	overflow-x: hidden;
 	overflow-y: scroll;
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	padding: 2rem 4.5rem 0;
+	padding: 2rem 4.7rem 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -105,11 +107,11 @@ const InputSelect = styled.div`
 	background-color: #FFFFFF;
 	border: 0.5px solid #85144B;
 	border-radius: 3px 3px 0 0;
-	display: flex;
 	color: #959595;
-	justify-content: space-between;
 	font-size: 0.875rem;
 	padding: 0.5rem;
+	display: flex;
+	justify-content: space-between;
 	cursor: pointer;
 	z-index: 2;
 
@@ -123,7 +125,6 @@ const SelectedViewByText = styled.p`
 	color: ${props => (props.color === 'Selecionar status' ? '#959595' : '#85144B')};
 	font-family: Overpass, Regular;
 	padding-left: 0.3rem;
-
 `;
 
 const Overlay = styled.div`
@@ -163,10 +164,15 @@ const SelectedItem = styled.p`
 `;
 
 const Table = styled.table`
-	max-width: 100%;
+	/* display: flex;
+	flex-direction: column; */
 	width: 100%;
+	max-width: 100%;
+	height: calc(100vh - 161px);
 	border-spacing: 0;
-	padding: 1.5rem 4.5rem 0;
+	padding: 1.5rem 4.7rem 0;
+	/* overflow-x: hidden;
+	overflow-y: scroll; */
 
 	@media (max-width: 768px) {
 		padding: 2rem 0 0 0;
@@ -203,13 +209,6 @@ const Tr = styled.tr`
 	}
 
 	@media(max-width: 768px) {
-		margin-bottom: 1rem;
-		padding: 1rem 1rem 15.5rem 1rem;
-		display: flex;
-    flex-wrap: wrap;
-	}
-
-	@media(max-width: 768px) {
 		/* margin-bottom: 1rem; */
 		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
@@ -225,11 +224,12 @@ const Tr = styled.tr`
 `;
 
 const TableTitle = styled.th`
-	/* width: 7rem; */
+	/* width: 5rem; */
+	background-color: #85144B;
 	color: #FFFFFF;
 	font-size: 1rem;
 	font-family: Overpass, Regular;
-	background-color: #85144B;
+	text-align: ${props => (props.center === 'Status' && 'center')};
 	padding-left: 0.7rem;
 
 	@media (max-width: 768px) {
@@ -246,7 +246,6 @@ const ImageMore = styled.img`
 		right: 15px;
 	}
 `;
-
 
 const ContainerTableTitleMob = styled.span`
 	display: none;
@@ -311,11 +310,14 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	color: #404040;
+	font-family: "Overpass", Light;
+	/* font-family: ${props => (props.font ? '"Overpass", Light' : 'Overpass, SemiBold')}; */
+	font-weight: ${props => (props.font ? 'Bold' : '0')};
 	font-size: 0.95rem;
 	padding: 0.5rem;
 
 	@media (max-width: 768px) {
-		padding: 0;
+		padding: 0.5rem 0;
 		display: ${props => (props.mob ? 'none' : 'flex')};
 	}
 `;
@@ -323,6 +325,7 @@ const TableList = styled.td`
 const ContainerStatus = styled.td`
 	width: 6rem;
 	padding: 0.5rem;
+	text-align: center;
 	display: flex;
 	align-items: center;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
@@ -341,9 +344,8 @@ const ContainerStatus = styled.td`
 const TextStatus = styled.p`
 	color: ${props => (props.color)};
 	font-size: 0.8rem;
-	font-family: Overpass, Light;
-	text-transform: uppercase;
 
+	text-transform: uppercase;
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
@@ -372,8 +374,8 @@ class OrganizationScreen extends Component {
 			selectedValue: 'Selecionar status',
 			selectedItems: [
 				'Selecionar status',
-				{ select: 'Pendente de Autorização', filter: 'Autorizar' },
-				{ select: 'Pendente de Pagamento', filter: 'Pendente' },
+				{ select: 'Pendente de Autorização', filter: 'autorizar' },
+				{ select: 'Pendente de Pagamento', filter: 'pendente' },
 				'Isento',
 				'Pago',
 				'Vencido',
@@ -401,7 +403,7 @@ class OrganizationScreen extends Component {
 					createdIn: '19/05/19',
 					authorization: '-',
 					dueDate: '-',
-					status: 'pendente',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Jorge Amado da Silva',
@@ -427,7 +429,7 @@ class OrganizationScreen extends Component {
 					createdIn: '18/06/19',
 					authorization: '-',
 					dueDate: '-',
-					status: 'isento',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Yasmin Miranda',
@@ -453,7 +455,7 @@ class OrganizationScreen extends Component {
 					createdIn: '17/06/19',
 					authorization: '02/06/19',
 					dueDate: '02/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Alice Barbosa Souza',
@@ -479,7 +481,7 @@ class OrganizationScreen extends Component {
 					createdIn: '15/06/19',
 					authorization: '15/07/19',
 					dueDate: '-',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Vinicius Almeida Rodrigues',
@@ -505,7 +507,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Tarcila do Amaral Gonçalves',
@@ -531,7 +533,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Aline Candido Mendes',
@@ -557,7 +559,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Ronaldo Veiga de Almeida',
@@ -583,7 +585,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Ana Claudia Ferrari Silva',
@@ -609,7 +611,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Marcio Rodrigues Alves',
@@ -635,7 +637,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'João Marcos Barbosa',
@@ -661,7 +663,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Caroline Perreira',
@@ -687,7 +689,7 @@ class OrganizationScreen extends Component {
 					createdIn: '12/06/19',
 					authorization: '15/06/19',
 					dueDate: '15/07/19',
-					status: '',
+					status: 'autorizar',
 					admin:
 					{
 						name: 'Alice Barbosa Souza',
@@ -848,11 +850,11 @@ class OrganizationScreen extends Component {
 						<TableList>{item.organization}</TableList>
 					</ContainerTableTitleMob>
 					: <>
-						<TableList onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
+						<TableList font={this.state.hovered === item} onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
 					</>
 				}
-				<TableList mob>{item.cpf}</TableList>
-				<TableList mob>{item.user}</TableList>
+				<TableList font={this.state.hovered === item} mob>{item.cpf}</TableList>
+				<TableList font={this.state.hovered === item} mob>{item.user}</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
@@ -860,34 +862,34 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList>{item.telephone}</TableList>
+						<TableList font={this.state.hovered === item}>{item.telephone}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
-						<TableList>{item.createdIn}</TableList>
+						<TableList font={this.state.hovered === item}>{item.createdIn}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Autorização</TableTitleMob>
-						<TableList>{item.authorization}</TableList>
+						<TableList font={this.state.hovered === item}>{item.authorization}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Vencimento</TableTitleMob>
-						<TableList>{item.dueDate}</TableList>
+						<TableList font={this.state.hovered === item}>{item.dueDate}</TableList>
 					</ContainerTableTitleMob>
 					</>
 					: <>
-						<TableList onClick={() => this.isModalOpen(item)}>{item.email}</TableList>
-						<TableList onClick={() => this.isModalOpen(item)}>{item.telephone}</TableList>
-						<TableList>{item.createdIn}</TableList>
-						<TableList>{item.authorization}</TableList>
-						<TableList>{item.dueDate}</TableList>
+						<TableList font={this.state.hovered === item} onClick={() => this.isModalOpen(item)}>{item.email}</TableList>
+						<TableList font={this.state.hovered === item} onClick={() => this.isModalOpen(item)}>{item.telephone}</TableList>
+						<TableList font={this.state.hovered === item}>{item.createdIn}</TableList>
+						<TableList font={this.state.hovered === item}>{item.authorization}</TableList>
+						<TableList font={this.state.hovered === item}>{item.dueDate}</TableList>
 					</>
 				}
 				{widthMob
 					? <ContainerTableTitleMob
 					// selected={this.state.hovered === item}
 					>
-						<TableTitleMob>Status</TableTitleMob>
+						<TableTitleMob center>Status</TableTitleMob>
 						{this.renderStatus(item)}
 					</ContainerTableTitleMob>
 					: <>
@@ -933,7 +935,7 @@ class OrganizationScreen extends Component {
 					<Thead>
 						<Tr>
 							{this.state.tableTitles.map(title => (
-								<TableTitle key={title}>{title}</TableTitle>
+								<TableTitle key={title} center={title}>{title}</TableTitle>
 							))}
 						</Tr>
 					</Thead>
