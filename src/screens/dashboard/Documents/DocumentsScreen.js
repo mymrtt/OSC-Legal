@@ -6,6 +6,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -19,6 +20,7 @@ import DeleteIconWhite from '../../../assets/deleteWhite.svg';
 import documentWhite from '../../../assets/documentWhite.svg';
 
 import Header from '../components/Header';
+import logo from '../../../assets/logo.svg';
 
 // Redux
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/dashboard-modules';
@@ -41,13 +43,24 @@ const Container = styled.div`
 	}
 `;
 
+const MaximumWidth = styled.div`
+	max-width: 1440px;
+	margin: 0 auto;
+`;
+
 const ContainerHeader = styled.div`
 	margin: 3rem 4rem 0 4rem;
   display: flex;
   justify-content: space-between;
-	@media (max-width: 768px) {
-		margin: 3rem 2rem 0 2rem;
+
+	@media (max-width: 1024px) {
+		margin: 3rem 4rem 0 3rem;
 	}
+
+	@media (max-width: 768px) {
+		margin: 3rem 2rem 0 0;
+	}
+
 	@media (max-width: 490px) {
 		margin: 1.2rem;
 	}
@@ -65,10 +78,18 @@ const TitleSearch = styled.p`
   color: #85144B;
   font-size: 2rem;
   font-family: "Overpass", Black;
-  font-weight: 600;
-	@media (max-width: 768px) {
+  font-weight: 900;
+
+	@media (max-width: 1024px) {
 		font-size: 1.5rem;
 	}
+
+	@media (max-width: 768px) {
+		font-size: 1.5rem;
+		text-align: center;
+		width: 37%;
+	}
+
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -133,11 +154,24 @@ const InitialAddModel = styled.div`
 
 
 const ContainerScroll = styled.div`
+	max-height: 73vh;
 	width: 65%;
 	max-height: 65vh;
 	overflow-y: scroll;
+	display: ${props => (props.initialModel ? 'none' : 'inline-block')};
 
-	@media (max-width: 490px) {
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	@media (max-width: 1680px) {
+		max-height: 69vh;
+	}
+
+	@media (max-width: 1440px) {
+		max-height: 65vh;
+	}
+	@media(max-width: 490px){
 		width: 100%;
 	}
 `;
@@ -305,19 +339,20 @@ const ContainerModelDescription = styled.div`
 	flex-direction: column;
 	span {
 		display: flex;
-		@media (max-width: 1024px) {
-			width: 76%;
-		}
+
 		@media (max-width: 768px) {
 			width: 95%;
 		}
+
 		@media (max-width: 490px) {
 			width: 100%;
 		}
 	}
+
 	@media (max-width: 768px) {
 		width: 70%;
 	}
+
 	@media (max-width: 490px) {
 		width: 100%;
 	}
@@ -426,9 +461,11 @@ const OptionText = styled.p`
 	color: ${props => (props.colorTextButton)};
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
+
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
+
 	@media (max-width: 490px) {
 		font-size: 1.3rem;
     margin-left: 0.8rem;
@@ -452,10 +489,12 @@ const Button = styled.button`
 		padding: 1rem;
 		width: 70%;
 	}
+
 	@media (max-width: 768px) {
 		font-size: 1rem;
 		width: 75%;
 	}
+
 	@media (max-width: 490px) {
 		position:fixed;
 		bottom: 1vh;
@@ -476,6 +515,7 @@ const ContainerModal = styled.div`
 	align-items: center;
 	z-index: 3;
 	background: rgba(112, 112, 112, 0.5);
+
 	@media (max-width: 490px) {
 		flex-direction: column;
 	}
@@ -490,14 +530,53 @@ const ModalAddModel = styled.form`
 	justify-content: space-between;
 	border-radius: 4px;
 	padding: 1% 2% 2% 3%;
+
 	@media (max-width: 1024px) {
 		height: 540px;
 	}
+
 	@media (max-width: 490px) {
-		height: 100%;
+		height: 100vh;
 		width: 100%;
 		padding: 5%;
 	}
+`;
+
+const LogoAndData = styled.div`
+	display: none;
+
+	@media (max-width: 490px) {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 10%;
+	}
+`;
+
+const ParagraphContainer1 = styled.p`
+	font-size: 1.25rem;
+	font-family: "Overpass", Light;
+	margin-top: 1.2rem;
+
+	@media (max-width: 859px) {
+		font-size: 1rem;
+	}
+
+	@media (max-width: 685px) {
+		margin-top: 0;
+	}
+
+	@media (max-width: 648px) {
+		font-size: 0.8rem;
+	}
+`;
+
+const ParagraphSair = styled.p`
+  color: #85144B;
+  font-family: Overpass, SemiBold;
+	font-size: 1rem;
+	cursor: pointer;
+	align-self: flex-end;
+	text-transform: uppercase;
 `;
 
 const HeaderAddModel = styled.div`
@@ -517,9 +596,10 @@ const TitleAddModel = styled.h2`
 	margin-bottom: 1%;
 	margin-left: 1rem;
   font-family: "Overpass", Bold;
-  font-weight: 600;
+  font-weight: 900;
+
 	@media (max-width: 490px) {
-		font-size: 1.8rem;
+		font-size: 1.5rem;
 	}
 `;
 
@@ -595,7 +675,7 @@ const Input = styled.input`
 	padding: 3% 2.5%;
 	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
 `;
 
@@ -607,12 +687,13 @@ const TextArea = styled.textarea`
 	margin-bottom: .5rem;
 	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
 
 	@media (max-width: 490px) {
 		height: 100px;
 	}
+	resize: none;
 `;
 
 const ButtonAdd = styled(Button)`
@@ -620,17 +701,19 @@ const ButtonAdd = styled(Button)`
 	width: 55%;
 	margin: 0;
 	text-transform: uppercase;
+
 	@media (max-width: 1024px) {
 		font-size: .9rem;
 		width: 55%;
 		padding: .8rem;
 	}
+
 	@media (max-width: 768px) {
-		font-size: .9rem;
 		width: 60%;
 		padding: 1rem;
 		margin: 0;
 	}
+
 	@media (max-width: 490px) {
 		width: 95%;
 		font-size: 1.2rem;
@@ -649,6 +732,7 @@ const ModalDelete = styled.div`
 	width: 480px;
 	padding: 1% 1% 1% 2%;
 
+	
 	@media (max-width: 490px) {
 		width: 100%;
 		height: 100vh;
@@ -748,6 +832,7 @@ class DocumentsScreen extends Component {
 		colorTextExport: '',
 		colorTextDelete: '',
 		isFile: null,
+  	redirect: false,
 		document: {
 			title: '',
 			description: '',
@@ -863,8 +948,8 @@ class DocumentsScreen extends Component {
 
 	uploadFile = (e) => {
 		e.preventDefault();
-		let reader = new FileReader();
-		let file = e.target.files[0];
+		const reader = new FileReader();
+		const file = e.target.files[0];
 
 		reader.onloadend = () => {
 			this.setState({
@@ -911,18 +996,32 @@ class DocumentsScreen extends Component {
 					title: '',
 					description: '',
 					isFile: null,
-				})
+				});
 			}
+		}
+
+		handleRedirect = () => {
+			this.setState({ redirect: true });
 		}
 
 
 	renderModalModels = () => (
 		<ContainerModal onClick={this.handleCancelAddModel}>
-			{window.innerWidth <= 490 && <Header />}
 			<ModalAddModel
 				onSubmit={this.handleSubmit}
 				onClick={ev => ev.stopPropagation()}
 			>
+				<LogoAndData>
+					<img src={logo} alt="Logo OSC Legal"/>
+					<ParagraphContainer1>
+  					{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+                && this.props.password === '12345678' ? 'Administrador' : this.props.name}
+  				</ParagraphContainer1>
+					<ParagraphSair onClick={this.handleRedirect}>
+              sair
+  				</ParagraphSair>
+					{this.state.redirect && <Redirect exact to="/" />}
+				</LogoAndData>
 				<HeaderAddModel>
 					<TitleAddModel>Adicionar Modelo</TitleAddModel>
 					<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
@@ -1000,91 +1099,93 @@ class DocumentsScreen extends Component {
 
 	render() {
 		const documentsList = (this.state.search !== '')
-			? this.props.documentsList.filter(model => !model.title.search(this.state.search)) : this.props.documentsList;
+			? this.props.documentsList.filter(model => !model.title.toLowerCase().search(this.state.search)) : this.props.documentsList;
 
 		return (
 			<Container onClick={this.handleClickedLabelLeave}>
 				<Header />
-				<ContainerHeader>
-					<TitleSearch>Modelos de Documentos</TitleSearch>
-					<ContainerSearch>
-						<SearchText>Pesquisar</SearchText>
-						<ContainerSearchInput
-							onClick={this.handleClickedLabel}
-							clickLabel={this.state.changeColorLabel}>
-							<SearchInput
-								onChange={this.handleSearch}
-								placeholder="Digite aqui para pesquisar"
-							/>
-							<img src={magnifyingGlass} alt="Lupa" />
-						</ContainerSearchInput>
-					</ContainerSearch>
-				</ContainerHeader>
-				<ContainerContent>
-					<ContainerAddModel initialModel={this.state.initialModel}>
-						<AddModelImage src={ImageDocument}/>
-						<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
-						{this.state.addModel
+				<MaximumWidth>
+					<ContainerHeader>
+						<TitleSearch>Modelos de Documentos</TitleSearch>
+						<ContainerSearch>
+							<SearchText>Pesquisar</SearchText>
+							<ContainerSearchInput
+								onClick={this.handleClickedLabel}
+								clickLabel={this.state.changeColorLabel}>
+								<SearchInput
+									onChange={this.handleSearch}
+									placeholder="Digite aqui para pesquisar"
+								/>
+								<img src={magnifyingGlass} alt="Lupa" />
+							</ContainerSearchInput>
+						</ContainerSearch>
+					</ContainerHeader>
+					<ContainerContent>
+						<ContainerAddModel initialModel={this.state.initialModel}>
+							<AddModelImage src={ImageDocument}/>
+							<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
+							{this.state.addModel
 							&& this.renderModalModels()}
-					</ContainerAddModel>
-					<InitialAddModel initialModel={this.state.initialModel}>
-						<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
-						<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Documento</span></TextInitialAddModel>
-					</InitialAddModel>
-					<ContainerScroll>
-						<ContainerModels initialModel={this.state.initialModel}>
-							{documentsList.map((item, index) => (
-								<ContainerModel key={item}
-									style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-									zIndex={this.state.addModel}
-									displayBefore={this.state.modalDelete}
-									onMouseEnter={() => this.handleOnOptions(item)}
-									onMouseLeave={this.handleOffOptions}>
-									<ContainerModelDescription>
-										<span>
-											<ModelNumber>{item.id}</ModelNumber>
-											<ModelTitle>{item.title}</ModelTitle>
-										</span>
-										<ModelParagraph>{item.description}</ModelParagraph>
-									</ContainerModelDescription>
-									<ContainerOptions
-										contOptions={this.state.options && (this.state.selectedOptions === item)}>
-										<Option
-											onMouseEnter={() => this.handleChangeColorExport(item)}
-											onMouseLeave={this.handleChangeColorLeaveExport}
-										>
-											<OptionImage
-												src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-												alt="Download" />
-											<OptionText
-												colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+						</ContainerAddModel>
+						<InitialAddModel initialModel={this.state.initialModel}>
+							<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
+							<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Documento</span></TextInitialAddModel>
+						</InitialAddModel>
+						<ContainerScroll initialModel={this.state.initialModel}>
+							<ContainerModels initialModel={this.state.initialModel}>
+								{documentsList.map((item, index) => (
+									<ContainerModel key={item}
+										style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+										zIndex={this.state.addModel}
+										displayBefore={this.state.modalDelete}
+										onMouseEnter={() => this.handleOnOptions(item)}
+										onMouseLeave={this.handleOffOptions}>
+										<ContainerModelDescription>
+											<span>
+												<ModelNumber>{item.id}</ModelNumber>
+												<ModelTitle>{item.title}</ModelTitle>
+											</span>
+											<ModelParagraph>{item.description}</ModelParagraph>
+										</ContainerModelDescription>
+										<ContainerOptions
+											contOptions={this.state.options && (this.state.selectedOptions === item)}>
+											<Option
+												onMouseEnter={() => this.handleChangeColorExport(item)}
+												onMouseLeave={this.handleChangeColorLeaveExport}
 											>
+												<OptionImage
+													src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+													alt="Download" />
+												<OptionText
+													colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+												>
 												Exportar
-											</OptionText>
-										</Option>
-										<Option
-											onMouseEnter={() => this.handleChangeColorDelete(item)}
-											onMouseLeave={this.handleChangeColorLeaveDelete}
-											onClick={this.handleModalDelete}
-										>
-											<OptionImage
-												src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
-												alt="Deletar" />
-											<OptionText
-												colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-												onClick={() => this.handleSelected(item)}
+												</OptionText>
+											</Option>
+											<Option
+												onMouseEnter={() => this.handleChangeColorDelete(item)}
+												onMouseLeave={this.handleChangeColorLeaveDelete}
+												onClick={this.handleModalDelete}
 											>
+												<OptionImage
+													src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+													alt="Deletar" />
+												<OptionText
+													colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+													onClick={() => this.handleSelected(item)}
+												>
 												Excluir
-											</OptionText>
-										</Option>
-									</ContainerOptions>
-								</ContainerModel>
-							))}
-							{this.state.modalDelete
+												</OptionText>
+											</Option>
+										</ContainerOptions>
+									</ContainerModel>
+								))}
+								{this.state.modalDelete
 									&& this.renderModalDelete()}
-						</ContainerModels>
-					</ContainerScroll>
-				</ContainerContent>
+							</ContainerModels>
+						</ContainerScroll>
+					</ContainerContent>
+				</MaximumWidth>
 			</Container>
 		);
 	}

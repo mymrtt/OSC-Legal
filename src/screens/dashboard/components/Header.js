@@ -104,7 +104,7 @@ const ContainerAdm = styled.div`
 const ParagraphContainer1 = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin: 1.2rem 1.5rem 0 0;
+	margin: 1.2rem 3.5rem 0 0;
 
 	@media (max-width: 859px) {
 		font-size: 1rem;
@@ -123,7 +123,7 @@ const ParagraphSair = styled.p`
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
-	margin-right: 1.5rem;
+	margin-right: 3.5rem;
 	cursor: pointer;
 `;
 
@@ -139,7 +139,7 @@ class Header extends Component {
   render() {
   	return (
   		<Container>
-  			<ImageLogo margin={'0 0 0 3rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
+  			<ImageLogo margin={'0 0 0 4rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
   			<WrapButton>
   				<NavLink
   					exact to="/organizations"
@@ -158,7 +158,6 @@ class Header extends Component {
   				<ParagraphContainer1>
   					{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
 							&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
-						GABRIEL
   				</ParagraphContainer1>
   				<ParagraphSair onClick={this.handleRedirect}>
               sair
