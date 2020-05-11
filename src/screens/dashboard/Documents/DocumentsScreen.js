@@ -171,8 +171,10 @@ const ContainerScroll = styled.div`
 	@media (max-width: 1440px) {
 		max-height: 65vh;
 	}
-	@media(max-width: 490px){
+
+	@media (max-width: 490px) {
 		width: 100%;
+		max-height: 50vh;
 	}
 `;
 
@@ -1099,7 +1101,7 @@ class DocumentsScreen extends Component {
 
 	render() {
 		const documentsList = (this.state.search !== '')
-			? this.props.documentsList.filter(model => !model.title.toLowerCase().search(this.state.search)) : this.props.documentsList;
+			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i'))) : this.props.documentsList;
 
 		return (
 			<Container onClick={this.handleClickedLabelLeave}>
