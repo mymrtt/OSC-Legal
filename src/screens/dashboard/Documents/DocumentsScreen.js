@@ -134,7 +134,7 @@ const InitialAddModel = styled.div`
 const ContainerScroll = styled.div`
 	max-height: 60vh;
 	width: 65%;
-	overflow: scroll;
+	overflow-Y: scroll;
 
 	@media (max-width: 490px) {
 		width: 100%;
@@ -174,7 +174,7 @@ const TextInitialAddModel = styled.p`
 
 const ContainerSearch = styled.div`
 	margin-right: 2rem;
-	width: 35%;
+	width: 40%;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
@@ -206,7 +206,7 @@ const ContainerSearchInput = styled.label`
 	display: flex;
 	width: 100%;
 	border-radius: 3px;
-  padding: 0.7rem;
+	padding: .6rem 1rem;
 	border: ${props => (props.clickLabel ? '1px solid #FF4136' : '0.5px solid #85144B')};
 	img {
 		margin: 0 0 0 10px;
@@ -215,8 +215,9 @@ const ContainerSearchInput = styled.label`
 
 const SearchInput = styled.input`
   width: 100%;
-  border: 0;
+	border: 0;
 	outline: none;
+	padding-left: .5rem;
 	@media (max-width: 768px) {
 		&::placeholder {
 			font-size: .7rem;
@@ -442,7 +443,8 @@ const Button = styled.button`
   font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
-  background-color: #FF4136;
+	background-color: #FF4136;
+
 	@media (max-width: 1024px) {
 		padding: 1rem;
 		width: 70%;
@@ -452,8 +454,11 @@ const Button = styled.button`
 		width: 75%;
 	}
 	@media (max-width: 490px) {
+		position:fixed;
+		bottom: 1vh;
+		margin: 0 auto;
 		font-size: 1.2rem;
-		width: 100%;
+		width: 95%;
 	}
 `;
 
@@ -518,6 +523,10 @@ const TitleAddModel = styled.h2`
 const ContainerInputs = styled.div`
 	display: flex;
 	flex-direction: column;
+
+	@media(max-width: 648px){
+		height: 80%;
+	}
 `;
 
 const UploadFile = styled.label`
@@ -526,7 +535,7 @@ const UploadFile = styled.label`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
@@ -579,13 +588,10 @@ const Input = styled.input`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
-	/* &:focus {
-		outline: 1px solid #ff4136;
-	} */
 `;
 
 const TextArea = styled.textarea`
@@ -594,13 +600,11 @@ const TextArea = styled.textarea`
 	border-radius: 3px;
 	padding: 3% 2.5%;
 	margin-bottom: .5rem;
-	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
-	/* &:focus {
-		outline: 1px solid #ff4136;
-	} */
+
 	@media (max-width: 490px) {
 		height: 100px;
 	}
@@ -623,8 +627,9 @@ const ButtonAdd = styled(Button)`
 		margin: 0;
 	}
 	@media (max-width: 490px) {
-		width: 100%;
+		width: 95%;
 		font-size: 1.2rem;
+		align-self: center;
 	}
 `;
 
@@ -634,10 +639,11 @@ const ContainerModalDelete = styled(ContainerModal)`
 	}
 `;
 
-const ModalDelete = styled(ModalAddModel)`
-	width: 460px;
-	height: auto;
+const ModalDelete = styled.div`
+	background: #FFF;
+	width: 480px;
 	padding: 1% 1% 1% 2%;
+
 	@media (max-width: 490px) {
 		width: 100%;
 		height: 100vh;
@@ -667,7 +673,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
-	margin-top: 4%;
+	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
 	color: #404040;
@@ -697,6 +703,7 @@ const ButtonCancel = styled(Button)`
 	background: #ffffff;
 	margin: 5% 0 0 0;
 	box-shadow: none;
+	width: 50%;
 	@media (max-width: 490px) {
 		margin: 0;
 	}
@@ -704,6 +711,7 @@ const ButtonCancel = styled(Button)`
 
 const ButtonConfirm = styled(Button)`
 	margin: 5% 0 0 0;
+	width: 50%;
 	@media (max-width: 490px) {
 		margin: 0;
 	}
@@ -715,6 +723,7 @@ const ErrorText = styled.p`
 	text-align: right;
 	margin-bottom: .5rem;
 	font-size: .9rem;
+	font-family: Overpass;
 `;
 
 class DocumentsScreen extends Component {
@@ -860,18 +869,11 @@ class DocumentsScreen extends Component {
 		}
 
 		handleDelete = () => {
-			// ev.preventDefault();
 			this.props.deleteDocument(this.state.modelSelect.id);
 			this.setState({
 				modelSelect: '',
 			});
 			this.handleCancelDelete();
-			// const documentsList = this.props;
-			// documentsList.splice(documentsList.indexOf(this.props.documentsList), 1);
-			// this.setState({
-			// 	list,
-			// 	modalDelete: false,
-			// });
 		}
 
 		handleSearch = (e) => {

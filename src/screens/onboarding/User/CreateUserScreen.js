@@ -238,7 +238,7 @@ const Modal = styled.div`
 		overflow-y: auto;
 		/* overflow-x: hidden;
 		overflow-y: scroll; */
-  }
+	}
 `;
 
 const TitleTerms = styled.h1`
@@ -252,7 +252,10 @@ const TitleTerms = styled.h1`
     margin: 3rem 0 1rem 0;
     font-size: 1.5rem;
     align-self: center;
-  }
+	}
+	@media(max-width: 320px) and (max-height: 570px){
+		margin-bottom: 10rem;
+	}
 `;
 
 const ButtonTerms = styled.button`
@@ -297,7 +300,11 @@ const BlockTerms = styled.div`
     height: 100%;
     justify-content: space-around;
     background: #FFF;
-  }
+	}
+
+	@media(max-width: 320px) and (max-height: 570px){
+		margin-bottom: 4rem;
+	}
 `;
 
 const Terms = styled.p`
@@ -315,7 +322,8 @@ const Terms = styled.p`
     font-size: 1rem;
     width: 90%;
     align-self: center;
-  }
+	}
+
 `;
 
 const SubtitleTerms = styled.h3`
