@@ -41,6 +41,7 @@ const ContainerForm = styled.div`
 `;
 
 const Form = styled.form`
+	padding-top: 1rem;
   width: 30%;
 	border-radius: 5px;
   background-color: #fff;
@@ -201,13 +202,12 @@ class NewPasswordScreen extends Component {
 
 		return (
 			<ContainerForm>
-				<ImageLogo margin='3rem 0 0 0' />
+				<ImageLogo margin='3rem 0 2rem 0' alt="Logo" />
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
 						<Paragraph width='100%'>
-							Um código de confirmação foi enviado para
-							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'},
+							Um código de confirmação foi enviado para {this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'},
 							por favor, cole-o abaixo:
 						</Paragraph>
 						<Label>código de confirmação</Label>

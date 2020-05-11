@@ -169,10 +169,6 @@ const ContainerScroll = styled.div`
 	@media (max-width: 1440px) {
 		max-height: 65vh;
 	}
-
-	@media (max-width: 490px) {
-		width: 100%;
-	}
 `;
 
 const TitleInitialAddModel = styled.h2`
@@ -190,7 +186,7 @@ const TextInitialAddModel = styled.p`
   font-family: "Overpass", Regular;
 	font-weight: 300;
 
-	a {
+	span {
 		color: #85144B;
 		text-decoration: underline;
 		cursor: pointer;
@@ -426,7 +422,7 @@ const Option = styled.button`
 	background: transparent;
 	border: none;
 	border-radius: 4px;
-	
+
 	&:hover {
 		background: #FF4136;
 	}
@@ -1103,7 +1099,7 @@ class DocumentsScreen extends Component {
 					</ContainerAddModel>
 					<InitialAddModel initialModel={this.state.initialModel}>
 						<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
-						<TextInitialAddModel>Escolha um modelo de documento clicando em <a onClick={this.handleAddModel}>Adicionar Documento</a></TextInitialAddModel>
+						<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Documento</span></TextInitialAddModel>
 					</InitialAddModel>
 					<ContainerScroll initialModel={this.state.initialModel}>
 						<ContainerModels initialModel={this.state.initialModel}>

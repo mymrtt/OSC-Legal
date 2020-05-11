@@ -138,6 +138,7 @@ const Span = styled.span`
 
 const ButtonText = styled(Link)`
   color: #85144B;
+	font-family: 'Overpass', Regular;
   font-size: 0.9rem;
   text-decoration: none;
 	text-transform: uppercase;
@@ -176,8 +177,6 @@ class LoginScreen extends Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-
-		console.log('redirect', this.state.redirect)
 
 		if (!this.handleError()) {
 			this.setState({ redirect: '/dashboard' });
