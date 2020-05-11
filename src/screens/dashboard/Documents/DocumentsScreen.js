@@ -172,6 +172,7 @@ const ContainerScroll = styled.div`
 
 	@media (max-width: 490px) {
 		width: 100%;
+		max-height: 50vh;
 	}
 `;
 
@@ -190,7 +191,7 @@ const TextInitialAddModel = styled.p`
   font-family: "Overpass", Regular;
 	font-weight: 300;
 
-	a {
+	span {
 		color: #85144B;
 		text-decoration: underline;
 		cursor: pointer;
@@ -426,7 +427,7 @@ const Option = styled.button`
 	background: transparent;
 	border: none;
 	border-radius: 4px;
-	
+
 	&:hover {
 		background: #FF4136;
 	}

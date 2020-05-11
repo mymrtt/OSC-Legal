@@ -51,12 +51,12 @@ const Content = styled.div`
   padding: 0 0.5rem;
 
 	@media (max-width: 1030px) {
-    width: 47%
+    width: 47%;
+		height: 44vh;
 	}
 
  @media (max-width: 768px) {
 		width: 60%;
-		height: 75vh;
 	}
 
  @media (max-width: 648px) {
@@ -82,14 +82,13 @@ const TitleTerms = styled.h1`
 
 const SucessImage = styled.img`
 	width: 9rem;
-	margin: 1rem 0;
+	margin: 1rem 0 3rem;
 `;
 
 const TextTerms = styled.p`
 	width: 80%;
 	font-family: Overpass;
 	font-size: 1rem;
-	padding-bottom: 1rem;
 
 	@media(max-width: 768px) {
 		padding-bottom: 1rem;
@@ -116,8 +115,9 @@ const CreateUserSucessScreen = props => (
 			<SucessImage src={sucessImage} alt="sucess image" />
 			<TextTerms>
       Enviamos um e-mail de confirmação para
-				<TextTermsBold>{props.onboarding.users.email ? props.onboarding.users.email : 'nome@email.com'}</TextTermsBold>. Verifique sua caixa de entrada para
-      prosseguir.
+				<TextTermsBold>
+					{props.onboarding.users.email ? props.onboarding.users.email : 'nome@email.com'}
+				</TextTermsBold>. Verifique sua caixa de entrada para prosseguir.
 			</TextTerms>
 			<TextTerms>
       Caso não tenha recebido a confirmação, clique em
@@ -126,7 +126,7 @@ const CreateUserSucessScreen = props => (
 			<Link to="/">
 				<Button
 					width="87%"
-					height="3.5rem"
+					height="3.8rem"
 					margin="2rem 0 1.5rem"
 					text="fazer login"
 				/>
