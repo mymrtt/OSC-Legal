@@ -943,7 +943,7 @@ class OrganizationScreen extends Component {
 				</Table>
 				{this.renderAllTable().length === 0 && (
 					<TextNoOrganitazion>
-						<TextInformation>Não há organização.</TextInformation>
+						<TextInformation>Não há organizações.</TextInformation>
 					</TextNoOrganitazion>
 				)}
 			</Container>

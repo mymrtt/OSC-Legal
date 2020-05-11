@@ -307,7 +307,7 @@ class ModalOrganization extends Component {
 		const { item } = this.props;
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
-				<Container onClick={(ev) => ev.stopPropagation()}>
+				<Container onClick={ev => ev.stopPropagation()}>
 					<Figure>
 						<ImageBack src={ImageBackMobile} onClick={this.props.handleClosedModal} />
 					</Figure>
@@ -336,7 +336,7 @@ class ModalOrganization extends Component {
 							</ContentConsultorItem>
 						</ContentConsultor>
 						<ContentCreate>
-							<ImageClosed src={ImageClose} onClick={this.props.handleClosedModal} />
+							<ImageClosed src={ImageClose} alt="Fechar" onClick={this.props.handleClosedModal} />
 							<ContentConsultorDetails>
 								<div>
 									<SubTitle>criado em</SubTitle>
@@ -421,10 +421,11 @@ class ModalOrganization extends Component {
 								border={this.state.selectedStatus === item.desc}
 								onClick={() => this.handleClicked(item)}
 							>
-								<img src={item.img}></img>
+								<img src={item.img} alt={item.desc} />
 								<PaymentMethodText
 									color={this.state.selectedStatus === item.desc}
-								>{item.desc}
+								>
+									{item.desc}
 								</PaymentMethodText>
 							</ContainerPaymentMethod>))}
 					</ContainerSelected>
