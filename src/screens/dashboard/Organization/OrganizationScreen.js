@@ -549,7 +549,7 @@ class OrganizationScreen extends Component {
 						<TableList onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
 					</>
 				}
-				<TableList mob>{item.cpf}</TableList>
+				<TableList mo>{item.cpf}</TableList>
 				<TableList mob>{item.user}</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
@@ -641,7 +641,7 @@ class OrganizationScreen extends Component {
 				</Table>
 				{this.renderAllTable().length === 0 && (
 					<TextNoOrganitazion>
-						<TextInformation>Não há organização.</TextInformation>
+						<TextInformation>Não há organizações até o momento.</TextInformation>
 					</TextNoOrganitazion>
 				)}
 			</Container>

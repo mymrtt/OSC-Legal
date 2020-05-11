@@ -54,7 +54,8 @@ const ContainerHeader = styled.div`
 `;
 
 const AddModelImage = styled.img`
-	width: 35%;
+	width: 8.5rem;
+
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -132,9 +133,9 @@ const InitialAddModel = styled.div`
 
 
 const ContainerScroll = styled.div`
-	max-height: 60vh;
 	width: 65%;
-	overflow-Y: scroll;
+	max-height: 65vh;
+	overflow-y: scroll;
 
 	@media (max-width: 490px) {
 		width: 100%;
@@ -156,7 +157,7 @@ const TextInitialAddModel = styled.p`
   font-family: "Overpass", Regular;
 	font-weight: 300;
 
-	a {
+	span {
 		color: #85144B;
 		text-decoration: underline;
 		cursor: pointer;
@@ -173,7 +174,7 @@ const TextInitialAddModel = styled.p`
 `;
 
 const ContainerSearch = styled.div`
-	margin-right: 2rem;
+	margin-right: 1.2rem;
 	width: 40%;
 	display: flex;
 	justify-content: flex-end;
@@ -229,6 +230,7 @@ const ContainerModels = styled.div`
 	width: 100%;
 	display: ${(props => (props.initialModel ? 'none' : 'flex'))};
 	flex-direction: column;
+	
 	@media (max-width: 490px) {
     margin-bottom: 10rem;
 	}
@@ -249,6 +251,7 @@ const ContainerModel = styled.div`
 	cursor: pointer;
 	position: relative;
 	z-index: ${props => (props.zIndex ? '-1' : 0)};
+	margin: 0 auto;
 
 	&:hover {
 		border:1px solid #85144B;
@@ -392,7 +395,7 @@ const Option = styled.button`
 	background: transparent;
 	border: none;
 	border-radius: 4px;
-	
+
 	&:hover {
 		background: #FF4136;
 	}
@@ -434,9 +437,9 @@ const OptionText = styled.p`
 
 const Button = styled.button`
   margin: 2rem;
-	padding: 1.3rem;
-  width: 60%;
-  border: 0;
+	width: 50%;
+	height: 3.5rem;
+	border: 0;
   color: #fff;
   box-shadow: 0 3px 6px #00000029;
   border-radius: 3px;
@@ -556,10 +559,12 @@ const TextUploadFile = styled.div`
 	font-family: "Overpass", SemiBold;
 	font-size: .9rem;
 	color: #959595;
+
 	h3 {
 		font-family: "Overpass", Bold;
 		margin-bottom: .5rem;
-		font-size: 1.2rem;
+		font-size: 1.1rem;
+		color:${props => (props.file === null ? '#959595' : 'green')};
 	}
 	span {
 		cursor: pointer;
@@ -797,6 +802,7 @@ class DocumentsScreen extends Component {
 			this.setState({
 				addModel: false,
 				isError: false,
+				isFile: null,
 			});
 		}
 
@@ -856,10 +862,16 @@ class DocumentsScreen extends Component {
 		}
 
 	uploadFile = (e) => {
-		const file = e.target.files[0];
-		this.setState({
-			isFiles: file.name,
-		});
+		e.preventDefault();
+		let reader = new FileReader();
+		let file = e.target.files[0];
+
+		reader.onloadend = () => {
+			this.setState({
+				isFile: reader.result,
+			});
+		};
+		reader.readAsDataURL(file);
 	}
 
 		handleSelected = (item) => {
@@ -885,16 +897,21 @@ class DocumentsScreen extends Component {
 		handleSubmit = (e) => {
 			e.preventDefault();
 			const { title, description, id } = this.state.document;
-			const { isFiles } = this.state;
-			if (title === '' || description === '' || isFiles === null) {
+			const { isFile } = this.state;
+			if (title === '' || description === '' || isFile === null) {
 				this.setState({
 					isError: true,
 				});
 			} else {
 				this.props.addNewDocument({
-					title, description, id, isFiles,
+					title, description, id, isFile,
 				});
 				this.handleCancelAddModel();
+				this.setState({
+					title: '',
+					description: '',
+					isFile: null,
+				})
 			}
 		}
 
@@ -920,11 +937,10 @@ class DocumentsScreen extends Component {
 							onChange={this.uploadFile}
 							id='upload-file'
 							type="file"
-							placeholder="Anexar Modelo"
 						/>
 						<img src={documentWhite} alt="Anexar Documento" />
-						<TextUploadFile>
-							<h3>Anexar Modelo</h3>
+						<TextUploadFile file={this.state.isFile}>
+							<h3>{this.state.isFile === null ? 'Adiocionar documento' : 'Modelo adicionado'}</h3>
 							<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
 						</TextUploadFile>
 					</UploadFile>
@@ -952,7 +968,7 @@ class DocumentsScreen extends Component {
 					</ContainerInput>
 				</ContainerInputs>
 				<span>
-					{this.state.isError && <ErrorText>Preencha todos os valores</ErrorText>}
+					{this.state.isError && <ErrorText>Preencha todos os campos</ErrorText>}
 				</span>
 				<ButtonAdd type="submit">Adicionar</ButtonAdd>
 			</ModalAddModel>
@@ -1013,7 +1029,7 @@ class DocumentsScreen extends Component {
 					</ContainerAddModel>
 					<InitialAddModel initialModel={this.state.initialModel}>
 						<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
-						<TextInitialAddModel>Escolha um modelo de documento clicando em <a onClick={this.handleAddModel}>Adicionar Documento</a></TextInitialAddModel>
+						<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Documento</span></TextInitialAddModel>
 					</InitialAddModel>
 					<ContainerScroll>
 						<ContainerModels initialModel={this.state.initialModel}>
