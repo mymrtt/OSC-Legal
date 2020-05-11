@@ -1073,92 +1073,92 @@ class DocumentsScreen extends Component {
 
 	render() {
 		const documentsList = (this.state.search !== '')
-			? this.props.documentsList.filter(model => !model.title.toLowerCase().search(this.state.search)) : this.props.documentsList;
+			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i'))) : this.props.documentsList;
 
 		return (
 			<Container onClick={this.handleClickedLabelLeave}>
 				<Header />
 				<MaximumWidth>
-				<ContainerHeader>
-					<TitleSearch>Modelos de Documentos</TitleSearch>
-					<ContainerSearch>
-						<SearchText>Pesquisar</SearchText>
-						<ContainerSearchInput
-							onClick={this.handleClickedLabel}
-							clickLabel={this.state.changeColorLabel}>
-							<SearchInput
-								onChange={this.handleSearch}
-								placeholder="Digite aqui para pesquisar"
-							/>
-							<img src={magnifyingGlass} alt="Lupa" />
-						</ContainerSearchInput>
-					</ContainerSearch>
-				</ContainerHeader>
-				<ContainerContent>
-					<ContainerAddModel initialModel={this.state.initialModel}>
-						<AddModelImage src={ImageDocument}/>
-						<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
-						{this.state.addModel
+					<ContainerHeader>
+						<TitleSearch>Modelos de Documentos</TitleSearch>
+						<ContainerSearch>
+							<SearchText>Pesquisar</SearchText>
+							<ContainerSearchInput
+								onClick={this.handleClickedLabel}
+								clickLabel={this.state.changeColorLabel}>
+								<SearchInput
+									onChange={this.handleSearch}
+									placeholder="Digite aqui para pesquisar"
+								/>
+								<img src={magnifyingGlass} alt="Lupa" />
+							</ContainerSearchInput>
+						</ContainerSearch>
+					</ContainerHeader>
+					<ContainerContent>
+						<ContainerAddModel initialModel={this.state.initialModel}>
+							<AddModelImage src={ImageDocument}/>
+							<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
+							{this.state.addModel
 							&& this.renderModalModels()}
-					</ContainerAddModel>
-					<InitialAddModel initialModel={this.state.initialModel}>
-						<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
-						<TextInitialAddModel>Escolha um modelo de documento clicando em <a onClick={this.handleAddModel}>Adicionar Documento</a></TextInitialAddModel>
-					</InitialAddModel>
-					<ContainerScroll initialModel={this.state.initialModel}>
-						<ContainerModels initialModel={this.state.initialModel}>
-							{documentsList.map((item, index) => (
-								<ContainerModel key={item}
-									style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-									zIndex={this.state.addModel}
-									displayBefore={this.state.modalDelete}
-									onMouseEnter={() => this.handleOnOptions(item)}
-									onMouseLeave={this.handleOffOptions}>
-									<ContainerModelDescription>
-										<span>
-											<ModelNumber>{item.id}</ModelNumber>
-											<ModelTitle>{item.title}</ModelTitle>
-										</span>
-										<ModelParagraph>{item.description}</ModelParagraph>
-									</ContainerModelDescription>
-									<ContainerOptions
-										contOptions={this.state.options && (this.state.selectedOptions === item)}>
-										<Option
-											onMouseEnter={() => this.handleChangeColorExport(item)}
-											onMouseLeave={this.handleChangeColorLeaveExport}
-										>
-											<OptionImage
-												src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-												alt="Download" />
-											<OptionText
-												colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+						</ContainerAddModel>
+						<InitialAddModel initialModel={this.state.initialModel}>
+							<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
+							<TextInitialAddModel>Escolha um modelo de documento clicando em <a onClick={this.handleAddModel}>Adicionar Documento</a></TextInitialAddModel>
+						</InitialAddModel>
+						<ContainerScroll initialModel={this.state.initialModel}>
+							<ContainerModels initialModel={this.state.initialModel}>
+								{documentsList.map((item, index) => (
+									<ContainerModel key={item}
+										style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+										zIndex={this.state.addModel}
+										displayBefore={this.state.modalDelete}
+										onMouseEnter={() => this.handleOnOptions(item)}
+										onMouseLeave={this.handleOffOptions}>
+										<ContainerModelDescription>
+											<span>
+												<ModelNumber>{item.id}</ModelNumber>
+												<ModelTitle>{item.title}</ModelTitle>
+											</span>
+											<ModelParagraph>{item.description}</ModelParagraph>
+										</ContainerModelDescription>
+										<ContainerOptions
+											contOptions={this.state.options && (this.state.selectedOptions === item)}>
+											<Option
+												onMouseEnter={() => this.handleChangeColorExport(item)}
+												onMouseLeave={this.handleChangeColorLeaveExport}
 											>
+												<OptionImage
+													src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+													alt="Download" />
+												<OptionText
+													colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+												>
 												Exportar
-											</OptionText>
-										</Option>
-										<Option
-											onMouseEnter={() => this.handleChangeColorDelete(item)}
-											onMouseLeave={this.handleChangeColorLeaveDelete}
-											onClick={this.handleModalDelete}
-										>
-											<OptionImage
-												src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
-												alt="Deletar" />
-											<OptionText
-												colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-												onClick={() => this.handleSelected(item)}
+												</OptionText>
+											</Option>
+											<Option
+												onMouseEnter={() => this.handleChangeColorDelete(item)}
+												onMouseLeave={this.handleChangeColorLeaveDelete}
+												onClick={this.handleModalDelete}
 											>
+												<OptionImage
+													src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+													alt="Deletar" />
+												<OptionText
+													colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+													onClick={() => this.handleSelected(item)}
+												>
 												Excluir
-											</OptionText>
-										</Option>
-									</ContainerOptions>
-								</ContainerModel>
-							))}
-							{this.state.modalDelete
+												</OptionText>
+											</Option>
+										</ContainerOptions>
+									</ContainerModel>
+								))}
+								{this.state.modalDelete
 									&& this.renderModalDelete()}
-						</ContainerModels>
-					</ContainerScroll>
-				</ContainerContent>
+							</ContainerModels>
+						</ContainerScroll>
+					</ContainerContent>
 				</MaximumWidth>
 			</Container>
 		);
