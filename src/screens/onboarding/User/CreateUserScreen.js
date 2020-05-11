@@ -124,7 +124,7 @@ const ParagraphInput = styled.p`
 	font-size: 0.75rem;
 	font-family: Overpass;
 	font-weight: 900;
-	margin: 1rem 0 0.4rem 1.3rem;
+	margin: 1rem 0 0.4rem 1.6rem;
 	/* margin: 1rem 0 0.2rem 0.8rem; */
 	text-transform: uppercase;
 	@media (max-width: 425px) {
