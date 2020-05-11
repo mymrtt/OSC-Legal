@@ -140,7 +140,7 @@ class Header extends Component {
   render() {
   	return (
   		<Container>
-  			<ImageLogo margin={'0 0 0 3rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
+  			<ImageLogo margin={'0 0 0 4rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
   			<WrapButton>
   				<NavLink
   					exact to="/organizations"
