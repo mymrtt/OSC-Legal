@@ -60,7 +60,6 @@ const WrapButton = styled.div`
 		text-decoration: none;
 		color: #000;
 		margin: 0 1.5rem;
-		/* background: green; */
 	}
 
 	@media(max-width: 768px){
@@ -105,7 +104,7 @@ const ContainerAdm = styled.div`
 const ParagraphContainer1 = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin-top: 1.2rem;
+	margin: 1.2rem 3.5rem 0 0;
 
 	@media (max-width: 859px) {
 		font-size: 1rem;
@@ -124,7 +123,7 @@ const ParagraphSair = styled.p`
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
-	margin-right: 4.5rem;
+	margin-right: 3.5rem;
 	cursor: pointer;
 `;
 
@@ -158,7 +157,7 @@ class Header extends Component {
   			<ContainerAdm>
   				<ParagraphContainer1>
   					{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-                && this.props.password === '12345678' ? 'Administrador' : this.props.name}
+							&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
   				</ParagraphContainer1>
   				<ParagraphSair onClick={this.handleRedirect}>
               sair

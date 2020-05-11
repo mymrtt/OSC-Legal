@@ -67,7 +67,8 @@ const ContainerHeader = styled.div`
 `;
 
 const AddModelImage = styled.img`
-	width: 35%;
+	width: 8.5rem;
+
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -155,6 +156,7 @@ const InitialAddModel = styled.div`
 const ContainerScroll = styled.div`
 	max-height: 73vh;
 	width: 65%;
+	max-height: 65vh;
 	overflow-y: scroll;
 	display: ${props => (props.initialModel ? 'none' : 'inline-block')};
 
@@ -208,8 +210,8 @@ const TextInitialAddModel = styled.p`
 `;
 
 const ContainerSearch = styled.div`
-	margin-right: 2rem;
-	width: 35%;
+	margin-right: 1.2rem;
+	width: 40%;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
@@ -241,7 +243,7 @@ const ContainerSearchInput = styled.label`
 	display: flex;
 	width: 100%;
 	border-radius: 3px;
-  padding: 0.7rem;
+	padding: .6rem 1rem;
 	border: ${props => (props.clickLabel ? '1px solid #FF4136' : '0.5px solid #85144B')};
 	img {
 		margin: 0 0 0 10px;
@@ -250,8 +252,9 @@ const ContainerSearchInput = styled.label`
 
 const SearchInput = styled.input`
   width: 100%;
-  border: 0;
+	border: 0;
 	outline: none;
+	padding-left: .5rem;
 	@media (max-width: 768px) {
 		&::placeholder {
 			font-size: .7rem;
@@ -263,6 +266,7 @@ const ContainerModels = styled.div`
 	width: 100%;
 	display: ${(props => (props.initialModel ? 'none' : 'flex'))};
 	flex-direction: column;
+	
 	@media (max-width: 490px) {
     margin-bottom: 10rem;
 	}
@@ -283,6 +287,7 @@ const ContainerModel = styled.div`
 	cursor: pointer;
 	position: relative;
 	z-index: ${props => (props.zIndex ? '-1' : 0)};
+	margin: 0 auto;
 
 	&:hover {
 		border:1px solid #85144B;
@@ -471,16 +476,16 @@ const OptionText = styled.p`
 
 const Button = styled.button`
   margin: 2rem;
-	padding: 1.3rem;
-  width: 60%;
-  border: 0;
+	width: 50%;
+	height: 3.5rem;
+	border: 0;
   color: #fff;
   box-shadow: 0 3px 6px #00000029;
   border-radius: 3px;
   font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
-  background-color: #FF4136;
+	background-color: #FF4136;
 
 	@media (max-width: 1024px) {
 		padding: 1rem;
@@ -493,8 +498,11 @@ const Button = styled.button`
 	}
 
 	@media (max-width: 490px) {
+		position:fixed;
+		bottom: 1vh;
+		margin: 0 auto;
 		font-size: 1.2rem;
-		width: 100%;
+		width: 95%;
 	}
 `;
 
@@ -600,6 +608,10 @@ const TitleAddModel = styled.h2`
 const ContainerInputs = styled.div`
 	display: flex;
 	flex-direction: column;
+
+	@media(max-width: 648px){
+		height: 80%;
+	}
 `;
 
 const UploadFile = styled.label`
@@ -608,7 +620,7 @@ const UploadFile = styled.label`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
@@ -629,10 +641,12 @@ const TextUploadFile = styled.div`
 	font-family: "Overpass", SemiBold;
 	font-size: .9rem;
 	color: #959595;
+
 	h3 {
 		font-family: "Overpass", Bold;
 		margin-bottom: .5rem;
-		font-size: 1.2rem;
+		font-size: 1.1rem;
+		color:${props => (props.file === null ? '#959595' : 'green')};
 	}
 	span {
 		cursor: pointer;
@@ -661,7 +675,7 @@ const Input = styled.input`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
@@ -673,10 +687,14 @@ const TextArea = styled.textarea`
 	border-radius: 3px;
 	padding: 3% 2.5%;
 	margin-bottom: .5rem;
-	border: ${props => (props.isError === true ? '2px solid #ff4136' : '1px solid #85144B')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
+
+	@media (max-width: 490px) {
+		height: 100px;
+	}
 	resize: none;
 `;
 
@@ -699,8 +717,9 @@ const ButtonAdd = styled(Button)`
 	}
 
 	@media (max-width: 490px) {
-		width: 100%;
+		width: 95%;
 		font-size: 1.2rem;
+		align-self: center;
 	}
 `;
 
@@ -710,10 +729,11 @@ const ContainerModalDelete = styled(ContainerModal)`
 	}
 `;
 
-const ModalDelete = styled(ModalAddModel)`
-	width: 460px;
-	height: auto;
+const ModalDelete = styled.div`
+	background: #FFF;
+	width: 480px;
 	padding: 1% 1% 1% 2%;
+
 	
 	@media (max-width: 490px) {
 		width: 100%;
@@ -744,7 +764,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
-	margin-top: 4%;
+	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
 	color: #404040;
@@ -774,6 +794,7 @@ const ButtonCancel = styled(Button)`
 	background: #ffffff;
 	margin: 5% 0 0 0;
 	box-shadow: none;
+	width: 50%;
 	@media (max-width: 490px) {
 		margin: 0;
 	}
@@ -781,6 +802,7 @@ const ButtonCancel = styled(Button)`
 
 const ButtonConfirm = styled(Button)`
 	margin: 5% 0 0 0;
+	width: 50%;
 	@media (max-width: 490px) {
 		margin: 0;
 	}
@@ -792,6 +814,7 @@ const ErrorText = styled.p`
 	text-align: right;
 	margin-bottom: .5rem;
 	font-size: .9rem;
+	font-family: Overpass;
 `;
 
 class DocumentsScreen extends Component {
@@ -866,6 +889,7 @@ class DocumentsScreen extends Component {
 			this.setState({
 				addModel: false,
 				isError: false,
+				isFile: null,
 			});
 		}
 
@@ -925,10 +949,16 @@ class DocumentsScreen extends Component {
 		}
 
 	uploadFile = (e) => {
+		e.preventDefault();
+		const reader = new FileReader();
 		const file = e.target.files[0];
-		this.setState({
-			isFiles: file.name,
-		});
+
+		reader.onloadend = () => {
+			this.setState({
+				isFile: reader.result,
+			});
+		};
+		reader.readAsDataURL(file);
 	}
 
 		handleSelected = (item) => {
@@ -938,18 +968,11 @@ class DocumentsScreen extends Component {
 		}
 
 		handleDelete = () => {
-			// ev.preventDefault();
 			this.props.deleteDocument(this.state.modelSelect.id);
 			this.setState({
 				modelSelect: '',
 			});
 			this.handleCancelDelete();
-			// const documentsList = this.props;
-			// documentsList.splice(documentsList.indexOf(this.props.documentsList), 1);
-			// this.setState({
-			// 	list,
-			// 	modalDelete: false,
-			// });
 		}
 
 		handleSearch = (e) => {
@@ -961,16 +984,21 @@ class DocumentsScreen extends Component {
 		handleSubmit = (e) => {
 			e.preventDefault();
 			const { title, description, id } = this.state.document;
-			const { isFiles } = this.state;
-			if (title === '' || description === '' || isFiles === null) {
+			const { isFile } = this.state;
+			if (title === '' || description === '' || isFile === null) {
 				this.setState({
 					isError: true,
 				});
 			} else {
 				this.props.addNewDocument({
-					title, description, id, isFiles,
+					title, description, id, isFile,
 				});
 				this.handleCancelAddModel();
+				this.setState({
+					title: '',
+					description: '',
+					isFile: null,
+				});
 			}
 		}
 
@@ -1010,11 +1038,10 @@ class DocumentsScreen extends Component {
 							onChange={this.uploadFile}
 							id='upload-file'
 							type="file"
-							placeholder="Anexar Modelo"
 						/>
 						<img src={documentWhite} alt="Anexar Documento" />
-						<TextUploadFile>
-							<h3>Anexar Modelo</h3>
+						<TextUploadFile file={this.state.isFile}>
+							<h3>{this.state.isFile === null ? 'Adiocionar documento' : 'Modelo adicionado'}</h3>
 							<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
 						</TextUploadFile>
 					</UploadFile>
@@ -1042,7 +1069,7 @@ class DocumentsScreen extends Component {
 					</ContainerInput>
 				</ContainerInputs>
 				<span>
-					{this.state.isError && <ErrorText>Preencha todos os valores</ErrorText>}
+					{this.state.isError && <ErrorText>Preencha todos os campos</ErrorText>}
 				</span>
 				<ButtonAdd type="submit">Adicionar</ButtonAdd>
 			</ModalAddModel>
@@ -1104,7 +1131,7 @@ class DocumentsScreen extends Component {
 						</ContainerAddModel>
 						<InitialAddModel initialModel={this.state.initialModel}>
 							<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
-							<TextInitialAddModel>Escolha um modelo de documento clicando em <a onClick={this.handleAddModel}>Adicionar Documento</a></TextInitialAddModel>
+							<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Documento</span></TextInitialAddModel>
 						</InitialAddModel>
 						<ContainerScroll initialModel={this.state.initialModel}>
 							<ContainerModels initialModel={this.state.initialModel}>
