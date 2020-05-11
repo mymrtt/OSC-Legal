@@ -117,6 +117,7 @@ const Title = styled.h2`
 	color: #231F20;
 	font-size: 1.25rem;
 	font-family: Overpass, ExtraBold;
+	font-weight: 900;
 	padding-top: 2rem;
 	padding-bottom: 1.7rem;
 	margin-left: 3.4rem;
