@@ -4,9 +4,7 @@ const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
 
 // Initial State
 const initialState = {
-	documentsList: [
-		{},
-	],
+	documentsList: [],
 	tableDatas: [
 		{
 			id: 1,
