@@ -266,7 +266,7 @@ const ContainerModels = styled.div`
 	width: 100%;
 	display: ${(props => (props.initialModel ? 'none' : 'flex'))};
 	flex-direction: column;
-	
+
 	@media (max-width: 490px) {
     margin-bottom: 10rem;
 	}
@@ -735,7 +735,7 @@ const ModalDelete = styled.div`
 	width: 480px;
 	padding: 1% 1% 1% 2%;
 
-	
+
 	@media (max-width: 490px) {
 		width: 100%;
 		height: 100vh;
@@ -1027,7 +1027,7 @@ class DocumentsScreen extends Component {
 			this.setState({
 				isErrorTitleQtd: true,
 			});
-		}else {
+		} else {
 			this.props.addNewDocument({
 				title, description, id, isFile,
 			});

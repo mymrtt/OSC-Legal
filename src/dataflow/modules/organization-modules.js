@@ -1,12 +1,8 @@
 // Action Types
-const ADD_NEW_DOCUMENT = 'osc/documents/ADD_NEW_DOCUMENTS';
-const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
+const UPDATE_TABLEDATAS = 'osc/organization/UPDATE_TABLEDATAS';
 
 // Initial State
 const initialState = {
-	documentsList: [
-		{},
-	],
 	tableDatas: [
 		{
 			id: 1,
@@ -70,7 +66,7 @@ const initialState = {
 			createdIn: '17/06/19',
 			authorization: '02/06/19',
 			dueDate: '02/07/19',
-			status: 'Vencido',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -96,7 +92,7 @@ const initialState = {
 			createdIn: '15/06/19',
 			authorization: '15/07/19',
 			dueDate: '-',
-			status: 'pendente',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Vinicius Almeida Rodrigues',
@@ -118,7 +114,7 @@ const initialState = {
 			cpf: '000.000.000-00',
 			user: 'Tarcila do Amaral Gonçalves',
 			email: 'organização@email.com',
-			telephone: '(26)52658-1236',
+			telephone: '(44)44444-4444',
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
@@ -322,22 +318,22 @@ const initialState = {
 		},
 		{
 			id: 13,
-			organization: 'Associação de Moradores',
+			organization: 'Crianças Felizes',
 			cpf: '000.000.000-00',
-			user: 'Jorge Amado da Silva',
+			user: 'Alice Barbosa Souza',
 			email: 'organização@email.com',
-			telephone: '(21)98956-7866',
-			createdIn: '12/06/18',
-			authorization: '31/08/95',
-			dueDate: '10/10/22',
+			telephone: '(21)98956-7856',
+			createdIn: '12/06/19',
+			authorization: '15/06/19',
+			dueDate: '15/07/19',
 			status: 'autorizar',
 			admin:
 			{
-				name: 'Jorge Amado da Silva',
-				rg: '63.526.745-3',
+				name: 'Alice Barbosa Souza',
+				rg: '12.526.759-3',
 				dateOfBirth: '10/10/10',
 				fantasyName: 'Vai na Web',
-				reasonSocial: 'Associação de Moradores',
+				reasonSocial: 'Crianças Felizes',
 				cnpj: '00.000.000/0000-00',
 				address: 'Rua Gomes Lopes',
 				complement: 'Casa',
@@ -348,22 +344,22 @@ const initialState = {
 		},
 		{
 			id: 14,
-			organization: 'Educap',
+			organization: 'Crianças Felizes',
 			cpf: '000.000.000-00',
-			user: 'Tarcila do Amaral Gonçalves',
+			user: 'Alice Barbosa Souza',
 			email: 'organização@email.com',
 			telephone: '(21)98956-7856',
-			createdIn: '12/06/97',
-			authorization: '31/08/85',
-			dueDate: '25/12/19',
+			createdIn: '12/06/19',
+			authorization: '15/06/19',
+			dueDate: '15/07/19',
 			status: 'autorizar',
 			admin:
 			{
-				name: 'Tarcila do Amaral Gonçalves',
-				rg: '12.526.856-3',
+				name: 'Alice Barbosa Souza',
+				rg: '12.526.759-3',
 				dateOfBirth: '10/10/10',
 				fantasyName: 'Vai na Web',
-				reasonSocial: 'Educap',
+				reasonSocial: 'Crianças Felizes',
 				cnpj: '00.000.000/0000-00',
 				address: 'Rua Gomes Lopes',
 				complement: 'Casa',
@@ -372,6 +368,7 @@ const initialState = {
 				city: 'Rio de Janeiro',
 			},
 		},
+
 		{
 			id: 15,
 			organization: 'Crianças Felizes',
@@ -560,31 +557,16 @@ const initialState = {
 // Reducers
 export default function (state = initialState, action) {
 	switch (action.type) {
-	case ADD_NEW_DOCUMENT:
+	case UPDATE_TABLEDATAS:
 		return Object.assign({}, state, {
-			documentsList: [
-				...state.documentsList,
-				{
-					...action.info,
-				},
-			],
-		});
-	case DELETE_DOCUMENT:
-		return Object.assign({}, state, {
-			...state,
-			documentsList: state.documentsList.filter(item => item.id !== action.info),
+			tableDatas: action.info,
 		});
 	default: return state;
 	}
 }
 
 // Action Creators
-export const addNewDocument = info => ({
-	type: ADD_NEW_DOCUMENT,
-	info,
-});
-
-export const deleteDocument = info => ({
-	type: DELETE_DOCUMENT,
+export const updateTableDatas = info => ({
+	type: UPDATE_TABLEDATAS,
 	info,
 });

@@ -16,10 +16,17 @@ import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
 
 // Redux
+import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
+
 const mapStateToProps = state => ({
 	typeAccount: state.onboarding.users.typeAccount,
-	tableDatas: state.dashboard.tableDatas,
+	tableDatas: state.organization.tableDatas,
 });
+
+const mapDispatchToProps = dispatch => ({
+	updateTableDatas: info => dispatch(updateTableDatas(info)),
+});
+
 
 const Container = styled.div`
 	width: 100%;
@@ -75,7 +82,7 @@ const SelectViewBy = styled.div`
 
 const SpanSelect = styled.div`
 	width: 15rem;
-	margin-top: 0.5rem;
+	margin: 0.5rem 0 0;
 	position: relative;
 	display: flex;
   flex-direction: column;
@@ -86,6 +93,7 @@ const SpanSelect = styled.div`
 	}
 
 	@media (max-width: 768px) {
+		margin: 0 2rem;
 		width: 100%;
 	}
 
@@ -170,7 +178,7 @@ const SelectedItem = styled.p`
 `;
 
 const Content = styled.div`
-	padding: 2.5rem 5rem 0;
+	padding: 2rem 5rem 0;
 	width: 100%;
 	max-width: 100%;
 
@@ -260,14 +268,15 @@ const Tr = styled.tr`
 `;
 
 const TableTitle = styled.th`
+	width: ${props => (props.width)};
+	background-color: #85144B;
+	color: #FFFFFF;
+	font-family: Overpass, Regular;
+	font-size: 1rem;
+	text-align: ${props => (props.center === 'Status' && 'center')};
 	position: sticky;
 	top: 0;
 	z-index: 5;
-	background-color: #85144B;
-	color: #FFFFFF;
-	font-size: 1rem;
-	font-family: Overpass, Regular;
-	text-align: ${props => (props.center === 'Status' && 'center')};
 	${''}
 
 	@media (max-width: 768px) {
@@ -324,15 +333,15 @@ const TextInformation = styled.p`
 
 const Box = styled.div`
 	display: none;
-	flex-direction: row;
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
+		flex-direction: row;
 	}
 `;
 
 const BoxButton = styled.button`
-	width: 100%;
+	/* width: 100%; */
 	height: 100%;
 	border: none;
 	background: none;
@@ -350,8 +359,9 @@ const TableTitleMob = styled.th`
 `;
 
 const TableList = styled.td`
-	padding-top: 0;
-	padding-bottom: 0;
+	width: ${props => (props.width)};
+	/* padding-top: 0;
+	padding-bottom: 0; */
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-weight: ${props => (props.font ? '900' : 'none')};
@@ -364,12 +374,12 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
-	width: 6rem;
-	padding: 0.5rem;
+	height: 100%;
+	/* padding: 0.5rem; */
 	text-align: center;
 	display: flex;
 	align-items: center;
-	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
+	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
 
 	${({ selected }) => selected && css`
 		img {display: block}
@@ -483,7 +493,6 @@ class OrganizationScreen extends Component {
 	};
 
 	handleSelectedStatus = (newStatus, item) => {
-		console.log('cheguei aqui');
 		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
 			if (data === item) {
@@ -499,6 +508,9 @@ class OrganizationScreen extends Component {
 			isClickedStatus: '',
 			tableDatas: newList,
 		});
+		this.props.updateTableDatas(
+			newList,
+		);
 	}
 
 	handleClickedImageStatus = (item) => {
@@ -582,13 +594,14 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
+							width={'8rem'}
 						>
 							{item.organization}
 						</TableList>
 					</>
 				}
-				<TableList font={this.state.hovered === item} mob>{item.cpf}</TableList>
-				<TableList font={this.state.hovered === item} mob>{item.user}</TableList>
+				<TableList font={this.state.hovered === item} width={'8rem'} mob>{item.cpf}</TableList>
+				<TableList font={this.state.hovered === item} width={'7.5rem'} mob>{item.user}</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
@@ -621,6 +634,7 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
+							width={'8rem'}
 						>
 							{item.telephone}
 						</TableList>
@@ -683,7 +697,7 @@ class OrganizationScreen extends Component {
 							<Thead>
 								<Tr>
 									{this.state.tableTitles.map(title => (
-										<TableTitle
+										<TableTitle width={'6rem'}
 											key={title}
 											center={title}
 											style={{ paddingLeft: title === 'Organização' && '0.7rem' }}
@@ -700,7 +714,7 @@ class OrganizationScreen extends Component {
 					</ContainerTable>
 					{this.renderAllTable().length === 0 && (
 						<TextNoOrganitazion>
-							<TextInformation>Não há organizações até o momento.</TextInformation>
+							<TextInformation>Não há organizações no momento.</TextInformation>
 						</TextNoOrganitazion>
 					)}
 				</Content>
@@ -709,4 +723,4 @@ class OrganizationScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, null)(OrganizationScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(OrganizationScreen);
