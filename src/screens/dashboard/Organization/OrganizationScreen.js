@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 // Libs
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
@@ -38,30 +37,15 @@ const ContainerSelectedViewBy = styled.div`
 `;
 
 const ContainerContentSelectedViewBy = styled.div`
-	${'' /* padding: 4rem 0 0;
+	padding-bottom: 1.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	z-index: 4;
-	width: 89%;
-	margin: 0 auto; */}
-	padding-bottom: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-	${'' /* @media(max-width: 1024px) {
-		width: 100%;
-	} */}
 
 	@media (max-width: 768px) {
 		align-items: center;
 		flex-direction: column;
 	}
-
-	${'' /* @media (max-width: 648px) {
-		padding: 1rem;
-	} */}
 `;
 
 const TitleManageOrgs = styled.h2`
@@ -632,8 +616,18 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					</>
 					: <>
-						<TableList font={this.state.hovered === item} onClick={() => this.isModalOpen(item)}>{item.email}</TableList>
-						<TableList font={this.state.hovered === item} onClick={() => this.isModalOpen(item)}>{item.telephone}</TableList>
+						<TableList
+							font={this.state.hovered === item}
+							onClick={() => this.isModalOpen(item)}
+						>
+							{item.email}
+						</TableList>
+						<TableList
+							font={this.state.hovered === item}
+							onClick={() => this.isModalOpen(item)}
+						>
+							{item.telephone}
+						</TableList>
 						<TableList font={this.state.hovered === item}>{item.createdIn}</TableList>
 						<TableList font={this.state.hovered === item}>{item.authorization}</TableList>
 						<TableList font={this.state.hovered === item}>{item.dueDate}</TableList>
