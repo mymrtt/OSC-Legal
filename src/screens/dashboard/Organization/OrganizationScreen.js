@@ -180,7 +180,7 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	max-height: 79vh;
+	max-height: 77.5vh;
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -591,8 +591,20 @@ class OrganizationScreen extends Component {
 						</TableList>
 					</>
 				}
-				<TableList font={this.state.hovered === item} mob>{item.cpf}</TableList>
-				<TableList font={this.state.hovered === item} mob>{item.user}</TableList>
+				<TableList
+					mob
+					font={this.state.hovered === item}
+					onClick={() => this.isModalOpen(item)}
+				>
+					{item.cpf}
+				</TableList>
+				<TableList
+					mob
+					font={this.state.hovered === item}
+					onClick={() => this.isModalOpen(item)}
+				>
+					{item.user}
+				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
@@ -628,9 +640,24 @@ class OrganizationScreen extends Component {
 						>
 							{item.telephone}
 						</TableList>
-						<TableList font={this.state.hovered === item}>{item.createdIn}</TableList>
-						<TableList font={this.state.hovered === item}>{item.authorization}</TableList>
-						<TableList font={this.state.hovered === item}>{item.dueDate}</TableList>
+						<TableList
+							font={this.state.hovered === item}
+							onClick={() => this.isModalOpen(item)}
+						>
+							{item.createdIn}
+						</TableList>
+						<TableList
+							font={this.state.hovered === item}
+							onClick={() => this.isModalOpen(item)}
+						>
+							{item.authorization}
+						</TableList>
+						<TableList
+							font={this.state.hovered === item}
+							onClick={() => this.isModalOpen(item)}
+						>
+							{item.dueDate}
+						</TableList>
 					</>
 				}
 				{widthMob
