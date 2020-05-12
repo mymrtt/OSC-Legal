@@ -419,14 +419,12 @@ class CreateUserScreen extends Component {
 			this.setState({
 				isErrorTel: true,
 			});
-			console.log('certo');
 		} else {
 			this.setState({
 				isErrorTel: false,
 			});
 			this.handleErrors();
 		}
-		console.log(this.state.isErrorTel);
 	};
 
 	handleErrors = () => {
