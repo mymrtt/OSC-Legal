@@ -55,7 +55,7 @@ const WrapButton = styled.div`
 		align-items: flex-end;
 		height: 40px;
 		align-self: flex-end;
-		padding-bottom: .7rem;
+		padding-bottom: 1rem;
 		font-size: 1.375rem;
 		text-decoration: none;
 		color: #000;
@@ -123,8 +123,12 @@ const ParagraphSair = styled.p`
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
-	margin-right: 3.5rem;
+	margin-right: 2.8rem;
 	cursor: pointer;
+
+	@media(max-width: 648px) {
+		margin-right: 1.8rem;
+	}
 `;
 
 class Header extends Component {
@@ -139,7 +143,11 @@ class Header extends Component {
   render() {
   	return (
   		<Container>
-  			<ImageLogo margin={'0 0 0 4rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem' />
+  			<NavLink
+  				exact to="/organizations"
+  			>
+  				<ImageLogo margin={'0 0 0 4rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem'/>
+  			</NavLink>
   			<WrapButton>
   				<NavLink
   					exact to="/organizations"
