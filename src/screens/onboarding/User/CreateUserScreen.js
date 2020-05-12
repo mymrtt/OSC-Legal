@@ -605,8 +605,8 @@ class CreateUserScreen extends Component {
 									placeholder="(00) 00000-0000"
 									name="telefone"
 									required
-									/>
-									{this.state.isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
+								/>
+								{this.state.isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>senha</ParagraphInput>
