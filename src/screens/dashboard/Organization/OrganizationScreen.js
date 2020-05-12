@@ -34,15 +34,9 @@ const Container = styled.div`
 const ContainerSelectedViewBy = styled.div`
 	padding: 2rem 4.7rem 0;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
 	z-index: 4;
-	width: 95%;
-	margin: 0 auto;
-
-	/* @media(max-width: 1024px) {
-		padding: 3rem 3rem 0 4rem;
-	} */
 
 	@media (max-width: 768px) {
 		padding: 2rem 4rem 0 4rem;
@@ -167,14 +161,10 @@ const SelectedItem = styled.p`
 `;
 
 const Table = styled.table`
-	/* display: flex;
-	flex-direction: column; */
 	width: 100%;
 	max-width: 100%;
 	height: calc(100vh - 161px);
 	border-spacing: 0;
-	margin: 1.5rem;
-
 	padding: 1.5rem 4.7rem 0;
 	/* overflow-x: hidden;
 	overflow-y: scroll; */
@@ -214,7 +204,6 @@ const Tr = styled.tr`
 	}
 
 	@media(max-width: 768px) {
-		/* margin-bottom: 1rem; */
 		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
     flex-wrap: wrap;
@@ -270,26 +259,22 @@ const ContainerTableTitleMob = styled.span`
 `;
 
 const TextNoOrganitazion = styled.div`
-	width: 89%;
-	margin: 0 auto;
-	height: 90vh;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-bottom: 4rem;
-	background: #FFF;
-
+	margin-top: 4rem;
 `;
 
 const TextInformation = styled.p`
-	font-size: 2rem;
+	font-size: 1.5rem;
 	text-align: center;
-	font-family: Overpass;
+	font-family: Overpass, Regular;
 	color: #85144B;
-
+/*
 	@media(max-width: 648px) {
 		font-size: 1.5rem;
-	}
+	} */
 `;
 
 const Box = styled.div`
@@ -355,7 +340,6 @@ const ContainerStatus = styled.td`
 const TextStatus = styled.p`
 	color: ${props => (props.color)};
 	font-size: 0.8rem;
-
 	text-transform: uppercase;
 
 	@media(max-width: 768px) {
@@ -454,7 +438,8 @@ class OrganizationScreen extends Component {
 	};
 
 	handleSelectedStatus = (newStatus, item) => {
-		const { tableDatas } = this.state;
+		console.log('cheguei aqui');
+		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
 			if (data === item) {
 				return {
@@ -535,9 +520,10 @@ class OrganizationScreen extends Component {
 		</>
 	)
 
-	renderTable = () => {
+	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-		return this.props.tableDatas.map(item => (
+
+		return listTable.map(item => (
 			<Tr key={item.organization}>
 				{widthMob
 					? <ContainerTableTitleMob>
@@ -603,7 +589,9 @@ class OrganizationScreen extends Component {
 	}
 
 	renderAllTable = () => {
-		const { tableDatas, selectedValue } = this.state;
+		const { selectedValue } = this.state;
+		const { tableDatas } = this.props;
+
 		let listTable = this.renderTable(tableDatas);
 		if (
 			selectedValue !== 'Selecionar status'
