@@ -602,6 +602,7 @@ class OrganizationScreen extends Component {
 				}
 				<TableList
 					mob
+          width={'8rem'}
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 					width={'9rem'}
@@ -610,6 +611,7 @@ class OrganizationScreen extends Component {
 				</TableList>
 				<TableList
 					mob
+          width={'7.5rem'}
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}
