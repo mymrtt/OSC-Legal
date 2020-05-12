@@ -109,7 +109,7 @@ const TextTermsBold = styled.strong`
 
 const CreateUserSucessScreen = props => (
 	<Container>
-		<ImageLogo margin='3rem 0 3.5rem 0' displayMobile='none'/>
+		<ImageLogo margin='5rem 0 3.5rem 0' displayMobile='none'/>
 		<Content>
 			<TitleTerms>Cadastro concluído com sucesso!</TitleTerms>
 			<SucessImage src={sucessImage} alt="sucess image" />
@@ -125,7 +125,7 @@ const CreateUserSucessScreen = props => (
 			</TextTerms>
 			<Link to="/">
 				<Button
-					width="90%"
+					width="85%"
 					height="3.8rem"
 					margin="2rem 0 1.5rem"
 					text="fazer login"
