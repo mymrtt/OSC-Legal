@@ -23,36 +23,45 @@ const mapStateToProps = state => ({
 });
 
 const Container = styled.div`
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 	padding: 0 0 2rem;
-	/* overflow: hidden; */
-	overflow-x: hidden;
-	overflow-y: scroll;
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	padding: 2rem 4.7rem 0;
+	margin-top: 1.3rem;
+	padding-right: .6rem;
+
+	@media(max-width: 648px) {
+		margin-top: 0;
+	}
+`;
+
+const ContainerContentSelectedViewBy = styled.div`
+	${'' /* padding: 4rem 0 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	z-index: 4;
-	width: 95%;
-	margin: 0 auto;
+	width: 89%;
+	margin: 0 auto; */}
+	padding-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-	/* @media(max-width: 1024px) {
-		padding: 3rem 3rem 0 4rem;
-	} */
+	${'' /* @media(max-width: 1024px) {
+		width: 100%;
+	} */}
 
 	@media (max-width: 768px) {
-		padding: 2rem 4rem 0 4rem;
 		align-items: center;
 		flex-direction: column;
 	}
 
-	@media (max-width: 648px) {
-		padding: 1rem 2rem 1rem 2rem;
-	}
+	${'' /* @media (max-width: 648px) {
+		padding: 1rem;
+	} */}
 `;
 
 const TitleManageOrgs = styled.h2`
@@ -73,21 +82,31 @@ const SelectViewBy = styled.div`
 	@media (max-width: 768px) {
 		width: 100%;
 	}
+
+	@media(max-width: 648px) {
+    justify-content: center;
+	}
 `;
+
 
 const SpanSelect = styled.div`
 	width: 15rem;
 	margin-top: 0.5rem;
+	position: relative;
 	display: flex;
   flex-direction: column;
-	position: relative;
-	z-index: 2;
+	z-index: 11;
 
 	@media (max-width: 940px) {
 		width: 47%;
 	}
+
 	@media (max-width: 768px) {
 		width: 100%;
+	}
+
+	@media(max-width: 648px) {
+		width: 90%;
 	}
 `;
 
@@ -166,26 +185,55 @@ const SelectedItem = styled.p`
 	}
 `;
 
-const Table = styled.table`
-	/* display: flex;
-	flex-direction: column; */
+const Content = styled.div`
+	padding: 1.5rem 5rem 0;
 	width: 100%;
 	max-width: 100%;
-	height: calc(100vh - 161px);
-	border-spacing: 0;
-	margin: 1.5rem;
-
-	padding: 1.5rem 4.7rem 0;
-	/* overflow-x: hidden;
-	overflow-y: scroll; */
 
 	@media (max-width: 768px) {
+		padding: 1.5rem 0 0;
+	}
+`;
+
+const ContainerTable = styled.div`
+	max-height: 79vh;
+	overflow-y: scroll;
+
+	::-webkit-scrollbar {
+  width: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
+	}
+
+	@media(max-width: 648px) {
+		overflow-y: visible;
+		max-height: 100%;
+	}
+`;
+
+const Table = styled.table`
+	max-width: 100%;
+  width: 100%;
+  height: 100%;
+	border-spacing: 0;
+
+	@media (max-width: 768px) {
+		margin: 0;
 		padding: 2rem 0 0 0;
 	}
 
 	@media (max-width: 648px) {
 		padding: 0;
-		padding-top: 1rem;
 		${({ modal }) => modal && css`
 			display: none;
 		`}
@@ -203,7 +251,6 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
-	position: relative;
 	cursor: pointer;
 
 	&:nth-child(even) {
@@ -220,6 +267,7 @@ const Tr = styled.tr`
     flex-wrap: wrap;
 	}
 	@media(max-width: 648px) {
+		position: relative;
 		padding: 1rem 1rem 12.5rem 1rem;
 	}
 
@@ -229,13 +277,15 @@ const Tr = styled.tr`
 `;
 
 const TableTitle = styled.th`
-	/* width: 5rem; */
+	position: sticky;
+	top: 0;
+	z-index: 5;
 	background-color: #85144B;
 	color: #FFFFFF;
 	font-size: 1rem;
 	font-family: Overpass, Regular;
 	text-align: ${props => (props.center === 'Status' && 'center')};
-	padding-left: 0.7rem;
+	${''}
 
 	@media (max-width: 768px) {
 		display: none;
@@ -246,6 +296,7 @@ const ImageMore = styled.img`
 	display: none;
 
 	@media(max-width: 648px) {
+		width: 1rem;
 		display: flex;
 		position: absolute;
 		right: 15px;
@@ -320,12 +371,12 @@ const TableTitleMob = styled.th`
 `;
 
 const TableList = styled.td`
+	padding-top: 0;
+	padding-bottom: 0;
 	color: #404040;
 	font-family: "Overpass", Light;
-	/* font-family: ${props => (props.font ? '"Overpass", Light' : 'Overpass, SemiBold')}; */
-	font-weight: ${props => (props.font ? 'Bold' : '0')};
+	font-weight: ${props => (props.font ? '900' : 'none')};
 	font-size: 0.95rem;
-	padding: 0.5rem;
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -479,37 +530,39 @@ class OrganizationScreen extends Component {
 
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
-			{this.props.typeAccount === 'admin'
-				? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
-				: <h1>Minhas organizações</h1>
-			}
-			<SelectViewBy>
+			<ContainerContentSelectedViewBy>
 				{this.props.typeAccount === 'admin'
-					? <TitleViewBy>Visualizar por:</TitleViewBy>
-					: <p>Pesquisar</p>
+					? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
+					: <h1>Minhas organizações</h1>
 				}
-				<SpanSelect>
-					<InputSelect onClick={this.isSelectOpen}>
-						<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
-							{this.state.selectedValue.select || this.state.selectedValue}
-						</SelectedViewByText>
-						<img src={ImageCaminho} alt="arrow" />
-					</InputSelect>
-					{this.state.isSelected && (
-						<InputSelectedItem>
-							{this.state.selectedItems.map((item, index) => (
-								<SelectedItem
-									onClick={() => this.handleSelectedValue(item)}
-									key={index}
-									hover={item}
-								>
-									{item.select || item}
-								</SelectedItem>
-							))}
-						</InputSelectedItem>
-					)}
-				</SpanSelect>
-			</SelectViewBy>
+				<SelectViewBy>
+					{this.props.typeAccount === 'admin'
+						? <TitleViewBy>Visualizar por:</TitleViewBy>
+						: <p>Pesquisar</p>
+					}
+					<SpanSelect>
+						<InputSelect onClick={this.isSelectOpen}>
+							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
+								{this.state.selectedValue.select || this.state.selectedValue}
+							</SelectedViewByText>
+							<img src={ImageCaminho} alt="arrow" />
+						</InputSelect>
+						{this.state.isSelected && (
+							<InputSelectedItem>
+								{this.state.selectedItems.map((item, index) => (
+									<SelectedItem
+										onClick={() => this.handleSelectedValue(item)}
+										key={index}
+										hover={item}
+									>
+										{item.select || item}
+									</SelectedItem>
+								))}
+							</InputSelectedItem>
+						)}
+					</SpanSelect>
+				</SelectViewBy>
+			</ContainerContentSelectedViewBy>
 		</ContainerSelectedViewBy>
 	)
 
@@ -545,7 +598,13 @@ class OrganizationScreen extends Component {
 						<TableList>{item.organization}</TableList>
 					</ContainerTableTitleMob>
 					: <>
-						<TableList font={this.state.hovered === item} onClick={() => this.isModalOpen(item)}>{item.organization}</TableList>
+						<TableList
+							font={this.state.hovered === item}
+							onClick={() => this.isModalOpen(item)}
+							style={{ paddingLeft: '.7rem' }}
+						>
+							{item.organization}
+						</TableList>
 					</>
 				}
 				<TableList font={this.state.hovered === item} mob>{item.cpf}</TableList>
@@ -625,24 +684,34 @@ class OrganizationScreen extends Component {
 				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				<Header />
-				{this.renderSelectedViewby()}
-				<Table modal={this.state.isModal}>
-					<Thead>
-						<Tr>
-							{this.state.tableTitles.map(title => (
-								<TableTitle key={title} center={title}>{title}</TableTitle>
-							))}
-						</Tr>
-					</Thead>
-					<tbody>
-						{this.renderAllTable()}
-					</tbody>
-				</Table>
-				{this.renderAllTable().length === 0 && (
-					<TextNoOrganitazion>
-						<TextInformation>Não há organizações até o momento.</TextInformation>
-					</TextNoOrganitazion>
-				)}
+				<Content>
+					{this.renderSelectedViewby()}
+					<ContainerTable>
+						<Table modal={this.state.isModal}>
+							<Thead>
+								<Tr>
+									{this.state.tableTitles.map(title => (
+										<TableTitle
+											key={title}
+											center={title}
+											style={{ paddingLeft: title === 'Organização' && '0.7rem' }}
+										>
+											{title}
+										</TableTitle>
+									))}
+								</Tr>
+							</Thead>
+							<tbody>
+								{this.renderAllTable()}
+							</tbody>
+						</Table>
+					</ContainerTable>
+					{this.renderAllTable().length === 0 && (
+						<TextNoOrganitazion>
+							<TextInformation>Não há organizações até o momento.</TextInformation>
+						</TextNoOrganitazion>
+					)}
+				</Content>
 			</Container>
 		);
 	}
