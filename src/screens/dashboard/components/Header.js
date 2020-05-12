@@ -125,6 +125,10 @@ const ParagraphSair = styled.p`
 	font-size: 1.25rem;
 	margin-right: 3.5rem;
 	cursor: pointer;
+
+	@media(max-width: 648px) {
+		margin-right: 1.8rem;
+	}
 `;
 
 class Header extends Component {
