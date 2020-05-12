@@ -120,10 +120,10 @@ const ParagraphContainer1 = styled.p`
 `;
 
 const ParagraphSair = styled.p`
+	margin-right: 5rem;
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
-	margin-right: 2.8rem;
 	cursor: pointer;
 
 	@media(max-width: 648px) {
