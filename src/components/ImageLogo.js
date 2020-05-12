@@ -9,6 +9,7 @@ const LogoImage = styled.img`
   width: ${props => props.width};
   margin: ${props => props.margin};
 	height: ${props => props.height};
+	cursor: pointer;
 
 	@media(max-width: 768px){
 		margin: ${props => props.marginMobile};
@@ -32,6 +33,7 @@ const ImageLogo = props => (
 		paddingMobile={props.paddingMobile}
 		margin={props.margin}
 		marginMobile={props.marginMobile}
+		onClick={props.onClick}
 	/>
 );
 
