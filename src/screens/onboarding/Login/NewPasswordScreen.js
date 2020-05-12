@@ -104,7 +104,11 @@ const ErrorMessage = styled.h4`
   display: flex;
   justify-content: flex-end;
   font-size: 0.8rem;
-  font-family: Overpass, Regular;
+	font-family: Overpass, Regular;
+	
+	@media(max-width: 490px){
+		margin-bottom: 1rem;
+	}
 `;
 
 const Label = styled.label`
@@ -112,7 +116,7 @@ const Label = styled.label`
   font-size: 0.75rem;
   font-family: Overpass;
   font-weight: bold;
-  margin: 0.9rem;
+  margin: 1.2rem 0.9rem;
 	text-transform: uppercase;
 `;
 
