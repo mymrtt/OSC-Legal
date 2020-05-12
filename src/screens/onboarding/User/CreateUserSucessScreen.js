@@ -41,7 +41,7 @@ const Container = styled.div`
 
 const Content = styled.div`
  	width: 35%;
-  height: 65vh;
+  min-height: 65vh;
   background: #fff;
 	border-radius: 5px;
   display: flex;
@@ -125,7 +125,7 @@ const CreateUserSucessScreen = props => (
 			</TextTerms>
 			<Link to="/">
 				<Button
-					width="87%"
+					width="90%"
 					height="3.8rem"
 					margin="2rem 0 1.5rem"
 					text="fazer login"

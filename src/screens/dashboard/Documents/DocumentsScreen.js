@@ -525,13 +525,13 @@ const ContainerModal = styled.div`
 
 const ModalAddModel = styled.form`
 	width: 660px;
-	min-height: 560px;
+	min-height: 580px;
 	background: #FFFFFF;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	border-radius: 4px;
-	padding: 1% 2% 2% 3%;
+	padding: 1rem 1.5rem;
 
 	@media (max-width: 1024px) {
 		height: 540px;
@@ -584,6 +584,7 @@ const ParagraphSair = styled.p`
 const HeaderAddModel = styled.div`
 	display: flex;
 	justify-content: space-between;
+	padding-top: 1rem;
 	img {
 		width: 20px;
 		height: 20px;
@@ -620,7 +621,7 @@ const UploadFile = styled.label`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FFCFCD')};
 	background: #FAFAFA;
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
@@ -675,7 +676,7 @@ const Input = styled.input`
 	margin-bottom: 1rem;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FFCFCD')};
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
@@ -687,7 +688,7 @@ const TextArea = styled.textarea`
 	border-radius: 3px;
 	padding: 3% 2.5%;
 	margin-bottom: .5rem;
-	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FF4136')};
+	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FFCFCD')};
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
@@ -841,6 +842,10 @@ class DocumentsScreen extends Component {
 			id: this.props.documentsList.length + 1,
 		},
 		isError: false,
+		isErrorDescription: false,
+		isErrorTitle: false,
+		isErrorFile: false,
+		isErrorTitleQtd: false,
 	};
 
 	componentDidMount() {
@@ -912,6 +917,9 @@ class DocumentsScreen extends Component {
 		this.setState({
 			document,
 			isError: false,
+			isErrorFile: false,
+			isErrorTitle: false,
+			isErrorDescription: false,
 			file: this.state.isFile,
 		});
 	}
@@ -983,98 +991,136 @@ class DocumentsScreen extends Component {
 
 		handleSubmit = (e) => {
 			e.preventDefault();
-			const { title, description, id } = this.state.document;
-			const { isFile } = this.state;
-			if (title === '' || description === '' || isFile === null) {
-				this.setState({
-					isError: true,
-				});
-			} else {
-				this.props.addNewDocument({
-					title, description, id, isFile,
-				});
-				this.handleCancelAddModel();
-				this.setState({
-					title: '',
-					description: '',
-					isFile: null,
-				});
-			}
+			this.handleErrors();
+
+			this.setState({
+				title: '',
+				description: '',
+				isFile: null,
+			});
 		}
+
+	handleErrors = () => {
+		const { title, description, id } = this.state.document;
+		const { isFile } = this.state;
+
+		if (title === '' && description === '' && isFile === null) {
+			this.setState({
+				isError: true,
+				isErrorTitle: false,
+				isErrorDescription: false,
+				isErrorFile: false,
+			});
+		} else if (isFile === null) {
+			this.setState({
+				isErrorFile: true,
+			});
+		} else if (description === '') {
+			this.setState({
+				isErrorDescription: true,
+			});
+		} else if (title === '') {
+			this.setState({
+				isErrorTitle: true,
+			});
+		} else if (title.length < 4) {
+			this.setState({
+				isErrorTitleQtd: true,
+			});
+		}else {
+			this.props.addNewDocument({
+				title, description, id, isFile,
+			});
+			this.handleCancelAddModel();
+		}
+	}
 
 		handleRedirect = () => {
 			this.setState({ redirect: true });
 		}
 
 
-	renderModalModels = () => (
-		<ContainerModal onClick={this.handleCancelAddModel}>
-			<ModalAddModel
-				onSubmit={this.handleSubmit}
-				onClick={ev => ev.stopPropagation()}
-			>
-				<LogoAndData>
-					<img src={logo} alt="Logo OSC Legal"/>
-					<ParagraphContainer1>
-  					{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-                && this.props.password === '12345678' ? 'Administrador' : this.props.name}
-  				</ParagraphContainer1>
-					<ParagraphSair onClick={this.handleRedirect}>
-              sair
+	renderModalModels = () => {
+		const Messages = [
+			'Adicione um nome ao seu modelo',
+			'Adicione uma descrição para o seu modelo',
+			'Adicione um modelo',
+			'Preencha todos os campos',
+			'Nome do modelo deve ter no mínimo 4 letras',
+		];
+		return (
+			<ContainerModal onClick={this.handleCancelAddModel}>
+				<ModalAddModel
+					onSubmit={this.handleSubmit}
+					onClick={ev => ev.stopPropagation()}
+				>
+					<LogoAndData>
+						<img src={logo} alt="Logo OSC Legal" />
+						<ParagraphContainer1>
+							{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+								&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
+						</ParagraphContainer1>
+						<ParagraphSair onClick={this.handleRedirect}>
+							sair
   				</ParagraphSair>
-					{this.state.redirect && <Redirect exact to="/" />}
-				</LogoAndData>
-				<HeaderAddModel>
-					<TitleAddModel>Adicionar Modelo</TitleAddModel>
-					<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
-				</HeaderAddModel>
-				<ContainerInputs>
-					<UploadFile
-						validationModel={this.state.validationModel}
-						htmlFor='upload-file'
-						isError={this.state.isError}
-					>
-						<input
-							onChange={this.uploadFile}
-							id='upload-file'
-							type="file"
-						/>
-						<img src={documentWhite} alt="Anexar Documento" />
-						<TextUploadFile file={this.state.isFile}>
-							<h3>{this.state.isFile === null ? 'Adiocionar documento' : 'Modelo adicionado'}</h3>
-							<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
-						</TextUploadFile>
-					</UploadFile>
-					<ContainerInput>
-						<TitleInputs>Nome do modelo</TitleInputs>
-						<Input
+						{this.state.redirect && <Redirect exact to="/" />}
+					</LogoAndData>
+					<HeaderAddModel>
+						<TitleAddModel>Adicionar Modelo</TitleAddModel>
+						<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
+					</HeaderAddModel>
+					<ContainerInputs>
+						<UploadFile
 							validationModel={this.state.validationModel}
-							value={this.props.documentsList.title}
-							onChange={e => this.handleModelChange('title', e)}
-							type="text"
-							placeholder="Digitar nome do documento"
+							htmlFor='upload-file'
 							isError={this.state.isError}
-						/>
-					</ContainerInput>
-					<ContainerInput>
-						<TitleInputs>Descrição</TitleInputs>
-						<TextArea
-							validationModel={this.state.validationModel}
-							value={this.props.documentsList.description}
-							onChange={e => this.handleModelChange('description', e)}
-							type="text"
-							placeholder="Como esse documento é usado"
-							isError={this.state.isError}
-						/>
-					</ContainerInput>
-				</ContainerInputs>
-				<span>
-					{this.state.isError && <ErrorText>Preencha todos os campos</ErrorText>}
-				</span>
-				<ButtonAdd type="submit">Adicionar</ButtonAdd>
-			</ModalAddModel>
-		</ContainerModal>
-	)
+						>
+							<input
+								onChange={this.uploadFile}
+								id='upload-file'
+								type="file"
+							/>
+							<img src={documentWhite} alt="Anexar Documento" />
+							<TextUploadFile file={this.state.isFile}>
+								<h3>{this.state.isFile === null ? 'Adiocionar documento' : 'Modelo adicionado'}</h3>
+								<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
+							</TextUploadFile>
+						</UploadFile>
+						{this.state.isErrorFile && <ErrorText>{Messages[2]}</ErrorText>}
+						<ContainerInput>
+							<TitleInputs>Nome do modelo</TitleInputs>
+							<Input
+								validationModel={this.state.validationModel}
+								value={this.props.documentsList.title}
+								onChange={e => this.handleModelChange('title', e)}
+								type="text"
+								placeholder="Digitar nome do documento"
+								isError={this.state.isError}
+							/>
+							{this.state.isErrorTitleQtd && <ErrorText>{Messages[4]}</ErrorText>}
+							{this.state.isErrorTitle && <ErrorText>{Messages[0]}</ErrorText>}
+						</ContainerInput>
+						<ContainerInput>
+							<TitleInputs>Descrição</TitleInputs>
+							<TextArea
+								validationModel={this.state.validationModel}
+								value={this.props.documentsList.description}
+								onChange={e => this.handleModelChange('description', e)}
+								type="text"
+								placeholder="Como esse documento é usado"
+								isError={this.state.isError}
+							/>
+							{this.state.isErrorDescription && <ErrorText>{Messages[1]}</ErrorText>}
+						</ContainerInput>
+					</ContainerInputs>
+					<span>
+						{this.state.isError && <ErrorText>{Messages[3]}</ErrorText>}
+					</span>
+					<ButtonAdd type="submit">Adicionar</ButtonAdd>
+				</ModalAddModel>
+			</ContainerModal>
+		);
+	}
 
 	renderModalDelete = () => (
 		<ContainerModalDelete onClick={this.handleCancelDelete}>

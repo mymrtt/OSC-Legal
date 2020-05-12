@@ -47,7 +47,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1rem 0;
+  margin: 1.5rem 0 1rem 0;
   border-radius: 5px;
 	box-shadow: 0 1px 2px #00000029;
 
@@ -354,6 +354,7 @@ class CreateUserScreen extends Component {
 		isErrorCpf: false,
 		isErrorPassword: false,
 		isEmpty: false,
+		isErrorTel: false,
 		isTermsOpen: false,
 	};
 
@@ -414,7 +415,18 @@ class CreateUserScreen extends Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		this.handleErrors();
+		if (this.state.user.telephone.length < 8) {
+			this.setState({
+				isErrorTel: true,
+			});
+			console.log('certo');
+		} else {
+			this.setState({
+				isErrorTel: false,
+			});
+			this.handleErrors();
+		}
+		console.log(this.state.isErrorTel);
 	};
 
 	handleErrors = () => {
@@ -467,6 +479,7 @@ class CreateUserScreen extends Component {
 		}
 	};
 
+
 	renderTerms = () => (
 		<Overlay>
 			<Modal>
@@ -502,6 +515,7 @@ class CreateUserScreen extends Component {
 		const errorMessage = [
 			'Use 6 caracteres ou mais para a sua senha.',
 			'CPF inválido.',
+			'Insira um número de telefone válido',
 		];
 
 		const {
@@ -593,7 +607,8 @@ class CreateUserScreen extends Component {
 									placeholder="(00) 00000-0000"
 									name="telefone"
 									required
-								/>
+									/>
+									{this.state.isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>senha</ParagraphInput>
