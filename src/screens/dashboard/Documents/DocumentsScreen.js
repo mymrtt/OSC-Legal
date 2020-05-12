@@ -920,6 +920,7 @@ class DocumentsScreen extends Component {
 			isErrorFile: false,
 			isErrorTitle: false,
 			isErrorDescription: false,
+			isErrorTitleQtd: false,
 			file: this.state.isFile,
 		});
 	}
@@ -964,6 +965,7 @@ class DocumentsScreen extends Component {
 		reader.onloadend = () => {
 			this.setState({
 				isFile: reader.result,
+				isErrorFile: false,
 			});
 		};
 		reader.readAsDataURL(file);

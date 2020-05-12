@@ -415,18 +415,7 @@ class CreateUserScreen extends Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		if (this.state.user.telephone.length < 8) {
-			this.setState({
-				isErrorTel: true,
-			});
-			console.log('certo');
-		} else {
-			this.setState({
-				isErrorTel: false,
-			});
-			this.handleErrors();
-		}
-		console.log(this.state.isErrorTel);
+		this.handleErrors();
 	};
 
 	handleErrors = () => {
