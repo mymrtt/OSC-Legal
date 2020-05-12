@@ -67,7 +67,15 @@ const ContainerHeader = styled.div`
 `;
 
 const AddModelImage = styled.img`
-	width: 8.5rem;
+	width: 180px;
+
+	@media (max-width: 1024px) {
+		width: 140px;
+	}
+
+	@media (max-width: 768px) {
+		width: 120px;
+	}
 
 	@media (max-width: 490px) {
 		display: none;
@@ -121,14 +129,15 @@ const ContainerAddModel = styled.div`
 		order: 1;
 		width: 100%;
 		justify-content: flex-end;
+		z-index: 8;
 		height: ${props => (props.initialModel ? '60vh' : 'initial')};
 	}
 `;
 
 const InitialAddModel = styled.div`
-	width: 61.4%;
+	width: 62.5%;
 	height: 170px;
-	display: ${(props => (props.initialModel ? 'flex' : 'none'))};
+	display: ${props => (props.initialModel ? 'flex' : 'none')};
 	text-align: center;
 	justify-content: center;
 	align-items: center;
@@ -139,6 +148,7 @@ const InitialAddModel = styled.div`
 
 	@media (max-width: 1024px) {
 		padding: 0 1%;
+		width: 61.5%;
 	}
 
 	@media (max-width: 768px) {
@@ -313,7 +323,7 @@ const ContainerModel = styled.div`
 				width: 10rem;
 				height: 1px;
 				display: ${props => (props.displayBefore ? 'none' : 'flex')};
-				margin-top: 21.5%;
+				margin-top: 21.6%;
     		top: 100%;
 				z-index: 6;
 				right: 0;
@@ -476,25 +486,27 @@ const OptionText = styled.p`
 
 const Button = styled.button`
   margin: 2rem;
-	width: 50%;
-	height: 3.5rem;
+	width: 60%;
+	height: 5rem;
 	border: 0;
   color: #fff;
   box-shadow: 0 3px 6px #00000029;
   border-radius: 3px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
 
 	@media (max-width: 1024px) {
-		padding: 1rem;
-		width: 70%;
+		padding: 0;
+		width: 60%;
+		font-size: 1.2rem;
+		height: 4rem;
 	}
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
-		width: 75%;
+		width: 70%;
 	}
 
 	@media (max-width: 490px) {
@@ -503,6 +515,7 @@ const Button = styled.button`
 		margin: 0 auto;
 		font-size: 1.2rem;
 		width: 95%;
+		z-index: 6;
 	}
 `;
 
