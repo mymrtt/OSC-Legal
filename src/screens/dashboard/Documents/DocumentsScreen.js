@@ -1162,8 +1162,6 @@ class DocumentsScreen extends Component {
 		const documentsList = (this.state.search !== '')
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i'))) : this.props.documentsList;
 
-		console.log('this.props.documentsList', this.props.documentsList);
-
 		return (
 			<Container onClick={this.handleClickedLabelLeave}>
 				<Header />
