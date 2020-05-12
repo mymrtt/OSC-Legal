@@ -16,10 +16,17 @@ import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
 
 // Redux
+import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
+
 const mapStateToProps = state => ({
 	typeAccount: state.onboarding.users.typeAccount,
-	tableDatas: state.dashboard.tableDatas,
+	tableDatas: state.organization.tableDatas,
 });
+
+const mapDispatchToProps = dispatch => ({
+	updateTableDatas: info => dispatch(updateTableDatas(info)),
+});
+
 
 const Container = styled.div`
 	width: 100%;
@@ -39,8 +46,9 @@ const ContainerSelectedViewBy = styled.div`
 const ContainerContentSelectedViewBy = styled.div`
 	padding-bottom: 1.5rem;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
+	z-index: 4;
 
 	@media (max-width: 768px) {
 		align-items: center;
@@ -72,10 +80,9 @@ const SelectViewBy = styled.div`
 	}
 `;
 
-
 const SpanSelect = styled.div`
 	width: 15rem;
-	margin-top: 0.5rem;
+	margin: 0.5rem 0 0;
 	position: relative;
 	display: flex;
   flex-direction: column;
@@ -86,6 +93,7 @@ const SpanSelect = styled.div`
 	}
 
 	@media (max-width: 768px) {
+		margin: 0 2rem;
 		width: 100%;
 	}
 
@@ -170,7 +178,7 @@ const SelectedItem = styled.p`
 `;
 
 const Content = styled.div`
-	padding: 2.5rem 5rem 0;
+	padding: 2rem 5rem 0;
 	width: 100%;
 	max-width: 100%;
 
@@ -245,7 +253,6 @@ const Tr = styled.tr`
 	}
 
 	@media(max-width: 768px) {
-		/* margin-bottom: 1rem; */
 		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
     flex-wrap: wrap;
@@ -261,14 +268,15 @@ const Tr = styled.tr`
 `;
 
 const TableTitle = styled.th`
+	width: ${props => (props.width)};
+	background-color: #85144B;
+	color: #FFFFFF;
+	font-family: Overpass, Regular;
+	font-size: 1rem;
+	text-align: ${props => (props.center === 'Status' && 'center')};
 	position: sticky;
 	top: 0;
 	z-index: 5;
-	background-color: #85144B;
-	color: #FFFFFF;
-	font-size: 1rem;
-	font-family: Overpass, Regular;
-	text-align: ${props => (props.center === 'Status' && 'center')};
 	${''}
 
 	@media (max-width: 768px) {
@@ -305,39 +313,35 @@ const ContainerTableTitleMob = styled.span`
 `;
 
 const TextNoOrganitazion = styled.div`
-	width: 89%;
-	margin: 0 auto;
-	height: 90vh;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-bottom: 4rem;
-	background: #FFF;
-
+	margin-top: 4rem;
 `;
 
 const TextInformation = styled.p`
-	font-size: 2rem;
+	font-size: 1.5rem;
 	text-align: center;
-	font-family: Overpass;
+	font-family: Overpass, Regular;
 	color: #85144B;
-
+/*
 	@media(max-width: 648px) {
 		font-size: 1.5rem;
-	}
+	} */
 `;
 
 const Box = styled.div`
 	display: none;
-	flex-direction: row;
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
+		flex-direction: row;
 	}
 `;
 
 const BoxButton = styled.button`
-	width: 100%;
+	/* width: 100%; */
 	height: 100%;
 	border: none;
 	background: none;
@@ -355,8 +359,9 @@ const TableTitleMob = styled.th`
 `;
 
 const TableList = styled.td`
-	padding-top: 0;
-	padding-bottom: 0;
+	width: ${props => (props.width)};
+	/* padding-top: 0;
+	padding-bottom: 0; */
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-weight: ${props => (props.font ? '900' : 'none')};
@@ -369,12 +374,12 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
-	width: 6rem;
-	padding: 0.5rem;
+	height: 100%;
+	/* padding: 0.5rem; */
 	text-align: center;
 	display: flex;
 	align-items: center;
-	justify-content: ${props => (props.desc ? 'flex-start' : 'space-evenly')};
+	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
 
 	${({ selected }) => selected && css`
 		img {display: block}
@@ -390,7 +395,6 @@ const ContainerStatus = styled.td`
 const TextStatus = styled.p`
 	color: ${props => (props.color)};
 	font-size: 0.8rem;
-
 	text-transform: uppercase;
 
 	@media(max-width: 768px) {
@@ -489,7 +493,7 @@ class OrganizationScreen extends Component {
 	};
 
 	handleSelectedStatus = (newStatus, item) => {
-		const { tableDatas } = this.state;
+		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
 			if (data === item) {
 				return {
@@ -504,6 +508,9 @@ class OrganizationScreen extends Component {
 			isClickedStatus: '',
 			tableDatas: newList,
 		});
+		this.props.updateTableDatas(
+			newList,
+		);
 	}
 
 	handleClickedImageStatus = (item) => {
@@ -572,9 +579,10 @@ class OrganizationScreen extends Component {
 		</>
 	)
 
-	renderTable = () => {
+	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-		return this.props.tableDatas.map(item => (
+
+		return listTable.map(item => (
 			<Tr key={item.organization}>
 				{widthMob
 					? <ContainerTableTitleMob>
@@ -586,6 +594,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
+							width={'8rem'}
 						>
 							{item.organization}
 						</TableList>
@@ -593,6 +602,7 @@ class OrganizationScreen extends Component {
 				}
 				<TableList
 					mob
+          width={'8rem'}
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 				>
@@ -600,6 +610,7 @@ class OrganizationScreen extends Component {
 				</TableList>
 				<TableList
 					mob
+          width={'7.5rem'}
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 				>
@@ -637,6 +648,7 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
+							width={'8rem'}
 						>
 							{item.telephone}
 						</TableList>
@@ -683,7 +695,9 @@ class OrganizationScreen extends Component {
 	}
 
 	renderAllTable = () => {
-		const { tableDatas, selectedValue } = this.state;
+		const { selectedValue } = this.state;
+		const { tableDatas } = this.props;
+
 		let listTable = this.renderTable(tableDatas);
 		if (
 			selectedValue !== 'Selecionar status'
@@ -712,7 +726,7 @@ class OrganizationScreen extends Component {
 							<Thead>
 								<Tr>
 									{this.state.tableTitles.map(title => (
-										<TableTitle
+										<TableTitle width={'6rem'}
 											key={title}
 											center={title}
 											style={{ paddingLeft: title === 'Organização' && '0.7rem' }}
@@ -729,7 +743,7 @@ class OrganizationScreen extends Component {
 					</ContainerTable>
 					{this.renderAllTable().length === 0 && (
 						<TextNoOrganitazion>
-							<TextInformation>Não há organizações até o momento.</TextInformation>
+							<TextInformation>Não há organizações no momento.</TextInformation>
 						</TextNoOrganitazion>
 					)}
 				</Content>
@@ -738,4 +752,4 @@ class OrganizationScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, null)(OrganizationScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(OrganizationScreen);
