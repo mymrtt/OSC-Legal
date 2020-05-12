@@ -653,7 +653,6 @@ class CreateUserScreen extends Component {
 								margin="2rem 0"
 								width="87%"
 								widthMobile="90%"
-								height="50px"
 								text="concordar e criar conta"
 								type="submit"
 							/>

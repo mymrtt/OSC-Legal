@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const MyButton = styled.button`
   margin: ${props => props.margin};
   width: ${props => props.width};
-  height: 3.5rem;
+  height: ${props => (props.height ? props.height : '3.5rem')};
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
