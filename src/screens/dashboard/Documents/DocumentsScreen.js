@@ -23,10 +23,10 @@ import Header from '../components/Header';
 import logo from '../../../assets/logo.svg';
 
 // Redux
-import { addNewDocument, deleteDocument } from '../../../dataflow/modules/dashboard-modules';
+import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
 const mapStateToProps = state => ({
-	documentsList: state.dashboard.documentsList,
+	documentsList: state.documents.documentsList,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,7 +49,7 @@ const MaximumWidth = styled.div`
 `;
 
 const ContainerHeader = styled.div`
-	margin: 3rem 4rem 0 4rem;
+	margin: 3rem 4rem 1.5rem 4rem;
   display: flex;
   justify-content: space-between;
 
@@ -486,8 +486,8 @@ const OptionText = styled.p`
 
 const Button = styled.button`
   margin: 2rem;
-	width: 60%;
-	height: 5rem;
+	width: 50%;
+	height: 4rem;
 	border: 0;
   color: #fff;
   box-shadow: 0 3px 6px #00000029;
@@ -505,7 +505,7 @@ const Button = styled.button`
 	}
 
 	@media (max-width: 768px) {
-		font-size: 1rem;
+		font-size: 1.3rem;
 		width: 70%;
 	}
 
@@ -639,6 +639,10 @@ const UploadFile = styled.label`
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
 
+	@media(max-width: 490px){
+		margin-bottom: 2rem;
+	}
+
 	input[type='file'] {
 		display: none;
 	}
@@ -693,6 +697,10 @@ const Input = styled.input`
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
+
+	@media(max-width: 490px){
+		margin-bottom: 2.5rem;
+	}
 `;
 
 const TextArea = styled.textarea`
@@ -708,6 +716,7 @@ const TextArea = styled.textarea`
 
 	@media (max-width: 490px) {
 		height: 100px;
+		margin-bottom: 2rem;
 	}
 	resize: none;
 `;
@@ -717,6 +726,7 @@ const ButtonAdd = styled(Button)`
 	width: 55%;
 	margin: 0;
 	text-transform: uppercase;
+	height: 3.5rem;
 
 	@media (max-width: 1024px) {
 		font-size: .9rem;
@@ -725,8 +735,9 @@ const ButtonAdd = styled(Button)`
 	}
 
 	@media (max-width: 768px) {
-		width: 60%;
+		width: 45%;
 		padding: 1rem;
+		font-size: 1.3rem;
 		margin: 0;
 	}
 
@@ -833,6 +844,7 @@ const ErrorText = styled.p`
 
 class DocumentsScreen extends Component {
 	state = {
+		initialModel: null,
 		// initialModel: true,
 		changeColorLabel: false,
 		options: false,
@@ -847,12 +859,12 @@ class DocumentsScreen extends Component {
 		hoverDelete: '',
 		colorTextExport: '',
 		colorTextDelete: '',
-		isFile: null,
   	redirect: false,
+		isFile: null,
 		document: {
 			title: '',
 			description: '',
-			id: this.props.documentsList.length + 1,
+			id: 0,
 		},
 		isError: false,
 		isErrorDescription: false,
@@ -861,6 +873,17 @@ class DocumentsScreen extends Component {
 		isErrorTitleQtd: false,
 	};
 
+	// componentDidMount() {
+	// 	if (this.props.documentsList.length <= 0) {
+	// 		this.setState({
+	// 			initialModel: true,
+	// 		});
+	// 	} else {
+	// 		this.setState({
+	// 			initialModel: false,
+	// 		});
+	// 	}
+	// }
 	// componentDidMount() {
 	// 	if (this.props.documentsList.length !== 0) {
 	// 		this.setState({
@@ -933,6 +956,7 @@ class DocumentsScreen extends Component {
 			isErrorFile: false,
 			isErrorTitle: false,
 			isErrorDescription: false,
+			isErrorTitleQtd: false,
 			file: this.state.isFile,
 		});
 	}
@@ -977,6 +1001,7 @@ class DocumentsScreen extends Component {
 		reader.onloadend = () => {
 			this.setState({
 				isFile: reader.result,
+				isErrorFile: false,
 			});
 		};
 		reader.readAsDataURL(file);
@@ -1041,9 +1066,9 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: true,
 			});
 		} else {
-			this.props.addNewDocument({
-				title, description, id, isFile,
-			});
+			this.props.addNewDocument(
+				title, description, isFile,
+			);
 			this.handleCancelAddModel();
 		}
 	}
@@ -1183,10 +1208,10 @@ class DocumentsScreen extends Component {
 					</ContainerHeader>
 					<ContainerContent>
 						<ContainerAddModel>
-							<AddModelImage src={ImageDocument}/>
+							<AddModelImage src={ImageDocument} />
 							<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
 							{this.state.addModel
-							&& this.renderModalModels()}
+								&& this.renderModalModels()}
 						</ContainerAddModel>
 						<ContainerScroll>
 							<ContainerModels>
@@ -1217,7 +1242,7 @@ class DocumentsScreen extends Component {
 													<OptionText
 														colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
 													>
-        										Exportar
+														Exportar
 													</OptionText>
 												</Option>
 												<Option
@@ -1232,7 +1257,7 @@ class DocumentsScreen extends Component {
 														colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
 														onClick={() => this.handleSelected(item)}
 													>
-        										Excluir
+														Excluir
 													</OptionText>
 												</Option>
 											</ContainerOptions>
