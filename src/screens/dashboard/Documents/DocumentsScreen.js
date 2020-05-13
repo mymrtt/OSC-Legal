@@ -820,7 +820,7 @@ const ErrorText = styled.p`
 
 class DocumentsScreen extends Component {
 	state = {
-		initialModel: true,
+		initialModel: null,
 		changeColorLabel: false,
 		options: false,
 		selectedOptions: '',
@@ -834,8 +834,8 @@ class DocumentsScreen extends Component {
 		hoverDelete: '',
 		colorTextExport: '',
 		colorTextDelete: '',
-		isFile: null,
   	redirect: false,
+		isFile: null,
 		document: {
 			title: '',
 			description: '',
@@ -849,7 +849,11 @@ class DocumentsScreen extends Component {
 	};
 
 	componentDidMount() {
-		if (this.props.documentsList.length !== 0) {
+		if (this.props.documentsList.length <= 0) {
+			this.setState({
+				initialModel: true,
+			});
+		} else {
 			this.setState({
 				initialModel: false,
 			});
@@ -1029,7 +1033,7 @@ class DocumentsScreen extends Component {
 			this.setState({
 				isErrorTitleQtd: true,
 			});
-		}else {
+		} else {
 			this.props.addNewDocument({
 				title, description, id, isFile,
 			});
@@ -1156,7 +1160,7 @@ class DocumentsScreen extends Component {
 				<Header />
 				<MaximumWidth>
 					<ContainerHeader>
-						<TitleSearch>Modelos de Documentos</TitleSearch>
+						<TitleSearch onClick={() => console.log(this.props.documentsList.length)}>Modelos de Documentos</TitleSearch>
 						<ContainerSearch>
 							<SearchText>Pesquisar</SearchText>
 							<ContainerSearchInput
