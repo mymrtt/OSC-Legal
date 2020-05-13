@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable max-len */
@@ -1040,7 +1041,7 @@ class DocumentsScreen extends Component {
 			this.setState({
 				isErrorTitleQtd: true,
 			});
-		}else {
+		} else {
 			this.props.addNewDocument({
 				title, description, id, isFile,
 			});
