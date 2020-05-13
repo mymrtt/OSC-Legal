@@ -31,12 +31,17 @@ const mapDispatchToProps = dispatch => ({
 const Container = styled.div`
 	width: 100%;
 	height: 100vh;
-	padding: 0 0 2rem;
+	/* padding: 0 0 2rem; */
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	margin-top: 1.3rem;
+	/* margin-top: 1.3rem; */
 	padding-right: .6rem;
+
+	@media(max-width: 768px) {
+		/* margin: 1.3rem 0; */
+		padding-right: 0;
+	}
 
 	@media(max-width: 648px) {
 		margin-top: 0;
@@ -61,6 +66,10 @@ const TitleManageOrgs = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
+
+	@media (max-width: 768px) {
+		padding-bottom: 0.8rem;
+	}
 
 	@media (max-width: 648px) {
 		display: none;
@@ -178,9 +187,9 @@ const SelectedItem = styled.p`
 `;
 
 const Content = styled.div`
-	padding: 2rem 5rem 0;
-	width: 100%;
 	max-width: 100%;
+	width: 100%;
+	padding: 2.5rem 5rem 0;
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -188,7 +197,8 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	max-height: 77.5vh;
+	/* max-height: 69vh; */
+	max-height: calc(100vh - 85px - 96px - 2.8rem);
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -207,6 +217,10 @@ const ContainerTable = styled.div`
   	background: #f9bdbb;
 	}
 
+	@media (max-width: 768px) {
+		margin: 0 2rem;
+	}
+
 	@media(max-width: 648px) {
 		overflow-y: visible;
 		max-height: 100%;
@@ -216,12 +230,12 @@ const ContainerTable = styled.div`
 const Table = styled.table`
 	max-width: 100%;
   width: 100%;
-  height: 100%;
+	/* height: 100%; */
 	border-spacing: 0;
 
 	@media (max-width: 768px) {
-		margin: 0;
-		padding: 2rem 0 0 0;
+		/* margin: 0; */
+		/* padding: 2rem 0 0 0; */
 	}
 
 	@media (max-width: 648px) {
@@ -256,14 +270,14 @@ const Tr = styled.tr`
 		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
     flex-wrap: wrap;
+		position: relative;
 	}
 	@media(max-width: 648px) {
-		position: relative;
 		padding: 1rem 1rem 12.5rem 1rem;
 	}
 
 	@media(max-width: 420px) {
-		padding: 1rem 1rem 16rem 1rem;
+		padding: 1rem 1rem 16.8rem 1rem;
 	}
 `;
 
@@ -287,7 +301,7 @@ const TableTitle = styled.th`
 const ImageMore = styled.img`
 	display: none;
 
-	@media(max-width: 648px) {
+	@media(max-width: 768px) {
 		width: 1rem;
 		display: flex;
 		position: absolute;
@@ -299,7 +313,7 @@ const ContainerTableTitleMob = styled.span`
 	display: none;
 
 	@media (max-width: 768px) {
-		padding-right: 1rem;
+		padding-right: 2rem;
 		padding-bottom: 1rem;
 		display: flex;
 		flex-direction: column;
@@ -594,7 +608,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
-							width={'8rem'}
+							width={'8.5rem'}
 						>
 							{item.organization}
 						</TableList>
@@ -602,7 +616,6 @@ class OrganizationScreen extends Component {
 				}
 				<TableList
 					mob
-          width={'8rem'}
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 					width={'9rem'}
@@ -611,7 +624,6 @@ class OrganizationScreen extends Component {
 				</TableList>
 				<TableList
 					mob
-          width={'7.5rem'}
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}

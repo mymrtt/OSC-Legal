@@ -237,7 +237,7 @@ const SeparationMobile = styled.div`
 	display: none;
 
 	@media (max-width: 648px) {
-		width: 50%;
+		width: 56%;
 		display: flex;
 		flex-direction: column;
 	}
