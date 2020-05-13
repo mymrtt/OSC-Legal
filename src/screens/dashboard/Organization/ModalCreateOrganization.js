@@ -12,30 +12,32 @@ import Button from '../../../components/Button';
 // Icon
 import Exit from '../../../assets/exit.svg';
 
-const Container = styled.div`
-  max-width: 100%;
-  max-height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+const Overlay = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #707070a1;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+	z-index: 20;
+	position: absolute;
+`;
 
-  form {
-    display: flex;
-		min-width: 32%;
-    justify-content: center;
-    flex-direction: column;
-    padding: 1.5rem 0 2rem 0;
-    margin: 1rem;
-    border-radius: 3px;
-    background: #ffffff;
+const Container = styled.div`
+	min-width: 32%;
+	background-color: #FFFFFF;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 1.5rem 0 2rem 0;
+	margin: 1rem;
+	border-radius: 3px;
 
-    > img {
-    width: 1.3rem;
-    align-self: flex-end;
-    margin-right: 4%;
-  }
-  }
+	> img {
+	width: 1.3rem;
+	align-self: flex-end;
+	margin-right: 4%;
+}
 `;
 
 const ContainerFisicalPerson = styled.label`
@@ -44,7 +46,7 @@ const ContainerFisicalPerson = styled.label`
     margin: 0 11.2%;
     color: #85144b;
     font-weight: 800;
-    font-family: "Overpass", sans-serif;
+    font-family: Overpass;
   }
 
   > h2 {
@@ -52,7 +54,8 @@ const ContainerFisicalPerson = styled.label`
     margin: 5% 0 10% 11.8%;
     text-transform: uppercase;
     font-weight: 800;
-    font-family: "Overpass", sans-serif;
+    font-family: Overpass;
+		font-weight: 900;
   }
 
   div {
@@ -86,8 +89,8 @@ const ContainerFisicalPerson = styled.label`
       color: #85144b;
       text-transform: uppercase;
       margin-left: 3.2rem;
-      font-family: "Overpass", sans-serif;
-      font-weight: 700;
+      font-family: Overpass;
+      font-weight: bold;
     }
 
     @media (max-width: 648px) {
@@ -105,11 +108,9 @@ const ContainerFisicalPerson = styled.label`
 `;
 
 const Text = styled.p`
-
   font-size: 1rem;
   margin: 0 0 1.6rem 3.2rem;
-  font-family: "Overpass", sans-serif;
-  font-weight: 300;
+  font-family: "Overpass", Light;
 
   @media (max-width: 648px) {
     & {
@@ -125,10 +126,9 @@ const Text = styled.p`
 `;
 
 const TextSpan = styled.p`
-
+	font-family: "Overpass", Light;
   margin: 0 0 1.6rem 0;
 `;
-
 
 const ContainerLegalPerson = styled.label`
   h1 {
@@ -254,16 +254,16 @@ export default class CreateOrganization extends Component {
     this.setState({
       dataLegalPerson,
     });
-  };
+	};
 
   render() {
     const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
 
     return (
-      <Container>
-        <form onSubmit={this.handleSubmit}>
-        <img src={Exit} alt="Exit" />
-          <ContainerFisicalPerson>
+      <Overlay onClick={this.ModalClosed}>
+        <Container onSubmit={this.handleSubmit}>
+        <img src={Exit} alt="Exit"/>
+          <ContainerFisicalPerson onClick={this.ModalClosed}>
             <h1>Criar organização</h1>
             <h2>pessoa física</h2>
             <div>
@@ -362,8 +362,8 @@ export default class CreateOrganization extends Component {
             </WrapLegalPerson>
             <Button to={'/modalSucessfully'} type="submit" text="concluir"/>
           </ContainerLegalPerson>
-        </form>
-      </Container>
+        </Container>
+      </Overlay>
     );
   }
 }

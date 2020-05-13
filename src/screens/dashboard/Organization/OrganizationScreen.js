@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
-import ImageCaminho from '../../../assets/caminho.svg';
 import ModalOrganization from './ModalOrganization';
+import ModalCreateOrganization from './ModalCreateOrganization';
 
 // Image
+import ImageCaminho from '../../../assets/caminho.svg';
+import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
 import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
@@ -32,6 +34,26 @@ const Container = styled.div`
 	width: 100%;
 	height: 100vh;
 	/* padding: 0 0 2rem; */
+`;
+
+const ContainerUser = styled.div`
+	width: 100%;
+	height: 100vh;
+	background-color: #FFCFCD;
+`;
+
+const CreateButtonUser = styled.button`
+	width: 25%;
+  background-color: #FF4136;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 1.4rem;
+  font-family: Overpass, SemiBold;
+  font-weight: bold;
+	text-decoration: none;
+  padding: 1.3rem;
+  margin: 1.5rem 0 1.5rem 2.5rem;
 `;
 
 const ContainerSelectedViewBy = styled.div`
@@ -62,6 +84,21 @@ const ContainerContentSelectedViewBy = styled.div`
 `;
 
 const TitleManageOrgs = styled.h2`
+	color: #85144B;
+	font-size: 2rem;
+	font-family: "Overpass", Black;
+	font-weight: 900;
+
+	@media (max-width: 768px) {
+		padding-bottom: 0.8rem;
+	}
+
+	@media (max-width: 648px) {
+		display: none;
+	}
+`;
+
+const TitleMyOrganization = styled.h2`
 	color: #85144B;
 	font-size: 2rem;
 	font-family: "Overpass", Black;
@@ -114,6 +151,20 @@ const SpanSelect = styled.div`
 const TitleViewBy = styled.h2`
 	color: #231F20;
 	font-size: 1.125rem;
+	font-family: Overpass;
+	font-weight: bold;
+	margin: 0.8rem 0.8rem 0 0;
+	display: flex;
+  align-items: center;
+
+	@media (max-width: 768px) {
+		display: none;
+	}
+`;
+
+const TitleSearch = styled.h2`
+	color: #231F20;
+	font-size: 1,375rem;
 	font-family: Overpass;
 	font-weight: bold;
 	margin: 0.8rem 0.8rem 0 0;
@@ -186,6 +237,14 @@ const SelectedItem = styled.p`
 	}
 `;
 
+const ContainerTableUser = styled.div`
+  width: 94%;
+  max-height: 100vh;
+  background-color: #FFFFFF;
+	border-radius: 3px;
+	margin: 0 2.5rem;
+`;
+
 const Content = styled.div`
 	max-width: 100%;
 	width: 100%;
@@ -224,6 +283,7 @@ const ContainerTable = styled.div`
 	@media(max-width: 648px) {
 		overflow-y: visible;
 		max-height: 100%;
+		margin: 0;
 	}
 `;
 
@@ -486,6 +546,12 @@ class OrganizationScreen extends Component {
 		});
 	}
 
+	isModalCreateOrganization = () => {
+		this.setState({
+			isModalCreateOrg: !this.state.isModalCreateOrg,
+		});
+	}
+
 	isSelectOpen = (event) => {
 		event.stopPropagation();
 		this.setState({
@@ -538,19 +604,22 @@ class OrganizationScreen extends Component {
 			<ContainerContentSelectedViewBy>
 				{this.props.typeAccount === 'admin'
 					? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
-					: <h1>Minhas organizações</h1>
+					: <TitleMyOrganization>Minhas organizações</TitleMyOrganization>
 				}
 				<SelectViewBy>
 					{this.props.typeAccount === 'admin'
 						? <TitleViewBy>Visualizar por:</TitleViewBy>
-						: <p>Pesquisar</p>
+						: <TitleSearch>Pesquisar</TitleSearch>
 					}
 					<SpanSelect>
 						<InputSelect onClick={this.isSelectOpen}>
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							<img src={ImageCaminho} alt="arrow" />
+							{this.props.typeAccount === 'admin'
+								?	<img src={ImageCaminho} alt="arrow" />
+								:	<img src={magnifyingGlass} alt="Lupa"/>
+							}
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -724,43 +793,50 @@ class OrganizationScreen extends Component {
 	render() {
 		return (
 			<Container>
-				{/* {this.props.typeAccount === 'admin'
-					? <button> - </button>
-					: <button> Criar Organização </button>
-				} */}
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal
-				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
+				&& <ModalOrganization item={this.state.itemSelected} onClick={this.isModalOpen} />
+				}
+				{this.state.isModalCreateOrg
+				&& <ModalCreateOrganization />
 				}
 				<Header />
-				<Content>
-					{this.renderSelectedViewby()}
-					<ContainerTable>
-						<Table modal={this.state.isModal}>
-							<Thead>
-								<Tr>
-									{this.state.tableTitles.map(title => (
-										<TableTitle width={'6rem'}
-											key={title}
-											center={title}
-											style={{ paddingLeft: title === 'Organização' && '0.7rem' }}
-										>
-											{title}
-										</TableTitle>
-									))}
-								</Tr>
-							</Thead>
-							<tbody>
-								{this.renderAllTable()}
-							</tbody>
-						</Table>
-					</ContainerTable>
-					{this.renderAllTable().length === 0 && (
-						<TextNoOrganitazion>
-							<TextInformation>Não há organizações no momento.</TextInformation>
-						</TextNoOrganitazion>
-					)}
-				</Content>
+				<ContainerUser>
+					{this.props.typeAccount === 'user'
+					&& <CreateButtonUser
+						onClick={this.isModalCreateOrganization}> Criar Organização </CreateButtonUser>
+					}
+					<ContainerTableUser>
+						<Content>
+							{this.renderSelectedViewby()}
+							<ContainerTable>
+								<Table modal={this.state.isModal}>
+									<Thead>
+										<Tr>
+											{this.state.tableTitles.map(title => (
+												<TableTitle width={'6rem'}
+													key={title}
+													center={title}
+													style={{ paddingLeft: title === 'Organização' && '0.7rem' }}
+												>
+													{title}
+												</TableTitle>
+											))}
+										</Tr>
+									</Thead>
+									<tbody>
+										{this.renderAllTable()}
+									</tbody>
+								</Table>
+							</ContainerTable>
+							{this.renderAllTable().length === 0 && (
+								<TextNoOrganitazion>
+									<TextInformation>Não há organizações no momento.</TextInformation>
+								</TextNoOrganitazion>
+							)}
+						</Content>
+					</ContainerTableUser>
+				</ContainerUser>
 			</Container>
 		);
 	}
