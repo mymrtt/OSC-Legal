@@ -49,7 +49,7 @@ const Container = styled.div`
 
 const MaximumWidth = styled.div`
 	max-width: 1440px;
-	margin: 0 auto;
+	align-self: center;
 `;
 
 const ContainerHeader = styled.div`
@@ -323,7 +323,7 @@ const ContainerModel = styled.div`
 	cursor: pointer;
 	position: relative;
 	z-index: ${props => (props.zIndex ? '-1' : 0)};
-	margin: 0 auto;
+	align-self: center;
 
 	&:hover {
 		border:1px solid #85144B;
@@ -545,7 +545,8 @@ const Button = styled.button`
 	@media (max-width: 490px) {
 		position:fixed;
 		bottom: 1vh;
-		margin: 0 auto;
+		align-self: center;
+		margin: 0;
 		font-size: 1.2rem;
 		width: 95%;
 		z-index: 6;
@@ -892,7 +893,7 @@ class DocumentsScreen extends Component {
 		hoverDelete: '',
 		colorTextExport: '',
 		colorTextDelete: '',
-  	redirect: false,
+		redirect: false,
 		isFile: null,
 		document: {
 			title: '',
@@ -939,32 +940,32 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-		handleAddModel = () => {
-			this.setState({
-				addModel: true,
-			});
-		}
+	handleAddModel = () => {
+		this.setState({
+			addModel: true,
+		});
+	}
 
-		handleCancelAddModel = () => {
-			this.setState({
-				addModel: false,
-				isError: false,
-				isFile: null,
-			});
-		}
+	handleCancelAddModel = () => {
+		this.setState({
+			addModel: false,
+			isError: false,
+			isFile: null,
+		});
+	}
 
-		handleModalDelete = () => {
-			this.setState({
-				modalDelete: true,
-				options: false,
-			});
-		}
+	handleModalDelete = () => {
+		this.setState({
+			modalDelete: true,
+			options: false,
+		});
+	}
 
-		handleCancelDelete = () => {
-			this.setState({
-				modalDelete: false,
-			});
-		}
+	handleCancelDelete = () => {
+		this.setState({
+			modalDelete: false,
+		});
+	}
 
 	handleModelChange = (field, e) => {
 		const { document } = this.state;
@@ -980,37 +981,37 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-		handleChangeColorExport = (item) => {
-			this.setState({
-				downloadExport: DownloadWhiteIcon,
-				hoverExport: item,
-				colorTextExport: '#ffffff',
-			});
-		}
+	handleChangeColorExport = (item) => {
+		this.setState({
+			downloadExport: DownloadWhiteIcon,
+			hoverExport: item,
+			colorTextExport: '#ffffff',
+		});
+	}
 
-		handleChangeColorLeaveExport = () => {
-			this.setState({
-				downloadExport: DownloadIcon,
-				hoverExport: '',
-				colorTextExport: '#85144B',
-			});
-		}
+	handleChangeColorLeaveExport = () => {
+		this.setState({
+			downloadExport: DownloadIcon,
+			hoverExport: '',
+			colorTextExport: '#85144B',
+		});
+	}
 
-		handleChangeColorDelete = (item) => {
-			this.setState({
-				downloadDelete: DeleteIconWhite,
-				hoverDelete: item,
-				colorTextDelete: '#ffffff',
-			});
-		}
+	handleChangeColorDelete = (item) => {
+		this.setState({
+			downloadDelete: DeleteIconWhite,
+			hoverDelete: item,
+			colorTextDelete: '#ffffff',
+		});
+	}
 
-		handleChangeColorLeaveDelete = () => {
-			this.setState({
-				downloadDelete: DeleteIcon,
-				hoverDelete: '',
-				colorTextDelete: '#85144B',
-			});
-		}
+	handleChangeColorLeaveDelete = () => {
+		this.setState({
+			downloadDelete: DeleteIcon,
+			hoverDelete: '',
+			colorTextDelete: '#85144B',
+		});
+	}
 
 	uploadFile = (e) => {
 		e.preventDefault();
@@ -1026,36 +1027,36 @@ class DocumentsScreen extends Component {
 		reader.readAsDataURL(file);
 	}
 
-		handleSelected = (item) => {
-			this.setState({
-				modelSelect: item,
-			});
-		}
+	handleSelected = (item) => {
+		this.setState({
+			modelSelect: item,
+		});
+	}
 
-		handleDelete = () => {
-			this.props.deleteDocument(this.state.modelSelect.id);
-			this.setState({
-				modelSelect: '',
-			});
-			this.handleCancelDelete();
-		}
+	handleDelete = () => {
+		this.props.deleteDocument(this.state.modelSelect.id);
+		this.setState({
+			modelSelect: '',
+		});
+		this.handleCancelDelete();
+	}
 
-		handleSearch = (e) => {
-			this.setState({
-				search: e.target.value,
-			});
-		}
+	handleSearch = (e) => {
+		this.setState({
+			search: e.target.value,
+		});
+	}
 
-		handleSubmit = (e) => {
-			e.preventDefault();
-			this.handleErrors();
+	handleSubmit = (e) => {
+		e.preventDefault();
+		this.handleErrors();
 
-			this.setState({
-				title: '',
-				description: '',
-				isFile: null,
-			});
-		}
+		this.setState({
+			title: '',
+			description: '',
+			isFile: null,
+		});
+	}
 
 	handleErrors = () => {
 		const { title, description } = this.state.document;
@@ -1092,9 +1093,9 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-		handleRedirect = () => {
-			this.setState({ redirect: true });
-		}
+	handleRedirect = () => {
+		this.setState({ redirect: true });
+	}
 
 
 	renderModalModels = () => {
@@ -1281,11 +1282,11 @@ class DocumentsScreen extends Component {
 										</ContainerModel>
 									))
 								) : (
-									<InitialAddModel>
-										<TitleInitialAddModel>Você ainda não possui um modelo</TitleInitialAddModel>
-										<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span></TextInitialAddModel>
-									</InitialAddModel>
-								)}
+										<InitialAddModel>
+											<TitleInitialAddModel>Você ainda não possui um modelo</TitleInitialAddModel>
+											<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span></TextInitialAddModel>
+										</InitialAddModel>
+									)}
 								{this.state.modalDelete
 									&& this.renderModalDelete()}
 							</ContainerModels>
