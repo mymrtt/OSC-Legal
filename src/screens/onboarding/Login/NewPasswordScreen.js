@@ -57,8 +57,9 @@ const Form = styled.form`
 		width: 50%;
 	}
 	@media (max-width: 648px) {
-		width: 90%;
+		padding-top: 0;
 		margin: 0;
+		width: 90%;
 	}
 	input{
 		margin: 0.3rem 0 0.6rem 0;
@@ -91,7 +92,7 @@ const Paragraph = styled.p`
   font-family: Overpass, Regular;
   margin-bottom: 1.5rem;
 	@media (max-width: 648px) {
-		margin-top: 3rem;
+		margin-top: 1rem;
 	}
 	@media (max-width: 460px) {
 		font-size: 0.9rem;
@@ -105,7 +106,7 @@ const ErrorMessage = styled.h4`
   justify-content: flex-end;
   font-size: 0.8rem;
 	font-family: Overpass, Regular;
-	
+
 	@media(max-width: 490px){
 		margin-bottom: 1rem;
 	}
@@ -115,7 +116,7 @@ const Label = styled.label`
   color: #85144B;
   font-size: 0.75rem;
   font-family: Overpass;
-  font-weight: bold;
+  font-weight: 900;
   margin: 1.2rem 0.9rem;
 	text-transform: uppercase;
 `;
@@ -132,6 +133,11 @@ const ButtonText = styled(Link)`
 	margin-bottom: 1.5rem;
 	text-decoration: none;
 	text-transform: uppercase;
+
+	@media(max-width: 648px) {
+		margin-top: 1rem;
+		margin-bottom: 0rem;
+	}
 `;
 
 class NewPasswordScreen extends Component {
@@ -247,7 +253,7 @@ class NewPasswordScreen extends Component {
 						width='80%'
 						widthMobile='90%'
 						margin='1rem 0 1.5rem 0'
-						marginMobile='0.3rem 0 1.5rem'
+						marginMobile='0.5rem 0 1.5rem'
 						text="Prossiga com nova senha"
 						type="submit"
 					/>

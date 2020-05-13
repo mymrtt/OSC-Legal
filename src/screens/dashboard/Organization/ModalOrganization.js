@@ -270,6 +270,7 @@ const ContainerPaymentMethod = styled.div`
 
 const PaymentMethodText = styled.p`
 	color: ${props => (props.color && '#FF4136')};
+	font-family: "Overpass", Light;
 	padding-left: 0.3rem;
 `;
 
