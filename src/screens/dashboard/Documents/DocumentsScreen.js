@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable max-len */
@@ -27,6 +28,9 @@ import { addNewDocument, deleteDocument } from '../../../dataflow/modules/docume
 
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
+	email: state.onboarding.users.email,
+	password: state.onboarding.users.password,
+	name: state.onboarding.users.name,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -135,9 +139,9 @@ const ContainerAddModel = styled.div`
 `;
 
 const InitialAddModel = styled.div`
-	width: 62.5%;
+	width: 96%;
 	height: 170px;
-	${''}
+	display: flex;
 	text-align: center;
 	justify-content: center;
 	align-items: center;
@@ -148,7 +152,7 @@ const InitialAddModel = styled.div`
 
 	@media (max-width: 1024px) {
 		padding: 0 1%;
-		width: 61.5%;
+		width: 95%;
 	}
 
 	@media (max-width: 768px) {
@@ -161,7 +165,6 @@ const InitialAddModel = styled.div`
 		margin-bottom: 2rem;
 	}
 `;
-
 
 const ContainerScroll = styled.div`
 	max-height: 73vh;
@@ -225,25 +228,32 @@ const ContainerSearch = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+
 	@media (max-width: 1024px) {
 		margin-right: 1.1rem;
+		width: 45%;
 	}
+
 	@media (max-width: 768px) {
 		margin-right: .6rem;
-		width: 40%;
+		width: 50%;
 	}
+
 	@media (max-width: 490px) {
 		width: 100%;
 		margin-right: 0;
+		display: flex;
+		justify-content: center;
 	}
 `;
 
 const SearchText = styled.p`
   color: #231F20;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-family: Overpass, Bold;
 	font-weight: 600;
-  margin-right: 0.8rem;
+  margin-right: 1rem;
+
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -253,10 +263,16 @@ const ContainerSearchInput = styled.label`
 	display: flex;
 	width: 100%;
 	border-radius: 3px;
-	padding: .6rem 1rem;
-	border: ${props => (props.clickLabel ? '1px solid #FF4136' : '0.5px solid #85144B')};
+	padding: 0.2rem 1rem 0.1rem 1rem;
+	border: 0.5px solid #85144B;
+
 	img {
-		margin: 0 0 0 10px;
+		margin: 0.4rem 0 0.5rem 0.5rem;
+    width: 25px;
+	}
+
+	@media (max-width: 490px) {
+		width: 95%;
 	}
 `;
 
@@ -265,10 +281,20 @@ const SearchInput = styled.input`
 	border: 0;
 	outline: none;
 	padding-left: .5rem;
+	font-size: 1rem;
+	font-family: Overpass, Regular;
+	color: #959595;
+
+	@media (max-width: 1024px) {
+		font-size: 0.9rem;
+	}
+
 	@media (max-width: 768px) {
-		&::placeholder {
-			font-size: .7rem;
-		}
+		font-size: .8rem;
+	}
+
+	@media (max-width: 490px) {
+		font-size: 1rem;
 	}
 `;
 
@@ -411,9 +437,16 @@ const ContainerOptions = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	width: 15%;
+
+	@media (max-width: 1024px) {
+		width: 25%;
+		padding: 0 0 0 3.5%;
+	}
 
 	@media (max-width: 768px) {
-		margin-left: 1.7rem;
+		width: 30%;
+		padding: 0 0 0 4.5%;
 	}
 
 	@media (max-width: 490px) {
@@ -429,16 +462,17 @@ const ContainerOptions = styled.div`
 		background: #ffffff;
 		align-items: center;
 		border-radius: 3px;
+		padding: 0;
 	}
 `;
 
 const Option = styled.button`
 	margin-bottom: 1rem;
-	width: 7rem;
+	width: 8rem;
 	height: 2.5rem;
+	padding: 0 1rem;
 	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
+	justify-content: space-between;
 	background: transparent;
 	border: none;
 	border-radius: 4px;
@@ -448,12 +482,11 @@ const Option = styled.button`
 	}
 
 	@media (max-width: 768px) {
-		width: 6rem;
+		width: 7rem;
 	}
 
 	@media (max-width: 490px) {
 		align-self: center;
-		justify-content: space-around;
 		margin-bottom: 0;
 		height: 100%;
 		width: 100%;
@@ -463,16 +496,16 @@ const Option = styled.button`
 `;
 
 const OptionImage = styled.img`
-	@media (max-width: 768px) {
-		width: 20px;
-		height: 20px;
-	}
 `;
 
 const OptionText = styled.p`
 	color: ${props => (props.colorTextButton)};
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
+
+	p {
+		margin-right: 0.8rem;
+	}
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
@@ -893,20 +926,6 @@ class DocumentsScreen extends Component {
 	// 	}
 	// }
 
-	handleClickedLabel = (ev) => {
-		ev.stopPropagation();
-		this.setState({
-			changeColorLabel: true,
-		});
-	}
-
-
-	handleClickedLabelLeave = () => {
-		this.setState({
-			changeColorLabel: false,
-		});
-	}
-
 	handleOnOptions = (item) => {
 		this.setState({
 			options: true,
@@ -1040,7 +1059,7 @@ class DocumentsScreen extends Component {
 	}
 
 	handleErrors = () => {
-		const { title, description, id } = this.state.document;
+		const { title, description } = this.state.document;
 		const { isFile } = this.state;
 
 		if (title === '' && description === '' && isFile === null) {
@@ -1121,7 +1140,7 @@ class DocumentsScreen extends Component {
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
 							<TextUploadFile file={this.state.isFile}>
-								<h3>{this.state.isFile === null ? 'Adiocionar documento' : 'Modelo adicionado'}</h3>
+								<h3>{this.state.isFile === null ? 'Adicionar documento' : 'Modelo adicionado'}</h3>
 								<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
 							</TextUploadFile>
 						</UploadFile>
@@ -1196,9 +1215,7 @@ class DocumentsScreen extends Component {
 						<TitleSearch>Modelos de Documentos</TitleSearch>
 						<ContainerSearch>
 							<SearchText>Pesquisar</SearchText>
-							<ContainerSearchInput
-								onClick={this.handleClickedLabel}
-								clickLabel={this.state.changeColorLabel}>
+							<ContainerSearchInput>
 								<SearchInput
 									onChange={this.handleSearch}
 									placeholder="Digite aqui para pesquisar"
@@ -1243,7 +1260,7 @@ class DocumentsScreen extends Component {
 													<OptionText
 														colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
 													>
-														Exportar
+        									Exportar
 													</OptionText>
 												</Option>
 												<Option
@@ -1258,7 +1275,7 @@ class DocumentsScreen extends Component {
 														colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
 														onClick={() => this.handleSelected(item)}
 													>
-														Excluir
+        									<p>Excluir</p>
 													</OptionText>
 												</Option>
 											</ContainerOptions>
