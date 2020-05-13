@@ -6,12 +6,12 @@ import thunkMiddleware from 'redux-thunk';
 
 // Reducers
 import Onboarding from './dataflow/modules/onboarding-modules';
-import Dashboard from './dataflow/modules/dashboard-modules';
+import Documents from './dataflow/modules/documents-modules';
 import Organization from './dataflow/modules/organization-modules';
 
 const reducers = combineReducers({
 	onboarding: Onboarding,
-	dashboard: Dashboard,
+	documents: Documents,
 	organization: Organization,
 });
 

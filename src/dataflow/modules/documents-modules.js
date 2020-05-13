@@ -15,7 +15,10 @@ export default function (state = initialState, action) {
 			documentsList: [
 				...state.documentsList,
 				{
-					...action.info,
+					id: action.id,
+					title: action.info,
+					description: action.info,
+					file: action.info,
 				},
 			],
 		});
@@ -28,9 +31,11 @@ export default function (state = initialState, action) {
 	}
 }
 
+let nextDocId = 1;
 // Action Creators
 export const addNewDocument = info => ({
 	type: ADD_NEW_DOCUMENT,
+	id: nextDocId++,
 	info,
 });
 
