@@ -23,10 +23,10 @@ import Header from '../components/Header';
 import logo from '../../../assets/logo.svg';
 
 // Redux
-import { addNewDocument, deleteDocument } from '../../../dataflow/modules/dashboard-modules';
+import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
 const mapStateToProps = state => ({
-	documentsList: state.dashboard.documentsList,
+	documentsList: state.documents.documentsList,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,7 +49,7 @@ const MaximumWidth = styled.div`
 `;
 
 const ContainerHeader = styled.div`
-	margin: 3rem 4rem 0 4rem;
+	margin: 3rem 4rem 1.5rem 4rem;
   display: flex;
   justify-content: space-between;
 
@@ -67,7 +67,15 @@ const ContainerHeader = styled.div`
 `;
 
 const AddModelImage = styled.img`
-	width: 8.5rem;
+	width: 180px;
+
+	@media (max-width: 1024px) {
+		width: 140px;
+	}
+
+	@media (max-width: 768px) {
+		width: 120px;
+	}
 
 	@media (max-width: 490px) {
 		display: none;
@@ -121,14 +129,15 @@ const ContainerAddModel = styled.div`
 		order: 1;
 		width: 100%;
 		justify-content: flex-end;
-		height: ${props => (props.initialModel ? '60vh' : 'initial')};
+		z-index: 8;
+		${''}
 	}
 `;
 
 const InitialAddModel = styled.div`
-	width: 61.4%;
+	width: 62.5%;
 	height: 170px;
-	display: ${(props => (props.initialModel ? 'flex' : 'none'))};
+	${''}
 	text-align: center;
 	justify-content: center;
 	align-items: center;
@@ -139,6 +148,7 @@ const InitialAddModel = styled.div`
 
 	@media (max-width: 1024px) {
 		padding: 0 1%;
+		width: 61.5%;
 	}
 
 	@media (max-width: 768px) {
@@ -266,7 +276,7 @@ const ContainerModels = styled.div`
 	width: 100%;
 	display: ${(props => (props.initialModel ? 'none' : 'flex'))};
 	flex-direction: column;
-	
+
 	@media (max-width: 490px) {
     margin-bottom: 10rem;
 	}
@@ -313,7 +323,7 @@ const ContainerModel = styled.div`
 				width: 10rem;
 				height: 1px;
 				display: ${props => (props.displayBefore ? 'none' : 'flex')};
-				margin-top: 21.5%;
+				margin-top: 21.6%;
     		top: 100%;
 				z-index: 6;
 				right: 0;
@@ -477,24 +487,26 @@ const OptionText = styled.p`
 const Button = styled.button`
   margin: 2rem;
 	width: 50%;
-	height: 3.5rem;
+	height: 4rem;
 	border: 0;
   color: #fff;
   box-shadow: 0 3px 6px #00000029;
   border-radius: 3px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
 
 	@media (max-width: 1024px) {
-		padding: 1rem;
-		width: 70%;
+		padding: 0;
+		width: 60%;
+		font-size: 1.2rem;
+		height: 4rem;
 	}
 
 	@media (max-width: 768px) {
-		font-size: 1rem;
-		width: 75%;
+		font-size: 1.3rem;
+		width: 70%;
 	}
 
 	@media (max-width: 490px) {
@@ -503,6 +515,7 @@ const Button = styled.button`
 		margin: 0 auto;
 		font-size: 1.2rem;
 		width: 95%;
+		z-index: 6;
 	}
 `;
 
@@ -626,6 +639,10 @@ const UploadFile = styled.label`
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
 
+	@media(max-width: 490px){
+		margin-bottom: 2rem;
+	}
+
 	input[type='file'] {
 		display: none;
 	}
@@ -680,6 +697,10 @@ const Input = styled.input`
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
+
+	@media(max-width: 490px){
+		margin-bottom: 2.5rem;
+	}
 `;
 
 const TextArea = styled.textarea`
@@ -695,6 +716,7 @@ const TextArea = styled.textarea`
 
 	@media (max-width: 490px) {
 		height: 100px;
+		margin-bottom: 2rem;
 	}
 	resize: none;
 `;
@@ -704,6 +726,7 @@ const ButtonAdd = styled(Button)`
 	width: 55%;
 	margin: 0;
 	text-transform: uppercase;
+	height: 3.5rem;
 
 	@media (max-width: 1024px) {
 		font-size: .9rem;
@@ -712,8 +735,9 @@ const ButtonAdd = styled(Button)`
 	}
 
 	@media (max-width: 768px) {
-		width: 60%;
+		width: 45%;
 		padding: 1rem;
+		font-size: 1.3rem;
 		margin: 0;
 	}
 
@@ -735,7 +759,7 @@ const ModalDelete = styled.div`
 	width: 480px;
 	padding: 1% 1% 1% 2%;
 
-	
+
 	@media (max-width: 490px) {
 		width: 100%;
 		height: 100vh;
@@ -821,6 +845,7 @@ const ErrorText = styled.p`
 class DocumentsScreen extends Component {
 	state = {
 		initialModel: null,
+		// initialModel: true,
 		changeColorLabel: false,
 		options: false,
 		selectedOptions: '',
@@ -839,7 +864,7 @@ class DocumentsScreen extends Component {
 		document: {
 			title: '',
 			description: '',
-			id: this.props.documentsList.length + 1,
+			id: 0,
 		},
 		isError: false,
 		isErrorDescription: false,
@@ -848,17 +873,24 @@ class DocumentsScreen extends Component {
 		isErrorTitleQtd: false,
 	};
 
-	componentDidMount() {
-		if (this.props.documentsList.length <= 0) {
-			this.setState({
-				initialModel: true,
-			});
-		} else {
-			this.setState({
-				initialModel: false,
-			});
-		}
-	}
+	// componentDidMount() {
+	// 	if (this.props.documentsList.length <= 0) {
+	// 		this.setState({
+	// 			initialModel: true,
+	// 		});
+	// 	} else {
+	// 		this.setState({
+	// 			initialModel: false,
+	// 		});
+	// 	}
+	// }
+	// componentDidMount() {
+	// 	if (this.props.documentsList.length !== 0) {
+	// 		this.setState({
+	// 			initialModel: false,
+	// 		});
+	// 	}
+	// }
 
 	handleClickedLabel = (ev) => {
 		ev.stopPropagation();
@@ -1034,9 +1066,9 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: true,
 			});
 		} else {
-			this.props.addNewDocument({
-				title, description, id, isFile,
-			});
+			this.props.addNewDocument(
+				title, description, isFile,
+			);
 			this.handleCancelAddModel();
 		}
 	}
@@ -1160,7 +1192,7 @@ class DocumentsScreen extends Component {
 				<Header />
 				<MaximumWidth>
 					<ContainerHeader>
-						<TitleSearch onClick={() => console.log(this.props.documentsList.length)}>Modelos de Documentos</TitleSearch>
+						<TitleSearch>Modelos de Documentos</TitleSearch>
 						<ContainerSearch>
 							<SearchText>Pesquisar</SearchText>
 							<ContainerSearchInput
@@ -1175,65 +1207,68 @@ class DocumentsScreen extends Component {
 						</ContainerSearch>
 					</ContainerHeader>
 					<ContainerContent>
-						<ContainerAddModel initialModel={this.state.initialModel}>
-							<AddModelImage src={ImageDocument}/>
+						<ContainerAddModel>
+							<AddModelImage src={ImageDocument} />
 							<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
 							{this.state.addModel
-							&& this.renderModalModels()}
+								&& this.renderModalModels()}
 						</ContainerAddModel>
-						<InitialAddModel initialModel={this.state.initialModel}>
-							<TitleInitialAddModel>Você ainda não tem nenhum documento</TitleInitialAddModel>
-							<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Documento</span></TextInitialAddModel>
-						</InitialAddModel>
-						<ContainerScroll initialModel={this.state.initialModel}>
-							<ContainerModels initialModel={this.state.initialModel}>
-								{documentsList.map((item, index) => (
-									<ContainerModel key={item}
-										style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-										zIndex={this.state.addModel}
-										displayBefore={this.state.modalDelete}
-										onMouseEnter={() => this.handleOnOptions(item)}
-										onMouseLeave={this.handleOffOptions}>
-										<ContainerModelDescription>
-											<span>
-												<ModelNumber>{item.id}</ModelNumber>
-												<ModelTitle>{item.title}</ModelTitle>
-											</span>
-											<ModelParagraph>{item.description}</ModelParagraph>
-										</ContainerModelDescription>
-										<ContainerOptions
-											contOptions={this.state.options && (this.state.selectedOptions === item)}>
-											<Option
-												onMouseEnter={() => this.handleChangeColorExport(item)}
-												onMouseLeave={this.handleChangeColorLeaveExport}
-											>
-												<OptionImage
-													src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-													alt="Download" />
-												<OptionText
-													colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+						<ContainerScroll>
+							<ContainerModels>
+								{documentsList && documentsList.length > 0 ? (
+									documentsList.map((item, index) => (
+										<ContainerModel key={item}
+											style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+											zIndex={this.state.addModel}
+											displayBefore={this.state.modalDelete}
+											onMouseEnter={() => this.handleOnOptions(item)}
+											onMouseLeave={this.handleOffOptions}>
+											<ContainerModelDescription>
+												<span>
+													<ModelNumber>{item.id}</ModelNumber>
+													<ModelTitle>{item.title}</ModelTitle>
+												</span>
+												<ModelParagraph>{item.description}</ModelParagraph>
+											</ContainerModelDescription>
+											<ContainerOptions
+												contOptions={this.state.options && (this.state.selectedOptions === item)}>
+												<Option
+													onMouseEnter={() => this.handleChangeColorExport(item)}
+													onMouseLeave={this.handleChangeColorLeaveExport}
 												>
-												Exportar
-												</OptionText>
-											</Option>
-											<Option
-												onMouseEnter={() => this.handleChangeColorDelete(item)}
-												onMouseLeave={this.handleChangeColorLeaveDelete}
-												onClick={this.handleModalDelete}
-											>
-												<OptionImage
-													src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
-													alt="Deletar" />
-												<OptionText
-													colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-													onClick={() => this.handleSelected(item)}
+													<OptionImage
+														src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+														alt="Download" />
+													<OptionText
+														colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+													>
+														Exportar
+													</OptionText>
+												</Option>
+												<Option
+													onMouseEnter={() => this.handleChangeColorDelete(item)}
+													onMouseLeave={this.handleChangeColorLeaveDelete}
+													onClick={this.handleModalDelete}
 												>
-												Excluir
-												</OptionText>
-											</Option>
-										</ContainerOptions>
-									</ContainerModel>
-								))}
+													<OptionImage
+														src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+														alt="Deletar" />
+													<OptionText
+														colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+														onClick={() => this.handleSelected(item)}
+													>
+														Excluir
+													</OptionText>
+												</Option>
+											</ContainerOptions>
+										</ContainerModel>
+									))
+								) : (
+									<InitialAddModel>
+										<TitleInitialAddModel>Você ainda não possui um modelo</TitleInitialAddModel>
+										<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span></TextInitialAddModel>
+									</InitialAddModel>
+								)}
 								{this.state.modalDelete
 									&& this.renderModalDelete()}
 							</ContainerModels>

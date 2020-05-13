@@ -232,7 +232,7 @@ const Modal = styled.div`
   }
   @media (max-width: 648px) {
     width: 100%;
-    max-height: 100vh;
+    min-height: 100vh;
     padding-bottom: 8rem;
     justify-content: flex-start;
     align-self: center;
@@ -254,8 +254,8 @@ const TitleTerms = styled.h1`
     font-size: 1.5rem;
     align-self: center;
 	}
-	@media(max-width: 320px) and (max-height: 570px){
-		margin-bottom: 10rem;
+	@media(max-width: 320px){
+		margin-bottom: 5rem;
 	}
 `;
 
@@ -298,7 +298,7 @@ const BlockTerms = styled.div`
 
   @media(max-width: 648px){
 		padding-bottom: 3rem;
-    height: 100%;
+    min-height: 100vh;
     justify-content: space-around;
     background: #FFF;
 	}
@@ -324,6 +324,10 @@ const Terms = styled.p`
     width: 90%;
     align-self: center;
 	}
+
+	/* @media(max-width: 375px){
+		margin-bottom: 3rem;
+	} */
 
 `;
 
@@ -461,8 +465,17 @@ class CreateUserScreen extends Component {
 				isErrorPassword: false,
 			});
 		}
+		if (!telephone || telephone.length < 8) {
+			this.setState({
+				isErrorTel: true,
+			});
+		} else {
+			this.setState({
+				isErrorTel: false,
+			});
+		}
 
-		if (password.length >= 6 && cpf.length === 11) {
+		if (telephone.length > 8 && password.length >= 6 && cpf.length === 11) {
 			this.props.addNewUser(user);
 			this.handleModalSucess();
 		}
@@ -566,7 +579,7 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input
-									type="number"
+									type="text"
 									onChange={ev => this.handleChange('cpf', ev)}
 									value={cpf}
 									placeholder="000.000.000-00"
@@ -590,14 +603,14 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>telefone</ParagraphInput>
 								<Input
-									type="number"
+									type="text"
 									onChange={ev => this.handleChange('telephone', ev)}
 									value={telephone}
 									placeholder="(00) 00000-0000"
 									name="telefone"
 									required
-									/>
-									{this.state.isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
+								/>
+								{this.state.isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>senha</ParagraphInput>
@@ -642,7 +655,6 @@ class CreateUserScreen extends Component {
 								margin="2rem 0"
 								width="87%"
 								widthMobile="90%"
-								height="50px"
 								text="concordar e criar conta"
 								type="submit"
 							/>

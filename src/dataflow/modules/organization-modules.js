@@ -1,10 +1,8 @@
 // Action Types
-const ADD_NEW_DOCUMENT = 'osc/documents/ADD_NEW_DOCUMENTS';
-const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
+const UPDATE_TABLEDATAS = 'osc/organization/UPDATE_TABLEDATAS';
 
 // Initial State
 const initialState = {
-	documentsList: [],
 	tableDatas: [
 		{
 			id: 1,
@@ -16,7 +14,7 @@ const initialState = {
 			createdIn: '19/05/19',
 			authorization: '-',
 			dueDate: '-',
-			status: 'pendente',
+			status: 'Isento',
 			admin:
 			{
 				name: 'Jorge Amado da Silva',
@@ -42,7 +40,7 @@ const initialState = {
 			createdIn: '18/06/19',
 			authorization: '-',
 			dueDate: '-',
-			status: 'isento',
+			status: 'Pago',
 			admin:
 			{
 				name: 'Yasmin Miranda',
@@ -68,7 +66,7 @@ const initialState = {
 			createdIn: '17/06/19',
 			authorization: '02/06/19',
 			dueDate: '02/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -94,7 +92,7 @@ const initialState = {
 			createdIn: '15/06/19',
 			authorization: '15/07/19',
 			dueDate: '-',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Vinicius Almeida Rodrigues',
@@ -120,7 +118,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Tarcila do Amaral Gonçalves',
@@ -146,7 +144,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Aline Candido Mendes',
@@ -172,7 +170,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Ronaldo Veiga de Almeida',
@@ -198,7 +196,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Ana Claudia Ferrari Silva',
@@ -224,7 +222,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Marcio Rodrigues Alves',
@@ -250,7 +248,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'João Marcos Barbosa',
@@ -276,7 +274,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Caroline Perreira',
@@ -302,7 +300,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -328,7 +326,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -354,7 +352,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -381,7 +379,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -407,7 +405,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -433,7 +431,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -459,7 +457,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -485,7 +483,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -511,7 +509,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -537,7 +535,7 @@ const initialState = {
 			createdIn: '12/06/19',
 			authorization: '15/06/19',
 			dueDate: '15/07/19',
-			status: '',
+			status: 'autorizar',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
@@ -559,30 +557,16 @@ const initialState = {
 // Reducers
 export default function (state = initialState, action) {
 	switch (action.type) {
-	case ADD_NEW_DOCUMENT:
+	case UPDATE_TABLEDATAS:
 		return Object.assign({}, state, {
-			documentsList: [
-				...state.documentsList,
-				{
-					...action.info,
-				},
-			],
-		});
-	case DELETE_DOCUMENT:
-		return Object.assign({}, state, {
-			...state,
-			documentsList: state.documentsList.filter(item => item.id !== action.info),
+			tableDatas: action.info,
 		});
 	default: return state;
 	}
 }
 
 // Action Creators
-export const addNewDocument = info => ({
-	type: ADD_NEW_DOCUMENT,
-	info,
-});
-export const deleteDocument = info => ({
-	type: DELETE_DOCUMENT,
+export const updateTableDatas = info => ({
+	type: UPDATE_TABLEDATAS,
 	info,
 });

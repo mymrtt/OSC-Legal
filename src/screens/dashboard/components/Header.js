@@ -75,6 +75,11 @@ const WrapButton = styled.div`
 
 		a{
 			font-size: 1.2rem;
+			width: 50%;
+			/* margin: 0; */
+			display: flex;
+			justify-content: center;
+			margin: 0;
 		}
 	}
 `;
@@ -104,10 +109,11 @@ const ContainerAdm = styled.div`
 const ParagraphContainer1 = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin: 1.2rem 3.5rem 0 0;
+	margin: 1.2rem 3rem 0 0;
 
 	@media (max-width: 859px) {
-		font-size: 1rem;
+		font-size: 1.2rem;
+		margin-right: .7rem;
 	}
 
 	@media (max-width: 685px) {
@@ -115,19 +121,23 @@ const ParagraphContainer1 = styled.p`
 	}
 
 	@media (max-width: 648px) {
-		font-size: 0.8rem;
+		font-size: 1.2rem;
+		margin-right: 1.7rem;
 	}
 `;
 
 const ParagraphSair = styled.p`
+	margin-right: 3rem;
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
-	margin-right: 2.8rem;
 	cursor: pointer;
 
-	@media(max-width: 648px) {
-		margin-right: 1.8rem;
+	@media(max-width: 768px){
+		margin-right: .7rem;
+	}
+	@media(max-width: 648px){
+		margin-right: 1.7rem;
 	}
 `;
 
