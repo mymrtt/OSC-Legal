@@ -471,7 +471,7 @@ const Option = styled.button`
 	width: 8rem;
 	height: 2.5rem;
 	padding: 0 1rem;
-	display: flex;
+	display: ${props => (props.hidden ? 'none' : 'flex')};
 	justify-content: space-between;
 	background: transparent;
 	border: none;
@@ -631,7 +631,7 @@ const ParagraphSair = styled.p`
 const HeaderAddModel = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding-top: 1rem;
+
 	img {
 		width: 20px;
 		height: 20px;
@@ -798,6 +798,9 @@ const ModalDelete = styled.div`
 		width: 100%;
 		height: 100vh;
 		padding: 5%;
+		    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 	}
 `;
 
@@ -819,6 +822,7 @@ const WrapTextModal = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+		margin-top: 5%;
 	}
 `;
 
@@ -839,9 +843,8 @@ const TextModal = styled.p`
 `;
 
 const ButtonsModal = styled.div`
-	display: flex;
-	width: 98%;
 	margin-top: 5%;
+
 	@media (max-width: 490px) {
 		margin: 0;
 		width: 100%;
@@ -854,16 +857,22 @@ const ButtonCancel = styled(Button)`
 	margin: 5% 0 0 0;
 	box-shadow: none;
 	width: 50%;
+
 	@media (max-width: 490px) {
 		margin: 0;
+		position: initial;
+		width: 100%;
 	}
 `;
 
 const ButtonConfirm = styled(Button)`
 	margin: 5% 0 0 0;
 	width: 50%;
+
 	@media (max-width: 490px) {
 		margin: 0;
+		position: initial;
+		width: 100%;
 	}
 `;
 
@@ -895,6 +904,7 @@ class DocumentsScreen extends Component {
 		colorTextDelete: '',
 		redirect: false,
 		isFile: null,
+		hidden: false,
 		document: {
 			title: '',
 			description: '',
@@ -1227,7 +1237,7 @@ class DocumentsScreen extends Component {
 					<ContainerContent>
 						<ContainerAddModel>
 							<AddModelImage src={ImageDocument} />
-							<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
+							<Button hidden={this.state.addModel || this.state.modalDelete} onClick={this.handleAddModel}>Adicionar Modelo</Button>
 							{this.state.addModel
 								&& this.renderModalModels()}
 						</ContainerAddModel>
