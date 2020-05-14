@@ -268,7 +268,7 @@ const ContainerSearchInput = styled.label`
 
 	img {
 		margin: 0.4rem 0 0.5rem 0.5rem;
-    width: 25px;
+    width: 20px;
 	}
 
 	@media (max-width: 490px) {
@@ -538,7 +538,7 @@ const Button = styled.button`
 	}
 
 	@media (max-width: 768px) {
-		font-size: 1.3rem;
+		font-size: 1.2rem;
 		width: 70%;
 	}
 
