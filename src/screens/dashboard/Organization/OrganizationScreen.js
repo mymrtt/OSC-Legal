@@ -21,7 +21,7 @@ import selectMaisMobile from '../../../assets/selectMais.svg';
 import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
 
 const mapStateToProps = state => ({
-	typeAccount: state.onboarding.users.typeAccount,
+	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
 });
 
@@ -37,9 +37,9 @@ const Container = styled.div`
 `;
 
 const ContainerUser = styled.div`
-	width: 100%;
-	height: 100vh;
-	background-color: #FFCFCD;
+	width: ${props => (props.width ? '100%' : '100%')};
+	height: ${props => (props.height ? '0' : '100vh')};
+	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 `;
 
 const CreateButtonUser = styled.button`
@@ -129,10 +129,10 @@ const SelectViewBy = styled.div`
 const SpanSelect = styled.div`
 	width: 15rem;
 	margin: 0.5rem 0 0;
-	position: relative;
 	display: flex;
   flex-direction: column;
 	z-index: 11;
+	position: relative;
 
 	@media (max-width: 940px) {
 		width: 47%;
@@ -238,17 +238,17 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-  width: 94%;
-  max-height: 100vh;
-  background-color: #FFFFFF;
-	border-radius: 3px;
-	margin: 0 2.5rem;
+  width: ${props => (props.width ? '100%' : '94%')};
+  max-height: ${props => (props.height ? '0' : '100vh')};
+  background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
+	border-radius: ${props => (props.border ? '0' : '3px')};
+	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 `;
 
 const Content = styled.div`
 	max-width: 100%;
 	width: 100%;
-	padding: 2.5rem 5rem 0;
+	padding: ${props => (props.padding ? '2.5rem 5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -572,6 +572,12 @@ class OrganizationScreen extends Component {
 		});
 	};
 
+	handleClosedModal = () => {
+		this.setState({
+			isModal: false,
+		});
+	}
+
 	handleSelectedStatus = (newStatus, item) => {
 		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
@@ -602,12 +608,12 @@ class OrganizationScreen extends Component {
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
-				{this.props.typeAccount === 'admin'
+				{this.props.isAdmin
 					? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
 					: <TitleMyOrganization>Minhas organizações</TitleMyOrganization>
 				}
 				<SelectViewBy>
-					{this.props.typeAccount === 'admin'
+					{this.props.isAdmin
 						? <TitleViewBy>Visualizar por:</TitleViewBy>
 						: <TitleSearch>Pesquisar</TitleSearch>
 					}
@@ -616,7 +622,7 @@ class OrganizationScreen extends Component {
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							{this.props.typeAccount === 'admin'
+							{this.props.isAdmin
 								?	<img src={ImageCaminho} alt="arrow" />
 								:	<img src={magnifyingGlass} alt="Lupa"/>
 							}
@@ -795,19 +801,27 @@ class OrganizationScreen extends Component {
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal
-				&& <ModalOrganization item={this.state.itemSelected} onClick={this.isModalOpen} />
+				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
 				&& <ModalCreateOrganization />
 				}
 				<Header />
-				<ContainerUser>
-					{this.props.typeAccount === 'user'
+				<ContainerUser
+					width={this.props.isAdmin}
+					height={this.props.isAdmin}
+					background={this.props.isAdmin}>
+					{!this.props.isAdmin
 					&& <CreateButtonUser
 						onClick={this.isModalCreateOrganization}> Criar Organização </CreateButtonUser>
 					}
-					<ContainerTableUser>
-						<Content>
+					<ContainerTableUser
+						width={this.props.isAdmin}
+						height={this.props.isAdmin}
+						background={this.props.isAdmin}
+						border={this.props.isAdmin}
+						margin={this.props.isAdmin}>
+						<Content padding={this.props.isAdmin}>
 							{this.renderSelectedViewby()}
 							<ContainerTable>
 								<Table modal={this.state.isModal}>
