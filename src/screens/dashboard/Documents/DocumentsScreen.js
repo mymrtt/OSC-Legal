@@ -1,9 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/jsx-no-duplicate-props */
-/* eslint-disable no-mixed-spaces-and-tabs */
-/* eslint-disable max-len */
-/* eslint-disable react/jsx-key */
-/* eslint-disable class-methods-use-this */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -53,7 +47,7 @@ const MaximumWidth = styled.div`
 `;
 
 const ContainerHeader = styled.div`
-	margin: 3rem 4rem 1.5rem 4rem;
+	margin: 3rem 4rem 2rem 4rem;
   display: flex;
   justify-content: space-between;
 
@@ -139,8 +133,8 @@ const ContainerAddModel = styled.div`
 `;
 
 const InitialAddModel = styled.div`
-	width: 96%;
-	height: 170px;
+	width: 98%;
+	height: 11rem;
 	display: flex;
 	text-align: center;
 	justify-content: center;
@@ -157,12 +151,14 @@ const InitialAddModel = styled.div`
 
 	@media (max-width: 768px) {
 		padding: 0 5%;
+		width: 98%;
 	}
 
 	@media (max-width: 490px) {
-		width: 100%;
+		width: 95%;
 		padding: 0 6%;
 		margin-bottom: 2rem;
+		margin-left: .7rem;
 	}
 `;
 
@@ -172,6 +168,7 @@ const ContainerScroll = styled.div`
 	max-height: 65vh;
 	overflow-y: scroll;
 	display: ${props => (props.initialModel ? 'none' : 'inline-block')};
+	margin-right: 1rem;
 
 	&::-webkit-scrollbar {
 		display: none;
@@ -249,7 +246,7 @@ const ContainerSearch = styled.div`
 
 const SearchText = styled.p`
   color: #231F20;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-family: Overpass, Bold;
 	font-weight: 600;
   margin-right: 1rem;
@@ -268,7 +265,7 @@ const ContainerSearchInput = styled.label`
 
 	img {
 		margin: 0.4rem 0 0.5rem 0.5rem;
-    width: 25px;
+    width: 1.09rem;
 	}
 
 	@media (max-width: 490px) {
@@ -283,14 +280,14 @@ const SearchInput = styled.input`
 	padding-left: .5rem;
 	font-size: 1rem;
 	font-family: Overpass, Regular;
-	color: #959595;
+	color: #85144B;
 
 	@media (max-width: 1024px) {
 		font-size: 0.9rem;
 	}
 
 	@media (max-width: 768px) {
-		font-size: .8rem;
+		font-size: 1rem;
 	}
 
 	@media (max-width: 490px) {
@@ -471,7 +468,7 @@ const Option = styled.button`
 	width: 8rem;
 	height: 2.5rem;
 	padding: 0 1rem;
-	display: flex;
+	display: ${props => (props.hidden ? 'none' : 'flex')};
 	justify-content: space-between;
 	background: transparent;
 	border: none;
@@ -519,13 +516,13 @@ const OptionText = styled.p`
 
 const Button = styled.button`
   margin: 2rem;
-	width: 50%;
-	height: 4rem;
+	width: 18.75rem;
+	height: 4.7rem;
 	border: 0;
   color: #fff;
   box-shadow: 0 3px 6px #00000029;
   border-radius: 3px;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
@@ -538,7 +535,7 @@ const Button = styled.button`
 	}
 
 	@media (max-width: 768px) {
-		font-size: 1.3rem;
+		font-size: 1.2rem;
 		width: 70%;
 	}
 
@@ -587,6 +584,8 @@ const ModalAddModel = styled.form`
 	@media (max-width: 490px) {
 		height: 100vh;
 		width: 100%;
+		position: absolute;
+		top: 0%;
 		padding: 5%;
 	}
 `;
@@ -631,7 +630,7 @@ const ParagraphSair = styled.p`
 const HeaderAddModel = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding-top: 1rem;
+
 	img {
 		width: 20px;
 		height: 20px;
@@ -650,6 +649,7 @@ const TitleAddModel = styled.h2`
 
 	@media (max-width: 490px) {
 		font-size: 1.5rem;
+		margin-bottom: 1rem;
 	}
 `;
 
@@ -703,6 +703,7 @@ const TextUploadFile = styled.div`
 	span {
 		cursor: pointer;
 		text-decoration: underline;
+		margin-left: .5rem;	
 	}
 	@media (max-width: 490px) {
 		width: 52%;
@@ -749,18 +750,20 @@ const TextArea = styled.textarea`
 	font-family: "Overpass", SemiBold;
 
 	@media (max-width: 490px) {
-		height: 100px;
+		height: 9.37rem;
 		margin-bottom: 2rem;
+		width: 100%;
 	}
 	resize: none;
 `;
 
 const ButtonAdd = styled(Button)`
 	align-self: flex-end;
-	width: 55%;
+	width: 18.75rem;
+	height: 4rem;
+	font-size: 1.2rem;
 	margin: 0;
 	text-transform: uppercase;
-	height: 3.5rem;
 
 	@media (max-width: 1024px) {
 		font-size: .9rem;
@@ -798,6 +801,9 @@ const ModalDelete = styled.div`
 		width: 100%;
 		height: 100vh;
 		padding: 5%;
+		    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 	}
 `;
 
@@ -819,6 +825,7 @@ const WrapTextModal = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+		margin-top: 5%;
 	}
 `;
 
@@ -839,9 +846,8 @@ const TextModal = styled.p`
 `;
 
 const ButtonsModal = styled.div`
-	display: flex;
-	width: 98%;
 	margin-top: 5%;
+
 	@media (max-width: 490px) {
 		margin: 0;
 		width: 100%;
@@ -854,16 +860,22 @@ const ButtonCancel = styled(Button)`
 	margin: 5% 0 0 0;
 	box-shadow: none;
 	width: 50%;
+
 	@media (max-width: 490px) {
 		margin: 0;
+		position: initial;
+		width: 100%;
 	}
 `;
 
 const ButtonConfirm = styled(Button)`
 	margin: 5% 0 0 0;
 	width: 50%;
+
 	@media (max-width: 490px) {
 		margin: 0;
+		position: initial;
+		width: 100%;
 	}
 `;
 
@@ -878,8 +890,6 @@ const ErrorText = styled.p`
 
 class DocumentsScreen extends Component {
 	state = {
-		initialModel: null,
-		// initialModel: true,
 		changeColorLabel: false,
 		options: false,
 		selectedOptions: '',
@@ -895,6 +905,7 @@ class DocumentsScreen extends Component {
 		colorTextDelete: '',
 		redirect: false,
 		isFile: null,
+		hidden: false,
 		document: {
 			title: '',
 			description: '',
@@ -906,25 +917,6 @@ class DocumentsScreen extends Component {
 		isErrorFile: false,
 		isErrorTitleQtd: false,
 	};
-
-	// componentDidMount() {
-	// 	if (this.props.documentsList.length <= 0) {
-	// 		this.setState({
-	// 			initialModel: true,
-	// 		});
-	// 	} else {
-	// 		this.setState({
-	// 			initialModel: false,
-	// 		});
-	// 	}
-	// }
-	// componentDidMount() {
-	// 	if (this.props.documentsList.length !== 0) {
-	// 		this.setState({
-	// 			initialModel: false,
-	// 		});
-	// 	}
-	// }
 
 	handleOnOptions = (item) => {
 		this.setState({
@@ -951,6 +943,10 @@ class DocumentsScreen extends Component {
 			addModel: false,
 			isError: false,
 			isFile: null,
+			isErrorDescription: false,
+			isErrorFile: false,
+			isErrorTitle: false,
+			isErrorTitleQtd: false,
 		});
 	}
 
@@ -1050,45 +1046,67 @@ class DocumentsScreen extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.handleErrors();
-
-		this.setState({
-			title: '',
-			description: '',
-			isFile: null,
-		});
+		console.log(this.state.document);
 	}
 
 	handleErrors = () => {
 		const { title, description } = this.state.document;
 		const { isFile } = this.state;
 
+		if (isFile === null) {
+			this.setState({
+				isErrorFile: true,
+			});
+		} else {
+			this.setState({
+				isErrorFile: false,
+			});
+		}
+		if (description === '') {
+			this.setState({
+				isErrorDescription: true,
+			});
+		} else {
+			this.setState({
+				isErrorDescription: false,
+			});
+		}
+		if (title === '') {
+			this.setState({
+				isErrorTitle: true,
+				isErrorTitleQtd: false,
+			});
+		} else {
+			this.setState({
+				isErrorTitle: false,
+			});
+		}
+		if (title.length < 4 && title.length > 1) {
+			this.setState({
+				isErrorTitleQtd: true,
+			});
+		} else {
+			this.setState({
+				isErrorTitleQtd: false,
+			});
+		}
 		if (title === '' && description === '' && isFile === null) {
 			this.setState({
 				isError: true,
 				isErrorTitle: false,
 				isErrorDescription: false,
 				isErrorFile: false,
+				isErrorTitleQtd: false,
 			});
-		} else if (isFile === null) {
-			this.setState({
-				isErrorFile: true,
-			});
-		} else if (description === '') {
-			this.setState({
-				isErrorDescription: true,
-			});
-		} else if (title === '') {
-			this.setState({
-				isErrorTitle: true,
-			});
-		} else if (title.length < 4) {
-			this.setState({
-				isErrorTitleQtd: true,
-			});
-		} else {
-			this.props.addNewDocument(
+		}
+		if (title !== '' && title.length > 4 && description !== '' && isFile !== null) {
+			this.props.addNewDocument({
 				title, description, isFile,
-			);
+			});
+			this.setState({
+				document: {},
+				isFile: null,
+			});
 			this.handleCancelAddModel();
 		}
 	}
@@ -1141,7 +1159,9 @@ class DocumentsScreen extends Component {
 							<img src={documentWhite} alt="Anexar Documento" />
 							<TextUploadFile file={this.state.isFile}>
 								<h3>{this.state.isFile === null ? 'Adicionar documento' : 'Modelo adicionado'}</h3>
-								<p>Arraste o documento para cá ou <span>Clique aqui</span></p>
+								<p>Arraste o documento para cá ou
+									<span>{this.state.isFile === null ? 'Clique aqui' : 'Clique aqui para adicionar outro modelo'}</span>
+								</p>
 							</TextUploadFile>
 						</UploadFile>
 						{this.state.isErrorFile && <ErrorText>{Messages[2]}</ErrorText>}
@@ -1149,7 +1169,7 @@ class DocumentsScreen extends Component {
 							<TitleInputs>Nome do modelo</TitleInputs>
 							<Input
 								validationModel={this.state.validationModel}
-								value={this.props.documentsList.title}
+								value={this.state.document.title}
 								onChange={e => this.handleModelChange('title', e)}
 								type="text"
 								placeholder="Digitar nome do documento"
@@ -1162,7 +1182,7 @@ class DocumentsScreen extends Component {
 							<TitleInputs>Descrição</TitleInputs>
 							<TextArea
 								validationModel={this.state.validationModel}
-								value={this.props.documentsList.description}
+								value={this.state.document.description}
 								onChange={e => this.handleModelChange('description', e)}
 								type="text"
 								placeholder="Como esse documento é usado"
@@ -1227,7 +1247,7 @@ class DocumentsScreen extends Component {
 					<ContainerContent>
 						<ContainerAddModel>
 							<AddModelImage src={ImageDocument} />
-							<Button onClick={this.handleAddModel}>Adicionar Modelo</Button>
+							<Button hidden={this.state.addModel || this.state.modalDelete} onClick={this.handleAddModel}>Adicionar Modelo</Button>
 							{this.state.addModel
 								&& this.renderModalModels()}
 						</ContainerAddModel>
@@ -1282,11 +1302,11 @@ class DocumentsScreen extends Component {
 										</ContainerModel>
 									))
 								) : (
-										<InitialAddModel>
-											<TitleInitialAddModel>Você ainda não possui um modelo</TitleInitialAddModel>
-											<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span></TextInitialAddModel>
-										</InitialAddModel>
-									)}
+									<InitialAddModel>
+										<TitleInitialAddModel>Você ainda não possui um modelo</TitleInitialAddModel>
+										<TextInitialAddModel>Escolha um modelo de documento clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span></TextInitialAddModel>
+									</InitialAddModel>
+								)}
 								{this.state.modalDelete
 									&& this.renderModalDelete()}
 							</ContainerModels>

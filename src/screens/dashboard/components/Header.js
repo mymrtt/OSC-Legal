@@ -106,10 +106,10 @@ const ContainerAdm = styled.div`
 	}
 `;
 
-const ParagraphContainer1 = styled.p`
+const ParagraphUserName = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin: 1.2rem 3rem 0 0;
+	margin: 1.2rem 5.5rem 0 0;
 
 	@media (max-width: 859px) {
 		font-size: 1.2rem;
@@ -127,7 +127,7 @@ const ParagraphContainer1 = styled.p`
 `;
 
 const ParagraphSair = styled.p`
-	margin-right: 3rem;
+	margin-right: 5.5rem;
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
@@ -173,10 +173,10 @@ class Header extends Component {
   				</NavLink>
   			</WrapButton>
   			<ContainerAdm>
-  				<ParagraphContainer1>
+  				<ParagraphUserName>
   					{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
 							&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
-  				</ParagraphContainer1>
+  				</ParagraphUserName>
   				<ParagraphSair onClick={this.handleRedirect}>
               sair
   				</ParagraphSair>

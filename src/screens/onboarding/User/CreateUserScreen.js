@@ -254,8 +254,13 @@ const TitleTerms = styled.h1`
     font-size: 1.5rem;
     align-self: center;
 	}
+
+	@media(max-width: 375px){
+		margin: 3rem 0 3rem 0;
+	}
+
 	@media(max-width: 320px){
-		margin-bottom: 5rem;
+		margin-bottom: 9rem;
 	}
 `;
 
@@ -288,7 +293,6 @@ const ButtonTerms = styled.button`
 
 const BlockTerms = styled.div`
   width: 97%;
-  /* height: 90%; */
   background: #ffcfcd;
   padding: 1rem 1rem;
   border-radius: 4px;
@@ -303,7 +307,7 @@ const BlockTerms = styled.div`
     background: #FFF;
 	}
 
-	@media(max-width: 320px) and (max-height: 570px){
+	@media(max-width: 320px) and (max-height: 568px){
 		margin-bottom: 4rem;
 	}
 `;
@@ -324,10 +328,6 @@ const Terms = styled.p`
     width: 90%;
     align-self: center;
 	}
-
-	/* @media(max-width: 375px){
-		margin-bottom: 3rem;
-	} */
 
 `;
 
@@ -486,7 +486,6 @@ class CreateUserScreen extends Component {
 		}
 	};
 
-
 	renderTerms = () => (
 		<Overlay>
 			<Modal>
@@ -522,7 +521,7 @@ class CreateUserScreen extends Component {
 		const errorMessage = [
 			'Use 6 caracteres ou mais para a sua senha.',
 			'CPF inválido.',
-			'Insira um número de telefone válido',
+			'Insira um número de telefone válido.',
 		];
 		const {
 			isErrorPassword,
@@ -531,6 +530,7 @@ class CreateUserScreen extends Component {
 			isErrorCpf,
 			togglePassword,
 			isTermsOpen,
+			isErrorTel,
 		} = this.state;
 		const {
 			name,
@@ -610,10 +610,11 @@ class CreateUserScreen extends Component {
 									onChange={ev => this.handleChange('telephone', ev)}
 									value={telephone}
 									placeholder="(00) 00000-0000"
-									name="telefone"
+									name="telephone"
+									isError={isErrorTel}
 									required
 								/>
-								{this.state.isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
+								{isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>senha</ParagraphInput>
