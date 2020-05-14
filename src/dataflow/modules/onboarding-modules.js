@@ -4,8 +4,7 @@ const UPDATE_RESET_PASSWORD = 'osc/resetpassword/UPDATE_RESET_PASSWORD';
 const IS_RESET_PASSWORD = 'osc/resetpassword/IS_RESET_PASSWORD';
 
 const initialState = {
-	// users: { email: 'teste@gmail.com', password: '12345678' },
-	users: { email: '', password: '', typeAccount: 'admin' },
+	users: { email: '', password: '', typeAccount: 'user' },
 	isResetPassword: undefined,
 	emailReset: '',
 };

@@ -66,7 +66,7 @@ const initialState = {
 			createdIn: '17/06/19',
 			authorization: '02/06/19',
 			dueDate: '02/07/19',
-			status: 'autorizar',
+			status: 'pendente',
 			admin:
 			{
 				name: 'Alice Barbosa Souza',
