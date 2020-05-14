@@ -387,6 +387,11 @@ class CreateUserScreen extends Component {
 		this.setState({ user });
 	};
 
+	handleChangeCpf = (ev) => {
+		const { user } = this.state;
+		user['cpf'] = ev.target.value;
+		this.setState({ user, isErrorCpf: false});
+	};
 
 	isValidCPF = () => {
 		const { cpf } = this.state.user;
@@ -449,7 +454,7 @@ class CreateUserScreen extends Component {
 		}
 		if (cpf.length === 11) {
 			this.setState({
-				isErrorCpf: !this.isValidCPF(),
+				isErrorCpf: false,
 			});
 		} else {
 			this.setState({
@@ -475,7 +480,7 @@ class CreateUserScreen extends Component {
 			});
 		}
 
-		if (telephone.length > 8 && password.length >= 6 && cpf.length === 11) {
+		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11) {
 			this.props.addNewUser(user);
 			this.handleModalSucess();
 		}
@@ -519,7 +524,6 @@ class CreateUserScreen extends Component {
 			'CPF inválido.',
 			'Insira um número de telefone válido',
 		];
-
 		const {
 			isErrorPassword,
 			modalSucess,
@@ -579,12 +583,11 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input
-									type="text"
-									onChange={ev => this.handleChange('cpf', ev)}
+									type="number"
+									onChange={ev => this.handleChangeCpf(ev)}
 									value={cpf}
 									placeholder="000.000.000-00"
 									name="cpf"
-									isError={isErrorCpf}
 									required
 								/>
 								{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
@@ -603,7 +606,7 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>telefone</ParagraphInput>
 								<Input
-									type="text"
+									type="number"
 									onChange={ev => this.handleChange('telephone', ev)}
 									value={telephone}
 									placeholder="(00) 00000-0000"
