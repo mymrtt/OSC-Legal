@@ -246,9 +246,9 @@ const ContainerTableUser = styled.div`
 `;
 
 const Content = styled.div`
+	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
 	max-width: 100%;
 	width: 100%;
-	padding: ${props => (props.padding ? '2.5rem 5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -257,6 +257,7 @@ const Content = styled.div`
 
 const ContainerTable = styled.div`
 	/* max-height: 69vh; */
+	${'' /* max-height: 77vh; */}
 	max-height: calc(100vh - 85px - 96px - 2.8rem);
 	overflow-y: scroll;
 
@@ -274,10 +275,6 @@ const ContainerTable = styled.div`
 
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
-	}
-
-	@media (max-width: 768px) {
-		margin: 0 2rem;
 	}
 
 	@media(max-width: 648px) {
@@ -438,8 +435,9 @@ const TableList = styled.td`
 	padding-bottom: 0; */
 	color: #404040;
 	font-family: "Overpass", Light;
-	font-weight: ${props => (props.font ? '900' : 'none')};
+	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
+	text-align: ${props => (props.wNumber && 'center')};
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -448,11 +446,12 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
-	height: 100%;
+	${''}
 	/* padding: 0.5rem; */
-	text-align: center;
+	${''}
 	display: flex;
-	align-items: center;
+	${''}
+	height: inherit;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
 
 	${({ selected }) => selected && css`
@@ -467,7 +466,7 @@ const ContainerStatus = styled.td`
 `;
 
 const TextStatus = styled.p`
-	color: ${props => (props.color)};
+	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
 	text-transform: uppercase;
 
@@ -632,6 +631,7 @@ class OrganizationScreen extends Component {
 								{this.state.selectedItems.map((item, index) => (
 									<SelectedItem
 										onClick={() => this.handleSelectedValue(item)}
+										style={{ paddingTop: item === 'Selecionar status' && '.7rem' }}
 										key={index}
 										hover={item}
 									>
@@ -659,7 +659,7 @@ class OrganizationScreen extends Component {
 				))}
 			</Box>
 			<BoxButton onClick={() => this.handleClickedImageStatus(item)}>
-				<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
+				<TextStatus color={item.isChanged}
 					isClickedName={item.id === this.state.isClickedStatus}
 				>
 					{item.status}
@@ -742,18 +742,21 @@ class OrganizationScreen extends Component {
 							{item.telephone}
 						</TableList>
 						<TableList
+							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
 							{item.createdIn}
 						</TableList>
 						<TableList
+							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
 							{item.authorization}
 						</TableList>
 						<TableList
+							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
@@ -831,7 +834,11 @@ class OrganizationScreen extends Component {
 												<TableTitle width={'6rem'}
 													key={title}
 													center={title}
-													style={{ paddingLeft: title === 'Organização' && '0.7rem' }}
+													style={{
+														paddingLeft: title === 'Organização' && '0.7rem',
+														textAlign: title === 'Criado em'
+														|| title === 'Autorização' || title === 'Vencimento' ? 'center' : null,
+													}}
 												>
 													{title}
 												</TableTitle>
