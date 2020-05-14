@@ -15,10 +15,8 @@ export default function (state = initialState, action) {
 			documentsList: [
 				...state.documentsList,
 				{
+					...action.info,
 					id: action.id,
-					title: action.info,
-					description: action.info,
-					file: action.info,
 				},
 			],
 		});

@@ -92,7 +92,7 @@ const initialState = {
 			createdIn: '15/06/19',
 			authorization: '15/07/19',
 			dueDate: '-',
-			status: 'autorizar',
+			status: 'Vencido',
 			admin:
 			{
 				name: 'Vinicius Almeida Rodrigues',

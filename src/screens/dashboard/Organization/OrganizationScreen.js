@@ -21,7 +21,7 @@ import selectMaisMobile from '../../../assets/selectMais.svg';
 import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
 
 const mapStateToProps = state => ({
-	typeAccount: state.onboarding.users.typeAccount,
+	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
 });
 
@@ -37,9 +37,9 @@ const Container = styled.div`
 `;
 
 const ContainerUser = styled.div`
-	width: 100%;
-	height: 100vh;
-	background-color: #FFCFCD;
+	width: ${props => (props.width ? '100%' : '100%')};
+	height: ${props => (props.height ? '0' : '100vh')};
+	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 `;
 
 const CreateButtonUser = styled.button`
@@ -129,10 +129,10 @@ const SelectViewBy = styled.div`
 const SpanSelect = styled.div`
 	width: 15rem;
 	margin: 0.5rem 0 0;
-	position: relative;
 	display: flex;
   flex-direction: column;
 	z-index: 11;
+	position: relative;
 
 	@media (max-width: 940px) {
 		width: 47%;
@@ -238,17 +238,17 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-  width: 94%;
-  max-height: 100vh;
-  background-color: #FFFFFF;
-	border-radius: 3px;
-	margin: 0 2.5rem;
+  width: ${props => (props.width ? '100%' : '94%')};
+  max-height: ${props => (props.height ? '0' : '100vh')};
+  background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
+	border-radius: ${props => (props.border ? '0' : '3px')};
+	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 `;
 
 const Content = styled.div`
+	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
 	max-width: 100%;
 	width: 100%;
-	padding: 2.5rem 5rem 0;
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -257,6 +257,7 @@ const Content = styled.div`
 
 const ContainerTable = styled.div`
 	/* max-height: 69vh; */
+	${'' /* max-height: 77vh; */}
 	max-height: calc(100vh - 85px - 96px - 2.8rem);
 	overflow-y: scroll;
 
@@ -274,10 +275,6 @@ const ContainerTable = styled.div`
 
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
-	}
-
-	@media (max-width: 768px) {
-		margin: 0 2rem;
 	}
 
 	@media(max-width: 648px) {
@@ -438,8 +435,9 @@ const TableList = styled.td`
 	padding-bottom: 0; */
 	color: #404040;
 	font-family: "Overpass", Light;
-	font-weight: ${props => (props.font ? '900' : 'none')};
+	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
+	text-align: ${props => (props.wNumber && 'center')};
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -448,11 +446,12 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
-	height: 100%;
+	${''}
 	/* padding: 0.5rem; */
-	text-align: center;
+	${''}
 	display: flex;
-	align-items: center;
+	${''}
+	height: inherit;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
 
 	${({ selected }) => selected && css`
@@ -467,7 +466,7 @@ const ContainerStatus = styled.td`
 `;
 
 const TextStatus = styled.p`
-	color: ${props => (props.color)};
+	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
 	text-transform: uppercase;
 
@@ -572,6 +571,12 @@ class OrganizationScreen extends Component {
 		});
 	};
 
+	handleClosedModal = () => {
+		this.setState({
+			isModal: false,
+		});
+	}
+
 	handleSelectedStatus = (newStatus, item) => {
 		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
@@ -602,12 +607,12 @@ class OrganizationScreen extends Component {
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
-				{this.props.typeAccount === 'admin'
+				{this.props.isAdmin
 					? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
 					: <TitleMyOrganization>Minhas organizações</TitleMyOrganization>
 				}
 				<SelectViewBy>
-					{this.props.typeAccount === 'admin'
+					{this.props.isAdmin
 						? <TitleViewBy>Visualizar por:</TitleViewBy>
 						: <TitleSearch>Pesquisar</TitleSearch>
 					}
@@ -616,7 +621,7 @@ class OrganizationScreen extends Component {
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							{this.props.typeAccount === 'admin'
+							{this.props.isAdmin
 								?	<img src={ImageCaminho} alt="arrow" />
 								:	<img src={magnifyingGlass} alt="Lupa"/>
 							}
@@ -626,6 +631,7 @@ class OrganizationScreen extends Component {
 								{this.state.selectedItems.map((item, index) => (
 									<SelectedItem
 										onClick={() => this.handleSelectedValue(item)}
+										style={{ paddingTop: item === 'Selecionar status' && '.7rem' }}
 										key={index}
 										hover={item}
 									>
@@ -653,7 +659,7 @@ class OrganizationScreen extends Component {
 				))}
 			</Box>
 			<BoxButton onClick={() => this.handleClickedImageStatus(item)}>
-				<TextStatus color={item.isChanged ? '#FF4136' : '#85144B'}
+				<TextStatus color={item.isChanged}
 					isClickedName={item.id === this.state.isClickedStatus}
 				>
 					{item.status}
@@ -736,18 +742,21 @@ class OrganizationScreen extends Component {
 							{item.telephone}
 						</TableList>
 						<TableList
+							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
 							{item.createdIn}
 						</TableList>
 						<TableList
+							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
 							{item.authorization}
 						</TableList>
 						<TableList
+							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
@@ -795,19 +804,27 @@ class OrganizationScreen extends Component {
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal
-				&& <ModalOrganization item={this.state.itemSelected} onClick={this.isModalOpen} />
+				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
 				&& <ModalCreateOrganization />
 				}
 				<Header />
-				<ContainerUser>
-					{this.props.typeAccount === 'user'
+				<ContainerUser
+					width={this.props.isAdmin}
+					height={this.props.isAdmin}
+					background={this.props.isAdmin}>
+					{!this.props.isAdmin
 					&& <CreateButtonUser
 						onClick={this.isModalCreateOrganization}> Criar Organização </CreateButtonUser>
 					}
-					<ContainerTableUser>
-						<Content>
+					<ContainerTableUser
+						width={this.props.isAdmin}
+						height={this.props.isAdmin}
+						background={this.props.isAdmin}
+						border={this.props.isAdmin}
+						margin={this.props.isAdmin}>
+						<Content padding={this.props.isAdmin}>
 							{this.renderSelectedViewby()}
 							<ContainerTable>
 								<Table modal={this.state.isModal}>
@@ -817,7 +834,11 @@ class OrganizationScreen extends Component {
 												<TableTitle width={'6rem'}
 													key={title}
 													center={title}
-													style={{ paddingLeft: title === 'Organização' && '0.7rem' }}
+													style={{
+														paddingLeft: title === 'Organização' && '0.7rem',
+														textAlign: title === 'Criado em'
+														|| title === 'Autorização' || title === 'Vencimento' ? 'center' : null,
+													}}
 												>
 													{title}
 												</TableTitle>

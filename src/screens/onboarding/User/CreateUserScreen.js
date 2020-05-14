@@ -465,17 +465,17 @@ class CreateUserScreen extends Component {
 				isErrorPassword: false,
 			});
 		}
-		if (!telephone || telephone.length < 8) {
-			this.setState({
-				isErrorTel: true,
-			});
-		} else {
-			this.setState({
-				isErrorTel: false,
-			});
-		}
+		// if (!telephone || telephone.length < 8) {
+		// 	this.setState({
+		// 		isErrorTel: true,
+		// 	});
+		// } else {
+		// 	this.setState({
+		// 		isErrorTel: false,
+		// 	});
+		// }
 
-		if (telephone.length > 8 && password.length >= 6 && cpf.length === 11) {
+		if (password.length >= 6 && cpf.length === 11 && telephone.length >= 8) {
 			this.props.addNewUser(user);
 			this.handleModalSucess();
 		}
@@ -514,10 +514,14 @@ class CreateUserScreen extends Component {
 	)
 
 	render() {
+		console.log('telephone', this.state.user.telephone);
+		console.log('cpf', this.state.user.cpf);
+		console.log('isErrorTel', this.state.isErrorTel);
+		console.log('isErrorCpf', this.state.isErrorCpf);
 		const errorMessage = [
 			'Use 6 caracteres ou mais para a sua senha.',
 			'CPF inválido.',
-			'Insira um número de telefone válido',
+			'Insira um número de telefone válido.',
 		];
 
 		const {
@@ -527,6 +531,7 @@ class CreateUserScreen extends Component {
 			isErrorCpf,
 			togglePassword,
 			isTermsOpen,
+			isErrorTel,
 		} = this.state;
 		const {
 			name,
@@ -607,10 +612,11 @@ class CreateUserScreen extends Component {
 									onChange={ev => this.handleChange('telephone', ev)}
 									value={telephone}
 									placeholder="(00) 00000-0000"
-									name="telefone"
+									name="telephone"
+									isError={isErrorTel}
 									required
 								/>
-								{this.state.isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
+								{isErrorTel && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>senha</ParagraphInput>
