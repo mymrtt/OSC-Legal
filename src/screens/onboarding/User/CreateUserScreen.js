@@ -387,6 +387,11 @@ class CreateUserScreen extends Component {
 		this.setState({ user });
 	};
 
+	handleChangeCpf = (ev) => {
+		const { user } = this.state;
+		user['cpf'] = ev.target.value;
+		this.setState({ user, isErrorCpf: false});
+	};
 
 	isValidCPF = () => {
 		const { cpf } = this.state.user;
@@ -449,7 +454,7 @@ class CreateUserScreen extends Component {
 		}
 		if (cpf.length === 11) {
 			this.setState({
-				isErrorCpf: !this.isValidCPF(),
+				isErrorCpf: false,
 			});
 		} else {
 			this.setState({
@@ -465,22 +470,21 @@ class CreateUserScreen extends Component {
 				isErrorPassword: false,
 			});
 		}
-		// if (!telephone || telephone.length < 8) {
-		// 	this.setState({
-		// 		isErrorTel: true,
-		// 	});
-		// } else {
-		// 	this.setState({
-		// 		isErrorTel: false,
-		// 	});
-		// }
+		if (!telephone || telephone.length < 8) {
+			this.setState({
+				isErrorTel: true,
+			});
+		} else {
+			this.setState({
+				isErrorTel: false,
+			});
+		}
 
-		if (password.length >= 6 && cpf.length === 11 && telephone.length >= 8) {
+		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11) {
 			this.props.addNewUser(user);
 			this.handleModalSucess();
 		}
 	};
-
 
 	renderTerms = () => (
 		<Overlay>
@@ -514,16 +518,11 @@ class CreateUserScreen extends Component {
 	)
 
 	render() {
-		console.log('telephone', this.state.user.telephone);
-		console.log('cpf', this.state.user.cpf);
-		console.log('isErrorTel', this.state.isErrorTel);
-		console.log('isErrorCpf', this.state.isErrorCpf);
 		const errorMessage = [
 			'Use 6 caracteres ou mais para a sua senha.',
 			'CPF inválido.',
 			'Insira um número de telefone válido.',
 		];
-
 		const {
 			isErrorPassword,
 			modalSucess,
@@ -584,12 +583,11 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input
-									type="text"
-									onChange={ev => this.handleChange('cpf', ev)}
+									type="number"
+									onChange={ev => this.handleChangeCpf(ev)}
 									value={cpf}
 									placeholder="000.000.000-00"
 									name="cpf"
-									isError={isErrorCpf}
 									required
 								/>
 								{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
@@ -608,7 +606,7 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>telefone</ParagraphInput>
 								<Input
-									type="text"
+									type="number"
 									onChange={ev => this.handleChange('telephone', ev)}
 									value={telephone}
 									placeholder="(00) 00000-0000"
