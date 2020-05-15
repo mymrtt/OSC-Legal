@@ -125,6 +125,7 @@ class ResetPasswordCode extends Component {
 						marginMobile='3rem 0 2rem 0'
 						text="redefinir senha"
 						type="button"
+						textTransform
 						onClick={this.handleRedirect}
 					/>
 				</Content>

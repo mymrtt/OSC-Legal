@@ -129,6 +129,7 @@ const CreateUserSucessScreen = props => (
 					height="3.8rem"
 					margin="2rem 0 1.5rem"
 					text="fazer login"
+					textTransform
 				/>
 			</Link>
 		</Content>

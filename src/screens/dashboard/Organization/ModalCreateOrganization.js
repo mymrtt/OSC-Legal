@@ -260,10 +260,10 @@ export default class CreateOrganization extends Component {
     const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
 
     return (
-      <Overlay onClick={this.ModalClosed}>
+      <Overlay onClick={this.props.handleClosedModal}>
         <Container onSubmit={this.handleSubmit}>
         <img src={Exit} alt="Exit"/>
-          <ContainerFisicalPerson onClick={this.ModalClosed}>
+          <ContainerFisicalPerson onClick={this.props.handleClosedModal}>
             <h1>Criar organização</h1>
             <h2>pessoa física</h2>
             <div>
@@ -360,7 +360,7 @@ export default class CreateOrganization extends Component {
                 </label>
               </Label>
             </WrapLegalPerson>
-            <Button to={'/modalSucessfully'} type="submit" text="concluir"/>
+            <Button to={'/modalSucessfully'} type="submit" text="concluir" textTransform/>
           </ContainerLegalPerson>
         </Container>
       </Overlay>
