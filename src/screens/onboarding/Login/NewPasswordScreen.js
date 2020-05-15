@@ -256,6 +256,7 @@ class NewPasswordScreen extends Component {
 						marginMobile='0.5rem 0 1.5rem'
 						text="Prossiga com nova senha"
 						type="submit"
+						textTransform
 					/>
 					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>

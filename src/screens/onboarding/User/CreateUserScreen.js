@@ -135,22 +135,24 @@ const ParagraphInput = styled.p`
 `;
 
 const ErrorMessage = styled.p`
-  font-size: 0.6rem;
+  margin: 0.5rem 0 0.5rem 0.8rem;
+  font-size: 0.8rem;
   color: #f00;
   align-self: flex-start;
-  font-weight: normal;
-  margin: 0.5rem 0 0.5rem 0.8rem;
+	font-family: Overpass;
+  font-weight: 400;
   @media (max-width: 425px) {
     margin: 0.5rem 0 0.5rem 0;
   }
 `;
 
 const ErrorEmpty = styled.p`
+  margin: 0.5rem 0 0.5rem 1.9rem;
   font-size: 0.7rem;
   color: #F00;
   align-self: flex-start;
-  font-weight: normal;
-  margin: 0.5rem 0 0.5rem 1.9rem;
+	font-family: Overpass;
+  font-weight: 400;
 	@media(max-width: 2560px){
 		margin: 0.5rem 0 0.5rem 3.2rem;
 	}
@@ -288,6 +290,8 @@ const ButtonTerms = styled.button`
     margin: 0.8rem 0;
     font-size: 1rem;
     font-weight: bold;
+
+
   }
 `;
 
@@ -390,7 +394,7 @@ class CreateUserScreen extends Component {
 
 	handleChangeCpf = (ev) => {
 		const { user } = this.state;
-		user['cpf'] = ev.target.value;
+		user.cpf = ev.target.value;
 		this.setState({ user, isErrorCpf: false });
 	};
 
@@ -662,6 +666,7 @@ class CreateUserScreen extends Component {
 								widthMobile="90%"
 								text="concordar e criar conta"
 								type="submit"
+								textTransform
 							/>
 						</Form>
 						{ isTermsOpen && this.renderTerms() }

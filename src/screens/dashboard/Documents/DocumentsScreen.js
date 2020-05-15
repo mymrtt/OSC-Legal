@@ -1,5 +1,8 @@
 /* eslint-disable react/jsx-key */
+<<<<<<< HEAD
 /* eslint-disable no-nested-ternary */
+=======
+>>>>>>> 1203edb70729a7d9d4ccf6ae199517bfc4dab223
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -419,12 +422,23 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: 85%;
+	width: ${props => (props.isAdmin ? '85%' : '100%')};
 	display: flex;
 	flex-direction: column;
+<<<<<<< HEAD
 	border: ${props => (props.ishovering ? '1px solid #85144B' : 'none')};
+=======
+	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
+
+	&:hover {
+		border: ${props => (props.isAdmin ? '0' : '1px solid #85144B')};
+		border-radius: ${props => (props.isAdmin ? '0' : '3px')};
+	}
+
+>>>>>>> 1203edb70729a7d9d4ccf6ae199517bfc4dab223
 	span {
 		display: flex;
+		padding: ${props => (props.isAdmin ? '0' : '0 2rem')};
 
 		@media (max-width: 768px) {
 			width: 95%;
@@ -449,6 +463,7 @@ const ModelNumber = styled.h2`
 	color: #FF4136;
 	font-family: "Overpass", Black;
 	font-size: 1.5rem;
+
 	@media (max-width: 490px) {
 		font-size: 1.2rem;
 	}
@@ -470,6 +485,8 @@ const ModelParagraph = styled.p`
   width: 92%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
+	padding: ${props => (props.isAdmin ? '0' : '0 2rem 1rem 2rem')};
+
 	@media (max-width: 768px) {
 		font-size: 1rem;
 		width: 98%;
@@ -996,13 +1013,14 @@ const Modal = styled.div`
 	border-radius: 4px;
 	display: flex;
 	flex-direction: column;
-	padding: 1rem 3rem;
+	padding: 1rem 2rem;
 `;
 
 const BoxTitle = styled.span`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	padding: 5rem 2rem 0 2rem;
 `;
 
 const SubtitleModal = styled.p`
@@ -1403,13 +1421,18 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
+<<<<<<< HEAD
 					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription>
+=======
+					{this.state.listDocs.map(docs => (
+						<ContainerModelDescription isAdmin={this.state.isAdmin}>
+>>>>>>> 1203edb70729a7d9d4ccf6ae199517bfc4dab223
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
 							</span>
-							<ModelParagraph>{docs.description}</ModelParagraph>
+							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
 						</ContainerModelDescription>
 					))}
 				</BoxModelsDoc>
