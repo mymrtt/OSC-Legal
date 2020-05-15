@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -416,11 +417,19 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: 85%;
+	width: ${props => (props.isAdmin ? '85%' : '100%')};
 	display: flex;
 	flex-direction: column;
+	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
+
+	&:hover {
+		border: ${props => (props.isAdmin ? '0' : '1px solid #85144B')};
+		border-radius: ${props => (props.isAdmin ? '0' : '3px')};
+	}
+
 	span {
 		display: flex;
+		padding: ${props => (props.isAdmin ? '0' : '0 2rem')};
 
 		@media (max-width: 768px) {
 			width: 95%;
@@ -445,6 +454,7 @@ const ModelNumber = styled.h2`
 	color: #FF4136;
 	font-family: "Overpass", Black;
 	font-size: 1.5rem;
+
 	@media (max-width: 490px) {
 		font-size: 1.2rem;
 	}
@@ -466,6 +476,8 @@ const ModelParagraph = styled.p`
   width: 92%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
+	padding: ${props => (props.isAdmin ? '0' : '0 2rem 1rem 2rem')};
+
 	@media (max-width: 768px) {
 		font-size: 1rem;
 		width: 98%;
@@ -985,6 +997,42 @@ const TextOrg = styled.p`
 	font-family: 'Overpass', Regular;
 `;
 
+const Modal = styled.div`
+	width: 45.3rem;
+	min-height: 100vh;
+	background: #FFF;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem 2rem;
+`;
+
+const BoxTitle = styled.span`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 5rem 2rem 0 2rem;
+`;
+
+const SubtitleModal = styled.p`
+	font-size: 1.1rem;
+	color: #959595;
+	font-family: 'Overpass', Regular;
+	margin-bottom: 1rem;
+`;
+
+const TitleModalList = styled.h2`
+	color: #85144B;
+	font-size: 2rem;
+	font-family: Overpass;
+	margin: 1rem 0 .5rem 0;
+`;
+
+const BoxModelsDoc = styled.span`
+
+`;
+
+
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1014,11 +1062,36 @@ class DocumentsScreen extends Component {
 		isErrorFile: false,
 		isErrorTitleQtd: false,
 		isBoxFilter: false,
+		ishovering: false,
 		Orgs: [
 			'vai na web',
 			'instituto precisa ser',
 			'celebrations',
 			'crianças felizes',
+		],
+		modalListDoc: true,
+		listDocs: [
+			{
+				id: 1,
+				title: 'Modelo 1',
+				description: 'Modelo de estatuto',
+			},
+			{
+				id: 2,
+				title: 'Modelo 2',
+				description: 'Modelo de estatuto',
+			},
+			{
+				id: 3,
+				title: 'Modelo 3',
+				description: 'Modelo de estatuto',
+			},
+			{
+				id: 4,
+				title: 'Modelo 4',
+				description: 'Modelo de estatuto',
+			},
+
 		],
 	};
 
@@ -1231,6 +1304,19 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	openModalListDoc = () => {
+		this.setState({
+			modalListDoc: true,
+		});
+	}
+
+	closeModalListDoc = () => {
+		this.setState({
+			modalListDoc: false,
+		});
+	}
+
+
 	renderModalModels = () => {
 		const Messages = [
 			'Adicione um nome ao seu modelo',
@@ -1339,6 +1425,28 @@ class DocumentsScreen extends Component {
 		</ContainerModalDelete>
 	)
 
+	renderModalListDoc = () => (
+		<ContainerModal onClick={this.closeModalListDoc}>
+			<Modal onClick={ev => ev.stopPropagation()}>
+				<BoxTitle>
+					<TitleModalList>Adicionar Documento</TitleModalList>
+					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
+				</BoxTitle>
+				<BoxModelsDoc>
+					{this.state.listDocs.map(docs => (
+						<ContainerModelDescription isAdmin={this.state.isAdmin}>
+							<span key={docs}>
+								<ModelNumber>{docs.id}</ModelNumber>
+								<ModelTitle>{docs.title}</ModelTitle>
+							</span>
+							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
+						</ContainerModelDescription>
+					))}
+				</BoxModelsDoc>
+			</Modal>
+		</ContainerModal>
+	)
+
 	render() {
 		const documentsList = (this.state.search !== '')
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
@@ -1366,7 +1474,8 @@ class DocumentsScreen extends Component {
 							</Button>
 						) : (
 							<Button
-								onClick={this.handleListDoc}
+								onClick={this.openModalListDoc}
+								hidden={this.state.modalListDoc}
 							>
 									Adicionar Documento
 							</Button>
@@ -1482,6 +1591,7 @@ class DocumentsScreen extends Component {
 									</ContainerAddModelMob>
 									{this.state.addModel && this.renderModalModels()}
 									{this.state.modalDelete && this.renderModalDelete()}
+									{this.state.modalListDoc && this.renderModalListDoc()}
 								</ContainerModels>
 							</ContainerScroll>
 						</ContainerContent>
