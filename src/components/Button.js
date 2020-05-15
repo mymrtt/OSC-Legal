@@ -6,15 +6,15 @@ const MyButton = styled.button`
   margin: ${props => props.margin};
   width: ${props => props.width};
   height: ${props => (props.height ? props.height : '3.5rem')};
-  color: #fff;
-  font-size: 1rem;
+  color: #FFFFFF;
+  font-size: ${props => (props.fontSize ? props.fontSize : '1rem')};
   font-weight: 600;
   font-family: Overpass, Bold;
   border: 0;
   border-radius: 3px;
-  background-color: #ff4136;
+  background-color: #FF4136;
   box-shadow: 0 3px 6px #00000029;
-  text-transform: uppercase;
+  text-transform: ${props => (props.textTransform && 'uppercase')};
 
   @media(max-width: 768px){
     height: ${props => props.heightMobile};
@@ -40,10 +40,12 @@ const Button = props => (
 		widthMobileSmall={props.widthMobileSmall}
 		height={props.height}
 		heightMobile={props.heightMobile}
-		margin={props.margin}
-		marginMobile={props.marginMobile}
+		fontSize={props.fontSize}
 		padding={props.padding}
 		paddingMobile={props.paddingMobile}
+		margin={props.margin}
+		marginMobile={props.marginMobile}
+		textTransform={props.textTransform}
 	>
 		{props.text}
 	</MyButton>

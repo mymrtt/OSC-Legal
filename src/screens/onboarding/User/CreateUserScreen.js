@@ -666,6 +666,7 @@ class CreateUserScreen extends Component {
 								widthMobile="90%"
 								text="concordar e criar conta"
 								type="submit"
+								textTransform
 							/>
 						</Form>
 						{ isTermsOpen && this.renderTerms() }

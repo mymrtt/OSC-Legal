@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
+import Button from '../../../components/Button';
 
 // Image
 import ImageCaminho from '../../../assets/caminho.svg';
@@ -40,19 +41,6 @@ const ContainerUser = styled.div`
 	width: ${props => (props.width ? '100%' : '100%')};
 	height: ${props => (props.height ? '0' : '100vh')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
-`;
-
-const CreateButtonUser = styled.button`
-	width: 25%;
-  background-color: #FF4136;
-  border: 0;
-  border-radius: 3px;
-  color: #fff;
-  font-size: 1.4rem;
-  font-family: Overpass, SemiBold;
-  font-weight: bold;
-  padding: 1.3rem;
-  margin: 1.5rem 0 1.5rem 2.5rem;
 `;
 
 const ContainerSelectedViewBy = styled.div`
@@ -256,7 +244,7 @@ const Content = styled.div`
 
 const ContainerTable = styled.div`
 	/* max-height: 69vh; */
-	${'' /* max-height: 77vh; */}
+	${''}
 	max-height: calc(100vh - 85px - 96px - 2.8rem);
 	overflow-y: scroll;
 
@@ -411,9 +399,9 @@ const Box = styled.div`
 `;
 
 const BoxButton = styled.button`
-	height: 100%;
 	border: none;
 	background: none;
+	outline: none;
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
@@ -673,7 +661,7 @@ class OrganizationScreen extends Component {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 
 		return listTable.map(item => (
-			<Tr key={item.organization}>
+			<Tr key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
@@ -684,7 +672,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
-							width={'8.5rem'}
+							width={'9rem'}
 						>
 							{item.organization}
 						</TableList>
@@ -694,7 +682,7 @@ class OrganizationScreen extends Component {
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'9rem'}
+					width={'9.5rem'}
 				>
 					{item.cpf}
 				</TableList>
@@ -808,7 +796,7 @@ class OrganizationScreen extends Component {
 				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
-				&& <ModalCreateOrganization />
+				&& <ModalCreateOrganization handleClosedModal={this.isModalCreateOrganization} />
 				}
 				<Header />
 				<ContainerUser
@@ -816,8 +804,14 @@ class OrganizationScreen extends Component {
 					height={this.props.isAdmin}
 					background={this.props.isAdmin}>
 					{!this.props.isAdmin
-					&& <CreateButtonUser
-						onClick={this.isModalCreateOrganization}> Criar Organização </CreateButtonUser>
+					&& <Button
+						width='22%'
+						height='4rem'
+						fontSize='1.4rem'
+						margin='1.5rem 0 1.5rem 2.5rem'
+						text='Criar Organização'
+						type='button'
+						onClick={this.isModalCreateOrganization}/>
 					}
 					<ContainerTableUser
 						width={this.props.isAdmin}

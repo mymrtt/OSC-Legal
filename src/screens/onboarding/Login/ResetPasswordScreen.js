@@ -176,6 +176,7 @@ class ResetPasswordEmailScreen extends Component {
 							margin='1rem 0 1.5rem 0'
 							marginMobile='5.9rem 0 2.7rem 0'
 							text="solicitar redefinição de senha"
+							textTransform
 							type="submit"
 						/>
 					</Box>

@@ -64,6 +64,7 @@ const ConfirmEmail = () => (
 				widthMobile="100%"
 				heightMobile="4rem"
 				text="confirmar e acessar"
+				textTransform
 			/>
 		</Modal>
 	</Container>
