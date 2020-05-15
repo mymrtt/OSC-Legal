@@ -611,7 +611,7 @@ const Button = styled.button`
 		margin: 0;
 		font-size: 1.2rem;
 		width: ${props => (props.modelMob ? '86%' : '95%')};
-		z-index: ${props => (props.hidden ? '6' : 0)};
+		z-index: 6;
 	}
 `;
 
@@ -978,6 +978,10 @@ const BoxFilter = styled.div`
 	left: 0;
 	top: 1.85rem;
 	background: #FFF;
+
+	@media (max-width: 490px) {
+		z-index: 6;
+	}
 `;
 
 const Org = styled.div`
