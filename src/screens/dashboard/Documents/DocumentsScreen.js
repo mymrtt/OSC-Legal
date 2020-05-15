@@ -574,7 +574,7 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
-	display: ${props => props.hidden ? 'none' : 'block'};
+	display: ${props => (props.hidden ? 'none' : 'block')};
 
 	@media (max-width: 1024px) {
 		padding: 0;
@@ -956,7 +956,7 @@ const BoxFilter = styled.div`
 	display: flex;
 	flex-direction: column;
 	border: 1px solid #85144B;
-	padding: .5rem; 
+	padding: .5rem;
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -969,7 +969,7 @@ const Org = styled.div`
 	font-size: .75rem;
 	font-family: 'Overpass';
 	font-weight: 600;
-	cursor: pointer;	
+	cursor: pointer;
 	width: 100%;
 	padding: .3rem 0;
 
@@ -1366,9 +1366,9 @@ class DocumentsScreen extends Component {
 									Adicionar Modelo
 							</Button>
 						) : (
-								<Button
-									onClick={this.handleListDoc}
-								>
+							<Button
+								onClick={this.handleListDoc}
+							>
 									Adicionar Documento
 							</Button>
 						)}

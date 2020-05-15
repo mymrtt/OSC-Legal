@@ -801,6 +801,8 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
+		const { isAdmin } = this.props;
+
 		return (
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
@@ -812,20 +814,20 @@ class OrganizationScreen extends Component {
 				}
 				<Header />
 				<ContainerUser
-					width={this.props.isAdmin}
-					height={this.props.isAdmin}
-					background={this.props.isAdmin}>
-					{!this.props.isAdmin
+					width={isAdmin}
+					height={isAdmin}
+					background={isAdmin}>
+					{!isAdmin
 					&& <CreateButtonUser
 						onClick={this.isModalCreateOrganization}> Criar Organização </CreateButtonUser>
 					}
 					<ContainerTableUser
-						width={this.props.isAdmin}
-						height={this.props.isAdmin}
-						background={this.props.isAdmin}
-						border={this.props.isAdmin}
-						margin={this.props.isAdmin}>
-						<Content padding={this.props.isAdmin}>
+						width={isAdmin}
+						height={isAdmin}
+						background={isAdmin}
+						border={isAdmin}
+						margin={isAdmin}>
+						<Content padding={isAdmin}>
 							{this.renderSelectedViewby()}
 							<ContainerTable>
 								<Table modal={this.state.isModal}>
