@@ -51,7 +51,6 @@ const CreateButtonUser = styled.button`
   font-size: 1.4rem;
   font-family: Overpass, SemiBold;
   font-weight: bold;
-	text-decoration: none;
   padding: 1.3rem;
   margin: 1.5rem 0 1.5rem 2.5rem;
 `;
@@ -412,10 +411,13 @@ const Box = styled.div`
 `;
 
 const BoxButton = styled.button`
-	/* width: 100%; */
 	height: 100%;
 	border: none;
 	background: none;
+
+	@media(max-width: 768px) {
+		display: ${props => (props.isClickedName ? 'none' : 'flex')};
+	}
 `;
 
 const TableTitleMob = styled.th`
@@ -446,11 +448,7 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
-	${''}
-	/* padding: 0.5rem; */
-	${''}
 	display: flex;
-	${''}
 	height: inherit;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
 
@@ -617,6 +615,9 @@ class OrganizationScreen extends Component {
 						: <TitleSearch>Pesquisar</TitleSearch>
 					}
 					<SpanSelect>
+						{/* {!this.props.isAdmin
+							&& <input></input>
+						} */}
 						<InputSelect onClick={this.isSelectOpen}>
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
@@ -658,9 +659,9 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 			</Box>
-			<BoxButton onClick={() => this.handleClickedImageStatus(item)}>
+			<BoxButton isClickedName={item.id === this.state.isClickedStatus} onClick={() => this.handleClickedImageStatus(item)}>
 				<TextStatus color={item.isChanged}
-					isClickedName={item.id === this.state.isClickedStatus}
+					// isClickedName={item.id === this.state.isClickedStatus}
 				>
 					{item.status}
 				</TextStatus>
