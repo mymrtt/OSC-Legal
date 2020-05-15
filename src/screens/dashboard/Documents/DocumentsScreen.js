@@ -1,8 +1,6 @@
 /* eslint-disable react/jsx-key */
-<<<<<<< HEAD
 /* eslint-disable no-nested-ternary */
-=======
->>>>>>> 1203edb70729a7d9d4ccf6ae199517bfc4dab223
+
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -369,7 +367,7 @@ const ContainerModel = styled.div`
 	align-self: center;
 
 	&:hover {
-		border:1px solid #85144B;
+		border: 1px solid #85144B;
 
 		&::before {
 			content: '';
@@ -425,9 +423,7 @@ const ContainerModelDescription = styled.div`
 	width: ${props => (props.isAdmin ? '85%' : '100%')};
 	display: flex;
 	flex-direction: column;
-<<<<<<< HEAD
 	border: ${props => (props.ishovering ? '1px solid #85144B' : 'none')};
-=======
 	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
 
 	&:hover {
@@ -435,7 +431,6 @@ const ContainerModelDescription = styled.div`
 		border-radius: ${props => (props.isAdmin ? '0' : '3px')};
 	}
 
->>>>>>> 1203edb70729a7d9d4ccf6ae199517bfc4dab223
 	span {
 		display: flex;
 		padding: ${props => (props.isAdmin ? '0' : '0 2rem')};
@@ -1008,19 +1003,19 @@ const TextOrg = styled.p`
 
 const Modal = styled.div`
 	width: 45.3rem;
-	min-height: 100vh;
+	height: 90vh;
 	background: #FFF;
 	border-radius: 4px;
 	display: flex;
 	flex-direction: column;
-	padding: 1rem 2rem;
+	padding: .5rem 2rem;
 `;
 
 const BoxTitle = styled.span`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	padding: 5rem 2rem 0 2rem;
+	padding: 1rem 2rem 0 2rem;
 `;
 
 const SubtitleModal = styled.p`
@@ -1038,7 +1033,30 @@ const TitleModalList = styled.h2`
 `;
 
 const BoxModelsDoc = styled.span`
+	width: 100%;
+	height: 80%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	margin-bottom: 1rem;
+	
+	&::-webkit-scrollbar{
+		display: none;
+	}
+`;
 
+const ButtonModalList = styled.button`
+	width: 18rem;
+	height: 3.5rem;
+	background: #FF4136;
+	color: #FFF;
+	text-transform: uppercase;
+	border-radius: 3px;
+	border: none;
+	align-self: flex-end;
+	margin-top: 1rem;
+	font-weight: bold;
+	font-size: 1rem;
 `;
 
 
@@ -1080,6 +1098,21 @@ class DocumentsScreen extends Component {
 		],
 		modalListDoc: false,
 		listDocs: [
+			{
+				id: 1,
+				title: 'Modelo 1',
+				description: 'igfghdjfiohdfgnjlkf',
+			},
+			{
+				id: 2,
+				title: 'Modelo 2',
+				description: 'igfghdjfiohdfgnjlkf',
+			},
+			{
+				id: 3,
+				title: 'Modelo 3',
+				description: 'igfghdjfiohdfgnjlkf',
+			},
 		],
 	};
 
@@ -1421,13 +1454,8 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-<<<<<<< HEAD
 					{this.props.documentsList.map(docs => (
-						<ContainerModelDescription>
-=======
-					{this.state.listDocs.map(docs => (
 						<ContainerModelDescription isAdmin={this.state.isAdmin}>
->>>>>>> 1203edb70729a7d9d4ccf6ae199517bfc4dab223
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
@@ -1436,6 +1464,7 @@ class DocumentsScreen extends Component {
 						</ContainerModelDescription>
 					))}
 				</BoxModelsDoc>
+				<ButtonModalList>Escolher</ButtonModalList>
 			</Modal>
 		</ContainerModal>
 	)
@@ -1580,7 +1609,8 @@ class DocumentsScreen extends Component {
 													zIndex={this.state.modalListDoc}
 													displayBefore={this.state.modalDelete}
 													onMouseEnter={() => this.handleOnOptions(docs)}
-													onMouseLeave={this.handleOffOptions}>
+													onMouseLeave={this.handleOffOptions}
+												>
 													<ContainerModelDescription>
 														<span>
 															<ModelNumber>{docs.id}</ModelNumber>
