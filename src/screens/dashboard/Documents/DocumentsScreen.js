@@ -427,7 +427,7 @@ const ContainerModelDescription = styled.div`
 	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
 
 	&:hover {
-		border: ${props => (props.isAdmin ? '0' : '1px solid #85144B')};
+		border: ${props => (props.hidden ? '1px solid #85144B' : '0')};
 		border-radius: ${props => (props.isAdmin ? '0' : '3px')};
 	}
 
@@ -1113,6 +1113,15 @@ class DocumentsScreen extends Component {
 				title: 'Modelo 3',
 				description: 'igfghdjfiohdfgnjlkf',
 			},
+<<<<<<< HEAD
+=======
+			{
+				id: 4,
+				title: 'Modelo 4',
+				description: 'Modelo de estatutoModelo de estatuto',
+			},
+
+>>>>>>> 7a97a6c3d702763d50f179ca56293a36aa9d121a
 		],
 	};
 
@@ -1454,8 +1463,13 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
+<<<<<<< HEAD
 					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription isAdmin={this.state.isAdmin}>
+=======
+					{this.state.listDocs.map(docs => (
+						<ContainerModelDescription hidden={this.state.modalListDoc} isAdmin={this.state.isAdmin}>
+>>>>>>> 7a97a6c3d702763d50f179ca56293a36aa9d121a
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
