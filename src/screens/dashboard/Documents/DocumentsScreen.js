@@ -419,6 +419,7 @@ const ContainerModelDescription = styled.div`
 	width: 85%;
 	display: flex;
 	flex-direction: column;
+	border: ${props => props.ishovering ? '1px solid #85144B' : 'none'};
 	span {
 		display: flex;
 
@@ -574,7 +575,7 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
-	display: ${props => props.hidden ? 'none' : 'block'};
+	display: ${props => (props.hidden ? 'none' : 'block')};
 
 	@media (max-width: 1024px) {
 		padding: 0;
@@ -985,6 +986,41 @@ const TextOrg = styled.p`
 	font-family: 'Overpass', Regular;
 `;
 
+const Modal = styled.div`
+	width: 45.3rem;
+	min-height: 100vh;
+	background: #FFF;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem 3rem;
+`;
+
+const BoxTitle = styled.span`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+`;
+
+const SubtitleModal = styled.p`
+	font-size: 1.1rem;
+	color: #959595;
+	font-family: 'Overpass', Regular;
+	margin-bottom: 1rem;
+`;
+
+const TitleModalList = styled.h2`
+	color: #85144B;
+	font-size: 2rem;
+	font-family: Overpass;
+	margin: 1rem 0 .5rem 0;
+`;
+
+const BoxModelsDoc = styled.span`
+
+`;
+
+
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1014,11 +1050,36 @@ class DocumentsScreen extends Component {
 		isErrorFile: false,
 		isErrorTitleQtd: false,
 		isBoxFilter: false,
+		ishovering: false,
 		Orgs: [
 			'vai na web',
 			'instituto precisa ser',
 			'celebrations',
 			'crianças felizes',
+		],
+		modalListDoc: true,
+		listDocs: [
+			{
+				id: 1,
+				title: 'Modelo 1',
+				description: 'Modelo de estatuto',
+			},
+			{
+				id: 2,
+				title: 'Modelo 2',
+				description: 'Modelo de estatuto',
+			},
+			{
+				id: 3,
+				title: 'Modelo 3',
+				description: 'Modelo de estatuto',
+			},
+			{
+				id: 4,
+				title: 'Modelo 4',
+				description: 'Modelo de estatuto',
+			},
+
 		],
 	};
 
@@ -1231,6 +1292,19 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	openModalListDoc = () => {
+		this.setState({
+			modalListDoc: true,
+		});
+	}
+
+	closeModalListDoc = () => {
+		this.setState({
+			modalListDoc: false,
+		});
+	}
+
+
 	renderModalModels = () => {
 		const Messages = [
 			'Adicione um nome ao seu modelo',
@@ -1339,12 +1413,33 @@ class DocumentsScreen extends Component {
 		</ContainerModalDelete>
 	)
 
+	renderModalListDoc = () => (
+		<ContainerModal onClick={this.closeModalListDoc}>
+			<Modal onClick={ev => ev.stopPropagation()}>
+				<BoxTitle>
+					<TitleModalList>Adicionar Documento</TitleModalList>
+					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
+				</BoxTitle>
+				<BoxModelsDoc>
+					{this.state.listDocs.map(docs => (
+						<ContainerModelDescription>
+							<span key={docs}>
+								<ModelNumber>{docs.id}</ModelNumber>
+								<ModelTitle>{docs.title}</ModelTitle>
+							</span>
+							<ModelParagraph>{docs.description}</ModelParagraph>
+						</ContainerModelDescription>
+					))}
+				</BoxModelsDoc>
+			</Modal>
+		</ContainerModal>
+	)
+
 	render() {
 		const documentsList = (this.state.search !== '')
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
 			: this.props.documentsList;
 		const { isAdmin } = this.props;
-		const { addModel, modalDelete } = this.state;
 
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxFilter}>
@@ -1366,9 +1461,10 @@ class DocumentsScreen extends Component {
 									Adicionar Modelo
 							</Button>
 						) : (
-								<Button
-									onClick={this.handleListDoc}
-								>
+							<Button
+								onClick={this.openModalListDoc}
+								hidden={this.state.modalListDoc}
+							>
 									Adicionar Documento
 							</Button>
 						)}
@@ -1483,6 +1579,7 @@ class DocumentsScreen extends Component {
 									</ContainerAddModelMob>
 									{this.state.addModel && this.renderModalModels()}
 									{this.state.modalDelete && this.renderModalDelete()}
+									{this.state.modalListDoc && this.renderModalListDoc()}
 								</ContainerModels>
 							</ContainerScroll>
 						</ContainerContent>
