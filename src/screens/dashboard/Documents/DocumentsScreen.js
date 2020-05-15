@@ -574,7 +574,7 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
-	display: ${props => props.hidden ? 'none' : 'block'};
+	display: ${props => (props.hidden ? 'none' : 'block')};
 
 	@media (max-width: 1024px) {
 		padding: 0;
@@ -1344,7 +1344,6 @@ class DocumentsScreen extends Component {
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
 			: this.props.documentsList;
 		const { isAdmin } = this.props;
-		const { addModel, modalDelete } = this.state;
 
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxFilter}>
@@ -1366,9 +1365,9 @@ class DocumentsScreen extends Component {
 									Adicionar Modelo
 							</Button>
 						) : (
-								<Button
-									onClick={this.handleListDoc}
-								>
+							<Button
+								onClick={this.handleListDoc}
+							>
 									Adicionar Documento
 							</Button>
 						)}
