@@ -431,7 +431,7 @@ const ModelParagraph = styled.p`
 `;
 
 const ContainerOptions = styled.div`
-	display: flex;
+	display: ${props => (props.contOptions ? 'flex' : 'none')};
 	justify-content: center;
 	flex-direction: column;
 	width: 15%;
@@ -447,7 +447,6 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		display: ${props => (props.contOptions ? 'flex' : 'none')};
 		position: absolute;
 		width: 160px;
 		height: 130px;
@@ -861,6 +860,11 @@ const ButtonCancel = styled(Button)`
 	box-shadow: none;
 	width: 50%;
 
+	@media (max-width: 1024px) {
+		margin: 5% 0 0 0;
+		width: 50%;
+	}
+
 	@media (max-width: 490px) {
 		margin: 0;
 		position: initial;
@@ -871,6 +875,11 @@ const ButtonCancel = styled(Button)`
 const ButtonConfirm = styled(Button)`
 	margin: 5% 0 0 0;
 	width: 50%;
+
+	@media (max-width: 1024px) {
+		margin: 5% 0 0 0;
+		width: 50%;
+	}
 
 	@media (max-width: 490px) {
 		margin: 0;
