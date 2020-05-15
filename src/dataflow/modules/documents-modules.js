@@ -4,12 +4,7 @@ const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
 
 // Initial State
 const initialState = {
-	documentsList: [
-		{
-			title: 'dsdsadsa',
-			description: 'dsdsds',
-		},
-	],
+	documentsList: [],
 };
 
 // Reducers
