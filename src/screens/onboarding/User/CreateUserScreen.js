@@ -260,7 +260,7 @@ const TitleTerms = styled.h1`
 	}
 
 	@media(max-width: 320px){
-		margin-bottom: 9rem;
+		margin-bottom: 7rem;
 	}
 `;
 
@@ -308,6 +308,7 @@ const BlockTerms = styled.div`
 	}
 
 	@media(max-width: 320px) and (max-height: 568px){
+		padding: 0;
 		margin-bottom: 4rem;
 	}
 `;
@@ -390,7 +391,7 @@ class CreateUserScreen extends Component {
 	handleChangeCpf = (ev) => {
 		const { user } = this.state;
 		user['cpf'] = ev.target.value;
-		this.setState({ user, isErrorCpf: false});
+		this.setState({ user, isErrorCpf: false });
 	};
 
 	isValidCPF = () => {
