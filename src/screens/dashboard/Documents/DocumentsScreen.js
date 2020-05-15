@@ -445,7 +445,7 @@ const ContainerModelDescription = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		width: 70%;
+		width: ${props => (props.isAdmin ? '70%' : '100%')};
 	}
 
 	@media (max-width: 490px) {
@@ -611,7 +611,7 @@ const Button = styled.button`
 		margin: 0;
 		font-size: 1.2rem;
 		width: ${props => (props.modelMob ? '86%' : '95%')};
-		z-index: 6;
+		z-index: ${props => (props.hidden ? '6' : 0)};
 	}
 `;
 
@@ -1009,6 +1009,16 @@ const Modal = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: .5rem 2rem;
+
+	@media (max-width: 768px) {
+		width: 40rem;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+	}
 `;
 
 const BoxTitle = styled.span`
@@ -1030,6 +1040,10 @@ const TitleModalList = styled.h2`
 	font-size: 2rem;
 	font-family: Overpass;
 	margin: 1rem 0 .5rem 0;
+
+	@media (max-width: 490px) {
+		font-size: 1.8rem;
+	}
 `;
 
 const BoxModelsDoc = styled.span`
@@ -1057,8 +1071,11 @@ const ButtonModalList = styled.button`
 	margin-top: 1rem;
 	font-weight: bold;
 	font-size: 1rem;
-`;
 
+	@media (max-width: 490px) {
+		width: 100%;
+	}
+`;
 
 class DocumentsScreen extends Component {
 	state = {
@@ -1113,15 +1130,11 @@ class DocumentsScreen extends Component {
 				title: 'Modelo 3',
 				description: 'igfghdjfiohdfgnjlkf',
 			},
-<<<<<<< HEAD
-=======
 			{
 				id: 4,
 				title: 'Modelo 4',
 				description: 'Modelo de estatutoModelo de estatuto',
 			},
-
->>>>>>> 7a97a6c3d702763d50f179ca56293a36aa9d121a
 		],
 	};
 
@@ -1463,13 +1476,8 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-<<<<<<< HEAD
-					{this.props.documentsList.map(docs => (
-						<ContainerModelDescription isAdmin={this.state.isAdmin}>
-=======
 					{this.state.listDocs.map(docs => (
 						<ContainerModelDescription hidden={this.state.modalListDoc} isAdmin={this.state.isAdmin}>
->>>>>>> 7a97a6c3d702763d50f179ca56293a36aa9d121a
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
@@ -1681,9 +1689,9 @@ class DocumentsScreen extends Component {
 									<ContainerAddModelMob>
 										<Button modelMob
 											hidden={this.state.addModel || this.state.modalDelete}
-											onClick={this.handleAddModel}
+											onClick={this.openModalListDoc}
 										>
-											Adicionar Modelo
+											Adicionar Documento
 										</Button>
 									</ContainerAddModelMob>
 									{this.state.addModel && this.renderModalModels()}
