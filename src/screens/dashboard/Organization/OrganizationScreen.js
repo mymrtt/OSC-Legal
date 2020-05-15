@@ -495,8 +495,8 @@ class OrganizationScreen extends Component {
 			selectedValue: 'Selecionar status',
 			selectedItems: [
 				'Selecionar status',
-				{ select: 'Pendente de Autorização', filter: 'autorizar' },
 				{ select: 'Pendente de Pagamento', filter: 'pendente' },
+				{ select: 'Pendente de Autorização', filter: 'autorizar' },
 				'Isento',
 				'Pago',
 				'Vencido',

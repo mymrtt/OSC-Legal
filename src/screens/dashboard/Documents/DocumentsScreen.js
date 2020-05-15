@@ -5,6 +5,11 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
+import Header from '../components/Header';
+import logo from '../../../assets/logo.svg';
+
+// Images
+import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
 import DownloadIcon from '../../../assets/download.svg';
@@ -13,9 +18,7 @@ import Exit from '../../../assets/exit.svg';
 import DeleteIcon from '../../../assets/delete.svg';
 import DeleteIconWhite from '../../../assets/deleteWhite.svg';
 import documentWhite from '../../../assets/documentWhite.svg';
-
-import Header from '../components/Header';
-import logo from '../../../assets/logo.svg';
+import ArrowDownIcon from '../../../assets/caminho.svg';
 
 // Redux
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
@@ -253,7 +256,7 @@ const TextInitialAddModel = styled.p`
 
 const ContainerSearch = styled.div`
 	margin-right: 1.2rem;
-	width: 40%;
+	width: 60%;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
@@ -294,6 +297,11 @@ const ContainerSearchInput = styled.label`
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
+	border-bottom-right-radius: ${props => (props.filter ? '0' : '3px')};
+	border-bottom-left-radius: ${props => (props.filter ? '0' : '3px')};
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
 
 	img {
 		margin: 0.4rem 0 0.5rem 0.5rem;
@@ -566,6 +574,7 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
+	display: ${props => props.hidden ? 'none' : 'block'};
 
 	@media (max-width: 1024px) {
 		padding: 0;
@@ -863,9 +872,9 @@ const WrapTextModal = styled.div`
 	@media (max-width: 490px) {
 		height: 30%;
     display: flex;
-    ${'' /* justify-content: space-between; */}
+    ${''}
     flex-direction: column;
-		${'' /* margin-top: 5%; */}
+		${''}
 	}
 `;
 
@@ -942,6 +951,40 @@ const ErrorText = styled.p`
 	font-family: Overpass;
 `;
 
+const BoxFilter = styled.div`
+	width: 21.3rem;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #85144B;
+	padding: .5rem; 
+	position: absolute;
+	right: 0;
+	left: 0;
+	top: 1.85rem;
+	background: #FFF;
+`;
+
+const Org = styled.div`
+	color: #231F20;
+	font-size: .75rem;
+	font-family: 'Overpass';
+	font-weight: 600;
+	cursor: pointer;	
+	width: 100%;
+	padding: .3rem 0;
+
+	:hover{
+		background: #FFCFCD;
+		border: 1px solid #85144B;
+	}
+`;
+
+const TextOrg = styled.p`
+	font-size: .8rem;
+	color: #959595;
+	font-family: 'Overpass', Regular;
+`;
+
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -970,6 +1013,13 @@ class DocumentsScreen extends Component {
 		isErrorTitle: false,
 		isErrorFile: false,
 		isErrorTitleQtd: false,
+		isBoxFilter: false,
+		Orgs: [
+			'vai na web',
+			'instituto precisa ser',
+			'celebrations',
+			'crianças felizes',
+		],
 	};
 
 	handleOnOptions = (item) => {
@@ -1168,6 +1218,18 @@ class DocumentsScreen extends Component {
 		this.setState({ redirect: true });
 	}
 
+	openBoxFilter = (ev) => {
+		ev.stopPropagation();
+		this.setState({
+			isBoxFilter: !this.state.isBoxFilter,
+		});
+	}
+
+	closeBoxFilter = () => {
+		this.setState({
+			isBoxFilter: false,
+		});
+	}
 
 	renderModalModels = () => {
 		const Messages = [
@@ -1281,32 +1343,67 @@ class DocumentsScreen extends Component {
 		const documentsList = (this.state.search !== '')
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
 			: this.props.documentsList;
+		const { isAdmin } = this.props;
+		const { addModel, modalDelete } = this.state;
 
 		return (
-			<Container onClick={this.handleClickedLabelLeave}>
+			<Container onClick={this.handleClickedLabelLeave || this.closeBoxFilter}>
 				<Header />
 				<MaximumWidth>
 					<ContainerAddModel>
-						<TitleSearch>Modelos de Documentos</TitleSearch>
-						<AddModelImage src={ImageDocument} />
-						<Button
-							hidden={this.state.addModel || this.state.modalDelete}
-							onClick={this.handleAddModel}
-						>
-							Adicionar Modelo
-						</Button>
-						{this.state.addModel && this.renderModalModels()}
+						{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
+						{
+							isAdmin ? (
+								<AddModelImage src={ImageDocument} />
+							) : (
+								<AddModelImage src={DocumentUser} />
+							)}
+						{isAdmin ? (
+							<Button
+								onClick={this.handleAddModel}
+								hidden={this.state.addModel || this.state.deleteModal}
+							>
+									Adicionar Modelo
+							</Button>
+						) : (
+								<Button
+									onClick={this.handleListDoc}
+								>
+									Adicionar Documento
+							</Button>
+						)}
 					</ContainerAddModel>
 					<Teste>
 						<ContainerHeader>
 							<ContainerSearch>
-								<SearchText>Pesquisar</SearchText>
-								<ContainerSearchInput>
-									<SearchInput
-										onChange={this.handleSearch}
-										placeholder="Digite aqui para pesquisar"
-									/>
-									<img src={magnifyingGlass} alt="Lupa" />
+								<SearchText>
+									{isAdmin ? 'Pesquisar' : 'Organização'}
+								</SearchText>
+								{/* {isAdmin ? ( */}
+								<ContainerSearchInput
+									filter={this.state.isBoxFilter}
+									onClick={this.openBoxFilter}
+								>
+									{isAdmin
+										? <SearchInput
+											onChange={this.handleSearch}
+											placeholder="Digite aqui para pesquisar"
+										/> : <TextOrg>Selecionar Organização</TextOrg>}
+									{isAdmin
+										? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
+										: <img src={ArrowDownIcon}
+											alt="arrow"
+											style={{ cursor: 'pointer' }}
+											onClick={this.openBoxFilter}
+										/>
+									}
+									{this.state.isBoxFilter && (
+										<BoxFilter onClick={ev => ev.stopPropagation()}>
+											{this.state.Orgs.map(orgs => (
+												<Org key={orgs}>{orgs}</Org>
+											))}
+										</BoxFilter>
+									)}
 								</ContainerSearchInput>
 							</ContainerSearch>
 						</ContainerHeader>
@@ -1363,7 +1460,13 @@ class DocumentsScreen extends Component {
 										))
 									) : (
 										<InitialAddModel>
-											<TitleInitialAddModel>Você ainda não possui um modelo</TitleInitialAddModel>
+											<TitleInitialAddModel>
+												{isAdmin ? (
+													'Você ainda não possui um modelo'
+												) : (
+													'Você não tem nenhum documento'
+												)}
+											</TitleInitialAddModel>
 											<TextInitialAddModel>
 												Escolha um modelo de documento
 												clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span>
