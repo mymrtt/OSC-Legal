@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable no-nested-ternary */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -28,6 +30,7 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
+	isAdmin: state.onboarding.users.isAdmin,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -419,7 +422,7 @@ const ContainerModelDescription = styled.div`
 	width: 85%;
 	display: flex;
 	flex-direction: column;
-	border: ${props => props.ishovering ? '1px solid #85144B' : 'none'};
+	border: ${props => (props.ishovering ? '1px solid #85144B' : 'none')};
 	span {
 		display: flex;
 
@@ -953,7 +956,7 @@ const ErrorText = styled.p`
 `;
 
 const BoxFilter = styled.div`
-	width: 21.3rem;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	border: 1px solid #85144B;
@@ -1057,29 +1060,8 @@ class DocumentsScreen extends Component {
 			'celebrations',
 			'crianças felizes',
 		],
-		modalListDoc: true,
+		modalListDoc: false,
 		listDocs: [
-			{
-				id: 1,
-				title: 'Modelo 1',
-				description: 'Modelo de estatuto',
-			},
-			{
-				id: 2,
-				title: 'Modelo 2',
-				description: 'Modelo de estatuto',
-			},
-			{
-				id: 3,
-				title: 'Modelo 3',
-				description: 'Modelo de estatuto',
-			},
-			{
-				id: 4,
-				title: 'Modelo 4',
-				description: 'Modelo de estatuto',
-			},
-
 		],
 	};
 
@@ -1421,7 +1403,7 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-					{this.state.listDocs.map(docs => (
+					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription>
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
@@ -1506,69 +1488,129 @@ class DocumentsScreen extends Component {
 						<ContainerContent>
 							<ContainerScroll>
 								<ContainerModels>
-									{documentsList && documentsList.length > 0 ? (
-										documentsList.map((item, index) => (
-											<ContainerModel key={item}
-												style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-												zIndex={this.state.addModel}
-												displayBefore={this.state.modalDelete}
-												onMouseEnter={() => this.handleOnOptions(item)}
-												onMouseLeave={this.handleOffOptions}>
-												<ContainerModelDescription>
-													<span>
-														<ModelNumber>{item.id}</ModelNumber>
-														<ModelTitle>{item.title}</ModelTitle>
-													</span>
-													<ModelParagraph>{item.description}</ModelParagraph>
-												</ContainerModelDescription>
-												<ContainerOptions
-													contOptions={this.state.options && (this.state.selectedOptions === item)}>
-													<Option
-														onMouseEnter={() => this.handleChangeColorExport(item)}
-														onMouseLeave={this.handleChangeColorLeaveExport}
-													>
-														<OptionImage
-															src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-															alt="Exportar" />
-														<OptionText
-															colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+
+									{isAdmin ? (
+										documentsList && documentsList.length > 0 ? (
+											documentsList.map((item, index) => (
+												<ContainerModel key={item}
+													style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+													zIndex={this.state.addModel}
+													displayBefore={this.state.modalDelete}
+													onMouseEnter={() => this.handleOnOptions(item)}
+													onMouseLeave={this.handleOffOptions}>
+													<ContainerModelDescription>
+														<span>
+															<ModelNumber>{item.id}</ModelNumber>
+															<ModelTitle>{item.title}</ModelTitle>
+														</span>
+														<ModelParagraph>{item.description}</ModelParagraph>
+													</ContainerModelDescription>
+													<ContainerOptions
+														contOptions={this.state.options && (this.state.selectedOptions === item)}>
+														<Option
+															onMouseEnter={() => this.handleChangeColorExport(item)}
+															onMouseLeave={this.handleChangeColorLeaveExport}
 														>
+															<OptionImage
+																src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+																alt="Exportar" />
+															<OptionText
+																colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+															>
 														Exportar
-														</OptionText>
-													</Option>
-													<Option
-														onMouseEnter={() => this.handleChangeColorDelete(item)}
-														onMouseLeave={this.handleChangeColorLeaveDelete}
-														onClick={this.handleModalDelete}
-													>
-														<OptionImage
-															src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
-															alt="Deletar" />
-														<OptionText
-															colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-															onClick={() => this.handleSelected(item)}
+															</OptionText>
+														</Option>
+														<Option
+															onMouseEnter={() => this.handleChangeColorDelete(item)}
+															onMouseLeave={this.handleChangeColorLeaveDelete}
+															onClick={this.handleModalDelete}
 														>
-															<p>Excluir</p>
-														</OptionText>
-													</Option>
-												</ContainerOptions>
-											</ContainerModel>
-										))
-									) : (
-										<InitialAddModel>
-											<TitleInitialAddModel>
-												{isAdmin ? (
-													'Você ainda não possui um modelo'
-												) : (
-													'Você não tem nenhum documento'
-												)}
-											</TitleInitialAddModel>
-											<TextInitialAddModel>
+															<OptionImage
+																src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+																alt="Deletar" />
+															<OptionText
+																colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+																onClick={() => this.handleSelected(item)}
+															>
+																<p>Excluir</p>
+															</OptionText>
+														</Option>
+													</ContainerOptions>
+												</ContainerModel>
+											))
+										) : (
+											<InitialAddModel>
+												<TitleInitialAddModel>
+													Você ainda não possui um modelo
+												</TitleInitialAddModel>
+												<TextInitialAddModel>
 												Escolha um modelo de documento
 												clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span>
-											</TextInitialAddModel>
-										</InitialAddModel>
+												</TextInitialAddModel>
+											</InitialAddModel>
+										)
+									) : (
+										this.state.listDocs && this.state.listDocs.length > 0 ? (
+											this.state.listDocs.map((docs, index) => (
+												<ContainerModel key={docs}
+													style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+													zIndex={this.state.modalListDoc}
+													displayBefore={this.state.modalDelete}
+													onMouseEnter={() => this.handleOnOptions(docs)}
+													onMouseLeave={this.handleOffOptions}>
+													<ContainerModelDescription>
+														<span>
+															<ModelNumber>{docs.id}</ModelNumber>
+															<ModelTitle>{docs.title}</ModelTitle>
+														</span>
+														<ModelParagraph>{docs.description}</ModelParagraph>
+													</ContainerModelDescription>
+													<ContainerOptions
+														contOptions={this.state.options && (this.state.selectedOptions === docs)}>
+														<Option
+															onMouseEnter={() => this.handleChangeColorExport(docs)}
+															onMouseLeave={this.handleChangeColorLeaveExport}
+														>
+															<OptionImage
+																src={this.state.hoverExport === docs ? this.state.downloadExport : DownloadIcon}
+																alt="Exportar" />
+															<OptionText
+																colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
+															>
+														Exportar
+															</OptionText>
+														</Option>
+														<Option
+															onMouseEnter={() => this.handleChangeColorDelete(docs)}
+															onMouseLeave={this.handleChangeColorLeaveDelete}
+															onClick={this.handleModalDelete}
+														>
+															<OptionImage
+																src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
+																alt="Deletar" />
+															<OptionText
+																colorTextButton={this.state.hoverDelete === docs ? this.state.colorTextDelete : '#85144B'}
+																onClick={() => this.handleSelected(docs)}
+															>
+																<p>Excluir</p>
+															</OptionText>
+														</Option>
+													</ContainerOptions>
+												</ContainerModel>
+											))
+										) : (
+											<InitialAddModel>
+												<TitleInitialAddModel>
+													Você ainda não tem nenhum documento
+												</TitleInitialAddModel>
+												<TextInitialAddModel>
+												Escolha um modelo de documento
+												clicando em <span onClick={this.modalListDoc}>Adicionar Documento</span>
+												</TextInitialAddModel>
+											</InitialAddModel>
+										)
 									)}
+
 									<ContainerAddModelMob>
 										<Button modelMob
 											hidden={this.state.addModel || this.state.modalDelete}
