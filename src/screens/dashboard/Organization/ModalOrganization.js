@@ -265,7 +265,7 @@ const ContainerOption = styled.p`
 `;
 
 const Separation = styled.div`
-	/* display: flex; */
+
 
 	@media (max-width: 648px) {
 		display: none;
@@ -379,20 +379,20 @@ class ModalOrganization extends Component {
 						<ContentCreate>
 							<ImageClosed src={ImageClose} alt="Fechar" onClick={this.props.handleClosedModal} />
 							<ContentConsultorDetails>
-                <ContentSubTitle>
-                  <div>
-                    <SubTitle>criado em</SubTitle>
-                    <SubAnswer>{item.createdIn}</SubAnswer>
-                  </div>
-                  <div>
-                    <SubTitle>autorizado em</SubTitle>
-                    <SubAnswer>{item.authorization}</SubAnswer>
-                  </div>
-                  <div>
-                    <SubTitle>vencimento</SubTitle>
-                    <SubAnswer>{item.dueDate}</SubAnswer>
-                  </div>
-                </ContentSubTitle>
+								<ContentSubTitle>
+									<div>
+										<SubTitle>criado em</SubTitle>
+										<SubAnswer>{item.createdIn}</SubAnswer>
+									</div>
+									<div>
+										<SubTitle>autorizado em</SubTitle>
+										<SubAnswer>{item.authorization}</SubAnswer>
+									</div>
+									<div>
+										<SubTitle>vencimento</SubTitle>
+										<SubAnswer>{item.dueDate}</SubAnswer>
+									</div>
+								</ContentSubTitle>
 							</ContentConsultorDetails>
 							{/* {this.props.isAdmin
 								&& (<ContainerEdit>
