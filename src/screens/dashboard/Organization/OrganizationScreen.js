@@ -446,11 +446,7 @@ const TableList = styled.td`
 `;
 
 const ContainerStatus = styled.td`
-	${''}
-	/* padding: 0.5rem; */
-	${''}
 	display: flex;
-	${''}
 	height: inherit;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
 
