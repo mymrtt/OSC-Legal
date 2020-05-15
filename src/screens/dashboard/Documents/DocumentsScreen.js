@@ -65,7 +65,7 @@ const ContainerHeader = styled.div`
   display: flex;
   justify-content: flex-end;
 
-	@media (max-width: 768px) {
+	@media (max-width: 1024px) {
 		padding-right: 2rem;
 	}
 
@@ -371,7 +371,6 @@ const ContainerModel = styled.div`
 			}
 
 			@media (max-width: 768px) {
-				width: 94%;
 				right: 9rem;
 			}
 
@@ -390,9 +389,16 @@ const ContainerModel = styled.div`
 			}
 		}
 	}
-	@media (max-width: 768px) {
-		padding: 1.3rem;
+	@media (max-width: 1024px) {
+		padding-right: 1.1rem;
+		width: 95%;
 	}
+
+	@media (max-width: 768px) {
+		padding: 1.3rem 1rem 1.3rem 1.3rem;
+		width: 100%;
+	}
+
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
@@ -464,15 +470,15 @@ const ModelParagraph = styled.p`
 `;
 
 const ContainerOptions = styled.div`
+	display: ${props => (props.contOptions ? 'flex' : 'none')};
 	width: 15%;
-	display: flex;
 	align-items: flex-end;
 	justify-content: center;
 	flex-direction: column;
 
 	@media (max-width: 1024px) {
 		width: 25%;
-		padding: 0 0 0 3.5%;
+		padding: 0 0 0 3.4%;
 	}
 
 	@media (max-width: 768px) {
@@ -481,7 +487,6 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		display: ${props => (props.contOptions ? 'flex' : 'none')};
 		position: absolute;
 		width: 160px;
 		height: 130px;
@@ -514,6 +519,7 @@ const Option = styled.button`
 
 	@media (max-width: 768px) {
 		width: 7rem;
+		padding: 0 0.8rem;
 	}
 
 	@media (max-width: 490px) {
@@ -898,6 +904,11 @@ const ButtonCancel = styled(Button)`
 	width: 50%;
 	height: 3.5rem;
 
+	@media (max-width: 1024px) {
+		margin: 5% 0 0 0;
+		width: 50%;
+	}
+
 	@media (max-width: 490px) {
 		margin: 0;
 		position: initial;
@@ -909,6 +920,11 @@ const ButtonConfirm = styled(Button)`
 	margin: 5% 0 0 0;
 	width: 50%;
 	height: 3.5rem;
+
+	@media (max-width: 1024px) {
+		margin: 5% 0 0 0;
+		width: 50%;
+	}
 
 	@media (max-width: 490px) {
 		margin: 0;
