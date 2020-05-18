@@ -148,11 +148,6 @@ const ContainerAddModel = styled.div`
 	flex-direction: column;
 
 	@media (max-width: 490px) {
-		${'' /* display: flex;
-		order: 1;
-		width: 100%;
-		justify-content: flex-end;
-		z-index: 8; */}
 		display: none;
 	}
 `;
@@ -424,7 +419,7 @@ const ContainerModelDescription = styled.div`
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
-	border: ${props => (props.ishovering ? '1px solid #85144B' : 'none')};
+	border: ${props => (props.isSelected)};
 	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
 
 	&:hover {
@@ -532,7 +527,7 @@ const Option = styled.button`
 	width: 8rem;
 	height: 2.5rem;
 	padding: 0 1rem;
-	display: ${props => (props.hidden ? 'none' : 'flex')};
+	display: flex;
 	justify-content: space-between;
 	background: transparent;
 	border: none;
@@ -591,7 +586,7 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
-	display: ${props => (props.hidden ? 'none' : 'block')};
+	display: block;
 
 	@media (max-width: 1024px) {
 		padding: 0;
@@ -612,7 +607,6 @@ const Button = styled.button`
 		margin: 0;
 		font-size: 1.2rem;
 		width: ${props => (props.modelMob ? '86%' : '95%')};
-		z-index: 6;
 	}
 `;
 
@@ -1020,6 +1014,7 @@ const Modal = styled.div`
 		width: 100%;
 		height: 100%;
 		z-index: 10;
+		padding: .5rem 1rem;
 	}
 `;
 
@@ -1347,23 +1342,19 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	selecetedDocUser = (item) => {
-		console.log(item);
+	selectedDocUser = (docs) => {
 		this.setState({
-			selectedDoc: item,
+			selectedDoc: docs,
 		});
-		console.log('doc select',this.state.selectedDoc)
 	}
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		const { selecetedDoc } = this.state;
-		this.state.listDocs.push( selecetedDoc );
+		const { selectedDoc } = this.state;
+		this.state.listDocs.push(selectedDoc);
 		this.setState({
 			// modalListDoc: false,
 		});
-		console.log('selecionado:', this.state.selecetedDoc);
-		console.log('array:', this.state.listDocs);
 	}
 
 
@@ -1484,7 +1475,11 @@ class DocumentsScreen extends Component {
 				</BoxTitle>
 				<BoxModelsDoc>
 					{this.props.documentsList.map(docs => (
-						<ContainerModelDescription hidden={this.state.modalListDoc} isAdmin={this.state.isAdmin} onClick={() =>	this.selecetedDocUser(this.props.documentsList)}>
+						<ContainerModelDescription
+							isSelected={this.state.selectedDoc === docs ? '1px solid #85144B' : 'none'}
+							hidden={this.state.modalListDoc}
+							isAdmin={this.state.isAdmin}
+							onClick={ this.selectedDocUser}>
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
@@ -1518,15 +1513,12 @@ class DocumentsScreen extends Component {
 							)}
 						{isAdmin ? (
 							<Button
-								onClick={this.handleAddModel}
-								hidden={this.state.addModel || this.state.deleteModal}
-							>
+								onClick={this.handleAddModel}>
 									Adicionar Modelo
 							</Button>
 						) : (
 							<Button
 								onClick={this.openModalListDoc}
-								hidden={this.state.modalListDoc}
 							>
 									Adicionar Documento
 							</Button>
@@ -1694,10 +1686,7 @@ class DocumentsScreen extends Component {
 									)}
 
 									<ContainerAddModelMob>
-										<Button modelMob
-											hidden={this.state.addModel || this.state.modalDelete}
-											onClick={this.openModalListDoc}
-										>
+										<Button	onClick={this.openModalListDoc}>
 											Adicionar Documento
 										</Button>
 									</ContainerAddModelMob>
