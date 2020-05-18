@@ -23,7 +23,7 @@ const Overlay = styled.div`
 const Container = styled.div`
 	margin: 1rem;
 	width: 33%;
-	${'' /* max-height: calc(98vh - 0.25rem); */}
+	${''}
 	overflow: hidden auto;
 	background-color: #fff;
 	display: flex;
@@ -41,6 +41,7 @@ const ContainerExit = styled.figure`
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
+	cursor: pointer;
 `;
 
 const ExitIcon = styled.img`
@@ -51,8 +52,8 @@ const ExitIcon = styled.img`
 
 const Title = styled.h2`
 	padding-top: ${props => (props.org && '3rem')};
-	padding-left: 3.5rem;
 	padding-bottom: 2rem;
+	width: 100%;
 	font-size: 1.3rem;
 	text-transform: uppercase;
 	font-family: Overpass;
@@ -60,12 +61,13 @@ const Title = styled.h2`
 `;
 
 const ContainerUser = styled.div`
+	padding-left: 3.5rem;
+	width: 100%;
 	display: flex;
 	flex-flow: wrap column;
 `;
 
 const UserTitle = styled.h2`
-	padding-left: 3.5rem;
 	padding-bottom: .5rem;
 	font-size: 0.7rem;
 	color: #85144b;
@@ -76,7 +78,6 @@ const UserTitle = styled.h2`
 
 const UserText = styled.p`
   font-size: 1rem;
-	padding-left: 3.5rem;
 	padding-bottom: 1.5rem;
   font-family: "Overpass", Light;
 
@@ -104,10 +105,11 @@ const CreateOrgTitle = styled.h1`
 `;
 
 const ContentOrganization = styled.div`
+	width: 100%;
 `;
 
-const ContentOrganizationItem = styled.label`
-
+const ContentOrganizationItem = styled.div`
+	padding-bottom: 2rem;
 `;
 
 const WrapOrganization = styled.div`
@@ -121,11 +123,11 @@ const WrapOrganizationContent = styled.div`
 	display: flex;
 `;
 
-const WrapOrganizationItem = styled.label`
+const WrapOrganizationItem = styled.div`
+	padding-bottom: 2rem;
 	width: 44.5%;
 	display: flex;
 	flex-direction: column;
-	${'' /* align-items: center; */}
 `;
 
 const ContainerConcludeButton = styled.span`
@@ -133,6 +135,21 @@ const ContainerConcludeButton = styled.span`
 	width: 100%;
 	display: flex;
 	justify-content: center;
+`;
+
+const Teste = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const Teste2 = styled.div`
+	padding-left: 3.5rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 export default class ModalCreateOrganization extends Component {
@@ -158,6 +175,7 @@ export default class ModalCreateOrganization extends Component {
 				cpf: '000000000-00',
 			},
 		],
+		isModalOpen: false,
 	};
 
 	handleSubmit = (ev) => {
@@ -191,145 +209,155 @@ export default class ModalCreateOrganization extends Component {
 		});
 	};
 
+	handleModalOpen = () => {
+		this.setState({
+			isModalOpen: !this.state.isModalOpen,
+		});
+	}
+
 	render() {
 		const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
 
 		return (
-			<Overlay onClick={this.ModalClosed}>
+			<Overlay onClick={this.handleModalOpen}>
 				<Container onSubmit={this.handleSubmit}>
 					<Content>
-						<ContainerExit onClick={this.ModalClosed}>
+						<ContainerExit onClick={this.handleModalOpen}>
 							<ExitIcon src={Exit} alt="Sair"/>
 						</ContainerExit>
-						<CreateOrgTitle>Criar Organização</CreateOrgTitle>
-						<Title>Usuário</Title>
-						{this.state.userData.map(item => (
-							<ContainerUser key={item}>
-								<UserTitle>nome</UserTitle>
-								<UserText>{item.name}</UserText>
-								<UserTitle>e-mail</UserTitle>
-								<UserText>{item.email}</UserText>
-								<UserTitle>telefone</UserTitle>
-								<UserText>{item.telephone}</UserText>
-								<UserTitle>cpf</UserTitle>
-								<UserText>{item.cpf}</UserText>
-							</ContainerUser>
-						))}
-						<Title org>Organização</Title>
-						<ContentOrganization>
-							<ContentOrganizationItem>
-								<UserTitle>nome fantasia</UserTitle>
-								<Input
-									modalOrg
-									margin={'0 0 1.5rem 3rem'}
-									placeholder="Nome da organização"
-									onChange={ev => this.handleChange('fantasyName', ev)}
-									value={this.state.fantasyName}
+						<Teste>
+							<CreateOrgTitle>Criar Organização</CreateOrgTitle>
+							{this.state.userData.map(item => (
+								<ContainerUser key={item}>
+									<Title>Usuário</Title>
+									<UserTitle>nome</UserTitle>
+									<UserText>{item.name}</UserText>
+									<UserTitle>e-mail</UserTitle>
+									<UserText>{item.email}</UserText>
+									<UserTitle>telefone</UserTitle>
+									<UserText>{item.telephone}</UserText>
+									<UserTitle>cpf</UserTitle>
+									<UserText>{item.cpf}</UserText>
+								</ContainerUser>
+							))}
+							<Teste2>
+								<Title org>Organização</Title>
+								<ContentOrganization>
+									<ContentOrganizationItem>
+										<UserTitle>nome fantasia</UserTitle>
+										<Input
+											modalOrg
+											// margin={'0 0 1.5rem 3rem'}
+											placeholder="Nome da organização"
+											onChange={ev => this.handleChange('fantasyName', ev)}
+											value={this.state.fantasyName}
+										/>
+										{this.state.nomeError && <span>{error[0]}</span>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle>razão social</UserTitle>
+										<Input
+											modalOrg
+											// margin={'0 0 1.5rem 3rem'}
+											placeholder="Razão social"
+											onChange={ev => this.handleChange('companyName', ev)}
+											value={this.state.companyName}
+										/>
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle>cnpj</UserTitle>
+										<Input
+											modalOrg
+											// margin={'0 0 1.5rem 3rem'}
+											type="number"
+											placeholder="00.000.000/0000-00"
+											onChange={ev => this.handleChange('cnpj', ev)}
+											value={this.state.cnpj}
+										/>
+										{this.state.nomeError && <span>{error[1]}</span>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle>email</UserTitle>
+										<Input
+											modalOrg
+											// margin={'0 0 1.5rem 3rem'}
+											placeholder="endereçodeemail@email.com"
+											value={this.state.email}
+										/>
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle>telefone</UserTitle>
+										<Input
+											modalOrg
+											// margin={'0 0 1.5rem 3rem'}
+											type="number"
+											placeholder="(00) 00000-0000"
+											value={this.state.telephone}
+										/>
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle>endereço</UserTitle>
+										<Input
+											modalOrg
+											// margin={'0 0 1.5rem 3rem'}
+											placeholder="Endereço"
+											value={this.state.address}
+										/>
+									</ContentOrganizationItem>
+								</ContentOrganization>
+								<WrapOrganization>
+									<WrapOrganizationContent>
+										<WrapOrganizationItem>
+											<UserTitle>complemento</UserTitle>
+											<Input
+												modalOrg
+												// margin={'0 0 1.5rem 3rem'}
+												placeholder="Complemento"
+												value={this.state.complement}
+											/>
+										</WrapOrganizationItem>
+										<WrapOrganizationItem>
+											<UserTitle>cidade</UserTitle>
+											<Input
+												modalOrg
+												// margin={'0 0 1.5rem 3rem'}
+												placeholder="Cidade"
+												value={this.state.city}
+											/>
+										</WrapOrganizationItem>
+									</WrapOrganizationContent>
+									<WrapOrganizationContent>
+										<WrapOrganizationItem>
+											<UserTitle>bairro</UserTitle>
+											<Input
+												modalOrg
+												// margin={'0 0 1.5rem 3rem'}
+												placeholder="Bairro"
+												value={this.state.neighborhood}
+											/>
+										</WrapOrganizationItem>
+										<WrapOrganizationItem>
+											<UserTitle>cep</UserTitle>
+											<Input
+												modalOrg
+												// margin={'0 0 1.5rem 3rem'}
+												type="number"
+												placeholder="00000-000"
+												value={this.state.zipCode}
+											/>
+										</WrapOrganizationItem>
+									</WrapOrganizationContent>
+								</WrapOrganization>
+							</Teste2>
+							<ContainerConcludeButton>
+								<Button
+									to={'/modalSucessfully'}
+									type="submit"
+									width={'80%'}
+									text="concluir"
 								/>
-								{this.state.nomeError && <span>{error[0]}</span>}
-							</ContentOrganizationItem>
-							<ContentOrganizationItem>
-								<UserTitle>razão social</UserTitle>
-								<Input
-									modalOrg
-									margin={'0 0 1.5rem 3rem'}
-									placeholder="Razão social"
-									onChange={ev => this.handleChange('companyName', ev)}
-									value={this.state.companyName}
-								/>
-							</ContentOrganizationItem>
-							<ContentOrganizationItem>
-								<UserTitle>cnpj</UserTitle>
-								<Input
-									modalOrg
-									margin={'0 0 1.5rem 3rem'}
-									type="number"
-									placeholder="00.000.000/0000-00"
-									onChange={ev => this.handleChange('cnpj', ev)}
-									value={this.state.cnpj}
-								/>
-								{this.state.nomeError && <span>{error[1]}</span>}
-							</ContentOrganizationItem>
-							<ContentOrganizationItem>
-								<UserTitle>email</UserTitle>
-								<Input
-									modalOrg
-									margin={'0 0 1.5rem 3rem'}
-									placeholder="endereçodeemail@email.com"
-									value={this.state.email}
-								/>
-							</ContentOrganizationItem>
-							<ContentOrganizationItem>
-								<UserTitle>telefone</UserTitle>
-								<Input
-									modalOrg
-									margin={'0 0 1.5rem 3rem'}
-									type="number"
-									placeholder="(00) 00000-0000"
-									value={this.state.telephone}
-								/>
-							</ContentOrganizationItem>
-							<ContentOrganizationItem>
-								<UserTitle>endereço</UserTitle>
-								<Input
-									modalOrg
-									margin={'0 0 1.5rem 3rem'}
-									placeholder="Endereço"
-									value={this.state.address}
-								/>
-							</ContentOrganizationItem>
-						</ContentOrganization>
-						<WrapOrganization>
-							<WrapOrganizationContent>
-								<WrapOrganizationItem>
-									<UserTitle>complemento</UserTitle>
-									<Input
-										modalOrg
-										margin={'0 0 1.5rem 3rem'}
-										placeholder="Complemento"
-										value={this.state.complement}
-									/>
-								</WrapOrganizationItem>
-								<WrapOrganizationItem>
-									<UserTitle>cidade</UserTitle>
-									<Input
-										modalOrg
-										margin={'0 0 1.5rem 3rem'}
-										placeholder="Cidade"
-										value={this.state.city}
-									/>
-								</WrapOrganizationItem>
-							</WrapOrganizationContent>
-							<WrapOrganizationContent>
-								<WrapOrganizationItem>
-									<UserTitle>bairro</UserTitle>
-									<Input
-										modalOrg
-										margin={'0 0 1.5rem 3rem'}
-										placeholder="Bairro"
-										value={this.state.neighborhood}
-									/>
-								</WrapOrganizationItem>
-								<WrapOrganizationItem>
-									<UserTitle>cep</UserTitle>
-									<Input
-										modalOrg
-										margin={'0 0 1.5rem 3rem'}
-										type="number"
-										placeholder="00000-000"
-										value={this.state.zipCode}
-									/>
-								</WrapOrganizationItem>
-							</WrapOrganizationContent>
-						</WrapOrganization>
-						<ContainerConcludeButton>
-							<Button
-								to={'/modalSucessfully'}
-								type="submit"
-								width={'80%'}
-								text="concluir"
-							/>
-						</ContainerConcludeButton>
+							</ContainerConcludeButton>
+						</Teste>
 					</Content>
 				</Container>
 			</Overlay>
