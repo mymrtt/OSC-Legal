@@ -1714,34 +1714,23 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
 																>
-														Exportar
-															</OptionText>
-														</Option>
-														<Option
-															className="Edit"
-															onMouseEnter={() => this.handleChangeColorEdit(docs)}
-															onMouseLeave={this.handleChangeColorLeaveEdit}
-														>
-															<OptionImage
-																src={this.state.hoverEdit === docs ? this.state.downloadEdit : EditIcon}
-																alt="Editar" />
-															<OptionText
-																colorTextButton={this.state.hoverEdit === docs ? this.state.colorTextEdit : '#85144B'}
+																	Exportar
+																</OptionText>
+															</Option>
+
+
+															<Option
+																className="Edit"
+																onMouseEnter={() => this.handleChangeColorEdit(docs)}
+																onMouseLeave={this.handleChangeColorLeaveEdit}
 															>
-														<p>Editar</p>
-															</OptionText>
-														</Option>
-														<Option
-															onMouseEnter={() => this.handleChangeColorDelete(docs)}
-															onMouseLeave={this.handleChangeColorLeaveDelete}
-															onClick={this.handleModalDelete}
-														>
-															<OptionImage
-																src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
-																alt="Deletar" />
-															<OptionText
-																colorTextButton={this.state.hoverDelete === docs ? this.state.colorTextDelete : '#85144B'}
-																onClick={() => this.handleSelected(docs)}
+																<OptionImage
+																	src={this.state.hoverEdit === docs ? this.state.downloadEdit : EditIcon}
+																	alt="Editar" />
+																<OptionText
+																	colorTextButton={this.state.hoverEdit === docs ? this.state.colorTextEdit : '#85144B'}
+																>
+																	<p>Editar</p>
 																</OptionText>
 															</Option>
 															<Option
@@ -1753,7 +1742,8 @@ class DocumentsScreen extends Component {
 																	src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
 																	alt="Deletar" />
 																<OptionText
-																	colorTextButton={this.state.hoverDelete === docs ? this.state.colorTextDelete : '#85144B'}
+																	colorTextButton={this.state.hoverDelete === docs
+																		? this.state.colorTextDelete : '#85144B'}
 																	onClick={() => this.handleSelected(docs)}
 																>
 																	<p>Excluir</p>
