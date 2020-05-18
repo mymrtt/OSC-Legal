@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
+	isAdmin: state.onboarding.users.isAdmin,
 });
 
 const Container = styled.div`
@@ -153,32 +154,36 @@ class Header extends Component {
   render() {
   	return (
   		<Container>
-  			<NavLink
-  				exact to="/organizations"
-  			>
-  				<ImageLogo margin={'0 0 0 4rem'} marginMobile='1rem 0 0 .5rem' height='2.8rem' paddingMobile='0.5rem'/>
+  			<NavLink exact to="/organizations">
+  				<ImageLogo
+  					margin={'0 0 0 4rem'}
+  					marginMobile='1rem 0 0 .5rem'
+  					paddingMobile='0.5rem'
+  					height='2.8rem'
+  				/>
   			</NavLink>
   			<WrapButton>
   				<NavLink
   					exact to="/organizations"
   					activeClassName="button-header-dash"
   				>
-              Organizações
+						Organizações
   				</NavLink>
   				<NavLink
   					exact to="/documents"
   					activeClassName="button-header-dash"
   				>
-              Documentos
+						Documentos
   				</NavLink>
   			</WrapButton>
   			<ContainerAdm>
   				<ParagraphUserName>
-  					{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-							&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
+  					{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+							&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
+  					{this.props.isAdmin ? 'Administrador' : this.props.name}
   				</ParagraphUserName>
   				<ParagraphSair onClick={this.handleRedirect}>
-              sair
+						sair
   				</ParagraphSair>
   				{this.state.redirect && <Redirect exact to="/" />}
   			</ContainerAdm>

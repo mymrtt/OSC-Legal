@@ -3,7 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const InputForm = styled.input`
+	margin: ${props => (props.margin)};
   width: ${props => (props.login ? '100%' : '95%')};
+	${'' /* width: ${props => (props.modalOrg && '90%')}; */}
+	width: ${props => (props.modalOrg && '100%')};
   height: 3.5rem;
   border: 1px solid;
   border-color: ${props => (props.isError ? 'tomato' : '#ffcfcd')};
@@ -22,6 +25,8 @@ const InputForm = styled.input`
 
 const Input = props => (
 	<InputForm
+		margin={props.margin}
+		modalOrg={props.modalOrg}
 		login={props.login}
 		type={props.type}
 		onChange={props.onChange}

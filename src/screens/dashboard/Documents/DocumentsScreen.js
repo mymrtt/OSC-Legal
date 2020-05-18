@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable no-nested-ternary */
+
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -28,6 +31,7 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
+	isAdmin: state.onboarding.users.isAdmin,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -44,12 +48,24 @@ const Container = styled.div`
 	}
 `;
 
+const Content = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: ${props => (props.isAdmin ? '#FFF' : '#FFCFCD')};
+`;
+
 const MaximumWidth = styled.div`
 	margin-top: 3rem;
-	width: 100%;
-	min-width: 100%;
+	width: ${props => (props.isAdmin ? '100%' : '95%')};
+	min-width: ${props => (props.isAdmin ? '100%' : 0)};
+	height: ${props => (props.isAdmin ? 0 : '95%')};
 	max-width: 1440px;
 	display: flex;
+	background: #FFF;
+	padding: ${props => (props.isAdmin ? 0 : '2rem 0')};
 
 	@media(max-width: 648px) {
 		margin-top: 1rem;
@@ -144,11 +160,6 @@ const ContainerAddModel = styled.div`
 	flex-direction: column;
 
 	@media (max-width: 490px) {
-		${'' /* display: flex;
-		order: 1;
-		width: 100%;
-		justify-content: flex-end;
-		z-index: 8; */}
 		display: none;
 	}
 `;
@@ -219,7 +230,7 @@ const ContainerScroll = styled.div`
 
 	@media (max-width: 490px) {
 		width: 100%;
-		max-height: 50vh;
+		min-height: 50vh;
 	}
 `;
 
@@ -293,7 +304,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: 100%;
+	width: ${props => (props.filter ? '100%' : '70%')};
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -309,13 +320,14 @@ const ContainerSearchInput = styled.label`
 	}
 
 	@media (max-width: 490px) {
-		width: 95%;
+		width: 100%;
 	}
 `;
 
 const SearchInput = styled.input`
   width: 100%;
 	border: 0;
+	max-width: 100%;
 	outline: none;
 	padding-left: .5rem;
 	font-size: 1rem;
@@ -353,7 +365,7 @@ const ContainerModels = styled.div`
 const ContainerModel = styled.div`
 	margin-bottom: 1rem;
 	padding: 2rem;
-	width: 100%;
+	width: 99%;
 	border-radius: 3px;
 	height: 100%;
 	display: flex;
@@ -363,7 +375,7 @@ const ContainerModel = styled.div`
 	align-self: center;
 
 	&:hover {
-		border:1px solid #85144B;
+		border: 1px solid #85144B;
 
 		&::before {
 			content: '';
@@ -416,12 +428,21 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: 85%;
+	width: ${props => (props.isAdmin ? '85%' : '95%')};
 	display: flex;
 	flex-direction: column;
+	cursor: pointer;
+	border: ${props => (props.isSelected ? '1px solid #85144B' : 'none')};
+	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
+
+	&:hover {
+		border: ${props => (props.hidden ? '1px solid #85144B' : '0')};
+		border-radius: ${props => (props.isAdmin ? '0' : '3px')};
+	}
+
 	span {
 		display: flex;
-
+		padding: ${props => (props.isAdmin ? '0' : '0 2rem')};
 		@media (max-width: 768px) {
 			width: 95%;
 		}
@@ -432,7 +453,7 @@ const ContainerModelDescription = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		width: 70%;
+		width: ${props => (props.isAdmin ? '70%' : '100%')};
 	}
 
 	@media (max-width: 490px) {
@@ -445,6 +466,7 @@ const ModelNumber = styled.h2`
 	color: #FF4136;
 	font-family: "Overpass", Black;
 	font-size: 1.5rem;
+
 	@media (max-width: 490px) {
 		font-size: 1.2rem;
 	}
@@ -466,6 +488,8 @@ const ModelParagraph = styled.p`
   width: 92%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
+	padding: ${props => (props.isAdmin ? '0' : '0 2rem 1rem 2rem')};
+
 	@media (max-width: 768px) {
 		font-size: 1rem;
 		width: 98%;
@@ -499,7 +523,7 @@ const ContainerOptions = styled.div`
 		width: 160px;
 		height: 130px;
     top: 100%;
-		margin-top: 5%;
+		margin-top: 0;
     right: 0rem;
     border: 1px solid #85144B;
 		z-index: 5;
@@ -515,7 +539,7 @@ const Option = styled.button`
 	width: 8rem;
 	height: 2.5rem;
 	padding: 0 1rem;
-	display: ${props => (props.hidden ? 'none' : 'flex')};
+	display: flex;
 	justify-content: space-between;
 	background: transparent;
 	border: none;
@@ -574,7 +598,7 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
-	display: ${props => props.hidden ? 'none' : 'block'};
+	display: block;
 
 	@media (max-width: 1024px) {
 		padding: 0;
@@ -595,7 +619,6 @@ const Button = styled.button`
 		margin: 0;
 		font-size: 1.2rem;
 		width: ${props => (props.modelMob ? '86%' : '95%')};
-		z-index: 6;
 	}
 `;
 
@@ -951,31 +974,37 @@ const ErrorText = styled.p`
 	font-family: Overpass;
 `;
 
-const BoxFilter = styled.div`
-	width: 21.3rem;
+const BoxOrgs = styled.div`
+	width: 100%;
 	display: flex;
 	flex-direction: column;
+	border-radius: 3px;
 	border: 1px solid #85144B;
-	padding: .5rem; 
+	padding: .5rem 0;
 	position: absolute;
 	right: 0;
 	left: 0;
 	top: 1.85rem;
 	background: #FFF;
+	z-index: 99;
+
+	@media (max-width: 490px) {
+		z-index: 6;
+	}
 `;
 
 const Org = styled.div`
 	color: #231F20;
-	font-size: .75rem;
+	font-size: .8rem;
 	font-family: 'Overpass';
 	font-weight: 600;
-	cursor: pointer;	
+	cursor: pointer;
 	width: 100%;
-	padding: .3rem 0;
+	padding: .3rem 1rem;
 
 	:hover{
 		background: #FFCFCD;
-		border: 1px solid #85144B;
+		border: .5px solid #85144B;
 	}
 `;
 
@@ -984,6 +1013,94 @@ const TextOrg = styled.p`
 	color: #959595;
 	font-family: 'Overpass', Regular;
 `;
+
+const Modal = styled.div`
+	width: 45.3rem;
+	height: 90vh;
+	background: #FFF;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	padding: .5rem 2rem;
+
+	@media (max-width: 768px) {
+		width: 40rem;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+		padding: .5rem 1rem;
+	}
+`;
+
+const BoxTitle = styled.span`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem 2rem 0 2rem;
+`;
+
+const SubtitleModal = styled.p`
+	font-size: 1.1rem;
+	color: #959595;
+	font-family: 'Overpass', Regular;
+	margin-bottom: 1rem;
+`;
+
+const TitleModalList = styled.h2`
+	color: #85144B;
+	font-size: 2rem;
+	font-family: Overpass;
+	margin: 1rem 0 .5rem 0;
+
+	@media (max-width: 490px) {
+		font-size: 1.8rem;
+	}
+`;
+
+const BoxModelsDoc = styled.span`
+	width: 100%;
+	height: 80%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	margin-bottom: 1rem;
+
+	&::-webkit-scrollbar{
+		display: none;
+	}
+`;
+
+const ButtonModalList = styled.button`
+	width: 18rem;
+	height: 3.5rem;
+	background: #FF4136;
+	color: #FFF;
+	text-transform: uppercase;
+	border-radius: 3px;
+	border: none;
+	align-self: flex-end;
+	margin-top: 1rem;
+	font-weight: bold;
+	font-size: 1rem;
+
+	@media (max-width: 490px) {
+		width: 100%;
+	}
+`;
+
+const ImageExit = styled.img`
+	width: 20px;
+	align-self: flex-end;
+	position: absolute;
+	margin-top: .5rem;
+	cursor: pointer;
+`;
+
+
+let newList = [];
 
 class DocumentsScreen extends Component {
 	state = {
@@ -1013,12 +1130,21 @@ class DocumentsScreen extends Component {
 		isErrorTitle: false,
 		isErrorFile: false,
 		isErrorTitleQtd: false,
-		isBoxFilter: false,
+		isBoxOrgs: false,
+		ishovering: false,
 		Orgs: [
 			'vai na web',
 			'instituto precisa ser',
 			'celebrations',
 			'crianças felizes',
+		],
+		modalListDoc: false,
+		listDocs: [
+			{
+				id: 1,
+				title: 'Modelo 1',
+				description: 'Modelo de estatutoModelo de estatuto',
+			},
 		],
 	};
 
@@ -1218,18 +1344,46 @@ class DocumentsScreen extends Component {
 		this.setState({ redirect: true });
 	}
 
-	openBoxFilter = (ev) => {
+	openBoxOrgs = (ev) => {
 		ev.stopPropagation();
 		this.setState({
-			isBoxFilter: !this.state.isBoxFilter,
+			isBoxOrgs: !this.state.isBoxOrgs,
 		});
 	}
 
-	closeBoxFilter = () => {
+	closeBoxOrgs = () => {
 		this.setState({
-			isBoxFilter: false,
+			isBoxOrgs: false,
 		});
 	}
+
+	openModalListDoc = () => {
+		this.setState({
+			modalListDoc: true,
+		});
+	}
+
+	closeModalListDoc = () => {
+		this.setState({
+			modalListDoc: false,
+		});
+	}
+
+	selecetedDocUser = (docs) => {
+		newList = this.state.listDocs.concat(docs);
+		this.setState({
+			isSelected: docs,
+		});
+	}
+
+	handleDocsUser = (e) => {
+		e.preventDefault();
+		this.setState({
+			modalListDoc: false,
+			listDocs: newList,
+		});
+	}
+
 
 	renderModalModels = () => {
 		const Messages = [
@@ -1248,8 +1402,9 @@ class DocumentsScreen extends Component {
 					<LogoAndData>
 						<img src={logo} alt="Logo OSC Legal" />
 						<ParagraphContainer1>
-							{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-								&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
+							{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+								&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
+							{this.props.isAdmin ? 'Administrador' : this.props.name}
 						</ParagraphContainer1>
 						<ParagraphSair onClick={this.handleRedirect}>
 							sair
@@ -1339,155 +1494,246 @@ class DocumentsScreen extends Component {
 		</ContainerModalDelete>
 	)
 
+	renderModalListDoc = () => (
+		<ContainerModal onClick={this.closeModalListDoc}>
+			<Modal onClick={ev => ev.stopPropagation()}>
+				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc}/>
+				<BoxTitle>
+					<TitleModalList>Adicionar Documento</TitleModalList>
+					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
+				</BoxTitle>
+				<BoxModelsDoc>
+					{this.props.documentsList.map(docs => (
+						<ContainerModelDescription
+							hidden={this.state.modalListDoc}
+							isAdmin={this.state.isAdmin}
+							onClick={() => this.selecetedDocUser(docs)}
+							isSelected={docs === this.state.isSelected}
+						>
+							<span key={docs}>
+								<ModelNumber>{docs.id}</ModelNumber>
+								<ModelTitle>{docs.title}</ModelTitle>
+							</span>
+							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
+						</ContainerModelDescription>
+					))}
+				</BoxModelsDoc>
+				<ButtonModalList onClick={this.handleDocsUser}>Escolher</ButtonModalList>
+			</Modal>
+		</ContainerModal>
+	)
+
 	render() {
 		const documentsList = (this.state.search !== '')
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
 			: this.props.documentsList;
 		const { isAdmin } = this.props;
-		const { addModel, modalDelete } = this.state;
 
 		return (
-			<Container onClick={this.handleClickedLabelLeave || this.closeBoxFilter}>
+			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
-				<MaximumWidth>
-					<ContainerAddModel>
-						{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
-						{
-							isAdmin ? (
-								<AddModelImage src={ImageDocument} />
-							) : (
-								<AddModelImage src={DocumentUser} />
-							)}
-						{isAdmin ? (
-							<Button
-								onClick={this.handleAddModel}
-								hidden={this.state.addModel || this.state.deleteModal}
-							>
-									Adicionar Modelo
-							</Button>
-						) : (
+				<Content>
+					<MaximumWidth>
+						<ContainerAddModel>
+							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
+							{
+								isAdmin ? (
+									<AddModelImage src={ImageDocument} />
+								) : (
+									<AddModelImage src={DocumentUser} />
+								)}
+							{isAdmin ? (
 								<Button
-									onClick={this.handleListDoc}
+									onClick={this.handleAddModel}
+									hidden={this.state.addModel || this.state.deleteModal}
+								>
+									Adicionar Modelo
+								</Button>
+							) : (
+								<Button
+									onClick={this.openModalListDoc}
+									hidden={this.state.modalListDoc}
 								>
 									Adicionar Documento
-							</Button>
-						)}
-					</ContainerAddModel>
-					<Teste>
-						<ContainerHeader>
-							<ContainerSearch>
-								<SearchText>
-									{isAdmin ? 'Pesquisar' : 'Organização'}
-								</SearchText>
-								{/* {isAdmin ? ( */}
-								<ContainerSearchInput
-									filter={this.state.isBoxFilter}
-									onClick={this.openBoxFilter}
-								>
-									{isAdmin
-										? <SearchInput
-											onChange={this.handleSearch}
-											placeholder="Digite aqui para pesquisar"
-										/> : <TextOrg>Selecionar Organização</TextOrg>}
-									{isAdmin
-										? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
-										: <img src={ArrowDownIcon}
-											alt="arrow"
-											style={{ cursor: 'pointer' }}
-											onClick={this.openBoxFilter}
-										/>
-									}
-									{this.state.isBoxFilter && (
-										<BoxFilter onClick={ev => ev.stopPropagation()}>
-											{this.state.Orgs.map(orgs => (
-												<Org key={orgs}>{orgs}</Org>
-											))}
-										</BoxFilter>
-									)}
-								</ContainerSearchInput>
-							</ContainerSearch>
-						</ContainerHeader>
-						<ContainerContent>
-							<ContainerScroll>
-								<ContainerModels>
-									{documentsList && documentsList.length > 0 ? (
-										documentsList.map((item, index) => (
-											<ContainerModel key={item}
-												style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-												zIndex={this.state.addModel}
-												displayBefore={this.state.modalDelete}
-												onMouseEnter={() => this.handleOnOptions(item)}
-												onMouseLeave={this.handleOffOptions}>
-												<ContainerModelDescription>
-													<span>
-														<ModelNumber>{item.id}</ModelNumber>
-														<ModelTitle>{item.title}</ModelTitle>
-													</span>
-													<ModelParagraph>{item.description}</ModelParagraph>
-												</ContainerModelDescription>
-												<ContainerOptions
-													contOptions={this.state.options && (this.state.selectedOptions === item)}>
-													<Option
-														onMouseEnter={() => this.handleChangeColorExport(item)}
-														onMouseLeave={this.handleChangeColorLeaveExport}
-													>
-														<OptionImage
-															src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-															alt="Exportar" />
-														<OptionText
-															colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
-														>
+								</Button>
+							)}
+						</ContainerAddModel>
+						<Teste>
+							<ContainerHeader>
+								<ContainerSearch>
+									<SearchText>
+										{isAdmin ? 'Pesquisar' : 'Organização'}
+									</SearchText>
+									{/* {isAdmin ? ( */}
+									<ContainerSearchInput
+										filter={this.state.isBoxOrgs}
+										onClick={this.openBoxOrgs}
+									>
+										{isAdmin
+											? <SearchInput
+												onChange={this.handleSearch}
+												placeholder="Digite aqui para pesquisar"
+											/> : <TextOrg>Selecionar Organização</TextOrg>}
+										{isAdmin
+											? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
+											: <img src={ArrowDownIcon}
+												alt="arrow"
+												style={{ cursor: 'pointer' }}
+												onClick={this.openBoxOrgs}
+											/>
+										}
+										{this.state.isBoxOrgs && isAdmin === false ? (
+											<BoxOrgs
+												onClick={ev => ev.stopPropagation()}>
+												{this.state.Orgs.map(orgs => (
+													<Org key={orgs}>{orgs}</Org>
+												))}
+											</BoxOrgs>
+										) : null}
+									</ContainerSearchInput>
+								</ContainerSearch>
+							</ContainerHeader>
+							<ContainerContent>
+								<ContainerScroll>
+									<ContainerModels>
+
+										{isAdmin ? (
+											documentsList && documentsList.length > 0 ? (
+												documentsList.map((item, index) => (
+													<ContainerModel key={item}
+														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+														zIndex={this.state.addModel}
+														displayBefore={this.state.modalDelete}
+														onMouseEnter={() => this.handleOnOptions(item)}
+														onMouseLeave={this.handleOffOptions}>
+														<ContainerModelDescription>
+															<span>
+																<ModelNumber>{item.id}</ModelNumber>
+																<ModelTitle>{item.title}</ModelTitle>
+															</span>
+															<ModelParagraph>{item.description}</ModelParagraph>
+														</ContainerModelDescription>
+														<ContainerOptions
+															contOptions={this.state.options && (this.state.selectedOptions === item)}>
+															<Option
+																onMouseEnter={() => this.handleChangeColorExport(item)}
+																onMouseLeave={this.handleChangeColorLeaveExport}
+															>
+																<OptionImage
+																	src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+																	alt="Exportar" />
+																<OptionText
+																	colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+																>
 														Exportar
-														</OptionText>
-													</Option>
-													<Option
-														onMouseEnter={() => this.handleChangeColorDelete(item)}
-														onMouseLeave={this.handleChangeColorLeaveDelete}
-														onClick={this.handleModalDelete}
-													>
-														<OptionImage
-															src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
-															alt="Deletar" />
-														<OptionText
-															colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-															onClick={() => this.handleSelected(item)}
-														>
-															<p>Excluir</p>
-														</OptionText>
-													</Option>
-												</ContainerOptions>
-											</ContainerModel>
-										))
-									) : (
-										<InitialAddModel>
-											<TitleInitialAddModel>
-												{isAdmin ? (
-													'Você ainda não possui um modelo'
-												) : (
-													'Você não tem nenhum documento'
-												)}
-											</TitleInitialAddModel>
-											<TextInitialAddModel>
+																</OptionText>
+															</Option>
+															<Option
+																onMouseEnter={() => this.handleChangeColorDelete(item)}
+																onMouseLeave={this.handleChangeColorLeaveDelete}
+																onClick={this.handleModalDelete}
+															>
+																<OptionImage
+																	src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+																	alt="Deletar" />
+																<OptionText
+																	colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+																	onClick={() => this.handleSelected(item)}
+																>
+																	<p>Excluir</p>
+																</OptionText>
+															</Option>
+														</ContainerOptions>
+													</ContainerModel>
+												))
+											) : (
+												<InitialAddModel>
+													<TitleInitialAddModel>
+													Você ainda não possui um modelo
+													</TitleInitialAddModel>
+													<TextInitialAddModel>
 												Escolha um modelo de documento
 												clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span>
-											</TextInitialAddModel>
-										</InitialAddModel>
-									)}
-									<ContainerAddModelMob>
-										<Button modelMob
-											hidden={this.state.addModel || this.state.modalDelete}
-											onClick={this.handleAddModel}
-										>
-											Adicionar Modelo
-										</Button>
-									</ContainerAddModelMob>
-									{this.state.addModel && this.renderModalModels()}
-									{this.state.modalDelete && this.renderModalDelete()}
-								</ContainerModels>
-							</ContainerScroll>
-						</ContainerContent>
-					</Teste>
-				</MaximumWidth>
+													</TextInitialAddModel>
+												</InitialAddModel>
+											)
+										) : (
+											this.state.listDocs && this.state.listDocs.length > 0 ? (
+												this.state.listDocs.map((docs, index) => (
+													<ContainerModel key={docs}
+														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+														zIndex={this.state.modalListDoc}
+														displayBefore={this.state.modalDelete}
+														onMouseEnter={() => this.handleOnOptions(docs)}
+														onMouseLeave={this.handleOffOptions}
+													>
+														<ContainerModelDescription>
+															<span>
+																<ModelNumber>{docs.id}</ModelNumber>
+																<ModelTitle>{docs.title}</ModelTitle>
+															</span>
+															<ModelParagraph>{docs.description}</ModelParagraph>
+														</ContainerModelDescription>
+														<ContainerOptions
+															contOptions={this.state.options && (this.state.selectedOptions === docs)}>
+															<Option
+																onMouseEnter={() => this.handleChangeColorExport(docs)}
+																onMouseLeave={this.handleChangeColorLeaveExport}
+															>
+																<OptionImage
+																	src={this.state.hoverExport === docs ? this.state.downloadExport : DownloadIcon}
+																	alt="Exportar" />
+																<OptionText
+																	colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
+																>
+														Exportar
+																</OptionText>
+															</Option>
+															<Option
+																onMouseEnter={() => this.handleChangeColorDelete(docs)}
+																onMouseLeave={this.handleChangeColorLeaveDelete}
+																onClick={this.handleModalDelete}
+															>
+																<OptionImage
+																	src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
+																	alt="Deletar" />
+																<OptionText
+																	colorTextButton={this.state.hoverDelete === docs ? this.state.colorTextDelete : '#85144B'}
+																	onClick={() => this.handleSelected(docs)}
+																>
+																	<p>Excluir</p>
+																</OptionText>
+															</Option>
+														</ContainerOptions>
+													</ContainerModel>
+												))
+											) : (
+												<InitialAddModel>
+													<TitleInitialAddModel>
+													Você ainda não tem nenhum documento
+													</TitleInitialAddModel>
+													<TextInitialAddModel>
+												Escolha um modelo de documento
+												clicando em <span onClick={this.modalListDoc}>Adicionar Documento</span>
+													</TextInitialAddModel>
+												</InitialAddModel>
+											)
+										)}
+
+										<ContainerAddModelMob>
+											<Button	onClick={this.openModalListDoc}>
+											Adicionar Documento
+											</Button>
+										</ContainerAddModelMob>
+										{this.state.addModel && this.renderModalModels()}
+										{this.state.modalDelete && this.renderModalDelete()}
+										{this.state.modalListDoc && this.renderModalListDoc()}
+									</ContainerModels>
+								</ContainerScroll>
+							</ContainerContent>
+						</Teste>
+					</MaximumWidth>
+				</Content>
 			</Container>
 		);
 	}
