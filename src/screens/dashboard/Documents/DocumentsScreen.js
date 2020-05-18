@@ -423,6 +423,7 @@ const ContainerModelDescription = styled.div`
 	width: ${props => (props.isAdmin ? '85%' : '100%')};
 	display: flex;
 	flex-direction: column;
+	cursor: pointer;
 	border: ${props => (props.ishovering ? '1px solid #85144B' : 'none')};
 	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
 
@@ -1119,24 +1120,10 @@ class DocumentsScreen extends Component {
 			{
 				id: 1,
 				title: 'Modelo 1',
-				description: 'igfghdjfiohdfgnjlkf',
-			},
-			{
-				id: 2,
-				title: 'Modelo 2',
-				description: 'igfghdjfiohdfgnjlkf',
-			},
-			{
-				id: 3,
-				title: 'Modelo 3',
-				description: 'igfghdjfiohdfgnjlkf',
-			},
-			{
-				id: 4,
-				title: 'Modelo 4',
 				description: 'Modelo de estatutoModelo de estatuto',
 			},
 		],
+		selectedDoc: [],
 	};
 
 	handleOnOptions = (item) => {
@@ -1360,6 +1347,25 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	selecetedDocUser = (item) => {
+		console.log(item);
+		this.setState({
+			selectedDoc: item,
+		});
+		console.log('doc select',this.state.selectedDoc)
+	}
+
+	handleDocsUser = (e) => {
+		e.preventDefault();
+		const { selecetedDoc } = this.state;
+		this.state.listDocs.push( selecetedDoc );
+		this.setState({
+			// modalListDoc: false,
+		});
+		console.log('selecionado:', this.state.selecetedDoc);
+		console.log('array:', this.state.listDocs);
+	}
+
 
 	renderModalModels = () => {
 		const Messages = [
@@ -1477,8 +1483,8 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-					{this.state.listDocs.map(docs => (
-						<ContainerModelDescription hidden={this.state.modalListDoc} isAdmin={this.state.isAdmin}>
+					{this.props.documentsList.map(docs => (
+						<ContainerModelDescription hidden={this.state.modalListDoc} isAdmin={this.state.isAdmin} onClick={() =>	this.selecetedDocUser(this.props.documentsList)}>
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
@@ -1487,7 +1493,7 @@ class DocumentsScreen extends Component {
 						</ContainerModelDescription>
 					))}
 				</BoxModelsDoc>
-				<ButtonModalList>Escolher</ButtonModalList>
+				<ButtonModalList onClick={this.handleDocsUser}>Escolher</ButtonModalList>
 			</Modal>
 		</ContainerModal>
 	)
