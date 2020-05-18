@@ -148,11 +148,6 @@ const ContainerAddModel = styled.div`
 	flex-direction: column;
 
 	@media (max-width: 490px) {
-		${'' /* display: flex;
-		order: 1;
-		width: 100%;
-		justify-content: flex-end;
-		z-index: 8; */}
 		display: none;
 	}
 `;
@@ -297,7 +292,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: 100%;
+	width: ${props => (props.filter ? '100%' : '70%')};
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -532,7 +527,7 @@ const Option = styled.button`
 	width: 8rem;
 	height: 2.5rem;
 	padding: 0 1rem;
-	display: ${props => (props.hidden ? 'none' : 'flex')};
+	display: flex;
 	justify-content: space-between;
 	background: transparent;
 	border: none;
@@ -591,7 +586,7 @@ const Button = styled.button`
 	font-family: "Overpass", SemiBold;
   font-weight: bold;
 	background-color: #FF4136;
-	display: ${props => (props.hidden ? 'none' : 'block')};
+	display: block;
 
 	@media (max-width: 1024px) {
 		padding: 0;
@@ -612,7 +607,6 @@ const Button = styled.button`
 		margin: 0;
 		font-size: 1.2rem;
 		width: ${props => (props.modelMob ? '86%' : '95%')};
-		z-index: 6;
 	}
 `;
 
@@ -972,6 +966,7 @@ const BoxFilter = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	border-radius: 3px;
 	border: 1px solid #85144B;
 	padding: .5rem 0;
 	position: absolute;
@@ -993,11 +988,11 @@ const Org = styled.div`
 	font-weight: 600;
 	cursor: pointer;
 	width: 100%;
-	padding: .3rem 0;
-	padding: .3rem 0 .3rem 1rem;
+	padding: .3rem 1rem;
+
 	:hover{
 		background: #FFCFCD;
-		border: 1px solid #85144B;
+		border: .5px solid #85144B;
 	}
 `;
 
@@ -1024,7 +1019,7 @@ const Modal = styled.div`
 		width: 100%;
 		height: 100%;
 		z-index: 10;
-		padding: 1rem;
+		padding: .5rem 1rem;
 	}
 `;
 
@@ -1535,15 +1530,12 @@ class DocumentsScreen extends Component {
 							)}
 						{isAdmin ? (
 							<Button
-								onClick={this.handleAddModel}
-								hidden={this.state.addModel || this.state.deleteModal}
-							>
+								onClick={this.handleAddModel}>
 									Adicionar Modelo
 							</Button>
 						) : (
 							<Button
 								onClick={this.openModalListDoc}
-								hidden={this.state.modalListDoc}
 							>
 									Adicionar Documento
 							</Button>
@@ -1712,10 +1704,7 @@ class DocumentsScreen extends Component {
 									)}
 
 									<ContainerAddModelMob>
-										<Button modelMob
-											hidden={this.state.addModel || this.state.modalDelete}
-											onClick={this.openModalListDoc}
-										>
+										<Button	onClick={this.openModalListDoc}>
 											Adicionar Documento
 										</Button>
 									</ContainerAddModelMob>
