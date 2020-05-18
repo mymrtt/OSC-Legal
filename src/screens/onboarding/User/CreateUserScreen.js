@@ -394,6 +394,7 @@ class CreateUserScreen extends Component {
 
 	handleChangeCpf = (ev) => {
 		const { user } = this.state;
+		// user['cpf'] = ev.target.value;
 		user.cpf = ev.target.value;
 		this.setState({ user, isErrorCpf: false });
 	};
@@ -666,6 +667,7 @@ class CreateUserScreen extends Component {
 								widthMobile="90%"
 								text="concordar e criar conta"
 								type="submit"
+								textTransform
 							/>
 						</Form>
 						{ isTermsOpen && this.renderTerms() }

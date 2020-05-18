@@ -273,6 +273,7 @@ class LoginScreen extends Component {
 						marginMobile={this.props.isResetPassword ? '3.7rem 0 3rem' : '3.7rem 0 1.5rem'}
 						text="entrar"
 						type="submit"
+						textTransform
 					/>
 					{!this.props.isResetPassword && <Span>
 						<ButtonText to={'/createuser'}>criar conta</ButtonText>

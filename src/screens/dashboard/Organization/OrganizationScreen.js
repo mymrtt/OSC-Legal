@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
+import Button from '../../../components/Button';
 
 // Image
 import ImageCaminho from '../../../assets/caminho.svg';
@@ -40,19 +41,6 @@ const ContainerUser = styled.div`
 	width: ${props => (props.width ? '100%' : '100%')};
 	height: ${props => (props.height ? '0' : '100vh')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
-`;
-
-const CreateButtonUser = styled.button`
-	width: 25%;
-  background-color: #FF4136;
-  border: 0;
-  border-radius: 3px;
-  color: #fff;
-  font-size: 1.4rem;
-  font-family: Overpass, SemiBold;
-  font-weight: bold;
-  padding: 1.3rem;
-  margin: 1.5rem 0 1.5rem 2.5rem;
 `;
 
 const ContainerSelectedViewBy = styled.div`
@@ -113,6 +101,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
+	width: ${props => (props.width)};
 	display: flex;
 	flex-direction: row;
 
@@ -173,6 +162,21 @@ const TitleSearch = styled.h2`
 	@media (max-width: 768px) {
 		display: none;
 	}
+`;
+
+const SelectInputUser = styled.span`
+	width: 100%;
+	border: 0.5px solid #85144B;
+	border-radius: 3px;
+	padding: 0.1rem 1rem;
+	margin-top: 0.8rem;
+	display: flex;
+	justify-content: space-between;
+`;
+
+const Input = styled.input`
+	border: none;
+	outline: none;
 `;
 
 const InputSelect = styled.div`
@@ -256,7 +260,7 @@ const Content = styled.div`
 
 const ContainerTable = styled.div`
 	/* max-height: 69vh; */
-	${'' /* max-height: 77vh; */}
+	${''}
 	max-height: calc(100vh - 85px - 96px - 2.8rem);
 	overflow-y: scroll;
 
@@ -411,9 +415,9 @@ const Box = styled.div`
 `;
 
 const BoxButton = styled.button`
-	height: 100%;
 	border: none;
 	background: none;
+	outline: none;
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
@@ -605,27 +609,15 @@ class OrganizationScreen extends Component {
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
-				{this.props.isAdmin
-					? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
-					: <TitleMyOrganization>Minhas organizações</TitleMyOrganization>
-				}
+				<TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
 				<SelectViewBy>
-					{this.props.isAdmin
-						? <TitleViewBy>Visualizar por:</TitleViewBy>
-						: <TitleSearch>Pesquisar</TitleSearch>
-					}
+					<TitleViewBy>Visualizar por:</TitleViewBy>
 					<SpanSelect>
-						{/* {!this.props.isAdmin
-							&& <input></input>
-						} */}
 						<InputSelect onClick={this.isSelectOpen}>
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							{this.props.isAdmin
-								?	<img src={ImageCaminho} alt="arrow" />
-								:	<img src={magnifyingGlass} alt="Lupa"/>
-							}
+							<img src={ImageCaminho} alt="arrow" />
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -642,6 +634,24 @@ class OrganizationScreen extends Component {
 							</InputSelectedItem>
 						)}
 					</SpanSelect>
+				</SelectViewBy>
+			</ContainerContentSelectedViewBy>
+		</ContainerSelectedViewBy>
+	)
+
+	renderSelectedViewbyUser = () => (
+		<ContainerSelectedViewBy>
+			<ContainerContentSelectedViewBy>
+				<TitleMyOrganization>Minhas organizações</TitleMyOrganization>
+				<SelectViewBy width={'37%'}>
+					<TitleSearch>Pesquisar</TitleSearch>
+					<SelectInputUser>
+						<Input
+							placeholder= 'Digite aqui para pesquisar'
+							type="text"
+						/>
+						<img src={magnifyingGlass} alt="Lupa"/>
+					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
 		</ContainerSelectedViewBy>
@@ -673,7 +683,7 @@ class OrganizationScreen extends Component {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 
 		return listTable.map(item => (
-			<Tr key={item.organization}>
+			<Tr key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
@@ -684,7 +694,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
-							width={'8.5rem'}
+							width={'9rem'}
 						>
 							{item.organization}
 						</TableList>
@@ -694,7 +704,7 @@ class OrganizationScreen extends Component {
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'9rem'}
+					width={'9.5rem'}
 				>
 					{item.cpf}
 				</TableList>
@@ -810,16 +820,23 @@ class OrganizationScreen extends Component {
 				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
-				&& <ModalCreateOrganization />
+				&& <ModalCreateOrganization handleClosedModal={this.isModalCreateOrganization} />
 				}
 				<Header />
 				<ContainerUser
 					width={isAdmin}
 					height={isAdmin}
-					background={isAdmin}>
+					background={isAdmin}
+				>
 					{!isAdmin
-					&& <CreateButtonUser
-						onClick={this.isModalCreateOrganization}> Criar Organização </CreateButtonUser>
+					&& <Button
+						width='22%'
+						height='4rem'
+						fontSize='1.4rem'
+						margin='1.5rem 0 1.5rem 2.5rem'
+						text='Criar Organização'
+						type='button'
+						onClick={this.isModalCreateOrganization}/>
 					}
 					<ContainerTableUser
 						width={isAdmin}
@@ -828,7 +845,9 @@ class OrganizationScreen extends Component {
 						border={isAdmin}
 						margin={isAdmin}>
 						<Content padding={isAdmin}>
-							{this.renderSelectedViewby()}
+							{isAdmin
+								? this.renderSelectedViewby()
+								: this.renderSelectedViewbyUser()}
 							<ContainerTable>
 								<Table modal={this.state.isModal}>
 									<Thead>
