@@ -20,10 +20,9 @@ const Overlay = styled.div`
 	position: absolute;
 `;
 
-const Container = styled.div`
+const Container = styled.form`
 	margin: 1rem;
 	width: 33%;
-	${''}
 	overflow: hidden auto;
 	background-color: #fff;
 	display: flex;
@@ -108,12 +107,13 @@ const ContentOrganization = styled.div`
 	width: 100%;
 `;
 
-const ContentOrganizationItem = styled.div`
+const ContentOrganizationItem = styled.label`
 	padding-bottom: 2rem;
 `;
 
 const WrapOrganization = styled.div`
-  margin-bottom: 3rem;
+	width: 100%;
+  margin-bottom: 1rem;
   display: flex;
 	justify-content: center;
   flex-direction: column;
@@ -124,17 +124,20 @@ const WrapOrganizationContent = styled.div`
 `;
 
 const WrapOrganizationItem = styled.div`
+	margin-right: 1.5rem;
 	padding-bottom: 2rem;
-	width: 44.5%;
+	width: 50%;
+	${''}
 	display: flex;
 	flex-direction: column;
 `;
 
 const ContainerConcludeButton = styled.span`
+	padding-left: 3.5rem;
 	padding-bottom: 1rem;
 	width: 100%;
-	display: flex;
-	justify-content: center;
+	${'' /* display: flex;
+	justify-content: center; */}
 `;
 
 const Teste = styled.div`
@@ -152,20 +155,31 @@ const Teste2 = styled.div`
 	align-items: center;
 `;
 
+const ErrorMessage = styled.p`
+  margin: 0.5rem 0 0.5rem 0.8rem;
+  font-size: 0.8rem;
+  color: #f00;
+  align-self: flex-start;
+	font-family: Overpass;
+  font-weight: 400;
+  @media (max-width: 425px) {
+    margin: 0.5rem 0 0.5rem 0;
+  }
+`;
+
 export default class ModalCreateOrganization extends Component {
 	state = {
-		nomeError: false,
-		dataLegalPerson: {
-			fantasyName: '',
+		dataOrganization: {
+			tradingName: '',
 			companyName: '',
 			cnpj: '',
-			email: '',
+			// email: '',
 			telephone: '',
 			address: '',
-			complement: '',
+			addressComplement: '',
 			neighborhood: '',
 			city: '',
-			zipCode: '',
+			cep: '',
 		},
 		userData: [
 			{
@@ -175,55 +189,90 @@ export default class ModalCreateOrganization extends Component {
 				cpf: '000000000-00',
 			},
 		],
-		isModalOpen: false,
+		isTradingNameError: false,
+		isCompanyNameError: false,
+		isCnpjError: false,
+		isTelephoneError: false,
+		isAddressError: false,
+		isAddressComplementError: false,
+		isNeighborhoodError: false,
+		isCityError: false,
+		isCepError: false,
 	};
+
+
+	handleErros = () => {
+		const {
+			tradingName,
+			companyName,
+			cnpj,
+			telephone,
+			address,
+			addressComplement,
+			neighborhood,
+			city,
+			cep,
+		} = this.state.dataOrganization;
+
+
+		if (!tradingName || tradingName < 4) {
+			this.setState({
+				isTradingNameError: true,
+			});
+		} else {
+			this.setState({
+				isTradingNameError: false,
+			});
+		}
+	}
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		if (this.state.dataLegalPerson.fantasyName === '') {
-			this.setState({
-				nomeError: true,
-			});
-		} else {
-			this.setState({
-				nomeError: false,
-			});
-		}
-
-		if (this.state.dataLegalPerson.cnpj === '') {
-			this.setState({
-				nomeError: true,
-			});
-		} else {
-			this.setState({
-				nomeError: false,
-			});
-		}
+		this.handleErros();
+		console.log('clickkkkk')
 	};
 
 	handleChange = (field, ev) => {
-		const { dataLegalPerson } = this.state;
-		dataLegalPerson[field] = ev.target.value;
-		this.setState({
-			dataLegalPerson,
-		});
+		const { dataOrganization } = this.state;
+		dataOrganization[field] = ev.target.value;
+		this.setState({ dataOrganization });
+
+		console.log('dataOrganization[field]', dataOrganization[field]);
 	};
 
-	handleModalOpen = () => {
-		this.setState({
-			isModalOpen: !this.state.isModalOpen,
-		});
-	}
-
 	render() {
-		const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
+		const errorMessage = [
+			'Insira um nome fantasia válido.',
+			'Insira uma razão social válida.',
+			'Insira um CNPJ válido.',
+			'Insira um número de telefone válido.',
+			'Insira um endereço válido.',
+			'Insira um complemento válido.',
+			'Insira uma cidade válida.',
+			'Insira um bairro válido.',
+			'Insira um cep válido.',
+		];
+
+		const {
+			isTradingNameError,
+			isCompanyNameError,
+			isCnpjError,
+			isTelephoneError,
+			isAddressError,
+			isAddressComplementError,
+			isNeighborhoodError,
+			isCityError,
+			isCepError,
+		} = this.state;
+
+		console.log('isTradingNameError', isTradingNameError)
 
 		return (
-			<Overlay onClick={this.handleModalOpen}>
+			<Overlay>
 				<Container onSubmit={this.handleSubmit}>
 					<Content>
-						<ContainerExit onClick={this.handleModalOpen}>
-							<ExitIcon src={Exit} alt="Sair"/>
+						<ContainerExit>
+							<ExitIcon src={Exit} alt="Fechar"/>
 						</ContainerExit>
 						<Teste>
 							<CreateOrgTitle>Criar Organização</CreateOrgTitle>
@@ -247,61 +296,79 @@ export default class ModalCreateOrganization extends Component {
 										<UserTitle>nome fantasia</UserTitle>
 										<Input
 											modalOrg
-											// margin={'0 0 1.5rem 3rem'}
+											margin={'0 0 2rem'}
+											type="text"
 											placeholder="Nome da organização"
-											onChange={ev => this.handleChange('fantasyName', ev)}
-											value={this.state.fantasyName}
+											onChange={ev => this.handleChange('tradingName', ev)}
+											value={this.state.tradingName}
+											name="tradingName"
+											required
 										/>
-										{this.state.nomeError && <span>{error[0]}</span>}
+										{isTradingNameError && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 									</ContentOrganizationItem>
 									<ContentOrganizationItem>
 										<UserTitle>razão social</UserTitle>
 										<Input
 											modalOrg
-											// margin={'0 0 1.5rem 3rem'}
+											margin={'0 0 2rem'}
+											type="text"
 											placeholder="Razão social"
 											onChange={ev => this.handleChange('companyName', ev)}
 											value={this.state.companyName}
+											name="companyName"
+											required
 										/>
 									</ContentOrganizationItem>
 									<ContentOrganizationItem>
 										<UserTitle>cnpj</UserTitle>
 										<Input
 											modalOrg
-											// margin={'0 0 1.5rem 3rem'}
-											type="number"
+											margin={'0 0 2rem'}
+											type="text"
 											placeholder="00.000.000/0000-00"
 											onChange={ev => this.handleChange('cnpj', ev)}
 											value={this.state.cnpj}
+											name="cnpj"
+											required
 										/>
-										{this.state.nomeError && <span>{error[1]}</span>}
+										{this.state.isCnpjError && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
 									</ContentOrganizationItem>
-									<ContentOrganizationItem>
+									{/* <ContentOrganizationItem>
 										<UserTitle>email</UserTitle>
 										<Input
 											modalOrg
-											// margin={'0 0 1.5rem 3rem'}
-											placeholder="endereçodeemail@email.com"
+											margin={'0 0 2rem'}
+											type="text"
+											placeholder="email@email.com"
 											value={this.state.email}
+											name="email"
+											required
 										/>
-									</ContentOrganizationItem>
+									</ContentOrganizationItem> */}
 									<ContentOrganizationItem>
 										<UserTitle>telefone</UserTitle>
 										<Input
 											modalOrg
-											// margin={'0 0 1.5rem 3rem'}
-											type="number"
+											margin={'0 0 2rem'}
+											type="text"
 											placeholder="(00) 00000-0000"
+											onChange={ev => this.handleChange('telephone', ev)}
 											value={this.state.telephone}
+											name="telephone"
+											required
 										/>
 									</ContentOrganizationItem>
 									<ContentOrganizationItem>
 										<UserTitle>endereço</UserTitle>
 										<Input
 											modalOrg
-											// margin={'0 0 1.5rem 3rem'}
+											margin={'0 0 2rem'}
+											type="text"
 											placeholder="Endereço"
+											onChange={ev => this.handleChange('address', ev)}
 											value={this.state.address}
+											name="address"
+											required
 										/>
 									</ContentOrganizationItem>
 								</ContentOrganization>
@@ -311,18 +378,26 @@ export default class ModalCreateOrganization extends Component {
 											<UserTitle>complemento</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 1.5rem 3rem'}
+												// margin={'0 0 2rem'}
+												type="text"
 												placeholder="Complemento"
-												value={this.state.complement}
+												onChange={ev => this.handleChange('addressComplement', ev)}
+												value={this.state.addressComplement}
+												name="addressComplement"
+												required
 											/>
 										</WrapOrganizationItem>
 										<WrapOrganizationItem>
 											<UserTitle>cidade</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 1.5rem 3rem'}
+												// margin={'0 0 2rem'}
+												type="text"
 												placeholder="Cidade"
+												onChange={ev => this.handleChange('city', ev)}
 												value={this.state.city}
+												name="city"
+												required
 											/>
 										</WrapOrganizationItem>
 									</WrapOrganizationContent>
@@ -331,19 +406,26 @@ export default class ModalCreateOrganization extends Component {
 											<UserTitle>bairro</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 1.5rem 3rem'}
+												// margin={'0 0 2rem'}
+												type="text"
 												placeholder="Bairro"
+												onChange={ev => this.handleChange('neighborhood', ev)}
 												value={this.state.neighborhood}
+												name="neighborhood"
+												required
 											/>
 										</WrapOrganizationItem>
 										<WrapOrganizationItem>
 											<UserTitle>cep</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 1.5rem 3rem'}
-												type="number"
+												// margin={'0 0 2rem'}
+												type="text"
 												placeholder="00000-000"
-												value={this.state.zipCode}
+												onChange={ev => this.handleChange('cep', ev)}
+												value={this.state.cep}
+												name="cep"
+												required
 											/>
 										</WrapOrganizationItem>
 									</WrapOrganizationContent>
@@ -351,10 +433,11 @@ export default class ModalCreateOrganization extends Component {
 							</Teste2>
 							<ContainerConcludeButton>
 								<Button
-									to={'/modalSucessfully'}
+									// to={'/sucessfully'}
 									type="submit"
-									width={'80%'}
+									width={'90%'}
 									text="concluir"
+									textTransform
 								/>
 							</ContainerConcludeButton>
 						</Teste>

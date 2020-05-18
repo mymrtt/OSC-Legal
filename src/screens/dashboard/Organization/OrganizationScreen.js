@@ -540,14 +540,16 @@ class OrganizationScreen extends Component {
 		};
 	}
 
-	isModalOpen = (item) => {
+	isModalOpen = (item, ev) => {
+		ev.stopPropagation();
 		this.setState({
 			itemSelected: item,
 			isModal: !this.state.isModal,
 		});
 	}
 
-	isModalCreateOrganization = () => {
+	isModalCreateOrganization = (ev) => {
+		ev.stopPropagation();
 		this.setState({
 			isModalCreateOrg: !this.state.isModalCreateOrg,
 		});
