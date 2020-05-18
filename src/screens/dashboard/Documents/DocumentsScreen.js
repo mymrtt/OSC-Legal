@@ -980,6 +980,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
+	padding: .5rem 0;
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -997,7 +998,7 @@ const Org = styled.div`
 	font-size: .8rem;
 	font-family: 'Overpass';
 	font-weight: 600;
-	cursor: pointer;	
+	cursor: pointer;
 	width: 100%;
 	padding: .3rem 1rem;
 
@@ -1066,7 +1067,7 @@ const BoxModelsDoc = styled.span`
 	flex-direction: column;
 	overflow-y: scroll;
 	margin-bottom: 1rem;
-	
+
 	&::-webkit-scrollbar{
 		display: none;
 	}
@@ -1401,8 +1402,9 @@ class DocumentsScreen extends Component {
 					<LogoAndData>
 						<img src={logo} alt="Logo OSC Legal" />
 						<ParagraphContainer1>
-							{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-								&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
+							{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+								&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
+							{this.props.isAdmin ? 'Administrador' : this.props.name}
 						</ParagraphContainer1>
 						<ParagraphSair onClick={this.handleRedirect}>
 							sair

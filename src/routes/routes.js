@@ -13,6 +13,7 @@ import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 import Dashboard from '../screens/dashboard/index';
 import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
+import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -28,6 +29,7 @@ const Routes = () => (
 			<Route path='/createuser' component={CreateUserScreen} />
 
 			<PrivateRoute path='/dashboard' component={Dashboard} />
+			<Route path='/sucessfully' component={ModalSucessfully} />
 			<Route path='/organizations' component={OrganizationScreen} />
 			<Route path='/documents' component={DocumentsScreen} />
 		</Switch>

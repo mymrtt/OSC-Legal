@@ -547,7 +547,8 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	isModalCreateOrganization = () => {
+	isModalCreateOrganization = (ev) => {
+		ev.stopPropagation();
 		this.setState({
 			isModalCreateOrg: !this.state.isModalCreateOrg,
 		});
@@ -669,7 +670,10 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 			</Box>
-			<BoxButton isClickedName={item.id === this.state.isClickedStatus} onClick={() => this.handleClickedImageStatus(item)}>
+			<BoxButton
+				isClickedName={item.id === this.state.isClickedStatus}
+				onClick={() => this.handleClickedImageStatus(item)}
+			>
 				<TextStatus color={item.isChanged}
 					// isClickedName={item.id === this.state.isClickedStatus}
 				>
@@ -811,6 +815,8 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
+		const { isAdmin } = this.props;
+
 		return (
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
@@ -822,10 +828,11 @@ class OrganizationScreen extends Component {
 				}
 				<Header />
 				<ContainerUser
-					width={this.props.isAdmin}
-					height={this.props.isAdmin}
-					background={this.props.isAdmin}>
-					{!this.props.isAdmin
+					width={isAdmin}
+					height={isAdmin}
+					background={isAdmin}
+				>
+					{!isAdmin
 					&& <Button
 						width='22%'
 						height='4rem'
@@ -836,13 +843,13 @@ class OrganizationScreen extends Component {
 						onClick={this.isModalCreateOrganization}/>
 					}
 					<ContainerTableUser
-						width={this.props.isAdmin}
-						height={this.props.isAdmin}
-						background={this.props.isAdmin}
-						border={this.props.isAdmin}
-						margin={this.props.isAdmin}>
-						<Content padding={this.props.isAdmin}>
-							{this.props.isAdmin
+						width={isAdmin}
+						height={isAdmin}
+						background={isAdmin}
+						border={isAdmin}
+						margin={isAdmin}>
+						<Content padding={isAdmin}>
+							{isAdmin
 								? this.renderSelectedViewby()
 								: this.renderSelectedViewbyUser()}
 							<ContainerTable>
