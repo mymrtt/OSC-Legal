@@ -39,8 +39,11 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: ${props => (props.width ? '100%' : '100%')};
-	height: ${props => (props.height ? '0' : '100vh')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
+
+	@media(max-width: 648px) {
+		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
+	}
 `;
 
 const ContainerSelectedViewBy = styled.div`
@@ -107,6 +110,7 @@ const SelectViewBy = styled.div`
 
 	@media (max-width: 768px) {
 		width: 100%;
+		justify-content: center;
 	}
 
 	@media(max-width: 648px) {
@@ -155,7 +159,7 @@ const TitleSearch = styled.h2`
 	font-size: 1,375rem;
 	font-family: Overpass;
 	font-weight: bold;
-	margin: 0.8rem 0.8rem 0 0;
+	margin: 0.8rem 0.9rem 0 0;
 	display: flex;
   align-items: center;
 
@@ -165,18 +169,26 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
-	width: 100%;
+	width: 80%;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
 	margin-top: 0.8rem;
 	display: flex;
 	justify-content: space-between;
+
+	/* @media (max-width: 648px) {
+		order: ${props => (props.order ? '0' : '1')};
+	} */
 `;
 
 const Input = styled.input`
 	border: none;
 	outline: none;
+
+	@media (max-width: 768px) {
+		padding: 0.5rem;
+	}
 `;
 
 const InputSelect = styled.div`
@@ -246,12 +258,20 @@ const ContainerTableUser = styled.div`
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	border-radius: ${props => (props.border ? '0' : '3px')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+
+	@media (max-width: 768px) {
+		margin: 0 0;
+	}
+
+	/* @media (max-width: 648px) {
+		order: 1;
+	} */
 `;
 
 const Content = styled.div`
-	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
-	max-width: 100%;
 	width: 100%;
+	max-width: 100%;
+	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -259,9 +279,9 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	/* max-height: 69vh; */
 	${''}
-	max-height: calc(100vh - 85px - 96px - 2.8rem);
+	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
+	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 178px)')};
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -292,11 +312,6 @@ const Table = styled.table`
   width: 100%;
 	/* height: 100%; */
 	border-spacing: 0;
-
-	@media (max-width: 768px) {
-		/* margin: 0; */
-		/* padding: 2rem 0 0 0; */
-	}
 
 	@media (max-width: 648px) {
 		padding: 0;
@@ -437,8 +452,6 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	width: ${props => (props.width)};
-	/* padding-top: 0;
-	padding-bottom: 0; */
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-weight: ${props => (props.font && '900')};
@@ -496,6 +509,7 @@ class OrganizationScreen extends Component {
 			isModal: undefined,
 			itemSelected: undefined,
 			isSelected: undefined,
+			filter: '',
 			selectedValue: 'Selecionar status',
 			selectedItems: [
 				'Selecionar status',
@@ -607,6 +621,12 @@ class OrganizationScreen extends Component {
 		});
 	};
 
+	handleChangeFilter = (ev) => {
+		this.setState({
+			filter: ev.target.value,
+		});
+	}
+
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
@@ -644,10 +664,12 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleMyOrganization>Minhas organizações</TitleMyOrganization>
-				<SelectViewBy width={'37%'}>
+				<SelectViewBy width={'34%'}>
 					<TitleSearch>Pesquisar</TitleSearch>
 					<SelectInputUser>
 						<Input
+							onChange={this.handleChangeFilter}
+							onKeyUp={this.handleChangeFilterKey}
 							placeholder= 'Digite aqui para pesquisar'
 							type="text"
 						/>
@@ -834,12 +856,13 @@ class OrganizationScreen extends Component {
 				>
 					{!isAdmin
 					&& <Button
-						width='22%'
-						height='4rem'
+						width='20%'
+						height='4.3rem'
 						fontSize='1.4rem'
 						margin='1.5rem 0 1.5rem 2.5rem'
 						text='Criar Organização'
 						type='button'
+						// orderMobile={3}
 						onClick={this.isModalCreateOrganization}/>
 					}
 					<ContainerTableUser
@@ -852,7 +875,7 @@ class OrganizationScreen extends Component {
 							{isAdmin
 								? this.renderSelectedViewby()
 								: this.renderSelectedViewbyUser()}
-							<ContainerTable>
+							<ContainerTable maxHeight={this.props.isAdmin}>
 								<Table modal={this.state.isModal}>
 									<Thead>
 										<Tr>

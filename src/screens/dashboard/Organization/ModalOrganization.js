@@ -1,6 +1,8 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+
 // import { Link, Redirect } from 'react-router-dom';
 
 // Components
@@ -14,6 +16,11 @@ import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
+
+const mapStateToProps = state => ({
+	isAdmin: state.onboarding.users.isAdmin,
+	tableDatas: state.organization.tableDatas,
+});
 
 const Overlay = styled.div`
 	width: 100vw;
@@ -52,7 +59,6 @@ const Figure = styled.figure`
 	position: fixed;
 	top: 0;
 `;
-
 
 const ImageBack = styled.img`
 	display: none;
@@ -148,8 +154,10 @@ const SubAnswer = styled.p`
 `;
 
 const ContentCreate = styled.div`
-	width: 35%;
+ 	width: ${props => (props.width ? '35%' : '37%')};
+	/* width: 35%; */
   color: #85144B;
+	padding: ${props => (props.padding ? '0 0 2rem 3rem' : '0 0 2rem 2.5rem')};
 	padding: 0 0 2rem 3rem;
   border-left: 1px solid;
 	display: flex;
@@ -168,7 +176,7 @@ const ContentCreate = styled.div`
 const ImageClosed = styled.img`
 	display: flex;
 	align-self: flex-end;
-	padding: 1rem 1rem 0;
+	padding: 0.8rem 0.8rem 0;
 	cursor: pointer;
 
 	@media (max-width: 648px) {
@@ -214,7 +222,7 @@ const ContentOrganizationMobile = styled.div`
 
 const ContentConsultorDetails = styled.div`
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 
 	 @media (max-width: 648px) {
 		width: 100%;
@@ -225,14 +233,14 @@ const ContentConsultorDetails = styled.div`
 `;
 
 const ContentSubTitle = styled.div`
-	width: 60%;
+	/* width: 60%; */
+	width: 55%;
 
 	@media (max-width: 648px) {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
     justify-content: space-between;
-    margin: 0 1rem;
 	}
 `;
 
@@ -248,24 +256,37 @@ const ContainerEdit = styled.div`
 const SpanContainer = styled.span`
 	display: flex;
 	flex-direction: row;
+	margin-bottom: 0.5rem;
 `;
 
 const ImageEdite = styled.img`
 	display: flex;
   flex-direction: row;
+	margin-right: 0.3rem;
 `;
 
 const ContainerOption = styled.p`
 	color: #85144B;
+	font-size: 1rem;
 	font-family: Overpass, Regular;
-	font-size: 1.2rem;
 	display: flex;
   align-items: center;
+	padding-top: 0.5rem;
 	margin-left: 0.3rem;
 `;
 
-const Separation = styled.div`
+const ContainerOptionDelete = styled.p`
+	color: #85144B;
+	font-size: 1rem;
+	font-family: Overpass, Regular;
+	display: flex;
+  align-items: center;
+	padding-top: 0.5rem;
+	margin-left: 1rem;
+`;
 
+const Separation = styled.div`
+	/* display: flex; */
 
 	@media (max-width: 648px) {
 		display: none;
@@ -311,6 +332,37 @@ const PaymentMethodText = styled.p`
 	color: ${props => (props.color && '#FF4136')};
 	font-family: "Overpass", Light;
 	padding-left: 0.3rem;
+`;
+
+const ContainerEditImage = styled.div`
+	display: none;
+
+	@media (max-width: 648px) {
+		width: 100%;
+		padding: 1rem 0 1rem;
+		display: flex;
+		justify-content: center;
+		justify-content: space-evenly;
+		background-color: #FFFFFF;
+		bottom: 0;
+		position: fixed;
+		cursor: pointer;
+	}
+`;
+
+const SpanContainerImage = styled.div`
+	  display: flex;
+    flex-direction: row;
+`;
+
+const ContainerOptionMobile = styled.p`
+	color: #85144B;
+	font-size: 1rem;
+	font-family: Overpass, Regular;
+	display: flex;
+  align-items: center;
+	padding-top: 0.3rem;
+	margin-left: 1rem;
 `;
 
 class ModalOrganization extends Component {
@@ -376,7 +428,9 @@ class ModalOrganization extends Component {
 								</div>
 							</ContentConsultorItem>
 						</ContentConsultor>
-						<ContentCreate>
+						<ContentCreate
+							width={this.props.isAdmin}
+							padding={this.props.isAdmin}>
 							<ImageClosed src={ImageClose} alt="Fechar" onClick={this.props.handleClosedModal} />
 							<ContentConsultorDetails>
 								<ContentSubTitle>
@@ -393,19 +447,19 @@ class ModalOrganization extends Component {
 										<SubAnswer>{item.dueDate}</SubAnswer>
 									</div>
 								</ContentSubTitle>
+								{!this.props.isAdmin
+									&&	<ContainerEdit>
+										<SpanContainer>
+											<ImageEdite src={ImageEdit}/>
+											<ContainerOption>Editar</ContainerOption>
+										</SpanContainer>
+										<SpanContainer>
+											<img src={ImageDelete}/>
+											<ContainerOptionDelete>Excluir</ContainerOptionDelete>
+										</SpanContainer>
+									</ContainerEdit>
+								}
 							</ContentConsultorDetails>
-							{/* {this.props.isAdmin
-								&& (<ContainerEdit>
-									<SpanContainer>
-										<ImageEdit src={ImageEdit}/>
-										<ContainerOption>Editar</ContainerOption>
-									</SpanContainer>
-									<SpanContainer>
-										<img src={ImageDelete}/>
-										<ContainerOption>Excluir</ContainerOption>
-									</SpanContainer>
-								</ContainerEdit>)
-							} */}
 						</ContentCreate>
 					</ContentAdmin>
 					<ContainerOrganization>
@@ -470,19 +524,31 @@ class ModalOrganization extends Component {
 						</ContentOrganization>
 					</ContainerOrganization>
 					<ContainerSelected>
-						{this.state.paymentMethodList.map(item => (
-							<ContainerPaymentMethod
-								key={item.desc}
-								border={this.state.selectedStatus === item.desc}
-								onClick={() => this.handleClicked(item)}
-							>
-								<img src={item.img} alt={item.desc} />
-								<PaymentMethodText
-									color={this.state.selectedStatus === item.desc}
+						{this.props.isAdmin
+							?	this.state.paymentMethodList.map(item => (
+								<ContainerPaymentMethod
+									key={item.desc}
+									border={this.state.selectedStatus === item.desc}
+									onClick={() => this.handleClicked(item)}
 								>
-									{item.desc}
-								</PaymentMethodText>
-							</ContainerPaymentMethod>))}
+									<img src={item.img} alt={item.desc} />
+									<PaymentMethodText
+										color={this.state.selectedStatus === item.desc}
+									>
+										{item.desc}
+									</PaymentMethodText>
+								</ContainerPaymentMethod>))
+							: <ContainerEditImage>
+								<SpanContainerImage>
+									<ImageEdite src={ImageEdit}/>
+									<ContainerOptionMobile>Editar</ContainerOptionMobile>
+								</SpanContainerImage>
+								<SpanContainerImage>
+									<img src={ImageDelete}/>
+									<ContainerOptionMobile>Excluir</ContainerOptionMobile>
+								</SpanContainerImage>
+							</ContainerEditImage>
+						}
 					</ContainerSelected>
 				</Container>
 			</Overlay>
@@ -490,4 +556,4 @@ class ModalOrganization extends Component {
 	}
 }
 
-export default ModalOrganization;
+export default connect(mapStateToProps, null)(ModalOrganization);
