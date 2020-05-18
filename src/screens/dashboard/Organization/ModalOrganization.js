@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 // Components
 import ImageClose from '../../../assets/fechar.svg';
-// import ImageEdit from '../../../assets/edit.svg';
-// import ImageDelete from '../../../assets/delete.svg';
+import ImageEdit from '../../../assets/edit.svg';
+import ImageDelete from '../../../assets/delete.svg';
 import ImageBackMobile from '../../../assets/setaLado.svg';
 
 // ImageClosed
@@ -221,12 +221,51 @@ const ContentConsultorDetails = styled.div`
 		flex-direction: row;
 		justify-content: space-between;
 		margin: 5rem 0 0;
-
 	}
 `;
 
+const ContentSubTitle = styled.div`
+	width: 60%;
+
+	@media (max-width: 648px) {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+    justify-content: space-between;
+    margin: 0 1rem;
+	}
+`;
+
+const ContainerEdit = styled.div`
+	display: flex;
+	flex-direction: column;
+
+	@media (max-width: 648px) {
+		display: none;
+	}
+`;
+
+const SpanContainer = styled.span`
+	display: flex;
+	flex-direction: row;
+`;
+
+const ImageEdite = styled.img`
+	display: flex;
+  flex-direction: row;
+`;
+
+const ContainerOption = styled.p`
+	color: #85144B;
+	font-family: Overpass, Regular;
+	font-size: 1.2rem;
+	display: flex;
+  align-items: center;
+	margin-left: 0.3rem;
+`;
+
 const Separation = styled.div`
-	/* display: flex; */
+
 
 	@media (max-width: 648px) {
 		display: none;
@@ -340,19 +379,33 @@ class ModalOrganization extends Component {
 						<ContentCreate>
 							<ImageClosed src={ImageClose} alt="Fechar" onClick={this.props.handleClosedModal} />
 							<ContentConsultorDetails>
-								<div>
-									<SubTitle>criado em</SubTitle>
-									<SubAnswer>{item.createdIn}</SubAnswer>
-								</div>
-								<div>
-									<SubTitle>autorizado em</SubTitle>
-									<SubAnswer>{item.authorization}</SubAnswer>
-								</div>
-								<div>
-									<SubTitle>vencimento</SubTitle>
-									<SubAnswer>{item.dueDate}</SubAnswer>
-								</div>
+								<ContentSubTitle>
+									<div>
+										<SubTitle>criado em</SubTitle>
+										<SubAnswer>{item.createdIn}</SubAnswer>
+									</div>
+									<div>
+										<SubTitle>autorizado em</SubTitle>
+										<SubAnswer>{item.authorization}</SubAnswer>
+									</div>
+									<div>
+										<SubTitle>vencimento</SubTitle>
+										<SubAnswer>{item.dueDate}</SubAnswer>
+									</div>
+								</ContentSubTitle>
 							</ContentConsultorDetails>
+							{/* {this.props.isAdmin
+								&& (<ContainerEdit>
+									<SpanContainer>
+										<ImageEdit src={ImageEdit}/>
+										<ContainerOption>Editar</ContainerOption>
+									</SpanContainer>
+									<SpanContainer>
+										<img src={ImageDelete}/>
+										<ContainerOption>Excluir</ContainerOption>
+									</SpanContainer>
+								</ContainerEdit>)
+							} */}
 						</ContentCreate>
 					</ContentAdmin>
 					<ContainerOrganization>

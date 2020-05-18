@@ -101,6 +101,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
+	width: ${props => (props.width)};
 	display: flex;
 	flex-direction: row;
 
@@ -161,6 +162,21 @@ const TitleSearch = styled.h2`
 	@media (max-width: 768px) {
 		display: none;
 	}
+`;
+
+const SelectInputUser = styled.span`
+	width: 100%;
+	border: 0.5px solid #85144B;
+	border-radius: 3px;
+	padding: 0.1rem 1rem;
+	margin-top: 0.8rem;
+	display: flex;
+	justify-content: space-between;
+`;
+
+const Input = styled.input`
+	border: none;
+	outline: none;
 `;
 
 const InputSelect = styled.div`
@@ -593,27 +609,15 @@ class OrganizationScreen extends Component {
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
-				{this.props.isAdmin
-					? <TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
-					: <TitleMyOrganization>Minhas organizações</TitleMyOrganization>
-				}
+				<TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
 				<SelectViewBy>
-					{this.props.isAdmin
-						? <TitleViewBy>Visualizar por:</TitleViewBy>
-						: <TitleSearch>Pesquisar</TitleSearch>
-					}
+					<TitleViewBy>Visualizar por:</TitleViewBy>
 					<SpanSelect>
-						{/* {!this.props.isAdmin
-							&& <input></input>
-						} */}
 						<InputSelect onClick={this.isSelectOpen}>
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							{this.props.isAdmin
-								?	<img src={ImageCaminho} alt="arrow" />
-								:	<img src={magnifyingGlass} alt="Lupa"/>
-							}
+							<img src={ImageCaminho} alt="arrow" />
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -630,6 +634,24 @@ class OrganizationScreen extends Component {
 							</InputSelectedItem>
 						)}
 					</SpanSelect>
+				</SelectViewBy>
+			</ContainerContentSelectedViewBy>
+		</ContainerSelectedViewBy>
+	)
+
+	renderSelectedViewbyUser = () => (
+		<ContainerSelectedViewBy>
+			<ContainerContentSelectedViewBy>
+				<TitleMyOrganization>Minhas organizações</TitleMyOrganization>
+				<SelectViewBy width={'37%'}>
+					<TitleSearch>Pesquisar</TitleSearch>
+					<SelectInputUser>
+						<Input
+							placeholder= 'Digite aqui para pesquisar'
+							type="text"
+						/>
+						<img src={magnifyingGlass} alt="Lupa"/>
+					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
 		</ContainerSelectedViewBy>
@@ -820,7 +842,9 @@ class OrganizationScreen extends Component {
 						border={this.props.isAdmin}
 						margin={this.props.isAdmin}>
 						<Content padding={this.props.isAdmin}>
-							{this.renderSelectedViewby()}
+							{this.props.isAdmin
+								? this.renderSelectedViewby()
+								: this.renderSelectedViewbyUser()}
 							<ContainerTable>
 								<Table modal={this.state.isModal}>
 									<Thead>

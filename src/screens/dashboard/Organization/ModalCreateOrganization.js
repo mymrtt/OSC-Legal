@@ -209,161 +209,161 @@ const Label = styled.label`
 `;
 
 export default class CreateOrganization extends Component {
-  state = {
-    nomeError: false,
-    dataLegalPerson: {
-      fantasyName: '',
-      companyName: '',
-      cnpj: '',
-      email: '',
-      telephone: '',
-      address: '',
-      complement: '',
-      neighborhood: '',
-      city: '',
-      zipCode: '',
-    },
-  };
-
-  handleSubmit = (ev) => {
-    ev.preventDefault();
-    if (this.state.dataLegalPerson.fantasyName === '') {
-      this.setState({
-        nomeError: true,
-      });
-    } else {
-      this.setState({
-        nomeError: false,
-      });
-    }
-
-    if (this.state.dataLegalPerson.cnpj === '') {
-      this.setState({
-        nomeError: true,
-      });
-    } else {
-      this.setState({
-        nomeError: false,
-      });
-    }
-  };
-
-  handleChange = (field, ev) => {
-    const { dataLegalPerson } = this.state;
-    dataLegalPerson[field] = ev.target.value;
-    this.setState({
-      dataLegalPerson,
-    });
+	state = {
+		nomeError: false,
+		dataLegalPerson: {
+			fantasyName: '',
+			companyName: '',
+			cnpj: '',
+			email: '',
+			telephone: '',
+			address: '',
+			complement: '',
+			neighborhood: '',
+			city: '',
+			zipCode: '',
+		},
 	};
 
-  render() {
-    const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
+	handleSubmit = (ev) => {
+		ev.preventDefault();
+		if (this.state.dataLegalPerson.fantasyName === '') {
+			this.setState({
+				nomeError: true,
+			});
+		} else {
+			this.setState({
+				nomeError: false,
+			});
+		}
 
-    return (
-      <Overlay onClick={this.props.handleClosedModal}>
-        <Container onSubmit={this.handleSubmit}>
-        <img src={Exit} alt="Exit"/>
-          <ContainerFisicalPerson onClick={this.props.handleClosedModal}>
-            <h1>Criar organização</h1>
-            <h2>pessoa física</h2>
-            <div>
-              <h2>nome</h2>
-              <Text>Yasmin Miranda</Text>
-              <h2>rg</h2>
-              <Text>0000000-0</Text>
-              <h2>e-mail</h2>
-              <Text>nome@email.com</Text>
-              <h2>telefone</h2>
-              <Text>(99) 99999-9999</Text>
-              <span>
-                <h2>data de nascimento</h2>
-                <TextSpan>22/02/2020</TextSpan>
-                <h2>cpf</h2>
-                <TextSpan>000000000-00</TextSpan>
-              </span>
-            </div>
-          </ContainerFisicalPerson>
-          <ContainerLegalPerson>
-            <h1>associar pessoa jurídica</h1>
-            <div>
-              <label>
-                <h2>nome fantasia</h2>
-                <Input
-                  placeholder="Nome da organização"
-                  onChange={ev => this.handleChange('fantasyName', ev)}
-                  value={this.state.fantasyName}
-                />
-                {this.state.nomeError && <span>{error[0]}</span>}
-              </label>
-              <label>
-                <h2>razão social</h2>
-                <Input
-                  placeholder="Razão social"
-                  onChange={ev => this.handleChange('companyName', ev)}
-                  value={this.state.companyName}
-                />
-              </label>
-              <label>
-                <h2>cnpj</h2>
-                <Input
+		if (this.state.dataLegalPerson.cnpj === '') {
+			this.setState({
+				nomeError: true,
+			});
+		} else {
+			this.setState({
+				nomeError: false,
+			});
+		}
+	};
+
+	handleChange = (field, ev) => {
+		const { dataLegalPerson } = this.state;
+		dataLegalPerson[field] = ev.target.value;
+		this.setState({
+			dataLegalPerson,
+		});
+	};
+
+	render() {
+		const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
+
+		return (
+			<Overlay onClick={this.props.handleClosedModal}>
+				<Container onClick={ev => ev.stopPropagation()} onSubmit={this.handleSubmit}>
+					<img src={Exit} alt="Exit" onClick={this.props.handleClosedModal} />
+					<ContainerFisicalPerson>
+						<h1>Criar organização</h1>
+						<h2>pessoa física</h2>
+						<div>
+							<h2>nome</h2>
+							<Text>Yasmin Miranda</Text>
+							<h2>rg</h2>
+							<Text>0000000-0</Text>
+							<h2>e-mail</h2>
+							<Text>nome@email.com</Text>
+							<h2>telefone</h2>
+							<Text>(99) 99999-9999</Text>
+							<span>
+								<h2>data de nascimento</h2>
+								<TextSpan>22/02/2020</TextSpan>
+								<h2>cpf</h2>
+								<TextSpan>000000000-00</TextSpan>
+							</span>
+						</div>
+					</ContainerFisicalPerson>
+					<ContainerLegalPerson>
+						<h1>associar pessoa jurídica</h1>
+						<div>
+							<label>
+								<h2>nome fantasia</h2>
+								<Input
+									placeholder="Nome da organização"
+									onChange={ev => this.handleChange('fantasyName', ev)}
+									value={this.state.fantasyName}
+								/>
+								{this.state.nomeError && <span>{error[0]}</span>}
+							</label>
+							<label>
+								<h2>razão social</h2>
+								<Input
+									placeholder="Razão social"
+									onChange={ev => this.handleChange('companyName', ev)}
+									value={this.state.companyName}
+								/>
+							</label>
+							<label>
+								<h2>cnpj</h2>
+								<Input
 									type="number"
-                  placeholder="00.000.000/0000-00"
-                  onChange={ev => this.handleChange('cnpj', ev)}
-                  value={this.state.cnpj}
-                />
-                {this.state.nomeError && <span>{error[1]}</span>}
-              </label>
-              <label>
-                <h2>email</h2>
-                <Input placeholder="endereçodeemail@email.com" value={this.state.email} />
-              </label>
-              <label>
-                <h2>telefone</h2>
-                <Input
+									placeholder="00.000.000/0000-00"
+									onChange={ev => this.handleChange('cnpj', ev)}
+									value={this.state.cnpj}
+								/>
+								{this.state.nomeError && <span>{error[1]}</span>}
+							</label>
+							<label>
+								<h2>email</h2>
+								<Input placeholder="endereçodeemail@email.com" value={this.state.email} />
+							</label>
+							<label>
+								<h2>telefone</h2>
+								<Input
 									type="number"
-                  placeholder="(00) 00000-0000"
-                  value={this.state.telephone}
-                />
-              </label>
-              <label>
-                <h2>endereço</h2>
-                <Input placeholder="Endereço" value={this.state.address} />
-              </label>
-            </div>
-            <WrapLegalPerson>
-              <Label>
-                <label>
-                  <label>
-                    <h2>complemento</h2>
-                    <Input
-                      placeholder="Complemento"
-                      value={this.state.complement}
-                    />
-                  </label>
-                  <label>
-                    <h2>cidade</h2>
-                    <Input placeholder="Cidade" value={this.state.city} />
-                  </label>
-                </label>
-                <label>
-                  <label>
-                    <h2>bairro</h2>
-                    <Input
-                      placeholder="Bairro"
-                      value={this.state.neighborhood}
-                    />
-                  </label>
-                  <label>
-                    <h2>cep</h2>
-                    <Input type="number" placeholder="00000-000" value={this.state.zipCode} />
-                  </label>
-                </label>
-              </Label>
-            </WrapLegalPerson>
-            <Button to={'/modalSucessfully'} type="submit" text="concluir" textTransform/>
-          </ContainerLegalPerson>
-        </Container>
-      </Overlay>
-    );
-  }
+									placeholder="(00) 00000-0000"
+									value={this.state.telephone}
+								/>
+							</label>
+							<label>
+								<h2>endereço</h2>
+								<Input placeholder="Endereço" value={this.state.address} />
+							</label>
+						</div>
+						<WrapLegalPerson>
+							<Label>
+								<label>
+									<label>
+										<h2>complemento</h2>
+										<Input
+											placeholder="Complemento"
+											value={this.state.complement}
+										/>
+									</label>
+									<label>
+										<h2>cidade</h2>
+										<Input placeholder="Cidade" value={this.state.city} />
+									</label>
+								</label>
+								<label>
+									<label>
+										<h2>bairro</h2>
+										<Input
+											placeholder="Bairro"
+											value={this.state.neighborhood}
+										/>
+									</label>
+									<label>
+										<h2>cep</h2>
+										<Input type="number" placeholder="00000-000" value={this.state.zipCode} />
+									</label>
+								</label>
+							</Label>
+						</WrapLegalPerson>
+						<Button to={'/modalSucessfully'} type="submit" text="concluir" textTransform />
+					</ContainerLegalPerson>
+				</Container>
+			</Overlay>
+		);
+	}
 }
