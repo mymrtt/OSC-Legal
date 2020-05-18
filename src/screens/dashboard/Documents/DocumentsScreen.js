@@ -292,7 +292,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: 100%;
+	width: ${props => (props.filter ? '100%' : '70%')};
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -419,7 +419,7 @@ const ContainerModelDescription = styled.div`
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
-	border: ${props => (props.isSelected)};
+	border: ${props => (props.isSelected ? '1px solid #85144B' : 'none')};
 	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
 
 	&:hover {
@@ -966,14 +966,19 @@ const BoxFilter = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	border: 0.5px solid #85144B;
 	border-radius: 3px;
+	border: 1px solid #85144B;
+	padding: .5rem 0; 
 	position: absolute;
 	right: 0;
 	left: 0;
 	top: 1.85rem;
 	background: #FFF;
-	z-index: 6;
+	z-index: 99;
+
+	@media (max-width: 490px) {
+		z-index: 6;
+	}
 `;
 
 const Org = styled.div`
@@ -1074,6 +1079,17 @@ const ButtonModalList = styled.button`
 	}
 `;
 
+const ImageExit = styled.img`
+	width: 30px;
+	align-self: flex-end;
+	position: absolute;
+	margin-top: .5rem;
+	cursor: pointer;
+`;
+
+
+let newList = [];
+
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1118,7 +1134,6 @@ class DocumentsScreen extends Component {
 				description: 'Modelo de estatutoModelo de estatuto',
 			},
 		],
-		selectedDoc: [],
 	};
 
 	handleOnOptions = (item) => {
@@ -1342,18 +1357,18 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	selectedDocUser = (docs) => {
+	selecetedDocUser = (docs) => {
+		newList = this.state.listDocs.concat(docs);
 		this.setState({
-			selectedDoc: docs,
+			isSelected: docs,
 		});
 	}
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		const { selectedDoc } = this.state;
-		this.state.listDocs.push(selectedDoc);
 		this.setState({
-			// modalListDoc: false,
+			modalListDoc: false,
+			listDocs: newList,
 		});
 	}
 
@@ -1469,6 +1484,7 @@ class DocumentsScreen extends Component {
 	renderModalListDoc = () => (
 		<ContainerModal onClick={this.closeModalListDoc}>
 			<Modal onClick={ev => ev.stopPropagation()}>
+				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc}/>
 				<BoxTitle>
 					<TitleModalList>Adicionar Documento</TitleModalList>
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
@@ -1476,10 +1492,11 @@ class DocumentsScreen extends Component {
 				<BoxModelsDoc>
 					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription
-							isSelected={this.state.selectedDoc === docs ? '1px solid #85144B' : 'none'}
 							hidden={this.state.modalListDoc}
 							isAdmin={this.state.isAdmin}
-							onClick={ this.selectedDocUser}>
+							onClick={() => this.selecetedDocUser(docs)}
+							isSelected={docs === this.state.isSelected}
+						>
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
@@ -1549,7 +1566,8 @@ class DocumentsScreen extends Component {
 										/>
 									}
 									{this.state.isBoxFilter && (
-										<BoxFilter onClick={ev => ev.stopPropagation()}>
+										<BoxFilter
+											onClick={ev => ev.stopPropagation()}>
 											{this.state.Orgs.map(orgs => (
 												<Org key={orgs}>{orgs}</Org>
 											))}
