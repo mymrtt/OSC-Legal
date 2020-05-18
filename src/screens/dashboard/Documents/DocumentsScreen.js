@@ -48,12 +48,24 @@ const Container = styled.div`
 	}
 `;
 
+const Content = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: ${props => (props.isAdmin ? '#FFF' : '#FFCFCD')};
+`;
+
 const MaximumWidth = styled.div`
 	margin-top: 3rem;
-	width: 100%;
-	min-width: 100%;
+	width: ${props => (props.isAdmin ? '100%' : '95%')};
+	min-width: ${props => (props.isAdmin ? '100%' : 0)};
+	height: ${props => (props.isAdmin ? 0 : '95%')};
 	max-width: 1440px;
 	display: flex;
+	background: #FFF;
+	padding: ${props => (props.isAdmin ? 0 : '2rem 0')};
 
 	@media(max-width: 648px) {
 		margin-top: 1rem;
@@ -218,7 +230,7 @@ const ContainerScroll = styled.div`
 
 	@media (max-width: 490px) {
 		width: 100%;
-		max-height: 50vh;
+		min-height: 50vh;
 	}
 `;
 
@@ -308,13 +320,14 @@ const ContainerSearchInput = styled.label`
 	}
 
 	@media (max-width: 490px) {
-		width: 95%;
+		width: 100%;
 	}
 `;
 
 const SearchInput = styled.input`
   width: 100%;
 	border: 0;
+	max-width: 100%;
 	outline: none;
 	padding-left: .5rem;
 	font-size: 1rem;
@@ -352,7 +365,7 @@ const ContainerModels = styled.div`
 const ContainerModel = styled.div`
 	margin-bottom: 1rem;
 	padding: 2rem;
-	width: 100%;
+	width: 99%;
 	border-radius: 3px;
 	height: 100%;
 	display: flex;
@@ -415,7 +428,7 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: ${props => (props.isAdmin ? '85%' : '100%')};
+	width: ${props => (props.isAdmin ? '85%' : '95%')};
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
@@ -430,7 +443,6 @@ const ContainerModelDescription = styled.div`
 	span {
 		display: flex;
 		padding: ${props => (props.isAdmin ? '0' : '0 2rem')};
-
 		@media (max-width: 768px) {
 			width: 95%;
 		}
@@ -511,7 +523,7 @@ const ContainerOptions = styled.div`
 		width: 160px;
 		height: 130px;
     top: 100%;
-		margin-top: 5%;
+		margin-top: 0;
     right: 0rem;
     border: 1px solid #85144B;
 		z-index: 5;
@@ -962,13 +974,12 @@ const ErrorText = styled.p`
 	font-family: Overpass;
 `;
 
-const BoxFilter = styled.div`
+const BoxOrgs = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	padding: .5rem 0; 
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -983,7 +994,7 @@ const BoxFilter = styled.div`
 
 const Org = styled.div`
 	color: #231F20;
-	font-size: .75rem;
+	font-size: .8rem;
 	font-family: 'Overpass';
 	font-weight: 600;
 	cursor: pointer;	
@@ -1080,7 +1091,7 @@ const ButtonModalList = styled.button`
 `;
 
 const ImageExit = styled.img`
-	width: 30px;
+	width: 20px;
 	align-self: flex-end;
 	position: absolute;
 	margin-top: .5rem;
@@ -1118,7 +1129,7 @@ class DocumentsScreen extends Component {
 		isErrorTitle: false,
 		isErrorFile: false,
 		isErrorTitleQtd: false,
-		isBoxFilter: false,
+		isBoxOrgs: false,
 		ishovering: false,
 		Orgs: [
 			'vai na web',
@@ -1332,16 +1343,16 @@ class DocumentsScreen extends Component {
 		this.setState({ redirect: true });
 	}
 
-	openBoxFilter = (ev) => {
+	openBoxOrgs = (ev) => {
 		ev.stopPropagation();
 		this.setState({
-			isBoxFilter: !this.state.isBoxFilter,
+			isBoxOrgs: !this.state.isBoxOrgs,
 		});
 	}
 
-	closeBoxFilter = () => {
+	closeBoxOrgs = () => {
 		this.setState({
-			isBoxFilter: false,
+			isBoxOrgs: false,
 		});
 	}
 
@@ -1517,205 +1528,210 @@ class DocumentsScreen extends Component {
 		const { isAdmin } = this.props;
 
 		return (
-			<Container onClick={this.handleClickedLabelLeave || this.closeBoxFilter}>
+			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
-				<MaximumWidth>
-					<ContainerAddModel>
-						{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
-						{
-							isAdmin ? (
-								<AddModelImage src={ImageDocument} />
-							) : (
-								<AddModelImage src={DocumentUser} />
-							)}
-						{isAdmin ? (
-							<Button
-								onClick={this.handleAddModel}>
-									Adicionar Modelo
-							</Button>
-						) : (
-							<Button
-								onClick={this.openModalListDoc}
-							>
-									Adicionar Documento
-							</Button>
-						)}
-					</ContainerAddModel>
-					<Teste>
-						<ContainerHeader>
-							<ContainerSearch>
-								<SearchText>
-									{isAdmin ? 'Pesquisar' : 'Organização'}
-								</SearchText>
-								{/* {isAdmin ? ( */}
-								<ContainerSearchInput
-									filter={this.state.isBoxFilter}
-									onClick={this.openBoxFilter}
+				<Content>
+					<MaximumWidth>
+						<ContainerAddModel>
+							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
+							{
+								isAdmin ? (
+									<AddModelImage src={ImageDocument} />
+								) : (
+									<AddModelImage src={DocumentUser} />
+								)}
+							{isAdmin ? (
+								<Button
+									onClick={this.handleAddModel}
+									hidden={this.state.addModel || this.state.deleteModal}
 								>
-									{isAdmin
-										? <SearchInput
-											onChange={this.handleSearch}
-											placeholder="Digite aqui para pesquisar"
-										/> : <TextOrg>Selecionar Organização</TextOrg>}
-									{isAdmin
-										? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
-										: <img src={ArrowDownIcon}
-											alt="arrow"
-											style={{ cursor: 'pointer' }}
-											onClick={this.openBoxFilter}
-										/>
-									}
-									{this.state.isBoxFilter && isAdmin === false ? (
-										<BoxFilter
-											onClick={ev => ev.stopPropagation()}>
-											{this.state.Orgs.map(orgs => (
-												<Org key={orgs}>{orgs}</Org>
-											))}
-										</BoxFilter>
-									) : null}
-								</ContainerSearchInput>
-							</ContainerSearch>
-						</ContainerHeader>
-						<ContainerContent>
-							<ContainerScroll>
-								<ContainerModels>
+									Adicionar Modelo
+								</Button>
+							) : (
+								<Button
+									onClick={this.openModalListDoc}
+									hidden={this.state.modalListDoc}
+								>
+									Adicionar Documento
+								</Button>
+							)}
+						</ContainerAddModel>
+						<Teste>
+							<ContainerHeader>
+								<ContainerSearch>
+									<SearchText>
+										{isAdmin ? 'Pesquisar' : 'Organização'}
+									</SearchText>
+									{/* {isAdmin ? ( */}
+									<ContainerSearchInput
+										filter={this.state.isBoxOrgs}
+										onClick={this.openBoxOrgs}
+									>
+										{isAdmin
+											? <SearchInput
+												onChange={this.handleSearch}
+												placeholder="Digite aqui para pesquisar"
+											/> : <TextOrg>Selecionar Organização</TextOrg>}
+										{isAdmin
+											? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
+											: <img src={ArrowDownIcon}
+												alt="arrow"
+												style={{ cursor: 'pointer' }}
+												onClick={this.openBoxOrgs}
+											/>
+										}
+										{this.state.isBoxOrgs && isAdmin === false ? (
+											<BoxOrgs
+												onClick={ev => ev.stopPropagation()}>
+												{this.state.Orgs.map(orgs => (
+													<Org key={orgs}>{orgs}</Org>
+												))}
+											</BoxOrgs>
+										) : null}
+									</ContainerSearchInput>
+								</ContainerSearch>
+							</ContainerHeader>
+							<ContainerContent>
+								<ContainerScroll>
+									<ContainerModels>
 
-									{isAdmin ? (
-										documentsList && documentsList.length > 0 ? (
-											documentsList.map((item, index) => (
-												<ContainerModel key={item}
-													style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-													zIndex={this.state.addModel}
-													displayBefore={this.state.modalDelete}
-													onMouseEnter={() => this.handleOnOptions(item)}
-													onMouseLeave={this.handleOffOptions}>
-													<ContainerModelDescription>
-														<span>
-															<ModelNumber>{item.id}</ModelNumber>
-															<ModelTitle>{item.title}</ModelTitle>
-														</span>
-														<ModelParagraph>{item.description}</ModelParagraph>
-													</ContainerModelDescription>
-													<ContainerOptions
-														contOptions={this.state.options && (this.state.selectedOptions === item)}>
-														<Option
-															onMouseEnter={() => this.handleChangeColorExport(item)}
-															onMouseLeave={this.handleChangeColorLeaveExport}
-														>
-															<OptionImage
-																src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
-																alt="Exportar" />
-															<OptionText
-																colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+										{isAdmin ? (
+											documentsList && documentsList.length > 0 ? (
+												documentsList.map((item, index) => (
+													<ContainerModel key={item}
+														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+														zIndex={this.state.addModel}
+														displayBefore={this.state.modalDelete}
+														onMouseEnter={() => this.handleOnOptions(item)}
+														onMouseLeave={this.handleOffOptions}>
+														<ContainerModelDescription>
+															<span>
+																<ModelNumber>{item.id}</ModelNumber>
+																<ModelTitle>{item.title}</ModelTitle>
+															</span>
+															<ModelParagraph>{item.description}</ModelParagraph>
+														</ContainerModelDescription>
+														<ContainerOptions
+															contOptions={this.state.options && (this.state.selectedOptions === item)}>
+															<Option
+																onMouseEnter={() => this.handleChangeColorExport(item)}
+																onMouseLeave={this.handleChangeColorLeaveExport}
 															>
+																<OptionImage
+																	src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
+																	alt="Exportar" />
+																<OptionText
+																	colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+																>
 														Exportar
-															</OptionText>
-														</Option>
-														<Option
-															onMouseEnter={() => this.handleChangeColorDelete(item)}
-															onMouseLeave={this.handleChangeColorLeaveDelete}
-															onClick={this.handleModalDelete}
-														>
-															<OptionImage
-																src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
-																alt="Deletar" />
-															<OptionText
-																colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
-																onClick={() => this.handleSelected(item)}
+																</OptionText>
+															</Option>
+															<Option
+																onMouseEnter={() => this.handleChangeColorDelete(item)}
+																onMouseLeave={this.handleChangeColorLeaveDelete}
+																onClick={this.handleModalDelete}
 															>
-																<p>Excluir</p>
-															</OptionText>
-														</Option>
-													</ContainerOptions>
-												</ContainerModel>
-											))
-										) : (
-											<InitialAddModel>
-												<TitleInitialAddModel>
+																<OptionImage
+																	src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
+																	alt="Deletar" />
+																<OptionText
+																	colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+																	onClick={() => this.handleSelected(item)}
+																>
+																	<p>Excluir</p>
+																</OptionText>
+															</Option>
+														</ContainerOptions>
+													</ContainerModel>
+												))
+											) : (
+												<InitialAddModel>
+													<TitleInitialAddModel>
 													Você ainda não possui um modelo
-												</TitleInitialAddModel>
-												<TextInitialAddModel>
+													</TitleInitialAddModel>
+													<TextInitialAddModel>
 												Escolha um modelo de documento
 												clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span>
-												</TextInitialAddModel>
-											</InitialAddModel>
-										)
-									) : (
-										this.state.listDocs && this.state.listDocs.length > 0 ? (
-											this.state.listDocs.map((docs, index) => (
-												<ContainerModel key={docs}
-													style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-													zIndex={this.state.modalListDoc}
-													displayBefore={this.state.modalDelete}
-													onMouseEnter={() => this.handleOnOptions(docs)}
-													onMouseLeave={this.handleOffOptions}
-												>
-													<ContainerModelDescription>
-														<span>
-															<ModelNumber>{docs.id}</ModelNumber>
-															<ModelTitle>{docs.title}</ModelTitle>
-														</span>
-														<ModelParagraph>{docs.description}</ModelParagraph>
-													</ContainerModelDescription>
-													<ContainerOptions
-														contOptions={this.state.options && (this.state.selectedOptions === docs)}>
-														<Option
-															onMouseEnter={() => this.handleChangeColorExport(docs)}
-															onMouseLeave={this.handleChangeColorLeaveExport}
-														>
-															<OptionImage
-																src={this.state.hoverExport === docs ? this.state.downloadExport : DownloadIcon}
-																alt="Exportar" />
-															<OptionText
-																colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
-															>
-														Exportar
-															</OptionText>
-														</Option>
-														<Option
-															onMouseEnter={() => this.handleChangeColorDelete(docs)}
-															onMouseLeave={this.handleChangeColorLeaveDelete}
-															onClick={this.handleModalDelete}
-														>
-															<OptionImage
-																src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
-																alt="Deletar" />
-															<OptionText
-																colorTextButton={this.state.hoverDelete === docs ? this.state.colorTextDelete : '#85144B'}
-																onClick={() => this.handleSelected(docs)}
-															>
-																<p>Excluir</p>
-															</OptionText>
-														</Option>
-													</ContainerOptions>
-												</ContainerModel>
-											))
+													</TextInitialAddModel>
+												</InitialAddModel>
+											)
 										) : (
-											<InitialAddModel>
-												<TitleInitialAddModel>
+											this.state.listDocs && this.state.listDocs.length > 0 ? (
+												this.state.listDocs.map((docs, index) => (
+													<ContainerModel key={docs}
+														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
+														zIndex={this.state.modalListDoc}
+														displayBefore={this.state.modalDelete}
+														onMouseEnter={() => this.handleOnOptions(docs)}
+														onMouseLeave={this.handleOffOptions}
+													>
+														<ContainerModelDescription>
+															<span>
+																<ModelNumber>{docs.id}</ModelNumber>
+																<ModelTitle>{docs.title}</ModelTitle>
+															</span>
+															<ModelParagraph>{docs.description}</ModelParagraph>
+														</ContainerModelDescription>
+														<ContainerOptions
+															contOptions={this.state.options && (this.state.selectedOptions === docs)}>
+															<Option
+																onMouseEnter={() => this.handleChangeColorExport(docs)}
+																onMouseLeave={this.handleChangeColorLeaveExport}
+															>
+																<OptionImage
+																	src={this.state.hoverExport === docs ? this.state.downloadExport : DownloadIcon}
+																	alt="Exportar" />
+																<OptionText
+																	colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
+																>
+														Exportar
+																</OptionText>
+															</Option>
+															<Option
+																onMouseEnter={() => this.handleChangeColorDelete(docs)}
+																onMouseLeave={this.handleChangeColorLeaveDelete}
+																onClick={this.handleModalDelete}
+															>
+																<OptionImage
+																	src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
+																	alt="Deletar" />
+																<OptionText
+																	colorTextButton={this.state.hoverDelete === docs ? this.state.colorTextDelete : '#85144B'}
+																	onClick={() => this.handleSelected(docs)}
+																>
+																	<p>Excluir</p>
+																</OptionText>
+															</Option>
+														</ContainerOptions>
+													</ContainerModel>
+												))
+											) : (
+												<InitialAddModel>
+													<TitleInitialAddModel>
 													Você ainda não tem nenhum documento
-												</TitleInitialAddModel>
-												<TextInitialAddModel>
+													</TitleInitialAddModel>
+													<TextInitialAddModel>
 												Escolha um modelo de documento
 												clicando em <span onClick={this.modalListDoc}>Adicionar Documento</span>
-												</TextInitialAddModel>
-											</InitialAddModel>
-										)
-									)}
+													</TextInitialAddModel>
+												</InitialAddModel>
+											)
+										)}
 
-									<ContainerAddModelMob>
-										<Button	onClick={this.openModalListDoc}>
+										<ContainerAddModelMob>
+											<Button	onClick={this.openModalListDoc}>
 											Adicionar Documento
-										</Button>
-									</ContainerAddModelMob>
-									{this.state.addModel && this.renderModalModels()}
-									{this.state.modalDelete && this.renderModalDelete()}
-									{this.state.modalListDoc && this.renderModalListDoc()}
-								</ContainerModels>
-							</ContainerScroll>
-						</ContainerContent>
-					</Teste>
-				</MaximumWidth>
+											</Button>
+										</ContainerAddModelMob>
+										{this.state.addModel && this.renderModalModels()}
+										{this.state.modalDelete && this.renderModalDelete()}
+										{this.state.modalListDoc && this.renderModalListDoc()}
+									</ContainerModels>
+								</ContainerScroll>
+							</ContainerContent>
+						</Teste>
+					</MaximumWidth>
+				</Content>
 			</Container>
 		);
 	}
