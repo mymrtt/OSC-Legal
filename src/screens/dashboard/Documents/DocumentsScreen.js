@@ -1390,8 +1390,9 @@ class DocumentsScreen extends Component {
 					<LogoAndData>
 						<img src={logo} alt="Logo OSC Legal" />
 						<ParagraphContainer1>
-							{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-								&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
+							{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+								&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
+							{this.props.isAdmin ? 'Administrador' : this.props.name}
 						</ParagraphContainer1>
 						<ParagraphSair onClick={this.handleRedirect}>
 							sair

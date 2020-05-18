@@ -670,7 +670,10 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 			</Box>
-			<BoxButton isClickedName={item.id === this.state.isClickedStatus} onClick={() => this.handleClickedImageStatus(item)}>
+			<BoxButton
+				isClickedName={item.id === this.state.isClickedStatus}
+				onClick={() => this.handleClickedImageStatus(item)}
+			>
 				<TextStatus color={item.isChanged}
 					// isClickedName={item.id === this.state.isClickedStatus}
 				>

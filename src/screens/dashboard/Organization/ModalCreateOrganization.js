@@ -1,5 +1,7 @@
 // Libs
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 // Components
@@ -8,6 +10,15 @@ import Button from '../../../components/Button';
 
 // Icon
 import Exit from '../../../assets/exit.svg';
+
+// Redux
+import { addNewOrg } from '../../../dataflow/modules/organization-modules';
+
+const mapDispatchToProps = dispatch => ({
+	addNewOrg: (org) => {
+		dispatch(addNewOrg(org));
+	},
+});
 
 const Overlay = styled.div`
   width: 100%;
@@ -188,7 +199,7 @@ const ErrorMessage = styled.p`
   }
 `;
 
-export default class ModalCreateOrganization extends Component {
+class ModalCreateOrganization extends Component {
 	state = {
 		dataOrganization: {
 			tradingName: '',
@@ -210,6 +221,7 @@ export default class ModalCreateOrganization extends Component {
 				cpf: '000000000-00',
 			},
 		],
+		modalSucess: false,
 		isTradingNameError: false,
 		isCompanyNameError: false,
 		isCnpjError: false,
@@ -221,6 +233,11 @@ export default class ModalCreateOrganization extends Component {
 		isCepError: false,
 	};
 
+	handleModalSucess = () => {
+		this.setState({
+			modalSucess: !this.state.modalSucess,
+		});
+	}
 
 	handleErros = () => {
 		const {
@@ -329,9 +346,12 @@ export default class ModalCreateOrganization extends Component {
 
 		if (tradingName.length > 4 && companyName.length > 4 && cnpj.length === 14
 			&& telephone.length >= 8 && address.length > 4 && addressComplement.length > 4 && city.length > 4
-			&& neighborhood.length > 4 && cep === 8
+			&& neighborhood.length > 4 && cep.length === 8
 		) {
-			console.log('enviouuuu tow tow tow');
+
+			this.props.addNewOrg(this.state.dataOrganization);
+
+			this.handleModalSucess();
 		}
 	}
 
@@ -344,8 +364,6 @@ export default class ModalCreateOrganization extends Component {
 		const { dataOrganization } = this.state;
 		dataOrganization[field] = ev.target.value;
 		this.setState({ dataOrganization });
-
-		console.log('dataOrganization[field]', field, dataOrganization[field]);
 	};
 
 	render() {
@@ -374,10 +392,13 @@ export default class ModalCreateOrganization extends Component {
 		} = this.state;
 
 		return (
-			<Overlay>
-				<Container onSubmit={this.handleSubmit}>
+			<Overlay onClick={this.props.handleClosedModal}>
+				<Container
+					onSubmit={this.handleSubmit}
+					onClick={ev => ev.stopPropagation()}
+				>
 					<Content>
-						<ContainerExit>
+						<ContainerExit onClick={this.props.handleClosedModal}>
 							<ExitIcon src={Exit} alt="Fechar"/>
 						</ContainerExit>
 						<Teste>
@@ -408,6 +429,7 @@ export default class ModalCreateOrganization extends Component {
 											onChange={ev => this.handleChange('tradingName', ev)}
 											value={this.state.tradingName}
 											name="tradingName"
+											isError={isTradingNameError}
 											required
 										/>
 										{isTradingNameError && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
@@ -422,6 +444,7 @@ export default class ModalCreateOrganization extends Component {
 											onChange={ev => this.handleChange('companyName', ev)}
 											value={this.state.companyName}
 											name="companyName"
+											isError={isCompanyNameError}
 											required
 										/>
 										{isCompanyNameError && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
@@ -436,6 +459,7 @@ export default class ModalCreateOrganization extends Component {
 											onChange={ev => this.handleChange('cnpj', ev)}
 											value={this.state.cnpj}
 											name="cnpj"
+											isError={isCnpjError}
 											required
 										/>
 										{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
@@ -462,6 +486,7 @@ export default class ModalCreateOrganization extends Component {
 											onChange={ev => this.handleChange('telephone', ev)}
 											value={this.state.telephone}
 											name="telephone"
+											isError={isTelephoneError}
 											required
 										/>
 										{isTelephoneError && <ErrorMessage>{errorMessage[3]}</ErrorMessage>}
@@ -476,6 +501,7 @@ export default class ModalCreateOrganization extends Component {
 											onChange={ev => this.handleChange('address', ev)}
 											value={this.state.address}
 											name="address"
+											isError={isAddressError}
 											required
 										/>
 										{isAddressError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
@@ -483,16 +509,21 @@ export default class ModalCreateOrganization extends Component {
 								</ContentOrganization>
 								<WrapOrganization>
 									<WrapOrganizationContent>
-										<WrapOrganizationItem style={{ marginRight: '1rem', paddingBottom: isAddressComplementError && '1rem' }}>
+										<WrapOrganizationItem
+											style={{
+												marginRight: '1rem',
+												paddingBottom: isAddressComplementError && '1rem',
+											}}
+										>
 											<UserTitle createOrg>complemento</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 2rem'}
 												type="text"
 												placeholder="Complemento"
 												onChange={ev => this.handleChange('addressComplement', ev)}
 												value={this.state.addressComplement}
 												name="addressComplement"
+												isError={isAddressComplementError}
 												required
 											/>
 											{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
@@ -501,28 +532,33 @@ export default class ModalCreateOrganization extends Component {
 											<UserTitle createOrg>cidade</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 2rem'}
 												type="text"
 												placeholder="Cidade"
 												onChange={ev => this.handleChange('city', ev)}
 												value={this.state.city}
 												name="city"
+												isError={isCityError}
 												required
 											/>
 											{isCityError && <ErrorMessage>{errorMessage[6]}</ErrorMessage>}
 										</WrapOrganizationItem>
 									</WrapOrganizationContent>
 									<WrapOrganizationContent>
-										<WrapOrganizationItem style={{ marginRight: '1rem', paddingBottom: isNeighborhoodError && '1rem' }}>
+										<WrapOrganizationItem
+											style={{
+												marginRight: '1rem',
+												paddingBottom: isNeighborhoodError && '1rem'
+											}}
+										>
 											<UserTitle createOrg>bairro</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 2rem'}
 												type="text"
 												placeholder="Bairro"
 												onChange={ev => this.handleChange('neighborhood', ev)}
 												value={this.state.neighborhood}
 												name="neighborhood"
+												isError={isNeighborhoodError}
 												required
 											/>
 											{isNeighborhoodError && <ErrorMessage>{errorMessage[7]}</ErrorMessage>}
@@ -531,12 +567,12 @@ export default class ModalCreateOrganization extends Component {
 											<UserTitle createOrg>cep</UserTitle>
 											<Input
 												modalOrg
-												// margin={'0 0 2rem'}
 												type="text"
 												placeholder="00000-000"
 												onChange={ev => this.handleChange('cep', ev)}
 												value={this.state.cep}
 												name="cep"
+												isError={isCepError}
 												required
 											/>
 											{isCepError && <ErrorMessage>{errorMessage[8]}</ErrorMessage>}
@@ -546,7 +582,6 @@ export default class ModalCreateOrganization extends Component {
 							</Teste2>
 							<ContainerConcludeButton>
 								<Button
-									// to={'/sucessfully'}
 									type="submit"
 									width={'100%'}
 									text="concluir"
@@ -555,8 +590,11 @@ export default class ModalCreateOrganization extends Component {
 							</ContainerConcludeButton>
 						</Teste>
 					</Content>
+					{this.state.modalSucess && <Redirect exact to="/sucessfully" />}
 				</Container>
 			</Overlay>
 		);
 	}
 }
+
+export default connect(null, mapDispatchToProps)(ModalCreateOrganization);

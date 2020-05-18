@@ -1,5 +1,6 @@
 // Action Types
 const UPDATE_TABLEDATAS = 'osc/organization/UPDATE_TABLEDATAS';
+const ADD_NEW_ORG = 'osc/organization/ADD_NEW_ORG';
 
 // Initial State
 const initialState = {
@@ -552,6 +553,17 @@ const initialState = {
 			},
 		},
 	],
+	org: {
+		tradingName: '',
+		companyName: '',
+		cnpj: '',
+		telephone: '',
+		address: '',
+		addressComplement: '',
+		neighborhood: '',
+		city: '',
+		cep: '',
+	},
 };
 
 // Reducers
@@ -561,12 +573,23 @@ export default function (state = initialState, action) {
 		return Object.assign({}, state, {
 			tableDatas: action.info,
 		});
-	default: return state;
+	case ADD_NEW_ORG:
+		return Object.assign({}, state, {
+			...state.org,
+			...action.info,
+		});
+	default:
+		return state;
 	}
 }
 
 // Action Creators
 export const updateTableDatas = info => ({
 	type: UPDATE_TABLEDATAS,
+	info,
+});
+
+export const addNewOrg = info => ({
+	type: ADD_NEW_ORG,
 	info,
 });
