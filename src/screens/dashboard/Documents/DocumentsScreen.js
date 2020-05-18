@@ -971,17 +971,14 @@ const BoxFilter = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	border: 1px solid #85144B;
-	padding: .5rem; 
+	border: 0.5px solid #85144B;
+	border-radius: 3px;
 	position: absolute;
 	right: 0;
 	left: 0;
 	top: 1.85rem;
 	background: #FFF;
-
-	@media (max-width: 490px) {
-		z-index: 6;
-	}
+	z-index: 6;
 `;
 
 const Org = styled.div`
@@ -991,11 +988,11 @@ const Org = styled.div`
 	font-weight: 600;
 	cursor: pointer;	
 	width: 100%;
-	padding: .3rem 0;
+	padding: .3rem 1rem;
 
 	:hover{
 		background: #FFCFCD;
-		border: 1px solid #85144B;
+		border: .5px solid #85144B;
 	}
 `;
 
