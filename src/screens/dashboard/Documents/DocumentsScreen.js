@@ -1573,14 +1573,14 @@ class DocumentsScreen extends Component {
 											onClick={this.openBoxFilter}
 										/>
 									}
-									{this.state.isBoxFilter && (
+									{this.state.isBoxFilter && isAdmin === false ? (
 										<BoxFilter
 											onClick={ev => ev.stopPropagation()}>
 											{this.state.Orgs.map(orgs => (
 												<Org key={orgs}>{orgs}</Org>
 											))}
 										</BoxFilter>
-									)}
+									) : null}
 								</ContainerSearchInput>
 							</ContainerSearch>
 						</ContainerHeader>
