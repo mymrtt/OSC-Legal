@@ -424,7 +424,7 @@ const ContainerModelDescription = styled.div`
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
-	border: ${props => (props.ishovering ? '1px solid #85144B' : 'none')};
+	border: ${props => (props.isSelected ? '1px solid #85144B' : 'none')};
 	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
 
 	&:hover {
@@ -973,12 +973,13 @@ const BoxFilter = styled.div`
 	display: flex;
 	flex-direction: column;
 	border: 1px solid #85144B;
-	padding: .5rem; 
+	padding: .5rem 0; 
 	position: absolute;
 	right: 0;
 	left: 0;
 	top: 1.85rem;
 	background: #FFF;
+	z-index: 99;
 
 	@media (max-width: 490px) {
 		z-index: 6;
@@ -993,7 +994,7 @@ const Org = styled.div`
 	cursor: pointer;	
 	width: 100%;
 	padding: .3rem 0;
-
+	padding: .3rem 0 .3rem 1rem;
 	:hover{
 		background: #FFCFCD;
 		border: 1px solid #85144B;
@@ -1023,6 +1024,7 @@ const Modal = styled.div`
 		width: 100%;
 		height: 100%;
 		z-index: 10;
+		padding: 1rem;
 	}
 `;
 
@@ -1082,6 +1084,17 @@ const ButtonModalList = styled.button`
 	}
 `;
 
+const ImageExit = styled.img`
+	width: 30px;
+	align-self: flex-end;
+	position: absolute;
+	margin-top: .5rem;
+	cursor: pointer;
+`;
+
+
+let newList = [];
+
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1126,7 +1139,6 @@ class DocumentsScreen extends Component {
 				description: 'Modelo de estatutoModelo de estatuto',
 			},
 		],
-		selectedDoc: [],
 	};
 
 	handleOnOptions = (item) => {
@@ -1350,23 +1362,19 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	selecetedDocUser = (item) => {
-		console.log(item);
+	selecetedDocUser = (docs) => {
+		newList = this.state.listDocs.concat(docs);
 		this.setState({
-			selectedDoc: item,
+			isSelected: docs,
 		});
-		console.log('doc select',this.state.selectedDoc)
 	}
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		const { selecetedDoc } = this.state;
-		this.state.listDocs.push( selecetedDoc );
 		this.setState({
-			// modalListDoc: false,
+			modalListDoc: false,
+			listDocs: newList,
 		});
-		console.log('selecionado:', this.state.selecetedDoc);
-		console.log('array:', this.state.listDocs);
 	}
 
 
@@ -1481,13 +1489,19 @@ class DocumentsScreen extends Component {
 	renderModalListDoc = () => (
 		<ContainerModal onClick={this.closeModalListDoc}>
 			<Modal onClick={ev => ev.stopPropagation()}>
+				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc}/>
 				<BoxTitle>
 					<TitleModalList>Adicionar Documento</TitleModalList>
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
 					{this.props.documentsList.map(docs => (
-						<ContainerModelDescription hidden={this.state.modalListDoc} isAdmin={this.state.isAdmin} onClick={() =>	this.selecetedDocUser(this.props.documentsList)}>
+						<ContainerModelDescription
+							hidden={this.state.modalListDoc}
+							isAdmin={this.state.isAdmin}
+							onClick={() => this.selecetedDocUser(docs)}
+							isSelected={docs === this.state.isSelected}
+						>
 							<span key={docs}>
 								<ModelNumber>{docs.id}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
@@ -1560,7 +1574,8 @@ class DocumentsScreen extends Component {
 										/>
 									}
 									{this.state.isBoxFilter && (
-										<BoxFilter onClick={ev => ev.stopPropagation()}>
+										<BoxFilter
+											onClick={ev => ev.stopPropagation()}>
 											{this.state.Orgs.map(orgs => (
 												<Org key={orgs}>{orgs}</Org>
 											))}
