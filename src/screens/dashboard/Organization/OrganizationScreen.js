@@ -11,6 +11,7 @@ import Button from '../../../components/Button';
 
 // Image
 import ImageCaminho from '../../../assets/caminho.svg';
+import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
 import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
@@ -677,7 +678,8 @@ class OrganizationScreen extends Component {
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							<img src={ImageCaminho} alt="arrow" />
+							 <img src={ImageCaminho} alt="arrow" onClick={this.isSelectOpen} />
+							<img src={ArrowUpIcon} alt="arrow" onClick={this.isSelectOpen} />
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
