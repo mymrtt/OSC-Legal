@@ -9,9 +9,10 @@ import { connect } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
-import logo from '../../../assets/logo.svg';
+import Button from '../../../components/Button';
 
 // Images
+import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
@@ -24,6 +25,7 @@ import EditIcon from '../../../assets/edit.svg';
 import EditIconWhite from '../../../assets/editWhite.svg';
 import documentWhite from '../../../assets/documentWhite.svg';
 import ArrowDownIcon from '../../../assets/caminho.svg';
+import ArrowUpIcon from '../../../assets/arrow-up.svg';
 
 // Redux
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
@@ -34,6 +36,7 @@ const mapStateToProps = state => ({
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
 	isAdmin: state.onboarding.users.isAdmin,
+	organization: state.organization.tableDatas,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -61,9 +64,9 @@ const Content = styled.div`
 
 const MaximumWidth = styled.div`
 	margin-top: 3rem;
-	width: ${props => (props.isAdmin ? '100%' : '95%')};
-	min-width: ${props => (props.isAdmin ? '100%' : 0)};
-	height: ${props => (props.isAdmin ? 0 : '95%')};
+	width: ${props => (props.isAdmin ? '100%' : '96%')};
+	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
+	height: ${props => (props.isAdmin ? '100%' : '95%')};
 	max-width: 1440px;
 	display: flex;
 	background: #FFF;
@@ -136,7 +139,7 @@ const TitleSearch = styled.p`
 
 const ContainerContent = styled.div`
 	padding-top: 3rem;
-	padding-right: 3rem;
+	padding-right: 2.4rem;
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -268,7 +271,7 @@ const TextInitialAddModel = styled.p`
 `;
 
 const ContainerSearch = styled.div`
-	margin-right: 1.2rem;
+	margin-right: .5rem;
 	width: 60%;
 	display: flex;
 	justify-content: flex-end;
@@ -306,7 +309,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: 70%;
+	width: 100%;
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -315,6 +318,7 @@ const ContainerSearchInput = styled.label`
 	align-items: center;
 	justify-content: space-between;
 	position: relative;
+	cursor: ${props => (props.isAdmin ? 'none' : 'pointer')};
 
 	img {
 		margin: 0.4rem 0 0.5rem 0.5rem;
@@ -335,7 +339,6 @@ const SearchInput = styled.input`
 	font-size: 1rem;
 	font-family: Overpass, Regular;
 	color: #85144B;
-
 	@media (max-width: 1024px) {
 		font-size: 0.9rem;
 	}
@@ -594,42 +597,42 @@ const OptionText = styled.p`
 	}
 `;
 
-const Button = styled.button`
-  margin: 2rem;
-	width: 18.75rem;
-	height: 4.7rem;
-	border: 0;
-  color: #fff;
-  box-shadow: 0 3px 6px #00000029;
-  border-radius: 3px;
-  font-size: 1.2rem;
-	font-family: "Overpass", SemiBold;
-  font-weight: bold;
-	background-color: #FF4136;
-	display: block;
+// const Button = styled.button`
+//   margin: 2rem;
+// 	width: 18.75rem;
+// 	height: 4.7rem;
+// 	border: 0;
+//   color: #fff;
+//   box-shadow: 0 3px 6px #00000029;
+//   border-radius: 3px;
+//   font-size: 1.2rem;
+// 	font-family: "Overpass", SemiBold;
+//   font-weight: bold;
+// 	background-color: #FF4136;
+// 	display: block;
 
-	@media (max-width: 1024px) {
-		padding: 0;
-		width: 65%;
-		font-size: 1.2rem;
-		height: 4rem;
-	}
+// 	@media (max-width: 1024px) {
+// 		padding: 0;
+// 		width: 65%;
+// 		font-size: 1.2rem;
+// 		height: 4rem;
+// 	}
 
-	@media (max-width: 768px) {
-		font-size: 1.2rem;
-		width: 70%;
-	}
+// 	@media (max-width: 768px) {
+// 		font-size: 1.2rem;
+// 		width: 70%;
+// 	}
 
-	@media (max-width: 490px) {
-		position:fixed;
-		bottom: 1vh;
-		align-self: center;
-		margin: 0;
-		font-size: 1.2rem;
-		z-index: 6;
-		width: ${props => (props.modelMob ? '86%' : '95%')};
-	}
-`;
+// 	@media (max-width: 490px) {
+// 		position:fixed;
+// 		bottom: 1vh;
+// 		align-self: center;
+// 		margin: 0;
+// 		font-size: 1.2rem;
+// 		z-index: 6;
+// 		width: ${props => (props.modelMob ? '86%' : '95%')};
+// 	}
+// `;
 
 const ContainerModal = styled.div`
 	width: 100%;
@@ -985,6 +988,8 @@ const ErrorText = styled.p`
 
 const BoxOrgs = styled.div`
 	width: 100%;
+	max-height: 35vh;
+	overflow-y: scroll;
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
@@ -993,9 +998,15 @@ const BoxOrgs = styled.div`
 	position: absolute;
 	right: 0;
 	left: 0;
-	top: 1.85rem;
+	top: 1.8rem;
+	border-top-left-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
+	border-top-right-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	background: #FFF;
 	z-index: 99;
+
+	&::-webkit-scrollbar{
+		display: none;
+	}
 
 	@media (max-width: 490px) {
 		z-index: 6;
@@ -1004,7 +1015,7 @@ const BoxOrgs = styled.div`
 
 const Org = styled.div`
 	color: #231F20;
-	font-size: .8rem;
+	font-size: .9rem;
 	font-family: 'Overpass';
 	font-weight: 600;
 	cursor: pointer;
@@ -1077,8 +1088,11 @@ const BoxModelsDoc = styled.span`
 	overflow-y: scroll;
 	margin-bottom: 1rem;
 
-	&::-webkit-scrollbar{
+	/* &::-webkit-scrollbar{
 		display: none;
+	} */
+	&::-webkit-scrollbar{
+		scrollbar-3dlight-color: red;
 	}
 `;
 
@@ -1108,8 +1122,15 @@ const ImageExit = styled.img`
 	cursor: pointer;
 `;
 
+const SpanButton = styled.span`
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+`;
+
 
 let newList = [];
+let nextId = 0;
 
 class DocumentsScreen extends Component {
 	state = {
@@ -1144,20 +1165,11 @@ class DocumentsScreen extends Component {
 		isErrorTitleQtd: false,
 		isBoxOrgs: false,
 		ishovering: false,
-		Orgs: [
-			'vai na web',
-			'instituto precisa ser',
-			'celebrations',
-			'crianças felizes',
-		],
 		modalListDoc: false,
-		listDocs: [
-			{
-				id: 1,
-				title: 'Modelo 1',
-				description: 'Modelo de estatutoModelo de estatuto',
-			},
-		],
+		listDocs: [],
+		selectedValue: 'Selecionar organizações',
+		isOrg: false,
+		isMobileButton: false,
 	};
 
 	handleOnOptions = (item) => {
@@ -1306,6 +1318,24 @@ class DocumentsScreen extends Component {
 		this.handleErrors();
 	}
 
+	componentDidMount() {
+		console.log(this.state.isMobileButton);
+		this.renderMobileButton();
+	}
+
+	renderMobileButton = () => {
+		if (window.innerWidth < '500') {
+			this.setState({
+				isMobileButton: true,
+			});
+			console.log(this.state.isMobileButton);
+		} else {
+			this.setState({
+				isMobileButton: false,
+			});
+		}
+	}
+
 	handleErrors = () => {
 		const { title, description } = this.state.document;
 		const { isFile } = this.state;
@@ -1410,6 +1440,14 @@ class DocumentsScreen extends Component {
 			modalListDoc: false,
 			listDocs: newList,
 		});
+		nextId = this.state.listDocs.length + 1;
+	}
+
+	handleSelectOrg = (orgs) => {
+		this.setState({
+			selectedValue: orgs,
+			isBoxOrgs: false,
+		});
 	}
 
 
@@ -1493,7 +1531,16 @@ class DocumentsScreen extends Component {
 					<span>
 						{this.state.isError && <ErrorText>{Messages[3]}</ErrorText>}
 					</span>
-					<ButtonAdd type="submit">Adicionar</ButtonAdd>
+					<SpanButton>
+						<Button
+							width="20.25rem"
+							height="3.5rem"
+							text="Adicionar"
+							type="submit"
+							widthMobileSmall="100%"
+							onClick={this.handleSubmit}
+						/>
+					</SpanButton>
 				</ModalAddModel>
 			</ContainerModal>
 		);
@@ -1560,8 +1607,8 @@ class DocumentsScreen extends Component {
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
-				<Content>
-					<MaximumWidth>
+				<Content isAdmin={this.props.isAdmin}>
+					<MaximumWidth onClick={() => console.log(this.state.isMobileButton)}>
 						<ContainerAddModel>
 							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
 							{
@@ -1570,21 +1617,32 @@ class DocumentsScreen extends Component {
 								) : (
 									<AddModelImage src={DocumentUser} />
 								)}
-							{isAdmin ? (
-								<Button
-									onClick={this.handleAddModel}
-									hidden={this.state.addModel || this.state.deleteModal}
-								>
-									Adicionar Modelo
-								</Button>
-							) : (
-								<Button
-									onClick={this.openModalListDoc}
-									hidden={this.state.modalListDoc}
-								>
-									Adicionar Documento
-								</Button>
-							)}
+							{isAdmin
+								? this.state.addModel !== true ? (
+									<Button
+										width="17.5rem"
+										height="4rem"
+										margin="1rem 0 0 0"
+										text="Adicionar Modelo"
+										onClick={this.handleAddModel}
+										hidden={this.state.addModel || this.state.deleteModal}
+										widthMobileSmall="95%"
+										positionMb="fixed"
+										bottom='0'
+										left="11px"
+									/>
+								) : (
+									null
+								) : this.state.modalListDoc !== true ? (
+									<Button
+										width="17.5rem"
+										height="4rem"
+										margin="1rem 0 0 0"
+										onClick={this.openModalListDoc}
+										hidden={this.state.modalListDoc}
+										text="Adicionar Documento"
+									/>
+								) : null}
 						</ContainerAddModel>
 						<Teste>
 							<ContainerHeader>
@@ -1601,20 +1659,32 @@ class DocumentsScreen extends Component {
 											? <SearchInput
 												onChange={this.handleSearch}
 												placeholder="Digite aqui para pesquisar"
-											/> : <TextOrg>Selecionar Organização</TextOrg>}
+											/> : <TextOrg isOrg={this.state.isOrg}>{this.state.selectedValue}</TextOrg>}
 										{isAdmin
 											? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
-											: <img src={ArrowDownIcon}
-												alt="arrow"
-												style={{ cursor: 'pointer' }}
-												onClick={this.openBoxOrgs}
-											/>
+											: this.state.isBoxOrgs
+												? <img src={ArrowUpIcon}
+													alt="arrow"
+													style={{ cursor: 'pointer' }}
+													onClick={this.openBoxOrgs}
+												/> : <img src={ArrowDownIcon}
+													alt="arrow"
+													style={{ cursor: 'pointer' }}
+													onClick={this.openBoxOrgs}
+												/>
 										}
 										{this.state.isBoxOrgs && isAdmin === false ? (
 											<BoxOrgs
-												onClick={ev => ev.stopPropagation()}>
-												{this.state.Orgs.map(orgs => (
-													<Org key={orgs}>{orgs}</Org>
+												onClick={ev => ev.stopPropagation()}
+												isBoxOrgs={this.state.isBoxOrgs}
+											>
+												{this.props.organization.map((orgs, index) => (
+													<Org
+														key={index}
+														onClick={() => this.handleSelectOrg(orgs.organization)}
+													>
+														{orgs.organization}
+													</Org>
 												))}
 											</BoxOrgs>
 										) : null}
@@ -1697,7 +1767,7 @@ class DocumentsScreen extends Component {
 													>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{docs.id}</ModelNumber>
+																<ModelNumber>{nextId}</ModelNumber>
 																<ModelTitle>{docs.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{docs.description}</ModelParagraph>
@@ -1759,7 +1829,7 @@ class DocumentsScreen extends Component {
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
 												Escolha um modelo de documento
-												clicando em <span onClick={this.modalListDoc}>Adicionar Documento</span>
+												clicando em <span onClick={this.openModalListDoc}>Adicionar Documento</span>
 													</TextInitialAddModel>
 												</InitialAddModel>
 											)
@@ -1770,6 +1840,39 @@ class DocumentsScreen extends Component {
 											Adicionar Documento
 											</Button>
 										</ContainerAddModelMob>
+										{isAdmin ? (
+											this.state.isMobileButton === true && this.state.addModel !== true ? (
+												null
+											) : (
+												<Button
+													width="17.5rem"
+													height="4rem"
+													marginMobile="0 0 1rem 0"
+													widthMobileSmall="95%"
+													bottom="0"
+													left="11px"
+													positionMb="fixed"
+													onClick={this.handleAddModel}
+													text="Adicionar Modelo"
+												/>
+											)
+										) : (
+											this.state.isMobileButton !== true && this.state.modalListDoc !== true ? (
+												null
+											) : (
+												<Button
+													width="17.5rem"
+													height="4rem"
+													marginMobile="0 0 1rem 0"
+													widthMobileSmall="95%"
+													bottom="0"
+													left="11px"
+													positionMb="fixed"
+													onClick={this.openModalListDoc}
+													text="Adicionar Documento"
+												/>
+											)
+										)}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}
