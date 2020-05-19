@@ -9,9 +9,10 @@ import { connect } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
-import logo from '../../../assets/logo.svg';
+import Button from '../../../components/Button';
 
 // Images
+import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
@@ -607,46 +608,6 @@ const OptionText = styled.p`
 	}
 `;
 
-const Button = styled.button`
-  margin: 2rem;
-	width: 18.75rem;
-	height: 4.7rem;
-	border: 0;
-  color: #fff;
-  box-shadow: 0 3px 6px #00000029;
-  border-radius: 3px;
-  font-size: 1.2rem;
-	font-family: "Overpass", SemiBold;
-  font-weight: bold;
-	background-color: #FF4136;
-	display: block;
-
-	@media (max-width: 1024px) {
-		padding: 0;
-		width: 65%;
-		font-size: 1.2rem;
-		height: 4rem;
-	}
-
-	@media (max-width: 768px) {
-		font-size: 1.2rem;
-		width: 70%;
-	}
-
-	@media (max-width: 490px) {
-		position:fixed;
-		/* position:${props => (props.openModal ? 'absolute' : 'fixed')}; */
-		bottom: 1vh;
-		align-self: center;
-		margin: 0;
-		font-size: 1.2rem;
-		/* z-index: ${props => (props.openModal ? '6' : '0')}; */
-		/* z-index: 6; */
-		/* display: ${props => (props.openModal ? 'none' : 'block')}; */
-		width: ${props => (props.modelMob ? '86%' : '95%')};
-	}
-`;
-
 const ContainerModal = styled.div`
 	width: 100%;
 	height: 100vh;
@@ -1139,6 +1100,12 @@ const ImageExit = styled.img`
 	cursor: pointer;
 `;
 
+const SpanButton = styled.span`
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+`;
+
 
 let newList = [];
 let nextId = 0;
@@ -1176,16 +1143,11 @@ class DocumentsScreen extends Component {
 		isErrorTitleQtd: false,
 		isBoxOrgs: false,
 		ishovering: false,
-		Orgs: [
-			'vai na web',
-			'instituto precisa ser',
-			'celebrations',
-			'crianças felizes',
-		],
 		modalListDoc: false,
 		listDocs: [],
 		selectedValue: 'Selecionar organizações',
 		isOrg: false,
+		isMobileButton: false,
 	};
 
 	handleOnOptions = (item) => {
@@ -1332,6 +1294,24 @@ class DocumentsScreen extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.handleErrors();
+	}
+
+	componentDidMount() {
+		console.log(this.state.isMobileButton);
+		this.renderMobileButton();
+	}
+
+	renderMobileButton = () => {
+		if (window.innerWidth < '500') {
+			this.setState({
+				isMobileButton: true,
+			});
+			console.log(this.state.isMobileButton);
+		} else {
+			this.setState({
+				isMobileButton: false,
+			});
+		}
 	}
 
 	handleErrors = () => {
@@ -1529,7 +1509,16 @@ class DocumentsScreen extends Component {
 					<span>
 						{this.state.isError && <ErrorText>{Messages[3]}</ErrorText>}
 					</span>
-					<ButtonAdd type="submit">Adicionar</ButtonAdd>
+					<SpanButton>
+						<Button
+							width="20.25rem"
+							height="3.5rem"
+							text="Adicionar"
+							type="submit"
+							widthMobileSmall="100%"
+							onClick={this.handleSubmit}
+						/>
+					</SpanButton>
 				</ModalAddModel>
 			</ContainerModal>
 		);
@@ -1597,7 +1586,7 @@ class DocumentsScreen extends Component {
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
 				<Content isAdmin={this.props.isAdmin}>
-					<MaximumWidth>
+					<MaximumWidth onClick={() => console.log(this.state.isMobileButton)}>
 						<ContainerAddModel>
 							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
 							{
@@ -1606,22 +1595,32 @@ class DocumentsScreen extends Component {
 								) : (
 									<AddModelImage src={DocumentUser} />
 								)}
-							{isAdmin ? (
-								<Button
-									onClick={this.handleAddModel}
-									hidden={this.state.addModel || this.state.deleteModal}
-								>
-									Adicionar Modelo
-								</Button>
-							) : (
-								<Button
-									openModal={this.state.modalDelete || this.state.modalListDoc}
-									onClick={this.openModalListDoc}
-									// hidden={this.state.modalListDoc}
-								>
-									Adicionar Documento
-								</Button>
-							)}
+							{isAdmin
+								? this.state.addModel !== true ? (
+									<Button
+										width="17.5rem"
+										height="4rem"
+										margin="1rem 0 0 0"
+										text="Adicionar Modelo"
+										onClick={this.handleAddModel}
+										hidden={this.state.addModel || this.state.deleteModal}
+										widthMobileSmall="95%"
+										positionMb="fixed"
+										bottom='0'
+										left="11px"
+									/>
+								) : (
+									null
+								) : this.state.modalListDoc !== true ? (
+									<Button
+										width="17.5rem"
+										height="4rem"
+										margin="1rem 0 0 0"
+										onClick={this.openModalListDoc}
+										hidden={this.state.modalListDoc}
+										text="Adicionar Documento"
+									/>
+								) : null}
 						</ContainerAddModel>
 						<Teste>
 							<ContainerHeader>
@@ -1819,6 +1818,39 @@ class DocumentsScreen extends Component {
 											Adicionar Documento
 											</Button>
 										</ContainerAddModelMob>
+										{isAdmin ? (
+											this.state.isMobileButton === true && this.state.addModel !== true ? (
+												null
+											) : (
+												<Button
+													width="17.5rem"
+													height="4rem"
+													marginMobile="0 0 1rem 0"
+													widthMobileSmall="95%"
+													bottom="0"
+													left="11px"
+													positionMb="fixed"
+													onClick={this.handleAddModel}
+													text="Adicionar Modelo"
+												/>
+											)
+										) : (
+											this.state.isMobileButton !== true && this.state.modalListDoc !== true ? (
+												null
+											) : (
+												<Button
+													width="17.5rem"
+													height="4rem"
+													marginMobile="0 0 1rem 0"
+													widthMobileSmall="95%"
+													bottom="0"
+													left="11px"
+													positionMb="fixed"
+													onClick={this.openModalListDoc}
+													text="Adicionar Documento"
+												/>
+											)
+										)}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}

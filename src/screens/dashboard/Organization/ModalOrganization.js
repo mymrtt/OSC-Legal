@@ -101,14 +101,14 @@ const ContentConsultor = styled.span`
 `;
 
 const ContentConsultorItem = styled.div`
-	/* width: 90%; */
+	width: 75%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	margin-left: 3.4rem;
 
 	@media (max-width: 935px) {
-		width: 100%;
+		/* width: 100%; */
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-left: 1rem;
@@ -411,14 +411,14 @@ class ModalOrganization extends Component {
 								<div>
 									<SubTitle>nome</SubTitle>
 									<SubAnswer>{item.admin.name}</SubAnswer>
-									<SubTitle>rg</SubTitle>
-									<SubAnswer>{item.admin.rg}</SubAnswer>
-								</div>
-								<div>
-									<SubTitle>data de nascimento</SubTitle>
-									<SubAnswer>{item.admin.dateOfBirth}</SubAnswer>
+									{/* <SubTitle>rg</SubTitle>
+									<SubAnswer>{item.admin.rg}</SubAnswer> */}
 									<SubTitle>cpf</SubTitle>
 									<SubAnswer>{item.cpf}</SubAnswer>
+								</div>
+								<div>
+									{/* <SubTitle>data de nascimento</SubTitle>
+									<SubAnswer>{item.admin.dateOfBirth}</SubAnswer> */}
 								</div>
 								<div>
 									<SubTitle>e-mail</SubTitle>

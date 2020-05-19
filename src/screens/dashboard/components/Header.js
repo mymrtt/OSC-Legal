@@ -2,7 +2,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {	NavLink, Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -86,7 +86,7 @@ const WrapButton = styled.div`
 `;
 
 
-const ContainerAdm = styled.div`
+const ContainerUser = styled.div`
   margin-bottom: 0.8rem;
   display: flex;
   align-items: flex-end;
@@ -101,6 +101,8 @@ const ContainerAdm = styled.div`
 	}
 
 	@media (max-width: 648px) {
+		${'' /* padding-right: 1rem; */}
+    white-space: nowrap;
 		padding-top: 0.7rem;
 		margin-bottom: 0;
 		order: 2;
@@ -176,18 +178,17 @@ class Header extends Component {
 						Documentos
   				</NavLink>
   			</WrapButton>
-  			<ContainerAdm>
+  			<ContainerUser>
   				<ParagraphUserName>
   					{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
 							&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
-						{this.props.isAdmin ? 'Administrador' : this.props.name}
-						Gabriel
+  					{this.props.isAdmin ? 'Administrador' : this.props.name}
   				</ParagraphUserName>
   				<ParagraphSair onClick={this.handleRedirect}>
 						sair
   				</ParagraphSair>
   				{this.state.redirect && <Redirect exact to="/" />}
-  			</ContainerAdm>
+  			</ContainerUser>
 	    </Container>
   	);
   }
