@@ -1,13 +1,14 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable class-methods-use-this */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 
 // Components
-import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
 // Images
-import ImageLogo from '../../../components/ImageLogo';
 import Barcode from '../../../assets/barcode.svg';
 
 
@@ -16,17 +17,17 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #ffcfcd;
+  background: rgba(35, 31, 32, 0.5);
   width: 100%;
   height: 100%;
   position: fixed;
+  top: 0;
+  right: 0;
 
   @media (max-width: 425px) {
-  & {
     position: initial;
     padding: 1rem 0;
   }
-}
 `;
 
 const Modal = styled.div`
@@ -34,6 +35,7 @@ const Modal = styled.div`
   align-items: center;
   flex-direction: column;
   max-width: 480px;
+  height: 460px;
   background: #FFFFFF;
   margin: 0 1rem;
 
@@ -53,7 +55,7 @@ const Modal = styled.div`
   }
 
   img {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   h2 {
@@ -81,9 +83,9 @@ const Modal = styled.div`
   }
 
   Button {
-    max-width: 62%;
+    width: 80%;
     text-transform: uppercase;
-    margin: 0;
+    margin: 1.7rem 0 0 0;
     border-radius: 3px;
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
@@ -111,10 +113,8 @@ const WarningText = styled.div`
   width: 100%;
 
   @media (max-width: 375px) {
-    & {
-      width: 80%;
-      padding: 0 0.4rem;
-    }
+    width: 80%;
+    padding: 0 0.4rem;
   }
 
   span {
@@ -129,30 +129,41 @@ const Text = styled.p`
   color: #231F20;
   font-family: 'Overpass', sans-serif;
   font-weight: 300;
+
+  a {
+    color: #85144B;
+  }
 `;
 
 export default class ModalSucessfully extends Component {
-	render() {
-		return (
-			<Container>
-				<ImageLogo />
-				<Modal>
-          <h1>O Nome da empresa foi associada com sucesso!</h1>
-          <img src={Barcode} alt="Barcode"/>
-          <WarningText>
-            <Text>
-              O acesso ao sistema será liberado após o pagamento do <span>boleto gerado.</span>
-            </Text>
-            <Text>
-              Caso você tenha um código de desconto, você pode adiciona-lo antes de gerar o boleto de pagamento clicando no campo abaixo.
-            </Text>
-          </WarningText>
-          <h2>Código de Desconto</h2>
-          <Input placeholder="Inserir Código"/>
-          <Button text="Gerar Boleto" />
-          <Button text="Voltar para o Início" />
-				</Modal>
-			</Container>
-		);
-	}
+  state = {
+  	redirect: false,
+  }
+
+  handleRedirect = () => {
+  	this.setState({
+  		redirect: true,
+  	});
+  }
+
+  render() {
+  	return (
+  		<Container>
+  			<Modal>
+  				<h1>A Nome da associação foi criada com sucesso!</h1>
+  				<img src={Barcode} alt="Barcode"/>
+  				<WarningText>
+  					<Text>
+            Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado até o dia <strong>16/07/2019</strong>, para o <span>e-mail cadastrado.</span>
+  					</Text>
+  					<Text>
+            Caso não recebe o boleto no prazo estipulado, entro em contato conosco através do nosso site <a href="www.osclegal.org.br">www.osclegal.org.br</a>
+  					</Text>
+  				</WarningText>
+  				<Button onClick={this.handleRedirect} text="Voltar para o Início"/>
+  				{this.state.redirect && <Redirect exact to="/organizations" />}
+  			</Modal>
+  		</Container>
+  	);
+  }
 }

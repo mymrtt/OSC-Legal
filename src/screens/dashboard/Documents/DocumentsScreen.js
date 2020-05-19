@@ -24,6 +24,7 @@ import EditIcon from '../../../assets/edit.svg';
 import EditIconWhite from '../../../assets/editWhite.svg';
 import documentWhite from '../../../assets/documentWhite.svg';
 import ArrowDownIcon from '../../../assets/caminho.svg';
+import ArrowUpIcon from '../../../assets/arrow-up.svg';
 
 // Redux
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
@@ -33,8 +34,9 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
-	// isAdmin: state.onboarding.users.isAdmin,
-	isAdmin: true,
+	isAdmin: state.onboarding.users.isAdmin,
+	organization: state.organization.tableDatas,
+	// isAdmin: false,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -62,9 +64,9 @@ const Content = styled.div`
 
 const MaximumWidth = styled.div`
 	margin-top: 3rem;
-	width: ${props => (props.isAdmin ? '100%' : '95%')};
-	min-width: ${props => (props.isAdmin ? '100%' : 0)};
-	height: ${props => (props.isAdmin ? 0 : '95%')};
+	width: ${props => (props.isAdmin ? '100%' : '96%')};
+	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
+	height: ${props => (props.isAdmin ? '100%' : '95%')};
 	max-width: 1440px;
 	display: flex;
 	background: #FFF;
@@ -88,6 +90,10 @@ const ContainerHeader = styled.div`
   justify-content: flex-end;
 
 	@media (max-width: 1024px) {
+		padding-right: 2.7rem;
+	}
+
+	@media (max-width: 768px) {
 		padding-right: 2rem;
 	}
 
@@ -137,7 +143,7 @@ const TitleSearch = styled.p`
 
 const ContainerContent = styled.div`
 	padding-top: 3rem;
-	padding-right: 3rem;
+	padding-right: 2.4rem;
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -269,7 +275,7 @@ const TextInitialAddModel = styled.p`
 `;
 
 const ContainerSearch = styled.div`
-	margin-right: 1.2rem;
+	margin-right: .5rem;
 	width: 60%;
 	display: flex;
 	justify-content: flex-end;
@@ -307,7 +313,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: 70%;
+	width: 100%;
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -316,6 +322,7 @@ const ContainerSearchInput = styled.label`
 	align-items: center;
 	justify-content: space-between;
 	position: relative;
+	cursor: ${props => (props.isAdmin ? 'none' : 'pointer')};
 
 	img {
 		margin: 0.4rem 0 0.5rem 0.5rem;
@@ -336,7 +343,6 @@ const SearchInput = styled.input`
 	font-size: 1rem;
 	font-family: Overpass, Regular;
 	color: #85144B;
-
 	@media (max-width: 1024px) {
 		font-size: 0.9rem;
 	}
@@ -995,6 +1001,8 @@ const ErrorText = styled.p`
 
 const BoxOrgs = styled.div`
 	width: 100%;
+	max-height: 35vh;
+	overflow-y: scroll;
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
@@ -1003,9 +1011,15 @@ const BoxOrgs = styled.div`
 	position: absolute;
 	right: 0;
 	left: 0;
-	top: 1.85rem;
+	top: 1.8rem;
+	border-top-left-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
+	border-top-right-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	background: #FFF;
 	z-index: 99;
+
+	&::-webkit-scrollbar{
+		display: none;
+	}
 
 	@media (max-width: 490px) {
 		z-index: 6;
@@ -1014,7 +1028,7 @@ const BoxOrgs = styled.div`
 
 const Org = styled.div`
 	color: #231F20;
-	font-size: .8rem;
+	font-size: .9rem;
 	font-family: 'Overpass';
 	font-weight: 600;
 	cursor: pointer;
@@ -1031,6 +1045,10 @@ const TextOrg = styled.p`
 	font-size: .8rem;
 	color: #959595;
 	font-family: 'Overpass', Regular;
+
+	@media(max-width: 1024px) {
+		font-size: .7rem;
+	}
 `;
 
 const Modal = styled.div`
@@ -1087,8 +1105,11 @@ const BoxModelsDoc = styled.span`
 	overflow-y: scroll;
 	margin-bottom: 1rem;
 
-	&::-webkit-scrollbar{
+	/* &::-webkit-scrollbar{
 		display: none;
+	} */
+	&::-webkit-scrollbar{
+		scrollbar-3dlight-color: red;
 	}
 `;
 
@@ -1120,6 +1141,7 @@ const ImageExit = styled.img`
 
 
 let newList = [];
+let nextId = 0;
 
 class DocumentsScreen extends Component {
 	state = {
@@ -1161,13 +1183,9 @@ class DocumentsScreen extends Component {
 			'crianças felizes',
 		],
 		modalListDoc: false,
-		listDocs: [
-			{
-				id: 1,
-				title: 'Modelo 1',
-				description: 'Modelo de estatutoModelo de estatuto',
-			},
-		],
+		listDocs: [],
+		selectedValue: 'Selecionar organizações',
+		isOrg: false,
 	};
 
 	handleOnOptions = (item) => {
@@ -1420,6 +1438,14 @@ class DocumentsScreen extends Component {
 			modalListDoc: false,
 			listDocs: newList,
 		});
+		nextId = this.state.listDocs.length + 1;
+	}
+
+	handleSelectOrg = (orgs) => {
+		this.setState({
+			selectedValue: orgs,
+			isBoxOrgs: false,
+		});
 	}
 
 
@@ -1570,7 +1596,7 @@ class DocumentsScreen extends Component {
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
-				<Content>
+				<Content isAdmin={this.props.isAdmin}>
 					<MaximumWidth>
 						<ContainerAddModel>
 							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
@@ -1612,20 +1638,32 @@ class DocumentsScreen extends Component {
 											? <SearchInput
 												onChange={this.handleSearch}
 												placeholder="Digite aqui para pesquisar"
-											/> : <TextOrg>Selecionar Organização</TextOrg>}
+											/> : <TextOrg isOrg={this.state.isOrg}>{this.state.selectedValue}</TextOrg>}
 										{isAdmin
 											? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
-											: <img src={ArrowDownIcon}
-												alt="arrow"
-												style={{ cursor: 'pointer' }}
-												onClick={this.openBoxOrgs}
-											/>
+											: this.state.isBoxOrgs
+												? <img src={ArrowUpIcon}
+													alt="arrow"
+													style={{ cursor: 'pointer' }}
+													onClick={this.openBoxOrgs}
+												/> : <img src={ArrowDownIcon}
+													alt="arrow"
+													style={{ cursor: 'pointer' }}
+													onClick={this.openBoxOrgs}
+												/>
 										}
 										{this.state.isBoxOrgs && isAdmin === false ? (
 											<BoxOrgs
-												onClick={ev => ev.stopPropagation()}>
-												{this.state.Orgs.map(orgs => (
-													<Org key={orgs}>{orgs}</Org>
+												onClick={ev => ev.stopPropagation()}
+												isBoxOrgs={this.state.isBoxOrgs}
+											>
+												{this.props.organization.map((orgs, index) => (
+													<Org
+														key={index}
+														onClick={() => this.handleSelectOrg(orgs.organization)}
+													>
+														{orgs.organization}
+													</Org>
 												))}
 											</BoxOrgs>
 										) : null}
@@ -1708,14 +1746,13 @@ class DocumentsScreen extends Component {
 													>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{docs.id}</ModelNumber>
+																<ModelNumber>{nextId}</ModelNumber>
 																<ModelTitle>{docs.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{docs.description}</ModelParagraph>
 														</ContainerModelDescription>
 														<ContainerOptions
-															contOptions={true}>
-															{/* this.state.options && (this.state.selectedOptions === docs) */}
+															contOptions={this.state.options && (this.state.selectedOptions === docs)}>
 															<Option
 																onMouseEnter={() => this.handleChangeColorExport(docs)}
 																onMouseLeave={this.handleChangeColorLeaveExport}
@@ -1771,7 +1808,7 @@ class DocumentsScreen extends Component {
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
 												Escolha um modelo de documento
-												clicando em <span onClick={this.modalListDoc}>Adicionar Documento</span>
+												clicando em <span onClick={this.openModalListDoc}>Adicionar Documento</span>
 													</TextInitialAddModel>
 												</InitialAddModel>
 											)

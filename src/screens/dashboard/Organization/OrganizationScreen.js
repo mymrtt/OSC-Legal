@@ -133,6 +133,7 @@ const SpanSelect = styled.div`
 	@media (max-width: 768px) {
 		margin: 0 2rem;
 		width: 100%;
+		align-items: center;
 	}
 
 	@media(max-width: 648px) {
@@ -180,6 +181,14 @@ const SelectInputUser = styled.span`
 	/* @media (max-width: 648px) {
 		order: ${props => (props.order ? '0' : '1')};
 	} */
+
+	@media(max-width: 768px) {
+		width: 50%;
+	}
+
+	@media(max-width: 490px) {
+		width: 80%;
+	}
 `;
 
 const Input = styled.input`
@@ -206,6 +215,11 @@ const InputSelect = styled.div`
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
+		width: 50%;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
 	}
 `;
 
@@ -234,6 +248,16 @@ const InputSelectedItem = styled.div`
 	position: absolute;
 	top: 32px;
 	cursor: pointer;
+
+	@media (max-width: 768px) {
+		width: 50%;
+		top: 36px;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
+		top: 32px;
+	}
 `;
 
 const SelectedItem = styled.p`
@@ -664,7 +688,7 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleMyOrganization>Minhas organizações</TitleMyOrganization>
-				<SelectViewBy width={'34%'}>
+				<SelectViewBy>
 					<TitleSearch>Pesquisar</TitleSearch>
 					<SelectInputUser>
 						<Input

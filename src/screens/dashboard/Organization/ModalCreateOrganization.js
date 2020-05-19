@@ -1,12 +1,13 @@
 // Libs
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 // Components
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import Sucessfully from './ModalSucessfully';
 
 // Icon
 import Exit from '../../../assets/exit.svg';
@@ -153,7 +154,6 @@ const WrapOrganizationContent = styled.div`
 `;
 
 const WrapOrganizationItem = styled.div`
-	${'' /* margin-right: 1.5rem; */}
 	padding-bottom: 2rem;
 	width: 50%;
 	display: flex;
@@ -161,13 +161,10 @@ const WrapOrganizationItem = styled.div`
 `;
 
 const ContainerConcludeButton = styled.span`
-	${'' /* padding-left: 3.5rem; */}
 	padding-left: 3rem;
 	padding-right: 3rem;
 	padding-bottom: 1rem;
 	width: 100%;
-	${'' /* display: flex;
-	justify-content: center; */}
 `;
 
 const Teste = styled.div`
@@ -180,7 +177,6 @@ const Teste = styled.div`
 const Teste2 = styled.div`
 	padding-left: 3rem;
 	padding-right: 3rem;
-	${'' /* padding-left: 3.5rem; */}
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -348,7 +344,6 @@ class ModalCreateOrganization extends Component {
 			&& telephone.length >= 8 && address.length > 4 && addressComplement.length > 4 && city.length > 4
 			&& neighborhood.length > 4 && cep.length === 8
 		) {
-
 			this.props.addNewOrg(this.state.dataOrganization);
 
 			this.handleModalSucess();
@@ -395,8 +390,7 @@ class ModalCreateOrganization extends Component {
 			<Overlay onClick={this.props.handleClosedModal}>
 				<Container
 					onSubmit={this.handleSubmit}
-					onClick={ev => ev.stopPropagation()}
-				>
+					onClick={ev => ev.stopPropagation()}>
 					<Content>
 						<ContainerExit onClick={this.props.handleClosedModal}>
 							<ExitIcon src={Exit} alt="Fechar"/>
@@ -547,9 +541,8 @@ class ModalCreateOrganization extends Component {
 										<WrapOrganizationItem
 											style={{
 												marginRight: '1rem',
-												paddingBottom: isNeighborhoodError && '1rem'
-											}}
-										>
+												paddingBottom: isNeighborhoodError && '1rem',
+											}}>
 											<UserTitle createOrg>bairro</UserTitle>
 											<Input
 												modalOrg
@@ -590,7 +583,7 @@ class ModalCreateOrganization extends Component {
 							</ContainerConcludeButton>
 						</Teste>
 					</Content>
-					{this.state.modalSucess && <Redirect exact to="/sucessfully" />}
+					{this.state.modalSucess && <Sucessfully />}
 				</Container>
 			</Overlay>
 		);
