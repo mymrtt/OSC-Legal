@@ -9,8 +9,8 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
 
-// Images
-import Exit from '../../../assets/exit.svg';
+// Icon
+import Exit from '../../../assets/fechar.svg';
 
 // Redux
 import { addNewOrg } from '../../../dataflow/modules/organization-modules';
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
 const Overlay = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #00000060;
+  background-color: #707070a1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,12 +39,13 @@ const Overlay = styled.div`
 
 const Container = styled.form`
 	width: 33%;
-	overflow: hidden auto;
-	background-color: #fff;
+	background-color: #FFFFFF;
+	border-radius: 3px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	border-radius: 3px;
+	/* margin: 1rem; */
+	overflow: hidden auto;
 
 	::-webkit-scrollbar {
   width: 10px;
@@ -77,33 +78,32 @@ const Content = styled.div`
 `;
 
 const ContainerExit = styled.figure`
-	padding-top: 1rem;
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
-	cursor: pointer;
 `;
 
 const ExitIcon = styled.img`
-	width: 1.3rem;
+	display: flex;
 	align-self: flex-end;
-	margin-right: 4%;
+	padding: 0.8rem 0.8rem 0.8rem;
+	cursor: pointer;
 `;
 
 const Title = styled.h2`
+	width: 100%;
+	font-family: Overpass;
+	font-size: 1.3rem;
+	font-weight: 900;
+	text-transform: uppercase;
 	padding-top: ${props => (props.org && '3rem')};
 	padding-left: ${props => (props.org && '.6rem')};
 	padding-bottom: 2rem;
-	width: 100%;
-	font-size: 1.3rem;
-	text-transform: uppercase;
-	font-family: Overpass;
-	font-weight: 900;
 `;
 
 const ContainerUser = styled.div`
-	padding-left: 3.5rem;
 	width: 100%;
+	padding-left: 3.5rem;
 	display: flex;
 	flex-flow: wrap column;
 
@@ -137,16 +137,14 @@ const UserText = styled.p`
 
   @media (max-width: 648px) {
 		font-size: 1rem;
-  };
+  }
 `;
 
 const CreateOrgTitle = styled.h1`
-	padding-left: 3.5rem;
-	padding-bottom: 2rem;
 	color: #85144B;
-	font-size: 2rem;
 	align-self: flex-start;
 	font-family: "Overpass", sans-serif;
+	font-size: 2rem;
 	font-weight: 900;
 
 	@media(max-width: 648px) {
@@ -177,6 +175,7 @@ const WrapOrganizationContent = styled.div`
 const WrapOrganizationItem = styled.div`
 	padding-bottom: 2rem;
 	width: 50%;
+	padding-bottom: 2rem;
 	display: flex;
 	flex-direction: column;
 `;
@@ -202,9 +201,9 @@ const ContentWrapper = styled.div`
 `;
 
 const ContainerCreateOrg = styled.div`
+	width: 100%;
 	padding-left: 3rem;
 	padding-right: 3rem;
-	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -428,8 +427,8 @@ class ModalCreateOrganization extends Component {
 					onClick={ev => ev.stopPropagation()}
 				>
 					<Content>
-						<ContainerExit onClick={this.props.handleClosedModal}>
-							<ExitIcon src={Exit} alt="Fechar"/>
+						<ContainerExit>
+							<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal}/>
 						</ContainerExit>
 						<ContentWrapper>
 							<CreateOrgTitle>Criar Organização</CreateOrgTitle>
