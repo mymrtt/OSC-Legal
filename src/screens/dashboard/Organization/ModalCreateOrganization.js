@@ -146,6 +146,7 @@ const CreateOrgTitle = styled.h1`
 	font-family: "Overpass", sans-serif;
 	font-size: 2rem;
 	font-weight: 900;
+	padding: 0 3.5rem 2.5rem;
 
 	@media(max-width: 648px) {
 		padding-left: 2.5rem;
@@ -483,7 +484,7 @@ class ModalCreateOrganization extends Component {
 										<Input
 											modalOrg
 											margin={isCnpjError ? '0' : '0 0 2rem'}
-											type="text"
+											type="number"
 											placeholder="00.000.000/0000-00"
 											onChange={ev => this.handleChange('cnpj', ev)}
 											value={this.state.cnpj}
@@ -510,7 +511,7 @@ class ModalCreateOrganization extends Component {
 										<Input
 											modalOrg
 											margin={isTelephoneError ? '0' : '0 0 2rem'}
-											type="text"
+											type="number"
 											placeholder="(00) 00000-0000"
 											onChange={ev => this.handleChange('telephone', ev)}
 											value={this.state.telephone}
@@ -596,7 +597,7 @@ class ModalCreateOrganization extends Component {
 											<UserTitle createOrg>cep</UserTitle>
 											<Input
 												modalOrg
-												type="text"
+												type="number"
 												placeholder="00000-000"
 												onChange={ev => this.handleChange('cep', ev)}
 												value={this.state.cep}
