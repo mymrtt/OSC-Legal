@@ -37,6 +37,7 @@ const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
 	isAdmin: state.onboarding.users.isAdmin,
 	organization: state.organization.tableDatas,
+	// isAdmin: false,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -90,6 +91,10 @@ const ContainerHeader = styled.div`
   justify-content: flex-end;
 
 	@media (max-width: 1024px) {
+		padding-right: 2.7rem;
+	}
+
+	@media (max-width: 768px) {
 		padding-right: 2rem;
 	}
 
@@ -403,17 +408,18 @@ const ContainerModel = styled.div`
 				width: 10rem;
 				height: 1px;
 				display: ${props => (props.displayBefore ? 'none' : 'flex')};
-				margin-top: 21.6%;
+				margin-top: 20.6%;
     		top: 100%;
-				z-index: 6;
+				z-index: 1;
 				right: 0;
 			}
 
 			@media (max-width: 375px) {
-				margin-top: 24.2%;
+				margin-top: 23.2%;
 			}
 		}
 	}
+
 	@media (max-width: 1024px) {
 		padding-right: 1.1rem;
 		width: 95%;
@@ -433,12 +439,14 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: ${props => (props.isAdmin ? '85%' : '95%')};
+	width: ${props => (props.isAdmin ? '85%' : '100%')};
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	cursor: pointer;
+	border-radius: 3px;
 	border: ${props => (props.isSelected ? '1px solid #85144B' : 'none')};
-	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
+	padding: ${props => (props.addDocument ? '1rem 0 1rem 0' : '0')};
 
 	&:hover {
 		border: ${props => (props.hidden ? '1px solid #85144B' : '0')};
@@ -447,7 +455,8 @@ const ContainerModelDescription = styled.div`
 
 	span {
 		display: flex;
-		padding: ${props => (props.isAdmin ? '0' : '0 2rem')};
+		padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
+
 		@media (max-width: 768px) {
 			width: 95%;
 		}
@@ -481,9 +490,11 @@ const ModelTitle = styled.h2`
 	margin-bottom: .5rem;
   color: #85144B;
   font-family: "Overpass", Black;
+
 	@media (max-width: 768px) {
 		font-size: 1.3rem;
 	}
+
 	@media (max-width: 490px) {
 		font-size: 1rem;
 	}
@@ -493,7 +504,7 @@ const ModelParagraph = styled.p`
   width: 92%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
-	padding: ${props => (props.isAdmin ? '0' : '0 2rem 1rem 2rem')};
+	padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
@@ -534,10 +545,10 @@ const ContainerOptions = styled.div`
 		width: 160px;
 		height: 130px;
     top: 100%;
-		margin-top: 0;
+		margin-top: .6rem;
     right: 0rem;
     border: 1px solid #85144B;
-		z-index: 5;
+		z-index: 2;
 		background: #ffffff;
 		align-items: center;
 		border-radius: 3px;
@@ -597,43 +608,6 @@ const OptionText = styled.p`
 	}
 `;
 
-// const Button = styled.button`
-//   margin: 2rem;
-// 	width: 18.75rem;
-// 	height: 4.7rem;
-// 	border: 0;
-//   color: #fff;
-//   box-shadow: 0 3px 6px #00000029;
-//   border-radius: 3px;
-//   font-size: 1.2rem;
-// 	font-family: "Overpass", SemiBold;
-//   font-weight: bold;
-// 	background-color: #FF4136;
-// 	display: block;
-
-// 	@media (max-width: 1024px) {
-// 		padding: 0;
-// 		width: 65%;
-// 		font-size: 1.2rem;
-// 		height: 4rem;
-// 	}
-
-// 	@media (max-width: 768px) {
-// 		font-size: 1.2rem;
-// 		width: 70%;
-// 	}
-
-// 	@media (max-width: 490px) {
-// 		position:fixed;
-// 		bottom: 1vh;
-// 		align-self: center;
-// 		margin: 0;
-// 		font-size: 1.2rem;
-// 		z-index: 6;
-// 		width: ${props => (props.modelMob ? '86%' : '95%')};
-// 	}
-// `;
-
 const ContainerModal = styled.div`
 	width: 100%;
 	height: 100vh;
@@ -643,7 +617,7 @@ const ContainerModal = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 3;
+	z-index: 1;
 	background: rgba(112, 112, 112, 0.5);
 
 	@media (max-width: 490px) {
@@ -1032,6 +1006,10 @@ const TextOrg = styled.p`
 	font-size: .8rem;
 	color: #959595;
 	font-family: 'Overpass', Regular;
+
+	@media(max-width: 1024px) {
+		font-size: .7rem;
+	}
 `;
 
 const Modal = styled.div`
@@ -1041,7 +1019,7 @@ const Modal = styled.div`
 	border-radius: 4px;
 	display: flex;
 	flex-direction: column;
-	padding: .5rem 2rem;
+	padding: .5rem 1.5rem;
 
 	@media (max-width: 768px) {
 		width: 40rem;
@@ -1059,7 +1037,7 @@ const BoxTitle = styled.span`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	padding: 1rem 2rem 0 2rem;
+	padding: 1rem 1rem 0 1rem;
 `;
 
 const SubtitleModal = styled.p`
@@ -1152,7 +1130,7 @@ class DocumentsScreen extends Component {
 		colorTextDelete: '',
 		redirect: false,
 		isFile: null,
-		hidden: false,
+		// hidden: false,
 		document: {
 			title: '',
 			description: '',
@@ -1581,7 +1559,7 @@ class DocumentsScreen extends Component {
 					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription
 							hidden={this.state.modalListDoc}
-							isAdmin={this.state.isAdmin}
+							addDocument={this.state.modalListDoc}
 							onClick={() => this.selecetedDocUser(docs)}
 							isSelected={docs === this.state.isSelected}
 						>
@@ -1760,7 +1738,7 @@ class DocumentsScreen extends Component {
 												this.state.listDocs.map((docs, index) => (
 													<ContainerModel key={docs}
 														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-														zIndex={this.state.modalListDoc}
+														// zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(docs)}
 														onMouseLeave={this.handleOffOptions}

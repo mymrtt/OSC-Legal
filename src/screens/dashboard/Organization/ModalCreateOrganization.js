@@ -1,12 +1,13 @@
 // Libs
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 // Components
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import Sucessfully from './ModalSucessfully';
 import HeaderModal from '../components/HeaderModal';
 
 // Icon
@@ -377,7 +378,6 @@ class ModalCreateOrganization extends Component {
 			&& telephone.length >= 8 && address.length > 4 && addressComplement.length > 4 && city.length > 4
 			&& neighborhood.length > 4 && cep.length === 8
 		) {
-
 			this.props.addNewOrg(this.state.dataOrganization);
 
 			this.handleModalSucess();
@@ -425,8 +425,7 @@ class ModalCreateOrganization extends Component {
 				<HeaderModal />
 				<Container
 					onSubmit={this.handleSubmit}
-					onClick={ev => ev.stopPropagation()}
-				>
+					onClick={ev => ev.stopPropagation()}>
 					<Content>
 						<ContainerExit>
 							<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal}/>
@@ -578,8 +577,7 @@ class ModalCreateOrganization extends Component {
 											style={{
 												marginRight: '1rem',
 												paddingBottom: isNeighborhoodError && '1rem',
-											}}
-										>
+											}}>
 											<UserTitle createOrg>bairro</UserTitle>
 											<Input
 												modalOrg
@@ -620,7 +618,7 @@ class ModalCreateOrganization extends Component {
 							</ContainerConcludeButton>
 						</ContentWrapper>
 					</Content>
-					{this.state.modalSucess && <Redirect exact to="/sucessfully" />}
+					{this.state.modalSucess && <Sucessfully />}
 				</Container>
 			</Overlay>
 		);
