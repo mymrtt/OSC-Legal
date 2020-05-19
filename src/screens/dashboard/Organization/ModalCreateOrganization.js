@@ -7,6 +7,7 @@ import styled from 'styled-components';
 // Components
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import HeaderModal from '../components/HeaderModal';
 
 // Icon
 import Exit from '../../../assets/fechar.svg';
@@ -28,7 +29,12 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
 	z-index: 20;
-	position: absolute;
+	position: fixed;
+
+	@media(max-width: 648px) {
+		display: flex;
+    flex-direction: column;
+	}
 `;
 
 const Container = styled.form`
@@ -57,16 +63,13 @@ const Container = styled.form`
   	background: #f9bdbb;
 	}
 
-	@media (max-width: 1024px) {
-		width: 42%;
+	@media(max-width: 768px) {
+		width: 70%;
 	}
 
 	@media(max-width: 648px) {
+		z-index: 10;
 		width: 100%;
-		min-height: 100vh;
-		margin: 0;
-		/* overflow-x: hidden;
-		overflow-y: scroll; */
 	}
 `;
 
@@ -104,8 +107,8 @@ const ContainerUser = styled.div`
 	display: flex;
 	flex-flow: wrap column;
 
-	@media(max-width: 768px) {
-		padding-left: 1.5rem;
+	@media(max-width: 648px) {
+		padding-left: 2.5rem;
 	}
 `;
 
@@ -117,24 +120,24 @@ const UserTitle = styled.h2`
 	text-transform: uppercase;
 	font-family: Overpass;
 	font-weight: bold;
+
+	@media(max-width: 768px) {
+		font-size: .9rem;
+	}
+
+	@media(max-width: 648px) {
+		font-size: 0.85rem;
+	}
 `;
 
 const UserText = styled.p`
   font-size: 1rem;
 	padding-bottom: 1.5rem;
   font-family: "Overpass", Light;
-/*
-  @media (max-width: 648px) {
-    & {
-      margin: 0 0 1.6rem 3.5rem;
-    }
-  };
 
-  @media (max-width: 425px) {
-    & {
-      margin: 0 0 1.6rem 0;
-    }
-  }; */
+  @media (max-width: 648px) {
+		font-size: 1rem;
+  }
 `;
 
 const CreateOrgTitle = styled.h1`
@@ -143,11 +146,9 @@ const CreateOrgTitle = styled.h1`
 	font-family: "Overpass", sans-serif;
 	font-size: 2rem;
 	font-weight: 900;
-	padding-bottom: 2rem;
-	padding-left: 3.5rem;
 
-	@media (max-width: 768px) {
-		padding-left: 1.5rem;
+	@media(max-width: 648px) {
+		padding-left: 2.5rem;
 	}
 `;
 
@@ -172,7 +173,7 @@ const WrapOrganizationContent = styled.div`
 `;
 
 const WrapOrganizationItem = styled.div`
-	${'' /* margin-right: 1.5rem; */}
+	padding-bottom: 2rem;
 	width: 50%;
 	padding-bottom: 2rem;
 	display: flex;
@@ -180,51 +181,49 @@ const WrapOrganizationItem = styled.div`
 `;
 
 const ContainerConcludeButton = styled.span`
-	${'' /* padding-left: 3.5rem; */}
-	width: 100%;
 	padding-left: 3rem;
 	padding-right: 3rem;
-	padding-bottom: 1rem;
-	${'' /* display: flex;
-	justify-content: center; */}
+	padding-bottom: 1.5rem;
+	width: 100%;
 
-	@media(max-width: 768px) {
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
+	@media(max-width: 648px) {
+		padding-left: 2rem;
+    padding-right: 2rem;
+		padding-bottom: 5rem;
 	}
 `;
 
-const Teste = styled.div`
+const ContentWrapper = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 `;
 
-const Teste2 = styled.div`
+const ContainerCreateOrg = styled.div`
 	width: 100%;
 	padding-left: 3rem;
 	padding-right: 3rem;
-	${'' /* padding-left: 3.5rem; */}
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
-	@media(max-width: 768px) {
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
+	@media(max-width: 648px) {
+		padding-left: 2rem;
+    padding-right: 2rem;
 	}
 `;
 
 const ErrorMessage = styled.p`
   margin: 0.5rem 0 1rem 0.8rem;
-  font-size: 0.8rem;
-  color: #f00;
   align-self: flex-start;
-	font-family: Overpass;
+  color: #f00;
+  font-size: 0.8rem;
   font-weight: 400;
-  @media (max-width: 425px) {
-    margin: 0.5rem 0 0.5rem 0;
+	font-family: Overpass;
+
+  @media (max-width: 648px) {
+    margin: 0.5rem 0 0.8rem 0;
   }
 `;
 
@@ -422,6 +421,7 @@ class ModalCreateOrganization extends Component {
 
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
+				<HeaderModal />
 				<Container
 					onSubmit={this.handleSubmit}
 					onClick={ev => ev.stopPropagation()}
@@ -430,7 +430,7 @@ class ModalCreateOrganization extends Component {
 						<ContainerExit>
 							<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal}/>
 						</ContainerExit>
-						<Teste>
+						<ContentWrapper>
 							<CreateOrgTitle>Criar Organização</CreateOrgTitle>
 							{this.state.userData.map(item => (
 								<ContainerUser key={item}>
@@ -445,7 +445,7 @@ class ModalCreateOrganization extends Component {
 									<UserText>{item.cpf}</UserText>
 								</ContainerUser>
 							))}
-							<Teste2>
+							<ContainerCreateOrg>
 								<Title org>Organização</Title>
 								<ContentOrganization>
 									<ContentOrganizationItem>
@@ -576,7 +576,7 @@ class ModalCreateOrganization extends Component {
 										<WrapOrganizationItem
 											style={{
 												marginRight: '1rem',
-												paddingBottom: isNeighborhoodError && '1rem'
+												paddingBottom: isNeighborhoodError && '1rem',
 											}}
 										>
 											<UserTitle createOrg>bairro</UserTitle>
@@ -608,7 +608,7 @@ class ModalCreateOrganization extends Component {
 										</WrapOrganizationItem>
 									</WrapOrganizationContent>
 								</WrapOrganization>
-							</Teste2>
+							</ContainerCreateOrg>
 							<ContainerConcludeButton>
 								<Button
 									type="submit"
@@ -617,7 +617,7 @@ class ModalCreateOrganization extends Component {
 									textTransform
 								/>
 							</ContainerConcludeButton>
-						</Teste>
+						</ContentWrapper>
 					</Content>
 					{this.state.modalSucess && <Redirect exact to="/sucessfully" />}
 				</Container>
