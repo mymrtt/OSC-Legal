@@ -1,8 +1,7 @@
-/* eslint-disable indent */
-/* eslint-disable no-mixed-spaces-and-tabs */
-
 // Libs
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 // Components
@@ -12,10 +11,19 @@ import Button from '../../../components/Button';
 // Icon
 import Exit from '../../../assets/exit.svg';
 
+// Redux
+import { addNewOrg } from '../../../dataflow/modules/organization-modules';
+
+const mapDispatchToProps = dispatch => ({
+	addNewOrg: (org) => {
+		dispatch(addNewOrg(org));
+	},
+});
+
 const Overlay = styled.div`
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
-  background-color: #707070a1;
+  background-color: #00000060;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,93 +31,82 @@ const Overlay = styled.div`
 	position: absolute;
 `;
 
-const Container = styled.div`
-	min-width: 32%;
-	background-color: #FFFFFF;
+const Container = styled.form`
+	margin: 1rem;
+	width: 33%;
+	overflow: hidden auto;
+	background-color: #fff;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	padding: 1.5rem 0 2rem 0;
-	margin: 1rem;
 	border-radius: 3px;
 
-	> img {
+	::-webkit-scrollbar {
+  width: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
+	}
+`;
+
+const Content = styled.div`
+	max-height: calc(98vh - 0.25rem);
+`;
+
+const ContainerExit = styled.figure`
+	padding-top: 1rem;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	cursor: pointer;
+`;
+
+const ExitIcon = styled.img`
 	width: 1.3rem;
 	align-self: flex-end;
 	margin-right: 4%;
-}
 `;
 
-const ContainerFisicalPerson = styled.label`
-
-  h1 {
-    margin: 0 11.2%;
-    color: #85144b;
-    font-weight: 800;
-    font-family: Overpass;
-  }
-
-  > h2 {
-    font-size: 1.3rem;
-    margin: 5% 0 10% 11.8%;
-    text-transform: uppercase;
-    font-weight: 800;
-    font-family: Overpass;
-		font-weight: 900;
-  }
-
-  div {
-    display: flex;
-    flex-flow: wrap column;
-    height: 270px;
-
-    @media (max-width: 425px) {
-      & {
-        height: initial;
-        align-items: flex-start;
-        padding-left: 11.7%;
-      }
-    }
-
-    span {
-      h2 {
-        margin: 0 0 0.4rem 0;
-      }
-    }
-
-    @media (max-width: 425px) {
-      span {
-        margin: 0;
-      }
-    }
-
-    h2 {
-      font-size: 0.7rem;
-      margin-bottom: 0.4rem;
-      color: #85144b;
-      text-transform: uppercase;
-      margin-left: 3.2rem;
-      font-family: Overpass;
-      font-weight: bold;
-    }
-
-    @media (max-width: 648px) {
-      h2 {
-        margin-left: 3.5rem;
-      }
-    }
-
-    @media (max-width: 425px) {
-      h2 {
-        margin-left: 0;
-      }
-    }
-  }
+const Title = styled.h2`
+	padding-top: ${props => (props.org && '3rem')};
+	padding-left: ${props => (props.org && '.6rem')};
+	padding-bottom: 2rem;
+	width: 100%;
+	font-size: 1.3rem;
+	text-transform: uppercase;
+	font-family: Overpass;
+	font-weight: 900;
 `;
 
-const Text = styled.p`
+const ContainerUser = styled.div`
+	padding-left: 3.5rem;
+	width: 100%;
+	display: flex;
+	flex-flow: wrap column;
+`;
+
+const UserTitle = styled.h2`
+	padding-left: ${props => (props.createOrg && '.8rem')};
+	padding-bottom: .5rem;
+	font-size: 0.7rem;
+	color: #85144b;
+	text-transform: uppercase;
+	font-family: Overpass;
+	font-weight: bold;
+`;
+
+const UserText = styled.p`
   font-size: 1rem;
-  margin: 0 0 1.6rem 3.2rem;
+	padding-bottom: 1.5rem;
   font-family: "Overpass", Light;
 
   @media (max-width: 648px) {
@@ -125,245 +122,479 @@ const Text = styled.p`
   };
 `;
 
-const TextSpan = styled.p`
-	font-family: "Overpass", Light;
-  margin: 0 0 1.6rem 0;
+const CreateOrgTitle = styled.h1`
+	padding-left: 3.5rem;
+	padding-bottom: 2rem;
+	color: #85144B;
+	font-size: 2rem;
+	align-self: flex-start;
+	font-family: "Overpass", sans-serif;
+	font-weight: 900;
 `;
 
-const ContainerLegalPerson = styled.label`
-  h1 {
-    font-size: 1.3rem;
-    align-self: flex-start;
-    text-transform: uppercase;
-    margin: 0 11.8%;
-    font-family: "Overpass", sans-serif;
-    font-weight: 800;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    input {
-      width: 100%;
-      font-family: "Overpass", sans-serif;
-      font-weight: 300;
-      padding: 0.5rem;
-    }
-
-    @media (max-width: 648px) {
-     input {
-        height: 10%;
-        padding: 1rem;
-      }
-    }
-
-    label {
-      width: 80%;
-
-      h2 {
-        margin-bottom: 0.4rem;
-        color: #85144b;
-        text-transform: uppercase;
-        font-size: 0.7rem;
-        margin-left: 0.5rem;
-        margin-top: 1.5rem;
-        font-family: "Overpass", sans-serif;
-        font-weight: 700;
-      }
-
-      @media (max-width: 648px) {
-        > input {
-          height: 25%;
-          padding: 1rem;
-        }
-      }
-    }
-  }
-
-  button {
-    min-width: 78%;
-    padding: 4% 0;
-    margin: 0 11.2%;
-    box-shadow: 0px 3px 6px #00000029;
-    border-radius: 3px;
-    font-family: "Overpass", sans-serif;
-    font-weight: 700;
-  };
+const ContentOrganization = styled.div`
+	width: 100%;
 `;
 
-const WrapLegalPerson = styled.div`
+const ContentOrganizationItem = styled.label`
+	padding-bottom: 2rem;
+`;
+
+const WrapOrganization = styled.div`
+	width: 100%;
+  margin-bottom: 1rem;
   display: flex;
+	justify-content: center;
   flex-direction: column;
-  margin-bottom: 3rem;
 `;
 
-const Label = styled.label`
-  display: flex;
-  justify-content: space-between;
+const WrapOrganizationContent = styled.div`
+	display: flex;
+`;
 
-  label:nth-of-type(1) {
-    padding-right: 1rem;
+const WrapOrganizationItem = styled.div`
+	${'' /* margin-right: 1.5rem; */}
+	padding-bottom: 2rem;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+`;
+
+const ContainerConcludeButton = styled.span`
+	${'' /* padding-left: 3.5rem; */}
+	padding-left: 3rem;
+	padding-right: 3rem;
+	padding-bottom: 1rem;
+	width: 100%;
+	${'' /* display: flex;
+	justify-content: center; */}
+`;
+
+const Teste = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const Teste2 = styled.div`
+	padding-left: 3rem;
+	padding-right: 3rem;
+	${'' /* padding-left: 3.5rem; */}
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const ErrorMessage = styled.p`
+  margin: 0.5rem 0 1rem 0.8rem;
+  font-size: 0.8rem;
+  color: #f00;
+  align-self: flex-start;
+	font-family: Overpass;
+  font-weight: 400;
+  @media (max-width: 425px) {
+    margin: 0.5rem 0 0.5rem 0;
   }
 `;
 
-export default class CreateOrganization extends Component {
+class ModalCreateOrganization extends Component {
 	state = {
-		nomeError: false,
-		dataLegalPerson: {
-			fantasyName: '',
+		dataOrganization: {
+			tradingName: '',
 			companyName: '',
 			cnpj: '',
-			email: '',
+			// email: '',
 			telephone: '',
 			address: '',
-			complement: '',
+			addressComplement: '',
 			neighborhood: '',
 			city: '',
-			zipCode: '',
+			cep: '',
 		},
+		userData: [
+			{
+				name: 'Yasmin Miranda',
+				email: 'nome@email.com',
+				telephone: '(99) 99999-9999',
+				cpf: '000000000-00',
+			},
+		],
+		modalSucess: false,
+		isTradingNameError: false,
+		isCompanyNameError: false,
+		isCnpjError: false,
+		isTelephoneError: false,
+		isAddressError: false,
+		isAddressComplementError: false,
+		isNeighborhoodError: false,
+		isCityError: false,
+		isCepError: false,
 	};
+
+	handleModalSucess = () => {
+		this.setState({
+			modalSucess: !this.state.modalSucess,
+		});
+	}
+
+	handleErros = () => {
+		const {
+			tradingName,
+			companyName,
+			cnpj,
+			telephone,
+			address,
+			addressComplement,
+			neighborhood,
+			city,
+			cep,
+		} = this.state.dataOrganization;
+
+
+		if (!tradingName || tradingName.length < 4) {
+			this.setState({
+				isTradingNameError: true,
+			});
+		} else {
+			this.setState({
+				isTradingNameError: false,
+			});
+		}
+
+		if (!companyName || companyName.length < 4) {
+			this.setState({
+				isCompanyNameError: true,
+			});
+		} else {
+			this.setState({
+				isCompanyNameError: false,
+			});
+		}
+
+		if (!cnpj || cnpj.length !== 14) {
+			this.setState({
+				isCnpjError: true,
+			});
+			// verificar como faz essa validação
+		} else {
+			this.setState({
+				isCnpjError: false,
+			});
+		}
+
+		if (!telephone || telephone.length < 8) {
+			this.setState({
+				isTelephoneError: true,
+			});
+		} else {
+			this.setState({
+				isTelephoneError: false,
+			});
+		}
+
+		if (!address || address.length < 4) {
+			this.setState({
+				isAddressError: true,
+			});
+		} else {
+			this.setState({
+				isAddressError: false,
+			});
+		}
+
+		if (!addressComplement || addressComplement.length < 4) {
+			this.setState({
+				isAddressComplementError: true,
+			});
+		} else {
+			this.setState({
+				isAddressComplementError: false,
+			});
+		}
+
+		if (!city || city.length < 4) {
+			this.setState({
+				isCityError: true,
+			});
+		} else {
+			this.setState({
+				isCityError: false,
+			});
+		}
+
+		if (!neighborhood || neighborhood.length < 4) {
+			this.setState({
+				isNeighborhoodError: true,
+			});
+		} else {
+			this.setState({
+				isNeighborhoodError: false,
+			});
+		}
+
+		if (!cep || cep.length !== 8) {
+			this.setState({
+				isCepError: true,
+			});
+		} else {
+			this.setState({
+				isCepError: false,
+			});
+		}
+
+		if (tradingName.length > 4 && companyName.length > 4 && cnpj.length === 14
+			&& telephone.length >= 8 && address.length > 4 && addressComplement.length > 4 && city.length > 4
+			&& neighborhood.length > 4 && cep.length === 8
+		) {
+
+			this.props.addNewOrg(this.state.dataOrganization);
+
+			this.handleModalSucess();
+		}
+	}
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		if (this.state.dataLegalPerson.fantasyName === '') {
-			this.setState({
-				nomeError: true,
-			});
-		} else {
-			this.setState({
-				nomeError: false,
-			});
-		}
-
-		if (this.state.dataLegalPerson.cnpj === '') {
-			this.setState({
-				nomeError: true,
-			});
-		} else {
-			this.setState({
-				nomeError: false,
-			});
-		}
+		this.handleErros();
 	};
 
 	handleChange = (field, ev) => {
-		const { dataLegalPerson } = this.state;
-		dataLegalPerson[field] = ev.target.value;
-		this.setState({
-			dataLegalPerson,
-		});
+		const { dataOrganization } = this.state;
+		dataOrganization[field] = ev.target.value;
+		this.setState({ dataOrganization });
 	};
 
 	render() {
-		const error = ['Nome fantasia invalido', 'CNPJ invalido', 'Email invalido'];
+		const errorMessage = [
+			'Insira um nome fantasia válido.',
+			'Insira uma razão social válida.',
+			'Insira um CNPJ válido.',
+			'Insira um número de telefone válido.',
+			'Insira um endereço válido.',
+			'Insira um complemento válido.',
+			'Insira uma cidade válida.',
+			'Insira um bairro válido.',
+			'Insira um cep válido.',
+		];
+
+		const {
+			isTradingNameError,
+			isCompanyNameError,
+			isCnpjError,
+			isTelephoneError,
+			isAddressError,
+			isAddressComplementError,
+			isCityError,
+			isNeighborhoodError,
+			isCepError,
+		} = this.state;
 
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
-				<Container onClick={ev => ev.stopPropagation()} onSubmit={this.handleSubmit}>
-					<img src={Exit} alt="Exit" onClick={this.props.handleClosedModal} />
-					<ContainerFisicalPerson>
-						<h1>Criar organização</h1>
-						<h2>pessoa física</h2>
-						<div>
-							<h2>nome</h2>
-							<Text>Yasmin Miranda</Text>
-							<h2>rg</h2>
-							<Text>0000000-0</Text>
-							<h2>e-mail</h2>
-							<Text>nome@email.com</Text>
-							<h2>telefone</h2>
-							<Text>(99) 99999-9999</Text>
-							<span>
-								<h2>data de nascimento</h2>
-								<TextSpan>22/02/2020</TextSpan>
-								<h2>cpf</h2>
-								<TextSpan>000000000-00</TextSpan>
-							</span>
-						</div>
-					</ContainerFisicalPerson>
-					<ContainerLegalPerson>
-						<h1>associar pessoa jurídica</h1>
-						<div>
-							<label>
-								<h2>nome fantasia</h2>
-								<Input
-									placeholder="Nome da organização"
-									onChange={ev => this.handleChange('fantasyName', ev)}
-									value={this.state.fantasyName}
-								/>
-								{this.state.nomeError && <span>{error[0]}</span>}
-							</label>
-							<label>
-								<h2>razão social</h2>
-								<Input
-									placeholder="Razão social"
-									onChange={ev => this.handleChange('companyName', ev)}
-									value={this.state.companyName}
-								/>
-							</label>
-							<label>
-								<h2>cnpj</h2>
-								<Input
-									type="number"
-									placeholder="00.000.000/0000-00"
-									onChange={ev => this.handleChange('cnpj', ev)}
-									value={this.state.cnpj}
-								/>
-								{this.state.nomeError && <span>{error[1]}</span>}
-							</label>
-							<label>
-								<h2>email</h2>
-								<Input placeholder="endereçodeemail@email.com" value={this.state.email} />
-							</label>
-							<label>
-								<h2>telefone</h2>
-								<Input
-									type="number"
-									placeholder="(00) 00000-0000"
-									value={this.state.telephone}
-								/>
-							</label>
-							<label>
-								<h2>endereço</h2>
-								<Input placeholder="Endereço" value={this.state.address} />
-							</label>
-						</div>
-						<WrapLegalPerson>
-							<Label>
-								<label>
-									<label>
-										<h2>complemento</h2>
+				<Container
+					onSubmit={this.handleSubmit}
+					onClick={ev => ev.stopPropagation()}
+				>
+					<Content>
+						<ContainerExit onClick={this.props.handleClosedModal}>
+							<ExitIcon src={Exit} alt="Fechar"/>
+						</ContainerExit>
+						<Teste>
+							<CreateOrgTitle>Criar Organização</CreateOrgTitle>
+							{this.state.userData.map(item => (
+								<ContainerUser key={item}>
+									<Title>Usuário</Title>
+									<UserTitle>nome</UserTitle>
+									<UserText>{item.name}</UserText>
+									<UserTitle>e-mail</UserTitle>
+									<UserText>{item.email}</UserText>
+									<UserTitle>telefone</UserTitle>
+									<UserText>{item.telephone}</UserText>
+									<UserTitle>cpf</UserTitle>
+									<UserText>{item.cpf}</UserText>
+								</ContainerUser>
+							))}
+							<Teste2>
+								<Title org>Organização</Title>
+								<ContentOrganization>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>nome fantasia</UserTitle>
 										<Input
-											placeholder="Complemento"
-											value={this.state.complement}
+											modalOrg
+											margin={isTradingNameError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="Nome da organização"
+											onChange={ev => this.handleChange('tradingName', ev)}
+											value={this.state.tradingName}
+											name="tradingName"
+											isError={isTradingNameError}
+											required
 										/>
-									</label>
-									<label>
-										<h2>cidade</h2>
-										<Input placeholder="Cidade" value={this.state.city} />
-									</label>
-								</label>
-								<label>
-									<label>
-										<h2>bairro</h2>
+										{isTradingNameError && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>razão social</UserTitle>
 										<Input
-											placeholder="Bairro"
-											value={this.state.neighborhood}
+											modalOrg
+											margin={isCompanyNameError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="Razão social"
+											onChange={ev => this.handleChange('companyName', ev)}
+											value={this.state.companyName}
+											name="companyName"
+											isError={isCompanyNameError}
+											required
 										/>
-									</label>
-									<label>
-										<h2>cep</h2>
-										<Input type="number" placeholder="00000-000" value={this.state.zipCode} />
-									</label>
-								</label>
-							</Label>
-						</WrapLegalPerson>
-						<Button to={'/modalSucessfully'} type="submit" text="concluir" textTransform />
-					</ContainerLegalPerson>
+										{isCompanyNameError && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>cnpj</UserTitle>
+										<Input
+											modalOrg
+											margin={isCnpjError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="00.000.000/0000-00"
+											onChange={ev => this.handleChange('cnpj', ev)}
+											value={this.state.cnpj}
+											name="cnpj"
+											isError={isCnpjError}
+											required
+										/>
+										{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									{/* <ContentOrganizationItem>
+										<UserTitle createOrg>email</UserTitle>
+										<Input
+											modalOrg
+											margin={'0 0 2rem'}
+											type="text"
+											placeholder="email@email.com"
+											value={this.state.email}
+											name="email"
+											required
+										/>
+									</ContentOrganizationItem> */}
+									<ContentOrganizationItem>
+										<UserTitle createOrg>telefone</UserTitle>
+										<Input
+											modalOrg
+											margin={isTelephoneError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="(00) 00000-0000"
+											onChange={ev => this.handleChange('telephone', ev)}
+											value={this.state.telephone}
+											name="telephone"
+											isError={isTelephoneError}
+											required
+										/>
+										{isTelephoneError && <ErrorMessage>{errorMessage[3]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>endereço</UserTitle>
+										<Input
+											modalOrg
+											margin={isAddressError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="Endereço"
+											onChange={ev => this.handleChange('address', ev)}
+											value={this.state.address}
+											name="address"
+											isError={isAddressError}
+											required
+										/>
+										{isAddressError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
+									</ContentOrganizationItem>
+								</ContentOrganization>
+								<WrapOrganization>
+									<WrapOrganizationContent>
+										<WrapOrganizationItem
+											style={{
+												marginRight: '1rem',
+												paddingBottom: isAddressComplementError && '1rem',
+											}}
+										>
+											<UserTitle createOrg>complemento</UserTitle>
+											<Input
+												modalOrg
+												type="text"
+												placeholder="Complemento"
+												onChange={ev => this.handleChange('addressComplement', ev)}
+												value={this.state.addressComplement}
+												name="addressComplement"
+												isError={isAddressComplementError}
+												required
+											/>
+											{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
+										</WrapOrganizationItem>
+										<WrapOrganizationItem style={{ paddingBottom: isCityError && '1rem' }}>
+											<UserTitle createOrg>cidade</UserTitle>
+											<Input
+												modalOrg
+												type="text"
+												placeholder="Cidade"
+												onChange={ev => this.handleChange('city', ev)}
+												value={this.state.city}
+												name="city"
+												isError={isCityError}
+												required
+											/>
+											{isCityError && <ErrorMessage>{errorMessage[6]}</ErrorMessage>}
+										</WrapOrganizationItem>
+									</WrapOrganizationContent>
+									<WrapOrganizationContent>
+										<WrapOrganizationItem
+											style={{
+												marginRight: '1rem',
+												paddingBottom: isNeighborhoodError && '1rem'
+											}}
+										>
+											<UserTitle createOrg>bairro</UserTitle>
+											<Input
+												modalOrg
+												type="text"
+												placeholder="Bairro"
+												onChange={ev => this.handleChange('neighborhood', ev)}
+												value={this.state.neighborhood}
+												name="neighborhood"
+												isError={isNeighborhoodError}
+												required
+											/>
+											{isNeighborhoodError && <ErrorMessage>{errorMessage[7]}</ErrorMessage>}
+										</WrapOrganizationItem>
+										<WrapOrganizationItem style={{ paddingBottom: isCepError && '1rem' }}>
+											<UserTitle createOrg>cep</UserTitle>
+											<Input
+												modalOrg
+												type="text"
+												placeholder="00000-000"
+												onChange={ev => this.handleChange('cep', ev)}
+												value={this.state.cep}
+												name="cep"
+												isError={isCepError}
+												required
+											/>
+											{isCepError && <ErrorMessage>{errorMessage[8]}</ErrorMessage>}
+										</WrapOrganizationItem>
+									</WrapOrganizationContent>
+								</WrapOrganization>
+							</Teste2>
+							<ContainerConcludeButton>
+								<Button
+									type="submit"
+									width={'100%'}
+									text="concluir"
+									textTransform
+								/>
+							</ContainerConcludeButton>
+						</Teste>
+					</Content>
+					{this.state.modalSucess && <Redirect exact to="/sucessfully" />}
 				</Container>
 			</Overlay>
 		);
 	}
 }
+
+export default connect(null, mapDispatchToProps)(ModalCreateOrganization);

@@ -20,6 +20,8 @@ import DownloadWhiteIcon from '../../../assets/downloadwhite.svg';
 import Exit from '../../../assets/exit.svg';
 import DeleteIcon from '../../../assets/delete.svg';
 import DeleteIconWhite from '../../../assets/deleteWhite.svg';
+import EditIcon from '../../../assets/edit.svg';
+import EditIconWhite from '../../../assets/editWhite.svg';
 import documentWhite from '../../../assets/documentWhite.svg';
 import ArrowDownIcon from '../../../assets/caminho.svg';
 
@@ -304,7 +306,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: ${props => (props.filter ? '100%' : '70%')};
+	width: 70%;
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -508,6 +510,12 @@ const ContainerOptions = styled.div`
 	justify-content: center;
 	flex-direction: column;
 
+	@media (max-width: 490px) {
+		.Edit {
+			display: none;
+		}
+	}
+
 	@media (max-width: 1024px) {
 		width: 25%;
 		padding: 0 0 0 3.4%;
@@ -618,6 +626,7 @@ const Button = styled.button`
 		align-self: center;
 		margin: 0;
 		font-size: 1.2rem;
+		z-index: 6;
 		width: ${props => (props.modelMob ? '86%' : '95%')};
 	}
 `;
@@ -980,6 +989,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
+	padding: .5rem 0;
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -997,7 +1007,7 @@ const Org = styled.div`
 	font-size: .8rem;
 	font-family: 'Overpass';
 	font-weight: 600;
-	cursor: pointer;	
+	cursor: pointer;
 	width: 100%;
 	padding: .3rem 1rem;
 
@@ -1066,7 +1076,7 @@ const BoxModelsDoc = styled.span`
 	flex-direction: column;
 	overflow-y: scroll;
 	margin-bottom: 1rem;
-	
+
 	&::-webkit-scrollbar{
 		display: none;
 	}
@@ -1109,12 +1119,15 @@ class DocumentsScreen extends Component {
 		modalDelete: false,
 		addModel: false,
 		downloadExport: DownloadIcon,
+		downloadEdit: EditIcon,
 		downloadDelete: DeleteIcon,
 		modelSelect: '',
 		search: '',
 		hoverExport: '',
+		hoverEdit: '',
 		hoverDelete: '',
 		colorTextExport: '',
+		colorTextEdit: '',
 		colorTextDelete: '',
 		redirect: false,
 		isFile: null,
@@ -1219,6 +1232,22 @@ class DocumentsScreen extends Component {
 			downloadExport: DownloadIcon,
 			hoverExport: '',
 			colorTextExport: '#85144B',
+		});
+	}
+
+	handleChangeColorEdit = (docs) => {
+		this.setState({
+			downloadEdit: EditIconWhite,
+			hoverEdit: docs,
+			colorTextEdit: '#ffffff',
+		});
+	}
+
+	handleChangeColorLeaveEdit = () => {
+		this.setState({
+			downloadEdit: EditIcon,
+			hoverEdit: '',
+			colorTextEdit: '#85144B',
 		});
 	}
 
@@ -1401,8 +1430,9 @@ class DocumentsScreen extends Component {
 					<LogoAndData>
 						<img src={logo} alt="Logo OSC Legal" />
 						<ParagraphContainer1>
-							{this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-								&& this.props.password === '12345678' ? 'Administrador' : this.props.name}
+							{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+								&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
+							{this.props.isAdmin ? 'Administrador' : this.props.name}
 						</ParagraphContainer1>
 						<ParagraphSair onClick={this.handleRedirect}>
 							sair
@@ -1684,7 +1714,23 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
 																>
-														Exportar
+																	Exportar
+																</OptionText>
+															</Option>
+
+
+															<Option
+																className="Edit"
+																onMouseEnter={() => this.handleChangeColorEdit(docs)}
+																onMouseLeave={this.handleChangeColorLeaveEdit}
+															>
+																<OptionImage
+																	src={this.state.hoverEdit === docs ? this.state.downloadEdit : EditIcon}
+																	alt="Editar" />
+																<OptionText
+																	colorTextButton={this.state.hoverEdit === docs ? this.state.colorTextEdit : '#85144B'}
+																>
+																	<p>Editar</p>
 																</OptionText>
 															</Option>
 															<Option
@@ -1696,7 +1742,8 @@ class DocumentsScreen extends Component {
 																	src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
 																	alt="Deletar" />
 																<OptionText
-																	colorTextButton={this.state.hoverDelete === docs ? this.state.colorTextDelete : '#85144B'}
+																	colorTextButton={this.state.hoverDelete === docs
+																		? this.state.colorTextDelete : '#85144B'}
 																	onClick={() => this.handleSelected(docs)}
 																>
 																	<p>Excluir</p>
