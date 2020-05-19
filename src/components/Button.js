@@ -30,6 +30,10 @@ const MyButton = styled.button`
 
   @media (max-width: 490px){
     width: ${props => (props.widthMobileSmall)};
+    position: ${props => props.positionMb};
+    left: ${props => props.left};
+    right: ${props => props.right};
+    bottom: ${props => props.bottom}
   }
 `;
 
@@ -48,7 +52,10 @@ const Button = props => (
 		margin={props.margin}
 		marginMobile={props.marginMobile}
 		textTransform={props.textTransform}
-		// orderMobile={props => (props.orderMobile)}
+    positionMb={props.positionMb}
+    right={props.right}
+    left={props.left}
+    bottom={props.bottom}
 	>
 		{props.text}
 	</MyButton>

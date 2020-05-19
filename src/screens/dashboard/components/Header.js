@@ -180,8 +180,7 @@ class Header extends Component {
   				<ParagraphUserName>
   					{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
 							&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
-						{this.props.isAdmin ? 'Administrador' : this.props.name}
-						Gabriel
+  					{this.props.isAdmin ? 'Administrador' : this.props.name}
   				</ParagraphUserName>
   				<ParagraphSair onClick={this.handleRedirect}>
 						sair
