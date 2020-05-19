@@ -9,7 +9,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
 // Icon
-import Exit from '../../../assets/exit.svg';
+import Exit from '../../../assets/fechar.svg';
 
 // Redux
 import { addNewOrg } from '../../../dataflow/modules/organization-modules';
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
 const Overlay = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #00000060;
+  background-color: #707070a1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,14 +32,14 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.form`
-	margin: 1rem;
 	width: 33%;
-	overflow: hidden auto;
-	background-color: #fff;
+	background-color: #FFFFFF;
+	border-radius: 3px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	border-radius: 3px;
+	/* margin: 1rem; */
+	overflow: hidden auto;
 
 	::-webkit-scrollbar {
   width: 10px;
@@ -56,6 +56,18 @@ const Container = styled.form`
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
 	}
+
+	@media (max-width: 1024px) {
+		width: 42%;
+	}
+
+	@media(max-width: 648px) {
+		width: 100%;
+		min-height: 100vh;
+		margin: 0;
+		/* overflow-x: hidden;
+		overflow-y: scroll; */
+	}
 `;
 
 const Content = styled.div`
@@ -63,35 +75,38 @@ const Content = styled.div`
 `;
 
 const ContainerExit = styled.figure`
-	padding-top: 1rem;
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
-	cursor: pointer;
 `;
 
 const ExitIcon = styled.img`
-	width: 1.3rem;
+	display: flex;
 	align-self: flex-end;
-	margin-right: 4%;
+	padding: 0.8rem 0.8rem 0.8rem;
+	cursor: pointer;
 `;
 
 const Title = styled.h2`
+	width: 100%;
+	font-family: Overpass;
+	font-size: 1.3rem;
+	font-weight: 900;
+	text-transform: uppercase;
 	padding-top: ${props => (props.org && '3rem')};
 	padding-left: ${props => (props.org && '.6rem')};
 	padding-bottom: 2rem;
-	width: 100%;
-	font-size: 1.3rem;
-	text-transform: uppercase;
-	font-family: Overpass;
-	font-weight: 900;
 `;
 
 const ContainerUser = styled.div`
-	padding-left: 3.5rem;
 	width: 100%;
+	padding-left: 3.5rem;
 	display: flex;
 	flex-flow: wrap column;
+
+	@media(max-width: 768px) {
+		padding-left: 1.5rem;
+	}
 `;
 
 const UserTitle = styled.h2`
@@ -108,7 +123,7 @@ const UserText = styled.p`
   font-size: 1rem;
 	padding-bottom: 1.5rem;
   font-family: "Overpass", Light;
-
+/*
   @media (max-width: 648px) {
     & {
       margin: 0 0 1.6rem 3.5rem;
@@ -119,17 +134,21 @@ const UserText = styled.p`
     & {
       margin: 0 0 1.6rem 0;
     }
-  };
+  }; */
 `;
 
 const CreateOrgTitle = styled.h1`
-	padding-left: 3.5rem;
-	padding-bottom: 2rem;
 	color: #85144B;
-	font-size: 2rem;
 	align-self: flex-start;
 	font-family: "Overpass", sans-serif;
+	font-size: 2rem;
 	font-weight: 900;
+	padding-bottom: 2rem;
+	padding-left: 3.5rem;
+
+	@media (max-width: 768px) {
+		padding-left: 1.5rem;
+	}
 `;
 
 const ContentOrganization = styled.div`
@@ -154,20 +173,25 @@ const WrapOrganizationContent = styled.div`
 
 const WrapOrganizationItem = styled.div`
 	${'' /* margin-right: 1.5rem; */}
-	padding-bottom: 2rem;
 	width: 50%;
+	padding-bottom: 2rem;
 	display: flex;
 	flex-direction: column;
 `;
 
 const ContainerConcludeButton = styled.span`
 	${'' /* padding-left: 3.5rem; */}
+	width: 100%;
 	padding-left: 3rem;
 	padding-right: 3rem;
 	padding-bottom: 1rem;
-	width: 100%;
 	${'' /* display: flex;
 	justify-content: center; */}
+
+	@media(max-width: 768px) {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
 `;
 
 const Teste = styled.div`
@@ -178,13 +202,18 @@ const Teste = styled.div`
 `;
 
 const Teste2 = styled.div`
+	width: 100%;
 	padding-left: 3rem;
 	padding-right: 3rem;
 	${'' /* padding-left: 3.5rem; */}
-	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	@media(max-width: 768px) {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
 `;
 
 const ErrorMessage = styled.p`
@@ -398,8 +427,8 @@ class ModalCreateOrganization extends Component {
 					onClick={ev => ev.stopPropagation()}
 				>
 					<Content>
-						<ContainerExit onClick={this.props.handleClosedModal}>
-							<ExitIcon src={Exit} alt="Fechar"/>
+						<ContainerExit>
+							<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal}/>
 						</ContainerExit>
 						<Teste>
 							<CreateOrgTitle>Criar Organização</CreateOrgTitle>
