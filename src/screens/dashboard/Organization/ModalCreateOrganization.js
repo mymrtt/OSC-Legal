@@ -121,6 +121,10 @@ const UserTitle = styled.h2`
 	font-family: Overpass;
 	font-weight: bold;
 
+	@media(max-width: 768px) {
+		font-size: .9rem;
+	}
+
 	@media(max-width: 648px) {
 		font-size: 0.85rem;
 	}
