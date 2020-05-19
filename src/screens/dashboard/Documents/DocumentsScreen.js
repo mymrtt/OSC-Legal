@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
-import logo from '../../../assets/logo.svg';
 
 // Images
+import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
