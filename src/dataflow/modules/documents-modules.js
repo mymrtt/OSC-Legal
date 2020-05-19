@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 // Action Types
 const ADD_NEW_DOCUMENT = 'osc/documents/ADD_NEW_DOCUMENTS';
 const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
