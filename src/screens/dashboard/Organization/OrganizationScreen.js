@@ -892,7 +892,7 @@ class OrganizationScreen extends Component {
 					&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
-					&& <ModalCreateOrganization handleClosedModal={this.isModalCreateOrganization} />
+					&& <ModalCreateOrganization isModal={this.state.isModalCreateOrg} handleClosedModal={this.isModalCreateOrganization} />
 				}
 				<Header />
 				<ContainerUser
