@@ -1177,19 +1177,9 @@ class DocumentsScreen extends Component {
 		isBoxOrgs: false,
 		ishovering: false,
 		modalListDoc: false,
-		listDocs: [
-			{
-				id: 1,
-				title: 'Modelo 157',
-				description: 'ngsfosnidbasfndoib',
-			},
-			{
-				id: 2,
-				title: 'Modelo 2',
-				description: 'afdsdgnkmfsadisbhadsf kgbh',
-			},
-		],
-		selectedValue: 'Selecionar organizações',
+
+		listDocs: [],
+		selectedValue: 'Selecionar organização',
 		isOrg: false,
 		isMobileButton: false,
 		userSelectDoc: '',
@@ -1549,7 +1539,7 @@ class DocumentsScreen extends Component {
 								value={this.state.document.title}
 								onChange={e => this.handleModelChange('title', e)}
 								type="text"
-								placeholder="Digitar nome do documento"
+								placeholder="Digitar o nome do documento"
 								isError={this.state.isError}
 							/>
 							{this.state.isErrorTitleQtd && <ErrorText>{Messages[4]}</ErrorText>}

@@ -683,8 +683,9 @@ class OrganizationScreen extends Component {
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							 <img src={ImageCaminho} alt="arrow" onClick={this.isSelectOpen} />
-							<img src={ArrowUpIcon} alt="arrow" onClick={this.isSelectOpen} />
+							{this.state.isSelected ? (
+								<img src={ArrowUpIcon} alt="arrow" />
+							) : <img src={ImageCaminho} alt="arrow" />}
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
