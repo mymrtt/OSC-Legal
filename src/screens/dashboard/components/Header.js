@@ -112,7 +112,7 @@ const ContainerUser = styled.div`
 const ParagraphUserName = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin: 1.2rem 5rem 0 0;
+	margin: 1.2rem 5.3rem 0 0;
 
 	@media (max-width: 859px) {
 		font-size: 1.2rem;
@@ -130,7 +130,7 @@ const ParagraphUserName = styled.p`
 `;
 
 const ParagraphSair = styled.p`
-	margin-right: 5rem;
+	margin-right: 5.3rem;
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
