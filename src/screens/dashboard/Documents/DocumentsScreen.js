@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 // Components
 import Header from '../components/Header';
 import Button from '../../../components/Button';
+import HeaderModal from '../components/HeaderModal';
 
 // Images
 import logo from '../../../assets/logo.svg';
@@ -56,11 +57,12 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	height: 100vh;
+	min-height: 82vh;
+	overflow-y: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: ${props => (props.isAdmin ? '#FFF' : '#FFCFCD')};
+	background: ${props => (props.isAdmin || props.isMobileButton ? '#FFF' : '#FFCFCD')};
 `;
 
 const MaximumWidth = styled.div`
@@ -68,14 +70,17 @@ const MaximumWidth = styled.div`
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
 	height: ${props => (props.isAdmin ? '100%' : '95%')};
+	height:	80vh;
 	max-width: 1440px;
 	display: flex;
 	background: #FFF;
 	padding: ${props => (props.isAdmin ? 0 : '2rem 0')};
 
-	@media(max-width: 648px) {
-		margin-top: 1rem;
+	@media(max-width: 648px){
+		padding: 0;
+		margin: 0;
 	}
+
 `;
 
 const Teste = styled.div`
@@ -208,10 +213,9 @@ const InitialAddModel = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		width: 94%;
+		width: 100%;
 		padding: 0 6%;
 		margin-bottom: 2rem;
-		margin-left: .7rem;
 	}
 `;
 
@@ -328,9 +332,10 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: ${props => props.isAdmin ? '70%' : '65%'};
+	width: ${props => (props.isAdmin ? '70%' : '65%')};
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
+	margin-right: .3rem;
 	border: 0.5px solid #85144B;
 	border-bottom-right-radius: ${props => (props.filter ? '0' : '3px')};
 	border-bottom-left-radius: ${props => (props.filter ? '0' : '3px')};
@@ -358,6 +363,7 @@ const SearchInput = styled.input`
 	font-size: 1rem;
 	font-family: Overpass, Regular;
 	color: #85144B;
+
 	@media (max-width: 1024px) {
 		font-size: 0.9rem;
 	}
@@ -866,7 +872,7 @@ const ContainerModalDelete = styled(ContainerModal)`
 const ModalDelete = styled.div`
 	background: #FFF;
 	width: 480px;
-	padding: 1% 2% 1% 2%;
+	padding: 1% 1% 1% 1%;
 
 
 	@media (max-width: 490px) {
@@ -921,7 +927,8 @@ const ButtonsModal = styled.div`
 	display: flex;
 	margin-top: 5%;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: space-between;
+	width: 100%;
 
 	@media (max-width: 490px) {
 		margin: 0;
@@ -930,13 +937,12 @@ const ButtonsModal = styled.div`
 `;
 
 const ButtonCancel = styled.button`
-	width: 13.6rem;
+	width: 50%;
 	height: 3.5rem;
 	color: #F00;
 	border-radius: 4px;
 	border: none;
 	background: #FFF;
-	margin: 0 1rem;
 	font-size: 1rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
@@ -1014,7 +1020,7 @@ const BoxOrgs = styled.div`
 `;
 
 const Org = styled.div`
-	color: #231F20;
+	color: #85144B;
 	font-size: .9rem;
 	font-family: 'Overpass';
 	font-weight: 600;
@@ -1030,7 +1036,8 @@ const Org = styled.div`
 
 const TextOrg = styled.p`
 	font-size: .8rem;
-	color: #959595;
+	/* color: #959595; */
+	color: ${props => (props.select === '' ? '#959595' : '#85144B')};
 	font-family: 'Overpass', Regular;
 
 	@media(max-width: 1024px) {
@@ -1177,9 +1184,8 @@ class DocumentsScreen extends Component {
 		isBoxOrgs: false,
 		ishovering: false,
 		modalListDoc: false,
-
 		listDocs: [],
-		selectedValue: 'Selecionar organização',
+		selectOrg: '',
 		isOrg: false,
 		isMobileButton: false,
 		userSelectDoc: '',
@@ -1450,12 +1456,13 @@ class DocumentsScreen extends Component {
 		this.setState({
 			modalListDoc: false,
 			listDocs: newList,
+			isSelected: '',
 		});
 	}
 
 	handleSelectOrg = (orgs) => {
 		this.setState({
-			selectedValue: orgs,
+			selectOrg: orgs,
 			isBoxOrgs: false,
 		});
 	}
@@ -1495,18 +1502,8 @@ class DocumentsScreen extends Component {
 					onSubmit={this.handleSubmit}
 					onClick={ev => ev.stopPropagation()}
 				>
-					<LogoAndData>
-						<img src={logo} alt="Logo OSC Legal" />
-						<ParagraphContainer1>
-							{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-								&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
-							{this.props.isAdmin ? 'Administrador' : this.props.name}
-						</ParagraphContainer1>
-						<ParagraphSair onClick={this.handleRedirect}>
-							sair
-						</ParagraphSair>
-						{this.state.redirect && <Redirect exact to="/" />}
-					</LogoAndData>
+					<HeaderModal/>
+
 					<HeaderAddModel>
 						<TitleAddModel>Adicionar Modelo</TitleAddModel>
 						<img onClick={this.handleCancelAddModel} src={Exit} alt="Sair" />
@@ -1569,6 +1566,7 @@ class DocumentsScreen extends Component {
 							type="submit"
 							widthMobileSmall="100%"
 							onClick={this.handleSubmit}
+							fontSize="1.2rem"
 						/>
 					</SpanButton>
 				</ModalAddModel>
@@ -1594,9 +1592,8 @@ class DocumentsScreen extends Component {
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
 					<Button
-						// onClick={this.handleDelete || this.deleteUserDoc}
 						onClick={this.delete}
-						width="13.6rem"
+						width="50%"
 						height="3.5rem"
 						text="Confirmar"
 					/>
@@ -1643,7 +1640,7 @@ class DocumentsScreen extends Component {
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
-				<Content isAdmin={this.props.isAdmin}>
+				<Content isAdmin={this.props.isAdmin} isMobileButton={this.state.isMobileButton}>
 					<MaximumWidth>
 						<ContainerAddModel>
 							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
@@ -1667,19 +1664,21 @@ class DocumentsScreen extends Component {
 										bottom='0'
 										widthTablet="14rem"
 										left="11px"
-										fontSize="1.2rem"
+										fontSize="1.3rem"
 									/>
 								) : (
-									<Button
-										width="17.5rem"
-										height="4.5rem"
-										margin="1rem 0 0 0"
-										onClick={this.openModalListDoc}
-										hidden={this.state.modalListDoc}
-										text="Adicionar Documento"
-										widthTablet="14rem"
-										fontSize="1.2rem"
-									/>
+									this.state.selectOrg !== '' ? (
+										<Button
+											width="17.5rem"
+											height="4.5rem"
+											margin="1rem 0 0 0"
+											onClick={this.openModalListDoc}
+											hidden={this.state.modalListDoc}
+											text="Adicionar Documento"
+											widthTablet="14rem"
+											fontSize="1.3rem"
+										/>
+									) : null
 								)}
 						</ContainerAddModel>
 						<Teste>
@@ -1697,7 +1696,12 @@ class DocumentsScreen extends Component {
 											? <SearchInput
 												onChange={this.handleSearch}
 												placeholder="Digite aqui para pesquisar"
-											/> : <TextOrg isOrg={this.state.isOrg}>{this.state.selectedValue}</TextOrg>}
+											/> : <TextOrg
+												isOrg={this.state.isOrg}
+												select={this.state.selectOrg}
+											>
+												{this.state.selectOrg === '' ? 'Selecionar organizações' : this.state.selectOrg}
+											</TextOrg>}
 										{isAdmin
 											? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
 											: this.state.isBoxOrgs
@@ -1716,7 +1720,7 @@ class DocumentsScreen extends Component {
 												onClick={ev => ev.stopPropagation()}
 												isBoxOrgs={this.state.isBoxOrgs}
 											>
-												<Org onClick={() => this.handleSelectOrg()}>Selecionar organizações</Org>
+												<Org onClick={() => this.setState({ selectOrg: '' })}>Selecionar organizações</Org>
 												{this.props.organization.map((orgs, index) => (
 													<Org
 														key={index}
@@ -1867,8 +1871,14 @@ class DocumentsScreen extends Component {
 													Você ainda não tem nenhum documento
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
-												Escolha um modelo de documento
-												clicando em <span onClick={this.openModalListDoc}>Adicionar Documento</span>
+														{this.state.selectOrg === '' ? (
+															'Selecione uma organização para adicionar um documento'
+														) : (
+															<>
+																Escolha um modelo de documento clicando em
+																<span style={{marginLeft: '.3rem'}} onClick={this.openModalListDoc}>Adicionar Documento</span>
+															</>
+														)}
 													</TextInitialAddModel>
 												</InitialAddModel>
 											)
@@ -1880,9 +1890,7 @@ class DocumentsScreen extends Component {
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (
-											this.state.isMobileButton !== true && this.state.addModel !== true ? (
-												null
-											) : (
+											this.state.isMobileButton === true && this.state.addModel === true ? (
 												<Button
 													width="17.5rem"
 													height="4.5rem"
@@ -1894,11 +1902,11 @@ class DocumentsScreen extends Component {
 													onClick={this.handleAddModel}
 													text="Adicionar Modelo"
 												/>
+											) : (
+												null
 											)
 										) : (
-											this.state.isMobileButton !== true && this.state.modalListDoc !== true ? (
-												null
-											) : (
+											this.state.isMobileButton === true && this.state.modalListDoc !== true ? (
 												<Button
 													width="17.5rem"
 													height="4.5rem"
@@ -1910,6 +1918,8 @@ class DocumentsScreen extends Component {
 													onClick={this.openModalListDoc}
 													text="Adicionar Documento"
 												/>
+											) : (
+												null
 											)
 										)}
 										{this.state.addModel && this.renderModalModels()}

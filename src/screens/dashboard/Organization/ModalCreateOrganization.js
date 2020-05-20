@@ -64,7 +64,7 @@ const Container = styled.form`
 	}
 
 	@media(max-width: 768px) {
-		width: 70%;
+		width: 53%;
 	}
 
 	@media(max-width: 648px) {

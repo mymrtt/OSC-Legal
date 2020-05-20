@@ -267,7 +267,7 @@ const ImageEdite = styled.img`
 
 const ContainerOption = styled.p`
 	color: #85144B;
-	font-size: 1rem;
+	font-size: 1.3rem;
 	font-family: Overpass, Regular;
 	display: flex;
   align-items: center;
@@ -277,7 +277,7 @@ const ContainerOption = styled.p`
 
 const ContainerOptionDelete = styled.p`
 	color: #85144B;
-	font-size: 1rem;
+	font-size: 1.3rem;
 	font-family: Overpass, Regular;
 	display: flex;
   align-items: center;
@@ -357,7 +357,7 @@ const SpanContainerImage = styled.div`
 
 const ContainerOptionMobile = styled.p`
 	color: #85144B;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-family: Overpass, Regular;
 	display: flex;
   align-items: center;
