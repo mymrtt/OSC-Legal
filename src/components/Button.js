@@ -1,6 +1,6 @@
 // Libs
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const MyButton = styled.button`
   margin: ${props => props.margin};
@@ -16,16 +16,21 @@ const MyButton = styled.button`
   font-weight: 600;
   text-transform: ${props => (props.textTransform && 'uppercase')};
 
+
   @media(max-width: 768px){
+		width: ${props => props.widthTablet};
     height: ${props => props.heightMobile};
+		${props => props.orderMobile && css`
+			position: fixed;
+			bottom: 0;
+			z-index: 2;
+		`}
   }
 
   @media (max-width: 648px) {
     width: ${props => (props.widthMobile)};
     margin: ${props => (props.marginMobile)};
     padding: ${props => (props.paddingMobile)};
-		/* order: ${props => (props.orderMobile)}; */
-		order: 2,
   }
 
   @media (max-width: 490px){
@@ -37,28 +42,46 @@ const MyButton = styled.button`
   }
 `;
 
+const ButtonBack = styled.div`
+
+	@media (max-width: 768px){
+		width: 100%;
+    background-color: #FFFFFF;
+		border: none;
+		padding: 3.5rem;
+		position: fixed;
+		bottom: 0;
+		z-index: 1;
+  }
+`;
+
 const Button = props => (
-	<MyButton
-		onClick={props.onClick}
-		type={props.type}
-		width={props.width}
-		widthMobile={props.widthMobile}
-		widthMobileSmall={props.widthMobileSmall}
-		height={props.height}
-		heightMobile={props.heightMobile}
-		fontSize={props.fontSize}
-		padding={props.padding}
-		paddingMobile={props.paddingMobile}
-		margin={props.margin}
-		marginMobile={props.marginMobile}
-		textTransform={props.textTransform}
-    positionMb={props.positionMb}
-    right={props.right}
-    left={props.left}
-    bottom={props.bottom}
-	>
-		{props.text}
-	</MyButton>
+	<>
+		{props.organizationMobile && <ButtonBack></ButtonBack>}
+		<MyButton
+			onClick={props.onClick}
+			type={props.type}
+			width={props.width}
+			widthMobile={props.widthMobile}
+			widthMobileSmall={props.widthMobileSmall}
+			height={props.height}
+			heightMobile={props.heightMobile}
+			fontSize={props.fontSize}
+			padding={props.padding}
+			paddingMobile={props.paddingMobile}
+			margin={props.margin}
+			marginMobile={props.marginMobile}
+			textTransform={props.textTransform}
+			orderMobile={props.orderMobile}
+			positionMb={props.positionMb}
+			right={props.right}
+			left={props.left}
+			bottom={props.bottom}
+			widthTablet={props.widthTablet}
+		>
+			{props.text}
+		</MyButton>
+	</>
 );
 
 export default Button;

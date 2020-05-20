@@ -37,6 +37,7 @@ const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
 	isAdmin: state.onboarding.users.isAdmin,
 	organization: state.organization.tableDatas,
+	// isAdmin: false,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -90,6 +91,10 @@ const ContainerHeader = styled.div`
   justify-content: flex-end;
 
 	@media (max-width: 1024px) {
+		padding-right: 2.7rem;
+	}
+
+	@media (max-width: 768px) {
 		padding-right: 2rem;
 	}
 
@@ -101,6 +106,7 @@ const ContainerHeader = styled.div`
 
 const AddModelImage = styled.img`
 	width: 180px;
+	margin-bottom: 1.5rem;
 
 	@media (max-width: 1024px) {
 		width: 140px;
@@ -217,8 +223,20 @@ const ContainerScroll = styled.div`
 	display: ${props => (props.initialModel ? 'none' : 'inline-block')};
 	margin-right: 1rem;
 
-	&::-webkit-scrollbar {
-		display: none;
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
 	}
 
 	@media (max-width: 1680px) {
@@ -236,6 +254,7 @@ const ContainerScroll = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		min-height: 50vh;
+		padding-bottom: 10rem;
 	}
 `;
 
@@ -309,7 +328,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: 100%;
+	width: ${props => props.isAdmin ? '70%' : '65%'};
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -370,7 +389,7 @@ const ContainerModels = styled.div`
 const ContainerModel = styled.div`
 	margin-bottom: 1rem;
 	padding: 2rem;
-	width: 99%;
+	width: 100%;
 	border-radius: 3px;
 	height: 100%;
 	display: flex;
@@ -403,17 +422,18 @@ const ContainerModel = styled.div`
 				width: 10rem;
 				height: 1px;
 				display: ${props => (props.displayBefore ? 'none' : 'flex')};
-				margin-top: 21.6%;
+				margin-top: 20.6%;
     		top: 100%;
-				z-index: 6;
+				z-index: 1;
 				right: 0;
 			}
 
 			@media (max-width: 375px) {
-				margin-top: 24.2%;
+				margin-top: 23.2%;
 			}
 		}
 	}
+
 	@media (max-width: 1024px) {
 		padding-right: 1.1rem;
 		width: 95%;
@@ -433,12 +453,14 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: ${props => (props.isAdmin ? '85%' : '95%')};
+	width: ${props => (props.isAdmin ? '85%' : '100%')};
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	cursor: pointer;
+	border-radius: 3px;
 	border: ${props => (props.isSelected ? '1px solid #85144B' : 'none')};
-	padding: ${props => (props.isAdmin ? '0' : '2rem 0 1rem 0')};
+	padding: ${props => (props.addDocument ? '1rem 0 1rem 0' : '0')};
 
 	&:hover {
 		border: ${props => (props.hidden ? '1px solid #85144B' : '0')};
@@ -447,7 +469,8 @@ const ContainerModelDescription = styled.div`
 
 	span {
 		display: flex;
-		padding: ${props => (props.isAdmin ? '0' : '0 2rem')};
+		padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
+
 		@media (max-width: 768px) {
 			width: 95%;
 		}
@@ -481,9 +504,11 @@ const ModelTitle = styled.h2`
 	margin-bottom: .5rem;
   color: #85144B;
   font-family: "Overpass", Black;
+
 	@media (max-width: 768px) {
 		font-size: 1.3rem;
 	}
+
 	@media (max-width: 490px) {
 		font-size: 1rem;
 	}
@@ -493,7 +518,7 @@ const ModelParagraph = styled.p`
   width: 92%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
-	padding: ${props => (props.isAdmin ? '0' : '0 2rem 1rem 2rem')};
+	padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
@@ -534,10 +559,10 @@ const ContainerOptions = styled.div`
 		width: 160px;
 		height: 130px;
     top: 100%;
-		margin-top: 0;
+		margin-top: .6rem;
     right: 0rem;
     border: 1px solid #85144B;
-		z-index: 5;
+		z-index: 2;
 		background: #ffffff;
 		align-items: center;
 		border-radius: 3px;
@@ -597,43 +622,6 @@ const OptionText = styled.p`
 	}
 `;
 
-// const Button = styled.button`
-//   margin: 2rem;
-// 	width: 18.75rem;
-// 	height: 4.7rem;
-// 	border: 0;
-//   color: #fff;
-//   box-shadow: 0 3px 6px #00000029;
-//   border-radius: 3px;
-//   font-size: 1.2rem;
-// 	font-family: "Overpass", SemiBold;
-//   font-weight: bold;
-// 	background-color: #FF4136;
-// 	display: block;
-
-// 	@media (max-width: 1024px) {
-// 		padding: 0;
-// 		width: 65%;
-// 		font-size: 1.2rem;
-// 		height: 4rem;
-// 	}
-
-// 	@media (max-width: 768px) {
-// 		font-size: 1.2rem;
-// 		width: 70%;
-// 	}
-
-// 	@media (max-width: 490px) {
-// 		position:fixed;
-// 		bottom: 1vh;
-// 		align-self: center;
-// 		margin: 0;
-// 		font-size: 1.2rem;
-// 		z-index: 6;
-// 		width: ${props => (props.modelMob ? '86%' : '95%')};
-// 	}
-// `;
-
 const ContainerModal = styled.div`
 	width: 100%;
 	height: 100vh;
@@ -643,7 +631,7 @@ const ContainerModal = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 3;
+	z-index: 1;
 	background: rgba(112, 112, 112, 0.5);
 
 	@media (max-width: 490px) {
@@ -1004,8 +992,20 @@ const BoxOrgs = styled.div`
 	background: #FFF;
 	z-index: 99;
 
-	&::-webkit-scrollbar{
-		display: none;
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
 	}
 
 	@media (max-width: 490px) {
@@ -1032,6 +1032,10 @@ const TextOrg = styled.p`
 	font-size: .8rem;
 	color: #959595;
 	font-family: 'Overpass', Regular;
+
+	@media(max-width: 1024px) {
+		font-size: .7rem;
+	}
 `;
 
 const Modal = styled.div`
@@ -1041,7 +1045,7 @@ const Modal = styled.div`
 	border-radius: 4px;
 	display: flex;
 	flex-direction: column;
-	padding: .5rem 2rem;
+	padding: .5rem 1.5rem;
 
 	@media (max-width: 768px) {
 		width: 40rem;
@@ -1059,7 +1063,7 @@ const BoxTitle = styled.span`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	padding: 1rem 2rem 0 2rem;
+	padding: 1rem 1rem 0 1rem;
 `;
 
 const SubtitleModal = styled.p`
@@ -1088,11 +1092,20 @@ const BoxModelsDoc = styled.span`
 	overflow-y: scroll;
 	margin-bottom: 1rem;
 
-	/* &::-webkit-scrollbar{
-		display: none;
-	} */
-	&::-webkit-scrollbar{
-		scrollbar-3dlight-color: red;
+	::-webkit-scrollbar {
+  width: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
 	}
 `;
 
@@ -1130,7 +1143,6 @@ const SpanButton = styled.span`
 
 
 let newList = [];
-let nextId = 0;
 
 class DocumentsScreen extends Component {
 	state = {
@@ -1152,7 +1164,6 @@ class DocumentsScreen extends Component {
 		colorTextDelete: '',
 		redirect: false,
 		isFile: null,
-		hidden: false,
 		document: {
 			title: '',
 			description: '',
@@ -1166,10 +1177,22 @@ class DocumentsScreen extends Component {
 		isBoxOrgs: false,
 		ishovering: false,
 		modalListDoc: false,
-		listDocs: [],
+		listDocs: [
+			{
+				id: 1,
+				title: 'Modelo 157',
+				description: 'ngsfosnidbasfndoib',
+			},
+			{
+				id: 2,
+				title: 'Modelo 2',
+				description: 'afdsdgnkmfsadisbhadsf kgbh',
+			},
+		],
 		selectedValue: 'Selecionar organizações',
 		isOrg: false,
 		isMobileButton: false,
+		userSelectDoc: '',
 	};
 
 	handleOnOptions = (item) => {
@@ -1319,7 +1342,6 @@ class DocumentsScreen extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.state.isMobileButton);
 		this.renderMobileButton();
 	}
 
@@ -1328,7 +1350,6 @@ class DocumentsScreen extends Component {
 			this.setState({
 				isMobileButton: true,
 			});
-			console.log(this.state.isMobileButton);
 		} else {
 			this.setState({
 				isMobileButton: false,
@@ -1440,7 +1461,6 @@ class DocumentsScreen extends Component {
 			modalListDoc: false,
 			listDocs: newList,
 		});
-		nextId = this.state.listDocs.length + 1;
 	}
 
 	handleSelectOrg = (orgs) => {
@@ -1450,6 +1470,26 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	userSelectedDoc = (docs) => {
+		this.setState({
+			userSelectDoc: docs,
+		});
+	}
+
+	deleteUserDoc = () => {
+		this.setState({
+			listDocs: this.state.listDocs.filter(docs => docs !== this.state.userSelectDoc),
+			modalDelete: false,
+		});
+	}
+
+	delete = () => {
+		if (this.props.isAdmin === true) {
+			this.handleDelete();
+		} else {
+			this.deleteUserDoc();
+		}
+	}
 
 	renderModalModels = () => {
 		const Messages = [
@@ -1558,13 +1598,14 @@ class DocumentsScreen extends Component {
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
 					<TextModal>
-						Você deseja excluir o <strong>{this.state.modelSelect.title}</strong> permanentemente?
+						Você deseja excluir o <strong>{this.state.modelSelect.title || this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
 					<Button
-						onClick={this.handleDelete}
+						// onClick={this.handleDelete || this.deleteUserDoc}
+						onClick={this.delete}
 						width="13.6rem"
 						height="3.5rem"
 						text="Confirmar"
@@ -1586,7 +1627,7 @@ class DocumentsScreen extends Component {
 					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription
 							hidden={this.state.modalListDoc}
-							isAdmin={this.state.isAdmin}
+							addDocument={this.state.modalListDoc}
 							onClick={() => this.selecetedDocUser(docs)}
 							isSelected={docs === this.state.isSelected}
 						>
@@ -1613,7 +1654,7 @@ class DocumentsScreen extends Component {
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
 				<Content isAdmin={this.props.isAdmin}>
-					<MaximumWidth onClick={() => console.log(this.state.isMobileButton)}>
+					<MaximumWidth>
 						<ContainerAddModel>
 							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
 							{
@@ -1623,10 +1664,10 @@ class DocumentsScreen extends Component {
 									<AddModelImage src={DocumentUser} />
 								)}
 							{isAdmin
-								? this.state.addModel !== true ? (
+								? (
 									<Button
 										width="17.5rem"
-										height="4rem"
+										height="4.5rem"
 										margin="1rem 0 0 0"
 										text="Adicionar Modelo"
 										onClick={this.handleAddModel}
@@ -1634,20 +1675,22 @@ class DocumentsScreen extends Component {
 										widthMobileSmall="95%"
 										positionMb="fixed"
 										bottom='0'
+										widthTablet="14rem"
 										left="11px"
+										fontSize="1.2rem"
 									/>
 								) : (
-									null
-								) : this.state.modalListDoc !== true ? (
 									<Button
 										width="17.5rem"
-										height="4rem"
+										height="4.5rem"
 										margin="1rem 0 0 0"
 										onClick={this.openModalListDoc}
 										hidden={this.state.modalListDoc}
 										text="Adicionar Documento"
+										widthTablet="14rem"
+										fontSize="1.2rem"
 									/>
-								) : null}
+								)}
 						</ContainerAddModel>
 						<Teste>
 							<ContainerHeader>
@@ -1683,6 +1726,7 @@ class DocumentsScreen extends Component {
 												onClick={ev => ev.stopPropagation()}
 												isBoxOrgs={this.state.isBoxOrgs}
 											>
+												<Org onClick={() => this.handleSelectOrg()}>Selecionar organizações</Org>
 												{this.props.organization.map((orgs, index) => (
 													<Org
 														key={index}
@@ -1765,14 +1809,14 @@ class DocumentsScreen extends Component {
 												this.state.listDocs.map((docs, index) => (
 													<ContainerModel key={docs}
 														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
-														zIndex={this.state.modalListDoc}
+														// zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(docs)}
 														onMouseLeave={this.handleOffOptions}
 													>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{nextId}</ModelNumber>
+																<ModelNumber>{docs.id}</ModelNumber>
 																<ModelTitle>{docs.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{docs.description}</ModelParagraph>
@@ -1819,7 +1863,7 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverDelete === docs
 																		? this.state.colorTextDelete : '#85144B'}
-																	onClick={() => this.handleSelected(docs)}
+																	onClick={() => this.userSelectedDoc(docs)}
 																>
 																	<p>Excluir</p>
 																</OptionText>
@@ -1846,12 +1890,12 @@ class DocumentsScreen extends Component {
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (
-											this.state.isMobileButton === true && this.state.addModel !== true ? (
+											this.state.isMobileButton !== true && this.state.addModel !== true ? (
 												null
 											) : (
 												<Button
 													width="17.5rem"
-													height="4rem"
+													height="4.5rem"
 													marginMobile="0 0 1rem 0"
 													widthMobileSmall="95%"
 													bottom="0"
@@ -1867,7 +1911,7 @@ class DocumentsScreen extends Component {
 											) : (
 												<Button
 													width="17.5rem"
-													height="4rem"
+													height="4.5rem"
 													marginMobile="0 0 1rem 0"
 													widthMobileSmall="95%"
 													bottom="0"

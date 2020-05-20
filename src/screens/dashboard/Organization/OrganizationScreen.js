@@ -11,6 +11,7 @@ import Button from '../../../components/Button';
 
 // Image
 import ImageCaminho from '../../../assets/caminho.svg';
+import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
 import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
@@ -104,7 +105,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.width)};
+	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
 
@@ -133,6 +134,7 @@ const SpanSelect = styled.div`
 	@media (max-width: 768px) {
 		margin: 0 2rem;
 		width: 100%;
+		align-items: center;
 	}
 
 	@media(max-width: 648px) {
@@ -169,17 +171,24 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
-	width: 80%;
+	width: 75%;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
 	margin-top: 0.8rem;
 	display: flex;
 	justify-content: space-between;
-
 	/* @media (max-width: 648px) {
 		order: ${props => (props.order ? '0' : '1')};
 	} */
+
+	@media(max-width: 768px) {
+		width: 50%;
+	}
+
+	@media(max-width: 490px) {
+		width: 80%;
+	}
 `;
 
 const Input = styled.input`
@@ -206,6 +215,11 @@ const InputSelect = styled.div`
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
+		width: 50%;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
 	}
 `;
 
@@ -234,6 +248,16 @@ const InputSelectedItem = styled.div`
 	position: absolute;
 	top: 32px;
 	cursor: pointer;
+
+	@media (max-width: 768px) {
+		width: 50%;
+		top: 36px;
+	}
+
+	@media (max-width: 490px) {
+		width: 100%;
+		top: 32px;
+	}
 `;
 
 const SelectedItem = styled.p`
@@ -260,12 +284,17 @@ const ContainerTableUser = styled.div`
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 
 	@media (max-width: 768px) {
+<<<<<<< HEAD
 		margin: 0 auto;
 		width: 100%;
+=======
+		width: ${props => (props.width ? '100%' : '100%')};
+		margin: 0 0;
+>>>>>>> 2d2832498ebf587023ca8b220abcba4cbc2af440
 	}
-
-	/* @media (max-width: 648px) {
-		order: 1;
+/*
+	@media (max-width: 648px) {
+		padding: 3rem;
 	} */
 `;
 
@@ -510,6 +539,7 @@ class OrganizationScreen extends Component {
 			isModal: undefined,
 			itemSelected: undefined,
 			isSelected: undefined,
+			toFilter: false,
 			filter: '',
 			selectedValue: 'Selecionar status',
 			selectedItems: [
@@ -628,6 +658,20 @@ class OrganizationScreen extends Component {
 		});
 	}
 
+	handleChangeFilterKey = (ev) => {
+		if (ev.key === 'Enter') {
+			this.setState({
+				toFilter: true,
+			});
+		}
+	}
+
+	handleToFilter = () => {
+		this.setState({
+			toFilter: true,
+		});
+	}
+
 	renderSelectedViewby = () => (
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
@@ -639,7 +683,8 @@ class OrganizationScreen extends Component {
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							<img src={ImageCaminho} alt="arrow" />
+							 <img src={ImageCaminho} alt="arrow" onClick={this.isSelectOpen} />
+							<img src={ArrowUpIcon} alt="arrow" onClick={this.isSelectOpen} />
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -665,16 +710,16 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleMyOrganization>Minhas organizações</TitleMyOrganization>
-				<SelectViewBy width={'34%'}>
+				<SelectViewBy>
 					<TitleSearch>Pesquisar</TitleSearch>
 					<SelectInputUser>
 						<Input
 							onChange={this.handleChangeFilter}
 							onKeyUp={this.handleChangeFilterKey}
-							placeholder= 'Digite aqui para pesquisar'
+							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<img src={magnifyingGlass} alt="Lupa"/>
+						<img src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -698,7 +743,7 @@ class OrganizationScreen extends Component {
 				onClick={() => this.handleClickedImageStatus(item)}
 			>
 				<TextStatus color={item.isChanged}
-					// isClickedName={item.id === this.state.isClickedStatus}
+				// isClickedName={item.id === this.state.isClickedStatus}
 				>
 					{item.status}
 				</TextStatus>
@@ -825,13 +870,13 @@ class OrganizationScreen extends Component {
 						)}
 					</>
 				}
-				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)}/>
+				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)} />
 			</Tr>
 		));
 	}
 
 	renderAllTable = () => {
-		const { selectedValue } = this.state;
+		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
 
 		let listTable = this.renderTable(tableDatas);
@@ -839,6 +884,13 @@ class OrganizationScreen extends Component {
 			selectedValue !== 'Selecionar status'
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
+		}
+		if (
+			toFilter
+		) {
+			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
+				? item.organization.split(' ').includes(filter)
+				: item.organization.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -850,10 +902,10 @@ class OrganizationScreen extends Component {
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal
-				&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
+					&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
-				&& <ModalCreateOrganization handleClosedModal={this.isModalCreateOrganization} />
+					&& <ModalCreateOrganization handleClosedModal={this.isModalCreateOrganization} />
 				}
 				<Header />
 				<ContainerUser
@@ -862,15 +914,16 @@ class OrganizationScreen extends Component {
 					background={isAdmin}
 				>
 					{!isAdmin
-					&& <Button
-						width='20%'
-						height='4.3rem'
-						fontSize='1.4rem'
-						margin='1.5rem 0 1.5rem 2.5rem'
-						text='Criar Organização'
-						type='button'
-						// orderMobile={3}
-						onClick={this.isModalCreateOrganization}/>
+						&& <Button
+							width='18%'
+							height='4.3rem'
+							fontSize='1.4rem'
+							margin='1.5rem 0 1.5rem 2.5rem'
+							text='Criar Organização'
+							type='button'
+							orderMobile
+							organizationMobile
+							onClick={this.isModalCreateOrganization} />
 					}
 					<ContainerTableUser
 						width={isAdmin}
@@ -893,7 +946,7 @@ class OrganizationScreen extends Component {
 													style={{
 														paddingLeft: title === 'Organização' && '0.7rem',
 														textAlign: title === 'Criado em'
-														|| title === 'Autorização' || title === 'Vencimento' ? 'center' : null,
+															|| title === 'Autorização' || title === 'Vencimento' ? 'center' : null,
 													}}
 												>
 													{title}

@@ -2,7 +2,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {	NavLink, Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -86,7 +86,7 @@ const WrapButton = styled.div`
 `;
 
 
-const ContainerAdm = styled.div`
+const ContainerUser = styled.div`
   margin-bottom: 0.8rem;
   display: flex;
   align-items: flex-end;
@@ -101,6 +101,8 @@ const ContainerAdm = styled.div`
 	}
 
 	@media (max-width: 648px) {
+		${'' /* padding-right: 1rem; */}
+    white-space: nowrap;
 		padding-top: 0.7rem;
 		margin-bottom: 0;
 		order: 2;
@@ -110,7 +112,7 @@ const ContainerAdm = styled.div`
 const ParagraphUserName = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin: 1.2rem 5.5rem 0 0;
+	margin: 1.2rem 5rem 0 0;
 
 	@media (max-width: 859px) {
 		font-size: 1.2rem;
@@ -128,7 +130,7 @@ const ParagraphUserName = styled.p`
 `;
 
 const ParagraphSair = styled.p`
-	margin-right: 5.5rem;
+	margin-right: 5rem;
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
@@ -176,7 +178,7 @@ class Header extends Component {
 						Documentos
   				</NavLink>
   			</WrapButton>
-  			<ContainerAdm>
+  			<ContainerUser>
   				<ParagraphUserName>
   					{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
 							&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
@@ -186,7 +188,7 @@ class Header extends Component {
 						sair
   				</ParagraphSair>
   				{this.state.redirect && <Redirect exact to="/" />}
-  			</ContainerAdm>
+  			</ContainerUser>
 	    </Container>
   	);
   }
