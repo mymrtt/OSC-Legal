@@ -130,11 +130,15 @@ const ParagraphUserName = styled.p`
 `;
 
 const ParagraphSair = styled.p`
-	margin-right: 5.3rem;
+	margin-right: 5.2rem;
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
 	cursor: pointer;
+
+	@media(max-width: 1440px) and (max-height: 900px){
+		margin-right: 5.5rem;
+	}
 
 	@media(max-width: 768px){
 		margin-right: .7rem;

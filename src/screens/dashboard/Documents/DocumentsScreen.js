@@ -1566,6 +1566,7 @@ class DocumentsScreen extends Component {
 							type="submit"
 							widthMobileSmall="100%"
 							onClick={this.handleSubmit}
+							fontSize="1.2rem"
 						/>
 					</SpanButton>
 				</ModalAddModel>
