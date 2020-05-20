@@ -20,7 +20,7 @@ import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
 
 // Redux
-import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
+import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
+	deleteOrg: info => dispatch(deleteOrg(info)),
 });
 
 
@@ -538,6 +539,7 @@ class OrganizationScreen extends Component {
 			itemSelected: undefined,
 			isSelected: undefined,
 			toFilter: false,
+			modalType: '',
 			filter: '',
 			selectedValue: 'Selecionar status',
 			selectedItems: [
@@ -590,10 +592,10 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	isModalCreateOrganization = (ev) => {
-		ev.stopPropagation();
+	isModalCreateOrganization = (type) => {
 		this.setState({
 			isModalCreateOrg: !this.state.isModalCreateOrg,
+			modalType: type,
 		});
 	}
 
@@ -618,6 +620,13 @@ class OrganizationScreen extends Component {
 	};
 
 	handleClosedModal = () => {
+		this.setState({
+			isModal: false,
+		});
+	}
+
+	deleteOrganization = () => {
+		this.props.deleteOrg(this.state.itemSelected);
 		this.setState({
 			isModal: false,
 		});
@@ -759,7 +768,7 @@ class OrganizationScreen extends Component {
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
-						<TableList>{item.organization}</TableList>
+						<TableList>{item.tradingName}</TableList>
 					</ContainerTableTitleMob>
 					: <>
 						<TableList
@@ -768,7 +777,7 @@ class OrganizationScreen extends Component {
 							style={{ paddingLeft: '.7rem' }}
 							width={'9rem'}
 						>
-							{item.organization}
+							{item.tradingName}
 						</TableList>
 					</>
 				}
@@ -778,7 +787,8 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'9.5rem'}
 				>
-					{item.cpf}
+					{/* {item.cpf} */}
+					cpf do user
 				</TableList>
 				<TableList
 					mob
@@ -786,7 +796,8 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}
 				>
-					{item.user}
+					{/* {item.name} */}
+					nome do user
 				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
@@ -815,14 +826,16 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.email}
+							{/* {item.email} */}
+							email do user
 						</TableList>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'8rem'}
 						>
-							{item.telephone}
+							{/* {item.telephone} */}
+							telefone do user
 						</TableList>
 						<TableList
 							wNumber
@@ -902,10 +915,21 @@ class OrganizationScreen extends Component {
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal
-					&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
+					&& <ModalOrganization
+						item={this.state.itemSelected}
+						handleClosedModal={this.isModalOpen}
+						isModalCreateOrganization={this.isModalCreateOrganization}
+						deleteOrganization={this.deleteOrganization}
+					/>
 				}
 				{this.state.isModalCreateOrg
-					&& <ModalCreateOrganization handleClosedModal={this.isModalCreateOrganization} />
+					&& <ModalCreateOrganization
+						item={this.state.itemSelected}
+						modalType={this.state.modalType}
+						tableDatas={this.props.tableDatas}
+						handleClosedModal={this.isModalCreateOrganization}
+						closeModal={this.isModalOpen}
+					/>
 				}
 				<Header />
 				<ContainerUser

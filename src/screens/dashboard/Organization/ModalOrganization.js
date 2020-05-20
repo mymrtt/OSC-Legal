@@ -410,7 +410,7 @@ class ModalOrganization extends Component {
 							<ContentConsultorItem>
 								<div>
 									<SubTitle>nome</SubTitle>
-									<SubAnswer>{item.admin.name}</SubAnswer>
+									<SubAnswer>{item.tradingName}</SubAnswer>
 									{/* <SubTitle>rg</SubTitle>
 									<SubAnswer>{item.admin.rg}</SubAnswer> */}
 									<SubTitle>cpf</SubTitle>
@@ -449,11 +449,11 @@ class ModalOrganization extends Component {
 								</ContentSubTitle>
 								{!this.props.isAdmin
 									&&	<ContainerEdit>
-										<SpanContainer>
+										<SpanContainer onClick={() => this.props.isModalCreateOrganization('edit')}>
 											<ImageEdite src={ImageEdit}/>
 											<ContainerOption>Editar</ContainerOption>
 										</SpanContainer>
-										<SpanContainer>
+										<SpanContainer onClick={this.props.deleteOrganization}>
 											<img src={ImageDelete}/>
 											<ContainerOptionDelete>Excluir</ContainerOptionDelete>
 										</SpanContainer>
@@ -467,13 +467,13 @@ class ModalOrganization extends Component {
 						<ContentOrganization margin>
 							<Separation>
 								<SubTitle>nome fantasia</SubTitle>
-								<SubAnswer>{item.admin.fantasyName}</SubAnswer>
+								{/* <SubAnswer>{item.admin.fantasyName}</SubAnswer> */}
 								<SubTitle>razão social</SubTitle>
-								<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
+								{/* <SubAnswer>{item.admin.reasonSocial}</SubAnswer> */}
 							</Separation>
 							<Separation>
 								<SubTitle>cnpj</SubTitle>
-								<SubAnswer>{item.admin.cnpj}</SubAnswer>
+								<SubAnswer>{item.cpf}</SubAnswer>
 								<SubTitle>telefone</SubTitle>
 								<SubAnswer>{item.telephone}</SubAnswer>
 							</Separation>
@@ -481,44 +481,44 @@ class ModalOrganization extends Component {
 								<SubTitle>email</SubTitle>
 								<SubAnswer>{item.email}</SubAnswer>
 								<SubTitle>endereço</SubTitle>
-								<SubAnswer>{item.admin.address}</SubAnswer>
+								{/* <SubAnswer>{item.admin.address}</SubAnswer> */}
 							</Separation>
 							<Separation>
 								<SubTitle>complemento</SubTitle>
-								<SubAnswer>{item.admin.complement}</SubAnswer>
+								{/* <SubAnswer>{item.admin.complement}</SubAnswer> */}
 								<SubTitle>bairro</SubTitle>
-								<SubAnswer>{item.admin.neighborhood}</SubAnswer>
+								{/* <SubAnswer>{item.admin.neighborhood}</SubAnswer> */}
 							</Separation>
 							<Separation>
 								<SubTitle>cep</SubTitle>
-								<SubAnswer>{item.admin.cep}</SubAnswer>
+								{/* <SubAnswer>{item.admin.cep}</SubAnswer> */}
 								<SubTitle>cidade</SubTitle>
-								<SubAnswer>{item.admin.city}</SubAnswer>
+								{/* <SubAnswer>{item.admin.city}</SubAnswer> */}
 							</Separation>
 							<ContentOrganizationMobile>
 								<SeparationMobile>
 									<SubTitle>nome fantasia</SubTitle>
-									<SubAnswer>{item.admin.fantasyName}</SubAnswer>
+									{/* <SubAnswer>{item.admin.fantasyName}</SubAnswer> */}
 									<SubTitle>email</SubTitle>
 									<SubAnswer>{item.email}</SubAnswer>
 									<SubTitle>cnpj</SubTitle>
-									<SubAnswer>{item.admin.cnpj}</SubAnswer>
+									{/* <SubAnswer>{item.admin.cnpj}</SubAnswer> */}
 									<SubTitle>complemento</SubTitle>
-									<SubAnswer>{item.admin.complement}</SubAnswer>
+									{/* <SubAnswer>{item.admin.complement}</SubAnswer> */}
 									<SubTitle>bairro</SubTitle>
-									<SubAnswer>{item.admin.neighborhood}</SubAnswer>
+									{/* <SubAnswer>{item.admin.neighborhood}</SubAnswer> */}
 								</SeparationMobile>
 								<SeparationMobile>
 									<SubTitle>razão social</SubTitle>
-									<SubAnswer>{item.admin.reasonSocial}</SubAnswer>
+									{/* <SubAnswer>{item.admin.reasonSocial}</SubAnswer> */}
 									<SubTitle>telefone</SubTitle>
 									<SubAnswer>{item.telephone}</SubAnswer>
 									<SubTitle>endereço</SubTitle>
-									<SubAnswer>{item.admin.address}</SubAnswer>
+									{/* <SubAnswer>{item.admin.address}</SubAnswer> */}
 									<SubTitle>cep</SubTitle>
-									<SubAnswer>{item.admin.cep}</SubAnswer>
+									{/* <SubAnswer>{item.admin.cep}</SubAnswer> */}
 									<SubTitle>cidade</SubTitle>
-									<SubAnswer>{item.admin.city}</SubAnswer>
+									{/* <SubAnswer>{item.admin.city}</SubAnswer> */}
 								</SeparationMobile>
 							</ContentOrganizationMobile>
 						</ContentOrganization>
