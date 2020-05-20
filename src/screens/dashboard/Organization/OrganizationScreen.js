@@ -39,7 +39,8 @@ const Container = styled.div`
 `;
 
 const ContainerUser = styled.div`
-	width: ${props => (props.width ? '100%' : '100%')};
+	width: 100%;
+	height: ${props => (!props.height && 'calc(100vh - 5.5rem)')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 
 	@media(max-width: 648px) {
@@ -105,7 +106,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	/* width: ${props => (props.width)}; */
+	width: ${props => (props.width)};
 	display: flex;
 	flex-direction: row;
 
@@ -124,17 +125,17 @@ const SpanSelect = styled.div`
 	margin: 0.5rem 0 0;
 	display: flex;
   flex-direction: column;
-	z-index: 11;
 	position: relative;
+	z-index: 11;
 
 	@media (max-width: 940px) {
 		width: 47%;
 	}
 
 	@media (max-width: 768px) {
-		margin: 0 2rem;
 		width: 100%;
 		align-items: center;
+		margin: 0;
 	}
 
 	@media(max-width: 648px) {
@@ -178,17 +179,15 @@ const SelectInputUser = styled.span`
 	margin-top: 0.8rem;
 	display: flex;
 	justify-content: space-between;
-	/* @media (max-width: 648px) {
-		order: ${props => (props.order ? '0' : '1')};
-	} */
 
 	@media(max-width: 768px) {
-		width: 50%;
+		width: 73%;
+		margin-top: 0;
 	}
 
-	@media(max-width: 490px) {
+	/* @media(max-width: 490px) {
 		width: 80%;
-	}
+	} */
 `;
 
 const Input = styled.input`
@@ -196,8 +195,12 @@ const Input = styled.input`
 	outline: none;
 
 	@media (max-width: 768px) {
+		width: 100%;
 		padding: 0.5rem;
 	}
+`;
+const ImageMagnifyingGlass = styled.img`
+	cursor: pointer;
 `;
 
 const InputSelect = styled.div`
@@ -214,8 +217,8 @@ const InputSelect = styled.div`
 	z-index: 2;
 
 	@media (max-width: 768px) {
+		width: 75%;
 		font-size: 1rem;
-		width: 50%;
 	}
 
 	@media (max-width: 490px) {
@@ -261,8 +264,8 @@ const InputSelectedItem = styled.div`
 `;
 
 const SelectedItem = styled.p`
-	font-size: 0.9rem;
 	color: #85144B;
+	font-size: 0.9rem;
 	font-family: Overpass, Regular;
 	padding: 0.4rem;
 
@@ -284,13 +287,8 @@ const ContainerTableUser = styled.div`
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 
 	@media (max-width: 768px) {
-<<<<<<< HEAD
-		margin: 0 auto;
-		width: 100%;
-=======
 		width: ${props => (props.width ? '100%' : '100%')};
 		margin: 0 0;
->>>>>>> 2d2832498ebf587023ca8b220abcba4cbc2af440
 	}
 /*
 	@media (max-width: 648px) {
@@ -301,7 +299,7 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
+	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.8rem 1.5rem 0')};
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -311,7 +309,7 @@ const Content = styled.div`
 const ContainerTable = styled.div`
 	${''}
 	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
-	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 178px)')};
+	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 179px)')};
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -362,7 +360,7 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
-	cursor: pointer;
+	/* cursor: pointer; */
 
 	&:nth-child(even) {
     background-color: #FFCFCD;
@@ -524,7 +522,7 @@ const ImageStatus = styled.img`
 	width: 1.3rem;
   padding-right: 0.3rem;
 	display: none;
-	cursor: pointer;
+	/* cursor: pointer; */
 
 	@media(max-width: 768px) {
 		display: flex;
@@ -655,6 +653,7 @@ class OrganizationScreen extends Component {
 	handleChangeFilter = (ev) => {
 		this.setState({
 			filter: ev.target.value,
+			toFilter: false,
 		});
 	}
 
@@ -711,7 +710,7 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleMyOrganization>Minhas organizações</TitleMyOrganization>
-				<SelectViewBy>
+				<SelectViewBy width={'30%'}>
 					<TitleSearch>Pesquisar</TitleSearch>
 					<SelectInputUser>
 						<Input
@@ -720,7 +719,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<img src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<ImageMagnifyingGlass src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -910,16 +909,17 @@ class OrganizationScreen extends Component {
 				}
 				<Header />
 				<ContainerUser
-					width={isAdmin}
 					height={isAdmin}
 					background={isAdmin}
 				>
 					{!isAdmin
 						&& <Button
-							width='18%'
-							height='4.3rem'
+							width='20%'
+							height='4.9rem'
 							fontSize='1.4rem'
-							margin='1.5rem 0 1.5rem 2.5rem'
+							margin='1.2rem 0 1.2rem 2.5rem'
+							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
