@@ -156,7 +156,7 @@ class Header extends Component {
   		<Container>
   			<NavLink exact to="/organizations">
   				<ImageLogo
-  					margin={'0 0 0 4rem'}
+  					margin={'0 0 0 2.5rem'}
   					marginMobile='1rem 0 0 .5rem'
   					paddingMobile='0.5rem'
   					height='2.8rem'

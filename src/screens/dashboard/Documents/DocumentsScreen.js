@@ -878,7 +878,7 @@ const ContainerModalDelete = styled(ContainerModal)`
 const ModalDelete = styled.div`
 	background: #FFF;
 	width: 480px;
-	padding: 1% 1% 1% 2%;
+	padding: 1% 2% 1% 2%;
 
 
 	@media (max-width: 490px) {
@@ -932,6 +932,8 @@ const TextModal = styled.p`
 const ButtonsModal = styled.div`
 	display: flex;
 	margin-top: 5%;
+	align-items: center;
+	justify-content: space-around;
 
 	@media (max-width: 490px) {
 		margin: 0;
@@ -939,19 +941,17 @@ const ButtonsModal = styled.div`
 	}
 `;
 
-const ButtonCancel = styled(Button)`
-	color: #FF4136;
-	background: #ffffff;
-	margin: 5% 0 0 0;
-	margin-right: .5rem;
-	box-shadow: none;
-	width: 50%;
+const ButtonCancel = styled.button`
+	width: 13.6rem;
 	height: 3.5rem;
-
-	@media (max-width: 1024px) {
-		margin: 5% 0 0 0;
-		width: 50%;
-	}
+	color: #F00;
+	border-radius: 4px;
+	border: none;
+	background: #FFF;
+	margin: 0 1rem;
+	font-size: 1rem;
+	font-family: "Overpass", Bold;
+	font-weight: 600;
 
 	@media (max-width: 490px) {
 		margin: 0;
@@ -1563,7 +1563,12 @@ class DocumentsScreen extends Component {
 				</WrapTextModal>
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
-					<ButtonConfirm onClick={this.handleDelete}>Confirmar</ButtonConfirm>
+					<Button
+						onClick={this.handleDelete}
+						width="13.6rem"
+						height="3.5rem"
+						text="Confirmar"
+					/>
 				</ButtonsModal>
 			</ModalDelete>
 		</ContainerModalDelete>
