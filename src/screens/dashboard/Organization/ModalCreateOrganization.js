@@ -14,12 +14,11 @@ import HeaderModal from '../components/HeaderModal';
 import Exit from '../../../assets/fechar.svg';
 
 // Redux
-import { addNewOrg } from '../../../dataflow/modules/organization-modules';
+import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modules';
 
 const mapDispatchToProps = dispatch => ({
-	addNewOrg: (org) => {
-		dispatch(addNewOrg(org));
-	},
+	addNewOrg: org => dispatch(addNewOrg(org)),
+	editOrg: org => dispatch(editOrg(org)),
 });
 
 const Overlay = styled.div`
@@ -231,18 +230,16 @@ const ErrorMessage = styled.p`
 
 class ModalCreateOrganization extends Component {
 	state = {
-		dataOrganization: {
-			tradingName: '',
-			companyName: '',
-			cnpj: '',
-			// email: '',
-			telephone: '',
-			address: '',
-			addressComplement: '',
-			neighborhood: '',
-			city: '',
-			cep: '',
-		},
+		tradingName: '',
+		companyName: '',
+		cpf: '',
+		// email: '',
+		telephone: '',
+		address: '',
+		addressComplement: '',
+		neighborhood: '',
+		city: '',
+		cep: '',
 		userData: [
 			{
 				name: 'Yasmin Miranda',
@@ -254,7 +251,7 @@ class ModalCreateOrganization extends Component {
 		modalSucess: false,
 		isTradingNameError: false,
 		isCompanyNameError: false,
-		isCnpjError: false,
+		// isCnpjError: false,
 		isTelephoneError: false,
 		isAddressError: false,
 		isAddressComplementError: false,
@@ -262,6 +259,23 @@ class ModalCreateOrganization extends Component {
 		isCityError: false,
 		isCepError: false,
 	};
+
+	componentDidMount() {
+		if (this.props.modalType === 'edit') {
+			this.setState({
+				tradingName: this.props.item.tradingName,
+				companyName: this.props.item.companyName,
+				cpf: this.props.item.cpf,
+				// email: '',
+				telephone: this.props.item.telephone,
+				address: this.props.item.address,
+				addressComplement: this.props.item.addressComplement,
+				neighborhood: this.props.item.neighborhood,
+				city: this.props.item.city,
+				cep: this.props.item.cep,
+			});
+		}
+	}
 
 	handleModalSucess = () => {
 		this.setState({
@@ -273,14 +287,14 @@ class ModalCreateOrganization extends Component {
 		const {
 			tradingName,
 			companyName,
-			cnpj,
+			// cpf,
 			telephone,
 			address,
-			addressComplement,
+			// addressComplement,
 			neighborhood,
 			city,
 			cep,
-		} = this.state.dataOrganization;
+		} = this.state;
 
 
 		if (!tradingName || tradingName.length < 4) {
@@ -303,16 +317,16 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cnpj || cnpj.length !== 14) {
-			this.setState({
-				isCnpjError: true,
-			});
-			// verificar como faz essa validação
-		} else {
-			this.setState({
-				isCnpjError: false,
-			});
-		}
+		// if (!cpf || cpf.length !== 14) {
+		// 	this.setState({
+		// 		isCnpjError: true,
+		// 	});
+		// 	// verificar como faz essa validação
+		// } else {
+		// 	this.setState({
+		// 		isCnpjError: false,
+		// 	});
+		// }
 
 		if (!telephone || telephone.length < 8) {
 			this.setState({
@@ -334,15 +348,15 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!addressComplement || addressComplement.length < 4) {
-			this.setState({
-				isAddressComplementError: true,
-			});
-		} else {
-			this.setState({
-				isAddressComplementError: false,
-			});
-		}
+		// if (!addressComplement || addressComplement.length < 4) {
+		// 	this.setState({
+		// 		isAddressComplementError: true,
+		// 	});
+		// } else {
+		// 	this.setState({
+		// 		isAddressComplementError: false,
+		// 	});
+		// }
 
 		if (!city || city.length < 4) {
 			this.setState({
@@ -374,13 +388,32 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (tradingName.length > 4 && companyName.length > 4 && cnpj.length === 14
-			&& telephone.length >= 8 && address.length > 4 && addressComplement.length > 4 && city.length > 4
+		if (tradingName.length > 4 && companyName.length > 4
+			&& telephone.length >= 8 && city.length > 4 && address.length > 0
 			&& neighborhood.length > 4 && cep.length === 8
 		) {
-			this.props.addNewOrg(this.state.dataOrganization);
-
-			this.handleModalSucess();
+			const isEdit = this.props.modalType === 'edit';
+			const org = {
+				id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
+				tradingName: this.state.tradingName,
+				companyName: this.state.companyName,
+				cpf: this.state.cpf,
+				// email: '',
+				telephone: this.state.telephone,
+				address: this.state.address,
+				addressComplement: this.state.addressComplement,
+				neighborhood: this.state.neighborhood,
+				city: this.state.city,
+				cep: this.state.cep,
+			};
+			if (this.props.modalType === 'edit') {
+				this.props.editOrg(org);
+				this.props.handleClosedModal();
+				this.props.closeModal();
+			} else {
+				this.props.addNewOrg(org);
+				this.handleModalSucess();
+			}
 		}
 	}
 
@@ -390,16 +423,16 @@ class ModalCreateOrganization extends Component {
 	};
 
 	handleChange = (field, ev) => {
-		const { dataOrganization } = this.state;
-		dataOrganization[field] = ev.target.value;
-		this.setState({ dataOrganization });
+		this.setState({
+			[field]: ev.target.value,
+		});
 	};
 
 	render() {
 		const errorMessage = [
 			'Insira um nome fantasia válido.',
 			'Insira uma razão social válida.',
-			'Insira um CNPJ válido.',
+			// 'Insira um CNPJ válido.',
 			'Insira um número de telefone válido.',
 			'Insira um endereço válido.',
 			'Insira um complemento válido.',
@@ -411,7 +444,7 @@ class ModalCreateOrganization extends Component {
 		const {
 			isTradingNameError,
 			isCompanyNameError,
-			isCnpjError,
+			// isCnpjError,
 			isTelephoneError,
 			isAddressError,
 			isAddressComplementError,
@@ -478,21 +511,21 @@ class ModalCreateOrganization extends Component {
 										/>
 										{isCompanyNameError && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
 									</ContentOrganizationItem>
-									<ContentOrganizationItem>
-										<UserTitle createOrg>cnpj</UserTitle>
+									{/* <ContentOrganizationItem>
+										<UserTitle createOrg>CPF/CNPJ</UserTitle>
 										<Input
 											modalOrg
 											margin={isCnpjError ? '0' : '0 0 2rem'}
 											type="number"
 											placeholder="00.000.000/0000-00"
-											onChange={ev => this.handleChange('cnpj', ev)}
-											value={this.state.cnpj}
-											name="cnpj"
+											onChange={ev => this.handleChange('cpf', ev)}
+											value={this.state.cpf}
+											name="cpf"
 											isError={isCnpjError}
 											required
 										/>
 										{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
-									</ContentOrganizationItem>
+									</ContentOrganizationItem> */}
 									{/* <ContentOrganizationItem>
 										<UserTitle createOrg>email</UserTitle>
 										<Input
@@ -595,7 +628,7 @@ class ModalCreateOrganization extends Component {
 											<UserTitle createOrg>cep</UserTitle>
 											<Input
 												modalOrg
-												type="number"
+												type="text"
 												placeholder="00000-000"
 												onChange={ev => this.handleChange('cep', ev)}
 												value={this.state.cep}
@@ -618,7 +651,9 @@ class ModalCreateOrganization extends Component {
 							</ContainerConcludeButton>
 						</ContentWrapper>
 					</Content>
-					{this.state.modalSucess && <Sucessfully />}
+					{this.state.modalSucess && <Sucessfully
+						handleClosedModal={this.props.handleClosedModal}
+						handleModalSucess={this.handleModalSucess} />}
 				</Container>
 			</Overlay>
 		);

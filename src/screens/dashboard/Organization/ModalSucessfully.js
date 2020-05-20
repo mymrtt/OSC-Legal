@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable class-methods-use-this */
 // Libs
@@ -141,9 +142,8 @@ export default class ModalSucessfully extends Component {
   }
 
   handleRedirect = () => {
-  	this.setState({
-  		redirect: true,
-  	});
+  	this.props.handleModalSucess();
+  	this.props.handleClosedModal();
   }
 
   render() {
