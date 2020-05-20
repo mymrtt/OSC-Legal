@@ -284,8 +284,13 @@ const ContainerTableUser = styled.div`
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 
 	@media (max-width: 768px) {
+<<<<<<< HEAD
+		margin: 0 auto;
+		width: 100%;
+=======
 		width: ${props => (props.width ? '100%' : '100%')};
 		margin: 0 0;
+>>>>>>> 2d2832498ebf587023ca8b220abcba4cbc2af440
 	}
 /*
 	@media (max-width: 648px) {
@@ -851,13 +856,19 @@ class OrganizationScreen extends Component {
 						{this.renderStatus(item)}
 					</ContainerTableTitleMob>
 					: <>
-						<ContainerStatus
-							onMouseEnter={() => this.setState({ hovered: item })}
-							onMouseLeave={() => this.setState({ hovered: undefined })}
-							selected={this.state.hovered === item}
-						>
-							{this.renderStatus(item)}
-						</ContainerStatus>
+						{this.props.isAdmin ? (
+							<ContainerStatus
+								onMouseEnter={() => this.setState({ hovered: item })}
+								onMouseLeave={() => this.setState({ hovered: undefined })}
+								selected={this.state.hovered === item}
+							>
+								{this.renderStatus(item)}
+							</ContainerStatus>
+						) : (
+							<ContainerStatus>
+								{this.renderStatus(item)}
+							</ContainerStatus>
+						)}
 					</>
 				}
 				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)} />

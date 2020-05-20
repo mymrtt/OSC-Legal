@@ -106,6 +106,7 @@ const ContainerHeader = styled.div`
 
 const AddModelImage = styled.img`
 	width: 180px;
+	margin-bottom: 1.5rem;
 
 	@media (max-width: 1024px) {
 		width: 140px;
@@ -222,8 +223,20 @@ const ContainerScroll = styled.div`
 	display: ${props => (props.initialModel ? 'none' : 'inline-block')};
 	margin-right: 1rem;
 
-	&::-webkit-scrollbar {
-		display: none;
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
 	}
 
 	@media (max-width: 1680px) {
@@ -241,6 +254,7 @@ const ContainerScroll = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		min-height: 50vh;
+		padding-bottom: 10rem;
 	}
 `;
 
@@ -314,7 +328,7 @@ const SearchText = styled.p`
 
 const ContainerSearchInput = styled.label`
 	display: flex;
-	width: 100%;
+	width: ${props => props.isAdmin ? '70%' : '65%'};
 	border-radius: 3px;
 	padding: 0.2rem 1rem 0.1rem 1rem;
 	border: 0.5px solid #85144B;
@@ -375,7 +389,7 @@ const ContainerModels = styled.div`
 const ContainerModel = styled.div`
 	margin-bottom: 1rem;
 	padding: 2rem;
-	width: 99%;
+	width: 100%;
 	border-radius: 3px;
 	height: 100%;
 	display: flex;
@@ -852,7 +866,7 @@ const ContainerModalDelete = styled(ContainerModal)`
 const ModalDelete = styled.div`
 	background: #FFF;
 	width: 480px;
-	padding: 1% 1% 1% 2%;
+	padding: 1% 2% 1% 2%;
 
 
 	@media (max-width: 490px) {
@@ -906,6 +920,8 @@ const TextModal = styled.p`
 const ButtonsModal = styled.div`
 	display: flex;
 	margin-top: 5%;
+	align-items: center;
+	justify-content: space-around;
 
 	@media (max-width: 490px) {
 		margin: 0;
@@ -913,19 +929,17 @@ const ButtonsModal = styled.div`
 	}
 `;
 
-const ButtonCancel = styled(Button)`
-	color: #FF4136;
-	background: #ffffff;
-	margin: 5% 0 0 0;
-	margin-right: .5rem;
-	box-shadow: none;
-	width: 50%;
+const ButtonCancel = styled.button`
+	width: 13.6rem;
 	height: 3.5rem;
-
-	@media (max-width: 1024px) {
-		margin: 5% 0 0 0;
-		width: 50%;
-	}
+	color: #F00;
+	border-radius: 4px;
+	border: none;
+	background: #FFF;
+	margin: 0 1rem;
+	font-size: 1rem;
+	font-family: "Overpass", Bold;
+	font-weight: 600;
 
 	@media (max-width: 490px) {
 		margin: 0;
@@ -978,8 +992,20 @@ const BoxOrgs = styled.div`
 	background: #FFF;
 	z-index: 99;
 
-	&::-webkit-scrollbar{
-		display: none;
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
 	}
 
 	@media (max-width: 490px) {
@@ -1066,11 +1092,20 @@ const BoxModelsDoc = styled.span`
 	overflow-y: scroll;
 	margin-bottom: 1rem;
 
-	/* &::-webkit-scrollbar{
-		display: none;
-	} */
-	&::-webkit-scrollbar{
-		scrollbar-3dlight-color: red;
+	::-webkit-scrollbar {
+  width: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
 	}
 `;
 
@@ -1108,7 +1143,6 @@ const SpanButton = styled.span`
 
 
 let newList = [];
-let nextId = 0;
 
 class DocumentsScreen extends Component {
 	state = {
@@ -1130,7 +1164,6 @@ class DocumentsScreen extends Component {
 		colorTextDelete: '',
 		redirect: false,
 		isFile: null,
-		// hidden: false,
 		document: {
 			title: '',
 			description: '',
@@ -1144,10 +1177,12 @@ class DocumentsScreen extends Component {
 		isBoxOrgs: false,
 		ishovering: false,
 		modalListDoc: false,
+
 		listDocs: [],
 		selectedValue: 'Selecionar organização',
 		isOrg: false,
 		isMobileButton: false,
+		userSelectDoc: '',
 	};
 
 	handleOnOptions = (item) => {
@@ -1297,7 +1332,6 @@ class DocumentsScreen extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.state.isMobileButton);
 		this.renderMobileButton();
 	}
 
@@ -1306,7 +1340,6 @@ class DocumentsScreen extends Component {
 			this.setState({
 				isMobileButton: true,
 			});
-			console.log(this.state.isMobileButton);
 		} else {
 			this.setState({
 				isMobileButton: false,
@@ -1418,7 +1451,6 @@ class DocumentsScreen extends Component {
 			modalListDoc: false,
 			listDocs: newList,
 		});
-		nextId = this.state.listDocs.length + 1;
 	}
 
 	handleSelectOrg = (orgs) => {
@@ -1428,6 +1460,26 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	userSelectedDoc = (docs) => {
+		this.setState({
+			userSelectDoc: docs,
+		});
+	}
+
+	deleteUserDoc = () => {
+		this.setState({
+			listDocs: this.state.listDocs.filter(docs => docs !== this.state.userSelectDoc),
+			modalDelete: false,
+		});
+	}
+
+	delete = () => {
+		if (this.props.isAdmin === true) {
+			this.handleDelete();
+		} else {
+			this.deleteUserDoc();
+		}
+	}
 
 	renderModalModels = () => {
 		const Messages = [
@@ -1536,12 +1588,18 @@ class DocumentsScreen extends Component {
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
 					<TextModal>
-						Você deseja excluir o <strong>{this.state.modelSelect.title}</strong> permanentemente?
+						Você deseja excluir o <strong>{this.state.modelSelect.title || this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
-					<ButtonConfirm onClick={this.handleDelete}>Confirmar</ButtonConfirm>
+					<Button
+						// onClick={this.handleDelete || this.deleteUserDoc}
+						onClick={this.delete}
+						width="13.6rem"
+						height="3.5rem"
+						text="Confirmar"
+					/>
 				</ButtonsModal>
 			</ModalDelete>
 		</ContainerModalDelete>
@@ -1586,7 +1644,7 @@ class DocumentsScreen extends Component {
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
 				<Content isAdmin={this.props.isAdmin}>
-					<MaximumWidth onClick={() => console.log(this.state.isMobileButton)}>
+					<MaximumWidth>
 						<ContainerAddModel>
 							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
 							{
@@ -1596,10 +1654,10 @@ class DocumentsScreen extends Component {
 									<AddModelImage src={DocumentUser} />
 								)}
 							{isAdmin
-								? this.state.addModel !== true ? (
+								? (
 									<Button
 										width="17.5rem"
-										height="4rem"
+										height="4.5rem"
 										margin="1rem 0 0 0"
 										text="Adicionar Modelo"
 										onClick={this.handleAddModel}
@@ -1607,20 +1665,22 @@ class DocumentsScreen extends Component {
 										widthMobileSmall="95%"
 										positionMb="fixed"
 										bottom='0'
+										widthTablet="14rem"
 										left="11px"
+										fontSize="1.2rem"
 									/>
 								) : (
-									null
-								) : this.state.modalListDoc !== true ? (
 									<Button
 										width="17.5rem"
-										height="4rem"
+										height="4.5rem"
 										margin="1rem 0 0 0"
 										onClick={this.openModalListDoc}
 										hidden={this.state.modalListDoc}
 										text="Adicionar Documento"
+										widthTablet="14rem"
+										fontSize="1.2rem"
 									/>
-								) : null}
+								)}
 						</ContainerAddModel>
 						<Teste>
 							<ContainerHeader>
@@ -1656,6 +1716,7 @@ class DocumentsScreen extends Component {
 												onClick={ev => ev.stopPropagation()}
 												isBoxOrgs={this.state.isBoxOrgs}
 											>
+												<Org onClick={() => this.handleSelectOrg()}>Selecionar organizações</Org>
 												{this.props.organization.map((orgs, index) => (
 													<Org
 														key={index}
@@ -1745,7 +1806,7 @@ class DocumentsScreen extends Component {
 													>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{nextId}</ModelNumber>
+																<ModelNumber>{docs.id}</ModelNumber>
 																<ModelTitle>{docs.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{docs.description}</ModelParagraph>
@@ -1792,7 +1853,7 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverDelete === docs
 																		? this.state.colorTextDelete : '#85144B'}
-																	onClick={() => this.handleSelected(docs)}
+																	onClick={() => this.userSelectedDoc(docs)}
 																>
 																	<p>Excluir</p>
 																</OptionText>
@@ -1819,12 +1880,12 @@ class DocumentsScreen extends Component {
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (
-											this.state.isMobileButton === true && this.state.addModel !== true ? (
+											this.state.isMobileButton !== true && this.state.addModel !== true ? (
 												null
 											) : (
 												<Button
 													width="17.5rem"
-													height="4rem"
+													height="4.5rem"
 													marginMobile="0 0 1rem 0"
 													widthMobileSmall="95%"
 													bottom="0"
@@ -1840,7 +1901,7 @@ class DocumentsScreen extends Component {
 											) : (
 												<Button
 													width="17.5rem"
-													height="4rem"
+													height="4.5rem"
 													marginMobile="0 0 1rem 0"
 													widthMobileSmall="95%"
 													bottom="0"
