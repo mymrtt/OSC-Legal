@@ -8,7 +8,6 @@ import styled from 'styled-components';
 // Components
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-import Sucessfully from './ModalSucessfully';
 import HeaderModal from '../components/HeaderModal';
 
 // Icon
@@ -148,6 +147,7 @@ const CreateOrgTitle = styled.h1`
 	font-family: "Overpass", sans-serif;
 	font-size: 2rem;
 	font-weight: 900;
+	padding: 0 3.5rem 2.5rem;
 
 	@media(max-width: 648px) {
 		padding-left: 2.5rem;
@@ -251,7 +251,7 @@ class ModalCreateOrganization extends Component {
 				cpf: '000000000-00',
 			},
 		],
-		modalSucess: true,
+		// modalSucess: true,
 		isTradingNameError: false,
 		isCompanyNameError: false,
 		isCnpjError: false,
@@ -261,11 +261,12 @@ class ModalCreateOrganization extends Component {
 		isNeighborhoodError: false,
 		isCityError: false,
 		isCepError: false,
+		allStateTrue: false,
 	};
 
 	handleModalSucess = () => {
 		this.setState({
-			modalSucess: !this.state.modalSucess,
+			modalSucess: !this.props.modalSucess,
 		});
 	}
 
@@ -379,7 +380,7 @@ class ModalCreateOrganization extends Component {
 			&& neighborhood.length > 4 && cep.length === 8
 		) {
 			this.props.addNewOrg(this.state.dataOrganization);
-
+			this.setState({ allStateTrue: true });
 			this.handleModalSucess();
 		}
 	}
@@ -394,12 +395,6 @@ class ModalCreateOrganization extends Component {
 		dataOrganization[field] = ev.target.value;
 		this.setState({ dataOrganization });
 	};
-
-	handleRedirect = () => {
-  	this.setState({
-			modalSucess: false,
-  	});
-	}
 
 	render() {
 		const errorMessage = [
@@ -427,80 +422,79 @@ class ModalCreateOrganization extends Component {
 		} = this.state;
 
 		return (
-			(this.state.modalSucess) ? <Sucessfully handleRedirect={this.handleRedirect} />
-				: <Overlay onClick={this.props.handleClosedModal}>
-					<HeaderModal />
-					<Container
-						onSubmit={this.handleSubmit}
-						onClick={ev => ev.stopPropagation()}>
-						<Content>
-							<ContainerExit>
-								<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal}/>
-							</ContainerExit>
-							<ContentWrapper>
-								<CreateOrgTitle>Criar Organização</CreateOrgTitle>
-								{this.state.userData.map(item => (
-									<ContainerUser key={item}>
-										<Title>Usuário</Title>
-										<UserTitle>nome</UserTitle>
-										<UserText>{item.name}</UserText>
-										<UserTitle>e-mail</UserTitle>
-										<UserText>{item.email}</UserText>
-										<UserTitle>telefone</UserTitle>
-										<UserText>{item.telephone}</UserText>
-										<UserTitle>cpf</UserTitle>
-										<UserText>{item.cpf}</UserText>
-									</ContainerUser>
-								))}
-								<ContainerCreateOrg>
-									<Title org>Organização</Title>
-									<ContentOrganization>
-										<ContentOrganizationItem>
-											<UserTitle createOrg>nome fantasia</UserTitle>
-											<Input
-												modalOrg
-												margin={isTradingNameError ? '0' : '0 0 2rem'}
-												type="text"
-												placeholder="Nome da organização"
-												onChange={ev => this.handleChange('tradingName', ev)}
-												value={this.state.tradingName}
-												name="tradingName"
-												isError={isTradingNameError}
-												required
-											/>
-											{isTradingNameError && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
-										</ContentOrganizationItem>
-										<ContentOrganizationItem>
-											<UserTitle createOrg>razão social</UserTitle>
-											<Input
-												modalOrg
-												margin={isCompanyNameError ? '0' : '0 0 2rem'}
-												type="text"
-												placeholder="Razão social"
-												onChange={ev => this.handleChange('companyName', ev)}
-												value={this.state.companyName}
-												name="companyName"
-												isError={isCompanyNameError}
-												required
-											/>
-											{isCompanyNameError && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
-										</ContentOrganizationItem>
-										<ContentOrganizationItem>
-											<UserTitle createOrg>cnpj</UserTitle>
-											<Input
-												modalOrg
-												margin={isCnpjError ? '0' : '0 0 2rem'}
-												type="text"
-												placeholder="00.000.000/0000-00"
-												onChange={ev => this.handleChange('cnpj', ev)}
-												value={this.state.cnpj}
-												name="cnpj"
-												isError={isCnpjError}
-												required
-											/>
-											{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
-										</ContentOrganizationItem>
-										{/* <ContentOrganizationItem>
+			 <Overlay onClick={this.props.handleClosedModal}>
+				<HeaderModal />
+				<Container
+					onSubmit={this.handleSubmit}
+					onClick={ev => ev.stopPropagation()}>
+					<Content>
+						<ContainerExit>
+							<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal}/>
+						</ContainerExit>
+						<ContentWrapper>
+							<CreateOrgTitle>Criar Organização</CreateOrgTitle>
+							{this.state.userData.map(item => (
+								<ContainerUser key={item}>
+									<Title>Usuário</Title>
+									<UserTitle>nome</UserTitle>
+									<UserText>{item.name}</UserText>
+									<UserTitle>e-mail</UserTitle>
+									<UserText>{item.email}</UserText>
+									<UserTitle>telefone</UserTitle>
+									<UserText>{item.telephone}</UserText>
+									<UserTitle>cpf</UserTitle>
+									<UserText>{item.cpf}</UserText>
+								</ContainerUser>
+							))}
+							<ContainerCreateOrg>
+								<Title org>Organização</Title>
+								<ContentOrganization>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>nome fantasia</UserTitle>
+										<Input
+											modalOrg
+											margin={isTradingNameError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="Nome da organização"
+											onChange={ev => this.handleChange('tradingName', ev)}
+											value={this.state.tradingName}
+											name="tradingName"
+											isError={isTradingNameError}
+											required
+										/>
+										{isTradingNameError && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>razão social</UserTitle>
+										<Input
+											modalOrg
+											margin={isCompanyNameError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="Razão social"
+											onChange={ev => this.handleChange('companyName', ev)}
+											value={this.state.companyName}
+											name="companyName"
+											isError={isCompanyNameError}
+											required
+										/>
+										{isCompanyNameError && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>cnpj</UserTitle>
+										<Input
+											modalOrg
+											margin={isCnpjError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="00.000.000/0000-00"
+											onChange={ev => this.handleChange('cnpj', ev)}
+											value={this.state.cnpj}
+											name="cnpj"
+											isError={isCnpjError}
+											required
+										/>
+										{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									{/* <ContentOrganizationItem>
 										<UserTitle createOrg>email</UserTitle>
 										<Input
 											modalOrg
@@ -512,121 +506,122 @@ class ModalCreateOrganization extends Component {
 											required
 										/>
 									</ContentOrganizationItem> */}
-										<ContentOrganizationItem>
-											<UserTitle createOrg>telefone</UserTitle>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>telefone</UserTitle>
+										<Input
+											modalOrg
+											margin={isTelephoneError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="(00) 00000-0000"
+											onChange={ev => this.handleChange('telephone', ev)}
+											value={this.state.telephone}
+											name="telephone"
+											isError={isTelephoneError}
+											required
+										/>
+										{isTelephoneError && <ErrorMessage>{errorMessage[3]}</ErrorMessage>}
+									</ContentOrganizationItem>
+									<ContentOrganizationItem>
+										<UserTitle createOrg>endereço</UserTitle>
+										<Input
+											modalOrg
+											margin={isAddressError ? '0' : '0 0 2rem'}
+											type="text"
+											placeholder="Endereço"
+											onChange={ev => this.handleChange('address', ev)}
+											value={this.state.address}
+											name="address"
+											isError={isAddressError}
+											required
+										/>
+										{isAddressError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
+									</ContentOrganizationItem>
+								</ContentOrganization>
+								<WrapOrganization>
+									<WrapOrganizationContent>
+										<WrapOrganizationItem
+											style={{
+												marginRight: '1rem',
+												paddingBottom: isAddressComplementError && '1rem',
+											}}
+										>
+											<UserTitle createOrg>complemento</UserTitle>
 											<Input
 												modalOrg
-												margin={isTelephoneError ? '0' : '0 0 2rem'}
 												type="text"
-												placeholder="(00) 00000-0000"
-												onChange={ev => this.handleChange('telephone', ev)}
-												value={this.state.telephone}
-												name="telephone"
-												isError={isTelephoneError}
+												placeholder="Complemento"
+												onChange={ev => this.handleChange('addressComplement', ev)}
+												value={this.state.addressComplement}
+												name="addressComplement"
+												isError={isAddressComplementError}
 												required
 											/>
-											{isTelephoneError && <ErrorMessage>{errorMessage[3]}</ErrorMessage>}
-										</ContentOrganizationItem>
-										<ContentOrganizationItem>
-											<UserTitle createOrg>endereço</UserTitle>
+											{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
+										</WrapOrganizationItem>
+										<WrapOrganizationItem style={{ paddingBottom: isCityError && '1rem' }}>
+											<UserTitle createOrg>cidade</UserTitle>
 											<Input
 												modalOrg
-												margin={isAddressError ? '0' : '0 0 2rem'}
 												type="text"
-												placeholder="Endereço"
-												onChange={ev => this.handleChange('address', ev)}
-												value={this.state.address}
-												name="address"
-												isError={isAddressError}
+												placeholder="Cidade"
+												onChange={ev => this.handleChange('city', ev)}
+												value={this.state.city}
+												name="city"
+												isError={isCityError}
 												required
 											/>
-											{isAddressError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
-										</ContentOrganizationItem>
-									</ContentOrganization>
-									<WrapOrganization>
-										<WrapOrganizationContent>
-											<WrapOrganizationItem
-												style={{
-													marginRight: '1rem',
-													paddingBottom: isAddressComplementError && '1rem',
-												}}
-											>
-												<UserTitle createOrg>complemento</UserTitle>
-												<Input
-													modalOrg
-													type="text"
-													placeholder="Complemento"
-													onChange={ev => this.handleChange('addressComplement', ev)}
-													value={this.state.addressComplement}
-													name="addressComplement"
-													isError={isAddressComplementError}
-													required
-												/>
-												{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
-											</WrapOrganizationItem>
-											<WrapOrganizationItem style={{ paddingBottom: isCityError && '1rem' }}>
-												<UserTitle createOrg>cidade</UserTitle>
-												<Input
-													modalOrg
-													type="text"
-													placeholder="Cidade"
-													onChange={ev => this.handleChange('city', ev)}
-													value={this.state.city}
-													name="city"
-													isError={isCityError}
-													required
-												/>
-												{isCityError && <ErrorMessage>{errorMessage[6]}</ErrorMessage>}
-											</WrapOrganizationItem>
-										</WrapOrganizationContent>
-										<WrapOrganizationContent>
-											<WrapOrganizationItem
-												style={{
-													marginRight: '1rem',
-													paddingBottom: isNeighborhoodError && '1rem',
-												}}>
-												<UserTitle createOrg>bairro</UserTitle>
-												<Input
-													modalOrg
-													type="text"
-													placeholder="Bairro"
-													onChange={ev => this.handleChange('neighborhood', ev)}
-													value={this.state.neighborhood}
-													name="neighborhood"
-													isError={isNeighborhoodError}
-													required
-												/>
-												{isNeighborhoodError && <ErrorMessage>{errorMessage[7]}</ErrorMessage>}
-											</WrapOrganizationItem>
-											<WrapOrganizationItem style={{ paddingBottom: isCepError && '1rem' }}>
-												<UserTitle createOrg>cep</UserTitle>
-												<Input
-													modalOrg
-													type="text"
-													placeholder="00000-000"
-													onChange={ev => this.handleChange('cep', ev)}
-													value={this.state.cep}
-													name="cep"
-													isError={isCepError}
-													required
-												/>
-												{isCepError && <ErrorMessage>{errorMessage[8]}</ErrorMessage>}
-											</WrapOrganizationItem>
-										</WrapOrganizationContent>
-									</WrapOrganization>
-								</ContainerCreateOrg>
-								<ContainerConcludeButton>
-									<Button
-										type="submit"
-										width={'100%'}
-										text="concluir"
-										textTransform
-									/>
-								</ContainerConcludeButton>
-							</ContentWrapper>
-						</Content>
-					</Container>
-				</Overlay>
+											{isCityError && <ErrorMessage>{errorMessage[6]}</ErrorMessage>}
+										</WrapOrganizationItem>
+									</WrapOrganizationContent>
+									<WrapOrganizationContent>
+										<WrapOrganizationItem
+											style={{
+												marginRight: '1rem',
+												paddingBottom: isNeighborhoodError && '1rem',
+											}}>
+											<UserTitle createOrg>bairro</UserTitle>
+											<Input
+												modalOrg
+												type="text"
+												placeholder="Bairro"
+												onChange={ev => this.handleChange('neighborhood', ev)}
+												value={this.state.neighborhood}
+												name="neighborhood"
+												isError={isNeighborhoodError}
+												required
+											/>
+											{isNeighborhoodError && <ErrorMessage>{errorMessage[7]}</ErrorMessage>}
+										</WrapOrganizationItem>
+										<WrapOrganizationItem style={{ paddingBottom: isCepError && '1rem' }}>
+											<UserTitle createOrg>cep</UserTitle>
+											<Input
+												modalOrg
+												type="text"
+												placeholder="00000-000"
+												onChange={ev => this.handleChange('cep', ev)}
+												value={this.state.cep}
+												name="cep"
+												isError={isCepError}
+												required
+											/>
+											{isCepError && <ErrorMessage>{errorMessage[8]}</ErrorMessage>}
+										</WrapOrganizationItem>
+									</WrapOrganizationContent>
+								</WrapOrganization>
+							</ContainerCreateOrg>
+							<ContainerConcludeButton>
+								<Button
+									type="submit"
+									width={'100%'}
+									text="concluir"
+									textTransform
+									onClick={this.state.allStateTrue && this.props.handleChangeCloseModal}
+								/>
+							</ContainerConcludeButton>
+						</ContentWrapper>
+					</Content>
+				</Container>
+			</Overlay>
 		);
 	}
 }

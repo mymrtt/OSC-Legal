@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
@@ -7,10 +8,12 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
+import Sucessfully from './ModalSucessfully';
 import Button from '../../../components/Button';
 
 // Image
 import ImageCaminho from '../../../assets/caminho.svg';
+import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
 import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
@@ -283,8 +286,8 @@ const ContainerTableUser = styled.div`
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 
 	@media (max-width: 768px) {
-		width: ${props => (props.width ? '100%' : '100%')};
-		margin: 0 0;
+		margin: 0 auto;
+		width: 100%;
 	}
 /*
 	@media (max-width: 648px) {
@@ -534,6 +537,7 @@ class OrganizationScreen extends Component {
 			itemSelected: undefined,
 			isSelected: undefined,
 			toFilter: false,
+			modalSucess: false,
 			filter: '',
 			selectedValue: 'Selecionar status',
 			selectedItems: [
@@ -677,7 +681,9 @@ class OrganizationScreen extends Component {
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							<img src={ImageCaminho} alt="arrow" />
+							{this.state.isSelected ? (
+								<img src={ArrowUpIcon} alt="arrow" />
+							) : <img src={ImageCaminho} alt="arrow" />}
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -848,13 +854,19 @@ class OrganizationScreen extends Component {
 						{this.renderStatus(item)}
 					</ContainerTableTitleMob>
 					: <>
-						<ContainerStatus
-							onMouseEnter={() => this.setState({ hovered: item })}
-							onMouseLeave={() => this.setState({ hovered: undefined })}
-							selected={this.state.hovered === item}
-						>
-							{this.renderStatus(item)}
-						</ContainerStatus>
+						{this.props.isAdmin ? (
+							<ContainerStatus
+								onMouseEnter={() => this.setState({ hovered: item })}
+								onMouseLeave={() => this.setState({ hovered: undefined })}
+								selected={this.state.hovered === item}
+							>
+								{this.renderStatus(item)}
+							</ContainerStatus>
+						) : (
+							<ContainerStatus>
+								{this.renderStatus(item)}
+							</ContainerStatus>
+						)}
 					</>
 				}
 				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)} />
@@ -882,6 +894,22 @@ class OrganizationScreen extends Component {
 		return listTable;
 	}
 
+	handleChangeCloseModal = (ev) => {
+		ev.stopPropagation();
+		this.setState({
+			isModalCreateOrg: false,
+			modalSucess: true,
+		});
+	}
+
+	handleRedirect = (ev) => {
+		ev.stopPropagation();
+  	this.setState({
+			modalSucess: !this.state.modalSucess,
+			isModalCreateOrg: false,
+  	});
+	}
+
 	render() {
 		const { isAdmin } = this.props;
 
@@ -892,8 +920,9 @@ class OrganizationScreen extends Component {
 					&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
-					&& <ModalCreateOrganization isModal={this.state.isModalCreateOrg} handleClosedModal={this.isModalCreateOrganization} />
+					&& <ModalCreateOrganization modalSucess={this.state.modalSucess} handleClosedModal={this.isModalCreateOrganization} handleChangeCloseModal={this.handleChangeCloseModal}/>
 				}
+				{this.state.modalSucess && <Sucessfully handleRedirect={this.handleRedirect} />}
 				<Header />
 				<ContainerUser
 					width={isAdmin}
