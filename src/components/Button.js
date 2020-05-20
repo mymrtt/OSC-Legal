@@ -18,6 +18,7 @@ const MyButton = styled.button`
 
 
   @media(max-width: 768px){
+		width: ${props => props.widthTablet};
     height: ${props => props.heightMobile};
 		${props => props.orderMobile && css`
 			width: 80%;
@@ -80,6 +81,7 @@ const Button = props => (
 			right={props.right}
 			left={props.left}
 			bottom={props.bottom}
+			widthTablet={props.widthTablet}
 		>
 			{props.text}
 		</MyButton>

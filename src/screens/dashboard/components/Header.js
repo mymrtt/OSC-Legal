@@ -112,7 +112,7 @@ const ContainerUser = styled.div`
 const ParagraphUserName = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin: 1.2rem 5.5rem 0 0;
+	margin: 1.2rem 5.3rem 0 0;
 
 	@media (max-width: 859px) {
 		font-size: 1.2rem;
@@ -130,11 +130,15 @@ const ParagraphUserName = styled.p`
 `;
 
 const ParagraphSair = styled.p`
-	margin-right: 5.5rem;
+	margin-right: 5.2rem;
   color: #85144B;
   font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
 	cursor: pointer;
+
+	@media(max-width: 1440px) and (max-height: 900px){
+		margin-right: 5.5rem;
+	}
 
 	@media(max-width: 768px){
 		margin-right: .7rem;
@@ -158,7 +162,7 @@ class Header extends Component {
   		<Container>
   			<NavLink exact to="/organizations">
   				<ImageLogo
-  					margin={'0 0 0 4rem'}
+  					margin={'0 0 0 2.5rem'}
   					marginMobile='1rem 0 0 .5rem'
   					paddingMobile='0.5rem'
   					height='2.8rem'

@@ -682,8 +682,9 @@ class OrganizationScreen extends Component {
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
-							<img src={ImageCaminho} alt="arrow" onClick={this.isSelectOpen} />
-							<img src={ArrowUpIcon} alt="arrow" onClick={this.isSelectOpen} />
+							{this.state.isSelected ? (
+								<img src={ArrowUpIcon} alt="arrow" />
+							) : <img src={ImageCaminho} alt="arrow" />}
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -854,13 +855,19 @@ class OrganizationScreen extends Component {
 						{this.renderStatus(item)}
 					</ContainerTableTitleMob>
 					: <>
-						<ContainerStatus
-							onMouseEnter={() => this.setState({ hovered: item })}
-							onMouseLeave={() => this.setState({ hovered: undefined })}
-							selected={this.state.hovered === item}
-						>
-							{this.renderStatus(item)}
-						</ContainerStatus>
+						{this.props.isAdmin ? (
+							<ContainerStatus
+								onMouseEnter={() => this.setState({ hovered: item })}
+								onMouseLeave={() => this.setState({ hovered: undefined })}
+								selected={this.state.hovered === item}
+							>
+								{this.renderStatus(item)}
+							</ContainerStatus>
+						) : (
+							<ContainerStatus>
+								{this.renderStatus(item)}
+							</ContainerStatus>
+						)}
 					</>
 				}
 				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)} />
