@@ -88,7 +88,6 @@
 @media (max-width: 648px) {
 	#container {
 		padding: 1rem;
-		/* background-color: #fff; */
 		justify-content: center;
 	}
 	.container_content {

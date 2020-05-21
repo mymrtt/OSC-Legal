@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -17,16 +16,15 @@ const mapStateToProps = state => ({
 });
 
 const Container = styled.div`
-  width: 100%;
-  background-color: #FFFFFF;
-  color: #231F20;
-  font-family: Overpass, Light;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-	/* padding: 0 4.5rem 0 3rem; */
-  text-transform: uppercase;
+	width: 100%;
+	background-color: #FFFFFF;
+	color: #231F20;
+	font-family: Overpass, Light;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+	text-transform: uppercase;
 	border-bottom: 1px solid  #707070;
 
 	@media (max-width: 890px) {
@@ -81,7 +79,6 @@ const WrapButton = styled.div`
 		a{
 			font-size: 1.2rem;
 			width: 50%;
-			/* margin: 0; */
 			display: flex;
 			justify-content: center;
 			margin: 0;
@@ -91,10 +88,10 @@ const WrapButton = styled.div`
 
 
 const ContainerUser = styled.div`
-  margin-bottom: 0.8rem;
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
+	margin-bottom: 0.8rem;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
 
 	@media (max-width: 785px) {
 		width: 40%;
@@ -105,8 +102,7 @@ const ContainerUser = styled.div`
 	}
 
 	@media (max-width: 648px) {
-		${'' /* padding-right: 1rem; */}
-    white-space: nowrap;
+		white-space: nowrap;
 		padding-top: 0.7rem;
 		margin-bottom: 0;
 		order: 2;
@@ -135,8 +131,8 @@ const ParagraphUserName = styled.p`
 
 const ParagraphSair = styled.p`
 	margin-right: 5.2rem;
-  color: #85144B;
-  font-family: Overpass, SemiBold;
+	color: #85144B;
+	font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
 	cursor: pointer;
 
@@ -154,53 +150,53 @@ const ParagraphSair = styled.p`
 `;
 
 class Header extends Component {
-  state = {
-  	redirect: false,
-  }
+	state = {
+		redirect: false,
+	}
 
-  handleRedirect = () => {
-  	this.setState({ redirect: true });
-  }
+	handleRedirect = () => {
+		this.setState({ redirect: true });
+	}
 
-  render() {
-  	return (
-  		<Container>
-  			<NavLink exact to="/organizations">
-  				<ImageLogo
-  					margin={'0 0 0 2.5rem'}
-  					marginMobile='1rem 0 0 .5rem'
-  					paddingMobile='0.5rem'
-  					height='2.8rem'
-  				/>
-  			</NavLink>
-  			<WrapButton>
-  				<NavLink
-  					exact to="/organizations"
-  					activeClassName="button-header-dash"
-  				>
+	render() {
+		return (
+			<Container>
+				<NavLink exact to="/organizations">
+					<ImageLogo
+						margin={'0 0 0 2.5rem'}
+						marginMobile='1rem 0 0 .5rem'
+						paddingMobile='0.5rem'
+						height='2.8rem'
+					/>
+				</NavLink>
+				<WrapButton>
+					<NavLink
+						exact to="/organizations"
+						activeClassName="button-header-dash"
+					>
 						Organizações
-  				</NavLink>
-  				<NavLink
-  					exact to="/documents"
-  					activeClassName="button-header-dash"
-  				>
+					</NavLink>
+					<NavLink
+						exact to="/documents"
+						activeClassName="button-header-dash"
+					>
 						Documentos
-  				</NavLink>
-  			</WrapButton>
-  			<ContainerUser>
-  				<ParagraphUserName>
-  					{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
+					</NavLink>
+				</WrapButton>
+				<ContainerUser>
+					<ParagraphUserName>
+						{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
 							&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
-  					{this.props.isAdmin ? 'Administrador' : this.props.name}
-  				</ParagraphUserName>
-  				<ParagraphSair onClick={this.handleRedirect}>
+						{this.props.isAdmin ? 'Administrador' : this.props.name}
+					</ParagraphUserName>
+					<ParagraphSair onClick={this.handleRedirect}>
 						sair
-  				</ParagraphSair>
-  				{this.state.redirect && <Redirect exact to="/" />}
-  			</ContainerUser>
-	    </Container>
-  	);
-  }
+					</ParagraphSair>
+					{this.state.redirect && <Redirect exact to="/" />}
+				</ContainerUser>
+			</Container>
+		);
+	}
 }
 
 export default connect(mapStateToProps, null)(Header);

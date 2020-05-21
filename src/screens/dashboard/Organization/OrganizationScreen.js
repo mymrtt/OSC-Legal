@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
@@ -7,6 +8,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
+import Sucessfully from './ModalSucessfully';
 import Button from '../../../components/Button';
 
 // Image
@@ -20,7 +22,7 @@ import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
 
 // Redux
-import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
+import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -29,35 +31,27 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
-	deleteOrg: info => dispatch(deleteOrg(info)),
 });
 
 
 const Container = styled.div`
 	width: 100%;
 	height: 100vh;
-	/* padding: 0 0 2rem; */
 `;
 
 const ContainerUser = styled.div`
-	width: 100%;
-	height: ${props => (!props.height && 'calc(100vh - 5.5rem)')};
+	width: ${props => (props.width ? '100%' : '100%')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
-
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	}
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	/* margin-top: 1.3rem; */
 	padding-right: .6rem;
-
 	@media(max-width: 768px) {
-		/* margin: 1.3rem 0; */
 		padding-right: 0;
 	}
-
 	@media(max-width: 648px) {
 		margin-top: 0;
 	}
@@ -69,7 +63,6 @@ const ContainerContentSelectedViewBy = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	z-index: 4;
-
 	@media (max-width: 768px) {
 		align-items: center;
 		flex-direction: column;
@@ -81,11 +74,9 @@ const TitleManageOrgs = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
-
 	@media (max-width: 768px) {
 		padding-bottom: 0.8rem;
 	}
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -96,26 +87,22 @@ const TitleMyOrganization = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
-
 	@media (max-width: 768px) {
 		padding-bottom: 0.8rem;
 	}
-
 	@media (max-width: 648px) {
 		display: none;
 	}
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.width)};
+	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
-
 	@media (max-width: 768px) {
 		width: 100%;
 		justify-content: center;
 	}
-
 	@media(max-width: 648px) {
     justify-content: center;
 	}
@@ -126,19 +113,16 @@ const SpanSelect = styled.div`
 	margin: 0.5rem 0 0;
 	display: flex;
   flex-direction: column;
-	position: relative;
 	z-index: 11;
-
+	position: relative;
 	@media (max-width: 940px) {
 		width: 47%;
 	}
-
 	@media (max-width: 768px) {
+		margin: 0 2rem;
 		width: 100%;
 		align-items: center;
-		margin: 0;
 	}
-
 	@media(max-width: 648px) {
 		width: 90%;
 	}
@@ -152,7 +136,6 @@ const TitleViewBy = styled.h2`
 	margin: 0.8rem 0.8rem 0 0;
 	display: flex;
   align-items: center;
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -166,7 +149,6 @@ const TitleSearch = styled.h2`
 	margin: 0.8rem 0.9rem 0 0;
 	display: flex;
   align-items: center;
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -180,28 +162,23 @@ const SelectInputUser = styled.span`
 	margin-top: 0.8rem;
 	display: flex;
 	justify-content: space-between;
-
-	@media(max-width: 768px) {
-		width: 73%;
-		margin-top: 0;
-	}
-
-	/* @media(max-width: 490px) {
-		width: 80%;
+	/* @media (max-width: 648px) {
+		order: ${props => (props.order ? '0' : '1')};
 	} */
+	@media(max-width: 768px) {
+		width: 50%;
+	}
+	@media(max-width: 490px) {
+		width: 80%;
+	}
 `;
 
 const Input = styled.input`
 	border: none;
 	outline: none;
-
 	@media (max-width: 768px) {
-		width: 100%;
 		padding: 0.5rem;
 	}
-`;
-const ImageMagnifyingGlass = styled.img`
-	cursor: pointer;
 `;
 
 const InputSelect = styled.div`
@@ -216,12 +193,10 @@ const InputSelect = styled.div`
 	justify-content: space-between;
 	cursor: pointer;
 	z-index: 2;
-
 	@media (max-width: 768px) {
-		width: 75%;
 		font-size: 1rem;
+		width: 50%;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 	}
@@ -252,12 +227,10 @@ const InputSelectedItem = styled.div`
 	position: absolute;
 	top: 32px;
 	cursor: pointer;
-
 	@media (max-width: 768px) {
 		width: 50%;
 		top: 36px;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 		top: 32px;
@@ -265,16 +238,14 @@ const InputSelectedItem = styled.div`
 `;
 
 const SelectedItem = styled.p`
-	color: #85144B;
 	font-size: 0.9rem;
+	color: #85144B;
 	font-family: Overpass, Regular;
 	padding: 0.4rem;
-
 	&:hover {
 		background-color: #FFCFCD;
 		border: 0.5px solid #85144B;
 	}
-
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
@@ -286,22 +257,16 @@ const ContainerTableUser = styled.div`
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	border-radius: ${props => (props.border ? '0' : '3px')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
-
 	@media (max-width: 768px) {
-		width: ${props => (props.width ? '100%' : '100%')};
-		margin: 0 0;
+		margin: 0 auto;
+		width: 100%;
 	}
-/*
-	@media (max-width: 648px) {
-		padding: 3rem;
-	} */
 `;
 
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.8rem 1.5rem 0')};
-
+	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
@@ -310,25 +275,20 @@ const Content = styled.div`
 const ContainerTable = styled.div`
 	${''}
 	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
-	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 179px)')};
+	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 178px)')};
 	overflow-y: scroll;
-
 	::-webkit-scrollbar {
   width: 10px;
 	}
-
 	::-webkit-scrollbar-track {
   background: #fff;
 	}
-
 	::-webkit-scrollbar-thumb {
   	background: #FFCFCD;
 	}
-
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
 	}
-
 	@media(max-width: 648px) {
 		overflow-y: visible;
 		max-height: 100%;
@@ -339,9 +299,7 @@ const ContainerTable = styled.div`
 const Table = styled.table`
 	max-width: 100%;
   width: 100%;
-	/* height: 100%; */
 	border-spacing: 0;
-
 	@media (max-width: 648px) {
 		padding: 0;
 		${({ modal }) => modal && css`
@@ -352,7 +310,6 @@ const Table = styled.table`
 
 const Thead = styled.thead`
 	text-align: left;
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -361,15 +318,13 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
-	/* cursor: pointer; */
-
+	cursor: pointer;
 	&:nth-child(even) {
     background-color: #FFCFCD;
   }
 	&:nth-child(odd) {
     background-color: #FFFFFF;
 	}
-
 	@media(max-width: 768px) {
 		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
@@ -379,7 +334,6 @@ const Tr = styled.tr`
 	@media(max-width: 648px) {
 		padding: 1rem 1rem 12.5rem 1rem;
 	}
-
 	@media(max-width: 420px) {
 		padding: 1rem 1rem 16.8rem 1rem;
 	}
@@ -396,7 +350,6 @@ const TableTitle = styled.th`
 	top: 0;
 	z-index: 5;
 	${''}
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -404,7 +357,6 @@ const TableTitle = styled.th`
 
 const ImageMore = styled.img`
 	display: none;
-
 	@media(max-width: 768px) {
 		width: 1rem;
 		display: flex;
@@ -415,15 +367,12 @@ const ImageMore = styled.img`
 
 const ContainerTableTitleMob = styled.span`
 	display: none;
-
 	@media (max-width: 768px) {
 		padding-right: 2rem;
 		padding-bottom: 1rem;
 		display: flex;
 		flex-direction: column;
-
 		${({ selected }) => selected && css`
-		/* img {display: block;} */
 		p {display: none;}
 		div {display: flex;}
 	`}
@@ -443,15 +392,10 @@ const TextInformation = styled.p`
 	text-align: center;
 	font-family: Overpass, Regular;
 	color: #85144B;
-/*
-	@media(max-width: 648px) {
-		font-size: 1.5rem;
-	} */
 `;
 
 const Box = styled.div`
 	display: none;
-
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 		flex-direction: row;
@@ -462,7 +406,6 @@ const BoxButton = styled.button`
 	border: none;
 	background: none;
 	outline: none;
-
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -470,7 +413,6 @@ const BoxButton = styled.button`
 
 const TableTitleMob = styled.th`
 	display: none;
-
 	@media(max-width: 768px) {
 		display: flex;
 		color: #85144B;
@@ -486,7 +428,6 @@ const TableList = styled.td`
 	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
 	text-align: ${props => (props.wNumber && 'center')};
-
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
 		display: ${props => (props.mob ? 'none' : 'flex')};
@@ -497,13 +438,11 @@ const ContainerStatus = styled.td`
 	display: flex;
 	height: inherit;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
-
 	${({ selected }) => selected && css`
 		img {display: block}
 		p {display: none}
 		div {display: flex}
 	`}
-
 	@media(max-width: 768px) {
 		padding: 0;
 	}
@@ -513,7 +452,6 @@ const TextStatus = styled.p`
 	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
 	text-transform: uppercase;
-
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -523,8 +461,7 @@ const ImageStatus = styled.img`
 	width: 1.3rem;
   padding-right: 0.3rem;
 	display: none;
-	/* cursor: pointer; */
-
+	cursor: pointer;
 	@media(max-width: 768px) {
 		display: flex;
 	}
@@ -539,7 +476,7 @@ class OrganizationScreen extends Component {
 			itemSelected: undefined,
 			isSelected: undefined,
 			toFilter: false,
-			modalType: '',
+			modalSucess: false,
 			filter: '',
 			selectedValue: 'Selecionar status',
 			selectedItems: [
@@ -592,10 +529,10 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	isModalCreateOrganization = (type) => {
+	isModalCreateOrganization = (ev) => {
+		ev.stopPropagation();
 		this.setState({
 			isModalCreateOrg: !this.state.isModalCreateOrg,
-			modalType: type,
 		});
 	}
 
@@ -620,13 +557,6 @@ class OrganizationScreen extends Component {
 	};
 
 	handleClosedModal = () => {
-		this.setState({
-			isModal: false,
-		});
-	}
-
-	deleteOrganization = () => {
-		this.props.deleteOrg(this.state.itemSelected);
 		this.setState({
 			isModal: false,
 		});
@@ -662,7 +592,6 @@ class OrganizationScreen extends Component {
 	handleChangeFilter = (ev) => {
 		this.setState({
 			filter: ev.target.value,
-			toFilter: false,
 		});
 	}
 
@@ -719,7 +648,7 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleMyOrganization>Minhas organizações</TitleMyOrganization>
-				<SelectViewBy width={'30%'}>
+				<SelectViewBy>
 					<TitleSearch>Pesquisar</TitleSearch>
 					<SelectInputUser>
 						<Input
@@ -728,7 +657,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<ImageMagnifyingGlass src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<img src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -768,7 +697,7 @@ class OrganizationScreen extends Component {
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
-						<TableList>{item.tradingName}</TableList>
+						<TableList>{item.organization}</TableList>
 					</ContainerTableTitleMob>
 					: <>
 						<TableList
@@ -777,7 +706,7 @@ class OrganizationScreen extends Component {
 							style={{ paddingLeft: '.7rem' }}
 							width={'9rem'}
 						>
-							{item.tradingName}
+							{item.organization}
 						</TableList>
 					</>
 				}
@@ -787,8 +716,7 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'9.5rem'}
 				>
-					{/* {item.cpf} */}
-					cpf do user
+					{item.cpf}
 				</TableList>
 				<TableList
 					mob
@@ -796,8 +724,7 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}
 				>
-					{/* {item.name} */}
-					nome do user
+					{item.user}
 				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
@@ -826,16 +753,14 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{/* {item.email} */}
-							email do user
+							{item.email}
 						</TableList>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'8rem'}
 						>
-							{/* {item.telephone} */}
-							telefone do user
+							{item.telephone}
 						</TableList>
 						<TableList
 							wNumber
@@ -908,6 +833,22 @@ class OrganizationScreen extends Component {
 		return listTable;
 	}
 
+	handleChangeCloseModal = (ev) => {
+		ev.stopPropagation();
+		this.setState({
+			isModalCreateOrg: false,
+			modalSucess: true,
+		});
+	}
+
+	handleRedirect = (ev) => {
+		ev.stopPropagation();
+  	this.setState({
+			modalSucess: !this.state.modalSucess,
+			isModalCreateOrg: false,
+  	});
+	}
+
 	render() {
 		const { isAdmin } = this.props;
 
@@ -915,35 +856,24 @@ class OrganizationScreen extends Component {
 			<Container>
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal
-					&& <ModalOrganization
-						item={this.state.itemSelected}
-						handleClosedModal={this.isModalOpen}
-						isModalCreateOrganization={this.isModalCreateOrganization}
-						deleteOrganization={this.deleteOrganization}
-					/>
+					&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
 				}
 				{this.state.isModalCreateOrg
-					&& <ModalCreateOrganization
-						item={this.state.itemSelected}
-						modalType={this.state.modalType}
-						tableDatas={this.props.tableDatas}
-						handleClosedModal={this.isModalCreateOrganization}
-						closeModal={this.isModalOpen}
-					/>
+					&& <ModalCreateOrganization modalSucess={this.state.modalSucess} handleClosedModal={this.isModalCreateOrganization} handleChangeCloseModal={this.handleChangeCloseModal}/>
 				}
+				{this.state.modalSucess && <Sucessfully handleRedirect={this.handleRedirect} />}
 				<Header />
 				<ContainerUser
+					width={isAdmin}
 					height={isAdmin}
 					background={isAdmin}
 				>
 					{!isAdmin
 						&& <Button
-							width='20%'
-							height='4.9rem'
+							width='18%'
+							height='4.3rem'
 							fontSize='1.4rem'
-							margin='1.2rem 0 1.2rem 2.5rem'
-							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
-							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
+							margin='1.5rem 0 1.5rem 2.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
