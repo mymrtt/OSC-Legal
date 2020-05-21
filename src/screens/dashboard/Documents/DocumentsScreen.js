@@ -60,7 +60,7 @@ const Content = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: ${props => (props.isAdmin || props.isMobileButton ? '#FFF' : '#FFCFCD')};
+	background: ${props => (props.isAdmin ? '#FFF' : '#FFCFCD')};
 
 	@media(max-width: 1400px) and (max-height: 900px){
 		min-height: 83.5vh;
@@ -85,6 +85,7 @@ const MaximumWidth = styled.div`
 	@media(max-width: 648px){
 		padding: 0;
 		margin: 0;
+		height: 85vh;
 	}
 
 `;
@@ -944,11 +945,10 @@ const ButtonsModal = styled.div`
 const ButtonCancel = styled.button`
 	width: 50%;
 	height: 3.5rem;
-	background: blue;
 	color: #F00;
 	border-radius: 4px;
 	border: none;
-	/* background: #FFF; */
+	background: #FFF;
 	font-size: 1rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
@@ -988,7 +988,6 @@ const ErrorText = styled.p`
 const BoxOrgs = styled.div`
 	width: 100%;
 	max-height: 35vh;
-	/* overflow-y: scroll; */
 	overflow-y: ${props => (props.orgs.length < '5' ? 'none' : 'scroll')};
 	display: flex;
 	flex-direction: column;
@@ -1041,13 +1040,9 @@ const Org = styled.div`
 `;
 
 const TextOrg = styled.p`
-	font-size: .8rem;
+	font-size: .9rem;
 	color: ${props => (props.select === '' ? '#959595' : '#85144B')};
 	font-family: 'Overpass', Regular;
-
-	@media(max-width: 1024px) {
-		font-size: .7rem;
-	}
 `;
 
 const Modal = styled.div`
@@ -1202,11 +1197,13 @@ class DocumentsScreen extends Component {
 		idDocUser: 1,
 	};
 
-	handleOnOptions = (item) => {
-		this.setState({
-			options: true,
-			selectedOptions: item,
-		});
+	handleOnOptions = (item, index) => {
+		if (this.state.selectedOptions.index === this.state.listDocs.index) {
+			this.setState({
+				options: true,
+				selectedOptions: item,
+			});
+		}
 	}
 
 	handleOffOptions = () => {
