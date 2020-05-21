@@ -466,7 +466,7 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: ${props => props.modal ? '95%' : '76%'};
+	width: ${props => (props.modal ? '95%' : '76%')};
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -1197,13 +1197,11 @@ class DocumentsScreen extends Component {
 		idDocUser: 1,
 	};
 
-	handleOnOptions = (item, index) => {
-		if (this.state.selectedOptions.index === this.state.listDocs.index) {
-			this.setState({
-				options: true,
-				selectedOptions: item,
-			});
-		}
+	handleOnOptions = (item) => {
+		this.setState({
+			options: true,
+			selectedOptions: item,
+		});
 	}
 
 	handleOffOptions = () => {
@@ -1844,7 +1842,7 @@ class DocumentsScreen extends Component {
 													>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{index +1}</ModelNumber>
+																<ModelNumber>{index + 1}</ModelNumber>
 																<ModelTitle>{docs.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{docs.description}</ModelParagraph>
