@@ -18,6 +18,7 @@ import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
+import Exit from '../../../assets/exit.svg';
 
 // Redux
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
@@ -510,6 +511,121 @@ const ImageStatus = styled.img`
 	}
 `;
 
+const ContainerModalDelete = styled.div`
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 30;
+	background: rgba(112, 112, 112, 0.5);
+
+	@media (max-width: 490px) {
+		flex-direction: column;
+		background: #ffffff;
+	}
+`;
+
+const ModalDelete = styled.div`
+	background: #FFF;
+	width: 480px;
+	padding: 1% 1% 1% 1%;
+
+
+	@media (max-width: 490px) {
+		width: 100%;
+		height: 100vh;
+		padding: 5%;
+		    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+	}
+`;
+
+const TitleModal = styled.div`
+	display: flex;
+	justify-content: space-between;
+
+	img {
+		width: 20px;
+		height: 20px;
+		cursor: pointer;
+	}
+`;
+
+const TitleDelete = styled.h2`
+	color: #85144B;
+	font-size: 2rem;
+	margin-top: 2%;
+	margin-bottom: 1%;
+	margin-left: 1rem;
+  font-family: "Overpass", Bold;
+  font-weight: 900;
+
+	@media (max-width: 490px) {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+`;
+
+const WrapTextModal = styled.div`
+	@media (max-width: 490px) {
+		height: 30%;
+    display: flex;
+    flex-direction: column;
+	}
+`;
+
+const TextModal = styled.p`
+	margin: 1.5rem  0;
+	font-size: 1rem;
+	font-family: 'Overpass', Regular;
+	color: #404040;
+
+	strong {
+		font-family: 'Overpass', Bold;
+		color: #404040;
+	}
+	@media (max-width: 490px) {
+		margin: 0;
+		font-size: 1.3rem;
+	}
+`;
+
+const ButtonsModal = styled.div`
+	display: flex;
+	margin-top: 5%;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+
+	@media (max-width: 490px) {
+		margin: 0;
+		width: 100%;
+	}
+`;
+
+const ButtonCancel = styled.button`
+	width: 50%;
+	height: 3.5rem;
+	color: #F00;
+	border-radius: 4px;
+	border: none;
+	background: #FFF;
+	font-size: 1rem;
+	font-family: "Overpass", Bold;
+	font-weight: 600;
+
+	@media (max-width: 490px) {
+		margin: 0;
+		position: initial;
+		width: 100%;
+	}
+`;
+
 class OrganizationScreen extends Component {
 	constructor(props) {
 		super(props);
@@ -519,6 +635,7 @@ class OrganizationScreen extends Component {
 			itemSelected: undefined,
 			isSelected: undefined,
 			toFilter: false,
+			isDeleteModal: false,
 			modalType: '',
 			filter: '',
 			selectedValue: 'Selecionar status',
@@ -605,11 +722,18 @@ class OrganizationScreen extends Component {
 		});
 	}
 
+	handleDeleteModal = () => {
+		this.setState({
+			isDeleteModal: !this.state.isDeleteModal,
+		});
+	}
+
 	deleteOrganization = () => {
 		this.props.deleteOrg(this.state.itemSelected);
 		this.setState({
 			isModal: false,
 		});
+		this.handleDeleteModal();
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
@@ -738,6 +862,32 @@ class OrganizationScreen extends Component {
 				</TextStatus>
 			</BoxButton>
 		</>
+	)
+
+	renderModalDelete = () => (
+		<ContainerModalDelete onClick={this.handleDeleteModal}>
+			<ModalDelete onClick={e => e.stopPropagation()}>
+				<TitleModal>
+					<TitleDelete>Excluir Organização</TitleDelete>
+					<img onClick={this.handleDeleteModal} src={Exit} alt="Sair" />
+				</TitleModal>
+				<WrapTextModal>
+					<TextModal>
+						Após ser excluido, uma organização não pode ser recuperado.
+					</TextModal>
+					<TextModal>Você deseja excluir <strong>{this.state.itemSelected.tradingName}</strong> permanentemente?</TextModal>
+				</WrapTextModal>
+				<ButtonsModal>
+					<ButtonCancel onClick={this.handleDeleteModal}>Cancelar</ButtonCancel>
+					<Button
+						onClick={this.deleteOrganization}
+						width="50%"
+						height="3.5rem"
+						text="Confirmar"
+					/>
+				</ButtonsModal>
+			</ModalDelete>
+		</ContainerModalDelete>
 	)
 
 	renderTable = (listTable) => {
@@ -889,24 +1039,32 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		const { isAdmin } = this.props;
+		const { isAdmin, tableDatas } = this.props;
+		const {
+			isSelected,
+			isModal,
+			isDeleteModal,
+			itemSelected,
+			modalType,
+			isModalCreateOrg,
+		} = this.state;
 
 		return (
 			<Container>
-				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
-				{this.state.isModal
+				{isSelected && <Overlay onClick={this.isSelectOpen} />}
+				{isModal
 					&& <ModalOrganization
-						org={this.state.itemSelected}
+						org={itemSelected}
 						handleClosedModal={this.isModalOpen}
 						isModalCreateOrganization={this.isModalCreateOrganization}
-						deleteOrganization={this.deleteOrganization}
+						handleDeleteModal={this.handleDeleteModal}
 					/>
 				}
-				{this.state.isModalCreateOrg
+				{isModalCreateOrg
 					&& <ModalCreateOrganization
-						item={this.state.itemSelected}
-						modalType={this.state.modalType}
-						tableDatas={this.props.tableDatas}
+						item={itemSelected}
+						modalType={modalType}
+						tableDatas={tableDatas}
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
 					/>
@@ -972,6 +1130,7 @@ class OrganizationScreen extends Component {
 						</Content>
 					</ContainerTableUser>
 				</ContainerUser>
+				{isDeleteModal && this.renderModalDelete()}
 			</Container>
 		);
 	}

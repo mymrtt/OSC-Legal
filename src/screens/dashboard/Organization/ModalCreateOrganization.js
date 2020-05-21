@@ -241,7 +241,7 @@ class ModalCreateOrganization extends Component {
 		cep: '',
 		userData: [
 			{
-				name: 'Yasmin Miranda',
+				name: '*********',
 				email: 'nome@email.com',
 				telephone: '(99) 99999-9999',
 				cpf: '000000000-00',

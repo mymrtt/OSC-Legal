@@ -4,7 +4,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
 
 // Images
-import logo from '../../../assets/logo.svg';
+// import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
@@ -668,42 +668,42 @@ const ModalAddModel = styled.form`
 	}
 `;
 
-const LogoAndData = styled.div`
-	display: none;
+// const LogoAndData = styled.div`
+// 	display: none;
 
-	@media (max-width: 490px) {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 10%;
-	}
-`;
+// 	@media (max-width: 490px) {
+// 		display: flex;
+// 		justify-content: space-between;
+// 		margin-bottom: 10%;
+// 	}
+// `;
 
-const ParagraphContainer1 = styled.p`
-	font-size: 1.25rem;
-	font-family: "Overpass", Light;
-	margin-top: 1.2rem;
+// const ParagraphContainer1 = styled.p`
+// 	font-size: 1.25rem;
+// 	font-family: "Overpass", Light;
+// 	margin-top: 1.2rem;
 
-	@media (max-width: 859px) {
-		font-size: 1rem;
-	}
+// 	@media (max-width: 859px) {
+// 		font-size: 1rem;
+// 	}
 
-	@media (max-width: 685px) {
-		margin-top: 0;
-	}
+// 	@media (max-width: 685px) {
+// 		margin-top: 0;
+// 	}
 
-	@media (max-width: 648px) {
-		font-size: 0.8rem;
-	}
-`;
+// 	@media (max-width: 648px) {
+// 		font-size: 0.8rem;
+// 	}
+// `;
 
-const ParagraphSair = styled.p`
-  color: #85144B;
-  font-family: Overpass, SemiBold;
-	font-size: 1rem;
-	cursor: pointer;
-	align-self: flex-end;
-	text-transform: uppercase;
-`;
+// const ParagraphSair = styled.p`
+//   color: #85144B;
+//   font-family: Overpass, SemiBold;
+// 	font-size: 1rem;
+// 	cursor: pointer;
+// 	align-self: flex-end;
+// 	text-transform: uppercase;
+// `;
 
 const HeaderAddModel = styled.div`
 	display: flex;
@@ -835,33 +835,33 @@ const TextArea = styled.textarea`
 	resize: none;
 `;
 
-const ButtonAdd = styled(Button)`
-	align-self: flex-end;
-	width: 18.75rem;
-	height: 4rem;
-	font-size: 1.2rem;
-	margin: 0;
-	text-transform: uppercase;
+// const ButtonAdd = styled(Button)`
+// 	align-self: flex-end;
+// 	width: 18.75rem;
+// 	height: 4rem;
+// 	font-size: 1.2rem;
+// 	margin: 0;
+// 	text-transform: uppercase;
 
-	@media (max-width: 1024px) {
-		font-size: .9rem;
-		width: 55%;
-		padding: .8rem;
-	}
+// 	@media (max-width: 1024px) {
+// 		font-size: .9rem;
+// 		width: 55%;
+// 		padding: .8rem;
+// 	}
 
-	@media (max-width: 768px) {
-		width: 45%;
-		padding: 1rem;
-		font-size: 1.3rem;
-		margin: 0;
-	}
+// 	@media (max-width: 768px) {
+// 		width: 45%;
+// 		padding: 1rem;
+// 		font-size: 1.3rem;
+// 		margin: 0;
+// 	}
 
-	@media (max-width: 490px) {
-		width: 90%;
-		font-size: 1.2rem;
-		align-self: center;
-	}
-`;
+// 	@media (max-width: 490px) {
+// 		width: 90%;
+// 		font-size: 1.2rem;
+// 		align-self: center;
+// 	}
+// `;
 
 const ContainerModalDelete = styled(ContainerModal)`
 	@media (max-width: 490px) {
@@ -954,22 +954,22 @@ const ButtonCancel = styled.button`
 	}
 `;
 
-const ButtonConfirm = styled(Button)`
-	margin: 5% 0 0 0;
-	width: 50%;
-	height: 3.5rem;
+// const ButtonConfirm = styled(Button)`
+// 	margin: 5% 0 0 0;
+// 	width: 50%;
+// 	height: 3.5rem;
 
-	@media (max-width: 1024px) {
-		margin: 5% 0 0 0;
-		width: 50%;
-	}
+// 	@media (max-width: 1024px) {
+// 		margin: 5% 0 0 0;
+// 		width: 50%;
+// 	}
 
-	@media (max-width: 490px) {
-		margin: 0;
-		position: initial;
-		width: 100%;
-	}
-`;
+// 	@media (max-width: 490px) {
+// 		margin: 0;
+// 		position: initial;
+// 		width: 100%;
+// 	}
+// `;
 
 const ErrorText = styled.p`
 	color: #f00;
@@ -1299,6 +1299,7 @@ class DocumentsScreen extends Component {
 
 	uploadFile = (e) => {
 		e.preventDefault();
+		// eslint-disable-next-line no-undef
 		const reader = new FileReader();
 		const file = e.target.files[0];
 
@@ -1875,7 +1876,9 @@ class DocumentsScreen extends Component {
 														) : (
 															<>
 																Escolha um modelo de documento clicando em
-																<span style={{marginLeft: '.3rem'}} onClick={this.openModalListDoc}>Adicionar Documento</span>
+																<span
+																	style={{ marginLeft: '.3rem' }}
+																	onClick={this.openModalListDoc}>Adicionar Documento</span>
 															</>
 														)}
 													</TextInitialAddModel>
