@@ -14,7 +14,7 @@ const initialState = {
 		{
 			id: 2,
 			title: 'Modelo 2',
-			description: 'fsankdsgfhdasbhklfsdfhjl',
+			description: 'dsfshgswdsfhgjhgdsfghgresfhggkldsfnonfa  f k OJGO NOÁJofp ançgnmd çljhOPI SKHDGISBHKS LAKPFJO kslnfksadhogj fas,mv kçHKG SM GKÇFADSHIPGFHSBKLG SLJPOHjlgd slnfdsoçjbv dsnk çkJHIPGB SL FKÇLDSJHIPDHWBLJ VLKJOPbglsc çfahiogbs lgds lçdshjs dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd asdnfognisahdgionspgjfiosbgkfsdnipohi',
 		},
 		{
 			id: 3,

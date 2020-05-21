@@ -66,6 +66,10 @@ const WrapButton = styled.div`
 	@media(max-width: 768px){
 		width: 50%;
 		margin-left: 1rem;
+
+		a{
+			font-size: 1.2rem;
+		}
 	}
 
 	@media (max-width: 648px) {
@@ -115,7 +119,7 @@ const ParagraphUserName = styled.p`
 	margin: 1.2rem 5.3rem 0 0;
 
 	@media (max-width: 859px) {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		margin-right: .7rem;
 	}
 
@@ -142,6 +146,7 @@ const ParagraphSair = styled.p`
 
 	@media(max-width: 768px){
 		margin-right: .7rem;
+		font-size: 1rem;
 	}
 	@media(max-width: 648px){
 		margin-right: 1.7rem;
