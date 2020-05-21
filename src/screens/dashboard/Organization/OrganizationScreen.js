@@ -109,8 +109,14 @@ const TitleMyOrganization = styled.h2`
 
 const SelectViewBy = styled.div`
 	/* width: ${props => (props.width)}; */
+	width: 43%;
 	display: flex;
 	flex-direction: row;
+	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
+
+	@media (max-width: 1024px) {
+		width: ${props => (props.isAdmin ? '48%' : '43%')};
+	}
 
 	@media (max-width: 768px) {
 		width: 45%;
@@ -123,7 +129,7 @@ const SelectViewBy = styled.div`
 	}
 
 	@media(max-width: 490px) {
-    width: 80%;
+    width: ${props => (props.isAdmin ? '85%' : '80%')};
 		margin-right: 0;
 	}
 `;
@@ -139,13 +145,15 @@ const SpanSelect = styled.div`
 	@media (max-width: 940px) {
 		width: 47%;
 	}
+
 	@media (max-width: 768px) {
-		margin: 0 2rem;
+		margin: 0;
 		width: 100%;
 		align-items: center;
 	}
-	@media(max-width: 648px) {
-		width: 90%;
+
+	@media(max-width: 490px) {
+		width: 100%;
 	}
 `;
 
@@ -176,7 +184,7 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
-	width: 75%;
+	width: 100%;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
@@ -187,7 +195,7 @@ const SelectInputUser = styled.span`
 	} */
 
 	@media(max-width: 768px) {
-		width: 70%;
+		width: 80%;
 	}
 
 	@media(max-width: 490px) {
@@ -215,10 +223,13 @@ const InputSelect = styled.div`
 	justify-content: space-between;
 	cursor: pointer;
 	z-index: 2;
+
 	@media (max-width: 768px) {
 		font-size: 1rem;
-		width: 50%;
+		width: ${props => (props.isAdmin ? '100%' : '50%')};
+		/* width: 50%; */
 	}
+
 	@media (max-width: 490px) {
 		width: 100%;
 	}
@@ -249,10 +260,12 @@ const InputSelectedItem = styled.div`
 	position: absolute;
 	top: 32px;
 	cursor: pointer;
+
 	@media (max-width: 768px) {
-		width: 50%;
+		width: 100%;
 		top: 36px;
 	}
+
 	@media (max-width: 490px) {
 		width: 100%;
 		top: 32px;
@@ -311,7 +324,6 @@ const Content = styled.div`
 	@media (max-width: 1024px) {
 		min-height: 64vh;
 	}
-	
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
@@ -452,6 +464,8 @@ const BoxButton = styled.button`
 	border: none;
 	background: none;
 	outline: none;
+	cursor: auto;
+
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -474,6 +488,8 @@ const TableList = styled.td`
 	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
 	text-align: ${props => (props.wNumber && 'center')};
+	cursor: pointer;
+
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
 		display: ${props => (props.mob ? 'none' : 'flex')};
@@ -498,6 +514,8 @@ const TextStatus = styled.p`
 	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
 	text-transform: uppercase;
+	cursor: auto;
+
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -507,7 +525,9 @@ const ImageStatus = styled.img`
 	width: 1.3rem;
   padding-right: 0.3rem;
 	display: none;
-	cursor: pointer;
+	/* cursor: pointer; */
+	cursor: ${props => (props.cursor ? 'pointer' : 'auto')};
+
 	@media(max-width: 768px) {
 		display: flex;
 	}
@@ -789,10 +809,10 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
-				<SelectViewBy>
+				<SelectViewBy isAdmin={this.props.isAdmin}>
 					<TitleViewBy>Visualizar por:</TitleViewBy>
 					<SpanSelect>
-						<InputSelect onClick={this.isSelectOpen}>
+						<InputSelect isAdmin={this.props.isAdmin} onClick={this.isSelectOpen}>
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
@@ -845,6 +865,7 @@ class OrganizationScreen extends Component {
 			<Box isClickedStatus={item.id === this.state.isClickedStatus}>
 				{this.state.statusImgs.map((status, index) => (
 					<ImageStatus
+						cursor={this.props.isAdmin}
 						key={index}
 						src={status.img}
 						alt={status.desc}
@@ -895,13 +916,12 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-
 		return listTable.map(item => (
 			<Tr key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
-						<TableList>{item.organization}</TableList>
+						<TableList cursor={this.props.isAdmin}>{item.tradingName}</TableList>
 					</ContainerTableTitleMob>
 					: <>
 						<TableList
@@ -910,7 +930,7 @@ class OrganizationScreen extends Component {
 							style={{ paddingLeft: '.7rem' }}
 							width={'9rem'}
 						>
-							{item.organization}
+							{item.tradingName}
 						</TableList>
 					</>
 				}
@@ -1031,8 +1051,8 @@ class OrganizationScreen extends Component {
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.organization.split(' ').includes(filter)
-				: item.organization.toLowerCase() === filter.toLowerCase())));
+				? item.companyName.split(' ').includes(filter)
+				: item.companyName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1096,9 +1116,9 @@ class OrganizationScreen extends Component {
 							width='18%'
 							height='4.3rem'
 							fontSize='1.4rem'
-							margin='1.5rem 0 1.5rem 2.5rem'
-							// marginMobile='0 2.5rem 1.2rem 2.5rem'
-							marginMobileSmall='0 1.9rem 1.2rem 2.6rem'
+							margin='1.2rem 0 1.2rem 2.3rem'
+							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
@@ -1111,7 +1131,7 @@ class OrganizationScreen extends Component {
 						background={isAdmin}
 						border={isAdmin}
 						margin={isAdmin}>
-						<Content padding={isAdmin}>
+						<Content height={isAdmin} padding={isAdmin}>
 							{isAdmin
 								? this.renderSelectedViewby()
 								: this.renderSelectedViewbyUser()}
