@@ -58,7 +58,6 @@ const Form = styled.form`
 		width: 47%;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    /* padding: 0 2rem; */
   }
   @media (max-width: 648px) {
     margin: 0;
@@ -112,11 +111,7 @@ const Label = styled.label`
   @media (max-width: 648px) {
 		width: 100%;
 		padding: 0 1rem;
-		/* margin-left: 0.3rem; */
   }
-  /* @media(max-width: 425px){
-		width: 100%;
-  } */
 `;
 
 const ParagraphInput = styled.p`
@@ -126,7 +121,6 @@ const ParagraphInput = styled.p`
 	font-family: Overpass;
 	font-weight: 900;
 	margin: 1rem 0 0.4rem 1.6rem;
-	/* margin: 1rem 0 0.2rem 0.8rem; */
 	text-transform: uppercase;
 	@media (max-width: 425px) {
 		text-align: left;
@@ -208,7 +202,6 @@ const Overlay = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
-  /* padding: 2.5rem 0; */
   z-index: 99;
 	@media(max-width: 648px) {
 		height: 100vh;
@@ -239,8 +232,6 @@ const Modal = styled.div`
     justify-content: flex-start;
     align-self: center;
 		overflow-y: auto;
-		/* overflow-x: hidden;
-		overflow-y: scroll; */
 	}
 `;
 

@@ -4,7 +4,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
 
 // Images
-import logo from '../../../assets/logo.svg';
+// import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
@@ -36,9 +36,9 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
-	isAdmin: state.onboarding.users.isAdmin,
+	// isAdmin: state.onboarding.users.isAdmin,
 	organization: state.organization.tableDatas,
-	// isAdmin: false,
+	isAdmin: true,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -668,42 +668,42 @@ const ModalAddModel = styled.form`
 	}
 `;
 
-const LogoAndData = styled.div`
-	display: none;
+// const LogoAndData = styled.div`
+// 	display: none;
 
-	@media (max-width: 490px) {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 10%;
-	}
-`;
+// 	@media (max-width: 490px) {
+// 		display: flex;
+// 		justify-content: space-between;
+// 		margin-bottom: 10%;
+// 	}
+// `;
 
-const ParagraphContainer1 = styled.p`
-	font-size: 1.25rem;
-	font-family: "Overpass", Light;
-	margin-top: 1.2rem;
+// const ParagraphContainer1 = styled.p`
+// 	font-size: 1.25rem;
+// 	font-family: "Overpass", Light;
+// 	margin-top: 1.2rem;
 
-	@media (max-width: 859px) {
-		font-size: 1rem;
-	}
+// 	@media (max-width: 859px) {
+// 		font-size: 1rem;
+// 	}
 
-	@media (max-width: 685px) {
-		margin-top: 0;
-	}
+// 	@media (max-width: 685px) {
+// 		margin-top: 0;
+// 	}
 
-	@media (max-width: 648px) {
-		font-size: 0.8rem;
-	}
-`;
+// 	@media (max-width: 648px) {
+// 		font-size: 0.8rem;
+// 	}
+// `;
 
-const ParagraphSair = styled.p`
-  color: #85144B;
-  font-family: Overpass, SemiBold;
-	font-size: 1rem;
-	cursor: pointer;
-	align-self: flex-end;
-	text-transform: uppercase;
-`;
+// const ParagraphSair = styled.p`
+//   color: #85144B;
+//   font-family: Overpass, SemiBold;
+// 	font-size: 1rem;
+// 	cursor: pointer;
+// 	align-self: flex-end;
+// 	text-transform: uppercase;
+// `;
 
 const HeaderAddModel = styled.div`
 	display: flex;
@@ -835,33 +835,33 @@ const TextArea = styled.textarea`
 	resize: none;
 `;
 
-const ButtonAdd = styled(Button)`
-	align-self: flex-end;
-	width: 18.75rem;
-	height: 4rem;
-	font-size: 1.2rem;
-	margin: 0;
-	text-transform: uppercase;
+// const ButtonAdd = styled(Button)`
+// 	align-self: flex-end;
+// 	width: 18.75rem;
+// 	height: 4rem;
+// 	font-size: 1.2rem;
+// 	margin: 0;
+// 	text-transform: uppercase;
 
-	@media (max-width: 1024px) {
-		font-size: .9rem;
-		width: 55%;
-		padding: .8rem;
-	}
+// 	@media (max-width: 1024px) {
+// 		font-size: .9rem;
+// 		width: 55%;
+// 		padding: .8rem;
+// 	}
 
-	@media (max-width: 768px) {
-		width: 45%;
-		padding: 1rem;
-		font-size: 1.3rem;
-		margin: 0;
-	}
+// 	@media (max-width: 768px) {
+// 		width: 45%;
+// 		padding: 1rem;
+// 		font-size: 1.3rem;
+// 		margin: 0;
+// 	}
 
-	@media (max-width: 490px) {
-		width: 90%;
-		font-size: 1.2rem;
-		align-self: center;
-	}
-`;
+// 	@media (max-width: 490px) {
+// 		width: 90%;
+// 		font-size: 1.2rem;
+// 		align-self: center;
+// 	}
+// `;
 
 const ContainerModalDelete = styled(ContainerModal)`
 	@media (max-width: 490px) {
@@ -954,22 +954,22 @@ const ButtonCancel = styled.button`
 	}
 `;
 
-const ButtonConfirm = styled(Button)`
-	margin: 5% 0 0 0;
-	width: 50%;
-	height: 3.5rem;
+// const ButtonConfirm = styled(Button)`
+// 	margin: 5% 0 0 0;
+// 	width: 50%;
+// 	height: 3.5rem;
 
-	@media (max-width: 1024px) {
-		margin: 5% 0 0 0;
-		width: 50%;
-	}
+// 	@media (max-width: 1024px) {
+// 		margin: 5% 0 0 0;
+// 		width: 50%;
+// 	}
 
-	@media (max-width: 490px) {
-		margin: 0;
-		position: initial;
-		width: 100%;
-	}
-`;
+// 	@media (max-width: 490px) {
+// 		margin: 0;
+// 		position: initial;
+// 		width: 100%;
+// 	}
+// `;
 
 const ErrorText = styled.p`
 	color: #f00;
@@ -1036,7 +1036,6 @@ const Org = styled.div`
 
 const TextOrg = styled.p`
 	font-size: .8rem;
-	/* color: #959595; */
 	color: ${props => (props.select === '' ? '#959595' : '#85144B')};
 	font-family: 'Overpass', Regular;
 
@@ -1163,6 +1162,7 @@ class DocumentsScreen extends Component {
 		downloadDelete: DeleteIcon,
 		modelSelect: '',
 		search: '',
+		searching: false,
 		hoverExport: '',
 		hoverEdit: '',
 		hoverDelete: '',
@@ -1300,6 +1300,7 @@ class DocumentsScreen extends Component {
 
 	uploadFile = (e) => {
 		e.preventDefault();
+		// eslint-disable-next-line no-undef
 		const reader = new FileReader();
 		const file = e.target.files[0];
 
@@ -1329,6 +1330,24 @@ class DocumentsScreen extends Component {
 	handleSearch = (e) => {
 		this.setState({
 			search: e.target.value,
+		});
+	}
+
+	handleOnKey = (ev) => {
+		if (ev.key === 'Enter') {
+			this.setState({
+				searching: true,
+			});
+		} else if (this.state.search === '') {
+			this.setState({
+				searching: false,
+			});
+		}
+	}
+
+	handleOnKeySeach = () => {
+		this.setState({
+			searching: true,
 		});
 	}
 
@@ -1632,7 +1651,7 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
-		const documentsList = (this.state.search !== '')
+		const documentsList = (this.state.search !== '' && this.state.searching === true)
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
 			: this.props.documentsList;
 		const { isAdmin } = this.props;
@@ -1695,6 +1714,7 @@ class DocumentsScreen extends Component {
 										{isAdmin
 											? <SearchInput
 												onChange={this.handleSearch}
+												onKeyUp={this.handleOnKey}
 												placeholder="Digite aqui para pesquisar"
 											/> : <TextOrg
 												isOrg={this.state.isOrg}
@@ -1703,7 +1723,7 @@ class DocumentsScreen extends Component {
 												{this.state.selectOrg === '' ? 'Selecionar organizações' : this.state.selectOrg}
 											</TextOrg>}
 										{isAdmin
-											? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
+											? <img onClick={this.handleOnKeySeach} src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
 											: this.state.isBoxOrgs
 												? <img src={ArrowUpIcon}
 													alt="arrow"
@@ -1876,7 +1896,9 @@ class DocumentsScreen extends Component {
 														) : (
 															<>
 																Escolha um modelo de documento clicando em
-																<span style={{marginLeft: '.3rem'}} onClick={this.openModalListDoc}>Adicionar Documento</span>
+																<span
+																	style={{ marginLeft: '.3rem' }}
+																	onClick={this.openModalListDoc}>Adicionar Documento</span>
 															</>
 														)}
 													</TextInitialAddModel>

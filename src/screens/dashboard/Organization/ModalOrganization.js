@@ -39,12 +39,10 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-
 	@media (max-width: 935px) {
 		width: 95%;
 		margin: 0;
 	}
-
 	@media (max-width: 648px) {
 		width: 100%;
 		min-height: 100vh;
@@ -62,7 +60,6 @@ const Figure = styled.figure`
 
 const ImageBack = styled.img`
 	display: none;
-
 	@media (max-width: 648px) {
 		display: flex;
 		align-self: end;
@@ -75,11 +72,9 @@ const ContentAdmin = styled.section`
 	flex-direction: row;
 	justify-content: space-between;
 	margin: ${props => (props.margin && '0 3.4rem')};
-
 	@media (max-width: 935px) {
 		margin: ${props => (props.margin && '0 1rem')};
 	}
-
 	@media (max-width: 648px) {
 		height: auto;
 		margin: 0;
@@ -92,7 +87,6 @@ const ContentConsultor = styled.span`
 	width: 60%;
 	display: flex;
 	flex-direction: column;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		padding: 0 1rem;
@@ -106,14 +100,12 @@ const ContentConsultorItem = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	margin-left: 3.4rem;
-
 	@media (max-width: 935px) {
 		/* width: 100%; */
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-left: 1rem;
 	}
-
 	@media (max-width: 648px) {
 		margin: 0;
 	}
@@ -128,11 +120,9 @@ const Title = styled.h2`
 	padding-bottom: 1.7rem;
 	margin-left: 3.4rem;
 	text-transform: uppercase;
-
 	@media (max-width: 935px) {
 		margin-left: 1rem;
 	}
-
 	@media (max-width: 648px) {
 		margin: 0;
 	}
@@ -162,7 +152,6 @@ const ContentCreate = styled.div`
   border-left: 1px solid;
 	display: flex;
 	flex-direction: column;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		border-left: 0;
@@ -178,7 +167,6 @@ const ImageClosed = styled.img`
 	align-self: flex-end;
 	padding: 0.8rem 0.8rem 0;
 	cursor: pointer;
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -189,7 +177,6 @@ const ContainerOrganization = styled.span`
 	display: flex;
 	flex-direction: column;
 	padding-bottom: 1.5rem;
-
 	@media (max-width: 648px) {
 		/* height: auto; */
 		padding: 0 1rem 2rem;
@@ -203,11 +190,9 @@ const ContentOrganization = styled.div`
 	justify-content: space-between;
 	margin: ${props => (props.margin && '0 3.4rem')};
 	padding: 0 0 2rem;
-
 	@media (max-width: 935px) {
 		margin: ${props => (props.margin && '0 1rem')};
 	}
-
 	@media (max-width: 648px) {
 		flex-direction: column;
 		margin: 0;
@@ -223,7 +208,6 @@ const ContentOrganizationMobile = styled.div`
 const ContentConsultorDetails = styled.div`
 	display: flex;
 	flex-direction: row;
-
 	 @media (max-width: 648px) {
 		width: 100%;
 		flex-direction: row;
@@ -235,7 +219,6 @@ const ContentConsultorDetails = styled.div`
 const ContentSubTitle = styled.div`
 	/* width: 60%; */
 	width: 55%;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		display: flex;
@@ -247,7 +230,6 @@ const ContentSubTitle = styled.div`
 const ContainerEdit = styled.div`
 	display: flex;
 	flex-direction: column;
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -287,7 +269,6 @@ const ContainerOptionDelete = styled.p`
 
 const Separation = styled.div`
 	/* display: flex; */
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -295,7 +276,6 @@ const Separation = styled.div`
 
 const SeparationMobile = styled.div`
 	display: none;
-
 	@media (max-width: 648px) {
 		width: 56%;
 		display: flex;
@@ -305,7 +285,6 @@ const SeparationMobile = styled.div`
 
 const ContainerSelected = styled.div`
 		display: none;
-
 		@media (max-width: 648px) {
 			width: 100%;
 			padding: 1rem 0 0;
@@ -336,7 +315,6 @@ const PaymentMethodText = styled.p`
 
 const ContainerEditImage = styled.div`
 	display: none;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		padding: 1rem 0 1rem;
@@ -351,8 +329,9 @@ const ContainerEditImage = styled.div`
 `;
 
 const SpanContainerImage = styled.div`
-	  display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
 `;
 
 const ContainerOptionMobile = styled.p`
@@ -453,7 +432,7 @@ class ModalOrganization extends Component {
 											<ImageEdite src={ImageEdit}/>
 											<ContainerOption>Editar</ContainerOption>
 										</SpanContainer>
-										<SpanContainer onClick={this.props.deleteOrganization}>
+										<SpanContainer onClick={this.props.handleDeleteModal}>
 											<img src={ImageDelete}/>
 											<ContainerOptionDelete>Excluir</ContainerOptionDelete>
 										</SpanContainer>
@@ -543,7 +522,7 @@ class ModalOrganization extends Component {
 									<ImageEdite src={ImageEdit}/>
 									<ContainerOptionMobile>Editar</ContainerOptionMobile>
 								</SpanContainerImage>
-								<SpanContainerImage>
+								<SpanContainerImage onClick={this.props.handleDeleteModal}>
 									<img src={ImageDelete}/>
 									<ContainerOptionMobile>Excluir</ContainerOptionMobile>
 								</SpanContainerImage>
