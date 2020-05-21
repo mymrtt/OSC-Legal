@@ -37,7 +37,6 @@ const mapDispatchToProps = dispatch => ({
 const Container = styled.div`
 	width: 100%;
 	height: 100vh;
-	/* padding: 0 0 2rem; */
 `;
 
 const ContainerUser = styled.div`
@@ -49,10 +48,8 @@ const ContainerUser = styled.div`
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	/* margin-top: 1.3rem; */
 	padding-right: .6rem;
 	@media(max-width: 768px) {
-		/* margin: 1.3rem 0; */
 		padding-right: 0;
 	}
 	@media(max-width: 648px) {
@@ -264,10 +261,6 @@ const ContainerTableUser = styled.div`
 		margin: 0 auto;
 		width: 100%;
 	}
-/*
-	@media (max-width: 648px) {
-		padding: 3rem;
-	} */
 `;
 
 const Content = styled.div`
@@ -306,7 +299,6 @@ const ContainerTable = styled.div`
 const Table = styled.table`
 	max-width: 100%;
   width: 100%;
-	/* height: 100%; */
 	border-spacing: 0;
 	@media (max-width: 648px) {
 		padding: 0;
@@ -381,7 +373,6 @@ const ContainerTableTitleMob = styled.span`
 		display: flex;
 		flex-direction: column;
 		${({ selected }) => selected && css`
-		/* img {display: block;} */
 		p {display: none;}
 		div {display: flex;}
 	`}
@@ -401,10 +392,6 @@ const TextInformation = styled.p`
 	text-align: center;
 	font-family: Overpass, Regular;
 	color: #85144B;
-/*
-	@media(max-width: 648px) {
-		font-size: 1.5rem;
-	} */
 `;
 
 const Box = styled.div`

@@ -1036,7 +1036,6 @@ const Org = styled.div`
 
 const TextOrg = styled.p`
 	font-size: .8rem;
-	/* color: #959595; */
 	color: ${props => (props.select === '' ? '#959595' : '#85144B')};
 	font-family: 'Overpass', Regular;
 

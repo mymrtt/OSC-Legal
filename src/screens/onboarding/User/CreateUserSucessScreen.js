@@ -95,7 +95,6 @@ const TextTerms = styled.p`
 	}
 
 	@media(max-width: 648px) {
-		/* width: 100%; */
 		line-height: 1.5rem;
 		margin-bottom: 0.8rem;
 	}
