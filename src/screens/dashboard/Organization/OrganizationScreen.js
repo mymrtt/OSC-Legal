@@ -63,7 +63,13 @@ const ContainerContentSelectedViewBy = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	z-index: 4;
-	@media (max-width: 768px) {
+
+	/* @media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+	} */
+
+	@media (max-width: 490px) {
 		align-items: center;
 		flex-direction: column;
 	}
@@ -74,9 +80,12 @@ const TitleManageOrgs = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
+
 	@media (max-width: 768px) {
-		padding-bottom: 0.8rem;
+		width: 90%;
+    margin-left: .9rem;
 	}
+
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -87,9 +96,11 @@ const TitleMyOrganization = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
+	
 	@media (max-width: 768px) {
-		padding-bottom: 0.8rem;
+		margin-left: 1rem;
 	}
+
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -99,12 +110,20 @@ const SelectViewBy = styled.div`
 	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
+
 	@media (max-width: 768px) {
-		width: 100%;
-		justify-content: center;
+		width: 45%;
+		justify-content: flex-end;
+		margin-right: 1rem;
 	}
+
 	@media(max-width: 648px) {
     justify-content: center;
+	}
+
+	@media(max-width: 490px) {
+    width: 80%;
+		margin-right: 0;
 	}
 `;
 
@@ -115,6 +134,7 @@ const SpanSelect = styled.div`
   flex-direction: column;
 	z-index: 11;
 	position: relative;
+
 	@media (max-width: 940px) {
 		width: 47%;
 	}
@@ -159,17 +179,18 @@ const SelectInputUser = styled.span`
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
-	margin-top: 0.8rem;
 	display: flex;
 	justify-content: space-between;
 	/* @media (max-width: 648px) {
 		order: ${props => (props.order ? '0' : '1')};
 	} */
+
 	@media(max-width: 768px) {
-		width: 50%;
+		width: 70%;
 	}
+
 	@media(max-width: 490px) {
-		width: 80%;
+		width: 100%;
 	}
 `;
 
@@ -252,11 +273,24 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-  width: ${props => (props.width ? '100%' : '94%')};
+  width: ${props => (props.width ? '100%' : '96%')};
   max-height: ${props => (props.height ? '0' : '100vh')};
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	border-radius: ${props => (props.border ? '0' : '3px')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+
+	@media (max-width: 1680px) {
+		width: ${props => (props.width ? '100%' : '95.4%')};
+	}
+
+	@media (max-width: 1440px) {
+		width: ${props => (props.width ? '100%' : '94.5%')};
+	}
+
+	@media (max-width: 1024px) {
+		width: ${props => (props.width ? '100%' : '92.5%')};
+	}
+
 	@media (max-width: 768px) {
 		margin: 0 auto;
 		width: 100%;
@@ -266,7 +300,17 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
+	min-height: 76vh;
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
+
+	@media (max-width: 1440px) {
+		min-height: 68vh;
+	}
+
+	@media (max-width: 1024px) {
+		min-height: 64vh;
+	}
+	
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
@@ -396,6 +440,7 @@ const TextInformation = styled.p`
 
 const Box = styled.div`
 	display: none;
+
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 		flex-direction: row;
@@ -874,6 +919,8 @@ class OrganizationScreen extends Component {
 							height='4.3rem'
 							fontSize='1.4rem'
 							margin='1.5rem 0 1.5rem 2.5rem'
+							// marginMobile='0 2.5rem 1.2rem 2.5rem'
+							marginMobileSmall='0 1.9rem 1.2rem 2.6rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
