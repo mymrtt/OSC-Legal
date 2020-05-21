@@ -33,23 +33,26 @@ const Modal = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  max-width: 480px;
+  width: 550px;
   height: 460px;
   background: #FFFFFF;
   margin: 0 1rem;
+
   h1 {
     font-size: 1.1rem;
-    width: 60%;
+    width: 52%;
     text-align: center;
     margin: 1.7rem 0 1.3rem 0;
     font-family: 'Overpass', sans-serif;
 		font-weight: 800;
   }
+
   @media (max-width: 375px) {
     h1 {
       width: 65%;
     }
   }
+
   img {
     margin-bottom: 2rem;
     @media (max-width: 490px) {
@@ -57,6 +60,7 @@ const Modal = styled.div`
       width: 115px;
     }
   }
+
   h2 {
     color: #85144B;
     text-transform: uppercase;
@@ -65,6 +69,7 @@ const Modal = styled.div`
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
   }
+
   Input {
     max-width: 62%;
     text-align: center;
@@ -73,11 +78,13 @@ const Modal = styled.div`
     font-family: 'Overpass', sans-serif;
 		font-weight: 300;
   }
+
   @media (max-width: 375px) {
     Input {
       max-width: 90%;
     }
   }
+
   Button {
     width: 80%;
     text-transform: uppercase;
@@ -85,10 +92,12 @@ const Modal = styled.div`
     border-radius: 3px;
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
+
     @media (max-width: 490px) {
       position: fixed;
       bottom: 5vh;
       font-size: .9rem;
+      margin: 0;
     }
   }
   @media (max-width: 490px) {

@@ -36,9 +36,8 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
-	// isAdmin: state.onboarding.users.isAdmin,
+	isAdmin: state.onboarding.users.isAdmin,
 	organization: state.organization.tableDatas,
-	isAdmin: true,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -57,12 +56,19 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	min-height: 82vh;
-	overflow-y: hidden;
+	min-height: 90.5vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background: ${props => (props.isAdmin || props.isMobileButton ? '#FFF' : '#FFCFCD')};
+
+	@media(max-width: 1400px) and (max-height: 900px){
+		min-height: 83.5vh;
+	}
+
+	@media(max-width: 768px){
+		min-height: 90.5vh;
+	}
 `;
 
 const MaximumWidth = styled.div`
@@ -369,7 +375,7 @@ const SearchInput = styled.input`
 	}
 
 	@media (max-width: 768px) {
-		font-size: 1rem;
+		font-size: .8rem;
 	}
 
 	@media (max-width: 490px) {
@@ -459,7 +465,7 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: ${props => (props.isAdmin ? '85%' : '100%')};
+	width: 76%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -467,6 +473,14 @@ const ContainerModelDescription = styled.div`
 	border-radius: 3px;
 	border: ${props => (props.isSelected ? '1px solid #85144B' : 'none')};
 	padding: ${props => (props.addDocument ? '1rem 0 1rem 0' : '0')};
+
+	@media(max-width: 768px){
+		width: 68%;
+	}
+
+	@media(max-width: 490px){
+		width: 100%;
+	}
 
 	&:hover {
 		border: ${props => (props.hidden ? '1px solid #85144B' : '0')};
@@ -477,22 +491,11 @@ const ContainerModelDescription = styled.div`
 		display: flex;
 		padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
 
-		@media (max-width: 768px) {
-			width: 95%;
-		}
-
 		@media (max-width: 490px) {
 			width: 100%;
 		}
 	}
 
-	@media (max-width: 768px) {
-		width: ${props => (props.isAdmin ? '70%' : '100%')};
-	}
-
-	@media (max-width: 490px) {
-		width: 100%;
-	}
 `;
 
 const ModelNumber = styled.h2`
@@ -521,14 +524,16 @@ const ModelTitle = styled.h2`
 `;
 
 const ModelParagraph = styled.p`
-  width: 92%;
+  max-width: 98%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
+	word-wrap: break-word;
 	padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
+
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
-		width: 98%;
+
 	}
 	@media (max-width: 490px) {
 		width: 100%;
@@ -539,7 +544,7 @@ const ModelParagraph = styled.p`
 
 const ContainerOptions = styled.div`
 	display: ${props => (props.contOptions ? 'flex' : 'none')};
-	width: 15%;
+	width: 25%;
 	align-items: flex-end;
 	justify-content: center;
 	flex-direction: column;
@@ -946,6 +951,7 @@ const ButtonCancel = styled.button`
 	font-size: 1rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
+	margin-right: 1rem;
 
 	@media (max-width: 490px) {
 		margin: 0;
@@ -983,7 +989,8 @@ const ErrorText = styled.p`
 const BoxOrgs = styled.div`
 	width: 100%;
 	max-height: 35vh;
-	overflow-y: scroll;
+	/* overflow-y: scroll; */
+	overflow-y: ${props => (props.orgs.length < '5' ? 'none' : 'scroll')};
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
@@ -1139,6 +1146,11 @@ const ImageExit = styled.img`
 	position: absolute;
 	margin-top: .5rem;
 	cursor: pointer;
+
+	@media(max-width: 490px){
+		top: 6rem;
+		right: .5rem;
+	}
 `;
 
 const SpanButton = styled.span`
@@ -1146,7 +1158,6 @@ const SpanButton = styled.span`
 	display: flex;
 	justify-content: flex-end;
 `;
-
 
 let newList = [];
 
@@ -1551,6 +1562,7 @@ class DocumentsScreen extends Component {
 						<ContainerInput>
 							<TitleInputs>Nome do modelo</TitleInputs>
 							<Input
+								required
 								validationModel={this.state.validationModel}
 								value={this.state.document.title}
 								onChange={e => this.handleModelChange('title', e)}
@@ -1624,6 +1636,7 @@ class DocumentsScreen extends Component {
 	renderModalListDoc = () => (
 		<ContainerModal onClick={this.closeModalListDoc}>
 			<Modal onClick={ev => ev.stopPropagation()}>
+				{this.state.isMobileButton ? <HeaderModal /> : null}
 				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc}/>
 				<BoxTitle>
 					<TitleModalList>Adicionar Documento</TitleModalList>
@@ -1739,14 +1752,15 @@ class DocumentsScreen extends Component {
 											<BoxOrgs
 												onClick={ev => ev.stopPropagation()}
 												isBoxOrgs={this.state.isBoxOrgs}
+												orgs={this.props.organization}
 											>
 												<Org onClick={() => this.setState({ selectOrg: '' })}>Selecionar organizações</Org>
 												{this.props.organization.map((orgs, index) => (
 													<Org
 														key={index}
-														onClick={() => this.handleSelectOrg(orgs.organization)}
+														onClick={() => this.handleSelectOrg(orgs.tradingName)}
 													>
-														{orgs.organization}
+														{orgs.tradingName}
 													</Org>
 												))}
 											</BoxOrgs>
@@ -1757,12 +1771,11 @@ class DocumentsScreen extends Component {
 							<ContainerContent>
 								<ContainerScroll>
 									<ContainerModels>
-
 										{isAdmin ? (
+											// MAP DOCUMENTS ADM
 											documentsList && documentsList.length > 0 ? (
-												documentsList.map((item, index) => (
+												documentsList.map(item => (
 													<ContainerModel key={item}
-														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
 														zIndex={this.state.addModel}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(item)}
@@ -1808,6 +1821,7 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
+												// QUANDO NÃO TEM DOC NO ADM
 												<InitialAddModel>
 													<TitleInitialAddModel>
 													Você ainda não possui um modelo
@@ -1819,10 +1833,10 @@ class DocumentsScreen extends Component {
 												</InitialAddModel>
 											)
 										) : (
+											// MAP DOCUMENTS USER
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
-												this.state.listDocs.map((docs, index) => (
+												this.state.listDocs.map(docs => (
 													<ContainerModel key={docs}
-														style={{ margin: index === documentsList.length - 1 && '0 0 10rem 0' }}
 														// zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(docs)}
@@ -1886,6 +1900,7 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
+												// QUANDO USER NÃO TEM DOC
 												<InitialAddModel>
 													<TitleInitialAddModel>
 													Você ainda não tem nenhum documento
@@ -1896,9 +1911,7 @@ class DocumentsScreen extends Component {
 														) : (
 															<>
 																Escolha um modelo de documento clicando em
-																<span
-																	style={{ marginLeft: '.3rem' }}
-																	onClick={this.openModalListDoc}>Adicionar Documento</span>
+																<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>Adicionar Documento</span>
 															</>
 														)}
 													</TextInitialAddModel>
@@ -1912,7 +1925,7 @@ class DocumentsScreen extends Component {
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (
-											this.state.isMobileButton === true && this.state.addModel === true ? (
+											this.state.isMobileButton === true && this.state.addModel !== true && this.state.selectOrg !== '' ? (
 												<Button
 													width="17.5rem"
 													height="4.5rem"
@@ -1928,7 +1941,7 @@ class DocumentsScreen extends Component {
 												null
 											)
 										) : (
-											this.state.isMobileButton === true && this.state.modalListDoc !== true ? (
+											this.state.isMobileButton === true && this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
 												<Button
 													width="17.5rem"
 													height="4.5rem"
