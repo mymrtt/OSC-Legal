@@ -376,7 +376,7 @@ class ModalOrganization extends Component {
 	};
 
 	render() {
-		const { item } = this.props;
+		const { org } = this.props;
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
 				<Container onClick={ev => ev.stopPropagation()}>
@@ -389,21 +389,21 @@ class ModalOrganization extends Component {
 							<ContentConsultorItem>
 								<div>
 									<SubTitle>nome</SubTitle>
-									<SubAnswer>{item.tradingName}</SubAnswer>
+									<SubAnswer>nome do consultor</SubAnswer>
 									{/* <SubTitle>rg</SubTitle>
-									<SubAnswer>{item.admin.rg}</SubAnswer> */}
+									<SubAnswer>rg do consultor</SubAnswer> */}
 									<SubTitle>cpf</SubTitle>
-									<SubAnswer>{item.cpf}</SubAnswer>
+									<SubAnswer>cpf do consultor</SubAnswer>
 								</div>
 								<div>
 									{/* <SubTitle>data de nascimento</SubTitle>
-									<SubAnswer>{item.admin.dateOfBirth}</SubAnswer> */}
+									<SubAnswer>data do consultor</SubAnswer> */}
 								</div>
 								<div>
 									<SubTitle>e-mail</SubTitle>
-									<SubAnswer>{item.email}</SubAnswer>
+									<SubAnswer>email do consultor</SubAnswer>
 									<SubTitle>telefone</SubTitle>
-									<SubAnswer>{item.telephone}</SubAnswer>
+									<SubAnswer>tel do consultor</SubAnswer>
 								</div>
 							</ContentConsultorItem>
 						</ContentConsultor>
@@ -415,15 +415,15 @@ class ModalOrganization extends Component {
 								<ContentSubTitle>
 									<div>
 										<SubTitle>criado em</SubTitle>
-										<SubAnswer>{item.createdIn}</SubAnswer>
+										<SubAnswer>{org.createdIn || '-'}</SubAnswer>
 									</div>
 									<div>
 										<SubTitle>autorizado em</SubTitle>
-										<SubAnswer>{item.authorization}</SubAnswer>
+										<SubAnswer>{org.authorization || '-'}</SubAnswer>
 									</div>
 									<div>
 										<SubTitle>vencimento</SubTitle>
-										<SubAnswer>{item.dueDate}</SubAnswer>
+										<SubAnswer>{org.dueDate || '-'}</SubAnswer>
 									</div>
 								</ContentSubTitle>
 								{!this.props.isAdmin
@@ -446,58 +446,58 @@ class ModalOrganization extends Component {
 						<ContentOrganization margin>
 							<Separation>
 								<SubTitle>nome fantasia</SubTitle>
-								{/* <SubAnswer>{item.admin.fantasyName}</SubAnswer> */}
+								<SubAnswer>{org.tradingName || '-'}</SubAnswer>
 								<SubTitle>razão social</SubTitle>
-								{/* <SubAnswer>{item.admin.reasonSocial}</SubAnswer> */}
+								<SubAnswer>{org.companyName || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>cnpj</SubTitle>
-								<SubAnswer>{item.cpf}</SubAnswer>
+								<SubTitle>cnpj/cpf</SubTitle>
+								<SubAnswer>{org.cpf || '-'}</SubAnswer>
 								<SubTitle>telefone</SubTitle>
-								<SubAnswer>{item.telephone}</SubAnswer>
+								<SubAnswer>{org.telephone || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>email</SubTitle>
-								<SubAnswer>{item.email}</SubAnswer>
+								<SubAnswer>{org.email || '-'}</SubAnswer>
 								<SubTitle>endereço</SubTitle>
-								{/* <SubAnswer>{item.admin.address}</SubAnswer> */}
+								<SubAnswer>{org.address || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>complemento</SubTitle>
-								{/* <SubAnswer>{item.admin.complement}</SubAnswer> */}
+								<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
 								<SubTitle>bairro</SubTitle>
-								{/* <SubAnswer>{item.admin.neighborhood}</SubAnswer> */}
+								<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>cep</SubTitle>
-								{/* <SubAnswer>{item.admin.cep}</SubAnswer> */}
+								<SubAnswer>{org.cep || '-'}</SubAnswer>
 								<SubTitle>cidade</SubTitle>
-								{/* <SubAnswer>{item.admin.city}</SubAnswer> */}
+								<SubAnswer>{org.city || '-'}</SubAnswer>
 							</Separation>
 							<ContentOrganizationMobile>
 								<SeparationMobile>
 									<SubTitle>nome fantasia</SubTitle>
-									{/* <SubAnswer>{item.admin.fantasyName}</SubAnswer> */}
+									<SubAnswer>{org.tradingName || '-'}</SubAnswer>
 									<SubTitle>email</SubTitle>
-									<SubAnswer>{item.email}</SubAnswer>
-									<SubTitle>cnpj</SubTitle>
-									{/* <SubAnswer>{item.admin.cnpj}</SubAnswer> */}
+									<SubAnswer>{org.email || '-'}</SubAnswer>
+									<SubTitle>cnpj/cpf</SubTitle>
+									<SubAnswer>{org.cpf || '-'}</SubAnswer>
 									<SubTitle>complemento</SubTitle>
-									{/* <SubAnswer>{item.admin.complement}</SubAnswer> */}
+									<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
 									<SubTitle>bairro</SubTitle>
-									{/* <SubAnswer>{item.admin.neighborhood}</SubAnswer> */}
+									<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
 								</SeparationMobile>
 								<SeparationMobile>
 									<SubTitle>razão social</SubTitle>
-									{/* <SubAnswer>{item.admin.reasonSocial}</SubAnswer> */}
+									<SubAnswer>{org.companyName || '-'}</SubAnswer>
 									<SubTitle>telefone</SubTitle>
-									<SubAnswer>{item.telephone}</SubAnswer>
+									<SubAnswer>{org.telephone || '-'}</SubAnswer>
 									<SubTitle>endereço</SubTitle>
-									{/* <SubAnswer>{item.admin.address}</SubAnswer> */}
+									<SubAnswer>{org.address || '-'}</SubAnswer>
 									<SubTitle>cep</SubTitle>
-									{/* <SubAnswer>{item.admin.cep}</SubAnswer> */}
+									<SubAnswer>{org.cep || '-'}</SubAnswer>
 									<SubTitle>cidade</SubTitle>
-									{/* <SubAnswer>{item.admin.city}</SubAnswer> */}
+									<SubAnswer>{org.city || '-'}</SubAnswer>
 								</SeparationMobile>
 							</ContentOrganizationMobile>
 						</ContentOrganization>
