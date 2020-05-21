@@ -36,9 +36,9 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
-	isAdmin: state.onboarding.users.isAdmin,
+	// isAdmin: state.onboarding.users.isAdmin,
 	organization: state.organization.tableDatas,
-	// isAdmin: false,
+	isAdmin: true,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -1162,6 +1162,7 @@ class DocumentsScreen extends Component {
 		downloadDelete: DeleteIcon,
 		modelSelect: '',
 		search: '',
+		searching: false,
 		hoverExport: '',
 		hoverEdit: '',
 		hoverDelete: '',
@@ -1329,6 +1330,24 @@ class DocumentsScreen extends Component {
 	handleSearch = (e) => {
 		this.setState({
 			search: e.target.value,
+		});
+	}
+
+	handleOnKey = (ev) => {
+		if (ev.key === 'Enter') {
+			this.setState({
+				searching: true,
+			});
+		} else if (this.state.search === '') {
+			this.setState({
+				searching: false,
+			});
+		}
+	}
+
+	handleOnKeySeach = () => {
+		this.setState({
+			searching: true,
 		});
 	}
 
@@ -1632,7 +1651,7 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
-		const documentsList = (this.state.search !== '')
+		const documentsList = (this.state.search !== '' && this.state.searching === true)
 			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
 			: this.props.documentsList;
 		const { isAdmin } = this.props;
@@ -1695,6 +1714,7 @@ class DocumentsScreen extends Component {
 										{isAdmin
 											? <SearchInput
 												onChange={this.handleSearch}
+												onKeyUp={this.handleOnKey}
 												placeholder="Digite aqui para pesquisar"
 											/> : <TextOrg
 												isOrg={this.state.isOrg}
@@ -1703,7 +1723,7 @@ class DocumentsScreen extends Component {
 												{this.state.selectOrg === '' ? 'Selecionar organizações' : this.state.selectOrg}
 											</TextOrg>}
 										{isAdmin
-											? <img src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
+											? <img onClick={this.handleOnKeySeach} src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
 											: this.state.isBoxOrgs
 												? <img src={ArrowUpIcon}
 													alt="arrow"

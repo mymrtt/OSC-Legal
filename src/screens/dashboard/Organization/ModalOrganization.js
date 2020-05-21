@@ -39,12 +39,10 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-
 	@media (max-width: 935px) {
 		width: 95%;
 		margin: 0;
 	}
-
 	@media (max-width: 648px) {
 		width: 100%;
 		min-height: 100vh;
@@ -62,7 +60,6 @@ const Figure = styled.figure`
 
 const ImageBack = styled.img`
 	display: none;
-
 	@media (max-width: 648px) {
 		display: flex;
 		align-self: end;
@@ -75,11 +72,9 @@ const ContentAdmin = styled.section`
 	flex-direction: row;
 	justify-content: space-between;
 	margin: ${props => (props.margin && '0 3.4rem')};
-
 	@media (max-width: 935px) {
 		margin: ${props => (props.margin && '0 1rem')};
 	}
-
 	@media (max-width: 648px) {
 		height: auto;
 		margin: 0;
@@ -92,7 +87,6 @@ const ContentConsultor = styled.span`
 	width: 60%;
 	display: flex;
 	flex-direction: column;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		padding: 0 1rem;
@@ -106,13 +100,12 @@ const ContentConsultorItem = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	margin-left: 3.4rem;
-
 	@media (max-width: 935px) {
+		/* width: 100%; */
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-left: 1rem;
 	}
-
 	@media (max-width: 648px) {
 		margin: 0;
 	}
@@ -127,11 +120,9 @@ const Title = styled.h2`
 	padding-bottom: 1.7rem;
 	margin-left: 3.4rem;
 	text-transform: uppercase;
-
 	@media (max-width: 935px) {
 		margin-left: 1rem;
 	}
-
 	@media (max-width: 648px) {
 		margin: 0;
 	}
@@ -154,13 +145,13 @@ const SubAnswer = styled.p`
 
 const ContentCreate = styled.div`
  	width: ${props => (props.width ? '35%' : '37%')};
+	/* width: 35%; */
   color: #85144B;
 	padding: ${props => (props.padding ? '0 0 2rem 3rem' : '0 0 2rem 2.5rem')};
 	padding: 0 0 2rem 3rem;
   border-left: 1px solid;
 	display: flex;
 	flex-direction: column;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		border-left: 0;
@@ -176,7 +167,6 @@ const ImageClosed = styled.img`
 	align-self: flex-end;
 	padding: 0.8rem 0.8rem 0;
 	cursor: pointer;
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -187,8 +177,8 @@ const ContainerOrganization = styled.span`
 	display: flex;
 	flex-direction: column;
 	padding-bottom: 1.5rem;
-
 	@media (max-width: 648px) {
+		/* height: auto; */
 		padding: 0 1rem 2rem;
 		order: 3;
 	}
@@ -200,11 +190,9 @@ const ContentOrganization = styled.div`
 	justify-content: space-between;
 	margin: ${props => (props.margin && '0 3.4rem')};
 	padding: 0 0 2rem;
-
 	@media (max-width: 935px) {
 		margin: ${props => (props.margin && '0 1rem')};
 	}
-
 	@media (max-width: 648px) {
 		flex-direction: column;
 		margin: 0;
@@ -220,7 +208,6 @@ const ContentOrganizationMobile = styled.div`
 const ContentConsultorDetails = styled.div`
 	display: flex;
 	flex-direction: row;
-
 	 @media (max-width: 648px) {
 		width: 100%;
 		flex-direction: row;
@@ -230,8 +217,8 @@ const ContentConsultorDetails = styled.div`
 `;
 
 const ContentSubTitle = styled.div`
+	/* width: 60%; */
 	width: 55%;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		display: flex;
@@ -243,7 +230,6 @@ const ContentSubTitle = styled.div`
 const ContainerEdit = styled.div`
 	display: flex;
 	flex-direction: column;
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -282,6 +268,7 @@ const ContainerOptionDelete = styled.p`
 `;
 
 const Separation = styled.div`
+	/* display: flex; */
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -289,7 +276,6 @@ const Separation = styled.div`
 
 const SeparationMobile = styled.div`
 	display: none;
-
 	@media (max-width: 648px) {
 		width: 56%;
 		display: flex;
@@ -299,7 +285,6 @@ const SeparationMobile = styled.div`
 
 const ContainerSelected = styled.div`
 		display: none;
-
 		@media (max-width: 648px) {
 			width: 100%;
 			padding: 1rem 0 0;
@@ -330,7 +315,6 @@ const PaymentMethodText = styled.p`
 
 const ContainerEditImage = styled.div`
 	display: none;
-
 	@media (max-width: 648px) {
 		width: 100%;
 		padding: 1rem 0 1rem;
@@ -392,7 +376,7 @@ class ModalOrganization extends Component {
 	};
 
 	render() {
-		const { org } = this.props;
+		const { item } = this.props;
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
 				<Container onClick={ev => ev.stopPropagation()}>
@@ -405,21 +389,21 @@ class ModalOrganization extends Component {
 							<ContentConsultorItem>
 								<div>
 									<SubTitle>nome</SubTitle>
-									<SubAnswer>nome do consultor</SubAnswer>
+									<SubAnswer>{item.tradingName}</SubAnswer>
 									{/* <SubTitle>rg</SubTitle>
-									<SubAnswer>rg do consultor</SubAnswer> */}
+									<SubAnswer>{item.admin.rg}</SubAnswer> */}
 									<SubTitle>cpf</SubTitle>
-									<SubAnswer>cpf do consultor</SubAnswer>
+									<SubAnswer>{item.cpf}</SubAnswer>
 								</div>
 								<div>
 									{/* <SubTitle>data de nascimento</SubTitle>
-									<SubAnswer>data do consultor</SubAnswer> */}
+									<SubAnswer>{item.admin.dateOfBirth}</SubAnswer> */}
 								</div>
 								<div>
 									<SubTitle>e-mail</SubTitle>
-									<SubAnswer>email do consultor</SubAnswer>
+									<SubAnswer>{item.email}</SubAnswer>
 									<SubTitle>telefone</SubTitle>
-									<SubAnswer>telefone do consultor</SubAnswer>
+									<SubAnswer>{item.telephone}</SubAnswer>
 								</div>
 							</ContentConsultorItem>
 						</ContentConsultor>
@@ -431,15 +415,15 @@ class ModalOrganization extends Component {
 								<ContentSubTitle>
 									<div>
 										<SubTitle>criado em</SubTitle>
-										<SubAnswer>{org.createdIn || '-' || '-'}</SubAnswer>
+										<SubAnswer>{item.createdIn}</SubAnswer>
 									</div>
 									<div>
 										<SubTitle>autorizado em</SubTitle>
-										<SubAnswer>{org.authorization || '-'}</SubAnswer>
+										<SubAnswer>{item.authorization}</SubAnswer>
 									</div>
 									<div>
 										<SubTitle>vencimento</SubTitle>
-										<SubAnswer>{org.dueDate || '-'}</SubAnswer>
+										<SubAnswer>{item.dueDate}</SubAnswer>
 									</div>
 								</ContentSubTitle>
 								{!this.props.isAdmin
@@ -462,58 +446,58 @@ class ModalOrganization extends Component {
 						<ContentOrganization margin>
 							<Separation>
 								<SubTitle>nome fantasia</SubTitle>
-								<SubAnswer>{org.tradingName || '-'}</SubAnswer>
+								{/* <SubAnswer>{item.admin.fantasyName}</SubAnswer> */}
 								<SubTitle>razão social</SubTitle>
-								<SubAnswer>{org.companyName || '-'}</SubAnswer>
+								{/* <SubAnswer>{item.admin.reasonSocial}</SubAnswer> */}
 							</Separation>
 							<Separation>
-								<SubTitle>cnpj/cpf</SubTitle>
-								<SubAnswer>{org.cpf || '-'}</SubAnswer>
+								<SubTitle>cnpj</SubTitle>
+								<SubAnswer>{item.cpf}</SubAnswer>
 								<SubTitle>telefone</SubTitle>
-								<SubAnswer>{org.telephone || '-'}</SubAnswer>
+								<SubAnswer>{item.telephone}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>email</SubTitle>
-								<SubAnswer>{org.email || '-'}</SubAnswer>
+								<SubAnswer>{item.email}</SubAnswer>
 								<SubTitle>endereço</SubTitle>
-								<SubAnswer>{org.address || '-'}</SubAnswer>
+								{/* <SubAnswer>{item.admin.address}</SubAnswer> */}
 							</Separation>
 							<Separation>
 								<SubTitle>complemento</SubTitle>
-								<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
+								{/* <SubAnswer>{item.admin.complement}</SubAnswer> */}
 								<SubTitle>bairro</SubTitle>
-								<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
+								{/* <SubAnswer>{item.admin.neighborhood}</SubAnswer> */}
 							</Separation>
 							<Separation>
 								<SubTitle>cep</SubTitle>
-								<SubAnswer>{org.cep || '-'}</SubAnswer>
+								{/* <SubAnswer>{item.admin.cep}</SubAnswer> */}
 								<SubTitle>cidade</SubTitle>
-								<SubAnswer>{org.city || '-'}</SubAnswer>
+								{/* <SubAnswer>{item.admin.city}</SubAnswer> */}
 							</Separation>
 							<ContentOrganizationMobile>
 								<SeparationMobile>
 									<SubTitle>nome fantasia</SubTitle>
-									<SubAnswer>{org.tradingName || '-'}</SubAnswer>
+									{/* <SubAnswer>{item.admin.fantasyName}</SubAnswer> */}
 									<SubTitle>email</SubTitle>
-									<SubAnswer>{org.email || '-'}</SubAnswer>
-									<SubTitle>cnpj/cpf</SubTitle>
-									<SubAnswer>{org.cpf || '-'}</SubAnswer>
+									<SubAnswer>{item.email}</SubAnswer>
+									<SubTitle>cnpj</SubTitle>
+									{/* <SubAnswer>{item.admin.cnpj}</SubAnswer> */}
 									<SubTitle>complemento</SubTitle>
-									<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
+									{/* <SubAnswer>{item.admin.complement}</SubAnswer> */}
 									<SubTitle>bairro</SubTitle>
-									<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
+									{/* <SubAnswer>{item.admin.neighborhood}</SubAnswer> */}
 								</SeparationMobile>
 								<SeparationMobile>
 									<SubTitle>razão social</SubTitle>
-									<SubAnswer>{org.companyName || '-'}</SubAnswer>
+									{/* <SubAnswer>{item.admin.reasonSocial}</SubAnswer> */}
 									<SubTitle>telefone</SubTitle>
-									<SubAnswer>{org.telephone || '-'}</SubAnswer>
+									<SubAnswer>{item.telephone}</SubAnswer>
 									<SubTitle>endereço</SubTitle>
-									<SubAnswer>{org.address || '-'}</SubAnswer>
+									{/* <SubAnswer>{item.admin.address}</SubAnswer> */}
 									<SubTitle>cep</SubTitle>
-									<SubAnswer>{org.cep || '-'}</SubAnswer>
+									{/* <SubAnswer>{item.admin.cep}</SubAnswer> */}
 									<SubTitle>cidade</SubTitle>
-									<SubAnswer>{org.city || '-'}</SubAnswer>
+									{/* <SubAnswer>{item.admin.city}</SubAnswer> */}
 								</SeparationMobile>
 							</ContentOrganizationMobile>
 						</ContentOrganization>
