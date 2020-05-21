@@ -51,7 +51,7 @@ const ButtonBack = styled.div`
 		width: 100%;
     background-color: #FFFFFF;
 		border: none;
-		padding: 3.5rem;
+		padding: 4rem;
 		position: fixed;
 		bottom: 0;
 		z-index: 1;
