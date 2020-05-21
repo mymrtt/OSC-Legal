@@ -21,6 +21,8 @@ const MyButton = styled.button`
 		width: ${props => props.widthTablet};
     height: ${props => props.heightMobile};
 		${props => props.orderMobile && css`
+			width: 80%;
+			margin: 0 4.5rem 1.2rem;
 			position: fixed;
 			bottom: 0;
 			z-index: 2;
@@ -35,11 +37,12 @@ const MyButton = styled.button`
 
   @media (max-width: 490px){
     width: ${props => (props.widthMobileSmall)};
+		margin: ${props => (props.marginMobileSmall)};
     position: ${props => props.positionMb};
     left: ${props => props.left};
     right: ${props => props.right};
     bottom: ${props => props.bottom}
-  }
+	}
 `;
 
 const ButtonBack = styled.div`
@@ -71,6 +74,7 @@ const Button = props => (
 			paddingMobile={props.paddingMobile}
 			margin={props.margin}
 			marginMobile={props.marginMobile}
+			marginMobileSmall={props.marginMobileSmall}
 			textTransform={props.textTransform}
 			orderMobile={props.orderMobile}
 			positionMb={props.positionMb}

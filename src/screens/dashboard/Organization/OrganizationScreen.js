@@ -43,7 +43,6 @@ const Container = styled.div`
 const ContainerUser = styled.div`
 	width: ${props => (props.width ? '100%' : '100%')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
-
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	}
@@ -52,12 +51,10 @@ const ContainerUser = styled.div`
 const ContainerSelectedViewBy = styled.div`
 	/* margin-top: 1.3rem; */
 	padding-right: .6rem;
-
 	@media(max-width: 768px) {
 		/* margin: 1.3rem 0; */
 		padding-right: 0;
 	}
-
 	@media(max-width: 648px) {
 		margin-top: 0;
 	}
@@ -69,7 +66,6 @@ const ContainerContentSelectedViewBy = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	z-index: 4;
-
 	@media (max-width: 768px) {
 		align-items: center;
 		flex-direction: column;
@@ -81,11 +77,9 @@ const TitleManageOrgs = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
-
 	@media (max-width: 768px) {
 		padding-bottom: 0.8rem;
 	}
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -96,11 +90,9 @@ const TitleMyOrganization = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
-
 	@media (max-width: 768px) {
 		padding-bottom: 0.8rem;
 	}
-
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -110,12 +102,10 @@ const SelectViewBy = styled.div`
 	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
-
 	@media (max-width: 768px) {
 		width: 100%;
 		justify-content: center;
 	}
-
 	@media(max-width: 648px) {
     justify-content: center;
 	}
@@ -128,17 +118,14 @@ const SpanSelect = styled.div`
   flex-direction: column;
 	z-index: 11;
 	position: relative;
-
 	@media (max-width: 940px) {
 		width: 47%;
 	}
-
 	@media (max-width: 768px) {
 		margin: 0 2rem;
 		width: 100%;
 		align-items: center;
 	}
-
 	@media(max-width: 648px) {
 		width: 90%;
 	}
@@ -152,7 +139,6 @@ const TitleViewBy = styled.h2`
 	margin: 0.8rem 0.8rem 0 0;
 	display: flex;
   align-items: center;
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -166,7 +152,6 @@ const TitleSearch = styled.h2`
 	margin: 0.8rem 0.9rem 0 0;
 	display: flex;
   align-items: center;
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -183,11 +168,9 @@ const SelectInputUser = styled.span`
 	/* @media (max-width: 648px) {
 		order: ${props => (props.order ? '0' : '1')};
 	} */
-
 	@media(max-width: 768px) {
 		width: 50%;
 	}
-
 	@media(max-width: 490px) {
 		width: 80%;
 	}
@@ -196,7 +179,6 @@ const SelectInputUser = styled.span`
 const Input = styled.input`
 	border: none;
 	outline: none;
-
 	@media (max-width: 768px) {
 		padding: 0.5rem;
 	}
@@ -214,12 +196,10 @@ const InputSelect = styled.div`
 	justify-content: space-between;
 	cursor: pointer;
 	z-index: 2;
-
 	@media (max-width: 768px) {
 		font-size: 1rem;
 		width: 50%;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 	}
@@ -250,12 +230,10 @@ const InputSelectedItem = styled.div`
 	position: absolute;
 	top: 32px;
 	cursor: pointer;
-
 	@media (max-width: 768px) {
 		width: 50%;
 		top: 36px;
 	}
-
 	@media (max-width: 490px) {
 		width: 100%;
 		top: 32px;
@@ -267,12 +245,10 @@ const SelectedItem = styled.p`
 	color: #85144B;
 	font-family: Overpass, Regular;
 	padding: 0.4rem;
-
 	&:hover {
 		background-color: #FFCFCD;
 		border: 0.5px solid #85144B;
 	}
-
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
@@ -284,7 +260,6 @@ const ContainerTableUser = styled.div`
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	border-radius: ${props => (props.border ? '0' : '3px')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
-
 	@media (max-width: 768px) {
 		margin: 0 auto;
 		width: 100%;
@@ -299,7 +274,6 @@ const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
-
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
@@ -310,23 +284,18 @@ const ContainerTable = styled.div`
 	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
 	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 178px)')};
 	overflow-y: scroll;
-
 	::-webkit-scrollbar {
   width: 10px;
 	}
-
 	::-webkit-scrollbar-track {
   background: #fff;
 	}
-
 	::-webkit-scrollbar-thumb {
   	background: #FFCFCD;
 	}
-
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
 	}
-
 	@media(max-width: 648px) {
 		overflow-y: visible;
 		max-height: 100%;
@@ -339,7 +308,6 @@ const Table = styled.table`
   width: 100%;
 	/* height: 100%; */
 	border-spacing: 0;
-
 	@media (max-width: 648px) {
 		padding: 0;
 		${({ modal }) => modal && css`
@@ -350,7 +318,6 @@ const Table = styled.table`
 
 const Thead = styled.thead`
 	text-align: left;
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -360,14 +327,12 @@ const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
 	cursor: pointer;
-
 	&:nth-child(even) {
     background-color: #FFCFCD;
   }
 	&:nth-child(odd) {
     background-color: #FFFFFF;
 	}
-
 	@media(max-width: 768px) {
 		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
@@ -377,7 +342,6 @@ const Tr = styled.tr`
 	@media(max-width: 648px) {
 		padding: 1rem 1rem 12.5rem 1rem;
 	}
-
 	@media(max-width: 420px) {
 		padding: 1rem 1rem 16.8rem 1rem;
 	}
@@ -394,7 +358,6 @@ const TableTitle = styled.th`
 	top: 0;
 	z-index: 5;
 	${''}
-
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -402,7 +365,6 @@ const TableTitle = styled.th`
 
 const ImageMore = styled.img`
 	display: none;
-
 	@media(max-width: 768px) {
 		width: 1rem;
 		display: flex;
@@ -413,13 +375,11 @@ const ImageMore = styled.img`
 
 const ContainerTableTitleMob = styled.span`
 	display: none;
-
 	@media (max-width: 768px) {
 		padding-right: 2rem;
 		padding-bottom: 1rem;
 		display: flex;
 		flex-direction: column;
-
 		${({ selected }) => selected && css`
 		/* img {display: block;} */
 		p {display: none;}
@@ -449,7 +409,6 @@ const TextInformation = styled.p`
 
 const Box = styled.div`
 	display: none;
-
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 		flex-direction: row;
@@ -460,7 +419,6 @@ const BoxButton = styled.button`
 	border: none;
 	background: none;
 	outline: none;
-
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -468,7 +426,6 @@ const BoxButton = styled.button`
 
 const TableTitleMob = styled.th`
 	display: none;
-
 	@media(max-width: 768px) {
 		display: flex;
 		color: #85144B;
@@ -484,7 +441,6 @@ const TableList = styled.td`
 	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
 	text-align: ${props => (props.wNumber && 'center')};
-
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
 		display: ${props => (props.mob ? 'none' : 'flex')};
@@ -495,13 +451,11 @@ const ContainerStatus = styled.td`
 	display: flex;
 	height: inherit;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
-
 	${({ selected }) => selected && css`
 		img {display: block}
 		p {display: none}
 		div {display: flex}
 	`}
-
 	@media(max-width: 768px) {
 		padding: 0;
 	}
@@ -511,7 +465,6 @@ const TextStatus = styled.p`
 	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
 	text-transform: uppercase;
-
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -522,7 +475,6 @@ const ImageStatus = styled.img`
   padding-right: 0.3rem;
 	display: none;
 	cursor: pointer;
-
 	@media(max-width: 768px) {
 		display: flex;
 	}

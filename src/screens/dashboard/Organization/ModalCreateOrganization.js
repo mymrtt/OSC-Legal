@@ -31,7 +31,6 @@ const Overlay = styled.div`
   justify-content: center;
 	z-index: 20;
 	position: fixed;
-
 	@media(max-width: 648px) {
 		display: flex;
     flex-direction: column;
@@ -47,27 +46,21 @@ const Container = styled.form`
 	justify-content: center;
 	/* margin: 1rem; */
 	overflow: hidden auto;
-
 	::-webkit-scrollbar {
   width: 10px;
 	}
-
 	::-webkit-scrollbar-track {
   background: #fff;
 	}
-
 	::-webkit-scrollbar-thumb {
   	background: #FFCFCD;
 	}
-
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
 	}
-
 	@media(max-width: 768px) {
 		width: 70%;
 	}
-
 	@media(max-width: 648px) {
 		z-index: 10;
 		width: 100%;
@@ -107,7 +100,6 @@ const ContainerUser = styled.div`
 	padding-left: 3.5rem;
 	display: flex;
 	flex-flow: wrap column;
-
 	@media(max-width: 648px) {
 		padding-left: 2.5rem;
 	}
@@ -121,11 +113,9 @@ const UserTitle = styled.h2`
 	text-transform: uppercase;
 	font-family: Overpass;
 	font-weight: bold;
-
 	@media(max-width: 768px) {
 		font-size: .9rem;
 	}
-
 	@media(max-width: 648px) {
 		font-size: 0.85rem;
 	}
@@ -135,7 +125,6 @@ const UserText = styled.p`
   font-size: 1rem;
 	padding-bottom: 1.5rem;
   font-family: "Overpass", Light;
-
   @media (max-width: 648px) {
 		font-size: 1rem;
   }
@@ -148,7 +137,6 @@ const CreateOrgTitle = styled.h1`
 	font-size: 2rem;
 	font-weight: 900;
 	padding: 0 3.5rem 2.5rem;
-
 	@media(max-width: 648px) {
 		padding-left: 2.5rem;
 	}
@@ -187,7 +175,6 @@ const ContainerConcludeButton = styled.span`
 	padding-right: 3rem;
 	padding-bottom: 1.5rem;
 	width: 100%;
-
 	@media(max-width: 648px) {
 		padding-left: 2rem;
     padding-right: 2rem;
@@ -209,7 +196,6 @@ const ContainerCreateOrg = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
 	@media(max-width: 648px) {
 		padding-left: 2rem;
     padding-right: 2rem;
@@ -223,7 +209,6 @@ const ErrorMessage = styled.p`
   font-size: 0.8rem;
   font-weight: 400;
 	font-family: Overpass;
-
   @media (max-width: 648px) {
     margin: 0.5rem 0 0.8rem 0;
   }

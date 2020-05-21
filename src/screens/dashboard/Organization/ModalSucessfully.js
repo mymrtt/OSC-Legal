@@ -24,7 +24,6 @@ const Container = styled.div`
   top: 0;
   right: 0;
   z-index: 999;
-
   @media (max-width: 490px) {
     position: initial;
   }
@@ -38,7 +37,6 @@ const Modal = styled.div`
   height: 460px;
   background: #FFFFFF;
   margin: 0 1rem;
-
   h1 {
     font-size: 1.1rem;
     width: 60%;
@@ -47,22 +45,18 @@ const Modal = styled.div`
     font-family: 'Overpass', sans-serif;
 		font-weight: 800;
   }
-
   @media (max-width: 375px) {
     h1 {
       width: 65%;
     }
   }
-
   img {
     margin-bottom: 2rem;
-
     @media (max-width: 490px) {
       margin: 1rem 0 2.5rem 0;
       width: 115px;
     }
   }
-
   h2 {
     color: #85144B;
     text-transform: uppercase;
@@ -71,7 +65,6 @@ const Modal = styled.div`
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
   }
-
   Input {
     max-width: 62%;
     text-align: center;
@@ -80,13 +73,11 @@ const Modal = styled.div`
     font-family: 'Overpass', sans-serif;
 		font-weight: 300;
   }
-
   @media (max-width: 375px) {
     Input {
       max-width: 90%;
     }
   }
-
   Button {
     width: 80%;
     text-transform: uppercase;
@@ -94,14 +85,12 @@ const Modal = styled.div`
     border-radius: 3px;
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
-
     @media (max-width: 490px) {
       position: fixed;
       bottom: 5vh;
       font-size: .9rem;
     }
   }
-
   @media (max-width: 490px) {
     height: 100vh;
     max-width: 100%;
@@ -114,16 +103,13 @@ const Modal = styled.div`
 const WarningText = styled.div`
   padding: 0 4rem;
   width: 100%;
-
   @media (max-width: 490px) {
     width: 57%;
     padding: 0;
   }
-
   @media (max-width: 375px) {
     width: 64%;
   }
-
   span {
     font-family: 'Overpass', sans-serif;
 		font-weight: 700;
@@ -136,7 +122,6 @@ const Text = styled.p`
   color: #231F20;
   font-family: 'Overpass', sans-serif;
   font-weight: 300;
-
   a {
     color: #85144B;
     font-family: 'Overpass', sans-serif;
