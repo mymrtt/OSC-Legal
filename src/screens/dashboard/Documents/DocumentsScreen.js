@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
 	organization: state.organization.tableDatas,
-	isAdmin: false,
+	isAdmin: true,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -522,11 +522,12 @@ const ModelTitle = styled.h2`
 `;
 
 const ModelParagraph = styled.p`
-  max-width: 100%;
+  max-width: 98%;
   font-size: 1.2rem;
   font-family: 'Overpass', Regular;
 	word-wrap: break-word;
 	padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
+
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
@@ -668,43 +669,6 @@ const ModalAddModel = styled.form`
 		top: 0%;
 		padding: 5%;
 	}
-`;
-
-const LogoAndData = styled.div`
-	display: none;
-
-	@media (max-width: 490px) {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 10%;
-	}
-`;
-
-const ParagraphContainer1 = styled.p`
-	font-size: 1.25rem;
-	font-family: "Overpass", Light;
-	margin-top: 1.2rem;
-
-	@media (max-width: 859px) {
-		font-size: 1rem;
-	}
-
-	@media (max-width: 685px) {
-		margin-top: 0;
-	}
-
-	@media (max-width: 648px) {
-		font-size: 0.8rem;
-	}
-`;
-
-const ParagraphSair = styled.p`
-  color: #85144B;
-  font-family: Overpass, SemiBold;
-	font-size: 1rem;
-	cursor: pointer;
-	align-self: flex-end;
-	text-transform: uppercase;
 `;
 
 const HeaderAddModel = styled.div`
@@ -942,7 +906,7 @@ const BoxOrgs = styled.div`
 	width: 100%;
 	max-height: 35vh;
 	/* overflow-y: scroll; */
-	overflow-y: ${props => props.orgs.length < '5' ? 'none' : 'scroll'};
+	overflow-y: ${props => (props.orgs.length < '5' ? 'none' : 'scroll')};
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
@@ -1110,13 +1074,6 @@ const SpanButton = styled.span`
 	display: flex;
 	justify-content: flex-end;
 `;
-
-const BoxDescription = styled.span`
-	max-width: 79%;
-	display: flex;
-	flex-wrap: wrap;
-`;
-
 
 let newList = [];
 
@@ -1729,8 +1686,8 @@ class DocumentsScreen extends Component {
 							<ContainerContent>
 								<ContainerScroll>
 									<ContainerModels>
-
 										{isAdmin ? (
+											// MAP DOCUMENTS ADM
 											documentsList && documentsList.length > 0 ? (
 												documentsList.map(item => (
 													<ContainerModel key={item}
@@ -1779,6 +1736,7 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
+												// QUANDO NÃO TEM DOC NO ADM
 												<InitialAddModel>
 													<TitleInitialAddModel>
 													Você ainda não possui um modelo
@@ -1790,6 +1748,7 @@ class DocumentsScreen extends Component {
 												</InitialAddModel>
 											)
 										) : (
+											// MAP DOCUMENTS USER
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
 												this.state.listDocs.map(docs => (
 													<ContainerModel key={docs}
@@ -1856,6 +1815,7 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
+												// QUANDO USER NÃO TEM DOC
 												<InitialAddModel>
 													<TitleInitialAddModel>
 													Você ainda não tem nenhum documento

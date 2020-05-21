@@ -4,6 +4,7 @@ const ADD_NEW_DOCUMENT = 'osc/documents/ADD_NEW_DOCUMENTS';
 const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
 
 // Initial State
+let nextDocId = 1;
 const initialState = {
 	documentsList: [
 		{
@@ -61,7 +62,7 @@ export default function (state = initialState, action) {
 	}
 }
 
-let nextDocId = 1;
+
 // Action Creators
 export const addNewDocument = info => ({
 	type: ADD_NEW_DOCUMENT,
