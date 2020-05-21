@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
-import Sucessfully from './ModalSucessfully';
 import Button from '../../../components/Button';
 
 // Image
@@ -23,7 +22,7 @@ import selectMaisMobile from '../../../assets/selectMais.svg';
 import Exit from '../../../assets/exit.svg';
 
 // Redux
-import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
+import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -32,6 +31,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
+	deleteOrg: info => dispatch(deleteOrg(info)),
 });
 
 
@@ -41,7 +41,7 @@ const Container = styled.div`
 `;
 
 const ContainerUser = styled.div`
-	width: ${props => (props.width ? '100%' : '100%')};
+	width: 100%;
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
@@ -64,7 +64,8 @@ const ContainerContentSelectedViewBy = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	z-index: 4;
-	@media (max-width: 768px) {
+
+	@media (max-width: 490px) {
 		align-items: center;
 		flex-direction: column;
 	}
@@ -75,9 +76,12 @@ const TitleManageOrgs = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
+
 	@media (max-width: 768px) {
-		padding-bottom: 0.8rem;
+		width: 90%;
+    margin-left: .9rem;
 	}
+
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -88,24 +92,33 @@ const TitleMyOrganization = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
+	
 	@media (max-width: 768px) {
-		padding-bottom: 0.8rem;
+		margin-left: 1rem;
 	}
+
 	@media (max-width: 648px) {
 		display: none;
 	}
 `;
 
 const SelectViewBy = styled.div`
-	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
+
 	@media (max-width: 768px) {
-		width: 100%;
-		justify-content: center;
+		width: 45%;
+		justify-content: flex-end;
+		margin-right: 1rem;
 	}
+
 	@media(max-width: 648px) {
     justify-content: center;
+	}
+
+	@media(max-width: 490px) {
+    width: 80%;
+		margin-right: 0;
 	}
 `;
 
@@ -116,6 +129,7 @@ const SpanSelect = styled.div`
   flex-direction: column;
 	z-index: 11;
 	position: relative;
+
 	@media (max-width: 940px) {
 		width: 47%;
 	}
@@ -160,17 +174,15 @@ const SelectInputUser = styled.span`
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
-	margin-top: 0.8rem;
 	display: flex;
 	justify-content: space-between;
-	/* @media (max-width: 648px) {
-		order: ${props => (props.order ? '0' : '1')};
-	} */
+
 	@media(max-width: 768px) {
-		width: 50%;
+		width: 70%;
 	}
+
 	@media(max-width: 490px) {
-		width: 80%;
+		width: 100%;
 	}
 `;
 
@@ -253,11 +265,24 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-  width: ${props => (props.width ? '100%' : '94%')};
+  width: ${props => (props.width ? '100%' : '96%')};
   max-height: ${props => (props.height ? '0' : '100vh')};
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
-	border-radius: ${props => (props.border ? '0' : '3px')};
+	border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+
+	@media (max-width: 1680px) {
+		width: ${props => (props.width ? '100%' : '95.4%')};
+	}
+
+	@media (max-width: 1440px) {
+		width: ${props => (props.width ? '100%' : '94.5%')};
+	}
+
+	@media (max-width: 1024px) {
+		width: ${props => (props.width ? '100%' : '92.5%')};
+	}
+
 	@media (max-width: 768px) {
 		margin: 0 auto;
 		width: 100%;
@@ -267,16 +292,24 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
+	min-height: calc(78vh + 11px);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
+
+	@media (max-width: 1440px) {
+		min-height: 68vh;
+	}
+
+	@media (max-width: 1024px) {
+		min-height: 64vh;
+	}
+	
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
 `;
 
 const ContainerTable = styled.div`
-	${''}
-	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
-	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 178px)')};
+	max-height: 66vh;
 	overflow-y: scroll;
 	::-webkit-scrollbar {
   width: 10px;
@@ -350,7 +383,6 @@ const TableTitle = styled.th`
 	position: sticky;
 	top: 0;
 	z-index: 5;
-	${''}
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -397,6 +429,7 @@ const TextInformation = styled.p`
 
 const Box = styled.div`
 	display: none;
+
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 		flex-direction: row;
@@ -646,10 +679,10 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	isModalCreateOrganization = (ev) => {
-		ev.stopPropagation();
+	isModalCreateOrganization = (type) => {
 		this.setState({
 			isModalCreateOrg: !this.state.isModalCreateOrg,
+			modalType: type,
 		});
 	}
 
@@ -856,7 +889,7 @@ class OrganizationScreen extends Component {
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
-						<TableList>{item.organization}</TableList>
+						<TableList>{item.tradingName}</TableList>
 					</ContainerTableTitleMob>
 					: <>
 						<TableList
@@ -865,7 +898,7 @@ class OrganizationScreen extends Component {
 							style={{ paddingLeft: '.7rem' }}
 							width={'9rem'}
 						>
-							{item.organization}
+							{item.tradingName}
 						</TableList>
 					</>
 				}
@@ -875,7 +908,8 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'9.5rem'}
 				>
-					{item.cpf}
+					{/* {item.cpf} */}
+					cpf do consultor
 				</TableList>
 				<TableList
 					mob
@@ -883,16 +917,17 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}
 				>
-					{item.user}
+					{/* {item.user} */}
+					nome do consultor
 				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
-						<TableList>{item.email}</TableList>
+						<TableList>email do consultor</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.telephone}</TableList>
+						<TableList font={this.state.hovered === item}>telefone</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
@@ -912,14 +947,16 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.email}
+							{/* {item.email} */}
+							email do consultor
 						</TableList>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'8rem'}
 						>
-							{item.telephone}
+							{/* {item.telephone} */}
+							telefone
 						</TableList>
 						<TableList
 							wNumber
@@ -986,8 +1023,8 @@ class OrganizationScreen extends Component {
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.organization.split(' ').includes(filter)
-				: item.organization.toLowerCase() === filter.toLowerCase())));
+				? item.tradingName.split(' ').includes(filter)
+				: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1037,9 +1074,9 @@ class OrganizationScreen extends Component {
 						tableDatas={tableDatas}
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
+						handleRedirect={this.handleRedirect}
 					/>
 				}
-				{this.state.modalSucess && <Sucessfully handleRedirect={this.handleRedirect} />}
 				<Header />
 				<ContainerUser
 					width={isAdmin}
@@ -1052,6 +1089,8 @@ class OrganizationScreen extends Component {
 							height='4.3rem'
 							fontSize='1.4rem'
 							margin='1.5rem 0 1.5rem 2.5rem'
+							// marginMobile='0 2.5rem 1.2rem 2.5rem'
+							marginMobileSmall='0 1.9rem 1.2rem 2.6rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
