@@ -98,9 +98,7 @@ const TitleMyOrganization = styled.h2`
 	font-weight: 900;
 
 	@media (max-width: 768px) {
-		display: none;
-		padding-bottom: 0.8rem;
-		/* margin-left: 1rem; */
+		margin-left: 1rem;
 	}
 
 	@media (max-width: 648px) {
@@ -109,9 +107,15 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
+	/* width: ${props => (props.width)}; */
+	width: 43%;
 	display: flex;
 	flex-direction: row;
-	/* align-items: flex-end; */
+	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
+
+	@media (max-width: 1024px) {
+		width: ${props => (props.isAdmin ? '48%' : '43%')};
+	}
 
 	@media (max-width: 768px) {
 		width: 100%;
@@ -120,7 +124,7 @@ const SelectViewBy = styled.div`
 	}
 
 	@media(max-width: 490px) {
-    width: 80%;
+    width: ${props => (props.isAdmin ? '85%' : '80%')};
 		margin-right: 0;
 	}
 `;
@@ -138,13 +142,13 @@ const SpanSelect = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		margin: 0 2rem;
+		margin: 0;
 		width: 100%;
 		align-items: center;
 	}
 
-	@media(max-width: 648px) {
-		width: 90%;
+	@media(max-width: 490px) {
+		width: 100%;
 	}
 `;
 
@@ -177,8 +181,7 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
-	width: 75%;
-	/* height: 2rem; */
+	width: 100%;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
@@ -187,8 +190,7 @@ const SelectInputUser = styled.span`
 	justify-content: space-between;
 
 	@media(max-width: 768px) {
-		width: 70%;
-		align-items: center;
+		width: 80%;
 	}
 
 	@media(max-width: 490px) {
@@ -217,11 +219,12 @@ const InputSelect = styled.div`
 	display: flex;
 	justify-content: space-between;
 	z-index: 2;
-	cursor: pointer;
 
 	@media (max-width: 768px) {
 		width: 75%;
 		font-size: 1rem;
+		width: ${props => (props.isAdmin ? '100%' : '50%')};
+		/* width: 50%; */
 	}
 
 	@media (max-width: 490px) {
@@ -256,8 +259,8 @@ const InputSelectedItem = styled.div`
 	cursor: pointer;
 
 	@media (max-width: 768px) {
-		width: 75%;
-		/* top: 36px; */
+		width: 100%;
+		top: 36px;
 	}
 
 	@media (max-width: 490px) {
@@ -309,10 +312,7 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	height: ${props => (props.height ? '0' : 'calc(100vh - 89px - 4.9rem - 2.4rem)')};
-	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.8rem 1.5rem 0')};
-	/* min-height: 76vh;
-	min-height: calc(78vh + 11px);
+	min-height: 76vh;
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 1440px) {
@@ -321,8 +321,7 @@ const Content = styled.div`
 
 	@media (max-width: 1024px) {
 		min-height: 64vh;
-	} */
-
+	}
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
@@ -818,10 +817,10 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
-				<SelectViewBy>
+				<SelectViewBy isAdmin={this.props.isAdmin}>
 					<TitleViewBy>Visualizar por:</TitleViewBy>
 					<SpanSelect>
-						<InputSelect onClick={this.isSelectOpen}>
+						<InputSelect isAdmin={this.props.isAdmin} onClick={this.isSelectOpen}>
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
@@ -1129,9 +1128,9 @@ class OrganizationScreen extends Component {
 							width='18%'
 							height='4.3rem'
 							fontSize='1.4rem'
-							margin='1.5rem 0 1.5rem 2.5rem'
-							// marginMobile='0 2.5rem 1.2rem 2.5rem'
-							marginMobileSmall='0 1.9rem 1.2rem 2.6rem'
+							margin='1.2rem 0 1.2rem 2.3rem'
+							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
