@@ -36,12 +36,11 @@ const mapDispatchToProps = dispatch => ({
 const Container = styled.div`
 	width: 100%;
 	height: 100vh;
-	/* padding: 0 0 2rem; */
 `;
 
 const ContainerUser = styled.div`
 	width: 100%;
-	height: ${props => (!props.height && 'calc(100vh - 5.5rem)')};
+	height: ${props => (!props.height && 'calc(100vh - 5.35rem)')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 
 	@media(max-width: 648px) {
@@ -50,11 +49,9 @@ const ContainerUser = styled.div`
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	/* margin-top: 1.3rem; */
 	padding-right: .6rem;
 
 	@media(max-width: 768px) {
-		/* margin: 1.3rem 0; */
 		padding-right: 0;
 	}
 
@@ -185,10 +182,6 @@ const SelectInputUser = styled.span`
 		width: 73%;
 		margin-top: 0;
 	}
-
-	/* @media(max-width: 490px) {
-		width: 80%;
-	} */
 `;
 
 const Input = styled.input`
@@ -291,10 +284,6 @@ const ContainerTableUser = styled.div`
 		width: ${props => (props.width ? '100%' : '100%')};
 		margin: 0 0;
 	}
-/*
-	@media (max-width: 648px) {
-		padding: 3rem;
-	} */
 `;
 
 const Content = styled.div`
@@ -309,8 +298,7 @@ const Content = styled.div`
 
 const ContainerTable = styled.div`
 	${''}
-	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
-	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 179px)')};
+	max-height: ${props => (props.maxHeight ? '66vh' : 'calc(84vh - 179px)')};
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -339,7 +327,6 @@ const ContainerTable = styled.div`
 const Table = styled.table`
 	max-width: 100%;
   width: 100%;
-	/* height: 100%; */
 	border-spacing: 0;
 
 	@media (max-width: 648px) {
@@ -361,7 +348,7 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
-	/* cursor: pointer; */
+	cursor: pointer;
 
 	&:nth-child(even) {
     background-color: #FFCFCD;
@@ -395,7 +382,6 @@ const TableTitle = styled.th`
 	position: sticky;
 	top: 0;
 	z-index: 5;
-	${''}
 
 	@media (max-width: 768px) {
 		display: none;
@@ -423,7 +409,6 @@ const ContainerTableTitleMob = styled.span`
 		flex-direction: column;
 
 		${({ selected }) => selected && css`
-		/* img {display: block;} */
 		p {display: none;}
 		div {display: flex;}
 	`}
@@ -443,10 +428,6 @@ const TextInformation = styled.p`
 	text-align: center;
 	font-family: Overpass, Regular;
 	color: #85144B;
-/*
-	@media(max-width: 648px) {
-		font-size: 1.5rem;
-	} */
 `;
 
 const Box = styled.div`
@@ -523,7 +504,6 @@ const ImageStatus = styled.img`
 	width: 1.3rem;
   padding-right: 0.3rem;
 	display: none;
-	/* cursor: pointer; */
 
 	@media(max-width: 768px) {
 		display: flex;
@@ -916,7 +896,7 @@ class OrganizationScreen extends Component {
 				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{this.state.isModal
 					&& <ModalOrganization
-						item={this.state.itemSelected}
+						org={this.state.itemSelected}
 						handleClosedModal={this.isModalOpen}
 						isModalCreateOrganization={this.isModalCreateOrganization}
 						deleteOrganization={this.deleteOrganization}

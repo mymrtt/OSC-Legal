@@ -44,7 +44,6 @@ const Container = styled.form`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	/* margin: 1rem; */
 	overflow: hidden auto;
 
 	::-webkit-scrollbar {
