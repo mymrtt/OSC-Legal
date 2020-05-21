@@ -4,6 +4,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -12,6 +13,7 @@ import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
 
 // Images
+// import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
@@ -35,7 +37,7 @@ const mapStateToProps = state => ({
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
 	organization: state.organization.tableDatas,
-	isAdmin: true,
+	isAdmin: false,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -671,6 +673,43 @@ const ModalAddModel = styled.form`
 	}
 `;
 
+// const LogoAndData = styled.div`
+// 	display: none;
+
+// 	@media (max-width: 490px) {
+// 		display: flex;
+// 		justify-content: space-between;
+// 		margin-bottom: 10%;
+// 	}
+// `;
+
+// const ParagraphContainer1 = styled.p`
+// 	font-size: 1.25rem;
+// 	font-family: "Overpass", Light;
+// 	margin-top: 1.2rem;
+
+// 	@media (max-width: 859px) {
+// 		font-size: 1rem;
+// 	}
+
+// 	@media (max-width: 685px) {
+// 		margin-top: 0;
+// 	}
+
+// 	@media (max-width: 648px) {
+// 		font-size: 0.8rem;
+// 	}
+// `;
+
+// const ParagraphSair = styled.p`
+//   color: #85144B;
+//   font-family: Overpass, SemiBold;
+// 	font-size: 1rem;
+// 	cursor: pointer;
+// 	align-self: flex-end;
+// 	text-transform: uppercase;
+// `;
+
 const HeaderAddModel = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -801,6 +840,34 @@ const TextArea = styled.textarea`
 	resize: none;
 `;
 
+// const ButtonAdd = styled(Button)`
+// 	align-self: flex-end;
+// 	width: 18.75rem;
+// 	height: 4rem;
+// 	font-size: 1.2rem;
+// 	margin: 0;
+// 	text-transform: uppercase;
+
+// 	@media (max-width: 1024px) {
+// 		font-size: .9rem;
+// 		width: 55%;
+// 		padding: .8rem;
+// 	}
+
+// 	@media (max-width: 768px) {
+// 		width: 45%;
+// 		padding: 1rem;
+// 		font-size: 1.3rem;
+// 		margin: 0;
+// 	}
+
+// 	@media (max-width: 490px) {
+// 		width: 90%;
+// 		font-size: 1.2rem;
+// 		align-self: center;
+// 	}
+// `;
+
 const ContainerModalDelete = styled(ContainerModal)`
 	@media (max-width: 490px) {
 		background: #ffffff;
@@ -892,6 +959,23 @@ const ButtonCancel = styled.button`
 		width: 100%;
 	}
 `;
+
+// const ButtonConfirm = styled(Button)`
+// 	margin: 5% 0 0 0;
+// 	width: 50%;
+// 	height: 3.5rem;
+
+// 	@media (max-width: 1024px) {
+// 		margin: 5% 0 0 0;
+// 		width: 50%;
+// 	}
+
+// 	@media (max-width: 490px) {
+// 		margin: 0;
+// 		position: initial;
+// 		width: 100%;
+// 	}
+// `;
 
 const ErrorText = styled.p`
 	color: #f00;
@@ -1063,8 +1147,8 @@ const ImageExit = styled.img`
 	margin-top: .5rem;
 	cursor: pointer;
 
-	@media(max-width: 490){
-		top: 5rem;
+	@media(max-width: 490px){
+		top: 6rem;
 		right: .5rem;
 	}
 `;
@@ -1227,6 +1311,7 @@ class DocumentsScreen extends Component {
 
 	uploadFile = (e) => {
 		e.preventDefault();
+		// eslint-disable-next-line no-undef
 		const reader = new FileReader();
 		const file = e.target.files[0];
 
@@ -1840,7 +1925,7 @@ class DocumentsScreen extends Component {
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (
-											this.state.isMobileButton === true && this.state.addModel !== true ? (
+											this.state.isMobileButton === true && this.state.addModel !== true && this.state.selectOrg !== '' ? (
 												<Button
 													width="17.5rem"
 													height="4.5rem"
@@ -1856,7 +1941,7 @@ class DocumentsScreen extends Component {
 												null
 											)
 										) : (
-											this.state.isMobileButton === true && this.state.modalListDoc !== true ? (
+											this.state.isMobileButton === true && this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
 												<Button
 													width="17.5rem"
 													height="4.5rem"
