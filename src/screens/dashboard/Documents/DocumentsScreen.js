@@ -67,20 +67,20 @@ const Content = styled.div`
 	}
 
 	@media(max-width: 768px){
-		min-height: 90.5vh;
+		min-height: 92.6vh;
 	}
 `;
 
 const MaximumWidth = styled.div`
-	margin-top: 3rem;
+	margin-top: 2rem;
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
-	height: ${props => (props.isAdmin ? '100%' : '95%')};
-	height:	80vh;
+	height: ${props => (props.isAdmin ? '100%' : '100%')};
+	height:	85vh;
 	max-width: 1440px;
 	display: flex;
 	background: #FFF;
-	padding: ${props => (props.isAdmin ? 0 : '2rem 0')};
+	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0')};
 
 	@media(max-width: 648px){
 		padding: 0;
@@ -166,7 +166,7 @@ const ContainerContent = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		padding-right: 1rem;
+		padding-right: 0;
 		padding-top: 2rem;
 	}
 	@media (max-width: 490px) {
@@ -308,7 +308,7 @@ const ContainerSearch = styled.div`
 
 	@media (max-width: 1024px) {
 		margin-right: 1.1rem;
-		width: 55%;
+		width: 65%;
 	}
 
 	@media (max-width: 768px) {
@@ -465,7 +465,7 @@ const ContainerModel = styled.div`
 `;
 
 const ContainerModelDescription = styled.div`
-	width: 76%;
+	width: ${props => props.modal ? '95%' : '76%'};
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -944,10 +944,11 @@ const ButtonsModal = styled.div`
 const ButtonCancel = styled.button`
 	width: 50%;
 	height: 3.5rem;
+	background: blue;
 	color: #F00;
 	border-radius: 4px;
 	border: none;
-	background: #FFF;
+	/* background: #FFF; */
 	font-size: 1rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
@@ -955,8 +956,6 @@ const ButtonCancel = styled.button`
 
 	@media (max-width: 490px) {
 		margin: 0;
-		position: initial;
-		width: 100%;
 	}
 `;
 
@@ -1200,6 +1199,7 @@ class DocumentsScreen extends Component {
 		isOrg: false,
 		isMobileButton: false,
 		userSelectDoc: '',
+		idDocUser: 1,
 	};
 
 	handleOnOptions = (item) => {
@@ -1505,7 +1505,7 @@ class DocumentsScreen extends Component {
 
 	deleteUserDoc = () => {
 		this.setState({
-			listDocs: this.state.listDocs.filter(docs => docs !== this.state.userSelectDoc),
+			listDocs: this.state.listDocs.filter((docs, index) => this.state.listDocs.indexOf(docs) !== index),
 			modalDelete: false,
 		});
 	}
@@ -1645,6 +1645,7 @@ class DocumentsScreen extends Component {
 				<BoxModelsDoc>
 					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription
+							modal={this.state.modalListDoc}
 							hidden={this.state.modalListDoc}
 							addDocument={this.state.modalListDoc}
 							onClick={() => this.selecetedDocUser(docs)}
@@ -1673,7 +1674,7 @@ class DocumentsScreen extends Component {
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header />
 				<Content isAdmin={this.props.isAdmin} isMobileButton={this.state.isMobileButton}>
-					<MaximumWidth>
+					<MaximumWidth isAdmin={this.props.isAdmin}>
 						<ContainerAddModel>
 							{isAdmin ? <TitleSearch>Modelos de Documentos</TitleSearch> : <TitleSearch>Documentos</TitleSearch>}
 							{
@@ -1835,16 +1836,18 @@ class DocumentsScreen extends Component {
 										) : (
 											// MAP DOCUMENTS USER
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
-												this.state.listDocs.map(docs => (
-													<ContainerModel key={docs}
-														// zIndex={this.state.modalListDoc}
+												this.state.listDocs.map((docs, index) => (
+													<ContainerModel
+														key={index}
+														zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
-														onMouseEnter={() => this.handleOnOptions(docs)}
+														onMouseEnter={() => this.handleOnOptions(docs, index)}
 														onMouseLeave={this.handleOffOptions}
+														onClick={() => this.handleOnOptions(docs, index)}
 													>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{docs.id}</ModelNumber>
+																<ModelNumber>{index +1}</ModelNumber>
 																<ModelTitle>{docs.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{docs.description}</ModelParagraph>
@@ -1891,7 +1894,7 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverDelete === docs
 																		? this.state.colorTextDelete : '#85144B'}
-																	onClick={() => this.userSelectedDoc(docs)}
+																	onClick={() => this.userSelectedDoc(docs, index)}
 																>
 																	<p>Excluir</p>
 																</OptionText>
@@ -1925,7 +1928,7 @@ class DocumentsScreen extends Component {
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (
-											this.state.isMobileButton === true && this.state.addModel !== true && this.state.selectOrg !== '' ? (
+											this.state.isMobileButton === true && this.state.addModel !== true ? (
 												<Button
 													width="17.5rem"
 													height="4.5rem"
