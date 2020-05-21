@@ -36,8 +36,8 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
+	isAdmin: state.onboarding.users.isAdmin,
 	organization: state.organization.tableDatas,
-	isAdmin: false,
 });
 
 const mapDispatchToProps = dispatch => ({
