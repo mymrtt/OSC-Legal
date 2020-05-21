@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
-import Sucessfully from './ModalSucessfully';
 import Button from '../../../components/Button';
 
 // Image
@@ -23,7 +22,7 @@ import selectMaisMobile from '../../../assets/selectMais.svg';
 import Exit from '../../../assets/exit.svg';
 
 // Redux
-import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
+import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -32,6 +31,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
+	deleteOrg: info => dispatch(deleteOrg(info)),
 });
 
 
@@ -41,7 +41,7 @@ const Container = styled.div`
 `;
 
 const ContainerUser = styled.div`
-	width: ${props => (props.width ? '100%' : '100%')};
+	width: 100%;
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
@@ -109,7 +109,6 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
 	/* align-items: flex-end; */
@@ -286,7 +285,7 @@ const ContainerTableUser = styled.div`
   width: ${props => (props.width ? '100%' : '94%')};
   max-height: ${props => (props.height ? '0' : '100vh')};
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
-	border-radius: ${props => (props.border ? '0' : '3px')};
+	border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 
 	/* @media (max-width: 1680px) {
@@ -313,6 +312,7 @@ const Content = styled.div`
 	height: ${props => (props.height ? '0' : 'calc(100vh - 89px - 4.9rem - 2.4rem)')};
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.8rem 1.5rem 0')};
 	/* min-height: 76vh;
+	min-height: calc(78vh + 11px);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 1440px) {
@@ -329,9 +329,7 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	${''}
-	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
-	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 178px)')};
+	max-height: 66vh;
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -722,10 +720,10 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	isModalCreateOrganization = (ev) => {
-		ev.stopPropagation();
+	isModalCreateOrganization = (type) => {
 		this.setState({
 			isModalCreateOrg: !this.state.isModalCreateOrg,
+			modalType: type,
 		});
 	}
 
@@ -951,7 +949,8 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'9.5rem'}
 				>
-					{item.cpf}
+					{/* {item.cpf} */}
+					cpf do consultor
 				</TableList>
 				<TableList
 					mob
@@ -959,16 +958,17 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}
 				>
-					{item.user}
+					{/* {item.user} */}
+					nome do consultor
 				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
-						<TableList>{item.email}</TableList>
+						<TableList>email do consultor</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.telephone}</TableList>
+						<TableList font={this.state.hovered === item}>telefone</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
@@ -988,14 +988,16 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.email}
+							{/* {item.email} */}
+							email do consultor
 						</TableList>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'8rem'}
 						>
-							{item.telephone}
+							{/* {item.telephone} */}
+							telefone
 						</TableList>
 						<TableList
 							wNumber
@@ -1062,8 +1064,8 @@ class OrganizationScreen extends Component {
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.companyName.split(' ').includes(filter)
-				: item.companyName.toLowerCase() === filter.toLowerCase())));
+				? item.tradingName.split(' ').includes(filter)
+				: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1113,9 +1115,9 @@ class OrganizationScreen extends Component {
 						tableDatas={tableDatas}
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
+						handleRedirect={this.handleRedirect}
 					/>
 				}
-				{this.state.modalSucess && <Sucessfully handleRedirect={this.handleRedirect} />}
 				<Header />
 				<ContainerUser
 					width={isAdmin}
