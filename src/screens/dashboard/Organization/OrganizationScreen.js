@@ -50,11 +50,9 @@ const ContainerUser = styled.div`
 `;
 
 const ContainerSelectedViewBy = styled.div`
-	/* margin-top: 1.3rem; */
 	padding-right: .6rem;
 
 	@media(max-width: 768px) {
-		/* margin: 1.3rem 0; */
 		padding-right: 0;
 	}
 
@@ -98,16 +96,16 @@ const TitleMyOrganization = styled.h2`
 	font-weight: 900;
 
 	@media (max-width: 768px) {
+		display: none;
 		padding-bottom: 0.8rem;
 	}
 
-	@media (max-width: 648px) {
-		display: none;
-	}
+	/* @media (max-width: 648px) {
+	} */
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.width)};
+	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
 
@@ -285,7 +283,7 @@ const ContainerTableUser = styled.div`
   max-height: ${props => (props.height ? '0' : '100vh')};
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	border-radius: ${props => (props.border ? '0' : '3px')};
-	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+	margin: ${props => (props.margin ? '0' : ' 0 2.3rem')};
 
 	@media (max-width: 768px) {
 		width: ${props => (props.width ? '100%' : '100%')};
@@ -300,6 +298,7 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
+	height: ${props => (props.height ? '0' : 'calc(100vh - 89px - 4.9rem - 2.4rem)')};
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.8rem 1.5rem 0')};
 
 	@media (max-width: 768px) {
@@ -462,6 +461,7 @@ const BoxButton = styled.button`
 	border: none;
 	background: none;
 	outline: none;
+	cursor: auto;
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
@@ -486,6 +486,7 @@ const TableList = styled.td`
 	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
 	text-align: ${props => (props.wNumber && 'center')};
+	cursor: pointer;
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -513,6 +514,7 @@ const TextStatus = styled.p`
 	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
 	text-transform: uppercase;
+	cursor: auto;
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
@@ -524,6 +526,7 @@ const ImageStatus = styled.img`
   padding-right: 0.3rem;
 	display: none;
 	/* cursor: pointer; */
+	cursor: ${props => (props.cursor ? 'pointer' : 'auto')};
 
 	@media(max-width: 768px) {
 		display: flex;
@@ -740,6 +743,7 @@ class OrganizationScreen extends Component {
 			<Box isClickedStatus={item.id === this.state.isClickedStatus}>
 				{this.state.statusImgs.map((status, index) => (
 					<ImageStatus
+						cursor={this.props.isAdmin}
 						key={index}
 						src={status.img}
 						alt={status.desc}
@@ -768,7 +772,9 @@ class OrganizationScreen extends Component {
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
-						<TableList>{item.tradingName}</TableList>
+						<TableList
+							cursor={this.props.isAdmin}
+						>{item.tradingName}</TableList>
 					</ContainerTableTitleMob>
 					: <>
 						<TableList
@@ -941,7 +947,7 @@ class OrganizationScreen extends Component {
 							width='20%'
 							height='4.9rem'
 							fontSize='1.4rem'
-							margin='1.2rem 0 1.2rem 2.5rem'
+							margin='1.2rem 0 1.2rem 2.3rem'
 							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
 							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
 							text='Criar Organização'
@@ -956,7 +962,7 @@ class OrganizationScreen extends Component {
 						background={isAdmin}
 						border={isAdmin}
 						margin={isAdmin}>
-						<Content padding={isAdmin}>
+						<Content height={isAdmin} padding={isAdmin}>
 							{isAdmin
 								? this.renderSelectedViewby()
 								: this.renderSelectedViewbyUser()}
