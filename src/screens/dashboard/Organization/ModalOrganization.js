@@ -329,8 +329,9 @@ const ContainerEditImage = styled.div`
 `;
 
 const SpanContainerImage = styled.div`
-	  display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
 `;
 
 const ContainerOptionMobile = styled.p`
@@ -431,7 +432,7 @@ class ModalOrganization extends Component {
 											<ImageEdite src={ImageEdit}/>
 											<ContainerOption>Editar</ContainerOption>
 										</SpanContainer>
-										<SpanContainer onClick={this.props.deleteOrganization}>
+										<SpanContainer onClick={this.props.handleDeleteModal}>
 											<img src={ImageDelete}/>
 											<ContainerOptionDelete>Excluir</ContainerOptionDelete>
 										</SpanContainer>
@@ -521,7 +522,7 @@ class ModalOrganization extends Component {
 									<ImageEdite src={ImageEdit}/>
 									<ContainerOptionMobile>Editar</ContainerOptionMobile>
 								</SpanContainerImage>
-								<SpanContainerImage>
+								<SpanContainerImage onClick={this.props.handleDeleteModal}>
 									<img src={ImageDelete}/>
 									<ContainerOptionMobile>Excluir</ContainerOptionMobile>
 								</SpanContainerImage>
