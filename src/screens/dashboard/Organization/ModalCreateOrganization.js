@@ -398,6 +398,7 @@ class ModalCreateOrganization extends Component {
 				this.props.closeModal();
 			} else {
 				this.props.addNewOrg(org);
+				this.setState({ allStateTrue: true });
 				this.handleModalSucess();
 			}
 		}
@@ -633,7 +634,7 @@ class ModalCreateOrganization extends Component {
 									width={'100%'}
 									text="concluir"
 									textTransform
-									onClick={this.state.allStateTrue && this.props.handleChangeCloseModal}
+									// onClick={this.state.allStateTrue && this.props.handleChangeCloseModal}
 								/>
 							</ContainerConcludeButton>
 						</ContentWrapper>

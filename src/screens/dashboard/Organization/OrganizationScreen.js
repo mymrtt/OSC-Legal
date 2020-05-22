@@ -9,6 +9,7 @@ import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
 import Button from '../../../components/Button';
+// import Sucessfully from './ModalSucessfully';
 
 // Image
 import ImageCaminho from '../../../assets/caminho.svg';
@@ -45,6 +46,14 @@ const ContainerUser = styled.div`
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
+	}
+`;
+
+const InvolveButton = styled.div`
+	padding: .5rem 0.2rem;
+
+	@media (max-width: 768px) {
+		padding: 0;
 	}
 `;
 
@@ -108,7 +117,7 @@ const TitleMyOrganization = styled.h2`
 
 const SelectViewBy = styled.div`
 	/* width: ${props => (props.width)}; */
-	width: 43%;
+	width: 45%;
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -124,7 +133,7 @@ const SelectViewBy = styled.div`
 	}
 
 	@media(max-width: 490px) {
-    width: ${props => (props.isAdmin ? '85%' : '80%')};
+    width: ${props => (props.isAdmin ? '85%' : '85%')};
 		margin-right: 0;
 	}
 `;
@@ -496,6 +505,8 @@ const TableList = styled.td`
 	font-size: 0.95rem;
 	text-align: ${props => (props.wNumber && 'center')};
 	cursor: pointer;
+	padding:0 .5%;
+
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -1124,18 +1135,20 @@ class OrganizationScreen extends Component {
 					background={isAdmin}
 				>
 					{!isAdmin
-						&& <Button
+						&& <InvolveButton><Button
 							width='18%'
+							widthMobileSmall='90%'
 							height='4.3rem'
+							heightMobile='5.3rem'
 							fontSize='1.4rem'
 							margin='1.2rem 0 1.2rem 2.3rem'
 							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
-							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
+							marginMobileSmall='1.5rem 2.5rem 1.5rem 1.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
 							organizationMobile
-							onClick={this.isModalCreateOrganization} />
+							onClick={this.isModalCreateOrganization} /></InvolveButton>
 					}
 					<ContainerTableUser
 						width={isAdmin}
