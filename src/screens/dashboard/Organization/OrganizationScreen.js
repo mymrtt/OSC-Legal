@@ -44,8 +44,11 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: 100%;
-	height: ${props => (!props.height && 'calc(100vh - 5.5rem)')};
+	height: ${props => (!props.height && 'calc(100vh - -3px - 5.5rem)')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
+	border-right: 1px solid #707070;
+	border-left: 1px solid #707070;
+	border-bottom: 1px solid #707070;
 
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
@@ -122,7 +125,8 @@ const TitleMyOrganization = styled.h2`
 
 const SelectViewBy = styled.div`
 	/* width: ${props => (props.width)}; */
-	width: 45%;
+ /* width: 45%; */
+	width: 35%;
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -204,7 +208,7 @@ const SelectInputUser = styled.span`
 	justify-content: space-between;
 
 	@media(max-width: 768px) {
-		width: 85%;
+		width: 75%;
 	}
 
 	@media(max-width: 490px) {
@@ -306,11 +310,14 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-  width: ${props => (props.width ? '100%' : '94%')};
-  max-height: ${props => (props.height ? '0' : '100vh')};
-  background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
-	border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
-	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+		width: ${props => (props.width && '100%')};
+		max-height: ${props => (props.height ? '0' : '100vh')};
+		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
+		border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
+		margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 	@media (max-width: 768px) {
 		margin: 0 auto;
@@ -319,11 +326,10 @@ const ContainerTableUser = styled.div`
 `;
 
 const Content = styled.div`
-	width: 94%;
-	max-width: 94%;
-	height: ${props => (props.height ? '0' : 'calc(100vh - 77px - 4.9rem - 2.4rem)')};
-	padding: ${props => (props.padding ? '2rem 2rem 0' : '2rem 0')};
-	margin: 0 auto;
+	width: 100%;
+	max-width: 100%;
+	height: ${props => (props.height ? '0' : 'calc(100vh - 85px - 5.8rem - 2.4rem)')};
+	padding: ${props => (props.padding ? '7rem 5.5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
