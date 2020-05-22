@@ -457,8 +457,8 @@ class ModalOrganization extends Component {
 								<SubAnswer>{org.companyName || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>cnpj/cpf</SubTitle>
-								<SubAnswer>{org.cpf || '-'}</SubAnswer>
+								<SubTitle>cnpj</SubTitle>
+								<SubAnswer>{org.cnpj || '-'}</SubAnswer>
 								<SubTitle>telefone</SubTitle>
 								<SubAnswer>{org.telephone || '-'}</SubAnswer>
 							</Separation>
@@ -486,8 +486,8 @@ class ModalOrganization extends Component {
 									<SubAnswer>{org.tradingName || '-'}</SubAnswer>
 									<SubTitle>email</SubTitle>
 									<SubAnswer>{org.email || '-'}</SubAnswer>
-									<SubTitle>cnpj/cpf</SubTitle>
-									<SubAnswer>{org.cpf || '-'}</SubAnswer>
+									<SubTitle>cnpj</SubTitle>
+									<SubAnswer>{org.cnpj || '-'}</SubAnswer>
 									<SubTitle>complemento</SubTitle>
 									<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
 									<SubTitle>bairro</SubTitle>

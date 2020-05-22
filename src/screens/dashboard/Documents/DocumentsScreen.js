@@ -79,7 +79,7 @@ const MaximumWidth = styled.div`
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
 	height: ${props => (props.isAdmin ? '100%' : '100%')};
-	height:	90vh;
+	height:	85vh;
 	max-width: 1440px;
 	margin-top: 2rem;
 	display: flex;
@@ -101,7 +101,7 @@ const MaximumWidth = styled.div`
 `;
 
 const Teste = styled.div`
-	width: 65%;
+	width: 64%;
 	@media(max-width: 648px) {
 		width: 100%;
 	}
@@ -187,13 +187,18 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	width: 35%;
+	${'' /* padding-right: 3rem; */}
+	width: 34%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	padding-right: 3rem;
+
+	${'' /* @media(max-width: 1440px) {
+		max-width: 40%;
+	} */}
 
 	@media(max-width: 768px){
+		width: 35%;
 		padding: 0;
 	}
 
@@ -209,7 +214,7 @@ const ContainerAddModelMob = styled.div`
 		display: flex;
 		width: 100%;
     justify-content: center;
-		display: ${props => props.list === '' ? 'flex' : 'none' };
+		display: ${props => (props.list === '' ? 'flex' : 'none')};
 	}
 `;
 
@@ -497,7 +502,7 @@ const ContainerModelDescription = styled.div`
 	padding: ${props => (props.addDocument ? '1rem 0 1rem 0' : '0')};
 
 	@media(max-width: 768px){
-		width: ${props => props.modal ? '100%' : '68%'};
+		width: ${props => (props.modal ? '100%' : '68%')};
 	}
 
 	@media(max-width: 490px){
@@ -1722,7 +1727,7 @@ class DocumentsScreen extends Component {
 							isSelected={docs === this.state.isSelected}
 						>
 							<span key={index}>
-								<ModelNumber>{index +1}</ModelNumber>
+								<ModelNumber>{index + 1}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
 							</span>
 							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
@@ -1790,7 +1795,6 @@ class DocumentsScreen extends Component {
 									<SearchText>
 										{isAdmin ? 'Pesquisar' : 'Organização'}
 									</SearchText>
-									{/* {isAdmin ? ( */}
 									<ContainerSearchInput
 										filter={this.state.isBoxOrgs}
 										onClick={this.openBoxOrgs}
@@ -1807,7 +1811,12 @@ class DocumentsScreen extends Component {
 												{this.state.selectOrg === '' ? 'Selecionar organizações' : this.state.selectOrg}
 											</TextOrg>}
 										{isAdmin
-											? <img onClick={this.handleOnKeySeach} src={magnifyingGlass} alt="Lupa" style={{ cursor: 'pointer' }}/>
+											? <img
+												onClick={this.handleOnKeySeach}
+												src={magnifyingGlass}
+												alt="Lupa"
+												style={{ cursor: 'pointer' }}
+											/>
 											: this.state.isBoxOrgs
 												? <img src={ArrowUpIcon}
 													alt="arrow"
@@ -1853,7 +1862,7 @@ class DocumentsScreen extends Component {
 														onMouseLeave={this.handleOffOptions}>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{index +1}</ModelNumber>
+																<ModelNumber>{index + 1}</ModelNumber>
 																<ModelTitle>{item.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{item.description}</ModelParagraph>
@@ -1868,7 +1877,9 @@ class DocumentsScreen extends Component {
 																	src={this.state.hoverExport === item ? this.state.downloadExport : DownloadIcon}
 																	alt="Exportar" />
 																<OptionText
-																	colorTextButton={this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'}
+																	colorTextButton={
+																		this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'
+																	}
 																>
 														Exportar
 																</OptionText>
@@ -1882,7 +1893,9 @@ class DocumentsScreen extends Component {
 																	src={this.state.hoverDelete === item ? this.state.downloadDelete : DeleteIcon}
 																	alt="Deletar" />
 																<OptionText
-																	colorTextButton={this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'}
+																	colorTextButton={
+																		this.state.hoverDelete === item ? this.state.colorTextDelete : '#85144B'
+																	}
 																	onClick={() => this.handleSelected(item)}
 																>
 																	<p>Excluir</p>
@@ -1976,7 +1989,7 @@ class DocumentsScreen extends Component {
 												// QUANDO USER NÃO TEM DOC
 												<InitialAddModel>
 													<TitleInitialAddModel>
-													Você ainda não tem nenhum documento
+														Você ainda não tem nenhum documento
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
 														{this.state.selectOrg === '' ? (
@@ -2017,22 +2030,23 @@ class DocumentsScreen extends Component {
 												null
 											)
 										) : (
-											this.state.isMobileButton === true && this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
-												<Button
-													width="17.5rem"
-													height="4.5rem"
-													marginMobile="0 0 1rem 0"
-													widthMobileSmall="95%"
-													bottom="0"
-													left="11px"
-													positionMb="fixed"
-													onClick={this.openModalListDoc}
-													text="Adicionar Documento"
-													fontSizeMobile="1.2rem"
-												/>
-											) : (
-												null
-											)
+											this.state.isMobileButton === true
+											&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
+													<Button
+														width="17.5rem"
+														height="4.5rem"
+														marginMobile="0 0 1rem 0"
+														widthMobileSmall="95%"
+														bottom="0"
+														left="11px"
+														positionMb="fixed"
+														onClick={this.openModalListDoc}
+														text="Adicionar Documento"
+														fontSizeMobile="1.2rem"
+													/>
+												) : (
+													null
+												)
 										)}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
