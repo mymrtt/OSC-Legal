@@ -1989,7 +1989,7 @@ class DocumentsScreen extends Component {
 												// QUANDO USER NÃO TEM DOC
 												<InitialAddModel>
 													<TitleInitialAddModel>
-													Você ainda não tem nenhum documento
+														Você ainda não tem nenhum documento
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
 														{this.state.selectOrg === '' ? (

@@ -926,7 +926,7 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-		const { user } = this.props;
+		const { user, org } = this.props;
 
 		return listTable.map(item => (
 			<Tr key={item.id}>
@@ -965,11 +965,11 @@ class OrganizationScreen extends Component {
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
-						<TableList>email do consultor</TableList>
+						<TableList>{user.email || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList width={'7rem'} font={this.state.hovered === item}>telefone</TableList>
+						<TableList width={'7rem'} font={this.state.hovered === item}>{user.telephone || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>

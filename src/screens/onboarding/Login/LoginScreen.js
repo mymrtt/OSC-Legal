@@ -179,7 +179,7 @@ class LoginScreen extends Component {
 		ev.preventDefault();
 
 		if (!this.handleError()) {
-			this.setState({ redirect: '/dashboard' });
+			this.setState({ redirect: '/organizations' });
 		}
 	}
 
@@ -280,7 +280,7 @@ class LoginScreen extends Component {
 						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
 					</Span>}
 				</Form>
-				{redirect && <Redirect to={'/dashboard'} />}
+				{redirect && <Redirect to={'/organizations'} />}
 			</ContainerForm>
 		);
 	}

@@ -63,7 +63,7 @@ const WrapButton = styled.div`
 
 	@media(max-width: 768px){
 		width: 50%;
-		margin-left: 1rem;
+		margin-left: 2rem;
 
 		a {
 			font-size: 1rem;
@@ -86,7 +86,6 @@ const WrapButton = styled.div`
 	}
 `;
 
-
 const ContainerUser = styled.div`
 	display: flex;
 	align-items: flex-end;
@@ -94,6 +93,7 @@ const ContainerUser = styled.div`
 	margin: 0 6.2rem 0.8rem 0;
 
 	@media (max-width: 785px) {
+		margin: 0 .5rem 0.8rem 0;
 		width: 40%;
 	}
 
