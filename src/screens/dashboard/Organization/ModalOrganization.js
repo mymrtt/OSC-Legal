@@ -255,6 +255,7 @@ const ContainerOption = styled.p`
   align-items: center;
 	padding-top: 0.5rem;
 	margin-left: 0.3rem;
+	cursor: pointer;
 `;
 
 const ContainerOptionDelete = styled.p`
@@ -265,6 +266,7 @@ const ContainerOptionDelete = styled.p`
   align-items: center;
 	padding-top: 0.5rem;
 	margin-left: 1rem;
+	cursor: pointer;
 `;
 
 const Separation = styled.div`
@@ -342,6 +344,7 @@ const ContainerOptionMobile = styled.p`
   align-items: center;
 	padding-top: 0.3rem;
 	margin-left: 1rem;
+	cursor: pointer;
 `;
 
 class ModalOrganization extends Component {

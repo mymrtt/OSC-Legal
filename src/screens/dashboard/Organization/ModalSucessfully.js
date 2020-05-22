@@ -142,7 +142,7 @@ const Text = styled.p`
 export default class ModalSucessfully extends Component {
 	render() {
   	return (
-  		<Container>
+  		<Container onClick={this.props.handleClosedModal}>
   			<Modal>
   				<h1>A associação foi criada com sucesso!</h1>
   				<img src={Barcode} alt="Barcode"/>
