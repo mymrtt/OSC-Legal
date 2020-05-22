@@ -3,8 +3,11 @@ const ADD_NEW_PASSWORD = 'osc/register/ADD_NEW_PASSWORD';
 const UPDATE_RESET_PASSWORD = 'osc/resetpassword/UPDATE_RESET_PASSWORD';
 const IS_RESET_PASSWORD = 'osc/resetpassword/IS_RESET_PASSWORD';
 
+
 const initialState = {
-	users: { email: '', password: '', isAdmin: true },
+	users: {
+		email: '', password: '', name: '', telephone: '', cpf: '', isAdmin: false,
+	},
 	isResetPassword: undefined,
 	emailReset: '',
 };

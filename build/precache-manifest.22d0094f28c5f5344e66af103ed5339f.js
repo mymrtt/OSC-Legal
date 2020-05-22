@@ -1,43 +1,55 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8c0d763f8610cf3f37de48ab6dec6704",
+    "revision": "a0ead61636ff07f79d82a82077d534f4",
     "url": "/OSC-Legal/index.html"
   },
   {
-    "revision": "8c65aff7c70b8db3b1ee",
-    "url": "/OSC-Legal/static/css/main.c0180cdc.chunk.css"
+    "revision": "6ae5db298cc161c5606f",
+    "url": "/OSC-Legal/static/css/main.52c6e3fb.chunk.css"
   },
   {
-    "revision": "5aedffd0c7e9431157fe",
-    "url": "/OSC-Legal/static/js/2.0dd9f003.chunk.js"
+    "revision": "8a05fa7ce6e08ea7673f",
+    "url": "/OSC-Legal/static/js/2.0cf6fd8b.chunk.js"
   },
   {
     "revision": "f231859d6585c4cd5f80c344783ed269",
-    "url": "/OSC-Legal/static/js/2.0dd9f003.chunk.js.LICENSE.txt"
+    "url": "/OSC-Legal/static/js/2.0cf6fd8b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8c65aff7c70b8db3b1ee",
-    "url": "/OSC-Legal/static/js/main.517bcf93.chunk.js"
+    "revision": "6ae5db298cc161c5606f",
+    "url": "/OSC-Legal/static/js/main.151c91f2.chunk.js"
   },
   {
     "revision": "566b1579a03fae3d130a",
     "url": "/OSC-Legal/static/js/runtime-main.6c64655e.js"
   },
   {
+    "revision": "fc7bfa93de166d77b68bcd7dc84833b8",
+    "url": "/OSC-Legal/static/media/arrow-up.fc7bfa93.svg"
+  },
+  {
     "revision": "3ce4b5b42e8ea57a1487682de052ecd6",
     "url": "/OSC-Legal/static/media/authorization.3ce4b5b4.svg"
+  },
+  {
+    "revision": "66f6825fd04eaae01a12b76d116ee1d8",
+    "url": "/OSC-Legal/static/media/barcode.66f6825f.svg"
   },
   {
     "revision": "fa1297e779925977cbb9a55c1c0d51c2",
     "url": "/OSC-Legal/static/media/caminho.fa1297e7.svg"
   },
   {
-    "revision": "33d53cbeab9a8f4f169b82028312b343",
-    "url": "/OSC-Legal/static/media/delete.33d53cbe.svg"
+    "revision": "b90ea57919dcebaf2ffadda669aa255b",
+    "url": "/OSC-Legal/static/media/delete.b90ea579.svg"
   },
   {
-    "revision": "07b57ec14fa92c2dafef4f8264cd0dec",
-    "url": "/OSC-Legal/static/media/deleteWhite.07b57ec1.svg"
+    "revision": "629262c75afde4ef8a6d03eac1259047",
+    "url": "/OSC-Legal/static/media/deleteWhite.629262c7.svg"
+  },
+  {
+    "revision": "6c4e23e88b5095909202ae8d625ca008",
+    "url": "/OSC-Legal/static/media/document-user.6c4e23e8.svg"
   },
   {
     "revision": "aab63df6009b4b833f25d3fb2f48e511",
@@ -50,6 +62,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "4a5d956353c6ddfcce455c00cec9bb92",
     "url": "/OSC-Legal/static/media/downloadwhite.4a5d9563.svg"
+  },
+  {
+    "revision": "f522e40b6ed209a70cf1c723f8a25043",
+    "url": "/OSC-Legal/static/media/edit.f522e40b.svg"
+  },
+  {
+    "revision": "ec88ea4007f6d6c7772d35174546757d",
+    "url": "/OSC-Legal/static/media/editWhite.ec88ea40.svg"
   },
   {
     "revision": "e824110658084015d390b922f014127e",
@@ -78,6 +98,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "92a1b9acfc969829207c06d1ecf2f60b",
     "url": "/OSC-Legal/static/media/pay.92a1b9ac.svg"
+  },
+  {
+    "revision": "5481b2a440d4f93ecbfd1471f8059fba",
+    "url": "/OSC-Legal/static/media/selectMais.5481b2a4.svg"
   },
   {
     "revision": "7e764e9f6b59d27bafc76eaa35905eaf",
