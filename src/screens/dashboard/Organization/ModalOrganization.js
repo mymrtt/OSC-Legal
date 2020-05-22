@@ -144,14 +144,14 @@ const SubAnswer = styled.p`
 `;
 
 const ContentCreate = styled.div`
- 	width: ${props => (props.width ? '35%' : '37%')};
-	/* width: 35%; */
+ 	width: ${props => (props.width ? '35%' : '45%')};
   color: #85144B;
 	padding: ${props => (props.padding ? '0 0 2rem 3rem' : '0 0 2rem 2.5rem')};
 	padding: 0 0 2rem 3rem;
   border-left: 1px solid;
 	display: flex;
 	flex-direction: column;
+
 	@media (max-width: 648px) {
 		width: 100%;
 		border-left: 0;
@@ -208,6 +208,7 @@ const ContentOrganizationMobile = styled.div`
 const ContentConsultorDetails = styled.div`
 	display: flex;
 	flex-direction: row;
+
 	 @media (max-width: 648px) {
 		width: 100%;
 		flex-direction: row;
@@ -217,8 +218,8 @@ const ContentConsultorDetails = styled.div`
 `;
 
 const ContentSubTitle = styled.div`
-	/* width: 60%; */
 	width: 55%;
+
 	@media (max-width: 648px) {
 		width: 100%;
 		display: flex;
@@ -230,6 +231,7 @@ const ContentSubTitle = styled.div`
 const ContainerEdit = styled.div`
 	display: flex;
 	flex-direction: column;
+
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -239,6 +241,7 @@ const SpanContainer = styled.span`
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 0.5rem;
+	cursor: pointer;
 `;
 
 const ImageEdite = styled.img`

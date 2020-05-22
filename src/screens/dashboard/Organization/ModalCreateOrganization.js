@@ -275,9 +275,10 @@ class ModalCreateOrganization extends Component {
 		}
 	}
 
-	handleModalSucess = () => {
+	handleModalSucess = (item) => {
 		this.setState({
 			modalSucess: !this.state.modalSucess,
+			tradingName: item,
 		});
 	}
 
@@ -410,7 +411,7 @@ class ModalCreateOrganization extends Component {
 				this.props.closeModal();
 			} else {
 				this.props.addNewOrg(org);
-				this.handleModalSucess();
+				this.handleModalSucess(tradingName);
 			}
 		}
 	}
@@ -651,9 +652,11 @@ class ModalCreateOrganization extends Component {
 						</ContentWrapper>
 					</Content>
 					{this.state.modalSucess && <Sucessfully
+						tradingName={this.state.tradingName}
 						handleClosedModal={this.props.handleClosedModal}
 						handleModalSucess={this.handleModalSucess}
-						handleRedirect={this.props.handleRedirect} />}
+						handleRedirect={this.props.handleRedirect}
+					/>}
 				</Container>
 			</Overlay>
 		);
