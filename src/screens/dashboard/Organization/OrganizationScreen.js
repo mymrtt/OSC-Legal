@@ -20,6 +20,7 @@ import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
+import Exit from '../../../assets/exit.svg';
 
 // Redux
 import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
@@ -63,7 +64,13 @@ const ContainerContentSelectedViewBy = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	z-index: 4;
-	@media (max-width: 768px) {
+
+	/* @media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+	} */
+
+	@media (max-width: 490px) {
 		align-items: center;
 		flex-direction: column;
 	}
@@ -74,9 +81,12 @@ const TitleManageOrgs = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
+
 	@media (max-width: 768px) {
-		padding-bottom: 0.8rem;
+		width: 90%;
+    margin-left: .9rem;
 	}
+
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -87,9 +97,11 @@ const TitleMyOrganization = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
+	
 	@media (max-width: 768px) {
-		padding-bottom: 0.8rem;
+		margin-left: 1rem;
 	}
+
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -99,12 +111,20 @@ const SelectViewBy = styled.div`
 	/* width: ${props => (props.width)}; */
 	display: flex;
 	flex-direction: row;
+
 	@media (max-width: 768px) {
-		width: 100%;
-		justify-content: center;
+		width: 45%;
+		justify-content: flex-end;
+		margin-right: 1rem;
 	}
+
 	@media(max-width: 648px) {
     justify-content: center;
+	}
+
+	@media(max-width: 490px) {
+    width: 80%;
+		margin-right: 0;
 	}
 `;
 
@@ -115,6 +135,7 @@ const SpanSelect = styled.div`
   flex-direction: column;
 	z-index: 11;
 	position: relative;
+
 	@media (max-width: 940px) {
 		width: 47%;
 	}
@@ -159,17 +180,18 @@ const SelectInputUser = styled.span`
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
-	margin-top: 0.8rem;
 	display: flex;
 	justify-content: space-between;
 	/* @media (max-width: 648px) {
 		order: ${props => (props.order ? '0' : '1')};
 	} */
+
 	@media(max-width: 768px) {
-		width: 50%;
+		width: 70%;
 	}
+
 	@media(max-width: 490px) {
-		width: 80%;
+		width: 100%;
 	}
 `;
 
@@ -252,11 +274,24 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-  width: ${props => (props.width ? '100%' : '94%')};
+  width: ${props => (props.width ? '100%' : '96%')};
   max-height: ${props => (props.height ? '0' : '100vh')};
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	border-radius: ${props => (props.border ? '0' : '3px')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+
+	@media (max-width: 1680px) {
+		width: ${props => (props.width ? '100%' : '95.4%')};
+	}
+
+	@media (max-width: 1440px) {
+		width: ${props => (props.width ? '100%' : '94.5%')};
+	}
+
+	@media (max-width: 1024px) {
+		width: ${props => (props.width ? '100%' : '92.5%')};
+	}
+
 	@media (max-width: 768px) {
 		margin: 0 auto;
 		width: 100%;
@@ -266,7 +301,17 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
+	min-height: 76vh;
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
+
+	@media (max-width: 1440px) {
+		min-height: 68vh;
+	}
+
+	@media (max-width: 1024px) {
+		min-height: 64vh;
+	}
+	
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
@@ -396,6 +441,7 @@ const TextInformation = styled.p`
 
 const Box = styled.div`
 	display: none;
+
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 		flex-direction: row;
@@ -467,6 +513,121 @@ const ImageStatus = styled.img`
 	}
 `;
 
+const ContainerModalDelete = styled.div`
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 30;
+	background: rgba(112, 112, 112, 0.5);
+
+	@media (max-width: 490px) {
+		flex-direction: column;
+		background: #ffffff;
+	}
+`;
+
+const ModalDelete = styled.div`
+	background: #FFF;
+	width: 480px;
+	padding: 1% 1% 1% 1%;
+
+
+	@media (max-width: 490px) {
+		width: 100%;
+		height: 100vh;
+		padding: 5%;
+		    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+	}
+`;
+
+const TitleModal = styled.div`
+	display: flex;
+	justify-content: space-between;
+
+	img {
+		width: 20px;
+		height: 20px;
+		cursor: pointer;
+	}
+`;
+
+const TitleDelete = styled.h2`
+	color: #85144B;
+	font-size: 2rem;
+	margin-top: 2%;
+	margin-bottom: 1%;
+	margin-left: 1rem;
+  font-family: "Overpass", Bold;
+  font-weight: 900;
+
+	@media (max-width: 490px) {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+`;
+
+const WrapTextModal = styled.div`
+	@media (max-width: 490px) {
+		height: 30%;
+    display: flex;
+    flex-direction: column;
+	}
+`;
+
+const TextModal = styled.p`
+	margin: 1.5rem  0;
+	font-size: 1rem;
+	font-family: 'Overpass', Regular;
+	color: #404040;
+
+	strong {
+		font-family: 'Overpass', Bold;
+		color: #404040;
+	}
+	@media (max-width: 490px) {
+		margin: 0;
+		font-size: 1.3rem;
+	}
+`;
+
+const ButtonsModal = styled.div`
+	display: flex;
+	margin-top: 5%;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+
+	@media (max-width: 490px) {
+		margin: 0;
+		width: 100%;
+	}
+`;
+
+const ButtonCancel = styled.button`
+	width: 50%;
+	height: 3.5rem;
+	color: #F00;
+	border-radius: 4px;
+	border: none;
+	background: #FFF;
+	font-size: 1rem;
+	font-family: "Overpass", Bold;
+	font-weight: 600;
+
+	@media (max-width: 490px) {
+		margin: 0;
+		position: initial;
+		width: 100%;
+	}
+`;
+
 class OrganizationScreen extends Component {
 	constructor(props) {
 		super(props);
@@ -476,7 +637,8 @@ class OrganizationScreen extends Component {
 			itemSelected: undefined,
 			isSelected: undefined,
 			toFilter: false,
-			modalSucess: false,
+			isDeleteModal: false,
+			modalType: '',
 			filter: '',
 			selectedValue: 'Selecionar status',
 			selectedItems: [
@@ -560,6 +722,20 @@ class OrganizationScreen extends Component {
 		this.setState({
 			isModal: false,
 		});
+	}
+
+	handleDeleteModal = () => {
+		this.setState({
+			isDeleteModal: !this.state.isDeleteModal,
+		});
+	}
+
+	deleteOrganization = () => {
+		this.props.deleteOrg(this.state.itemSelected);
+		this.setState({
+			isModal: false,
+		});
+		this.handleDeleteModal();
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
@@ -687,6 +863,34 @@ class OrganizationScreen extends Component {
 				</TextStatus>
 			</BoxButton>
 		</>
+	)
+
+	renderModalDelete = () => (
+		<ContainerModalDelete onClick={this.handleDeleteModal}>
+			<ModalDelete onClick={e => e.stopPropagation()}>
+				<TitleModal>
+					<TitleDelete>Excluir Organização</TitleDelete>
+					<img onClick={this.handleDeleteModal} src={Exit} alt="Sair" />
+				</TitleModal>
+				<WrapTextModal>
+					<TextModal>
+						Após ser excluido, uma organização não pode ser recuperado.
+					</TextModal>
+					<TextModal>
+						Você deseja excluir <strong>{this.state.itemSelected.tradingName}</strong> permanentemente?
+					</TextModal>
+				</WrapTextModal>
+				<ButtonsModal>
+					<ButtonCancel onClick={this.handleDeleteModal}>Cancelar</ButtonCancel>
+					<Button
+						onClick={this.deleteOrganization}
+						width="50%"
+						height="3.5rem"
+						text="Confirmar"
+					/>
+				</ButtonsModal>
+			</ModalDelete>
+		</ContainerModalDelete>
 	)
 
 	renderTable = (listTable) => {
@@ -850,16 +1054,35 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		const { isAdmin } = this.props;
+		const { isAdmin, tableDatas } = this.props;
+		const {
+			isSelected,
+			isModal,
+			isDeleteModal,
+			itemSelected,
+			modalType,
+			isModalCreateOrg,
+		} = this.state;
 
 		return (
 			<Container>
-				{this.state.isSelected && <Overlay onClick={this.isSelectOpen} />}
-				{this.state.isModal
-					&& <ModalOrganization item={this.state.itemSelected} handleClosedModal={this.isModalOpen} />
+				{isSelected && <Overlay onClick={this.isSelectOpen} />}
+				{isModal
+					&& <ModalOrganization
+						org={itemSelected}
+						handleClosedModal={this.isModalOpen}
+						isModalCreateOrganization={this.isModalCreateOrganization}
+						handleDeleteModal={this.handleDeleteModal}
+					/>
 				}
-				{this.state.isModalCreateOrg
-					&& <ModalCreateOrganization modalSucess={this.state.modalSucess} handleClosedModal={this.isModalCreateOrganization} handleChangeCloseModal={this.handleChangeCloseModal}/>
+				{isModalCreateOrg
+					&& <ModalCreateOrganization
+						item={itemSelected}
+						modalType={modalType}
+						tableDatas={tableDatas}
+						handleClosedModal={this.isModalCreateOrganization}
+						closeModal={this.isModalOpen}
+					/>
 				}
 				{this.state.modalSucess && <Sucessfully handleRedirect={this.handleRedirect} />}
 				<Header />
@@ -874,6 +1097,8 @@ class OrganizationScreen extends Component {
 							height='4.3rem'
 							fontSize='1.4rem'
 							margin='1.5rem 0 1.5rem 2.5rem'
+							// marginMobile='0 2.5rem 1.2rem 2.5rem'
+							marginMobileSmall='0 1.9rem 1.2rem 2.6rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
@@ -922,6 +1147,7 @@ class OrganizationScreen extends Component {
 						</Content>
 					</ContainerTableUser>
 				</ContainerUser>
+				{isDeleteModal && this.renderModalDelete()}
 			</Container>
 		);
 	}
