@@ -65,8 +65,8 @@ const WrapButton = styled.div`
 		width: 50%;
 		margin-left: 1rem;
 
-		a{
-			font-size: 1.2rem;
+		a {
+			font-size: 1rem;
 		}
 	}
 
@@ -88,10 +88,10 @@ const WrapButton = styled.div`
 
 
 const ContainerUser = styled.div`
-	margin-bottom: 0.8rem;
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
+	margin: 0 6.2rem 0.8rem 0;
 
 	@media (max-width: 785px) {
 		width: 40%;
@@ -99,12 +99,13 @@ const ContainerUser = styled.div`
 
 	@media (max-width: 750px) {
 		width: 20%;
+		margin: 0 0 0.8rem 0;
 	}
 
 	@media (max-width: 648px) {
 		white-space: nowrap;
 		padding-top: 0.7rem;
-		margin-bottom: 0;
+		margin: 0 2.2rem 0 0;
 		order: 2;
 	}
 `;
@@ -112,40 +113,25 @@ const ContainerUser = styled.div`
 const ParagraphUserName = styled.p`
 	font-size: 1.25rem;
 	font-family: "Overpass", Light;
-	margin: 1.2rem 5.3rem 0 0;
+	margin-top: 1.2rem;
 
 	@media (max-width: 859px) {
 		font-size: 1rem;
-		margin-right: .7rem;
-	}
-
-	@media (max-width: 685px) {
-		margin-top: 0;
 	}
 
 	@media (max-width: 648px) {
 		font-size: 1.2rem;
-		margin-right: 1.7rem;
 	}
 `;
 
 const ParagraphSair = styled.p`
-	margin-right: 5.2rem;
 	color: #85144B;
 	font-family: Overpass, SemiBold;
 	font-size: 1.25rem;
 	cursor: pointer;
 
-	@media(max-width: 1440px) and (max-height: 900px){
-		margin-right: 5.5rem;
-	}
-
 	@media(max-width: 768px){
-		margin-right: .7rem;
 		font-size: 1rem;
-	}
-	@media(max-width: 648px){
-		margin-right: 1.7rem;
 	}
 `;
 

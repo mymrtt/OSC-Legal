@@ -33,9 +33,10 @@ const Container = styled.div`
 const Modal = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   width: 550px;
-  height: 460px;
+  height: 530px;
   background: #FFFFFF;
   margin: 0 1rem;
 
@@ -43,7 +44,7 @@ const Modal = styled.div`
     font-size: 1.1rem;
     width: 52%;
     text-align: center;
-    margin: 1.7rem 0 1.3rem 0;
+    margin-bottom: 1.3rem;
     font-family: 'Overpass', sans-serif;
 		font-weight: 800;
   }
@@ -88,6 +89,7 @@ const Modal = styled.div`
 
   Button {
     width: 80%;
+    height: 4rem;
     text-transform: uppercase;
     margin: 1.7rem 0 0 0;
     border-radius: 3px;

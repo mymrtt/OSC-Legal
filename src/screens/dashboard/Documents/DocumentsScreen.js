@@ -193,6 +193,10 @@ const ContainerAddModel = styled.div`
 	flex-direction: column;
 	padding-right: 3rem;
 
+	@media(max-width: 768px){
+		padding: 0;
+	}
+
 	@media (max-width: 490px) {
 		display: none;
 	}
@@ -281,6 +285,7 @@ const ContainerScroll = styled.div`
 		margin: 0;
 		display: flex;
 		justify-content: center;
+		padding: 0 .2rem;
 	}
 `;
 
@@ -1087,6 +1092,10 @@ const BoxTitle = styled.span`
 	display: flex;
 	flex-direction: column;
 	padding: 1rem 1rem 0 1rem;
+
+	@media(max-width: 648px) {
+		padding: 2rem 1rem 0 1rem;
+	}
 `;
 
 const SubtitleModal = styled.p`
@@ -1160,7 +1169,7 @@ const ImageExit = styled.img`
 
 	@media(max-width: 490px){
 		top: 6rem;
-		right: .5rem;
+		right: 1.5rem;
 	}
 `;
 
@@ -1218,6 +1227,13 @@ class DocumentsScreen extends Component {
 		this.setState({
 			options: true,
 			selectedOptions: item,
+		});
+	}
+
+	handleOnOptionsUser = (docs, index) => {
+		this.setState({
+			options: true,
+			selectedOptions: docs,
 		});
 	}
 
@@ -1281,6 +1297,14 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	handleChangeColorExportUser = (docs) => {
+		this.setState({
+			downloadExport: DownloadWhiteIcon,
+			hoverExport: docs,
+			colorTextExport: '#ffffff',
+		});
+	}
+
 	handleChangeColorLeaveExport = () => {
 		this.setState({
 			downloadExport: DownloadIcon,
@@ -1289,7 +1313,7 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleChangeColorEdit = (docs) => {
+	handleChangeColorEditUser = (docs) => {
 		this.setState({
 			downloadEdit: EditIconWhite,
 			hoverEdit: docs,
@@ -1310,6 +1334,38 @@ class DocumentsScreen extends Component {
 			downloadDelete: DeleteIconWhite,
 			hoverDelete: item,
 			colorTextDelete: '#ffffff',
+		});
+	}
+
+	handleChangeColorLeaveDelete = () => {
+		this.setState({
+			downloadDelete: DeleteIcon,
+			hoverDelete: '',
+			colorTextDelete: '#85144B',
+		});
+	}
+
+	handleChangeColorDeleteUser = (docs) => {
+		this.setState({
+			downloadDelete: DeleteIconWhite,
+			hoverDelete: docs,
+			colorTextDelete: '#FFF',
+		});
+	}
+
+	handleChangeColorEdit = (docs) => {
+		this.setState({
+			downloadEdit: EditIconWhite,
+			hoverEdit: docs,
+			colorTextEdit: '#FFF',
+		});
+	}
+
+	handleChangeColorLeaveEdit = () => {
+		this.setState({
+			downloadEdit: EditIcon,
+			hoverEdit: '',
+			colorTextEdit: '#85144B',
 		});
 	}
 
@@ -1427,7 +1483,7 @@ class DocumentsScreen extends Component {
 				isErrorTitle: false,
 			});
 		}
-		if (!title || title.length < 4) {
+		if (title.length < 4 && title.length > 0) {
 			this.setState({
 				isErrorTitleQtd: true,
 			});
@@ -1501,6 +1557,7 @@ class DocumentsScreen extends Component {
 			isSelected: '',
 		});
 	}
+
 
 	handleSelectOrg = (orgs) => {
 		this.setState({
@@ -1655,7 +1712,7 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-					{this.props.documentsList.map(docs => (
+					{this.props.documentsList.map((docs, index) => (
 						<ContainerModelDescription
 							modal={this.state.modalListDoc}
 							list={this.state.listDocs}
@@ -1664,8 +1721,8 @@ class DocumentsScreen extends Component {
 							onClick={() => this.selecetedDocUser(docs)}
 							isSelected={docs === this.state.isSelected}
 						>
-							<span key={docs}>
-								<ModelNumber>{docs.id}</ModelNumber>
+							<span key={index}>
+								<ModelNumber>{index +1}</ModelNumber>
 								<ModelTitle>{docs.title}</ModelTitle>
 							</span>
 							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
@@ -1788,15 +1845,15 @@ class DocumentsScreen extends Component {
 										{isAdmin ? (
 											// MAP DOCUMENTS ADM
 											documentsList && documentsList.length > 0 ? (
-												documentsList.map(item => (
-													<ContainerModel key={item}
+												documentsList.map((item, index) => (
+													<ContainerModel key={index}
 														zIndex={this.state.addModel}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(item)}
 														onMouseLeave={this.handleOffOptions}>
 														<ContainerModelDescription>
 															<span>
-																<ModelNumber>{item.id}</ModelNumber>
+																<ModelNumber>{index +1}</ModelNumber>
 																<ModelTitle>{item.title}</ModelTitle>
 															</span>
 															<ModelParagraph>{item.description}</ModelParagraph>
@@ -1854,9 +1911,9 @@ class DocumentsScreen extends Component {
 														key={index}
 														zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
-														onMouseEnter={() => this.handleOnOptions(docs, index)}
+														onMouseEnter={() => this.handleOnOptionsUser(docs, index)}
 														onMouseLeave={this.handleOffOptions}
-														onClick={() => this.handleOnOptions(docs, index)}
+														onClick={() => this.handleOnOptionsUser(docs, index)}
 													>
 														<ContainerModelDescription>
 															<span>
@@ -1868,22 +1925,24 @@ class DocumentsScreen extends Component {
 														<ContainerOptions
 															contOptions={this.state.options && (this.state.selectedOptions === docs)}>
 															<Option
-																onMouseEnter={() => this.handleChangeColorExport(docs)}
+																onMouseEnter={() => this.handleChangeColorExportUser(docs)}
 																onMouseLeave={this.handleChangeColorLeaveExport}
 															>
 																<OptionImage
 																	src={this.state.hoverExport === docs ? this.state.downloadExport : DownloadIcon}
 																	alt="Exportar" />
 																<OptionText
-																	colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
+																	colorTextButton={
+																		this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'
+																	}
 																>
 																	Exportar
 																</OptionText>
 															</Option>
 
 															<Option
-																onMouseEnter={() => this.handleChangeColorDelete(docs)}
-																onMouseLeave={this.handleChangeColorLeaveDelete}
+																onMouseEnter={() => this.handleChangeColorEditUser(docs)}
+																onMouseLeave={this.handleChangeColorLeaveEdit}
 																onClick={() => { }}
 															>
 																<OptionImage src={this.state.hoverEdit === docs ? this.state.downloadEdit : EditIcon} />
@@ -1895,7 +1954,7 @@ class DocumentsScreen extends Component {
 
 															</Option>
 															<Option
-																onMouseEnter={() => this.handleChangeColorDelete(docs)}
+																onMouseEnter={() => this.handleChangeColorDeleteUser(docs)}
 																onMouseLeave={this.handleChangeColorLeaveDelete}
 																onClick={this.handleModalDelete}
 															>
@@ -1925,7 +1984,9 @@ class DocumentsScreen extends Component {
 														) : (
 															<>
 																Escolha um modelo de documento clicando em
-																<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>Adicionar Documento</span>
+																<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
+																	Adicionar Documento
+																</span>
 															</>
 														)}
 													</TextInitialAddModel>
@@ -1935,7 +1996,7 @@ class DocumentsScreen extends Component {
 
 										<ContainerAddModelMob list={this.state.listDocs}>
 											<Button	onClick={this.openModalListDoc}>
-											Adicionar Documento
+												Adicionar Documento
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (

@@ -4,7 +4,7 @@ const ADD_NEW_DOCUMENT = 'osc/documents/ADD_NEW_DOCUMENTS';
 const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
 
 // Initial State
-let nextDocId = 1;
+let nextDocId = 0;
 const initialState = {
 	documentsList: [
 		{

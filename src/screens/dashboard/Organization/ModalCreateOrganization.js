@@ -239,10 +239,10 @@ class ModalCreateOrganization extends Component {
 		cep: '',
 		userData: [
 			{
-				name: this.props.name,
-				email: this.props.email,
-				telephone: this.props.telephone,
-				cpf: this.props.cpf,
+				name: this.props.name || '-',
+				email: this.props.email || '-',
+				telephone: this.props.telephone || '-',
+				cpf: this.props.cpf || '-',
 			},
 		],
 		modalSucess: false,
