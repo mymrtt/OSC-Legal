@@ -213,6 +213,10 @@ const Input = styled.input`
 	}
 `;
 
+const ImageMagnifyng = styled.img`
+	cursor: pointer;
+`;
+
 const InputSelect = styled.div`
 	width: 100%;
 	background-color: #FFFFFF;
@@ -233,6 +237,10 @@ const InputSelect = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 	}
+`;
+
+const ImageArrow = styled.img`
+	cursor: pointer;
 `;
 
 const SelectedViewByText = styled.p`
@@ -818,8 +826,8 @@ class OrganizationScreen extends Component {
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
 							{this.state.isSelected ? (
-								<img src={ArrowUpIcon} alt="arrow" />
-							) : <img src={ImageCaminho} alt="arrow" />}
+								<ImageArrow src={ArrowUpIcon} alt="arrow" />
+							) : <ImageArrow src={ImageCaminho} alt="arrow" />}
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -854,7 +862,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<img src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<ImageMagnifyng src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
