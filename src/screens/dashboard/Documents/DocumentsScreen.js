@@ -497,7 +497,7 @@ const ContainerModelDescription = styled.div`
 	padding: ${props => (props.addDocument ? '1rem 0 1rem 0' : '0')};
 
 	@media(max-width: 768px){
-		width: ${props => props.modal ? '100%' : '68%'};		
+		width: ${props => props.modal ? '100%' : '68%'};
 	}
 
 	@media(max-width: 490px){
@@ -1092,6 +1092,10 @@ const BoxTitle = styled.span`
 	display: flex;
 	flex-direction: column;
 	padding: 1rem 1rem 0 1rem;
+
+	@media(max-width: 648px) {
+		padding: 2rem 1rem 0 1rem;
+	}
 `;
 
 const SubtitleModal = styled.p`
@@ -1165,7 +1169,7 @@ const ImageExit = styled.img`
 
 	@media(max-width: 490px){
 		top: 6rem;
-		right: .5rem;
+		right: 1.5rem;
 	}
 `;
 
@@ -1928,7 +1932,9 @@ class DocumentsScreen extends Component {
 																	src={this.state.hoverExport === docs ? this.state.downloadExport : DownloadIcon}
 																	alt="Exportar" />
 																<OptionText
-																	colorTextButton={this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'}
+																	colorTextButton={
+																		this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'
+																	}
 																>
 																	Exportar
 																</OptionText>
@@ -1978,7 +1984,9 @@ class DocumentsScreen extends Component {
 														) : (
 															<>
 																Escolha um modelo de documento clicando em
-																<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>Adicionar Documento</span>
+																<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
+																	Adicionar Documento
+																</span>
 															</>
 														)}
 													</TextInitialAddModel>
@@ -1988,7 +1996,7 @@ class DocumentsScreen extends Component {
 
 										<ContainerAddModelMob list={this.state.listDocs}>
 											<Button	onClick={this.openModalListDoc}>
-											Adicionar Documento
+												Adicionar Documento
 											</Button>
 										</ContainerAddModelMob>
 										{isAdmin ? (
