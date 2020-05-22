@@ -76,16 +76,16 @@ const Content = styled.div`
 `;
 
 const MaximumWidth = styled.div`
-	margin-top: 2rem;
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
 	height: ${props => (props.isAdmin ? '100%' : '100%')};
 	height:	85vh;
 	max-width: 1440px;
-	overflow-y: hidden;
+	margin-top: 2rem;
 	display: flex;
+	overflow-y: hidden;
 	background: #FFF;
-	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0')};
+	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0 0')};
 
 	@media(max-width: 768px){
 		margin: 0;
