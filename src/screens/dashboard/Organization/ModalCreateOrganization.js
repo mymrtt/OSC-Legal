@@ -1,13 +1,13 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
+import styled from 'styled-components';
 // import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 
 // Components
-import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import Input from '../../../components/Input';
 import Sucessfully from './ModalSucessfully';
 import HeaderModal from '../components/HeaderModal';
 
@@ -16,6 +16,14 @@ import Exit from '../../../assets/fechar.svg';
 
 // Redux
 import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modules';
+
+
+const mapStateToProps = state => ({
+	name: state.onboarding.users.name,
+	email: state.onboarding.users.email,
+	telephone: state.onboarding.users.telephone,
+	cpf: state.onboarding.users.cpf,
+});
 
 const mapDispatchToProps = dispatch => ({
 	addNewOrg: org => dispatch(addNewOrg(org)),
@@ -31,6 +39,7 @@ const Overlay = styled.div`
   justify-content: center;
 	z-index: 20;
 	position: fixed;
+
 	@media(max-width: 648px) {
 		display: flex;
     flex-direction: column;
@@ -45,6 +54,7 @@ const Container = styled.form`
 	flex-direction: column;
 	justify-content: center;
 	overflow: hidden auto;
+
 	::-webkit-scrollbar {
   width: 10px;
 	}
@@ -57,9 +67,11 @@ const Container = styled.form`
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
 	}
+
 	@media(max-width: 768px) {
 		width: 70%;
 	}
+
 	@media(max-width: 648px) {
 		z-index: 10;
 		width: 100%;
@@ -227,10 +239,10 @@ class ModalCreateOrganization extends Component {
 		cep: '',
 		userData: [
 			{
-				name: '*********',
-				email: 'nome@email.com',
-				telephone: '(99) 99999-9999',
-				cpf: '000000000-00',
+				name: this.props.name || '-',
+				email: this.props.email || '-',
+				telephone: this.props.telephone || '-',
+				cpf: this.props.cpf || '-',
 			},
 		],
 		modalSucess: false,
@@ -399,6 +411,7 @@ class ModalCreateOrganization extends Component {
 			} else {
 				this.props.addNewOrg(org);
 				this.setState({ allStateTrue: true });
+				this.props.handleClosedModal();
 				this.handleModalSucess();
 			}
 		}
@@ -503,7 +516,7 @@ class ModalCreateOrganization extends Component {
 										<Input
 											modalOrg
 											margin={isCnpjError ? '0' : '0 0 2rem'}
-											type="text"
+											type="number"
 											placeholder="00.000.000/0000-00"
 											onChange={ev => this.handleChange('cnpj', ev)}
 											value={this.state.cnpj}
@@ -530,7 +543,7 @@ class ModalCreateOrganization extends Component {
 										<Input
 											modalOrg
 											margin={isTelephoneError ? '0' : '0 0 2rem'}
-											type="text"
+											type="number"
 											placeholder="(00) 00000-0000"
 											onChange={ev => this.handleChange('telephone', ev)}
 											value={this.state.telephone}
@@ -615,7 +628,7 @@ class ModalCreateOrganization extends Component {
 											<UserTitle createOrg>cep</UserTitle>
 											<Input
 												modalOrg
-												type="text"
+												type="number"
 												placeholder="00000-000"
 												onChange={ev => this.handleChange('cep', ev)}
 												value={this.state.cep}
@@ -649,4 +662,4 @@ class ModalCreateOrganization extends Component {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(ModalCreateOrganization);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateOrganization);

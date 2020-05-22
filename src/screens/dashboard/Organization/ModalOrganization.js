@@ -20,6 +20,7 @@ import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
+	user: state.onboarding.users,
 });
 
 const Overlay = styled.div`
@@ -239,6 +240,7 @@ const SpanContainer = styled.span`
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 0.5rem;
+	cursor: pointer;
 `;
 
 const ImageEdite = styled.img`
@@ -265,6 +267,7 @@ const ContainerOptionDelete = styled.p`
   align-items: center;
 	padding-top: 0.5rem;
 	margin-left: 1rem;
+	cursor: pointer;
 `;
 
 const Separation = styled.div`
@@ -342,6 +345,7 @@ const ContainerOptionMobile = styled.p`
   align-items: center;
 	padding-top: 0.3rem;
 	margin-left: 1rem;
+	cursor: pointer;
 `;
 
 class ModalOrganization extends Component {
@@ -376,7 +380,7 @@ class ModalOrganization extends Component {
 	};
 
 	render() {
-		const { org } = this.props;
+		const { org, user } = this.props;
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
 				<Container onClick={ev => ev.stopPropagation()}>
@@ -389,11 +393,11 @@ class ModalOrganization extends Component {
 							<ContentConsultorItem>
 								<div>
 									<SubTitle>nome</SubTitle>
-									<SubAnswer>nome do consultor</SubAnswer>
+									<SubAnswer>{user.name || '-'}</SubAnswer>
 									{/* <SubTitle>rg</SubTitle>
 									<SubAnswer>rg do consultor</SubAnswer> */}
 									<SubTitle>cpf</SubTitle>
-									<SubAnswer>cpf do consultor</SubAnswer>
+									<SubAnswer>{user.cpf || '-'}</SubAnswer>
 								</div>
 								<div>
 									{/* <SubTitle>data de nascimento</SubTitle>
@@ -401,9 +405,9 @@ class ModalOrganization extends Component {
 								</div>
 								<div>
 									<SubTitle>e-mail</SubTitle>
-									<SubAnswer>email do consultor</SubAnswer>
+									<SubAnswer>{user.email || '-'}</SubAnswer>
 									<SubTitle>telefone</SubTitle>
-									<SubAnswer>tel do consultor</SubAnswer>
+									<SubAnswer>{user.telephone || '-'}</SubAnswer>
 								</div>
 							</ContentConsultorItem>
 						</ContentConsultor>
