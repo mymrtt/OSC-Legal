@@ -27,6 +27,7 @@ import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organizat
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
+	user: state.onboarding.users,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -124,11 +125,10 @@ const SelectViewBy = styled.div`
 	@media (max-width: 768px) {
 		width: 100%;
 		justify-content: center;
-		/* margin-right: 1rem; */
 	}
 
 	@media(max-width: 490px) {
-    width: ${props => (props.isAdmin ? '85%' : '80%')};
+    width: 85%;
 		margin-right: 0;
 	}
 `;
@@ -140,6 +140,7 @@ const SpanSelect = styled.div`
   flex-direction: column;
 	position: relative;
 	z-index: 11;
+	cursor: pointer;
 
 	@media (max-width: 940px) {
 		width: 47%;
@@ -309,22 +310,16 @@ const ContainerTableUser = styled.div`
 `;
 
 const Content = styled.div`
-	width: 100%;
-	max-width: 100%;
+	width: 94%;
+	max-width: 94%;
 	height: ${props => (props.height ? '0' : 'calc(100vh - 77px - 4.9rem - 2.4rem)')};
-	/* min-height: 76vh; */
-	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
-
-	/* @media (max-width: 1440px) {
-		min-height: 68vh;
-	}
-
-	@media (max-width: 1024px) {
-		min-height: 64vh;
-	} */
+	padding: ${props => (props.padding ? '2rem 2rem 0' : '2rem 0')};
+	margin: 0 auto;
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
+		width: 100%;
+		max-width: 100%;
 	}
 `;
 
@@ -403,6 +398,7 @@ const Tr = styled.tr`
 const TableTitle = styled.th`
 	width: ${props => (props.width)};
 	background-color: #85144B;
+	padding: .25rem;
 	color: #FFFFFF;
 	font-family: Overpass, Regular;
 	font-size: 1rem;
@@ -411,7 +407,6 @@ const TableTitle = styled.th`
 	top: 0;
 	z-index: 5;
 
-	${''}
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -491,6 +486,7 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	width: ${props => (props.width)};
+	padding: .25rem;
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-weight: ${props => (props.font && '900')};
@@ -925,6 +921,7 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
+		const { user } = this.props;
 
 		return listTable.map(item => (
 			<Tr key={item.id}>
@@ -950,8 +947,7 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}
 				>
-					{/* {item.cpf} */}
-					123.456.789-10
+					{user.cpf || '-'}
 				</TableList>
 				<TableList
 					mob
@@ -959,8 +955,7 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'9rem'}
 				>
-					{/* {item.user} */}
-					nome do consultor
+					{user.name || '-'}
 				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
@@ -990,16 +985,14 @@ class OrganizationScreen extends Component {
 							onClick={() => this.isModalOpen(item)}
 							width={'9rem'}
 						>
-							{/* {item.email} */}
-							email do consultor
+							{user.email || '-'}
 						</TableList>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'8rem'}
 						>
-							{/* {item.telephone} */}
-							(21)91234-5678
+							{user.telephone || '-'}
 						</TableList>
 						<TableList
 							wNumber
@@ -1128,12 +1121,15 @@ class OrganizationScreen extends Component {
 				>
 					{!isAdmin
 						&& <Button
-							width='18%'
-							height='4.3rem'
+							width='20%'
+							height='5.8rem'
+							heightMobile={'4.5rem'}
 							fontSize='1.4rem'
-							margin='1.2rem 0 1.2rem 2.3rem'
+							margin='1.2rem 0 1.2rem 2.5rem'
 							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
 							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
+							fontWeight={'400'}
+							letterSpacing={'1.1px'}
 							text='Criar Organização'
 							type='button'
 							orderMobile

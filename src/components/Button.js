@@ -13,8 +13,9 @@ const MyButton = styled.button`
   color: #FFFFFF;
   font-size: ${props => (props.fontSize ? props.fontSize : '1rem')};
   font-family: Overpass, Bold;
-  font-weight: 600;
-  text-transform: ${props => (props.textTransform && 'uppercase')};
+  font-weight: ${props => (props.fontWeight ? props.fontWeight : '600')};
+	text-transform: ${props => (props.textTransform && 'uppercase')};
+	letter-spacing:  ${props => props.letterSpacing};
 
 
   @media(max-width: 768px){
@@ -84,6 +85,8 @@ const Button = props => (
 			bottom={props.bottom}
 			widthTablet={props.widthTablet}
 			fontSizeMobile={props.fontSizeMobile}
+			fontWeight={props.fontWeight}
+			letterSpacing={props.letterSpacing}
 		>
 			{props.text}
 		</MyButton>

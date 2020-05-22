@@ -410,6 +410,7 @@ class ModalCreateOrganization extends Component {
 				this.props.closeModal();
 			} else {
 				this.props.addNewOrg(org);
+				this.props.handleClosedModal();
 				this.handleModalSucess();
 			}
 		}
