@@ -1,9 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable class-methods-use-this */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Redirect, Link } from 'react-router-dom';
 
 // Components
 import Button from '../../../components/Button';
@@ -26,6 +26,7 @@ const Container = styled.div`
   z-index: 999;
   @media (max-width: 490px) {
     position: initial;
+    padding: 1rem 0;
   }
 `;
 
@@ -143,18 +144,17 @@ export default class ModalSucessfully extends Component {
   	return (
   		<Container>
   			<Modal>
-  				<h1>O Nome da associação foi criado com sucesso!</h1>
+  				<h1>A associação foi criada com sucesso!</h1>
   				<img src={Barcode} alt="Barcode"/>
   				<WarningText>
   					<Text>
             Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado até o dia <strong>16/07/2019</strong>, para o <span>e-mail cadastrado.</span>
   					</Text>
   					<Text>
-            Caso não recebe o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="www.osclegal.org.br">www.osclegal.org.br</a>
+            Caso não receba o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="www.osclegal.org.br">www.osclegal.org.br</a>
   					</Text>
   				</WarningText>
   				<Button onClick={this.props.handleRedirect} text="Voltar para o Início"/>
-  				{/* {this.state.redirect && <Link exact to="/organizations" />} */}
   			</Modal>
   		</Container>
   	);

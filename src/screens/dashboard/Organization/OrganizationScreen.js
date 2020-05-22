@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ModalOrganization from './ModalOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
-import Sucessfully from './ModalSucessfully';
 import Button from '../../../components/Button';
 
 // Image
@@ -23,7 +22,7 @@ import selectMaisMobile from '../../../assets/selectMais.svg';
 import Exit from '../../../assets/exit.svg';
 
 // Redux
-import { updateTableDatas } from '../../../dataflow/modules/organization-modules';
+import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -32,6 +31,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
+	deleteOrg: info => dispatch(deleteOrg(info)),
 });
 
 
@@ -41,7 +41,7 @@ const Container = styled.div`
 `;
 
 const ContainerUser = styled.div`
-	width: ${props => (props.width ? '100%' : '100%')};
+	width: 100%;
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
@@ -65,10 +65,10 @@ const ContainerContentSelectedViewBy = styled.div`
 	justify-content: space-between;
 	z-index: 4;
 
-	/* @media (max-width: 768px) {
+	@media (max-width: 768px) {
 		align-items: center;
 		flex-direction: column;
-	} */
+	}
 
 	@media (max-width: 490px) {
 		align-items: center;
@@ -83,8 +83,7 @@ const TitleManageOrgs = styled.h2`
 	font-weight: 900;
 
 	@media (max-width: 768px) {
-		width: 90%;
-    margin-left: .9rem;
+		padding-bottom: 0.8rem;
 	}
 
 	@media (max-width: 648px) {
@@ -97,7 +96,7 @@ const TitleMyOrganization = styled.h2`
 	font-size: 2rem;
 	font-family: "Overpass", Black;
 	font-weight: 900;
-	
+
 	@media (max-width: 768px) {
 		margin-left: 1rem;
 	}
@@ -109,21 +108,23 @@ const TitleMyOrganization = styled.h2`
 
 const SelectViewBy = styled.div`
 	/* width: ${props => (props.width)}; */
+	width: 43%;
 	display: flex;
 	flex-direction: row;
+	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
 
-	@media (max-width: 768px) {
-		width: 45%;
-		justify-content: flex-end;
-		margin-right: 1rem;
+	@media (max-width: 1024px) {
+		width: ${props => (props.isAdmin ? '48%' : '43%')};
 	}
 
-	@media(max-width: 648px) {
-    justify-content: center;
+	@media (max-width: 768px) {
+		width: 100%;
+		justify-content: center;
+		/* margin-right: 1rem; */
 	}
 
 	@media(max-width: 490px) {
-    width: 80%;
+    width: ${props => (props.isAdmin ? '85%' : '80%')};
 		margin-right: 0;
 	}
 `;
@@ -133,19 +134,21 @@ const SpanSelect = styled.div`
 	margin: 0.5rem 0 0;
 	display: flex;
   flex-direction: column;
-	z-index: 11;
 	position: relative;
+	z-index: 11;
 
 	@media (max-width: 940px) {
 		width: 47%;
 	}
+
 	@media (max-width: 768px) {
-		margin: 0 2rem;
+		margin: 0;
 		width: 100%;
 		align-items: center;
 	}
-	@media(max-width: 648px) {
-		width: 90%;
+
+	@media(max-width: 490px) {
+		width: 100%;
 	}
 `;
 
@@ -157,6 +160,7 @@ const TitleViewBy = styled.h2`
 	margin: 0.8rem 0.8rem 0 0;
 	display: flex;
   align-items: center;
+
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -170,24 +174,23 @@ const TitleSearch = styled.h2`
 	margin: 0.8rem 0.9rem 0 0;
 	display: flex;
   align-items: center;
+
 	@media (max-width: 768px) {
 		display: none;
 	}
 `;
 
 const SelectInputUser = styled.span`
-	width: 75%;
+	width: 100%;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
 	padding: 0.1rem 1rem;
 	display: flex;
+	margin-top: 0.8rem;
 	justify-content: space-between;
-	/* @media (max-width: 648px) {
-		order: ${props => (props.order ? '0' : '1')};
-	} */
 
 	@media(max-width: 768px) {
-		width: 70%;
+		width: 80%;
 	}
 
 	@media(max-width: 490px) {
@@ -198,7 +201,9 @@ const SelectInputUser = styled.span`
 const Input = styled.input`
 	border: none;
 	outline: none;
+
 	@media (max-width: 768px) {
+		width: 100%;
 		padding: 0.5rem;
 	}
 `;
@@ -213,12 +218,15 @@ const InputSelect = styled.div`
 	padding: 0.5rem;
 	display: flex;
 	justify-content: space-between;
-	cursor: pointer;
 	z-index: 2;
+
 	@media (max-width: 768px) {
+		width: 75%;
 		font-size: 1rem;
-		width: 50%;
+		width: ${props => (props.isAdmin ? '100%' : '50%')};
+		/* width: 50%; */
 	}
+
 	@media (max-width: 490px) {
 		width: 100%;
 	}
@@ -249,10 +257,12 @@ const InputSelectedItem = styled.div`
 	position: absolute;
 	top: 32px;
 	cursor: pointer;
+
 	@media (max-width: 768px) {
-		width: 50%;
+		width: 100%;
 		top: 36px;
 	}
+
 	@media (max-width: 490px) {
 		width: 100%;
 		top: 32px;
@@ -264,6 +274,7 @@ const SelectedItem = styled.p`
 	color: #85144B;
 	font-family: Overpass, Regular;
 	padding: 0.4rem;
+
 	&:hover {
 		background-color: #FFCFCD;
 		border: 0.5px solid #85144B;
@@ -274,13 +285,13 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-  width: ${props => (props.width ? '100%' : '96%')};
+  width: ${props => (props.width ? '100%' : '94%')};
   max-height: ${props => (props.height ? '0' : '100vh')};
   background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
-	border-radius: ${props => (props.border ? '0' : '3px')};
+	border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 
-	@media (max-width: 1680px) {
+	/* @media (max-width: 1680px) {
 		width: ${props => (props.width ? '100%' : '95.4%')};
 	}
 
@@ -290,7 +301,7 @@ const ContainerTableUser = styled.div`
 
 	@media (max-width: 1024px) {
 		width: ${props => (props.width ? '100%' : '92.5%')};
-	}
+	} */
 
 	@media (max-width: 768px) {
 		margin: 0 auto;
@@ -311,17 +322,15 @@ const Content = styled.div`
 	@media (max-width: 1024px) {
 		min-height: 64vh;
 	}
-	
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
 `;
 
 const ContainerTable = styled.div`
-	${''}
-	/* max-height: calc(100vh - 85px - 96px - 2.8rem); */
-	max-height: ${props => (props.maxHeight ? 'calc(100vh - 85px - 96px - 2.8rem)' : 'calc(80vh - 178px)')};
+	max-height: 66vh;
 	overflow-y: scroll;
+
 	::-webkit-scrollbar {
   width: 10px;
 	}
@@ -334,6 +343,7 @@ const ContainerTable = styled.div`
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
 	}
+
 	@media(max-width: 648px) {
 		overflow-y: visible;
 		max-height: 100%;
@@ -345,6 +355,7 @@ const Table = styled.table`
 	max-width: 100%;
   width: 100%;
 	border-spacing: 0;
+
 	@media (max-width: 648px) {
 		padding: 0;
 		${({ modal }) => modal && css`
@@ -364,21 +375,25 @@ const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
 	cursor: pointer;
+
 	&:nth-child(even) {
     background-color: #FFCFCD;
   }
 	&:nth-child(odd) {
     background-color: #FFFFFF;
 	}
+
 	@media(max-width: 768px) {
 		padding: 1rem 1rem 10rem 1rem;
 		display: flex;
     flex-wrap: wrap;
 		position: relative;
 	}
+
 	@media(max-width: 648px) {
 		padding: 1rem 1rem 12.5rem 1rem;
 	}
+
 	@media(max-width: 420px) {
 		padding: 1rem 1rem 16.8rem 1rem;
 	}
@@ -394,6 +409,7 @@ const TableTitle = styled.th`
 	position: sticky;
 	top: 0;
 	z-index: 5;
+
 	${''}
 	@media (max-width: 768px) {
 		display: none;
@@ -402,6 +418,7 @@ const TableTitle = styled.th`
 
 const ImageMore = styled.img`
 	display: none;
+
 	@media(max-width: 768px) {
 		width: 1rem;
 		display: flex;
@@ -412,6 +429,7 @@ const ImageMore = styled.img`
 
 const ContainerTableTitleMob = styled.span`
 	display: none;
+
 	@media (max-width: 768px) {
 		padding-right: 2rem;
 		padding-bottom: 1rem;
@@ -452,6 +470,8 @@ const BoxButton = styled.button`
 	border: none;
 	background: none;
 	outline: none;
+	cursor: auto;
+
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -459,6 +479,7 @@ const BoxButton = styled.button`
 
 const TableTitleMob = styled.th`
 	display: none;
+
 	@media(max-width: 768px) {
 		display: flex;
 		color: #85144B;
@@ -474,6 +495,8 @@ const TableList = styled.td`
 	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
 	text-align: ${props => (props.wNumber && 'center')};
+	cursor: pointer;
+
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
 		display: ${props => (props.mob ? 'none' : 'flex')};
@@ -484,11 +507,13 @@ const ContainerStatus = styled.td`
 	display: flex;
 	height: inherit;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
+
 	${({ selected }) => selected && css`
 		img {display: block}
 		p {display: none}
 		div {display: flex}
 	`}
+
 	@media(max-width: 768px) {
 		padding: 0;
 	}
@@ -498,6 +523,8 @@ const TextStatus = styled.p`
 	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
 	text-transform: uppercase;
+	cursor: auto;
+
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
@@ -507,7 +534,8 @@ const ImageStatus = styled.img`
 	width: 1.3rem;
   padding-right: 0.3rem;
 	display: none;
-	cursor: pointer;
+	cursor: ${props => (props.cursor ? 'pointer' : 'auto')};
+
 	@media(max-width: 768px) {
 		display: flex;
 	}
@@ -536,12 +564,11 @@ const ModalDelete = styled.div`
 	width: 480px;
 	padding: 1% 1% 1% 1%;
 
-
 	@media (max-width: 490px) {
 		width: 100%;
 		height: 100vh;
 		padding: 5%;
-		    display: flex;
+		display: flex;
     justify-content: space-between;
     flex-direction: column;
 	}
@@ -591,6 +618,7 @@ const TextModal = styled.p`
 		font-family: 'Overpass', Bold;
 		color: #404040;
 	}
+
 	@media (max-width: 490px) {
 		margin: 0;
 		font-size: 1.3rem;
@@ -598,15 +626,15 @@ const TextModal = styled.p`
 `;
 
 const ButtonsModal = styled.div`
+	width: 100%;
 	display: flex;
-	margin-top: 5%;
 	align-items: center;
 	justify-content: space-between;
-	width: 100%;
+	margin-top: 5%;
 
 	@media (max-width: 490px) {
-		margin: 0;
 		width: 100%;
+		margin: 0;
 	}
 `;
 
@@ -691,10 +719,10 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	isModalCreateOrganization = (ev) => {
-		ev.stopPropagation();
+	isModalCreateOrganization = (type) => {
 		this.setState({
 			isModalCreateOrg: !this.state.isModalCreateOrg,
+			modalType: type,
 		});
 	}
 
@@ -789,10 +817,10 @@ class OrganizationScreen extends Component {
 		<ContainerSelectedViewBy>
 			<ContainerContentSelectedViewBy>
 				<TitleManageOrgs>Gerenciar organizações</TitleManageOrgs>
-				<SelectViewBy>
+				<SelectViewBy isAdmin={this.props.isAdmin}>
 					<TitleViewBy>Visualizar por:</TitleViewBy>
 					<SpanSelect>
-						<InputSelect onClick={this.isSelectOpen}>
+						<InputSelect isAdmin={this.props.isAdmin} onClick={this.isSelectOpen}>
 							<SelectedViewByText color={this.state.selectedValue.select || this.state.selectedValue}>
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
@@ -845,6 +873,7 @@ class OrganizationScreen extends Component {
 			<Box isClickedStatus={item.id === this.state.isClickedStatus}>
 				{this.state.statusImgs.map((status, index) => (
 					<ImageStatus
+						cursor={this.props.isAdmin}
 						key={index}
 						src={status.img}
 						alt={status.desc}
@@ -895,13 +924,12 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-
 		return listTable.map(item => (
 			<Tr key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
-						<TableList>{item.organization}</TableList>
+						<TableList cursor={this.props.isAdmin}>{item.tradingName}</TableList>
 					</ContainerTableTitleMob>
 					: <>
 						<TableList
@@ -910,7 +938,7 @@ class OrganizationScreen extends Component {
 							style={{ paddingLeft: '.7rem' }}
 							width={'9rem'}
 						>
-							{item.organization}
+							{item.tradingName}
 						</TableList>
 					</>
 				}
@@ -920,7 +948,8 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'9.5rem'}
 				>
-					{item.cpf}
+					{/* {item.cpf} */}
+					cpf do consultor
 				</TableList>
 				<TableList
 					mob
@@ -928,16 +957,17 @@ class OrganizationScreen extends Component {
 					onClick={() => this.isModalOpen(item)}
 					width={'8rem'}
 				>
-					{item.user}
+					{/* {item.user} */}
+					nome do consultor
 				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
-						<TableList>{item.email}</TableList>
+						<TableList>email do consultor</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.telephone}</TableList>
+						<TableList font={this.state.hovered === item}>telefone</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
@@ -957,14 +987,16 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.email}
+							{/* {item.email} */}
+							email do consultor
 						</TableList>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'8rem'}
 						>
-							{item.telephone}
+							{/* {item.telephone} */}
+							telefone
 						</TableList>
 						<TableList
 							wNumber
@@ -1031,8 +1063,8 @@ class OrganizationScreen extends Component {
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.organization.split(' ').includes(filter)
-				: item.organization.toLowerCase() === filter.toLowerCase())));
+				? item.tradingName.split(' ').includes(filter)
+				: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1082,9 +1114,9 @@ class OrganizationScreen extends Component {
 						tableDatas={tableDatas}
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
+						handleRedirect={this.handleRedirect}
 					/>
 				}
-				{this.state.modalSucess && <Sucessfully handleRedirect={this.handleRedirect} />}
 				<Header />
 				<ContainerUser
 					width={isAdmin}
@@ -1096,9 +1128,9 @@ class OrganizationScreen extends Component {
 							width='18%'
 							height='4.3rem'
 							fontSize='1.4rem'
-							margin='1.5rem 0 1.5rem 2.5rem'
-							// marginMobile='0 2.5rem 1.2rem 2.5rem'
-							marginMobileSmall='0 1.9rem 1.2rem 2.6rem'
+							margin='1.2rem 0 1.2rem 2.3rem'
+							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobileSmall='1.5rem 2.5rem 1.5rem 2.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
@@ -1111,7 +1143,7 @@ class OrganizationScreen extends Component {
 						background={isAdmin}
 						border={isAdmin}
 						margin={isAdmin}>
-						<Content padding={isAdmin}>
+						<Content height={isAdmin} padding={isAdmin}>
 							{isAdmin
 								? this.renderSelectedViewby()
 								: this.renderSelectedViewbyUser()}
