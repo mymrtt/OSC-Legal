@@ -42,7 +42,9 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: 100%;
+	height: ${props => (!props.height && 'calc(100vh - 5.5rem)')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
+
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
 	}
@@ -50,9 +52,11 @@ const ContainerUser = styled.div`
 
 const ContainerSelectedViewBy = styled.div`
 	padding-right: .6rem;
+
 	@media(max-width: 768px) {
 		padding-right: 0;
 	}
+
 	@media(max-width: 648px) {
 		margin-top: 0;
 	}
@@ -190,7 +194,7 @@ const SelectInputUser = styled.span`
 	justify-content: space-between;
 
 	@media(max-width: 768px) {
-		width: 80%;
+		width: 85%;
 	}
 
 	@media(max-width: 490px) {
@@ -201,11 +205,16 @@ const SelectInputUser = styled.span`
 const Input = styled.input`
 	border: none;
 	outline: none;
+	width: 90%;
 
 	@media (max-width: 768px) {
 		width: 100%;
 		padding: 0.5rem;
 	}
+`;
+
+const ImageMagnifyng = styled.img`
+	cursor: pointer;
 `;
 
 const InputSelect = styled.div`
@@ -223,13 +232,15 @@ const InputSelect = styled.div`
 	@media (max-width: 768px) {
 		width: 75%;
 		font-size: 1rem;
-		width: ${props => (props.isAdmin ? '100%' : '50%')};
-		/* width: 50%; */
 	}
 
 	@media (max-width: 490px) {
 		width: 100%;
 	}
+`;
+
+const ImageArrow = styled.img`
+	cursor: pointer;
 `;
 
 const SelectedViewByText = styled.p`
@@ -259,7 +270,7 @@ const InputSelectedItem = styled.div`
 	cursor: pointer;
 
 	@media (max-width: 768px) {
-		width: 100%;
+		width: 75%;
 		top: 36px;
 	}
 
@@ -291,18 +302,6 @@ const ContainerTableUser = styled.div`
 	border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
 	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
 
-	/* @media (max-width: 1680px) {
-		width: ${props => (props.width ? '100%' : '95.4%')};
-	}
-
-	@media (max-width: 1440px) {
-		width: ${props => (props.width ? '100%' : '94.5%')};
-	}
-
-	@media (max-width: 1024px) {
-		width: ${props => (props.width ? '100%' : '92.5%')};
-	} */
-
 	@media (max-width: 768px) {
 		margin: 0 auto;
 		width: 100%;
@@ -312,16 +311,18 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	min-height: 76vh;
+	height: ${props => (props.height ? '0' : 'calc(100vh - 77px - 4.9rem - 2.4rem)')};
+	/* min-height: 76vh; */
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '2rem 2rem 0')};
 
-	@media (max-width: 1440px) {
+	/* @media (max-width: 1440px) {
 		min-height: 68vh;
 	}
 
 	@media (max-width: 1024px) {
 		min-height: 64vh;
-	}
+	} */
+
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 	}
@@ -374,7 +375,7 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
-	cursor: pointer;
+	/* cursor: pointer; */
 
 	&:nth-child(even) {
     background-color: #FFCFCD;
@@ -825,8 +826,8 @@ class OrganizationScreen extends Component {
 								{this.state.selectedValue.select || this.state.selectedValue}
 							</SelectedViewByText>
 							{this.state.isSelected ? (
-								<img src={ArrowUpIcon} alt="arrow" />
-							) : <img src={ImageCaminho} alt="arrow" />}
+								<ImageArrow src={ArrowUpIcon} alt="arrow" />
+							) : <ImageArrow src={ImageCaminho} alt="arrow" />}
 						</InputSelect>
 						{this.state.isSelected && (
 							<InputSelectedItem>
@@ -861,7 +862,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<img src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<ImageMagnifyng src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -924,19 +925,20 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
+
 		return listTable.map(item => (
 			<Tr key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
-						<TableList cursor={this.props.isAdmin}>{item.tradingName}</TableList>
+						<TableList>{item.tradingName}</TableList>
 					</ContainerTableTitleMob>
 					: <>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
-							width={'9rem'}
+							width={'9.5rem'}
 						>
 							{item.tradingName}
 						</TableList>
@@ -946,16 +948,16 @@ class OrganizationScreen extends Component {
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'9.5rem'}
+					width={'8rem'}
 				>
 					{/* {item.cpf} */}
-					cpf do consultor
+					123.456.789-10
 				</TableList>
 				<TableList
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'8rem'}
+					width={'9rem'}
 				>
 					{/* {item.user} */}
 					nome do consultor
@@ -967,7 +969,7 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList font={this.state.hovered === item}>telefone</TableList>
+						<TableList width={'7rem'} font={this.state.hovered === item}>telefone</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
@@ -986,6 +988,7 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
+							width={'9rem'}
 						>
 							{/* {item.email} */}
 							email do consultor
@@ -996,7 +999,7 @@ class OrganizationScreen extends Component {
 							width={'8rem'}
 						>
 							{/* {item.telephone} */}
-							telefone
+							(21)91234-5678
 						</TableList>
 						<TableList
 							wNumber
