@@ -66,6 +66,10 @@ const Content = styled.div`
 		min-height: 83.5vh;
 	}
 
+	@media(max-width: 1024px) and (max-height: 1366px){
+		min-height: 94vh;
+	}
+
 	@media(max-width: 768px){
 		min-height: 92.6vh;
 	}
@@ -76,16 +80,22 @@ const MaximumWidth = styled.div`
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
 	height: ${props => (props.isAdmin ? '100%' : '100%')};
-	height:	85vh;
+	height:	90vh;
 	max-width: 1440px;
+	overflow-y: hidden;
 	display: flex;
 	background: #FFF;
 	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0')};
 
+	@media(max-width: 768px){
+		margin: 0;
+	}
+
 	@media(max-width: 648px){
 		padding: 0;
 		margin: 0;
-		height: 85vh;
+		height: 100vh;
+		width: 100%;
 	}
 
 `;
@@ -107,7 +117,7 @@ const ContainerHeader = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		padding-right: 2rem;
+		padding-right: 1.1rem;
 	}
 
 	@media (max-width: 490px) {
@@ -171,7 +181,7 @@ const ContainerContent = styled.div`
 		padding-top: 2rem;
 	}
 	@media (max-width: 490px) {
-		padding: 0 1.2rem;
+		padding: 0 0.4rem 0 1rem;
 		flex-direction: column;
 	}
 `;
@@ -181,6 +191,7 @@ const ContainerAddModel = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	padding-right: 3rem;
 
 	@media (max-width: 490px) {
 		display: none;
@@ -194,6 +205,7 @@ const ContainerAddModelMob = styled.div`
 		display: flex;
 		width: 100%;
     justify-content: center;
+		display: ${props => props.list === '' ? 'flex' : 'none' };
 	}
 `;
 
@@ -263,9 +275,12 @@ const ContainerScroll = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		width: 100%;
+		min-width: 100%;
 		min-height: 50vh;
 		padding-bottom: 10rem;
+		margin: 0;
+		display: flex;
+		justify-content: center;
 	}
 `;
 
@@ -314,7 +329,7 @@ const ContainerSearch = styled.div`
 
 	@media (max-width: 768px) {
 		margin-right: 0;
-    width: 80%;
+    width: 90%;
 	}
 
 	@media (max-width: 490px) {
@@ -358,6 +373,7 @@ const ContainerSearchInput = styled.label`
 
 	@media (max-width: 490px) {
 		width: 100%;
+		margin: 0;
 	}
 `;
 
@@ -476,7 +492,7 @@ const ContainerModelDescription = styled.div`
 	padding: ${props => (props.addDocument ? '1rem 0 1rem 0' : '0')};
 
 	@media(max-width: 768px){
-		width: 68%;
+		width: ${props => props.modal ? '100%' : '68%'};		
 	}
 
 	@media(max-width: 490px){
@@ -1131,6 +1147,7 @@ const ButtonModalList = styled.button`
 
 	@media (max-width: 490px) {
 		width: 100%;
+		height: 4.5rem;
 	}
 `;
 
@@ -1410,7 +1427,7 @@ class DocumentsScreen extends Component {
 				isErrorTitle: false,
 			});
 		}
-		if (title.length < 4 && title.length > 1) {
+		if (!title || title.length < 4) {
 			this.setState({
 				isErrorTitleQtd: true,
 			});
@@ -1641,6 +1658,7 @@ class DocumentsScreen extends Component {
 					{this.props.documentsList.map(docs => (
 						<ContainerModelDescription
 							modal={this.state.modalListDoc}
+							list={this.state.listDocs}
 							hidden={this.state.modalListDoc}
 							addDocument={this.state.modalListDoc}
 							onClick={() => this.selecetedDocUser(docs)}
@@ -1863,20 +1881,18 @@ class DocumentsScreen extends Component {
 																</OptionText>
 															</Option>
 
-
 															<Option
-																className="Edit"
-																onMouseEnter={() => this.handleChangeColorEdit(docs)}
-																onMouseLeave={this.handleChangeColorLeaveEdit}
+																onMouseEnter={() => this.handleChangeColorDelete(docs)}
+																onMouseLeave={this.handleChangeColorLeaveDelete}
+																onClick={() => { }}
 															>
-																<OptionImage
-																	src={this.state.hoverEdit === docs ? this.state.downloadEdit : EditIcon}
-																	alt="Editar" />
+																<OptionImage src={this.state.hoverEdit === docs ? this.state.downloadEdit : EditIcon} />
 																<OptionText
 																	colorTextButton={this.state.hoverEdit === docs ? this.state.colorTextEdit : '#85144B'}
 																>
 																	<p>Editar</p>
 																</OptionText>
+
 															</Option>
 															<Option
 																onMouseEnter={() => this.handleChangeColorDelete(docs)}
@@ -1917,7 +1933,7 @@ class DocumentsScreen extends Component {
 											)
 										)}
 
-										<ContainerAddModelMob>
+										<ContainerAddModelMob list={this.state.listDocs}>
 											<Button	onClick={this.openModalListDoc}>
 											Adicionar Documento
 											</Button>
@@ -1934,6 +1950,7 @@ class DocumentsScreen extends Component {
 													positionMb="fixed"
 													onClick={this.handleAddModel}
 													text="Adicionar Modelo"
+													fontSizeMobile="1.2rem"
 												/>
 											) : (
 												null
@@ -1950,6 +1967,7 @@ class DocumentsScreen extends Component {
 													positionMb="fixed"
 													onClick={this.openModalListDoc}
 													text="Adicionar Documento"
+													fontSizeMobile="1.2rem"
 												/>
 											) : (
 												null

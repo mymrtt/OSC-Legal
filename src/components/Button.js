@@ -41,7 +41,8 @@ const MyButton = styled.button`
     position: ${props => props.positionMb};
     left: ${props => props.left};
     right: ${props => props.right};
-    bottom: ${props => props.bottom}
+    bottom: ${props => props.bottom};
+		font-size: ${props => props.fontSizeMobile};
 	}
 `;
 
@@ -82,6 +83,7 @@ const Button = props => (
 			left={props.left}
 			bottom={props.bottom}
 			widthTablet={props.widthTablet}
+			fontSizeMobile={props.fontSizeMobile}
 		>
 			{props.text}
 		</MyButton>
