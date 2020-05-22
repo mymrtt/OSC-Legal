@@ -1570,7 +1570,7 @@ class DocumentsScreen extends Component {
 
 	deleteUserDoc = () => {
 		this.setState({
-			listDocs: this.state.listDocs.filter((docs, index) => this.state.listDocs.indexOf(docs) !== index),
+			listDocs: this.state.listDocs.filter(doc => doc !== this.state.userSelectDoc),
 			modalDelete: false,
 		});
 	}
