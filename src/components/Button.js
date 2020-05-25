@@ -17,13 +17,16 @@ const MyButton = styled.button`
 	text-transform: ${props => (props.textTransform && 'uppercase')};
 	letter-spacing:  ${props => props.letterSpacing};
 
+	@media(max-width: 1024px){
+		width: ${props => props.widthMedium};
+	}
 
   @media(max-width: 768px){
 		width: ${props => props.widthTablet};
     height: ${props => props.heightMobile};
 		${props => props.orderMobile && css`
-			width: 80%;
-			margin: 0 4.5rem 1.2rem;
+			width: 90%;
+			/* margin: 0 4.5rem 1.2rem; */
 			position: fixed;
 			bottom: 0;
 			z-index: 2;
@@ -67,6 +70,8 @@ const Button = props => (
 			onClick={props.onClick}
 			type={props.type}
 			width={props.width}
+			widthMedium={props.widthMedium}
+			widthTablet={props.widthTablet}
 			widthMobile={props.widthMobile}
 			widthMobileSmall={props.widthMobileSmall}
 			height={props.height}
@@ -83,7 +88,6 @@ const Button = props => (
 			right={props.right}
 			left={props.left}
 			bottom={props.bottom}
-			widthTablet={props.widthTablet}
 			fontSizeMobile={props.fontSizeMobile}
 			fontWeight={props.fontWeight}
 			letterSpacing={props.letterSpacing}
