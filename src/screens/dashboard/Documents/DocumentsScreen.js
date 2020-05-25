@@ -56,7 +56,7 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	min-height: 90.5vh;
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -187,7 +187,7 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	${'' /* padding-right: 3rem; */}
+	${''}
 	width: 34%;
 	display: flex;
 	align-items: center;
@@ -486,6 +486,7 @@ const ContainerModel = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
+		height: 7rem;
 		order: 3;
 		z-index: initial;
 	}
@@ -1185,7 +1186,8 @@ const SpanButton = styled.span`
 `;
 
 let newList = [];
-
+let found = [];
+let nextId = Math.random();
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1235,7 +1237,7 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleOnOptionsUser = (docs, index) => {
+	handleOnOptionsUser = (docs) => {
 		this.setState({
 			options: true,
 			selectedOptions: docs,
@@ -1268,6 +1270,7 @@ class DocumentsScreen extends Component {
 	}
 
 	handleModalDelete = () => {
+		console.log(found.id)
 		this.setState({
 			modalDelete: true,
 			options: false,
@@ -1556,11 +1559,15 @@ class DocumentsScreen extends Component {
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		this.setState({
-			modalListDoc: false,
-			listDocs: newList,
-			isSelected: '',
-		});
+		if (this.state.listDocs.find(item => item === this.state.isSelected)) {
+			window.alert('ERRO: documento já adicionado');
+		} else {
+			this.setState({
+				modalListDoc: false,
+				listDocs: newList,
+				isSelected: '',
+			});
+		}
 	}
 
 
@@ -1927,6 +1934,7 @@ class DocumentsScreen extends Component {
 														onMouseEnter={() => this.handleOnOptionsUser(docs, index)}
 														onMouseLeave={this.handleOffOptions}
 														onClick={() => this.handleOnOptionsUser(docs, index)}
+														option={this.state.options}
 													>
 														<ContainerModelDescription>
 															<span>
