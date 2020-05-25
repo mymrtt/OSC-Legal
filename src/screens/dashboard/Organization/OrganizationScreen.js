@@ -914,7 +914,7 @@ class OrganizationScreen extends Component {
 				</TitleModal>
 				<WrapTextModal>
 					<TextModal>
-						Após ser excluido, uma organização não pode ser recuperada.
+						Após ser excluida, uma organização não pode ser recuperada.
 					</TextModal>
 					<TextModal>
 						Você deseja excluir <strong>{this.state.itemSelected.tradingName}</strong> permanentemente?
