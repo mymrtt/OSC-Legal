@@ -1698,7 +1698,8 @@ class DocumentsScreen extends Component {
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
 					<TextModal>
-						Você deseja excluir o <strong>{this.state.modelSelect.title || this.state.userSelectDoc.title}</strong> permanentemente?
+						Você deseja excluir o
+						<strong>{this.state.modelSelect.title || this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
