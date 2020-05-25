@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 // Libs
-import React, { Component } from 'react';
+import React, { Component, localStorage } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -16,6 +16,9 @@ import VisibilityOn from '../../../assets/visibility-on.svg';
 
 // Redux
 import { addNewUser } from '../../../dataflow/modules/onboarding-modules';
+
+// Api
+import { createUserAccount } from '../../../api';
 
 const mapStateToProps = state => ({
 	signup: state.signup,
@@ -358,6 +361,20 @@ class CreateUserScreen extends Component {
 		isTermsOpen: false,
 	};
 
+	userRegister = async (user) => {
+		try {
+			const response = await createUserAccount(user);
+
+			if (response) {
+				await localStorage.setItem('token', response.data.token);
+			}
+
+			console.log('response', response);
+		} catch (err) {
+			console.log('err', err);
+		}
+	}
+
 	togglePassword = (ev) => {
 		ev.preventDefault();
 		this.setState({
@@ -478,6 +495,7 @@ class CreateUserScreen extends Component {
 
 		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11) {
 			this.props.addNewUser(user);
+			this.userRegister(user);
 			this.handleModalSucess();
 		}
 	};
