@@ -60,7 +60,7 @@ const Content = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: ${props => (props.isAdmin ? '#FFF' : '#FFCFCD')};
+	background: ${props => (props.isAdmin ? '#FFFFFF' : '#FFCFCD')};
 
 	@media(max-width: 1400px) and (max-height: 900px){
 		min-height: 83.5vh;

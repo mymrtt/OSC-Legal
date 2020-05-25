@@ -55,13 +55,13 @@ const ContainerUser = styled.div`
 	}
 `;
 
-const InvolveButton = styled.div`
-	padding: .5rem 0.2rem;
+// cons= styled.div`
+// 	padding: .5rem 0.2rem;
 
-	@media (max-width: 768px) {
-		padding: 0;
-	}
-`;
+// 	@media (max-width: 768px) {
+// 		padding: 0;
+// 	}
+// `;
 
 const ContainerSelectedViewBy = styled.div`
 	padding-right: .6rem;
@@ -328,7 +328,7 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	height: ${props => (props.height ? '0' : 'calc(100vh - 85px - 5.8rem - 2.4rem)')};
+	height: ${props => (props.height ? '0' : 'calc(100vh - 62px - 5.8rem - 2.4rem)')};
 	padding: ${props => (props.padding ? '7rem 5.5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 768px) {
@@ -810,6 +810,7 @@ class OrganizationScreen extends Component {
 	handleChangeFilter = (ev) => {
 		this.setState({
 			filter: ev.target.value,
+			toFilter: false,
 		});
 	}
 
@@ -1137,20 +1138,21 @@ class OrganizationScreen extends Component {
 					background={isAdmin}
 				>
 					{!isAdmin
-						&& <InvolveButton><Button
+						&& <Button
 							width='18%'
-							widthMobileSmall='90%'
+							widthMedium='24%'
+							// widthMobileSmall='90%'
 							height='4.3rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
 							margin='1.2rem 0 1.2rem 2.5rem'
-							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobile='1.5rem 1.7rem'
 							marginMobileSmall='1.5rem 2.5rem 1.5rem 1.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
 							organizationMobile
-							onClick={this.isModalCreateOrganization} /></InvolveButton>
+							onClick={this.isModalCreateOrganization} />
 					}
 					<ContainerTableUser
 						width={isAdmin}
