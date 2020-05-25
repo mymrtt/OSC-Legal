@@ -287,17 +287,17 @@ const SeparationMobile = styled.div`
 `;
 
 const ContainerSelected = styled.div`
-		display: none;
-		@media (max-width: 648px) {
-			width: 100%;
-			padding: 1rem 0 0;
-			display: flex;
-			justify-content: center;
-			justify-content: space-evenly;
-			background-color: #FFFFFF;
-			bottom: 0;
-			align-items: center;
-			position: fixed;
+	display: none;
+	@media (max-width: 648px) {
+		width: 100%;
+		padding: 1rem 0 0;
+		display: flex;
+		justify-content: center;
+		justify-content: space-evenly;
+		background-color: #FFFFFF;
+		bottom: 0;
+		align-items: center;
+		position: fixed;
  	}
 `;
 
@@ -525,11 +525,11 @@ class ModalDetailsOrganization extends Component {
 								</ContainerPaymentMethod>))
 							: <ContainerEditImage>
 								<SpanContainerImage onClick={() => this.props.isModalCreateOrganization('edit')}>
-									<ImageEdite src={ImageEdit}/>
+									<ImageEdite src={ImageEdit} />
 									<ContainerOptionMobile>Editar</ContainerOptionMobile>
 								</SpanContainerImage>
 								<SpanContainerImage onClick={this.props.handleDeleteModal}>
-									<img src={ImageDelete}/>
+									<img src={ImageDelete} />
 									<ContainerOptionMobile>Excluir</ContainerOptionMobile>
 								</SpanContainerImage>
 							</ContainerEditImage>
