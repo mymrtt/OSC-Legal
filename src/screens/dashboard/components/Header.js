@@ -25,7 +25,7 @@ const Container = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	text-transform: uppercase;
-	border-bottom: 1px solid  #707070;
+	border-bottom: ${props => (props.border ? '0px solid  #707070' : 'none')};
 
 	@media (max-width: 890px) {
 		padding: 0 2rem;
@@ -63,7 +63,7 @@ const WrapButton = styled.div`
 
 	@media(max-width: 768px){
 		width: 50%;
-		margin-left: 1rem;
+		margin-left: 2rem;
 
 		a {
 			font-size: 1rem;
@@ -86,7 +86,6 @@ const WrapButton = styled.div`
 	}
 `;
 
-
 const ContainerUser = styled.div`
 	display: flex;
 	align-items: flex-end;
@@ -94,6 +93,7 @@ const ContainerUser = styled.div`
 	margin: 0 6.2rem 0.8rem 0;
 
 	@media (max-width: 785px) {
+		margin: 0 .5rem 0.8rem 0;
 		width: 40%;
 	}
 
@@ -146,7 +146,7 @@ class Header extends Component {
 
 	render() {
 		return (
-			<Container>
+			<Container border={this.props.isAdmin}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
 						margin={'0 0 0 2.5rem'}

@@ -10,7 +10,7 @@ import ResetPasswordEmailScreen from '../screens/onboarding/Login/ResetPasswordS
 import CreateUserScreen from '../screens/onboarding/User/CreateUserScreen';
 
 // Dashboard
-import Dashboard from '../screens/dashboard/index';
+// import Dashboard from '../screens/dashboard/index';
 import DocumentsScreen from '../screens/dashboard/Documents/DocumentsScreen';
 import OrganizationScreen from '../screens/dashboard/Organization/OrganizationScreen';
 import ModalSucessfully from '../screens/dashboard/Organization/ModalSucessfully';
@@ -28,9 +28,9 @@ const Routes = () => (
 			<Route path='/newpassword' component={NewPassowrdScreen} />
 			<Route path='/createuser' component={CreateUserScreen} />
 
-			<PrivateRoute path='/dashboard' component={Dashboard} />
+			{/* <PrivateRoute path='/dashboard' component={Dashboard} /> */}
 			<Route path='/sucessfully' component={ModalSucessfully} />
-			<Route path='/organizations' component={OrganizationScreen} />
+			<PrivateRoute path='/organizations' component={OrganizationScreen} />
 			<Route path='/documents' component={DocumentsScreen} />
 		</Switch>
 	</BrowserRouter>

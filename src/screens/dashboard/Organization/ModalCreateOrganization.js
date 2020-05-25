@@ -248,7 +248,7 @@ class ModalCreateOrganization extends Component {
 		modalSucess: false,
 		isTradingNameError: false,
 		isCompanyNameError: false,
-		// isCnpjError: false,
+		isCnpjError: false,
 		isTelephoneError: false,
 		isAddressError: false,
 		// isAddressComplementError: false,
@@ -265,6 +265,7 @@ class ModalCreateOrganization extends Component {
 				companyName: this.props.item.companyName,
 				cpf: this.props.item.cpf,
 				// email: '',
+				cnpj: this.props.item.cnpj,
 				telephone: this.props.item.telephone,
 				address: this.props.item.address,
 				addressComplement: this.props.item.addressComplement,
@@ -275,9 +276,10 @@ class ModalCreateOrganization extends Component {
 		}
 	}
 
-	handleModalSucess = () => {
+	handleModalSucess = (item) => {
 		this.setState({
 			modalSucess: !this.state.modalSucess,
+			tradingName: item,
 		});
 	}
 
@@ -285,7 +287,7 @@ class ModalCreateOrganization extends Component {
 		const {
 			tradingName,
 			companyName,
-			// cnpj,
+			cnpj,
 			telephone,
 			address,
 			// addressComplement,
@@ -315,16 +317,16 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		// if (!cnpj || cnpj.length !== 14) {
-		// 	this.setState({
-		// 		isCnpjError: true,
-		// 	});
-		// 	// verificar como faz essa validação
-		// } else {
-		// 	this.setState({
-		// 		isCnpjError: false,
-		// 	});
-		// }
+		if (!cnpj || cnpj.length !== 14) {
+			this.setState({
+				isCnpjError: true,
+			});
+			// verificar como faz essa validação
+		} else {
+			this.setState({
+				isCnpjError: false,
+			});
+		}
 
 		if (!telephone || telephone.length < 8) {
 			this.setState({
@@ -395,8 +397,8 @@ class ModalCreateOrganization extends Component {
 				id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
 				tradingName: this.state.tradingName,
 				companyName: this.state.companyName,
-				cpf: this.state.cpf,
 				// email: '',
+				cnpj: this.state.cnpj,
 				telephone: this.state.telephone,
 				address: this.state.address,
 				addressComplement: this.state.addressComplement,
@@ -410,8 +412,9 @@ class ModalCreateOrganization extends Component {
 				this.props.closeModal();
 			} else {
 				this.props.addNewOrg(org);
+				this.setState({ allStateTrue: true });
 				this.props.handleClosedModal();
-				this.handleModalSucess();
+				this.handleModalSucess(tradingName);
 			}
 		}
 	}
@@ -431,7 +434,7 @@ class ModalCreateOrganization extends Component {
 		const errorMessage = [
 			'Insira um nome fantasia válido.',
 			'Insira uma razão social válida.',
-			// 'Insira um CNPJ válido.',
+			'Insira um CNPJ válido.',
 			'Insira um número de telefone válido.',
 			'Insira um endereço válido.',
 			'Insira um complemento válido.',
@@ -443,7 +446,7 @@ class ModalCreateOrganization extends Component {
 		const {
 			isTradingNameError,
 			isCompanyNameError,
-			// isCnpjError,
+			isCnpjError,
 			isTelephoneError,
 			isAddressError,
 			isAddressComplementError,
@@ -510,7 +513,7 @@ class ModalCreateOrganization extends Component {
 										/>
 										{isCompanyNameError && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}
 									</ContentOrganizationItem>
-									{/* <ContentOrganizationItem>
+									<ContentOrganizationItem>
 										<UserTitle createOrg>cnpj</UserTitle>
 										<Input
 											modalOrg
@@ -524,7 +527,7 @@ class ModalCreateOrganization extends Component {
 											required
 										/>
 										{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
-									</ContentOrganizationItem> */}
+									</ContentOrganizationItem>
 									{/* <ContentOrganizationItem>
 										<UserTitle createOrg>email</UserTitle>
 										<Input
@@ -646,15 +649,17 @@ class ModalCreateOrganization extends Component {
 									width={'100%'}
 									text="concluir"
 									textTransform
-									onClick={this.state.allStateTrue && this.props.handleChangeCloseModal}
+									// onClick={this.state.allStateTrue && this.props.handleChangeCloseModal}
 								/>
 							</ContainerConcludeButton>
 						</ContentWrapper>
 					</Content>
 					{this.state.modalSucess && <Sucessfully
+						tradingName={this.state.tradingName}
 						handleClosedModal={this.props.handleClosedModal}
 						handleModalSucess={this.handleModalSucess}
-						handleRedirect={this.props.handleRedirect} />}
+						handleRedirect={this.props.handleRedirect}
+					/>}
 				</Container>
 			</Overlay>
 		);

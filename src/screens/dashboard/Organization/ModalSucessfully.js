@@ -24,6 +24,7 @@ const Container = styled.div`
   top: 0;
   right: 0;
   z-index: 999;
+
   @media (max-width: 490px) {
     position: initial;
     padding: 1rem 0;
@@ -143,22 +144,22 @@ const Text = styled.p`
 
 export default class ModalSucessfully extends Component {
 	render() {
-  	return (
-  		<Container onClick={this.props.handleClosedModal}>
-  			<Modal>
-  				<h1>A associação foi criada com sucesso!</h1>
-  				<img src={Barcode} alt="Barcode"/>
-  				<WarningText>
-  					<Text>
-            Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado até o dia <strong>16/07/2019</strong>, para o <span>e-mail cadastrado.</span>
-  					</Text>
-  					<Text>
-            Caso não receba o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="www.osclegal.org.br">www.osclegal.org.br</a>
-  					</Text>
-  				</WarningText>
-  				<Button onClick={this.props.handleRedirect} text="Voltar para o Início"/>
-  			</Modal>
-  		</Container>
-  	);
+		return (
+			<Container onClick={this.props.handleClosedModal}>
+				<Modal>
+					<h1>A {this.props.tradingName} foi criada com sucesso!</h1>
+					<img src={Barcode} alt="Barcode" />
+					<WarningText>
+						<Text>
+							Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado até o dia <strong>16/07/2019</strong>, para o <span>e-mail cadastrado.</span>
+						</Text>
+						<Text>
+							Caso não receba o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="www.osclegal.org.br">www.osclegal.org.br</a>
+						</Text>
+					</WarningText>
+					<Button onClick={this.props.handleRedirect} text="Voltar para o Início" />
+				</Modal>
+			</Container>
+		);
 	}
 }

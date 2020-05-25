@@ -40,13 +40,13 @@ const initialState = {
 	org: {
 		tradingName: '',
 		companyName: '',
-		cpf: '',
 		telephone: '',
 		address: '',
 		addressComplement: '',
 		neighborhood: '',
 		city: '',
 		cep: '',
+		cnpj: '',
 	},
 };
 
