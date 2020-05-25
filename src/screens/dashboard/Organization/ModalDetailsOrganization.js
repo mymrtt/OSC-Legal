@@ -29,7 +29,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
 	z-index: 20;
-	position: absolute;
+	position: fixed;
 `;
 
 const Container = styled.div`
@@ -524,7 +524,7 @@ class ModalDetailsOrganization extends Component {
 									</PaymentMethodText>
 								</ContainerPaymentMethod>))
 							: <ContainerEditImage>
-								<SpanContainerImage>
+								<SpanContainerImage onClick={() => this.props.isModalCreateOrganization('edit')}>
 									<ImageEdite src={ImageEdit}/>
 									<ContainerOptionMobile>Editar</ContainerOptionMobile>
 								</SpanContainerImage>

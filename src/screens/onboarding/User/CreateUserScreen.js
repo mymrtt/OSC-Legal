@@ -402,7 +402,6 @@ class CreateUserScreen extends Component {
 
 	handleChangeCpf = (ev) => {
 		const { user } = this.state;
-		// user['cpf'] = ev.target.value;
 		user.cpf = ev.target.value;
 		this.setState({ user, isErrorCpf: false });
 	};
