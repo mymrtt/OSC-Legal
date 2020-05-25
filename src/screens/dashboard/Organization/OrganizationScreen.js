@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
-import ModalOrganization from './ModalOrganization';
+import ModalDetailsOrganization from './ModalDetailsOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
 import Button from '../../../components/Button';
 // import Sucessfully from './ModalSucessfully';
@@ -935,7 +935,7 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-		const { user, org } = this.props;
+		const { user } = this.props;
 
 		return listTable.map(item => (
 			<Tr key={item.id}>
@@ -1110,7 +1110,7 @@ class OrganizationScreen extends Component {
 			<Container>
 				{isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{isModal
-					&& <ModalOrganization
+					&& <ModalDetailsOrganization
 						org={itemSelected}
 						handleClosedModal={this.isModalOpen}
 						isModalCreateOrganization={this.isModalCreateOrganization}
