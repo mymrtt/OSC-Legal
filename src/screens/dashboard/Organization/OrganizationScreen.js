@@ -1136,18 +1136,19 @@ class OrganizationScreen extends Component {
 					width={isAdmin}
 					height={isAdmin}
 					background={isAdmin}
+					justifyContent={isAdmin}
 				>
 					{!isAdmin
 						&& <Button
 							width='18%'
 							widthMedium='24%'
+							widthMobile='78%'
 							// widthMobileSmall='90%'
 							height='4.3rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
 							margin='1.2rem 0 1.2rem 2.5rem'
-							marginMobile='1.5rem 1.7rem'
-							marginMobileSmall='1.5rem 2.5rem 1.5rem 1.5rem'
+							// marginMobile='1.5rem 1.7rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile

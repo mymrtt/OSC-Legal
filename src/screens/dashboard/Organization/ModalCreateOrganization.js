@@ -37,8 +37,8 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-	z-index: 20;
 	position: fixed;
+	z-index: 20;
 
 	@media(max-width: 648px) {
 		display: flex;
@@ -73,8 +73,8 @@ const Container = styled.form`
 	}
 
 	@media(max-width: 648px) {
-		z-index: 10;
 		width: 100%;
+		z-index: 10;
 	}
 `;
 
@@ -227,7 +227,7 @@ const ErrorMessage = styled.p`
 
 class ModalCreateOrganization extends Component {
 	state = {
-		tradingName: '',
+		tradingName: 'Lanne',
 		companyName: '',
 		cpf: '',
 		// email: '',
@@ -245,7 +245,7 @@ class ModalCreateOrganization extends Component {
 				cpf: this.props.cpf || '-',
 			},
 		],
-		modalSucess: false,
+		modalSucess: true,
 		isTradingNameError: false,
 		isCompanyNameError: false,
 		isCnpjError: false,
@@ -277,7 +277,6 @@ class ModalCreateOrganization extends Component {
 	}
 
 	handleModalSucess = (item) => {
-		console.log('estoou aquiiiii');
 		this.setState({
 			isCloseForm: true,
 			modalSucess: !this.state.modalSucess,
@@ -320,7 +319,6 @@ class ModalCreateOrganization extends Component {
 		}
 
 		if (!cnpj || cnpj.length !== 14) {
-			console.log('cheguei aqui validação cnpj');
 			this.setState({
 				isCnpjError: true,
 			});
@@ -416,13 +414,9 @@ class ModalCreateOrganization extends Component {
 				this.props.handleClosedModal();
 				this.props.closeModal();
 			} else {
-				console.log('deu tudo certo', 1);
 				this.props.addNewOrg(org);
-				console.log('deu tudo certo', 2);
 				this.setState({ allStateTrue: true });
-				console.log('deu tudo certo', 3);
 				this.handleModalSucess(tradingName);
-				console.log('deu tudo certo', 4);
 				// this.props.handleClosedModal();
 			}
 		}
@@ -440,7 +434,6 @@ class ModalCreateOrganization extends Component {
 	};
 
 	validateCnpj = (s) => {
-		console.log('cheguei aqui validateCnpj', s);
 		const cnpj = s.replace(/[^\d]+/g, '');
 
 		// Valida a quantidade de caracteres
@@ -499,7 +492,7 @@ class ModalCreateOrganization extends Component {
 
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
-				{/* <HeaderModal /> */}
+				<HeaderModal />
 				{this.state.isCloseForm ? null : (
 					<Container onSubmit={this.handleSubmit} onClick={ev => ev.stopPropagation()}>
 						<Content>
