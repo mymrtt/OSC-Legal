@@ -1186,8 +1186,6 @@ const SpanButton = styled.span`
 `;
 
 let newList = [];
-let found = [];
-let nextId = Math.random();
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1227,7 +1225,7 @@ class DocumentsScreen extends Component {
 		isOrg: false,
 		isMobileButton: false,
 		userSelectDoc: '',
-		idDocUser: 1,
+		isErrorDoc: false,
 	};
 
 	handleOnOptions = (item) => {
@@ -1270,7 +1268,6 @@ class DocumentsScreen extends Component {
 	}
 
 	handleModalDelete = () => {
-		console.log(found.id)
 		this.setState({
 			modalDelete: true,
 			options: false,
@@ -1560,12 +1557,15 @@ class DocumentsScreen extends Component {
 	handleDocsUser = (e) => {
 		e.preventDefault();
 		if (this.state.listDocs.find(item => item === this.state.isSelected)) {
-			window.alert('ERRO: documento já adicionado');
+			this.setState({
+				isErrorDoc: true,
+			});
 		} else {
 			this.setState({
 				modalListDoc: false,
 				listDocs: newList,
 				isSelected: '',
+				isErrorDoc: false,
 			});
 		}
 	}
@@ -1741,6 +1741,7 @@ class DocumentsScreen extends Component {
 						</ContainerModelDescription>
 					))}
 				</BoxModelsDoc>
+				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
 				<ButtonModalList onClick={this.handleDocsUser}>Escolher</ButtonModalList>
 			</Modal>
 		</ContainerModal>
