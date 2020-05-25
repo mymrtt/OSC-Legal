@@ -6,7 +6,7 @@ const IS_RESET_PASSWORD = 'osc/resetpassword/IS_RESET_PASSWORD';
 
 const initialState = {
 	users: {
-		email: '', password: '', name: '', telephone: '', cpf: '', isAdmin: false,
+		email: '', password: '', name: '', telephone: '', cpf: '', isAdmin: true,
 	},
 	isResetPassword: undefined,
 	emailReset: '',
