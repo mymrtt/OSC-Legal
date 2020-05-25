@@ -227,7 +227,7 @@ const ErrorMessage = styled.p`
 
 class ModalCreateOrganization extends Component {
 	state = {
-		tradingName: 'Lanne',
+		tradingName: '',
 		companyName: '',
 		cpf: '',
 		// email: '',
@@ -245,7 +245,7 @@ class ModalCreateOrganization extends Component {
 				cpf: this.props.cpf || '-',
 			},
 		],
-		modalSucess: true,
+		modalSucess: false,
 		isTradingNameError: false,
 		isCompanyNameError: false,
 		isCnpjError: false,
