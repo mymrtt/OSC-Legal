@@ -57,8 +57,7 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	height: calc(100vh - -3px - 5.5rem);
-	${''}
+	height: ${props => (props.isAdmin ? 'calc(100vh - -3px - 6.5rem)' : 'calc(100vh - -3px - 5.5rem)')};
 	display: flex;
 	align-items: center;
 	justify-content: center;
