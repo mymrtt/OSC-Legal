@@ -52,14 +52,6 @@ const ContainerUser = styled.div`
 	}
 `;
 
-// cons= styled.div`
-// 	padding: .5rem 0.2rem;
-
-// 	@media (max-width: 768px) {
-// 		padding: 0;
-// 	}
-// `;
-
 const ContainerSelectedViewBy = styled.div`
 	padding-right: .6rem;
 
@@ -325,8 +317,8 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	height: calc(100vh - 85px - 5.8rem - 1.87rem);
-	/* height: calc(100vh - 62px - 5.8rem - 2.4rem); */
+	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
+	height: calc(100vh - 62px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '4rem 5.5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 768px) {
@@ -815,8 +807,10 @@ class OrganizationScreen extends Component {
 	};
 
 	handleChangeFilter = (ev) => {
+		const value = ev.target.value.toLowerCase();
+
 		this.setState({
-			filter: ev.target.value,
+			filter: value,
 			toFilter: false,
 		});
 	}
@@ -1036,7 +1030,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
-							width={'9.5rem'}
+							width={'10rem'}
 						>
 							{item.tradingName}
 						</TableList>
@@ -1149,6 +1143,7 @@ class OrganizationScreen extends Component {
 	renderAllTable = () => {
 		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
+
 
 		let listTable = this.renderTable(tableDatas);
 		if (
