@@ -3,7 +3,7 @@ import axios from 'axios';
 export const API_URL = 'http://localhost:3333';
 
 // Onboarding
-export const createAccount = (token, user) => axios({
+export const createUserAccount = (token, user) => axios({
 	url: `${API_URL}/users`,
 	method: 'post',
 	headers: {
@@ -39,9 +39,9 @@ export const createDocument = doc => axios({
 // Document
 
 // Template (Document - Admin)
-export const createTemplate = template => axios({
+export const createTemplate = (title, description, isFile) => axios({
 	url: `${API_URL}/templates`,
 	method: 'post',
-	data: template,
+	data: { title, description, isFile },
 });
 // Template (Document - Admin)

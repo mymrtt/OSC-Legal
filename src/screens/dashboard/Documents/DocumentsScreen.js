@@ -29,6 +29,9 @@ import ArrowUpIcon from '../../../assets/arrow-up.svg';
 // Redux
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
+// Api
+import { createTemplate } from '../../../api';
+
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
 	email: state.onboarding.users.email,
@@ -55,7 +58,7 @@ const Container = styled.div`
 const Content = styled.div`
 	width: 100%;
 	height: calc(100vh - -3px - 5.5rem);
-	${'' /* min-height: 100vh; */}
+	${''}
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1017,7 +1020,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	${'' /* padding: .5rem 0; */}
+	${''}
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -1226,6 +1229,16 @@ class DocumentsScreen extends Component {
 		userSelectDoc: '',
 		idDocUser: 1,
 	};
+
+
+	createTemplate = async (title, description, isFile) => {
+		try {
+			const response = await createTemplate(title, description, isFile);
+		} catch (err) {
+			console.log('err', err);
+		}
+	}
+
 
 	handleOnOptions = (item) => {
 		this.setState({
@@ -1510,10 +1523,13 @@ class DocumentsScreen extends Component {
 			this.props.addNewDocument({
 				title, description, isFile,
 			});
+			this.createTemplate(title, description, isFile);
+
 			this.setState({
 				document: {},
 				isFile: null,
 			});
+
 			this.handleCancelAddModel();
 		}
 	}
@@ -1566,7 +1582,6 @@ class DocumentsScreen extends Component {
 			});
 		}
 	}
-
 
 	handleSelectOrg = (orgs) => {
 		this.setState({
