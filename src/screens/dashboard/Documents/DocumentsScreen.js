@@ -4,7 +4,6 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -13,7 +12,6 @@ import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
 
 // Images
-// import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
@@ -56,7 +54,8 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	min-height: 100vh;
+	height: calc(100vh - -3px - 5.5rem);
+	${'' /* min-height: 100vh; */}
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -76,19 +75,18 @@ const Content = styled.div`
 `;
 
 const MaximumWidth = styled.div`
+	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0 0')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
-	height: ${props => (props.isAdmin ? '100%' : '100%')};
-	height:	85vh;
 	max-width: 1440px;
+	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	margin-top: 2rem;
 	display: flex;
 	overflow-y: hidden;
 	background: #FFF;
-	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0 0')};
 
 	@media(max-width: 768px){
-		margin: 0;
+		height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 6.8rem - 0px)')};
 	}
 
 	@media(max-width: 648px){
@@ -642,7 +640,7 @@ const Option = styled.button`
 const OptionImage = styled.img`
 `;
 
-const OptionText = styled.p`
+const OptionText = styled.span`
 	color: ${props => (props.colorTextButton)};
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
@@ -1020,7 +1018,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	padding: .5rem 0;
+	${'' /* padding: .5rem 0; */}
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -1054,11 +1052,11 @@ const BoxOrgs = styled.div`
 const Org = styled.div`
 	color: #85144B;
 	font-size: .9rem;
-	font-family: 'Overpass';
-	font-weight: 600;
+	font-family: 'Overpass', Regular;
+	font-weight: 400;
 	cursor: pointer;
 	width: 100%;
-	padding: .3rem 1rem;
+	padding: .5rem 1rem;
 
 	:hover{
 		background: #FFCFCD;
@@ -1698,7 +1696,8 @@ class DocumentsScreen extends Component {
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
 					<TextModal>
-						Você deseja excluir o <strong>{this.state.modelSelect.title || this.state.userSelectDoc.title}</strong> permanentemente?
+						Você deseja excluir o <strong>{this.state.modelSelect.title
+						|| this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
@@ -1889,7 +1888,7 @@ class DocumentsScreen extends Component {
 																		this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'
 																	}
 																>
-														Exportar
+																	Exportar
 																</OptionText>
 															</Option>
 															<Option
