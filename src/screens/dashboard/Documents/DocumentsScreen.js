@@ -75,15 +75,15 @@ const Content = styled.div`
 `;
 
 const MaximumWidth = styled.div`
-	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0 0')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
+	background: #FFF;
+	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0 0')};
 	margin-top: 2rem;
 	display: flex;
 	overflow-y: hidden;
-	background: #FFF;
 
 	@media(max-width: 768px){
 		height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 6.8rem - 0px)')};
@@ -95,7 +95,6 @@ const MaximumWidth = styled.div`
 		height: 100vh;
 		width: 100%;
 	}
-
 `;
 
 const Teste = styled.div`

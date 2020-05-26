@@ -245,7 +245,7 @@ class ModalCreateOrganization extends Component {
 				cpf: this.props.cpf || '-',
 			},
 		],
-		modalSucess: false,
+		modalSucess: true,
 		isTradingNameError: false,
 		isCompanyNameError: false,
 		isCnpjError: false,
