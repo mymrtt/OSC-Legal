@@ -4,7 +4,6 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -13,7 +12,6 @@ import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
 
 // Images
-// import logo from '../../../assets/logo.svg';
 import DocumentUser from '../../../assets/document-user.svg';
 import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
@@ -30,6 +28,9 @@ import ArrowUpIcon from '../../../assets/arrow-up.svg';
 
 // Redux
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
+
+// Api
+import { createTemplate } from '../../../api';
 
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
@@ -56,7 +57,8 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	min-height: 90.5vh;
+	height: calc(100vh - -3px - 5.5rem);
+	${''}
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -76,19 +78,18 @@ const Content = styled.div`
 `;
 
 const MaximumWidth = styled.div`
+	padding: ${props => (props.isAdmin ? '5.5rem 1rem 0' : '2rem 0 0')};
+	margin-top: ${props => (props.isAdmin ? '0' : '2rem')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
-	height: ${props => (props.isAdmin ? '100%' : '100%')};
-	height:	85vh;
 	max-width: 1440px;
-	margin-top: 2rem;
+	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
 	overflow-y: hidden;
 	background: #FFF;
-	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0 0')};
 
 	@media(max-width: 768px){
-		margin: 0;
+		height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 6.8rem - 0px)')};
 	}
 
 	@media(max-width: 648px){
@@ -187,7 +188,7 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	${'' /* padding-right: 3rem; */}
+	${''}
 	width: 34%;
 	display: flex;
 	align-items: center;
@@ -486,6 +487,7 @@ const ContainerModel = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
+		height: 7rem;
 		order: 3;
 		z-index: initial;
 	}
@@ -641,7 +643,7 @@ const Option = styled.button`
 const OptionImage = styled.img`
 `;
 
-const OptionText = styled.p`
+const OptionText = styled.span`
 	color: ${props => (props.colorTextButton)};
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
@@ -1019,7 +1021,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	padding: .5rem 0;
+	${''}
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -1053,11 +1055,11 @@ const BoxOrgs = styled.div`
 const Org = styled.div`
 	color: #85144B;
 	font-size: .9rem;
-	font-family: 'Overpass';
-	font-weight: 600;
+	font-family: 'Overpass', Regular;
+	font-weight: 400;
 	cursor: pointer;
 	width: 100%;
-	padding: .3rem 1rem;
+	padding: .5rem 1rem;
 
 	:hover{
 		background: #FFCFCD;
@@ -1185,7 +1187,8 @@ const SpanButton = styled.span`
 `;
 
 let newList = [];
-
+const found = [];
+const nextId = Math.random();
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1228,6 +1231,16 @@ class DocumentsScreen extends Component {
 		idDocUser: 1,
 	};
 
+
+	createTemplate = async (title, description, isFile) => {
+		try {
+			const response = await createTemplate(title, description, isFile);
+		} catch (err) {
+			console.log('err', err);
+		}
+	}
+
+
 	handleOnOptions = (item) => {
 		this.setState({
 			options: true,
@@ -1235,7 +1248,7 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleOnOptionsUser = (docs, index) => {
+	handleOnOptionsUser = (docs) => {
 		this.setState({
 			options: true,
 			selectedOptions: docs,
@@ -1268,6 +1281,7 @@ class DocumentsScreen extends Component {
 	}
 
 	handleModalDelete = () => {
+		console.log(found.id);
 		this.setState({
 			modalDelete: true,
 			options: false,
@@ -1510,10 +1524,13 @@ class DocumentsScreen extends Component {
 			this.props.addNewDocument({
 				title, description, isFile,
 			});
+			this.createTemplate(title, description, isFile);
+
 			this.setState({
 				document: {},
 				isFile: null,
 			});
+
 			this.handleCancelAddModel();
 		}
 	}
@@ -1556,13 +1573,16 @@ class DocumentsScreen extends Component {
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		this.setState({
-			modalListDoc: false,
-			listDocs: newList,
-			isSelected: '',
-		});
+		if (this.state.listDocs.find(item => item === this.state.isSelected)) {
+			window.alert('ERRO: documento já adicionado');
+		} else {
+			this.setState({
+				modalListDoc: false,
+				listDocs: newList,
+				isSelected: '',
+			});
+		}
 	}
-
 
 	handleSelectOrg = (orgs) => {
 		this.setState({
@@ -1579,7 +1599,7 @@ class DocumentsScreen extends Component {
 
 	deleteUserDoc = () => {
 		this.setState({
-			listDocs: this.state.listDocs.filter((docs, index) => this.state.listDocs.indexOf(docs) !== index),
+			listDocs: this.state.listDocs.filter(doc => doc !== this.state.userSelectDoc),
 			modalDelete: false,
 		});
 	}
@@ -1691,7 +1711,8 @@ class DocumentsScreen extends Component {
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
 					<TextModal>
-						Você deseja excluir o <strong>{this.state.modelSelect.title || this.state.userSelectDoc.title}</strong> permanentemente?
+						Você deseja excluir o <strong>{this.state.modelSelect.title
+						|| this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
@@ -1881,7 +1902,7 @@ class DocumentsScreen extends Component {
 																		this.state.hoverExport === item ? this.state.colorTextExport : '#85144B'
 																	}
 																>
-														Exportar
+																	Exportar
 																</OptionText>
 															</Option>
 															<Option
@@ -1927,6 +1948,7 @@ class DocumentsScreen extends Component {
 														onMouseEnter={() => this.handleOnOptionsUser(docs, index)}
 														onMouseLeave={this.handleOffOptions}
 														onClick={() => this.handleOnOptionsUser(docs, index)}
+														option={this.state.options}
 													>
 														<ContainerModelDescription>
 															<span>

@@ -25,7 +25,7 @@ const Container = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	text-transform: uppercase;
-	border-bottom: ${props => (props.border ? '0px solid  #707070' : 'none')};
+	border-bottom: ${props => (props.border ? '1px solid  #707070' : 'none')};
 
 	@media (max-width: 890px) {
 		padding: 0 2rem;
@@ -171,8 +171,6 @@ class Header extends Component {
 				</WrapButton>
 				<ContainerUser>
 					<ParagraphUserName>
-						{/* {this.props.email && this.props.password && this.props.email === 'teste@gmail.com'
-							&& this.props.password === '12345678' ? 'Administrador' : this.props.name} */}
 						{this.props.isAdmin ? 'Administrador' : this.props.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleRedirect}>

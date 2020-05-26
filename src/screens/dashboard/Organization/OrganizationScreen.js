@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
-import ModalOrganization from './ModalOrganization';
+import ModalDetailsOrganization from './ModalDetailsOrganization';
 import ModalCreateOrganization from './ModalCreateOrganization';
 import Button from '../../../components/Button';
 // import Sucessfully from './ModalSucessfully';
@@ -46,9 +46,6 @@ const ContainerUser = styled.div`
 	width: 100%;
 	height: ${props => (!props.height && 'calc(100vh - -3px - 5.5rem)')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
-	border-right: 1px solid #707070;
-	border-left: 1px solid #707070;
-	border-bottom: 1px solid #707070;
 
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
@@ -310,14 +307,14 @@ const SelectedItem = styled.p`
 `;
 
 const ContainerTableUser = styled.div`
-		width: ${props => (props.width && '100%')};
-		max-height: ${props => (props.height ? '0' : '100vh')};
-		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
-		border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
-		margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	width: ${props => (props.width && '100%')};
+	max-height: 100vh;
+	background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
+	border-radius: ${props => (props.border ? '0' : '3px 3px 0 0')};
+	margin: ${props => (props.margin ? '0' : ' 0 2.5rem')};
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	@media (max-width: 768px) {
 		margin: 0 auto;
@@ -917,7 +914,7 @@ class OrganizationScreen extends Component {
 				</TitleModal>
 				<WrapTextModal>
 					<TextModal>
-						Após ser excluido, uma organização não pode ser recuperado.
+						Após ser excluida, uma organização não pode ser recuperada.
 					</TextModal>
 					<TextModal>
 						Você deseja excluir <strong>{this.state.itemSelected.tradingName}</strong> permanentemente?
@@ -938,7 +935,7 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-		const { user, org } = this.props;
+		const { user } = this.props;
 
 		return listTable.map(item => (
 			<Tr key={item.id}>
@@ -1113,7 +1110,7 @@ class OrganizationScreen extends Component {
 			<Container>
 				{isSelected && <Overlay onClick={this.isSelectOpen} />}
 				{isModal
-					&& <ModalOrganization
+					&& <ModalDetailsOrganization
 						org={itemSelected}
 						handleClosedModal={this.isModalOpen}
 						isModalCreateOrganization={this.isModalCreateOrganization}
@@ -1135,6 +1132,7 @@ class OrganizationScreen extends Component {
 					width={isAdmin}
 					height={isAdmin}
 					background={isAdmin}
+					justifyContent={isAdmin}
 				>
 					{!isAdmin
 						&& <InvolveButton><Button

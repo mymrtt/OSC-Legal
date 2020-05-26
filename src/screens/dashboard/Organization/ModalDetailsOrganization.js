@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-// import { Link, Redirect } from 'react-router-dom';
-
 // Components
 import ImageClose from '../../../assets/fechar.svg';
 import ImageEdit from '../../../assets/edit.svg';
@@ -289,17 +287,17 @@ const SeparationMobile = styled.div`
 `;
 
 const ContainerSelected = styled.div`
-		display: none;
-		@media (max-width: 648px) {
-			width: 100%;
-			padding: 1rem 0 0;
-			display: flex;
-			justify-content: center;
-			justify-content: space-evenly;
-			background-color: #FFFFFF;
-			bottom: 0;
-			align-items: center;
-			position: fixed;
+	display: none;
+	@media (max-width: 648px) {
+		width: 100%;
+		padding: 1rem 0 0;
+		display: flex;
+		justify-content: center;
+		justify-content: space-evenly;
+		background-color: #FFFFFF;
+		bottom: 0;
+		align-items: center;
+		position: fixed;
  	}
 `;
 
@@ -350,7 +348,7 @@ const ContainerOptionMobile = styled.p`
 	cursor: pointer;
 `;
 
-class ModalOrganization extends Component {
+class ModalDetailsOrganization extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -463,10 +461,12 @@ class ModalOrganization extends Component {
 								<SubAnswer>{org.telephone || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>email</SubTitle>
-								<SubAnswer>{org.email || '-'}</SubAnswer>
+								{/* <SubTitle>email</SubTitle>
+								<SubAnswer>{org.email || '-'}</SubAnswer> */}
 								<SubTitle>endereço</SubTitle>
 								<SubAnswer>{org.address || '-'}</SubAnswer>
+								<SubTitle>cep</SubTitle>
+								<SubAnswer>{org.cep || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
 								<SubTitle>complemento</SubTitle>
@@ -475,8 +475,8 @@ class ModalOrganization extends Component {
 								<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
 							</Separation>
 							<Separation>
-								<SubTitle>cep</SubTitle>
-								<SubAnswer>{org.cep || '-'}</SubAnswer>
+								{/* <SubTitle>cep</SubTitle>
+								<SubAnswer>{org.cep || '-'}</SubAnswer> */}
 								<SubTitle>cidade</SubTitle>
 								<SubAnswer>{org.city || '-'}</SubAnswer>
 							</Separation>
@@ -484,8 +484,8 @@ class ModalOrganization extends Component {
 								<SeparationMobile>
 									<SubTitle>nome fantasia</SubTitle>
 									<SubAnswer>{org.tradingName || '-'}</SubAnswer>
-									<SubTitle>email</SubTitle>
-									<SubAnswer>{org.email || '-'}</SubAnswer>
+									{/* <SubTitle>email</SubTitle>
+									<SubAnswer>{org.email || '-'}</SubAnswer> */}
 									<SubTitle>cnpj</SubTitle>
 									<SubAnswer>{org.cnpj || '-'}</SubAnswer>
 									<SubTitle>complemento</SubTitle>
@@ -525,11 +525,11 @@ class ModalOrganization extends Component {
 								</ContainerPaymentMethod>))
 							: <ContainerEditImage>
 								<SpanContainerImage onClick={() => this.props.isModalCreateOrganization('edit')}>
-									<ImageEdite src={ImageEdit}/>
+									<ImageEdite src={ImageEdit} />
 									<ContainerOptionMobile>Editar</ContainerOptionMobile>
 								</SpanContainerImage>
 								<SpanContainerImage onClick={this.props.handleDeleteModal}>
-									<img src={ImageDelete}/>
+									<img src={ImageDelete} />
 									<ContainerOptionMobile>Excluir</ContainerOptionMobile>
 								</SpanContainerImage>
 							</ContainerEditImage>
@@ -541,4 +541,4 @@ class ModalOrganization extends Component {
 	}
 }
 
-export default connect(mapStateToProps, null)(ModalOrganization);
+export default connect(mapStateToProps, null)(ModalDetailsOrganization);
