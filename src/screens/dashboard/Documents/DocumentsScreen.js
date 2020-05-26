@@ -78,12 +78,12 @@ const Content = styled.div`
 `;
 
 const MaximumWidth = styled.div`
-	padding: ${props => (props.isAdmin ? '0 1rem' : '2rem 0 0')};
+	padding: ${props => (props.isAdmin ? '5.5rem 1rem 0' : '2rem 0 0')};
+	margin-top: ${props => (props.isAdmin ? '0' : '2rem')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
-	margin-top: 2rem;
 	display: flex;
 	overflow-y: hidden;
 	background: #FFF;
