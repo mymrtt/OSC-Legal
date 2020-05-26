@@ -919,7 +919,9 @@ class OrganizationScreen extends Component {
 			listinha = isPayment;
 		}	else if (item.status === 'vencido') {
 			listinha = isExpired;
-		} else {
+		} else if () {
+				// tem q por coisa aquiii
+		}else {
 			listinha = statusImgs;
 		}
 
