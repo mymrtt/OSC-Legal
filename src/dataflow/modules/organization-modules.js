@@ -17,7 +17,7 @@ const initialState = {
 			city: 'ewfdrefe',
 			telephone: '987456241',
 			cep: '21220300',
-			status: 'Pago',
+			status: 'pendente de autorização',
 			createdIn: '18/06/19',
 			authorization: '31/08/1995',
 			dueDate: '12/07/1996',
@@ -34,7 +34,7 @@ const initialState = {
 			createdIn: '18/06/19',
 			authorization: '16/10/1965',
 			dueDate: '11/05/1966',
-			status: 'Pago',
+			status: 'pendente de autorização',
 		},
 	],
 	org: {

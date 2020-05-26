@@ -518,6 +518,7 @@ const TableList = styled.td`
 const ContainerStatus = styled.td`
 	display: flex;
 	height: inherit;
+	align-items: center;
 	justify-content: ${props => (props.desc ? 'flex-start' : 'center')};
 
 	${({ selected }) => selected && css`
@@ -534,6 +535,9 @@ const ContainerStatus = styled.td`
 const TextStatus = styled.p`
 	color: ${props => (props.color ? '#FF4136' : '#85144B')};
 	font-size: 0.8rem;
+	font-family: "Overpass", Light;
+  font-weight: 400;
+	text-align: center;
 	text-transform: uppercase;
 	cursor: auto;
 
@@ -883,6 +887,7 @@ class OrganizationScreen extends Component {
 
 	renderStatus = item => (
 		<>
+			{/* renderiza as imagens */}
 			<Box isClickedStatus={item.id === this.state.isClickedStatus}>
 				{this.state.statusImgs.map((status, index) => (
 					<ImageStatus
@@ -898,9 +903,7 @@ class OrganizationScreen extends Component {
 				isClickedName={item.id === this.state.isClickedStatus}
 				onClick={() => this.handleClickedImageStatus(item)}
 			>
-				<TextStatus color={item.isChanged}
-				// isClickedName={item.id === this.state.isClickedStatus}
-				>
+				<TextStatus color={item.isChanged}>
 					{item.status}
 				</TextStatus>
 			</BoxButton>
