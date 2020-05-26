@@ -245,7 +245,7 @@ class ModalCreateOrganization extends Component {
 				cpf: this.props.cpf || '-',
 			},
 		],
-		modalSucess: true,
+		modalSucess: false,
 		isTradingNameError: false,
 		isCompanyNameError: false,
 		isCnpjError: false,
@@ -391,11 +391,16 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (tradingName.length > 4 && companyName.length > 4
+		if (tradingName.length > 4 && companyName.length > 4 && cnpj.length === 14
 			&& telephone.length >= 8 && address.length > 4 && city.length > 4
 			&& neighborhood.length > 4 && cep.length === 8
 		) {
 			const isEdit = this.props.modalType === 'edit';
+			const createDate = () => {
+				const date = new Date();
+				return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
+			};
+
 			const org = {
 				id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
 				tradingName: this.state.tradingName,
@@ -408,6 +413,7 @@ class ModalCreateOrganization extends Component {
 				neighborhood: this.state.neighborhood,
 				city: this.state.city,
 				cep: this.state.cep,
+				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
 			};
 			if (this.props.modalType === 'edit') {
 				this.props.editOrg(org);
@@ -433,9 +439,14 @@ class ModalCreateOrganization extends Component {
 		});
 	};
 
+	handleChangeCnpj = (field, ev) => {
+		this.setState({
+			[field]: ev.target.value,
+		});
+	};
+
 	validateCnpj = (s) => {
 		const cnpj = s.replace(/[^\d]+/g, '');
-
 		// Valida a quantidade de caracteres
 		if (cnpj.length !== 14) return false;
 
@@ -461,7 +472,6 @@ class ModalCreateOrganization extends Component {
 			r = 11 - s % 11;
 			return r > 9 ? 0 : r;
 		};
-
 		return calc(t) === d1 && calc(t + 1) === d2;
 	}
 
@@ -554,7 +564,7 @@ class ModalCreateOrganization extends Component {
 												margin={isCnpjError ? '0' : '0 0 2rem'}
 												type="number"
 												placeholder="00.000.000/0000-00"
-												onChange={ev => this.handleChange('cnpj', ev)}
+												onChange={ev => this.handleChangeCnpj('cnpj', ev)}
 												value={this.state.cnpj}
 												name="cnpj"
 												isError={isCnpjError}
