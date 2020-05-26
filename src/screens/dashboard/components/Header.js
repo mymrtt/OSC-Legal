@@ -25,7 +25,7 @@ const Container = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	text-transform: uppercase;
-	border-bottom: ${props => (props.border ? '0px solid  #707070' : 'none')};
+	border-bottom: ${props => (props.border ? '1px solid  #707070' : 'none')};
 
 	@media (max-width: 890px) {
 		padding: 0 2rem;
