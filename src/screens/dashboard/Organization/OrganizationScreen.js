@@ -891,22 +891,9 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		console.log('item', item);
-		// const teste = this.state.statusImgs.filter(item => item.teste);
-		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
-		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
-
-		// const isPayment = this.state.statusImgs.filter(item => item.isPayment);
-		// const isPendingPayment = (item.status === 'pendente de pagamento') ? isPayment : this.state.statusImgs;
-
-		// let listinha = [];
-
-		// if (item.status === 'pendente de pagamento') {
-		// 	listinha = isPayment;
-		// }
 		const { statusImgs } = this.state;
 		let listinha = statusImgs; // lista deafult com as 4 imagens
-		const hiddenList = (item.status === 'autorizar' || item.status === 'isento'); // nao aparecer se for autorizar ou isento
+		const hiddenList = (item.status === 'autorizar' || item.status === 'isento' || item.status === 'prorrogar prazo'); // nao aparecer se for autorizar ou isento
 		const teste = statusImgs.filter(item => item.teste); // lista para pendente de autorização
 		const isPayment = statusImgs.filter(item => item.pagamento); // lista para pendente de pagamento
 		const isExpired = statusImgs.filter(item => item.prazoExpirado);
@@ -919,9 +906,7 @@ class OrganizationScreen extends Component {
 			listinha = isPayment;
 		}	else if (item.status === 'vencido') {
 			listinha = isExpired;
-		} else if () {
-				// tem q por coisa aquiii
-		}else {
+		} else {
 			listinha = statusImgs;
 		}
 
@@ -1130,7 +1115,7 @@ class OrganizationScreen extends Component {
 					: <>
 						{this.props.isAdmin ? (
 							<ContainerStatus
-								onMouseEnter={() => this.setState({ hovered: item === 'isento' || item === 'autorizar' ? null : item })}
+								onMouseEnter={() => this.setState({ hovered: item === 'isento' || item === 'autorizar' || item === 'prorrogar prazo' ? null : item })}
 								onMouseLeave={() => this.setState({ hovered: undefined })}
 								selected={this.state.hovered === item}
 							>
