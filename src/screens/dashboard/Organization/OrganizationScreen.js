@@ -1194,7 +1194,7 @@ class OrganizationScreen extends Component {
 							fontSize='1.4rem'
 							margin='1.2rem 0 1.2rem 2.5rem'
 							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
-							marginMobileSmall='1.5rem 2.5rem 1.5rem 1.5rem'
+							marginMobileSmall='1.5rem 1.5rem 1.5rem 1.2rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
