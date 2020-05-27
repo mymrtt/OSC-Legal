@@ -653,7 +653,7 @@ const ButtonCancel = styled.button`
 	border-radius: 4px;
 	border: none;
 	background: #FFF;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
 
@@ -680,7 +680,7 @@ class OrganizationScreen extends Component {
 			selectedItems: [
 				'Selecionar status',
 				{ select: 'Pendente de Pagamento', filter: 'pendente' },
-				{ select: 'Pendente de Autorização', filter: 'autorizar' },
+				'Pendente de Autorização',
 				'Isento',
 				'Pago',
 				'Vencido',
@@ -747,6 +747,7 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedValue = (item) => {
+		console.log('item', item);
 		this.setState({
 			selectedValue: item,
 			isSelected: false,
@@ -885,7 +886,6 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		console.log('item', item);
 		// const teste = this.state.statusImgs.filter(item => item.teste);
 		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
 		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
@@ -905,8 +905,6 @@ class OrganizationScreen extends Component {
 		const isPayment = statusImgs.filter(item => item.pagamento); // lista para pendente de pagamento
 		const isExpired = statusImgs.filter(item => item.prazoExpirado);
 
-		console.log('isPayment', isPayment);
-		console.log('item.status', item.status)
 		if (item.status === 'pendente de autorização') {
 			listinha = teste;
 		} else if (item.status === 'pendente de pagamento') {
@@ -1008,6 +1006,7 @@ class OrganizationScreen extends Component {
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
+						fontSize="1.2rem"
 					/>
 				</ButtonsModal>
 			</ModalDelete>
@@ -1144,12 +1143,11 @@ class OrganizationScreen extends Component {
 		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
 
-
 		let listTable = this.renderTable(tableDatas);
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
+			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)))
 		}
 		if (
 			toFilter
@@ -1220,8 +1218,8 @@ class OrganizationScreen extends Component {
 						&& <Button
 							width='18%'
 							widthMedium='24%'
-							widthMobile='78%'
-							// widthMobileSmall='90%'
+							widthMobile='88%'
+							widthMobileSmall='80%'
 							height='4.3rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
