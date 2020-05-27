@@ -31,7 +31,9 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.div`
-	width: 40%;
+	width: 35%;
+	/* height: 43vh; */
+	/* max-width: 35%; */
   background: #FFFFFF;
 	border-radius: 3px;
   display: flex;
@@ -54,13 +56,13 @@ const Title = styled.h1`
 	width: 50%;
 	font-size: 1.125rem;
 	font-family: "Overpass", ExtraBold;
-	font-weight: 800;
+	font-weight: 900;
 	text-align: center;
-	margin: 1rem 0 1.8rem;
+	margin: 1.5rem 0 1.8rem;
 
 		@media (max-width: 648px) {
 			width: 95%;
-			font-size: 1.8rem;
+			font-size: 1.9rem;
 			margin: 2rem 0 4rem;
 		}
 `;
@@ -73,7 +75,7 @@ const ImageBarcode = styled.img`
 		}
 
 		@media (max-width: 490px) {
-			margin: 0 0 4rem;
+			margin: 0 0 3rem;
 		}
 `;
 
@@ -121,7 +123,7 @@ const WarningText = styled.div`
 
 const Text = styled.p`
   color: #231F20;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-family: "Overpass", Light;;
   margin-bottom: 1rem;
   a {
@@ -131,7 +133,7 @@ const Text = styled.p`
   }
 
 	@media (max-width: 648px) {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 `;
 
@@ -154,7 +156,7 @@ export default class ModalSucessfully extends Component {
 						width='85%'
 						height='4rem'
 						margin='1.9rem 0 2rem'
-						marginMobile='2rem 0'
+						marginMobile='1rem 0'
 						textTransform
 						text="Voltar para o Início"
 						onClick={this.props.handleRedirect}
