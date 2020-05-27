@@ -113,9 +113,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	/* width: ${props => (props.width)}; */
- /* width: 45%; */
-	width: 35%;
+	width: ${props => (props.isAdmin ? '35%' : '30%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -188,13 +186,13 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
+	margin-top: 0.6rem;
+	padding: 0.1rem 1rem;
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
-	padding: 0.1rem 1rem;
-	display: flex;
-	margin-top: 0.8rem;
-	justify-content: space-between;
 
 	@media(max-width: 768px) {
 		width: 75%;
@@ -680,7 +678,7 @@ class OrganizationScreen extends Component {
 			selectedItems: [
 				'Selecionar status',
 				{ select: 'Pendente de Pagamento', filter: 'pendente' },
-				{ select: 'Pendente de Autorização', filter: 'autorizar' },
+				{ select: 'Pendente de Autorização', filter: 'autorizado' },
 				'Isento',
 				'Pago',
 				'Vencido',
@@ -700,8 +698,8 @@ class OrganizationScreen extends Component {
 			statusImgs: [
 				{
 					img: authorizationIcon,
-					desc: 'autorizar',
-					teste: true,
+					desc: 'autorizado',
+					pendenteAut: true,
 				},
 				{
 					img: payIcon,
@@ -711,13 +709,13 @@ class OrganizationScreen extends Component {
 				{
 					img: freeIcon,
 					desc: 'isento',
-					teste: true,
+					pendenteAut: true,
 					pagamento: true,
 				},
 				{
 					img: extendDeadlineIcon,
-					desc: 'prorrogar prazo',
-					prazoExpirado: true,
+					desc: 'prazo prorrogado',
+					prazoProrrogado: true,
 				},
 			],
 			selectedStatusImgs: undefined,
@@ -780,8 +778,13 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
+		// console.log('newStatus', newStatus);
+		// console.log('item seletecd st', item)
 		const { tableDatas } = this.props;
+		const teste = item === 'vencido' && newStatus !== 'prazo prorrogado' ? console.log('aaa') : null;
+		console.log('testeeeeeeee', teste)
 		const newList = tableDatas.map((data) => {
+			console.log('data', data);
 			if (data === item) {
 				return {
 					...data,
@@ -877,7 +880,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<ImageMagnifyng src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<ImageMagnifyng src={magnifyingGlass} alt="magnifying glass" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -885,30 +888,15 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		console.log('item', item);
-		// const teste = this.state.statusImgs.filter(item => item.teste);
-		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
-		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
-
-		// const isPayment = this.state.statusImgs.filter(item => item.isPayment);
-		// const isPendingPayment = (item.status === 'pendente de pagamento') ? isPayment : this.state.statusImgs;
-
-		// let listinha = [];
-
-		// if (item.status === 'pendente de pagamento') {
-		// 	listinha = isPayment;
-		// }
 		const { statusImgs } = this.state;
 		let listinha = statusImgs; // lista deafult com as 4 imagens
-		const hiddenList = (item.status === 'autorizar' || item.status === 'isento'); // nao aparecer se for autorizar ou isento
-		const teste = statusImgs.filter(item => item.teste); // lista para pendente de autorização
+		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado'); // nao aparecer se for autorizado ou isento
+		const isPendingAuthorization = statusImgs.filter(item => item.pendenteAut); // lista para pendente de autorização
 		const isPayment = statusImgs.filter(item => item.pagamento); // lista para pendente de pagamento
-		const isExpired = statusImgs.filter(item => item.prazoExpirado);
+		const isExpired = statusImgs.filter(item => item.prazoProrrogado);
 
-		console.log('isPayment', isPayment);
-		console.log('item.status', item.status)
 		if (item.status === 'pendente de autorização') {
-			listinha = teste;
+			listinha = isPendingAuthorization;
 		} else if (item.status === 'pendente de pagamento') {
 			listinha = isPayment;
 		}	else if (item.status === 'vencido') {
@@ -929,7 +917,6 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 
-
 				<BoxButton
 					isClickedName={item.id === this.state.isClickedStatus}
 					onClick={() => this.handleClickedImageStatus(item)}
@@ -941,50 +928,6 @@ class OrganizationScreen extends Component {
 			</>
 		);
 	}
-
-	// renderStatus = item => (
-	// 	<>
-	// 		{/* renderiza as imagens */}
-	// 		<Box isClickedStatus={item.id === this.state.isClickedStatus}>
-	// 			{console.log('item', item)}
-
-	// 			{/* const teste = item.status === 'pendente de autorização' */}
-
-	// 				{/* item.status === 'pendente de autorização' ? (
-	// 					this.state.statusImgs.map((status, index) => {
-	// 						return (
-	// 							<ImageStatus
-	// 								cursor={this.props.isAdmin}
-	// 								key={index}
-	// 								src={status.img}
-	// 								alt={status.desc}
-	// 								onClick={() => this.handleSelectedStatus(status, item)}
-	// 							/>
-	// 						);
-	// 					})
-	// 				) : null */}
-
-
-	// 			{/* {this.state.statusImgs.map((status, index) => (
-	// 				<ImageStatus
-	// 					cursor={this.props.isAdmin}
-	// 					key={index}
-	// 					src={status.img}
-	// 					alt={status.desc}
-	// 					onClick={() => this.handleSelectedStatus(status, item)}
-	// 				/>
-	// 			))} */}
-	// 		</Box>
-	// 		<BoxButton
-	// 			isClickedName={item.id === this.state.isClickedStatus}
-	// 			onClick={() => this.handleClickedImageStatus(item)}
-	// 		>
-	// 			<TextStatus color={item.isChanged}>
-	// 				{item.status}
-	// 			</TextStatus>
-	// 		</BoxButton>
-	// 	</>
-	// )
 
 	renderModalDelete = () => (
 		<ContainerModalDelete onClick={this.handleDeleteModal}>
@@ -1113,16 +1056,17 @@ class OrganizationScreen extends Component {
 					</>
 				}
 				{widthMob
-					? <ContainerTableTitleMob
-					// selected={this.state.hovered === item}
-					>
+					? <ContainerTableTitleMob>
 						<TableTitleMob center>Status</TableTitleMob>
 						{this.renderStatus(item)}
 					</ContainerTableTitleMob>
 					: <>
 						{this.props.isAdmin ? (
 							<ContainerStatus
-								onMouseEnter={() => this.setState({ hovered: item === 'isento' || item === 'autorizar' ? null : item })}
+								onMouseEnter={() => this.setState({
+									hovered: item.status === 'isento' || item.status === 'autorizado'
+									|| item.status === 'prazo prorrogado' ? null : item,
+								})}
 								onMouseLeave={() => this.setState({ hovered: undefined })}
 								selected={this.state.hovered === item}
 							>
@@ -1143,7 +1087,6 @@ class OrganizationScreen extends Component {
 	renderAllTable = () => {
 		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
-
 
 		let listTable = this.renderTable(tableDatas);
 		if (

@@ -17,7 +17,6 @@ import Exit from '../../../assets/fechar.svg';
 // Redux
 import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modules';
 
-
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
 	email: state.onboarding.users.email,
@@ -507,7 +506,7 @@ class ModalCreateOrganization extends Component {
 					<Container onSubmit={this.handleSubmit} onClick={ev => ev.stopPropagation()}>
 						<Content>
 							<ContainerExit>
-								<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal} />
+								<ExitIcon src={Exit} alt="close" onClick={this.props.handleClosedModal} />
 							</ContainerExit>
 							<ContentWrapper>
 								<CreateOrgTitle>Criar Organização</CreateOrgTitle>
