@@ -62,7 +62,7 @@ const initialState = {
 			createdIn: '18/06/19',
 			authorization: '16/10/1965',
 			dueDate: '11/05/1966',
-			status: 'autorizar',
+			status: 'autorizado',
 		},
 		{
 			id: 5,
@@ -90,7 +90,7 @@ const initialState = {
 			createdIn: '18/06/19',
 			authorization: '16/10/1965',
 			dueDate: '11/05/1966',
-			status: 'prorrogar prazo',
+			status: 'prazo prorrogado',
 		},
 	],
 	org: {
