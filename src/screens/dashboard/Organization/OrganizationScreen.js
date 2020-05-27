@@ -326,7 +326,7 @@ const Content = styled.div`
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
 	height: calc(100vh - 62px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '4rem 5.5rem 0' : '2rem 2rem 0')};
-	
+
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 		width: 100%;
@@ -659,7 +659,7 @@ const ButtonCancel = styled.button`
 	border-radius: 4px;
 	border: none;
 	background: #FFF;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
 
@@ -686,6 +686,7 @@ class OrganizationScreen extends Component {
 			selectedItems: [
 				'Selecionar status',
 				{ select: 'Pendente de Pagamento', filter: 'pendente' },
+				// 'Pendente de Autorização',
 				{ select: 'Pendente de Autorização', filter: 'autorizado' },
 				'Isento',
 				'Pago',
@@ -753,6 +754,7 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedValue = (item) => {
+		console.log('item', item);
 		this.setState({
 			selectedValue: item,
 			isSelected: false,
@@ -895,6 +897,18 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
+		// const teste = this.state.statusImgs.filter(item => item.teste);
+		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
+		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
+
+		// const isPayment = this.state.statusImgs.filter(item => item.isPayment);
+		// const isPendingPayment = (item.status === 'pendente de pagamento') ? isPayment : this.state.statusImgs;
+
+		// let listinha = [];
+
+		// if (item.status === 'pendente de pagamento') {
+		// 	listinha = isPayment;
+		// }
 		const { statusImgs } = this.state;
 		let listinha = statusImgs; // lista deafult com as 4 imagens
 		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado'); // nao aparecer se for autorizado ou isento
@@ -958,6 +972,7 @@ class OrganizationScreen extends Component {
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
+						fontSize="1.2rem"
 					/>
 				</ButtonsModal>
 			</ModalDelete>
@@ -1099,7 +1114,7 @@ class OrganizationScreen extends Component {
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
+			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)))
 		}
 
 		if (
@@ -1170,6 +1185,9 @@ class OrganizationScreen extends Component {
 					{!isAdmin
 						&& <InvolveButton><Button
 							width='18%'
+							widthMedium='24%'
+							widthMobile='88%'
+							// widthMobileSmall='80%'
 							widthMobileSmall='90%'
 							height='4.3rem'
 							heightMobile='5.3rem'

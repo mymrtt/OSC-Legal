@@ -61,8 +61,8 @@ const Title = styled.h1`
 	margin: 1.5rem 0 1.8rem;
 
 		@media (max-width: 648px) {
-			width: 95%;
-			font-size: 1.9rem;
+			width: 89%;
+			font-size: 1.4rem;
 			margin: 2rem 0 4rem;
 		}
 `;
@@ -111,10 +111,6 @@ const WarningText = styled.div`
     /* width: 100%; */
     padding: 0 2rem;
   }
-
-  @media (max-width: 375px) {
-    /* width: 64%; */
-  }
   span {
     font-family: Overpass;
 		font-weight: bold;
@@ -133,7 +129,7 @@ const Text = styled.p`
   }
 
 	@media (max-width: 648px) {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 `;
 

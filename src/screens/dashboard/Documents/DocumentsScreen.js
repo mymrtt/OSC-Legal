@@ -975,7 +975,7 @@ const ButtonCancel = styled.button`
 	border-radius: 4px;
 	border: none;
 	background: #FFF;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
 	margin-right: 1rem;
@@ -1728,6 +1728,7 @@ class DocumentsScreen extends Component {
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
+						fontSize="1.2rem"
 					/>
 				</ButtonsModal>
 			</ModalDelete>
