@@ -54,7 +54,7 @@ const WrapButton = styled.div`
 		align-items: flex-end;
 		height: 40px;
 		align-self: flex-end;
-		padding-bottom: 1rem;
+		padding-bottom: 1.2rem;
 		font-size: 1.375rem;
 		text-decoration: none;
 		color: #000;
