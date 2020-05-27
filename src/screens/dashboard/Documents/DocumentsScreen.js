@@ -84,6 +84,7 @@ const MaximumWidth = styled.div`
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
+	background: #FFF;
 	overflow-y: hidden;
 
 	@media(max-width: 768px){
