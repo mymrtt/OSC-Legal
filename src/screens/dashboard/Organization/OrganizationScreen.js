@@ -327,7 +327,7 @@ const Content = styled.div`
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
 	height: calc(100vh - 62px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '4rem 5.5rem 0' : '2rem 2rem 0')};
-	
+
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 		width: 100%;
@@ -482,6 +482,7 @@ const BoxButton = styled.button`
 
 	@media(max-width: 768px) {
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
+		padding: 0.5rem 0;
 	}
 `;
 
