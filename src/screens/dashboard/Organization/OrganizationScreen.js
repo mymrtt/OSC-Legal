@@ -919,9 +919,9 @@ class OrganizationScreen extends Component {
 		}
 
 		return (
-			<>
+			<div>
 				{this.props.isAdmin ? (
-					<>
+					<div>
 						{!hiddenList && listinha.map((status, index) => (
 							<ImageStatus
 								cursor={this.props.isAdmin}
@@ -931,7 +931,7 @@ class OrganizationScreen extends Component {
 								onClick={() => this.handleSelectedStatus(status, item)}
 							/>
 						))}
-					</>
+					</div>
 				) : null}
 
 				<BoxButton
@@ -942,7 +942,7 @@ class OrganizationScreen extends Component {
 						{item.status}
 					</TextStatus>
 				</BoxButton>
-			</>
+			</div>
 		);
 	}
 
