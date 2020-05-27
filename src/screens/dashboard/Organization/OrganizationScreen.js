@@ -113,9 +113,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	/* width: ${props => (props.width)}; */
- /* width: 45%; */
-	width: 35%;
+	width: ${props => (props.isAdmin ? '35%' : '30%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -188,13 +186,13 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
+	margin-top: 0.6rem;
+	padding: 0.1rem 1rem;
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
-	padding: 0.1rem 1rem;
-	display: flex;
-	margin-top: 0.8rem;
-	justify-content: space-between;
 
 	@media(max-width: 768px) {
 		width: 75%;
@@ -882,7 +880,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<ImageMagnifyng src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<ImageMagnifyng src={magnifyingGlass} alt="magnifying glass" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -1089,7 +1087,6 @@ class OrganizationScreen extends Component {
 	renderAllTable = () => {
 		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
-
 
 		let listTable = this.renderTable(tableDatas);
 		if (
