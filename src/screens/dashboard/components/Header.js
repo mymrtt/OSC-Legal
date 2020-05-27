@@ -90,9 +90,7 @@ const ContainerUser = styled.div`
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
-	margin: ${props => (props.isAdmin ? '0 6.2rem 0.8rem 0' : '0 2.4rem 0.8rem 0')};
-
-	/* margin: 0 2.4rem 0.8rem 0; */
+	margin: ${props => (props.isAdmin ? '0 6rem 0.8rem 0' : '0 2.6rem 0.8rem 0')};
 
 	@media (max-width: 785px) {
 		margin: 0 0 0.8rem 0;
@@ -176,7 +174,7 @@ class Header extends Component {
 						Documentos
 					</NavLink>
 				</WrapButton>
-				<ContainerUser isAdmin={this.state.isAdmin}>
+				<ContainerUser isAdmin={this.props.isAdmin}>
 					<ParagraphUserName>
 						{this.props.isAdmin ? 'Administrador' : this.props.name}
 					</ParagraphUserName>
