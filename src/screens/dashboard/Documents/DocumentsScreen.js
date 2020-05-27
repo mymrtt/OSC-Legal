@@ -77,7 +77,7 @@ const Content = styled.div`
 `;
 
 const MaximumWidth = styled.div`
-	padding: ${props => (props.isAdmin ? '5.5rem 1rem 0' : '2rem 0 0')};
+	padding: ${props => (props.isAdmin ? '4.5rem 1rem 0' : '2rem 0 0')};
 	margin-top: ${props => (props.isAdmin ? '0' : '2rem')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};

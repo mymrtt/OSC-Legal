@@ -52,6 +52,14 @@ const ContainerUser = styled.div`
 	}
 `;
 
+const InvolveButton = styled.div`
+	padding: .5rem 0.2rem;
+
+	@media (max-width: 768px) {
+		padding: 0;
+	}
+`;
+
 const ContainerSelectedViewBy = styled.div`
 	padding-right: .6rem;
 
@@ -113,9 +121,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	/* width: ${props => (props.width)}; */
- /* width: 45%; */
-	width: 35%;
+	width: ${props => (props.isAdmin ? '35%' : '30%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -188,13 +194,13 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
+	margin-top: 0.6rem;
+	padding: 0.1rem 1rem;
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
-	padding: 0.1rem 1rem;
-	display: flex;
-	margin-top: 0.8rem;
-	justify-content: space-between;
 
 	@media(max-width: 768px) {
 		width: 75%;
@@ -680,7 +686,8 @@ class OrganizationScreen extends Component {
 			selectedItems: [
 				'Selecionar status',
 				{ select: 'Pendente de Pagamento', filter: 'pendente' },
-				'Pendente de Autorização',
+				// 'Pendente de Autorização',
+				{ select: 'Pendente de Autorização', filter: 'autorizado' },
 				'Isento',
 				'Pago',
 				'Vencido',
@@ -700,8 +707,8 @@ class OrganizationScreen extends Component {
 			statusImgs: [
 				{
 					img: authorizationIcon,
-					desc: 'autorizar',
-					teste: true,
+					desc: 'autorizado',
+					pendenteAut: true,
 				},
 				{
 					img: payIcon,
@@ -711,13 +718,13 @@ class OrganizationScreen extends Component {
 				{
 					img: freeIcon,
 					desc: 'isento',
-					teste: true,
+					pendenteAut: true,
 					pagamento: true,
 				},
 				{
 					img: extendDeadlineIcon,
-					desc: 'prorrogar prazo',
-					prazoExpirado: true,
+					desc: 'prazo prorrogado',
+					prazoProrrogado: true,
 				},
 			],
 			selectedStatusImgs: undefined,
@@ -781,8 +788,13 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
+		// console.log('newStatus', newStatus);
+		// console.log('item seletecd st', item)
 		const { tableDatas } = this.props;
+		const teste = item === 'vencido' && newStatus !== 'prazo prorrogado' ? console.log('aaa') : null;
+		console.log('testeeeeeeee', teste)
 		const newList = tableDatas.map((data) => {
+			console.log('data', data);
 			if (data === item) {
 				return {
 					...data,
@@ -811,8 +823,7 @@ class OrganizationScreen extends Component {
 		const value = ev.target.value.toLowerCase();
 
 		this.setState({
-			filter: value,
-			toFilter: false,
+			filter: ev.target.value,
 		});
 	}
 
@@ -878,7 +889,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<ImageMagnifyng src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<ImageMagnifyng src={magnifyingGlass} alt="magnifying glass" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -900,13 +911,13 @@ class OrganizationScreen extends Component {
 		// }
 		const { statusImgs } = this.state;
 		let listinha = statusImgs; // lista deafult com as 4 imagens
-		const hiddenList = (item.status === 'autorizar' || item.status === 'isento'); // nao aparecer se for autorizar ou isento
-		const teste = statusImgs.filter(item => item.teste); // lista para pendente de autorização
+		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado'); // nao aparecer se for autorizado ou isento
+		const isPendingAuthorization = statusImgs.filter(item => item.pendenteAut); // lista para pendente de autorização
 		const isPayment = statusImgs.filter(item => item.pagamento); // lista para pendente de pagamento
-		const isExpired = statusImgs.filter(item => item.prazoExpirado);
+		const isExpired = statusImgs.filter(item => item.prazoProrrogado);
 
 		if (item.status === 'pendente de autorização') {
-			listinha = teste;
+			listinha = isPendingAuthorization;
 		} else if (item.status === 'pendente de pagamento') {
 			listinha = isPayment;
 		}	else if (item.status === 'vencido') {
@@ -927,7 +938,6 @@ class OrganizationScreen extends Component {
 					/>
 				))}
 
-
 				<BoxButton
 					isClickedName={item.id === this.state.isClickedStatus}
 					onClick={() => this.handleClickedImageStatus(item)}
@@ -939,50 +949,6 @@ class OrganizationScreen extends Component {
 			</>
 		);
 	}
-
-	// renderStatus = item => (
-	// 	<>
-	// 		{/* renderiza as imagens */}
-	// 		<Box isClickedStatus={item.id === this.state.isClickedStatus}>
-	// 			{console.log('item', item)}
-
-	// 			{/* const teste = item.status === 'pendente de autorização' */}
-
-	// 				{/* item.status === 'pendente de autorização' ? (
-	// 					this.state.statusImgs.map((status, index) => {
-	// 						return (
-	// 							<ImageStatus
-	// 								cursor={this.props.isAdmin}
-	// 								key={index}
-	// 								src={status.img}
-	// 								alt={status.desc}
-	// 								onClick={() => this.handleSelectedStatus(status, item)}
-	// 							/>
-	// 						);
-	// 					})
-	// 				) : null */}
-
-
-	// 			{/* {this.state.statusImgs.map((status, index) => (
-	// 				<ImageStatus
-	// 					cursor={this.props.isAdmin}
-	// 					key={index}
-	// 					src={status.img}
-	// 					alt={status.desc}
-	// 					onClick={() => this.handleSelectedStatus(status, item)}
-	// 				/>
-	// 			))} */}
-	// 		</Box>
-	// 		<BoxButton
-	// 			isClickedName={item.id === this.state.isClickedStatus}
-	// 			onClick={() => this.handleClickedImageStatus(item)}
-	// 		>
-	// 			<TextStatus color={item.isChanged}>
-	// 				{item.status}
-	// 			</TextStatus>
-	// 		</BoxButton>
-	// 	</>
-	// )
 
 	renderModalDelete = () => (
 		<ContainerModalDelete onClick={this.handleDeleteModal}>
@@ -1112,16 +1078,17 @@ class OrganizationScreen extends Component {
 					</>
 				}
 				{widthMob
-					? <ContainerTableTitleMob
-					// selected={this.state.hovered === item}
-					>
+					? <ContainerTableTitleMob>
 						<TableTitleMob center>Status</TableTitleMob>
 						{this.renderStatus(item)}
 					</ContainerTableTitleMob>
 					: <>
 						{this.props.isAdmin ? (
 							<ContainerStatus
-								onMouseEnter={() => this.setState({ hovered: item === 'isento' || item === 'autorizar' ? null : item })}
+								onMouseEnter={() => this.setState({
+									hovered: item.status === 'isento' || item.status === 'autorizado'
+									|| item.status === 'prazo prorrogado' ? null : item,
+								})}
 								onMouseLeave={() => this.setState({ hovered: undefined })}
 								selected={this.state.hovered === item}
 							>
@@ -1149,12 +1116,13 @@ class OrganizationScreen extends Component {
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)))
 		}
+
 		if (
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.tradingName.split(' ').includes(filter)
-				: item.tradingName.toLowerCase() === filter.toLowerCase())));
+			 	? item.tradingName.split(' ').includes(filter)
+			 	: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1167,8 +1135,8 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	handleRedirect = (ev) => {
-		ev.stopPropagation();
+	handleRedirect = () => {
+		// ev.stopPropagation();
   	this.setState({
 			modalSucess: !this.state.modalSucess,
 			isModalCreateOrg: false,
@@ -1215,21 +1183,23 @@ class OrganizationScreen extends Component {
 					justifyContent={isAdmin}
 				>
 					{!isAdmin
-						&& <Button
+						&& <InvolveButton><Button
 							width='18%'
 							widthMedium='24%'
 							widthMobile='88%'
-							widthMobileSmall='80%'
+							// widthMobileSmall='80%'
+							widthMobileSmall='90%'
 							height='4.3rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
 							margin='1.2rem 0 1.2rem 2.5rem'
-							// marginMobile='1.5rem 1.7rem'
+							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobileSmall='1.5rem 2.5rem 1.5rem 1.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
 							organizationMobile
-							onClick={this.isModalCreateOrganization} />
+							onClick={this.isModalCreateOrganization} /></InvolveButton>
 					}
 					<ContainerTableUser
 						width={isAdmin}

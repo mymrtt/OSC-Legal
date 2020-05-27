@@ -90,10 +90,12 @@ const ContainerUser = styled.div`
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
-	margin: 0 6.2rem 0.8rem 0;
+	margin: ${props => (props.isAdmin ? '0 6.2rem 0.8rem 0' : '0 2.4rem 0.8rem 0')};
+
+	/* margin: 0 2.4rem 0.8rem 0; */
 
 	@media (max-width: 785px) {
-		margin: 0 .5rem 0.8rem 0;
+		margin: 0 0 0.8rem 0;
 		width: 40%;
 	}
 
@@ -107,6 +109,11 @@ const ContainerUser = styled.div`
 		padding-top: 0.7rem;
 		margin: 0 2.2rem 0 0;
 		order: 2;
+	}
+
+	@media (max-width: 490px) {
+		margin: 0 2.2rem 0 0;
+		margin: ${props => (props.isAdmin ? '0 2.2rem 0 0' : '0 1rem 0 0')};
 	}
 `;
 
@@ -169,7 +176,7 @@ class Header extends Component {
 						Documentos
 					</NavLink>
 				</WrapButton>
-				<ContainerUser>
+				<ContainerUser isAdmin={this.state.isAdmin}>
 					<ParagraphUserName>
 						{this.props.isAdmin ? 'Administrador' : this.props.name}
 					</ParagraphUserName>
