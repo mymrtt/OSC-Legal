@@ -713,6 +713,7 @@ class OrganizationScreen extends Component {
 					img: authorizationIcon,
 					desc: 'autorizado',
 					pendenteAut: true,
+					pago: true,
 				},
 				{
 					img: payIcon,
@@ -907,6 +908,7 @@ class OrganizationScreen extends Component {
 		const isPendingAuthorization = statusImgs.filter(item => item.pendenteAut);
 		const isPayment = statusImgs.filter(item => item.pagamento);
 		const isExpired = statusImgs.filter(item => item.prazoProrrogado);
+		const isPaid = statusImgs.filter(item => item.pago);
 
 		if (item.status === 'pendente de autorização') {
 			listinha = isPendingAuthorization;
@@ -916,6 +918,8 @@ class OrganizationScreen extends Component {
 			listinha = isExpired;
 		} else if (item.status === 'deletar') {
 			this.props.deleteOrg(item);
+		} else if (item.status === 'pago') {
+			listinha = isPaid;
 		} else {
 			listinha = statusImgs;
 		}
