@@ -84,6 +84,7 @@ const MaximumWidth = styled.div`
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
+	background: #FFF;
 	overflow-y: hidden;
 
 	@media(max-width: 768px){
@@ -1184,8 +1185,6 @@ const SpanButton = styled.span`
 `;
 
 let newList = [];
-const found = [];
-const nextId = Math.random();
 class DocumentsScreen extends Component {
 	state = {
 		changeColorLabel: false,
@@ -1225,7 +1224,7 @@ class DocumentsScreen extends Component {
 		isOrg: false,
 		isMobileButton: false,
 		userSelectDoc: '',
-		idDocUser: 1,
+		isErrorDoc: false,
 	};
 
 
@@ -1278,7 +1277,6 @@ class DocumentsScreen extends Component {
 	}
 
 	handleModalDelete = () => {
-		console.log(found.id);
 		this.setState({
 			modalDelete: true,
 			options: false,
@@ -1571,12 +1569,15 @@ class DocumentsScreen extends Component {
 	handleDocsUser = (e) => {
 		e.preventDefault();
 		if (this.state.listDocs.find(item => item === this.state.isSelected)) {
-			window.alert('ERRO: documento já adicionado');
+			this.setState({
+				isErrorDoc: true,
+			});
 		} else {
 			this.setState({
 				modalListDoc: false,
 				listDocs: newList,
 				isSelected: '',
+				isErrorDoc: false,
 			});
 		}
 	}
@@ -1752,6 +1753,7 @@ class DocumentsScreen extends Component {
 						</ContainerModelDescription>
 					))}
 				</BoxModelsDoc>
+				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
 				<ButtonModalList onClick={this.handleDocsUser}>Escolher</ButtonModalList>
 			</Modal>
 		</ContainerModal>
@@ -1996,7 +1998,7 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverDelete === docs
 																		? this.state.colorTextDelete : '#85144B'}
-																	onClick={() => this.userSelectedDoc(docs, index)}
+																	onClick={() => this.userSelectedDoc(docs)}
 																>
 																	<p>Excluir</p>
 																</OptionText>
