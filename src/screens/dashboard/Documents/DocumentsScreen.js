@@ -84,7 +84,7 @@ const MaximumWidth = styled.div`
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
-	background: #FFF;
+	background: #FFF;	
 	overflow-y: hidden;
 
 	@media(max-width: 768px){
@@ -1244,10 +1244,10 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleOnOptionsUser = (docs) => {
+	handleOnOptionsUser = (docs, index) => {
 		this.setState({
 			options: true,
-			selectedOptions: docs,
+			selectedOptions: index,
 		});
 	}
 
@@ -1568,18 +1568,18 @@ class DocumentsScreen extends Component {
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		if (this.state.listDocs.find(item => item === this.state.isSelected)) {
-			this.setState({
-				isErrorDoc: true,
-			});
-		} else {
-			this.setState({
-				modalListDoc: false,
-				listDocs: newList,
-				isSelected: '',
-				isErrorDoc: false,
-			});
-		}
+		// if (this.state.listDocs.find(item => item === this.state.isSelected)) {
+		// 	this.setState({
+		// 		isErrorDoc: true,
+		// 	});
+		// } else {
+		this.setState({
+			modalListDoc: false,
+			listDocs: newList,
+			isSelected: '',
+			isErrorDoc: false,
+		});
+		// }
 	}
 
 	handleSelectOrg = (orgs) => {
