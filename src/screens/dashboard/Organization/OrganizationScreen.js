@@ -19,6 +19,7 @@ import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
+import deleteIcon from '../../../assets/delete.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
 import Exit from '../../../assets/exit.svg';
 
@@ -523,7 +524,8 @@ const ContainerStatus = styled.td`
 `;
 
 const TextStatus = styled.p`
-	color: ${props => (props.color ? '#FF4136' : '#85144B')};
+	${'' /* color: ${props => (props.color ? '#FF4136' : '#85144B')}; */}
+	color: #85144B;
 	font-size: 0.8rem;
 	font-family: "Overpass", Light;
   font-weight: 400;
@@ -717,6 +719,11 @@ class OrganizationScreen extends Component {
 					desc: 'prazo prorrogado',
 					prazoProrrogado: true,
 				},
+				{
+					img: deleteIcon,
+					desc: 'deletar',
+					prazoProrrogado: true,
+				},
 			],
 			selectedStatusImgs: undefined,
 			selectedStatusOrg: undefined,
@@ -778,13 +785,8 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
-		// console.log('newStatus', newStatus);
-		// console.log('item seletecd st', item)
 		const { tableDatas } = this.props;
-		const teste = item === 'vencido' && newStatus !== 'prazo prorrogado' ? console.log('aaa') : null;
-		console.log('testeeeeeeee', teste)
 		const newList = tableDatas.map((data) => {
-			console.log('data', data);
 			if (data === item) {
 				return {
 					...data,
@@ -889,10 +891,11 @@ class OrganizationScreen extends Component {
 
 	renderStatus = (item) => {
 		const { statusImgs } = this.state;
-		let listinha = statusImgs; // lista deafult com as 4 imagens
-		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado'); // nao aparecer se for autorizado ou isento
-		const isPendingAuthorization = statusImgs.filter(item => item.pendenteAut); // lista para pendente de autorização
-		const isPayment = statusImgs.filter(item => item.pagamento); // lista para pendente de pagamento
+		let listinha = statusImgs;
+
+		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado');
+		const isPendingAuthorization = statusImgs.filter(item => item.pendenteAut);
+		const isPayment = statusImgs.filter(item => item.pagamento);
 		const isExpired = statusImgs.filter(item => item.prazoProrrogado);
 
 		if (item.status === 'pendente de autorização') {
@@ -901,21 +904,27 @@ class OrganizationScreen extends Component {
 			listinha = isPayment;
 		}	else if (item.status === 'vencido') {
 			listinha = isExpired;
+		} else if (item.status === 'deletar') {
+			this.props.deleteOrg(item);
 		} else {
 			listinha = statusImgs;
 		}
 
 		return (
 			<>
-				{!hiddenList && listinha.map((status, index) => (
-					<ImageStatus
-						cursor={this.props.isAdmin}
-						key={index}
-						src={status.img}
-						alt={status.desc}
-						onClick={() => this.handleSelectedStatus(status, item)}
-					/>
-				))}
+				{this.props.isAdmin ? (
+					<>
+						{!hiddenList && listinha.map((status, index) => (
+							<ImageStatus
+								cursor={this.props.isAdmin}
+								key={index}
+								src={status.img}
+								alt={status.desc}
+								onClick={() => this.handleSelectedStatus(status, item)}
+							/>
+						))}
+					</>
+				) : null}
 
 				<BoxButton
 					isClickedName={item.id === this.state.isClickedStatus}
