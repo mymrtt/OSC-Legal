@@ -892,7 +892,7 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		console.log('item', item);
+		// console.log('item', item);
 		// const teste = this.state.statusImgs.filter(item => item.teste);
 		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
 		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
@@ -912,8 +912,8 @@ class OrganizationScreen extends Component {
 		const isPayment = statusImgs.filter(item => item.pagamento); // lista para pendente de pagamento
 		const isExpired = statusImgs.filter(item => item.prazoExpirado);
 
-		console.log('isPayment', isPayment);
-		console.log('item.status', item.status)
+		// console.log('isPayment', isPayment);
+		// console.log('item.status', item.status)
 		if (item.status === 'pendente de autorização') {
 			listinha = teste;
 		} else if (item.status === 'pendente de pagamento') {
@@ -1158,12 +1158,13 @@ class OrganizationScreen extends Component {
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
 		}
+
 		if (
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.tradingName.split(' ').includes(filter)
-				: item.tradingName.toLowerCase() === filter.toLowerCase())));
+			 	? item.tradingName.split(' ').includes(filter)
+			 	: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
