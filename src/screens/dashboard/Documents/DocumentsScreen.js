@@ -1232,7 +1232,6 @@ class DocumentsScreen extends Component {
 		try {
 			const response = await createTemplate(title, description, isFile);
 		} catch (err) {
-			console.log('err', err);
 		}
 	}
 
@@ -1244,10 +1243,10 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleOnOptionsUser = (docs) => {
+	handleOnOptionsUser = (docs, index) => {
 		this.setState({
 			options: true,
-			selectedOptions: docs,
+			selectedOptions: index,
 		});
 	}
 
@@ -1276,10 +1275,11 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleModalDelete = () => {
+	handleModalDelete = (doc, index) => {
 		this.setState({
 			modalDelete: true,
 			options: false,
+			clickedModel: index,
 		});
 	}
 
@@ -1568,18 +1568,25 @@ class DocumentsScreen extends Component {
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		if (this.state.listDocs.find(item => item === this.state.isSelected)) {
-			this.setState({
-				isErrorDoc: true,
-			});
-		} else {
-			this.setState({
-				modalListDoc: false,
-				listDocs: newList,
-				isSelected: '',
-				isErrorDoc: false,
-			});
-		}
+		// if (this.state.listDocs.find(item => item === this.state.isSelected)) {
+		// 	this.setState({
+		// 		isErrorDoc: true,
+		// 	});
+		// } else {
+		// 	this.setState({
+		// 		modalListDoc: false,
+		// 		listDocs: newList,
+		// 		isSelected: '',
+		// 		isErrorDoc: false,
+		// 	});
+		// }
+
+		this.setState({
+			modalListDoc: false,
+			listDocs: newList,
+			isSelected: '',
+			isErrorDoc: false,
+		});
 	}
 
 	handleSelectOrg = (orgs) => {
@@ -1589,15 +1596,16 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	userSelectedDoc = (docs) => {
+	userSelectedDoc = (docs, index) => {
 		this.setState({
 			userSelectDoc: docs,
+			userDeleteDoc: index,
 		});
 	}
 
 	deleteUserDoc = () => {
 		this.setState({
-			listDocs: this.state.listDocs.filter(doc => doc !== this.state.userSelectDoc),
+			listDocs: this.state.listDocs.filter((doc, index) => index !== this.state.clickedModel),
 			modalDelete: false,
 		});
 	}
@@ -1624,7 +1632,7 @@ class DocumentsScreen extends Component {
 					onSubmit={this.handleSubmit}
 					onClick={ev => ev.stopPropagation()}
 				>
-					<HeaderModal/>
+					<HeaderModal />
 
 					<HeaderAddModel>
 						<TitleAddModel>Adicionar Modelo</TitleAddModel>
@@ -1710,13 +1718,13 @@ class DocumentsScreen extends Component {
 					</TextModal>
 					<TextModal>
 						Você deseja excluir o <strong>{this.state.modelSelect.title
-						|| this.state.userSelectDoc.title}</strong> permanentemente?
+							|| this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
 					<Button
-						onClick={this.delete}
+						onClick={() => this.delete()}
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
@@ -1730,7 +1738,7 @@ class DocumentsScreen extends Component {
 		<ContainerModal onClick={this.closeModalListDoc}>
 			<Modal onClick={ev => ev.stopPropagation()}>
 				{this.state.isMobileButton ? <HeaderModal /> : null}
-				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc}/>
+				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc} />
 				<BoxTitle>
 					<TitleModalList>Adicionar Documento</TitleModalList>
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
@@ -1925,19 +1933,19 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
-												// QUANDO NÃO TEM DOC NO ADM
+											// QUANDO NÃO TEM DOC NO ADM
 												<InitialAddModel>
 													<TitleInitialAddModel>
-													Você ainda não possui um modelo
+															Você ainda não possui um modelo
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
-												Escolha um modelo de documento
+															Escolha um modelo de documento
 												clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span>
 													</TextInitialAddModel>
 												</InitialAddModel>
 											)
 										) : (
-											// MAP DOCUMENTS USER
+										// MAP DOCUMENTS USER
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
 												this.state.listDocs.map((docs, index) => (
 													<ContainerModel
@@ -1957,7 +1965,7 @@ class DocumentsScreen extends Component {
 															<ModelParagraph>{docs.description}</ModelParagraph>
 														</ContainerModelDescription>
 														<ContainerOptions
-															contOptions={this.state.options && (this.state.selectedOptions === docs)}>
+															contOptions={this.state.options && (this.state.selectedOptions === index)}>
 															<Option
 																onMouseEnter={() => this.handleChangeColorExportUser(docs)}
 																onMouseLeave={this.handleChangeColorLeaveExport}
@@ -1970,7 +1978,7 @@ class DocumentsScreen extends Component {
 																		this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'
 																	}
 																>
-																	Exportar
+																		Exportar
 																</OptionText>
 															</Option>
 
@@ -1990,7 +1998,7 @@ class DocumentsScreen extends Component {
 															<Option
 																onMouseEnter={() => this.handleChangeColorDeleteUser(docs)}
 																onMouseLeave={this.handleChangeColorLeaveDelete}
-																onClick={this.handleModalDelete}
+																onClick={() => this.handleModalDelete(docs, index)}
 															>
 																<OptionImage
 																	src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
@@ -1998,7 +2006,7 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverDelete === docs
 																		? this.state.colorTextDelete : '#85144B'}
-																	onClick={() => this.userSelectedDoc(docs)}
+																	onClick={() => this.userSelectedDoc(docs, index)}
 																>
 																	<p>Excluir</p>
 																</OptionText>
@@ -2007,19 +2015,19 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
-												// QUANDO USER NÃO TEM DOC
+											// QUANDO USER NÃO TEM DOC
 												<InitialAddModel>
 													<TitleInitialAddModel>
-														Você ainda não tem nenhum documento
+																Você ainda não tem nenhum documento
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
 														{this.state.selectOrg === '' ? (
 															'Selecione uma organização para adicionar um documento'
 														) : (
 															<>
-																Escolha um modelo de documento clicando em
+																			Escolha um modelo de documento clicando em
 																<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
-																	Adicionar Documento
+																				Adicionar Documento
 																</span>
 															</>
 														)}
@@ -2029,7 +2037,7 @@ class DocumentsScreen extends Component {
 										)}
 
 										<ContainerAddModelMob list={this.state.listDocs}>
-											<Button	onClick={this.openModalListDoc}>
+											<Button onClick={this.openModalListDoc}>
 												Adicionar Documento
 											</Button>
 										</ContainerAddModelMob>
@@ -2052,7 +2060,7 @@ class DocumentsScreen extends Component {
 											)
 										) : (
 											this.state.isMobileButton === true
-											&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
+													&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
 													<Button
 														width="17.5rem"
 														height="4.5rem"

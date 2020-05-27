@@ -52,6 +52,14 @@ const ContainerUser = styled.div`
 	}
 `;
 
+const InvolveButton = styled.div`
+	padding: .5rem 0.2rem;
+
+	@media (max-width: 768px) {
+		padding: 0;
+	}
+`;
+
 const ContainerSelectedViewBy = styled.div`
 	padding-right: .6rem;
 
@@ -318,7 +326,7 @@ const Content = styled.div`
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
 	height: calc(100vh - 62px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '4rem 5.5rem 0' : '2rem 2rem 0')};
-
+	
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
 		width: 100%;
@@ -813,8 +821,7 @@ class OrganizationScreen extends Component {
 		const value = ev.target.value.toLowerCase();
 
 		this.setState({
-			filter: value,
-			toFilter: false,
+			filter: ev.target.value,
 		});
 	}
 
@@ -1094,12 +1101,13 @@ class OrganizationScreen extends Component {
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
 		}
+
 		if (
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.tradingName.split(' ').includes(filter)
-				: item.tradingName.toLowerCase() === filter.toLowerCase())));
+			 	? item.tradingName.split(' ').includes(filter)
+			 	: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1112,8 +1120,8 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	handleRedirect = (ev) => {
-		ev.stopPropagation();
+	handleRedirect = () => {
+		// ev.stopPropagation();
   	this.setState({
 			modalSucess: !this.state.modalSucess,
 			isModalCreateOrg: false,
@@ -1160,21 +1168,20 @@ class OrganizationScreen extends Component {
 					justifyContent={isAdmin}
 				>
 					{!isAdmin
-						&& <Button
+						&& <InvolveButton><Button
 							width='18%'
-							widthMedium='24%'
-							widthMobile='78%'
-							// widthMobileSmall='90%'
+							widthMobileSmall='90%'
 							height='4.3rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
 							margin='1.2rem 0 1.2rem 2.5rem'
-							// marginMobile='1.5rem 1.7rem'
+							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobileSmall='1.5rem 2.5rem 1.5rem 1.5rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
 							organizationMobile
-							onClick={this.isModalCreateOrganization} />
+							onClick={this.isModalCreateOrganization} /></InvolveButton>
 					}
 					<ContainerTableUser
 						width={isAdmin}
