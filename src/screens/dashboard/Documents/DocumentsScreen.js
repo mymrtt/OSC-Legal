@@ -2000,7 +2000,7 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverDelete === docs
 																		? this.state.colorTextDelete : '#85144B'}
-																	onClick={() => this.userSelectedDoc(docs, index)}
+																	onClick={() => this.userSelectedDoc(docs)}
 																>
 																	<p>Excluir</p>
 																</OptionText>
