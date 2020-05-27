@@ -469,6 +469,7 @@ const Box = styled.div`
 	display: none;
 
 	@media(max-width: 768px) {
+		padding: 0.5rem 0;
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 		flex-direction: row;
 	}
@@ -481,8 +482,8 @@ const BoxButton = styled.button`
 	cursor: auto;
 
 	@media(max-width: 768px) {
-		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 		padding: 0.5rem 0;
+		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
 `;
 
@@ -548,12 +549,13 @@ const TextStatus = styled.p`
 `;
 
 const ImageStatus = styled.img`
-	width: 1.3rem;
   padding-right: 0.3rem;
+	width: 1.5rem;
 	display: none;
 	cursor: ${props => (props.cursor ? 'pointer' : 'auto')};
 
 	@media(max-width: 768px) {
+    padding-right: 0.5rem;
 		display: flex;
 	}
 `;
@@ -919,9 +921,10 @@ class OrganizationScreen extends Component {
 		}
 
 		return (
-			<div>
+			<>
 				{this.props.isAdmin ? (
-					<div>
+					<Box isClickedStatus={item.status === 'isento' || item.status === 'autorizado'
+						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}>
 						{!hiddenList && listinha.map((status, index) => (
 							<ImageStatus
 								cursor={this.props.isAdmin}
@@ -931,18 +934,20 @@ class OrganizationScreen extends Component {
 								onClick={() => this.handleSelectedStatus(status, item)}
 							/>
 						))}
-					</div>
+					</Box>
 				) : null}
 
+
 				<BoxButton
-					isClickedName={item.id === this.state.isClickedStatus}
+					isClickedName={item.status === 'isento' || item.status === 'autorizado'
+					|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
 					onClick={() => this.handleClickedImageStatus(item)}
 				>
 					<TextStatus color={item.isChanged}>
 						{item.status}
 					</TextStatus>
 				</BoxButton>
-			</div>
+			</>
 		);
 	}
 
