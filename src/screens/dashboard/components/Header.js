@@ -42,7 +42,8 @@ const Container = styled.div`
 `;
 
 const WrapButton = styled.div`
-	width: 55%;
+	/* width: 48%; */
+	width: ${props => (props.width ? '48%' : '60%')};
 	height: 5.3rem;
 	display: flex;
 	justify-content: flex-start;
@@ -154,13 +155,13 @@ class Header extends Component {
 			<Container border={this.props.isAdmin}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
-						margin={'0 0 0 2.5rem'}
+						margin={'0 0 0 3rem'}
 						marginMobile='1rem 0 0 .5rem'
 						paddingMobile='0.5rem'
 						height='2.8rem'
 					/>
 				</NavLink>
-				<WrapButton>
+				<WrapButton width={this.props.isAdmin}>
 					<NavLink
 						exact to="/organizations"
 						activeClassName="button-header-dash"
