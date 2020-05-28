@@ -48,7 +48,7 @@ const initialState = {
 			createdIn: '18/06/2019',
 			authorization: '16/10/1965',
 			dueDate: '11/05/1966',
-			status: 'Vencido',
+			status: 'vencido',
 		},
 		{
 			id: 4,
@@ -62,7 +62,7 @@ const initialState = {
 			createdIn: '18/06/2019',
 			authorization: '16/10/1965',
 			dueDate: '11/05/1966',
-			status: 'autorizado',
+			status: 'pago',
 		},
 		{
 			id: 5,
@@ -76,7 +76,7 @@ const initialState = {
 			createdIn: '18/06/2019',
 			authorization: '16/10/1965',
 			dueDate: '11/05/1966',
-			status: 'Isento',
+			status: 'isento',
 		},
 		{
 			id: 6,
@@ -91,6 +91,20 @@ const initialState = {
 			authorization: '16/10/1965',
 			dueDate: '11/05/1966',
 			status: 'prazo prorrogado',
+		},
+		{
+			id: 7,
+			tradingName: 'Teste5',
+			companyName: 'wada wada',
+			address: '',
+			addressComplement: '',
+			neighborhood: '',
+			city: '',
+			cep: '',
+			createdIn: '24/06/2000',
+			authorization: '12/07/1996',
+			dueDate: '31/08/1995',
+			status: '-',
 		},
 	],
 	org: {

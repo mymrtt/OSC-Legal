@@ -540,7 +540,7 @@ const ContainerStatus = styled.td`
 `;
 
 const TextStatus = styled.p`
-	${'' /* color: ${props => (props.color ? '#FF4136' : '#85144B')}; */}
+	${''}
 	color: #85144B;
 	font-size: 0.8rem;
 	font-family: "Overpass", Light;
@@ -677,7 +677,7 @@ const ButtonCancel = styled.button`
 	@media (max-width: 490px) {
 		margin: 0;
 		position: initial;
-		width: 100%;
+		/* width: 100%; */
 	}
 `;
 
@@ -934,7 +934,7 @@ class OrganizationScreen extends Component {
 			listinha = isPendingAuthorization;
 		} else if (item.status === 'pendente de pagamento') {
 			listinha = isPayment;
-		}	else if (item.status === 'vencido') {
+		} else if (item.status === 'vencido') {
 			listinha = isExpired;
 		} else if (item.status === 'deletar') {
 			this.props.deleteOrg(item);
@@ -964,7 +964,7 @@ class OrganizationScreen extends Component {
 
 				<BoxButton
 					isClickedName={item.status === 'isento' || item.status === 'autorizado'
-					|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
+						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
 					onClick={() => this.handleClickedImageStatus(item)}
 				>
 					<TextStatus color={item.isChanged}>
@@ -1112,7 +1112,7 @@ class OrganizationScreen extends Component {
 							<ContainerStatus
 								onMouseEnter={() => this.setState({
 									hovered: item.status === 'isento' || item.status === 'autorizado'
-									|| item.status === 'prazo prorrogado' ? null : item,
+										|| item.status === 'prazo prorrogado' ? null : item,
 								})}
 								onMouseLeave={() => this.setState({ hovered: undefined })}
 								selected={this.state.hovered === item}
@@ -1139,15 +1139,15 @@ class OrganizationScreen extends Component {
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
+			listTable = this.renderTable(tableDatas.filter(item => item.status.toLowerCase() === (selectedValue.filter || selectedValue).toLowerCase()));
 		}
 
 		if (
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-			 	? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
-			 	: item.tradingName.toLowerCase() === filter)));
+				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
+				: item.tradingName.toLowerCase() === filter)));
 		}
 		return listTable;
 	}
@@ -1162,10 +1162,10 @@ class OrganizationScreen extends Component {
 
 	handleRedirect = (ev) => {
 		ev.stopPropagation();
-  	this.setState({
+		this.setState({
 			modalSucess: !this.state.modalSucess,
 			isModalCreateOrg: false,
-  	});
+		});
 	}
 
 	render() {
@@ -1262,7 +1262,9 @@ class OrganizationScreen extends Component {
 							</ContainerTable>
 							{this.renderAllTable().length === 0 && (
 								<TextNoOrganitazion>
-									<TextInformation>Não há organizações no momento.</TextInformation>
+									{isAdmin
+										? <TextInformation>Não há organizações no momento.</TextInformation>
+										: <TextInformation>Essa organização não existe!</TextInformation>}
 								</TextNoOrganitazion>
 							)}
 						</Content>
