@@ -283,7 +283,7 @@ const ContainerScroll = styled.div`
 
 	@media (max-width: 490px) {
 		min-width: 100%;
-		min-height: 50vh;
+		min-height: 100vh;
 		padding-bottom: 10rem;
 		margin: 0;
 		display: flex;
@@ -484,6 +484,7 @@ const ContainerModel = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
+		margin: ${props => (props.lastIndex)};
 		height: auto;
 		order: 3;
 		z-index: initial;
@@ -1899,7 +1900,12 @@ class DocumentsScreen extends Component {
 											// MAP DOCUMENTS ADM
 											documentsList && documentsList.length > 0 ? (
 												documentsList.map((item, index) => (
-													<ContainerModel key={index}
+													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === documentsList.length - 1 && '0 0 8rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === documentsList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+														key={index}
 														zIndex={this.state.addModel}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(item)}

@@ -110,8 +110,8 @@ const ContainerUser = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		margin: 0 2.2rem 0 0;
-		margin: ${props => (props.isAdmin ? '0 2.2rem 0 0' : '0 1rem 0 0')};
+		margin: 0 1rem 0 0;
+		width: 38%;
 	}
 `;
 

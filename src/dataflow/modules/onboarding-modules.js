@@ -11,7 +11,7 @@ const initialState = {
 		name: '',
 		telephone: '',
 		cpf: '',
-		isAdmin: false,
+		isAdmin: true,
 	},
 	isResetPassword: undefined,
 	emailReset: '',
