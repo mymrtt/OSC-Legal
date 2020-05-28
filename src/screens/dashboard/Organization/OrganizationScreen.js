@@ -122,7 +122,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.isAdmin ? '35%' : '30%')};
+	width: ${props => (props.isAdmin ? '35%' : '37%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -182,7 +182,7 @@ const TitleViewBy = styled.h2`
 
 const TitleSearch = styled.h2`
 	color: #231F20;
-	font-size: 1,375rem;
+	font-size: 1.375rem;
 	font-family: Overpass;
 	font-weight: bold;
 	margin: 0.8rem 0.9rem 0 0;
@@ -325,8 +325,8 @@ const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 62px - 5.8rem - 2.4rem);
-	padding: ${props => (props.padding ? '4rem 5.5rem 0' : '2rem 2rem 0')};
+	height: calc(100vh - 79px - 5.8rem - 2.4rem);
+	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -350,6 +350,10 @@ const ContainerTable = styled.div`
 	}
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
+	}
+
+	@media(max-width: 768px) {
+		max-height: 75vh;
 	}
 
 	@media(max-width: 648px) {
@@ -382,7 +386,6 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
-	/* cursor: pointer; */
 
 	&:nth-child(even) {
     background-color: #FFCFCD;
@@ -463,6 +466,10 @@ const TextInformation = styled.p`
 	text-align: center;
 	font-family: Overpass, Regular;
 	color: #85144B;
+
+	@media(max-width: 648px) {
+		font-size: 1.3rem;
+	}
 `;
 
 const Box = styled.div`
@@ -500,15 +507,14 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	width: ${props => (props.width)};
-	padding: .25rem;
 	color: #404040;
 	font-family: "Overpass", Light;
-	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
+	font-weight: ${props => (props.font && '900')};
 	text-align: ${props => (props.wNumber && 'center')};
+	padding: .25rem;
+	/* padding: 0.5%; */
 	cursor: pointer;
-	padding:0 .5%;
-
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -563,14 +569,14 @@ const ImageStatus = styled.img`
 const ContainerModalDelete = styled.div`
 	width: 100%;
 	height: 100vh;
+	background: #707070a1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
 	top: 0;
 	right: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	z-index: 30;
-	background: rgba(112, 112, 112, 0.5);
 
 	@media (max-width: 490px) {
 		flex-direction: column;
@@ -579,8 +585,8 @@ const ContainerModalDelete = styled.div`
 `;
 
 const ModalDelete = styled.div`
-	background: #FFF;
 	width: 480px;
+	background: #FFF;
 	padding: 1% 1% 1% 1%;
 
 	@media (max-width: 490px) {
@@ -588,8 +594,8 @@ const ModalDelete = styled.div`
 		height: 100vh;
 		padding: 5%;
 		display: flex;
-    justify-content: space-between;
     flex-direction: column;
+    justify-content: space-between;
 	}
 `;
 
@@ -691,8 +697,8 @@ class OrganizationScreen extends Component {
 			selectedItems: [
 				'Selecionar status',
 				{ select: 'Pendente de Pagamento', filter: 'pendente' },
-				// 'Pendente de Autorização',
-				{ select: 'Pendente de Autorização', filter: 'autorizado' },
+				'Pendente de Autorização',
+				// { select: 'Pendente de Autorização', filter: 'autorizado' },
 				'Isento',
 				'Pago',
 				'Vencido',
@@ -765,7 +771,6 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedValue = (item) => {
-		console.log('item', item);
 		this.setState({
 			selectedValue: item,
 			isSelected: false,
@@ -829,7 +834,8 @@ class OrganizationScreen extends Component {
 		const value = ev.target.value.toLowerCase();
 
 		this.setState({
-			filter: ev.target.value,
+			filter: value,
+			toFilter: false,
 		});
 	}
 
@@ -1133,15 +1139,15 @@ class OrganizationScreen extends Component {
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)))
+			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
 		}
 
 		if (
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-			 	? item.tradingName.split(' ').includes(filter)
-			 	: item.tradingName.toLowerCase() === filter.toLowerCase())));
+			 	? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
+			 	: item.tradingName.toLowerCase() === filter)));
 		}
 		return listTable;
 	}
@@ -1154,8 +1160,8 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	handleRedirect = () => {
-		// ev.stopPropagation();
+	handleRedirect = (ev) => {
+		ev.stopPropagation();
   	this.setState({
 			modalSucess: !this.state.modalSucess,
 			isModalCreateOrg: false,
@@ -1203,7 +1209,7 @@ class OrganizationScreen extends Component {
 				>
 					{!isAdmin
 						&& <InvolveButton><Button
-							width='18%'
+							width='20%'
 							widthMedium='24%'
 							widthMobile='88%'
 							// widthMobileSmall='80%'
@@ -1211,7 +1217,7 @@ class OrganizationScreen extends Component {
 							height='4.3rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
-							margin='1.2rem 0 1.2rem 2.5rem'
+							margin='1rem 0 1rem 2.5rem'
 							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
 							marginMobileSmall='1.5rem 1.5rem 1.5rem 1.2rem'
 							text='Criar Organização'
