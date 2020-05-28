@@ -401,8 +401,8 @@ const Tr = styled.tr`
 		padding: 1rem 1rem 12.5rem 1rem;
 	}
 
-	@media(max-width: 420px) {
-		padding: 1rem 1rem 16.8rem 1rem;
+	@media(max-width: 490px) {
+		padding: 1rem 1rem 17.8rem 1rem;
 	}
 `;
 
@@ -861,7 +861,7 @@ class OrganizationScreen extends Component {
 								{this.state.selectedItems.map((item, index) => (
 									<SelectedItem
 										onClick={() => this.handleSelectedValue(item)}
-										style={{ paddingTop: item === 'Selecionar status' && '.7rem' }}
+										style={{ paddingTop: item === 'Selecionar status' && '.7rem'}}
 										key={index}
 										hover={item}
 									>
@@ -983,8 +983,8 @@ class OrganizationScreen extends Component {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 		const { user } = this.props;
 
-		return listTable.map(item => (
-			<Tr key={item.id}>
+		return listTable.map((item, index) => (
+			<Tr style={{ margin: index === listTable.length - 1 && '0 0 8rem 0' }} key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>

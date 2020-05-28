@@ -186,7 +186,6 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	${''}
 	width: 34%;
 	display: flex;
 	align-items: center;
@@ -485,7 +484,7 @@ const ContainerModel = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
-		height: 7rem;
+		height: auto;
 		order: 3;
 		z-index: initial;
 	}
@@ -858,13 +857,29 @@ const TextArea = styled.textarea`
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
+	resize: none;
+
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
+	}
 
 	@media (max-width: 490px) {
 		height: 9.37rem;
 		margin-bottom: 2rem;
 		width: 100%;
 	}
-	resize: none;
 `;
 
 // const ButtonAdd = styled(Button)`
