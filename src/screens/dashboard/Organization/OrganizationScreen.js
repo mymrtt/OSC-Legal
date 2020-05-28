@@ -121,7 +121,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.isAdmin ? '35%' : '30%')};
+	width: ${props => (props.isAdmin ? '35%' : '37%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -324,7 +324,7 @@ const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 62px - 5.8rem - 2.4rem);
+	height: calc(100vh - 79px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '4rem 5.5rem 0' : '2rem 2rem 0')};
 
 	@media (max-width: 768px) {
@@ -497,15 +497,14 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	width: ${props => (props.width)};
-	padding: .25rem;
 	color: #404040;
 	font-family: "Overpass", Light;
-	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
+	font-weight: ${props => (props.font && '900')};
 	text-align: ${props => (props.wNumber && 'center')};
+	padding: .25rem;
+	/* padding: 0.5%; */
 	cursor: pointer;
-	padding:0 .5%;
-
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -558,14 +557,14 @@ const ImageStatus = styled.img`
 const ContainerModalDelete = styled.div`
 	width: 100%;
 	height: 100vh;
+	background: #707070a1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
 	top: 0;
 	right: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	z-index: 30;
-	background: rgba(112, 112, 112, 0.5);
 
 	@media (max-width: 490px) {
 		flex-direction: column;
@@ -574,8 +573,8 @@ const ContainerModalDelete = styled.div`
 `;
 
 const ModalDelete = styled.div`
-	background: #FFF;
 	width: 480px;
+	background: #FFF;
 	padding: 1% 1% 1% 1%;
 
 	@media (max-width: 490px) {
@@ -583,8 +582,8 @@ const ModalDelete = styled.div`
 		height: 100vh;
 		padding: 5%;
 		display: flex;
-    justify-content: space-between;
     flex-direction: column;
+    justify-content: space-between;
 	}
 `;
 
@@ -754,7 +753,6 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedValue = (item) => {
-		console.log('item', item);
 		this.setState({
 			selectedValue: item,
 			isSelected: false,
@@ -788,13 +786,10 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
-		// console.log('newStatus', newStatus);
-		// console.log('item seletecd st', item)
 		const { tableDatas } = this.props;
 		const teste = item === 'vencido' && newStatus !== 'prazo prorrogado' ? console.log('aaa') : null;
 		console.log('testeeeeeeee', teste)
 		const newList = tableDatas.map((data) => {
-			console.log('data', data);
 			if (data === item) {
 				return {
 					...data,
@@ -823,7 +818,8 @@ class OrganizationScreen extends Component {
 		const value = ev.target.value.toLowerCase();
 
 		this.setState({
-			filter: ev.target.value,
+			filter: value,
+			toFilter: false,
 		});
 	}
 
@@ -1114,15 +1110,15 @@ class OrganizationScreen extends Component {
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)))
+			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
 		}
 
 		if (
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-			 	? item.tradingName.split(' ').includes(filter)
-			 	: item.tradingName.toLowerCase() === filter.toLowerCase())));
+			 	? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
+			 	: item.tradingName.toLowerCase() === filter)));
 		}
 		return listTable;
 	}
@@ -1135,8 +1131,8 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	handleRedirect = () => {
-		// ev.stopPropagation();
+	handleRedirect = (ev) => {
+		ev.stopPropagation();
   	this.setState({
 			modalSucess: !this.state.modalSucess,
 			isModalCreateOrg: false,
