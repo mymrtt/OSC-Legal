@@ -62,6 +62,10 @@ const WrapButton = styled.div`
 		margin: 0 1.5rem;
 	}
 
+	@media (max-width: 1024px) {
+		width: ${props => (props.width ? '48%' : '55%')};
+	}
+
 	@media(max-width: 768px){
 		width: 50%;
 		margin-left: 2rem;

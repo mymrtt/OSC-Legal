@@ -570,7 +570,7 @@ const ModelParagraph = styled.p`
 `;
 
 const ContainerOptions = styled.div`
-	display: ${props => (props.contOptions ? 'flex' : 'none')};
+	display: ${props => (props.contOptions ? 'flex' : 'flex')};
 	width: 25%;
 	align-items: flex-end;
 	justify-content: center;
@@ -588,7 +588,7 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		width: 30%;
+		width: 32%;
 		padding: 0 0 0 4.5%;
 	}
 
@@ -1035,7 +1035,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	${''}
+	/* border-right: 2px; */
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -1043,14 +1043,14 @@ const BoxOrgs = styled.div`
 	border-top-left-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	border-top-right-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	background: #FFF;
-	z-index: 99;
+	z-index: 999;
 
 	::-webkit-scrollbar {
-  width: 7px;
+  	width: 7px;
 	}
 
 	::-webkit-scrollbar-track {
-  background: #fff;
+  	background: #fff;
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -1902,7 +1902,7 @@ class DocumentsScreen extends Component {
 												documentsList.map((item, index) => (
 													<ContainerModel
 														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
-														style={{ margin: index === documentsList.length - 1 && '0 0 8rem 0' }}
+														style={{ margin: index === documentsList.length - 1 && '0 0 7rem 0' }}
 														// MARGEM ULTIMO ITEM LISTA MOBILE
 														lastIndex={(window.innerWidth <= 490) && index === documentsList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 														key={index}
@@ -1971,6 +1971,10 @@ class DocumentsScreen extends Component {
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
 												this.state.listDocs.map((docs, index) => (
 													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === this.state.listDocs.length - 1 && '0 0 9rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === this.state.listDocs.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 														key={index}
 														zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
