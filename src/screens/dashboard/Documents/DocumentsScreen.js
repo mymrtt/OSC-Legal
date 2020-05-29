@@ -49,6 +49,7 @@ const mapDispatchToProps = dispatch => ({
 const Container = styled.div`
   width: 100%;
 	height: 90%;
+	overflow-y: hidden;
 
 	@media (max-width: 490px) {
 		height: 45%;
@@ -73,6 +74,10 @@ const Content = styled.div`
 
 	@media(max-width: 768px){
 		min-height: 92.6vh;
+	}
+
+	@media(max-width: 648px){
+		background: #FFF;
 	}
 `;
 
@@ -538,6 +543,8 @@ const ModelNumber = styled.h2`
 
 const ModelTitle = styled.h2`
 	margin-bottom: .5rem;
+	max-width: 90%;
+	word-wrap: break-word;
   color: #85144B;
   font-family: "Overpass", Black;
 
@@ -600,7 +607,7 @@ const ContainerOptions = styled.div`
 		margin-top: .6rem;
     right: 0rem;
     border: 1px solid #85144B;
-		z-index: 2;
+		z-index: ${props => props.modal ? 0 : '2'};
 		background: #ffffff;
 		align-items: center;
 		border-radius: 3px;
@@ -962,6 +969,8 @@ const TextModal = styled.p`
 	color: #404040;
 
 	strong {
+		max-width: 30%;
+		word-wrap: break-word;
 		font-family: 'Overpass', Bold;
 		color: #404040;
 	}
@@ -1280,7 +1289,10 @@ class DocumentsScreen extends Component {
 	}
 
 	handleCancelAddModel = () => {
+		const { description, title } = this.state.document;
 		this.setState({
+			description: '',
+			title: '',
 			addModel: false,
 			isError: false,
 			isFile: null,
@@ -1667,7 +1679,7 @@ class DocumentsScreen extends Component {
 							<Input
 								required
 								validationModel={this.state.validationModel}
-								value={this.state.document.title}
+								value={this.state.title}
 								onChange={e => this.handleModelChange('title', e)}
 								type="text"
 								placeholder="Digitar o nome do documento"
@@ -1680,7 +1692,7 @@ class DocumentsScreen extends Component {
 							<TitleInputs>Descrição</TitleInputs>
 							<TextArea
 								validationModel={this.state.validationModel}
-								value={this.state.document.description}
+								value={this.state.description}
 								onChange={e => this.handleModelChange('description', e)}
 								type="text"
 								placeholder="Como esse documento é usado"
@@ -1977,7 +1989,7 @@ class DocumentsScreen extends Component {
 															</span>
 															<ModelParagraph>{docs.description}</ModelParagraph>
 														</ContainerModelDescription>
-														<ContainerOptions
+														<ContainerOptions modal={this.state.modalDelete}
 															contOptions={this.state.options && (this.state.selectedOptions === index)}>
 															<Option
 																onMouseEnter={() => this.handleChangeColorExportUser(docs)}
