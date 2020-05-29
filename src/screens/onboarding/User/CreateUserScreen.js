@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 // Libs
-import React, { Component, localStorage } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -9,6 +9,7 @@ import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import ImageLogo from '../../../components/ImageLogo';
 import CreateUserSucess from './CreateUserSucessScreen';
+import OscHash from '../../../services/OscHash';
 
 // Images
 import VisibilityOff from '../../../assets/visibility-off.svg';
@@ -18,7 +19,7 @@ import VisibilityOn from '../../../assets/visibility-on.svg';
 import { addNewUser } from '../../../dataflow/modules/onboarding-modules';
 
 // Api
-import { createUserAccount } from '../../../api';
+import { createUserAccount } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	signup: state.signup,
@@ -364,13 +365,20 @@ class CreateUserScreen extends Component {
 
 	userRegister = async (user) => {
 		try {
-			const response = await createUserAccount(user);
+			const encodedPassword = OscHash(user.password);
 
-			if (response) {
-				await localStorage.setItem('token', response.data.token);
-			}
+			const credentials = `${user.email}:${encodedPassword}`;
 
+			const base64credentials = Buffer.from(credentials, "utf-8").toString(
+				"base64"
+			);
+
+			delete user['email'];
+			delete user['password'];
+
+			const response = await createUserAccount(user, base64credentials);
 			console.log('response', response);
+
 		} catch (err) {
 			console.log('err', err);
 		}
