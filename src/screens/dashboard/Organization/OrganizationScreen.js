@@ -395,18 +395,18 @@ const Tr = styled.tr`
 	}
 
 	@media(max-width: 768px) {
-		padding: 1rem 1rem 10rem 1rem;
+		padding: 1rem 1rem 9rem 1rem;
 		display: flex;
     flex-wrap: wrap;
 		position: relative;
 	}
 
 	@media(max-width: 648px) {
-		padding: 1rem 1rem 12.5rem 1rem;
+		padding: 1rem 1rem 8.5rem 1rem;
 	}
 
 	@media(max-width: 490px) {
-		padding: 1rem 1rem 17.8rem 1rem;
+		padding: 1rem 1rem 17rem 1rem;
 	}
 `;
 
@@ -555,8 +555,8 @@ const TextStatus = styled.p`
 `;
 
 const ImageStatus = styled.img`
+	width: 1.3rem;
   padding-right: 0.3rem;
-	width: 1.5rem;
 	display: none;
 	cursor: ${props => (props.cursor ? 'pointer' : 'auto')};
 
@@ -696,7 +696,8 @@ class OrganizationScreen extends Component {
 			selectedValue: 'Selecionar status',
 			selectedItems: [
 				'Selecionar status',
-				{ select: 'Pendente de Pagamento', filter: 'pendente' },
+				// { select: 'Pendente de Pagamento', filter: 'pendente' },
+				'Pendente de Pagamento',
 				'Pendente de Autorização',
 				// { select: 'Pendente de Autorização', filter: 'autorizado' },
 				'Isento',
@@ -1009,7 +1010,7 @@ class OrganizationScreen extends Component {
 		const { user } = this.props;
 
 		return listTable.map((item, index) => (
-			<Tr style={{ margin: index === listTable.length - 1 && '0 0 8rem 0' }} key={item.id}>
+			<Tr style={{ margin: !this.props.isAdmin && index === listTable.length - 1 && '0 0 5rem 0' }} key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
