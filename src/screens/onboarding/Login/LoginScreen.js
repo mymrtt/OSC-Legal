@@ -8,9 +8,14 @@ import { connect } from 'react-redux';
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import OscHash from '../../../services/OscHash';
 
+// Images
 import VisibilityOn from '../../../assets/visibility-on.svg';
 import VisibilityOff from '../../../assets/visibility-off.svg';
+
+// Api
+import { login } from '../../../services/api';
 
 // Redux
 const mapStateToProps = state => ({
@@ -175,29 +180,48 @@ class LoginScreen extends Component {
 		};
 	}
 
-	handleSubmit = (ev) => {
-		ev.preventDefault();
+	userLogin = async () => {
+		try {
+			const user = {
+				email: this.state.email,
+				password: this.state.password,
+			};
+			console.log('user', user)
 
-		if (!this.handleError()) {
-			this.setState({ redirect: '/organizations' });
+			const encodedPassword = OscHash(user.password);
+
+			const credentials = `${user.email}:${encodedPassword}`;
+
+			const base64credentials = Buffer.from(credentials, 'utf-8').toString(
+				'base64',
+			);
+
+			const response = await login(user, base64credentials);
+			console.log('response', response);
+
+			if (response) {
+				this.setState({ redirect: '/organizations' });
+
+				await localStorage.setItem('token', response.data.token);
+			}
+
+			if (this.state.password.length < 6 || response.status !== 200) {
+				this.setState({
+					error: true,
+				});
+			}
+		} catch (err) {
+			console.log('err', err);
+			this.setState({
+				error: true,
+			});
 		}
 	}
 
-	handleError = () => {
-		const { email, password } = this.state;
-		const registeredEmail = this.props.email;
-		const registeredPassword = this.props.password;
-		let error = false;
+	handleSubmit = (ev) => {
+		ev.preventDefault();
 
-		if (email !== registeredEmail || password.length < 6 || password !== registeredPassword) {
-			error = true;
-		}
-
-		this.setState({
-			error,
-		});
-
-		return error;
+		this.userLogin();
 	}
 
 	handleChangeEmail = (ev) => {
