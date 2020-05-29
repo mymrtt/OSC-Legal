@@ -37,6 +37,11 @@ const MyButton = styled.button`
     width: ${props => (props.widthMobile)};
     margin: ${props => (props.marginMobile)};
     padding: ${props => (props.paddingMobile)};
+		position: ${props => props.positionMobile};
+		left: ${props => props.leftMobile};
+    right: ${props => props.rightMobile};
+    bottom: ${props => props.bottomMobile};
+		font-size: ${props => props.fontSizeMobile};
   }
 
   @media (max-width: 490px){
@@ -46,7 +51,6 @@ const MyButton = styled.button`
     left: ${props => props.left};
     right: ${props => props.right};
     bottom: ${props => props.bottom};
-		font-size: ${props => props.fontSizeMobile};
 	}
 `;
 
@@ -85,12 +89,19 @@ const Button = props => (
 			textTransform={props.textTransform}
 			orderMobile={props.orderMobile}
 			positionMb={props.positionMb}
+			positionMobile={props.positionMobile}
 			right={props.right}
 			left={props.left}
 			bottom={props.bottom}
+			rightMobile={props.rightMobile}
+			leftMobile={props.leftMobile}
+			bottomMobile={props.bottomMobile}
 			fontSizeMobile={props.fontSizeMobile}
 			fontWeight={props.fontWeight}
 			letterSpacing={props.letterSpacing}
+
+
+			background={props.background}
 		>
 			{props.text}
 		</MyButton>
