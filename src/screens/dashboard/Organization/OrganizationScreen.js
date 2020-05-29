@@ -19,6 +19,7 @@ import authorizationIcon from '../../../assets/authorization.svg';
 import payIcon from '../../../assets/pay.svg';
 import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
+import deleteIcon from '../../../assets/delete.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
 import Exit from '../../../assets/exit.svg';
 
@@ -49,6 +50,14 @@ const ContainerUser = styled.div`
 
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
+	}
+`;
+
+const InvolveButton = styled.div`
+	padding: .5rem 0.2rem;
+
+	@media (max-width: 768px) {
+		padding: 0;
 	}
 `;
 
@@ -113,9 +122,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	/* width: ${props => (props.width)}; */
- /* width: 45%; */
-	width: 35%;
+	width: ${props => (props.isAdmin ? '35%' : '37%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -175,7 +182,7 @@ const TitleViewBy = styled.h2`
 
 const TitleSearch = styled.h2`
 	color: #231F20;
-	font-size: 1,375rem;
+	font-size: 1.375rem;
 	font-family: Overpass;
 	font-weight: bold;
 	margin: 0.8rem 0.9rem 0 0;
@@ -188,13 +195,13 @@ const TitleSearch = styled.h2`
 `;
 
 const SelectInputUser = styled.span`
+	margin-top: 0.6rem;
+	padding: 0.1rem 1rem;
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	border: 0.5px solid #85144B;
 	border-radius: 3px;
-	padding: 0.1rem 1rem;
-	display: flex;
-	margin-top: 0.8rem;
-	justify-content: space-between;
 
 	@media(max-width: 768px) {
 		width: 75%;
@@ -318,8 +325,8 @@ const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 62px - 5.8rem - 2.4rem);
-	padding: ${props => (props.padding ? '4rem 5.5rem 0' : '2rem 2rem 0')};
+	height: calc(100vh - 79px - 5.8rem - 2.4rem);
+	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -343,6 +350,10 @@ const ContainerTable = styled.div`
 	}
 	::-webkit-scrollbar-thumb:hover {
   	background: #f9bdbb;
+	}
+
+	@media(max-width: 768px) {
+		max-height: 75vh;
 	}
 
 	@media(max-width: 648px) {
@@ -375,7 +386,6 @@ const Thead = styled.thead`
 const Tr = styled.tr`
 	height: 2.3rem;
 	padding-left: 0.7rem;
-	/* cursor: pointer; */
 
 	&:nth-child(even) {
     background-color: #FFCFCD;
@@ -395,8 +405,8 @@ const Tr = styled.tr`
 		padding: 1rem 1rem 12.5rem 1rem;
 	}
 
-	@media(max-width: 420px) {
-		padding: 1rem 1rem 16.8rem 1rem;
+	@media(max-width: 490px) {
+		padding: 1rem 1rem 17.8rem 1rem;
 	}
 `;
 
@@ -456,12 +466,17 @@ const TextInformation = styled.p`
 	text-align: center;
 	font-family: Overpass, Regular;
 	color: #85144B;
+
+	@media(max-width: 648px) {
+		font-size: 1.3rem;
+	}
 `;
 
 const Box = styled.div`
 	display: none;
 
 	@media(max-width: 768px) {
+		padding: 0.5rem 0;
 		display: ${props => (props.isClickedStatus ? 'flex' : 'none')};
 		flex-direction: row;
 	}
@@ -474,6 +489,7 @@ const BoxButton = styled.button`
 	cursor: auto;
 
 	@media(max-width: 768px) {
+		padding: 0.5rem 0;
 		display: ${props => (props.isClickedName ? 'none' : 'flex')};
 	}
 `;
@@ -491,15 +507,14 @@ const TableTitleMob = styled.th`
 
 const TableList = styled.td`
 	width: ${props => (props.width)};
-	padding: .25rem;
 	color: #404040;
 	font-family: "Overpass", Light;
-	font-weight: ${props => (props.font && '900')};
 	font-size: 0.95rem;
+	font-weight: ${props => (props.font && '900')};
 	text-align: ${props => (props.wNumber && 'center')};
+	padding: .25rem;
+	/* padding: 0.5%; */
 	cursor: pointer;
-	padding:0 .5%;
-
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
@@ -525,7 +540,8 @@ const ContainerStatus = styled.td`
 `;
 
 const TextStatus = styled.p`
-	color: ${props => (props.color ? '#FF4136' : '#85144B')};
+	${''}
+	color: #85144B;
 	font-size: 0.8rem;
 	font-family: "Overpass", Light;
   font-weight: 400;
@@ -539,12 +555,13 @@ const TextStatus = styled.p`
 `;
 
 const ImageStatus = styled.img`
-	width: 1.3rem;
   padding-right: 0.3rem;
+	width: 1.5rem;
 	display: none;
 	cursor: ${props => (props.cursor ? 'pointer' : 'auto')};
 
 	@media(max-width: 768px) {
+    padding-right: 0.5rem;
 		display: flex;
 	}
 `;
@@ -552,14 +569,14 @@ const ImageStatus = styled.img`
 const ContainerModalDelete = styled.div`
 	width: 100%;
 	height: 100vh;
+	background: #707070a1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
 	top: 0;
 	right: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	z-index: 30;
-	background: rgba(112, 112, 112, 0.5);
 
 	@media (max-width: 490px) {
 		flex-direction: column;
@@ -568,8 +585,8 @@ const ContainerModalDelete = styled.div`
 `;
 
 const ModalDelete = styled.div`
-	background: #FFF;
 	width: 480px;
+	background: #FFF;
 	padding: 1% 1% 1% 1%;
 
 	@media (max-width: 490px) {
@@ -577,8 +594,8 @@ const ModalDelete = styled.div`
 		height: 100vh;
 		padding: 5%;
 		display: flex;
-    justify-content: space-between;
     flex-direction: column;
+    justify-content: space-between;
 	}
 `;
 
@@ -653,14 +670,14 @@ const ButtonCancel = styled.button`
 	border-radius: 4px;
 	border: none;
 	background: #FFF;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
 
 	@media (max-width: 490px) {
 		margin: 0;
 		position: initial;
-		width: 100%;
+		/* width: 100%; */
 	}
 `;
 
@@ -680,7 +697,8 @@ class OrganizationScreen extends Component {
 			selectedItems: [
 				'Selecionar status',
 				{ select: 'Pendente de Pagamento', filter: 'pendente' },
-				{ select: 'Pendente de Autorização', filter: 'autorizar' },
+				'Pendente de Autorização',
+				// { select: 'Pendente de Autorização', filter: 'autorizado' },
 				'Isento',
 				'Pago',
 				'Vencido',
@@ -700,8 +718,9 @@ class OrganizationScreen extends Component {
 			statusImgs: [
 				{
 					img: authorizationIcon,
-					desc: 'autorizar',
-					teste: true,
+					desc: 'autorizado',
+					pendenteAut: true,
+					pago: true,
 				},
 				{
 					img: payIcon,
@@ -711,13 +730,18 @@ class OrganizationScreen extends Component {
 				{
 					img: freeIcon,
 					desc: 'isento',
-					teste: true,
+					pendenteAut: true,
 					pagamento: true,
 				},
 				{
 					img: extendDeadlineIcon,
-					desc: 'prorrogar prazo',
-					prazoExpirado: true,
+					desc: 'prazo prorrogado',
+					prazoProrrogado: true,
+				},
+				{
+					img: deleteIcon,
+					desc: 'deletar',
+					prazoProrrogado: true,
 				},
 			],
 			selectedStatusImgs: undefined,
@@ -849,7 +873,7 @@ class OrganizationScreen extends Component {
 								{this.state.selectedItems.map((item, index) => (
 									<SelectedItem
 										onClick={() => this.handleSelectedValue(item)}
-										style={{ paddingTop: item === 'Selecionar status' && '.7rem' }}
+										style={{ paddingTop: item === 'Selecionar status' && '.7rem'}}
 										key={index}
 										hover={item}
 									>
@@ -877,7 +901,7 @@ class OrganizationScreen extends Component {
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
-						<ImageMagnifyng src={magnifyingGlass} alt="Lupa" onClick={this.handleToFilter} />
+						<ImageMagnifyng src={magnifyingGlass} alt="magnifying glass" onClick={this.handleToFilter} />
 					</SelectInputUser>
 				</SelectViewBy>
 			</ContainerContentSelectedViewBy>
@@ -885,7 +909,6 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		console.log('item', item);
 		// const teste = this.state.statusImgs.filter(item => item.teste);
 		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
 		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
@@ -899,39 +922,49 @@ class OrganizationScreen extends Component {
 		// 	listinha = isPayment;
 		// }
 		const { statusImgs } = this.state;
-		let listinha = statusImgs; // lista deafult com as 4 imagens
-		const hiddenList = (item.status === 'autorizar' || item.status === 'isento'); // nao aparecer se for autorizar ou isento
-		const teste = statusImgs.filter(item => item.teste); // lista para pendente de autorização
-		const isPayment = statusImgs.filter(item => item.pagamento); // lista para pendente de pagamento
-		const isExpired = statusImgs.filter(item => item.prazoExpirado);
+		let listinha = statusImgs;
 
-		console.log('isPayment', isPayment);
-		console.log('item.status', item.status)
+		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado');
+		const isPendingAuthorization = statusImgs.filter(item => item.pendenteAut);
+		const isPayment = statusImgs.filter(item => item.pagamento);
+		const isExpired = statusImgs.filter(item => item.prazoProrrogado);
+		const isPaid = statusImgs.filter(item => item.pago);
+
 		if (item.status === 'pendente de autorização') {
-			listinha = teste;
+			listinha = isPendingAuthorization;
 		} else if (item.status === 'pendente de pagamento') {
 			listinha = isPayment;
-		}	else if (item.status === 'vencido') {
+		} else if (item.status === 'vencido') {
 			listinha = isExpired;
+		} else if (item.status === 'deletar') {
+			this.props.deleteOrg(item);
+		} else if (item.status === 'pago') {
+			listinha = isPaid;
 		} else {
 			listinha = statusImgs;
 		}
 
 		return (
 			<>
-				{!hiddenList && listinha.map((status, index) => (
-					<ImageStatus
-						cursor={this.props.isAdmin}
-						key={index}
-						src={status.img}
-						alt={status.desc}
-						onClick={() => this.handleSelectedStatus(status, item)}
-					/>
-				))}
+				{this.props.isAdmin ? (
+					<Box isClickedStatus={item.status === 'isento' || item.status === 'autorizado'
+						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}>
+						{!hiddenList && listinha.map((status, index) => (
+							<ImageStatus
+								cursor={this.props.isAdmin}
+								key={index}
+								src={status.img}
+								alt={status.desc}
+								onClick={() => this.handleSelectedStatus(status, item)}
+							/>
+						))}
+					</Box>
+				) : null}
 
 
 				<BoxButton
-					isClickedName={item.id === this.state.isClickedStatus}
+					isClickedName={item.status === 'isento' || item.status === 'autorizado'
+						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
 					onClick={() => this.handleClickedImageStatus(item)}
 				>
 					<TextStatus color={item.isChanged}>
@@ -941,50 +974,6 @@ class OrganizationScreen extends Component {
 			</>
 		);
 	}
-
-	// renderStatus = item => (
-	// 	<>
-	// 		{/* renderiza as imagens */}
-	// 		<Box isClickedStatus={item.id === this.state.isClickedStatus}>
-	// 			{console.log('item', item)}
-
-	// 			{/* const teste = item.status === 'pendente de autorização' */}
-
-	// 				{/* item.status === 'pendente de autorização' ? (
-	// 					this.state.statusImgs.map((status, index) => {
-	// 						return (
-	// 							<ImageStatus
-	// 								cursor={this.props.isAdmin}
-	// 								key={index}
-	// 								src={status.img}
-	// 								alt={status.desc}
-	// 								onClick={() => this.handleSelectedStatus(status, item)}
-	// 							/>
-	// 						);
-	// 					})
-	// 				) : null */}
-
-
-	// 			{/* {this.state.statusImgs.map((status, index) => (
-	// 				<ImageStatus
-	// 					cursor={this.props.isAdmin}
-	// 					key={index}
-	// 					src={status.img}
-	// 					alt={status.desc}
-	// 					onClick={() => this.handleSelectedStatus(status, item)}
-	// 				/>
-	// 			))} */}
-	// 		</Box>
-	// 		<BoxButton
-	// 			isClickedName={item.id === this.state.isClickedStatus}
-	// 			onClick={() => this.handleClickedImageStatus(item)}
-	// 		>
-	// 			<TextStatus color={item.isChanged}>
-	// 				{item.status}
-	// 			</TextStatus>
-	// 		</BoxButton>
-	// 	</>
-	// )
 
 	renderModalDelete = () => (
 		<ContainerModalDelete onClick={this.handleDeleteModal}>
@@ -1008,6 +997,7 @@ class OrganizationScreen extends Component {
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
+						fontSize="1.2rem"
 					/>
 				</ButtonsModal>
 			</ModalDelete>
@@ -1018,8 +1008,8 @@ class OrganizationScreen extends Component {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 		const { user } = this.props;
 
-		return listTable.map(item => (
-			<Tr key={item.id}>
+		return listTable.map((item, index) => (
+			<Tr style={{ margin: index === listTable.length - 1 && '0 0 8rem 0' }} key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
@@ -1113,16 +1103,17 @@ class OrganizationScreen extends Component {
 					</>
 				}
 				{widthMob
-					? <ContainerTableTitleMob
-					// selected={this.state.hovered === item}
-					>
+					? <ContainerTableTitleMob>
 						<TableTitleMob center>Status</TableTitleMob>
 						{this.renderStatus(item)}
 					</ContainerTableTitleMob>
 					: <>
 						{this.props.isAdmin ? (
 							<ContainerStatus
-								onMouseEnter={() => this.setState({ hovered: item === 'isento' || item === 'autorizar' ? null : item })}
+								onMouseEnter={() => this.setState({
+									hovered: item.status === 'isento' || item.status === 'autorizado'
+										|| item.status === 'prazo prorrogado' ? null : item,
+								})}
 								onMouseLeave={() => this.setState({ hovered: undefined })}
 								selected={this.state.hovered === item}
 							>
@@ -1144,19 +1135,19 @@ class OrganizationScreen extends Component {
 		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
 
-
 		let listTable = this.renderTable(tableDatas);
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status === (selectedValue.filter || selectedValue)));
+			listTable = this.renderTable(tableDatas.filter(item => item.status.toLowerCase() === (selectedValue.filter || selectedValue).toLowerCase()));
 		}
+
 		if (
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.tradingName.split(' ').includes(filter)
-				: item.tradingName.toLowerCase() === filter.toLowerCase())));
+				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
+				: item.tradingName.toLowerCase() === filter)));
 		}
 		return listTable;
 	}
@@ -1171,10 +1162,10 @@ class OrganizationScreen extends Component {
 
 	handleRedirect = (ev) => {
 		ev.stopPropagation();
-  	this.setState({
+		this.setState({
 			modalSucess: !this.state.modalSucess,
 			isModalCreateOrg: false,
-  	});
+		});
 	}
 
 	render() {
@@ -1217,21 +1208,23 @@ class OrganizationScreen extends Component {
 					justifyContent={isAdmin}
 				>
 					{!isAdmin
-						&& <Button
-							width='18%'
+						&& <InvolveButton><Button
+							width='20%'
 							widthMedium='24%'
-							widthMobile='78%'
-							// widthMobileSmall='90%'
+							widthMobile='88%'
+							// widthMobileSmall='80%'
+							widthMobileSmall='90%'
 							height='4.3rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
-							margin='1.2rem 0 1.2rem 2.5rem'
-							// marginMobile='1.5rem 1.7rem'
+							margin='1rem 0 1rem 2.5rem'
+							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+							marginMobileSmall='1.5rem 1.5rem 1.5rem 1.2rem'
 							text='Criar Organização'
 							type='button'
 							orderMobile
 							organizationMobile
-							onClick={this.isModalCreateOrganization} />
+							onClick={this.isModalCreateOrganization} /></InvolveButton>
 					}
 					<ContainerTableUser
 						width={isAdmin}
@@ -1269,7 +1262,9 @@ class OrganizationScreen extends Component {
 							</ContainerTable>
 							{this.renderAllTable().length === 0 && (
 								<TextNoOrganitazion>
-									<TextInformation>Não há organizações no momento.</TextInformation>
+									{isAdmin
+										? <TextInformation>Não há organizações no momento.</TextInformation>
+										: <TextInformation>Essa organização não existe!</TextInformation>}
 								</TextNoOrganitazion>
 							)}
 						</Content>

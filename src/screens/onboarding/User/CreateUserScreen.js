@@ -359,6 +359,7 @@ class CreateUserScreen extends Component {
 		isEmpty: false,
 		isErrorTel: false,
 		isTermsOpen: false,
+		isErrorEmail: false,
 	};
 
 	userRegister = async (user) => {
@@ -435,10 +436,22 @@ class CreateUserScreen extends Component {
 		return false;
 	}
 
+	// handleChangeEmail = (ev) => {
+	// 	const { user } = this.state;
+	// 	user.email = ev.target.value;
+	// 	this.setState({ user, isErrorEmail: false });
+	// };
+
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 		this.handleErrors();
 	};
+
+	// validateEmail = (email) => {
+	// 	const expression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line
+
+	// 	return expression.test(String(email).toLowerCase());
+	// };
 
 	handleErrors = () => {
 		const { user } = this.state;
@@ -450,10 +463,25 @@ class CreateUserScreen extends Component {
 			password,
 			cpf,
 		} = this.state.user;
-		if (
+
+		const regDominio = /[^@.$]/;
+		const regDot = /[. | ..]/;
+
+		const isDominio = regDominio.test(email);
+		const isDot = regDot.test(email);
+
+		if (isDominio === false || isDot === false) {
+			this.setState({
+				isErrorEmail: true,
+			});
+		} else {
+			this.setState({
+				isErrorEmail: false,
+			});
+		}	if (
 			name === ''
 			// || surname === ''
-			|| email === ''
+			// || email === ''
 			|| telephone === ''
 			|| password === ''
 		) {
@@ -493,7 +521,7 @@ class CreateUserScreen extends Component {
 			});
 		}
 
-		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11) {
+		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && isDominio === true && isDot === true) {
 			this.props.addNewUser(user);
 			this.userRegister(user);
 			this.handleModalSucess();
@@ -536,6 +564,7 @@ class CreateUserScreen extends Component {
 			'Use 6 caracteres ou mais para a sua senha.',
 			'CPF inválido.',
 			'Insira um número de telefone válido.',
+			'E-mail incompleto.',
 		];
 		const {
 			isErrorPassword,
@@ -545,6 +574,7 @@ class CreateUserScreen extends Component {
 			togglePassword,
 			isTermsOpen,
 			isErrorTel,
+			isErrorEmail,
 		} = this.state;
 		const {
 			name,
@@ -614,8 +644,10 @@ class CreateUserScreen extends Component {
 									value={email}
 									name="email"
 									placeholder="nome@email.com"
+									isError={isErrorEmail}
 									required
 								/>
+								{isErrorEmail && <ErrorMessage>{errorMessage[3]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>telefone</ParagraphInput>

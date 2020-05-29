@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable eqeqeq */
 /* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
@@ -16,7 +18,6 @@ import Exit from '../../../assets/fechar.svg';
 
 // Redux
 import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modules';
-
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -318,13 +319,10 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cnpj || cnpj.length !== 14) {
+		if (!cnpj || cnpj.length !== 14 || !this.validateCnpj(cnpj)) {
 			this.setState({
 				isCnpjError: true,
 			});
-
-			this.validateCnpj(cnpj);
-			// verificar como faz essa validação
 		} else {
 			this.setState({
 				isCnpjError: false,
@@ -445,34 +443,42 @@ class ModalCreateOrganization extends Component {
 		});
 	};
 
-	validateCnpj = (s) => {
-		const cnpj = s.replace(/[^\d]+/g, '');
-		// Valida a quantidade de caracteres
-		if (cnpj.length !== 14) return false;
-
-		// Elimina inválidos com todos os caracteres iguais
-		if (/^(\d)\1+$/.test(cnpj)) return false;
-
-		// Cáculo de validação
-		const t = cnpj.length - 2;
-		const d = cnpj.substring(t);
-		const d1 = parseInt(d.charAt(0));
-		const d2 = parseInt(d.charAt(1));
-		const calc = (x) => {
-			const n = cnpj.substring(0, x);
-			let y = x - 7;
-			let s = 0;
-			let r = 0;
-
-			for (let i = x; i >= 1; i--) {
-				s += n.charAt(x - i) * y--;
-				if (y < 2) y = 9;
-			}
-
-			r = 11 - s % 11;
-			return r > 9 ? 0 : r;
-		};
-		return calc(t) === d1 && calc(t + 1) === d2;
+	validateCnpj = (cnpj) => {
+		if (!cnpj || cnpj.length != 14
+				|| cnpj == '00000000000000'
+				|| cnpj == '11111111111111'
+				|| cnpj == '22222222222222'
+				|| cnpj == '33333333333333'
+				|| cnpj == '44444444444444'
+				|| cnpj == '55555555555555'
+				|| cnpj == '66666666666666'
+				|| cnpj == '77777777777777'
+				|| cnpj == '88888888888888'
+				|| cnpj == '99999999999999') return false;
+		let tamanho = cnpj.length - 2;
+		let numeros = cnpj.substring(0, tamanho);
+		const digitos = cnpj.substring(tamanho);
+		let soma = 0;
+		let pos = tamanho - 7;
+		for (let i = tamanho; i >= 1; i--) {
+			soma += numeros.charAt(tamanho - i) * pos--;
+			if (pos < 2) pos = 9;
+		}
+		// eslint-disable-next-line no-mixed-operators
+		let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+		if (resultado != digitos.charAt(0)) return false;
+		tamanho += 1;
+		numeros = cnpj.substring(0, tamanho);
+		soma = 0;
+		pos = tamanho - 7;
+		for (let i = tamanho; i >= 1; i--) {
+			soma += numeros.charAt(tamanho - i) * pos--;
+			if (pos < 2) pos = 9;
+		}
+		// eslint-disable-next-line no-mixed-operators
+		resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+		if (resultado != digitos.charAt(1)) return false;
+		return true;
 	}
 
 	render() {
@@ -507,7 +513,7 @@ class ModalCreateOrganization extends Component {
 					<Container onSubmit={this.handleSubmit} onClick={ev => ev.stopPropagation()}>
 						<Content>
 							<ContainerExit>
-								<ExitIcon src={Exit} alt="Fechar" onClick={this.props.handleClosedModal} />
+								<ExitIcon src={Exit} alt="close" onClick={this.props.handleClosedModal} />
 							</ContainerExit>
 							<ContentWrapper>
 								<CreateOrgTitle>Criar Organização</CreateOrgTitle>

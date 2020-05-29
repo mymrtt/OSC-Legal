@@ -42,7 +42,8 @@ const Container = styled.div`
 `;
 
 const WrapButton = styled.div`
-	width: 55%;
+	/* width: 48%; */
+	width: ${props => (props.width ? '48%' : '60%')};
 	height: 5.3rem;
 	display: flex;
 	justify-content: flex-start;
@@ -54,11 +55,15 @@ const WrapButton = styled.div`
 		align-items: flex-end;
 		height: 40px;
 		align-self: flex-end;
-		padding-bottom: 1rem;
+		padding-bottom: 1.2rem;
 		font-size: 1.375rem;
 		text-decoration: none;
 		color: #000;
 		margin: 0 1.5rem;
+	}
+
+	@media (max-width: 1024px) {
+		width: ${props => (props.width ? '48%' : '55%')};
 	}
 
 	@media(max-width: 768px){
@@ -90,10 +95,10 @@ const ContainerUser = styled.div`
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
-	margin: 0 6.2rem 0.8rem 0;
+	margin: ${props => (props.isAdmin ? '0 6rem 0.8rem 0' : '0 2.6rem 0.8rem 0')};
 
 	@media (max-width: 785px) {
-		margin: 0 .5rem 0.8rem 0;
+		margin: 0 0 0.8rem 0;
 		width: 40%;
 	}
 
@@ -107,6 +112,11 @@ const ContainerUser = styled.div`
 		padding-top: 0.7rem;
 		margin: 0 2.2rem 0 0;
 		order: 2;
+	}
+
+	@media (max-width: 490px) {
+		margin: 0 1rem 0 0;
+		width: 38%;
 	}
 `;
 
@@ -149,13 +159,13 @@ class Header extends Component {
 			<Container border={this.props.isAdmin}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
-						margin={'0 0 0 2.5rem'}
+						margin={'0 0 0 3rem'}
 						marginMobile='1rem 0 0 .5rem'
 						paddingMobile='0.5rem'
 						height='2.8rem'
 					/>
 				</NavLink>
-				<WrapButton>
+				<WrapButton width={this.props.isAdmin}>
 					<NavLink
 						exact to="/organizations"
 						activeClassName="button-header-dash"
@@ -169,7 +179,7 @@ class Header extends Component {
 						Documentos
 					</NavLink>
 				</WrapButton>
-				<ContainerUser>
+				<ContainerUser isAdmin={this.props.isAdmin}>
 					<ParagraphUserName>
 						{this.props.isAdmin ? 'Administrador' : this.props.name}
 					</ParagraphUserName>

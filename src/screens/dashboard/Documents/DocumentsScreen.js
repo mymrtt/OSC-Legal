@@ -77,7 +77,7 @@ const Content = styled.div`
 `;
 
 const MaximumWidth = styled.div`
-	padding: ${props => (props.isAdmin ? '5.5rem 1rem 0' : '2rem 0 0')};
+	padding: ${props => (props.isAdmin ? '4.5rem 1rem 0' : '2rem 0 0')};
 	margin-top: ${props => (props.isAdmin ? '0' : '2rem')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
@@ -186,7 +186,6 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	${''}
 	width: 34%;
 	display: flex;
 	align-items: center;
@@ -284,7 +283,7 @@ const ContainerScroll = styled.div`
 
 	@media (max-width: 490px) {
 		min-width: 100%;
-		min-height: 50vh;
+		min-height: 100vh;
 		padding-bottom: 10rem;
 		margin: 0;
 		display: flex;
@@ -485,7 +484,8 @@ const ContainerModel = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
-		height: 7rem;
+		margin: ${props => (props.lastIndex)};
+		height: auto;
 		order: 3;
 		z-index: initial;
 	}
@@ -588,7 +588,7 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		width: 30%;
+		width: 32%;
 		padding: 0 0 0 4.5%;
 	}
 
@@ -858,13 +858,29 @@ const TextArea = styled.textarea`
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
+	resize: none;
+
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
+	}
 
 	@media (max-width: 490px) {
 		height: 9.37rem;
 		margin-bottom: 2rem;
 		width: 100%;
 	}
-	resize: none;
 `;
 
 // const ButtonAdd = styled(Button)`
@@ -975,7 +991,7 @@ const ButtonCancel = styled.button`
 	border-radius: 4px;
 	border: none;
 	background: #FFF;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-family: "Overpass", Bold;
 	font-weight: 600;
 	margin-right: 1rem;
@@ -1019,7 +1035,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	${''}
+	/* border-right: 2px; */
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -1027,14 +1043,14 @@ const BoxOrgs = styled.div`
 	border-top-left-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	border-top-right-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	background: #FFF;
-	z-index: 99;
+	z-index: 999;
 
 	::-webkit-scrollbar {
-  width: 7px;
+  	width: 7px;
 	}
 
 	::-webkit-scrollbar-track {
-  background: #fff;
+  	background: #fff;
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -1232,7 +1248,6 @@ class DocumentsScreen extends Component {
 		try {
 			const response = await createTemplate(title, description, isFile);
 		} catch (err) {
-			console.log('err', err);
 		}
 	}
 
@@ -1276,10 +1291,11 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleModalDelete = () => {
+	handleModalDelete = (doc, index) => {
 		this.setState({
 			modalDelete: true,
 			options: false,
+			clickedModel: index,
 		});
 	}
 
@@ -1568,18 +1584,12 @@ class DocumentsScreen extends Component {
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		// if (this.state.listDocs.find(item => item === this.state.isSelected)) {
-		// 	this.setState({
-		// 		isErrorDoc: true,
-		// 	});
-		// } else {
 		this.setState({
 			modalListDoc: false,
 			listDocs: newList,
 			isSelected: '',
 			isErrorDoc: false,
 		});
-		// }
 	}
 
 	handleSelectOrg = (orgs) => {
@@ -1589,15 +1599,16 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	userSelectedDoc = (docs) => {
+	userSelectedDoc = (docs, index) => {
 		this.setState({
 			userSelectDoc: docs,
+			userDeleteDoc: index,
 		});
 	}
 
 	deleteUserDoc = () => {
 		this.setState({
-			listDocs: this.state.listDocs.filter(doc => doc !== this.state.userSelectDoc),
+			listDocs: this.state.listDocs.filter((doc, index) => index !== this.state.clickedModel),
 			modalDelete: false,
 		});
 	}
@@ -1624,7 +1635,7 @@ class DocumentsScreen extends Component {
 					onSubmit={this.handleSubmit}
 					onClick={ev => ev.stopPropagation()}
 				>
-					<HeaderModal/>
+					<HeaderModal />
 
 					<HeaderAddModel>
 						<TitleAddModel>Adicionar Modelo</TitleAddModel>
@@ -1710,16 +1721,17 @@ class DocumentsScreen extends Component {
 					</TextModal>
 					<TextModal>
 						Você deseja excluir o <strong>{this.state.modelSelect.title
-						|| this.state.userSelectDoc.title}</strong> permanentemente?
+							|| this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
 					<Button
-						onClick={this.delete}
+						onClick={() => this.delete()}
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
+						fontSize="1.2rem"
 					/>
 				</ButtonsModal>
 			</ModalDelete>
@@ -1730,7 +1742,7 @@ class DocumentsScreen extends Component {
 		<ContainerModal onClick={this.closeModalListDoc}>
 			<Modal onClick={ev => ev.stopPropagation()}>
 				{this.state.isMobileButton ? <HeaderModal /> : null}
-				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc}/>
+				<ImageExit src={Exit} alt="exit" onClick={this.closeModalListDoc} />
 				<BoxTitle>
 					<TitleModalList>Adicionar Documento</TitleModalList>
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
@@ -1875,7 +1887,12 @@ class DocumentsScreen extends Component {
 											// MAP DOCUMENTS ADM
 											documentsList && documentsList.length > 0 ? (
 												documentsList.map((item, index) => (
-													<ContainerModel key={index}
+													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === documentsList.length - 1 && '0 0 7rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === documentsList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+														key={index}
 														zIndex={this.state.addModel}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(item)}
@@ -1925,22 +1942,26 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
-												// QUANDO NÃO TEM DOC NO ADM
+											// QUANDO NÃO TEM DOC NO ADM
 												<InitialAddModel>
 													<TitleInitialAddModel>
-													Você ainda não possui um modelo
+															Você ainda não possui um modelo
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
-												Escolha um modelo de documento
+															Escolha um modelo de documento
 												clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span>
 													</TextInitialAddModel>
 												</InitialAddModel>
 											)
 										) : (
-											// MAP DOCUMENTS USER
+										// MAP DOCUMENTS USER
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
 												this.state.listDocs.map((docs, index) => (
 													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === this.state.listDocs.length - 1 && '0 0 9rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === this.state.listDocs.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 														key={index}
 														zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
@@ -1957,7 +1978,7 @@ class DocumentsScreen extends Component {
 															<ModelParagraph>{docs.description}</ModelParagraph>
 														</ContainerModelDescription>
 														<ContainerOptions
-															contOptions={this.state.options && (this.state.selectedOptions === docs)}>
+															contOptions={this.state.options && (this.state.selectedOptions === index)}>
 															<Option
 																onMouseEnter={() => this.handleChangeColorExportUser(docs)}
 																onMouseLeave={this.handleChangeColorLeaveExport}
@@ -1970,7 +1991,7 @@ class DocumentsScreen extends Component {
 																		this.state.hoverExport === docs ? this.state.colorTextExport : '#85144B'
 																	}
 																>
-																	Exportar
+																		Exportar
 																</OptionText>
 															</Option>
 
@@ -1990,7 +2011,7 @@ class DocumentsScreen extends Component {
 															<Option
 																onMouseEnter={() => this.handleChangeColorDeleteUser(docs)}
 																onMouseLeave={this.handleChangeColorLeaveDelete}
-																onClick={this.handleModalDelete}
+																onClick={() => this.handleModalDelete(docs, index)}
 															>
 																<OptionImage
 																	src={this.state.hoverDelete === docs ? this.state.downloadDelete : DeleteIcon}
@@ -1998,7 +2019,7 @@ class DocumentsScreen extends Component {
 																<OptionText
 																	colorTextButton={this.state.hoverDelete === docs
 																		? this.state.colorTextDelete : '#85144B'}
-																	onClick={() => this.userSelectedDoc(docs)}
+																	onClick={() => this.userSelectedDoc(docs, index)}
 																>
 																	<p>Excluir</p>
 																</OptionText>
@@ -2007,19 +2028,19 @@ class DocumentsScreen extends Component {
 													</ContainerModel>
 												))
 											) : (
-												// QUANDO USER NÃO TEM DOC
+											// QUANDO USER NÃO TEM DOC
 												<InitialAddModel>
 													<TitleInitialAddModel>
-														Você ainda não tem nenhum documento
+																Você ainda não tem nenhum documento
 													</TitleInitialAddModel>
 													<TextInitialAddModel>
 														{this.state.selectOrg === '' ? (
 															'Selecione uma organização para adicionar um documento'
 														) : (
 															<>
-																Escolha um modelo de documento clicando em
+																			Escolha um modelo de documento clicando em
 																<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
-																	Adicionar Documento
+																				Adicionar Documento
 																</span>
 															</>
 														)}
@@ -2029,7 +2050,7 @@ class DocumentsScreen extends Component {
 										)}
 
 										<ContainerAddModelMob list={this.state.listDocs}>
-											<Button	onClick={this.openModalListDoc}>
+											<Button onClick={this.openModalListDoc}>
 												Adicionar Documento
 											</Button>
 										</ContainerAddModelMob>
@@ -2052,7 +2073,7 @@ class DocumentsScreen extends Component {
 											)
 										) : (
 											this.state.isMobileButton === true
-											&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
+													&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
 													<Button
 														width="17.5rem"
 														height="4.5rem"
