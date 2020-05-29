@@ -62,6 +62,10 @@ const WrapButton = styled.div`
 		margin: 0 1.5rem;
 	}
 
+	@media (max-width: 1024px) {
+		width: ${props => (props.width ? '48%' : '55%')};
+	}
+
 	@media(max-width: 768px){
 		width: 50%;
 		margin-left: 2rem;
@@ -111,8 +115,8 @@ const ContainerUser = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		margin: 0 2.2rem 0 0;
-		margin: ${props => (props.isAdmin ? '0 2.2rem 0 0' : '0 1rem 0 0')};
+		margin: 0 1rem 0 0;
+		width: 38%;
 	}
 `;
 

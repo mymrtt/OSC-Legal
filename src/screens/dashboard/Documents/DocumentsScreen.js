@@ -186,7 +186,6 @@ const ContainerContent = styled.div`
 `;
 
 const ContainerAddModel = styled.div`
-	${''}
 	width: 34%;
 	display: flex;
 	align-items: center;
@@ -284,7 +283,7 @@ const ContainerScroll = styled.div`
 
 	@media (max-width: 490px) {
 		min-width: 100%;
-		min-height: 50vh;
+		min-height: 100vh;
 		padding-bottom: 10rem;
 		margin: 0;
 		display: flex;
@@ -485,7 +484,8 @@ const ContainerModel = styled.div`
 	@media (max-width: 490px) {
 		width: 100%;
 		padding: 1rem;
-		height: 7rem;
+		margin: ${props => (props.lastIndex)};
+		height: auto;
 		order: 3;
 		z-index: initial;
 	}
@@ -570,7 +570,7 @@ const ModelParagraph = styled.p`
 `;
 
 const ContainerOptions = styled.div`
-	display: ${props => (props.contOptions ? 'flex' : 'none')};
+	display: ${props => (props.contOptions ? 'flex' : 'flex')};
 	width: 25%;
 	align-items: flex-end;
 	justify-content: center;
@@ -588,7 +588,7 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		width: 30%;
+		width: 32%;
 		padding: 0 0 0 4.5%;
 	}
 
@@ -858,13 +858,29 @@ const TextArea = styled.textarea`
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
+	resize: none;
+
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
+	}
 
 	@media (max-width: 490px) {
 		height: 9.37rem;
 		margin-bottom: 2rem;
 		width: 100%;
 	}
-	resize: none;
 `;
 
 // const ButtonAdd = styled(Button)`
@@ -1019,7 +1035,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	${''}
+	/* border-right: 2px; */
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -1027,14 +1043,14 @@ const BoxOrgs = styled.div`
 	border-top-left-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	border-top-right-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	background: #FFF;
-	z-index: 99;
+	z-index: 999;
 
 	::-webkit-scrollbar {
-  width: 7px;
+  	width: 7px;
 	}
 
 	::-webkit-scrollbar-track {
-  background: #fff;
+  	background: #fff;
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -1884,7 +1900,12 @@ class DocumentsScreen extends Component {
 											// MAP DOCUMENTS ADM
 											documentsList && documentsList.length > 0 ? (
 												documentsList.map((item, index) => (
-													<ContainerModel key={index}
+													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === documentsList.length - 1 && '0 0 7rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === documentsList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+														key={index}
 														zIndex={this.state.addModel}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(item)}
@@ -1950,6 +1971,10 @@ class DocumentsScreen extends Component {
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
 												this.state.listDocs.map((docs, index) => (
 													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === this.state.listDocs.length - 1 && '0 0 9rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === this.state.listDocs.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 														key={index}
 														zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
