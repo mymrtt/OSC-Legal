@@ -38,6 +38,10 @@ const ContainerUser = styled.div`
 		margin-bottom: 0;
 		order: 2;
 	}
+
+	@media (max-width: 490px) {
+		text-align: right;
+	}
 `;
 
 const ParagraphUserName = styled.p`
@@ -46,6 +50,10 @@ const ParagraphUserName = styled.p`
 		font-size: 1.25rem;
 		font-family: "Overpass", Light;
 		font-size: 1.2rem;
+	}
+
+	@media (max-width: 490px) {
+		margin: 0;
 	}
 `;
 
@@ -57,6 +65,10 @@ const ParagraphSair = styled.p`
 	cursor: pointer;
 	align-self: flex-end;
 	text-transform: uppercase;
+
+	@media (max-width: 490px) {
+		margin: 0;
+	}
 `;
 
 class HeaderModal extends Component {

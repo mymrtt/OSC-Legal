@@ -53,18 +53,18 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-	width: 50%;
+	width: 75%;
 	font-size: 1.125rem;
 	font-family: "Overpass", ExtraBold;
 	font-weight: 900;
 	text-align: center;
 	margin: 1.5rem 0 1.8rem;
 
-		@media (max-width: 648px) {
-			width: 89%;
-			font-size: 1.4rem;
-			margin: 2rem 0 4rem;
-		}
+	@media (max-width: 648px) {
+		/* width: 89%; */
+		font-size: 1.4rem;
+		margin: 2rem 0 4rem;
+	}
 `;
 
 const ImageBarcode = styled.img`

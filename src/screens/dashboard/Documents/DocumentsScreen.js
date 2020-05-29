@@ -50,7 +50,7 @@ const Container = styled.div`
   width: 100%;
 	height: 90%;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		height: 45%;
 	}
 `;
@@ -71,13 +71,13 @@ const Content = styled.div`
 		min-height: 94vh;
 	}
 
-	@media(max-width: 768px){
+	/* @media(max-width: 768px){
 		min-height: 92.6vh;
-	}
+	} */
 `;
 
 const MaximumWidth = styled.div`
-	padding: ${props => (props.isAdmin ? '4.5rem 1rem 0' : '2rem 0 0')};
+	padding: ${props => (props.isAdmin ? '3.0rem 1rem 0' : '2rem 0 0')};
 	margin-top: ${props => (props.isAdmin ? '0' : '2rem')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
@@ -92,10 +92,10 @@ const MaximumWidth = styled.div`
 	}
 
 	@media(max-width: 648px){
+		width: 100%;
+		height: 80vh;
 		padding: 0;
 		margin: 0;
-		height: 100vh;
-		width: 100%;
 	}
 `;
 
@@ -119,14 +119,14 @@ const ContainerHeader = styled.div`
 		padding-right: 1.1rem;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		padding-right: 0;
 		margin: 1.2rem;
 	}
 `;
 
 const AddModelImage = styled.img`
-	width: 180px;
+	/* width: 180px; */
 	margin-bottom: 1.5rem;
 
 	@media (max-width: 1024px) {
@@ -137,7 +137,7 @@ const AddModelImage = styled.img`
 		width: 120px;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		display: none;
 	}
 `;
@@ -150,16 +150,16 @@ const TitleSearch = styled.p`
   font-weight: 900;
 
 	@media (max-width: 1024px) {
-		font-size: 1.5rem;
+		font-size: 1.8rem;
 	}
 
 	@media (max-width: 768px) {
-		width: 60%;
+		/* width: 60%; */
 		font-size: 1.5rem;
 		text-align: center;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		display: none;
 	}
 `;
@@ -179,14 +179,13 @@ const ContainerContent = styled.div`
 		padding-right: 0;
 		padding-top: 2rem;
 	}
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		padding: 0 0.4rem 0 1rem;
 		flex-direction: column;
 	}
 `;
 
 const ContainerAddModel = styled.div`
-	${''}
 	width: 34%;
 	display: flex;
 	align-items: center;
@@ -201,7 +200,7 @@ const ContainerAddModel = styled.div`
 		padding: 0;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		display: none;
 	}
 `;
@@ -239,7 +238,7 @@ const InitialAddModel = styled.div`
 		width: 100%;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 100%;
 		padding: 0 6%;
 		margin-bottom: 2rem;
@@ -247,12 +246,12 @@ const InitialAddModel = styled.div`
 `;
 
 const ContainerScroll = styled.div`
-	max-height: 73vh;
 	width: 100%;
-	max-height: 65vh;
-	overflow-y: scroll;
+	max-height: 73vh;
+	/* max-height: 65vh; */
 	display: ${props => (props.initialModel ? 'none' : 'inline-block')};
 	margin-right: 1rem;
+	overflow-y: scroll;
 
 	::-webkit-scrollbar {
   width: 7px;
@@ -282,9 +281,9 @@ const ContainerScroll = styled.div`
 		max-height: 85vh
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		min-width: 100%;
-		min-height: 50vh;
+		min-height: 100vh;
 		padding-bottom: 10rem;
 		margin: 0;
 		display: flex;
@@ -311,37 +310,37 @@ const TextInitialAddModel = styled.p`
 	span {
 		color: #85144B;
 		text-decoration: underline;
-		cursor: pointer;
 		text-underline-position: under;
+		cursor: pointer;
 	}
 
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		margin-top: 1rem;
 	}
 `;
 
 const ContainerSearch = styled.div`
-	margin-right: .5rem;
 	width: 60%;
 	display: flex;
-	justify-content: flex-end;
 	align-items: center;
+	justify-content: flex-end;
+	margin-right: .5rem;
 
 	@media (max-width: 1024px) {
-		margin-right: 1.1rem;
 		width: 65%;
+		margin-right: 1.1rem;
 	}
 
 	@media (max-width: 768px) {
-		margin-right: 0;
     width: 90%;
+		margin-right: 0;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 100%;
 		margin-right: 0;
 		display: flex;
@@ -356,22 +355,22 @@ const SearchText = styled.p`
 	font-weight: 600;
   margin-right: 1rem;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		display: none;
 	}
 `;
 
 const ContainerSearchInput = styled.label`
-	display: flex;
 	width: ${props => (props.isAdmin ? '70%' : '65%')};
-	border-radius: 3px;
-	padding: 0.2rem 1rem 0.1rem 1rem;
-	margin-right: .3rem;
 	border: 0.5px solid #85144B;
 	border-bottom-right-radius: ${props => (props.filter ? '0' : '3px')};
 	border-bottom-left-radius: ${props => (props.filter ? '0' : '3px')};
+	border-radius: 3px;
+	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding: 0.2rem 1rem 0.1rem 1rem;
+	/* margin-right: .3rem; */
 	position: relative;
 	cursor: ${props => (props.isAdmin ? 'none' : 'pointer')};
 
@@ -380,31 +379,32 @@ const ContainerSearchInput = styled.label`
     width: 1.09rem;
 	}
 
-	@media (max-width: 490px) {
-		width: 100%;
+	@media (max-width: 648px) {
+		width: 90%;
 		margin: 0;
 	}
 `;
 
 const SearchInput = styled.input`
   width: 100%;
-	border: 0;
 	max-width: 100%;
-	outline: none;
-	padding-left: .5rem;
-	font-size: 1rem;
-	font-family: Overpass, Regular;
+	border: 0;
 	color: #85144B;
+	font-size: 0.9rem;
+	/* font-size: 1rem; */
+	font-family: Overpass, Regular;
+	padding-left: .5rem;
+	outline: none;
 
 	@media (max-width: 1024px) {
-		font-size: 0.9rem;
+		/* font-size: 0.9rem; */
 	}
 
 	@media (max-width: 768px) {
 		font-size: .8rem;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		font-size: 1rem;
 	}
 `;
@@ -414,12 +414,13 @@ const ContainerModels = styled.div`
 	display: ${(props => (props.initialModel ? 'none' : 'flex'))};
 	flex-direction: column;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
+		width: 90%;
     margin-bottom: 10rem;
 	}
 
-	@media (max-width: 490px) {
-		width: 100%;
+	@media (max-width: 648px) {
+		width: 90%;
 		margin-bottom: 0;
 	}
 `;
@@ -456,7 +457,7 @@ const ContainerModel = styled.div`
 				right: 9rem;
 			}
 
-			@media (max-width: 490px) {
+			@media (max-width: 648px) {
 				width: 10rem;
 				height: 1px;
 				display: ${props => (props.displayBefore ? 'none' : 'flex')};
@@ -482,10 +483,11 @@ const ContainerModel = styled.div`
 		width: 100%;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 100%;
 		padding: 1rem;
-		height: 7rem;
+		margin: ${props => (props.lastIndex)};
+		height: auto;
 		order: 3;
 		z-index: initial;
 	}
@@ -505,7 +507,7 @@ const ContainerModelDescription = styled.div`
 		width: ${props => (props.modal ? '100%' : '68%')};
 	}
 
-	@media(max-width: 490px){
+	@media(max-width: 648px){
 		width: 100%;
 	}
 
@@ -518,7 +520,7 @@ const ContainerModelDescription = styled.div`
 		display: flex;
 		padding: ${props => (props.isAdmin ? '0' : '0 1rem')};
 
-		@media (max-width: 490px) {
+		@media (max-width: 648px) {
 			width: 100%;
 		}
 	}
@@ -531,7 +533,7 @@ const ModelNumber = styled.h2`
 	font-family: "Overpass", Black;
 	font-size: 1.5rem;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		font-size: 1.2rem;
 	}
 `;
@@ -545,7 +547,7 @@ const ModelTitle = styled.h2`
 		font-size: 1.3rem;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		font-size: 1rem;
 	}
 `;
@@ -562,7 +564,7 @@ const ModelParagraph = styled.p`
 		font-size: 1rem;
 
 	}
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 100%;
 		font-size: .8rem;
 		line-height: 1.3rem;
@@ -570,13 +572,13 @@ const ModelParagraph = styled.p`
 `;
 
 const ContainerOptions = styled.div`
-	display: ${props => (props.contOptions ? 'flex' : 'none')};
+	display: ${props => (props.contOptions ? 'flex' : 'flex')};
 	width: 25%;
 	align-items: flex-end;
 	justify-content: center;
 	flex-direction: column;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		.Edit {
 			display: none;
 		}
@@ -588,11 +590,11 @@ const ContainerOptions = styled.div`
 	}
 
 	@media (max-width: 768px) {
-		width: 30%;
+		width: 32%;
 		padding: 0 0 0 4.5%;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		position: absolute;
 		width: 160px;
 		height: 130px;
@@ -628,7 +630,7 @@ const Option = styled.button`
 		padding: 0 0.8rem;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		align-self: center;
 		margin-bottom: 0;
 		height: 100%;
@@ -654,7 +656,7 @@ const OptionText = styled.span`
 		font-size: 1rem;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		font-size: 1.3rem;
     margin-left: 0.8rem;
 	}
@@ -672,7 +674,7 @@ const ContainerModal = styled.div`
 	z-index: 1;
 	background: rgba(112, 112, 112, 0.5);
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		flex-direction: column;
 	}
 `;
@@ -691,7 +693,7 @@ const ModalAddModel = styled.form`
 		height: 540px;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		height: 100vh;
 		width: 100%;
 		position: absolute;
@@ -757,7 +759,7 @@ const TitleAddModel = styled.h2`
   font-family: "Overpass", Bold;
   font-weight: 900;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		font-size: 1.5rem;
 		margin-bottom: 1rem;
 	}
@@ -783,7 +785,7 @@ const UploadFile = styled.label`
 	font-size: 1.1rem;
 	font-family: "Overpass", SemiBold;
 
-	@media(max-width: 490px){
+	@media(max-width: 648px){
 		margin-bottom: 2rem;
 	}
 
@@ -815,7 +817,7 @@ const TextUploadFile = styled.div`
 		text-decoration: underline;
 		${''}
 	}
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 52%;
 	}
 `;
@@ -843,7 +845,7 @@ const Input = styled.input`
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
 
-	@media(max-width: 490px){
+	@media(max-width: 648px){
 		margin-bottom: 2.5rem;
 	}
 `;
@@ -858,13 +860,29 @@ const TextArea = styled.textarea`
 	background: #FAFAFA;
 	font-size: 1rem;
 	font-family: "Overpass", SemiBold;
+	resize: none;
 
-	@media (max-width: 490px) {
+	::-webkit-scrollbar {
+  width: 7px;
+	}
+
+	::-webkit-scrollbar-track {
+  background: #fff;
+	}
+
+	::-webkit-scrollbar-thumb {
+  	background: #FFCFCD;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+  	background: #f9bdbb;
+	}
+
+	@media (max-width: 648px) {
 		height: 9.37rem;
 		margin-bottom: 2rem;
 		width: 100%;
 	}
-	resize: none;
 `;
 
 // const ButtonAdd = styled(Button)`
@@ -896,7 +914,7 @@ const TextArea = styled.textarea`
 // `;
 
 const ContainerModalDelete = styled(ContainerModal)`
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		background: #ffffff;
 	}
 `;
@@ -907,11 +925,11 @@ const ModalDelete = styled.div`
 	padding: 1% 1% 1% 1%;
 
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 100%;
 		height: 100vh;
 		padding: 5%;
-		    display: flex;
+		display: flex;
     justify-content: space-between;
     flex-direction: column;
 	}
@@ -930,7 +948,7 @@ const TitleDelete = styled(TitleAddModel)`
 `;
 
 const WrapTextModal = styled.div`
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		height: 30%;
     display: flex;
     ${''}
@@ -949,7 +967,7 @@ const TextModal = styled.p`
 		font-family: 'Overpass', Bold;
 		color: #404040;
 	}
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		margin: 0;
 		font-size: 1.3rem;
 	}
@@ -962,9 +980,9 @@ const ButtonsModal = styled.div`
 	justify-content: space-between;
 	width: 100%;
 
-	@media (max-width: 490px) {
-		margin: 0;
+	@media (max-width: 648px) {
 		width: 100%;
+		margin: 0;
 	}
 `;
 
@@ -980,7 +998,7 @@ const ButtonCancel = styled.button`
 	font-weight: 600;
 	margin-right: 1rem;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		margin: 0;
 	}
 `;
@@ -1019,7 +1037,7 @@ const BoxOrgs = styled.div`
 	flex-direction: column;
 	border-radius: 3px;
 	border: 1px solid #85144B;
-	${''}
+	/* border-right: 2px; */
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -1027,14 +1045,14 @@ const BoxOrgs = styled.div`
 	border-top-left-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	border-top-right-radius: ${props => (props.isBoxOrgs ? 0 : '3px')};
 	background: #FFF;
-	z-index: 99;
+	z-index: 999;
 
 	::-webkit-scrollbar {
-  width: 7px;
+  	width: 7px;
 	}
 
 	::-webkit-scrollbar-track {
-  background: #fff;
+  	background: #fff;
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -1045,7 +1063,7 @@ const BoxOrgs = styled.div`
   	background: #f9bdbb;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		z-index: 6;
 	}
 `;
@@ -1084,7 +1102,7 @@ const Modal = styled.div`
 		width: 40rem;
 	}
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 100%;
 		height: 100%;
 		z-index: 10;
@@ -1116,7 +1134,7 @@ const TitleModalList = styled.h2`
 	font-family: Overpass;
 	margin: 1rem 0 .5rem 0;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		font-size: 1.8rem;
 	}
 `;
@@ -1159,7 +1177,7 @@ const ButtonModalList = styled.button`
 	font-weight: bold;
 	font-size: 1rem;
 
-	@media (max-width: 490px) {
+	@media (max-width: 648px) {
 		width: 100%;
 		height: 4.5rem;
 	}
@@ -1172,7 +1190,7 @@ const ImageExit = styled.img`
 	margin-top: .5rem;
 	cursor: pointer;
 
-	@media(max-width: 490px){
+	@media(max-width: 648px){
 		top: 6rem;
 		right: 1.5rem;
 	}
@@ -1232,8 +1250,8 @@ class DocumentsScreen extends Component {
 		try {
 			const response = await createTemplate(title, description, isFile);
 		} catch (err) {
-		}
 	}
+}
 
 
 	handleOnOptions = (item) => {
@@ -1776,7 +1794,7 @@ class DocumentsScreen extends Component {
 
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
-				<Header />
+				<Header/>
 				<Content isAdmin={this.props.isAdmin} isMobileButton={this.state.isMobileButton}>
 					<MaximumWidth isAdmin={this.props.isAdmin}>
 						<ContainerAddModel>
@@ -1791,17 +1809,17 @@ class DocumentsScreen extends Component {
 								? (
 									<Button
 										width="17.5rem"
-										height="4.5rem"
-										margin="1rem 0 0 0"
-										text="Adicionar Modelo"
-										onClick={this.handleAddModel}
-										hidden={this.state.addModel || this.state.deleteModal}
-										widthMobileSmall="95%"
-										positionMb="fixed"
-										bottom='0'
+										widthMobile="85%"
 										widthTablet="14rem"
-										left="11px"
+										height="4.5rem"
+										bottomMobile='0'
+										positionMobile="fixed"
+										margin="1rem 0 0 0"
 										fontSize="1.3rem"
+										// left="11px"
+										text="Adicionar Modelo"
+										hidden={this.state.addModel || this.state.deleteModal}
+										onClick={this.handleAddModel}
 									/>
 								) : (
 									this.state.selectOrg !== '' ? (
@@ -1884,7 +1902,12 @@ class DocumentsScreen extends Component {
 											// MAP DOCUMENTS ADM
 											documentsList && documentsList.length > 0 ? (
 												documentsList.map((item, index) => (
-													<ContainerModel key={index}
+													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === documentsList.length - 1 && '0 0 7rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === documentsList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+														key={index}
 														zIndex={this.state.addModel}
 														displayBefore={this.state.modalDelete}
 														onMouseEnter={() => this.handleOnOptions(item)}
@@ -1950,6 +1973,10 @@ class DocumentsScreen extends Component {
 											this.state.listDocs && this.state.listDocs.length > 0 ? (
 												this.state.listDocs.map((docs, index) => (
 													<ContainerModel
+														// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
+														style={{ margin: index === this.state.listDocs.length - 1 && '0 0 9rem 0' }}
+														// MARGEM ULTIMO ITEM LISTA MOBILE
+														lastIndex={(window.innerWidth <= 490) && index === this.state.listDocs.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 														key={index}
 														zIndex={this.state.modalListDoc}
 														displayBefore={this.state.modalDelete}
@@ -2048,10 +2075,10 @@ class DocumentsScreen extends Component {
 													width="17.5rem"
 													height="4.5rem"
 													marginMobile="0 0 1rem 0"
-													widthMobileSmall="95%"
-													bottom="0"
-													left="11px"
-													positionMb="fixed"
+													widthMobile="85%"
+													bottomMobile="0"
+													// left="11px"
+													positionMobile="fixed"
 													onClick={this.handleAddModel}
 													text="Adicionar Modelo"
 													fontSizeMobile="1.2rem"
@@ -2066,10 +2093,10 @@ class DocumentsScreen extends Component {
 														width="17.5rem"
 														height="4.5rem"
 														marginMobile="0 0 1rem 0"
-														widthMobileSmall="95%"
-														bottom="0"
-														left="11px"
-														positionMb="fixed"
+														widthMobile="85%"
+														bottomMobile="0"
+														// left="11px"
+														positionMobile="fixed"
 														onClick={this.openModalListDoc}
 														text="Adicionar Documento"
 														fontSizeMobile="1.2rem"

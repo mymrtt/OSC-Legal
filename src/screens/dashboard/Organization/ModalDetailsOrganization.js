@@ -38,10 +38,12 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+
 	@media (max-width: 935px) {
 		width: 95%;
 		margin: 0;
 	}
+
 	@media (max-width: 648px) {
 		width: 100%;
 		min-height: 100vh;
@@ -59,10 +61,18 @@ const Figure = styled.figure`
 
 const ImageBack = styled.img`
 	display: none;
+
 	@media (max-width: 648px) {
 		display: flex;
 		align-self: end;
 		padding: 1rem 0 2.3rem 1rem;
+	}
+`;
+
+const Content = styled.div`
+
+	@media (max-width: 648px) {
+		height: 100vh;
 	}
 `;
 
@@ -71,11 +81,13 @@ const ContentAdmin = styled.section`
 	flex-direction: row;
 	justify-content: space-between;
 	margin: ${props => (props.margin && '0 3.4rem')};
+
 	@media (max-width: 935px) {
 		margin: ${props => (props.margin && '0 1rem')};
 	}
+
 	@media (max-width: 648px) {
-		height: auto;
+		/* height: auto; */
 		margin: 0;
 		flex-direction: column;
 		order: 1;
@@ -86,6 +98,7 @@ const ContentConsultor = styled.span`
 	width: 60%;
 	display: flex;
 	flex-direction: column;
+
 	@media (max-width: 648px) {
 		width: 100%;
 		padding: 0 1rem;
@@ -99,12 +112,14 @@ const ContentConsultorItem = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	margin-left: 3.4rem;
+
 	@media (max-width: 935px) {
 		/* width: 100%; */
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-left: 1rem;
 	}
+
 	@media (max-width: 648px) {
 		margin: 0;
 	}
@@ -119,6 +134,7 @@ const Title = styled.h2`
 	padding-bottom: 1.7rem;
 	margin-left: 3.4rem;
 	text-transform: uppercase;
+
 	@media (max-width: 935px) {
 		margin-left: 1rem;
 	}
@@ -151,6 +167,10 @@ const ContentCreate = styled.div`
 	display: flex;
 	flex-direction: column;
 
+	@media (max-width: 768px) {
+		width: 40%;
+}
+
 	@media (max-width: 648px) {
 		width: 100%;
 		border-left: 0;
@@ -166,16 +186,18 @@ const ImageClosed = styled.img`
 	align-self: flex-end;
 	padding: 0.8rem 0.8rem 0;
 	cursor: pointer;
+
 	@media (max-width: 648px) {
 		display: none;
 	}
 `;
 
-const ContainerOrganization = styled.span`
+const ContainerOrganization = styled.section`
 	background-color: #FFCFCD;
 	display: flex;
 	flex-direction: column;
 	padding-bottom: 1.5rem;
+
 	@media (max-width: 648px) {
 		/* height: auto; */
 		padding: 0 1rem 2rem;
@@ -188,10 +210,12 @@ const ContentOrganization = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	margin: ${props => (props.margin && '0 3.4rem')};
-	padding: 0 0 2rem;
+	/* padding: 0 0 2rem; */
+
 	@media (max-width: 935px) {
 		margin: ${props => (props.margin && '0 1rem')};
 	}
+
 	@media (max-width: 648px) {
 		flex-direction: column;
 		margin: 0;
@@ -202,6 +226,7 @@ const ContentOrganization = styled.div`
 const ContentOrganizationMobile = styled.div`
 	display: flex;
 	flex-direction: row;
+	padding-bottom: 1rem;
 `;
 
 const ContentConsultorDetails = styled.div`
@@ -281,6 +306,7 @@ const SeparationMobile = styled.div`
 	display: none;
 	@media (max-width: 648px) {
 		width: 56%;
+		height: 45vh;
 		display: flex;
 		flex-direction: column;
 	}
@@ -288,6 +314,7 @@ const SeparationMobile = styled.div`
 
 const ContainerSelected = styled.div`
 	display: none;
+
 	@media (max-width: 648px) {
 		width: 100%;
 		padding: 1rem 0 0;
@@ -387,50 +414,51 @@ class ModalDetailsOrganization extends Component {
 					<Figure>
 						<ImageBack src={ImageBackMobile} onClick={this.props.handleClosedModal} />
 					</Figure>
-					<ContentAdmin>
-						<ContentConsultor>
-							<Title>consultor</Title>
-							<ContentConsultorItem>
-								<div>
-									<SubTitle>nome</SubTitle>
-									<SubAnswer>{user.name || '-'}</SubAnswer>
-									{/* <SubTitle>rg</SubTitle>
+					<Content>
+						<ContentAdmin>
+							<ContentConsultor>
+								<Title>consultor</Title>
+								<ContentConsultorItem>
+									<div>
+										<SubTitle>nome</SubTitle>
+										<SubAnswer>{user.name || '-'}</SubAnswer>
+										{/* <SubTitle>rg</SubTitle>
 									<SubAnswer>rg do consultor</SubAnswer> */}
-									<SubTitle>cpf</SubTitle>
-									<SubAnswer>{user.cpf || '-'}</SubAnswer>
-								</div>
-								<div>
-									{/* <SubTitle>data de nascimento</SubTitle>
+										<SubTitle>cpf</SubTitle>
+										<SubAnswer>{user.cpf || '-'}</SubAnswer>
+									</div>
+									<div>
+										{/* <SubTitle>data de nascimento</SubTitle>
 									<SubAnswer>data do consultor</SubAnswer> */}
-								</div>
-								<div>
-									<SubTitle>e-mail</SubTitle>
-									<SubAnswer>{user.email || '-'}</SubAnswer>
-									<SubTitle>telefone</SubTitle>
-									<SubAnswer>{user.telephone || '-'}</SubAnswer>
-								</div>
-							</ContentConsultorItem>
-						</ContentConsultor>
-						<ContentCreate
-							width={this.props.isAdmin}
-							padding={this.props.isAdmin}>
-							<ImageClosed src={ImageClose} alt="Fechar" onClick={this.props.handleClosedModal} />
-							<ContentConsultorDetails>
-								<ContentSubTitle>
-									<div>
-										<SubTitle>criado em</SubTitle>
-										<SubAnswer>{org.createdIn || '-'}</SubAnswer>
 									</div>
 									<div>
-										<SubTitle>autorizado em</SubTitle>
-										<SubAnswer>{org.authorization || '-'}</SubAnswer>
+										<SubTitle>e-mail</SubTitle>
+										<SubAnswer>{user.email || '-'}</SubAnswer>
+										<SubTitle>telefone</SubTitle>
+										<SubAnswer>{user.telephone || '-'}</SubAnswer>
 									</div>
-									<div>
-										<SubTitle>vencimento</SubTitle>
-										<SubAnswer>{org.dueDate || '-'}</SubAnswer>
-									</div>
-								</ContentSubTitle>
-								{!this.props.isAdmin
+								</ContentConsultorItem>
+							</ContentConsultor>
+							<ContentCreate
+								width={this.props.isAdmin}
+								padding={this.props.isAdmin}>
+								<ImageClosed src={ImageClose} alt="Fechar" onClick={this.props.handleClosedModal} />
+								<ContentConsultorDetails>
+									<ContentSubTitle>
+										<div>
+											<SubTitle>criado em</SubTitle>
+											<SubAnswer>{org.createdIn || '-'}</SubAnswer>
+										</div>
+										<div>
+											<SubTitle>autorizado em</SubTitle>
+											<SubAnswer>{org.authorization || '-'}</SubAnswer>
+										</div>
+										<div>
+											<SubTitle>vencimento</SubTitle>
+											<SubAnswer>{org.dueDate || '-'}</SubAnswer>
+										</div>
+									</ContentSubTitle>
+									{!this.props.isAdmin
 									&&	<ContainerEdit>
 										<SpanContainer onClick={() => this.props.isModalCreateOrganization('edit')}>
 											<ImageEdite src={ImageEdit}/>
@@ -441,73 +469,74 @@ class ModalDetailsOrganization extends Component {
 											<ContainerOptionDelete>Excluir</ContainerOptionDelete>
 										</SpanContainer>
 									</ContainerEdit>
-								}
-							</ContentConsultorDetails>
-						</ContentCreate>
-					</ContentAdmin>
-					<ContainerOrganization>
-						<Title>organização</Title>
-						<ContentOrganization margin>
-							<Separation>
-								<SubTitle>nome fantasia</SubTitle>
-								<SubAnswer>{org.tradingName || '-'}</SubAnswer>
-								<SubTitle>razão social</SubTitle>
-								<SubAnswer>{org.companyName || '-'}</SubAnswer>
-							</Separation>
-							<Separation>
-								<SubTitle>cnpj</SubTitle>
-								<SubAnswer>{org.cnpj || '-'}</SubAnswer>
-								<SubTitle>telefone</SubTitle>
-								<SubAnswer>{org.telephone || '-'}</SubAnswer>
-							</Separation>
-							<Separation>
-								{/* <SubTitle>email</SubTitle>
-								<SubAnswer>{org.email || '-'}</SubAnswer> */}
-								<SubTitle>endereço</SubTitle>
-								<SubAnswer>{org.address || '-'}</SubAnswer>
-								<SubTitle>cep</SubTitle>
-								<SubAnswer>{org.cep || '-'}</SubAnswer>
-							</Separation>
-							<Separation>
-								<SubTitle>complemento</SubTitle>
-								<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
-								<SubTitle>bairro</SubTitle>
-								<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
-							</Separation>
-							<Separation>
-								{/* <SubTitle>cep</SubTitle>
-								<SubAnswer>{org.cep || '-'}</SubAnswer> */}
-								<SubTitle>cidade</SubTitle>
-								<SubAnswer>{org.city || '-'}</SubAnswer>
-							</Separation>
-							<ContentOrganizationMobile>
-								<SeparationMobile>
+									}
+								</ContentConsultorDetails>
+							</ContentCreate>
+						</ContentAdmin>
+						<ContainerOrganization>
+							<Title>organização</Title>
+							<ContentOrganization margin>
+								<Separation>
 									<SubTitle>nome fantasia</SubTitle>
 									<SubAnswer>{org.tradingName || '-'}</SubAnswer>
-									{/* <SubTitle>email</SubTitle>
-									<SubAnswer>{org.email || '-'}</SubAnswer> */}
-									<SubTitle>cnpj</SubTitle>
-									<SubAnswer>{org.cnpj || '-'}</SubAnswer>
-									<SubTitle>complemento</SubTitle>
-									<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
-									<SubTitle>bairro</SubTitle>
-									<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
-								</SeparationMobile>
-								<SeparationMobile>
 									<SubTitle>razão social</SubTitle>
 									<SubAnswer>{org.companyName || '-'}</SubAnswer>
+								</Separation>
+								<Separation>
+									<SubTitle>cnpj</SubTitle>
+									<SubAnswer>{org.cnpj || '-'}</SubAnswer>
 									<SubTitle>telefone</SubTitle>
 									<SubAnswer>{org.telephone || '-'}</SubAnswer>
+								</Separation>
+								<Separation>
+									{/* <SubTitle>email</SubTitle>
+								<SubAnswer>{org.email || '-'}</SubAnswer> */}
 									<SubTitle>endereço</SubTitle>
 									<SubAnswer>{org.address || '-'}</SubAnswer>
 									<SubTitle>cep</SubTitle>
 									<SubAnswer>{org.cep || '-'}</SubAnswer>
+								</Separation>
+								<Separation>
+									<SubTitle>complemento</SubTitle>
+									<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
+									<SubTitle>bairro</SubTitle>
+									<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
+								</Separation>
+								<Separation>
+									{/* <SubTitle>cep</SubTitle>
+								<SubAnswer>{org.cep || '-'}</SubAnswer> */}
 									<SubTitle>cidade</SubTitle>
 									<SubAnswer>{org.city || '-'}</SubAnswer>
-								</SeparationMobile>
-							</ContentOrganizationMobile>
-						</ContentOrganization>
-					</ContainerOrganization>
+								</Separation>
+								<ContentOrganizationMobile>
+									<SeparationMobile>
+										<SubTitle>nome fantasia</SubTitle>
+										<SubAnswer>{org.tradingName || '-'}</SubAnswer>
+										{/* <SubTitle>email</SubTitle>
+									<SubAnswer>{org.email || '-'}</SubAnswer> */}
+										<SubTitle>cnpj</SubTitle>
+										<SubAnswer>{org.cnpj || '-'}</SubAnswer>
+										<SubTitle>complemento</SubTitle>
+										<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
+										<SubTitle>bairro</SubTitle>
+										<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
+									</SeparationMobile>
+									<SeparationMobile>
+										<SubTitle>razão social</SubTitle>
+										<SubAnswer>{org.companyName || '-'}</SubAnswer>
+										<SubTitle>telefone</SubTitle>
+										<SubAnswer>{org.telephone || '-'}</SubAnswer>
+										<SubTitle>endereço</SubTitle>
+										<SubAnswer>{org.address || '-'}</SubAnswer>
+										<SubTitle>cep</SubTitle>
+										<SubAnswer>{org.cep || '-'}</SubAnswer>
+										<SubTitle>cidade</SubTitle>
+										<SubAnswer>{org.city || '-'}</SubAnswer>
+									</SeparationMobile>
+								</ContentOrganizationMobile>
+							</ContentOrganization>
+						</ContainerOrganization>
+					</Content>
 					<ContainerSelected>
 						{this.props.isAdmin
 							?	this.state.paymentMethodList.map(item => (

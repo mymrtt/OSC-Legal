@@ -38,11 +38,13 @@ const Container = styled.div`
 	@media (max-width: 648px) {
 		padding: 0;
 		flex-wrap: wrap;
+		border-bottom: ${props => (!props.border ? '1px solid  #707070' : 'none')};
 	}
 `;
 
 const WrapButton = styled.div`
-	width: 55%;
+	/* width: 48%; */
+	width: ${props => (props.width ? '48%' : '60%')};
 	height: 5.3rem;
 	display: flex;
 	justify-content: flex-start;
@@ -59,6 +61,10 @@ const WrapButton = styled.div`
 		text-decoration: none;
 		color: #000;
 		margin: 0 1.5rem;
+	}
+
+	@media (max-width: 1024px) {
+		width: ${props => (props.width ? '48%' : '55%')};
 	}
 
 	@media(max-width: 768px){
@@ -110,8 +116,8 @@ const ContainerUser = styled.div`
 	}
 
 	@media (max-width: 490px) {
-		margin: 0 2.2rem 0 0;
-		margin: ${props => (props.isAdmin ? '0 2.2rem 0 0' : '0 1rem 0 0')};
+		margin: 0 1rem 0 0;
+		width: 38%;
 	}
 `;
 
@@ -154,13 +160,13 @@ class Header extends Component {
 			<Container border={this.props.isAdmin}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
-						margin={'0 0 0 2.5rem'}
+						margin={'0 0 0 3rem'}
 						marginMobile='1rem 0 0 .5rem'
 						paddingMobile='0.5rem'
 						height='2.8rem'
 					/>
 				</NavLink>
-				<WrapButton>
+				<WrapButton width={this.props.isAdmin}>
 					<NavLink
 						exact to="/organizations"
 						activeClassName="button-header-dash"
