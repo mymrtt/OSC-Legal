@@ -9,33 +9,8 @@ const initialState = {
 	documentsList: [
 		{
 			id: 1,
-			title: 'Modelo 1',
-			description: 'fsankdsgfhdasbhklfsdfhjl',
-		},
-		{
-			id: 2,
-			title: 'Modelo 2',
-			description: 'dsfshgswdsfhgjhgdsfghgresfhggkldsfnonfa  f k OJGO NOÁJofp ançgnmd çljhOPI SKHDGISBHKS LAKPFJO kslnfksadhogj fas,mv kçHKG SM GKÇFADSHIPGFHSBKLG SLJPOHjlgd slnfdsoçjbv dsnk çkJHIPGB SL FKÇLDSJHIPDHWBLJ VLKJOPbglsc çfahiogbs lgds lçdshjs dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd asdnfognisahdgionspgjfiosbgkfsdnipohi',
-		},
-		{
-			id: 3,
-			title: 'Modelo 3',
-			description: 'fsankdsgfhdasbhklfsdfhjl',
-		},
-		{
-			id: 4,
-			title: 'Modelo 4',
-			description: 'fsankdsgfhdasbhklfsdfhjl',
-		},
-		{
-			id: 5,
-			title: 'Modelo 5',
-			description: 'fsankdsgfhdasbhklfsdfhjl',
-		},
-		{
-			id: 6,
-			title: 'Modelo 6',
-			description: 'fsankdsgfhdasbhklfsdfhjl',
+			title: 'MODELO 1',
+			description: 'fsadipgndioashgfskagopfsahgipfs',
 		},
 	],
 };
