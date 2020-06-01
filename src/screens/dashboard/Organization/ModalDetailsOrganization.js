@@ -200,7 +200,7 @@ const ContainerOrganization = styled.section`
 
 	@media (max-width: 648px) {
 		/* height: auto; */
-		padding: 0 1rem 2rem;
+		padding: 0 0 4rem 1rem;
 		order: 3;
 	}
 `;

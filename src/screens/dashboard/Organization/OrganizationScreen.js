@@ -1214,7 +1214,7 @@ class OrganizationScreen extends Component {
 							widthMobile='88%'
 							// widthMobileSmall='80%'
 							widthMobileSmall='90%'
-							height='4.3rem'
+							height='4.5rem'
 							heightMobile='5.3rem'
 							fontSize='1.4rem'
 							margin='1rem 0 1rem 2.5rem'
