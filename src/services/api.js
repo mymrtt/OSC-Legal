@@ -3,20 +3,20 @@ import axios from 'axios';
 export const API_URL = 'http://localhost:3333';
 
 // Onboarding
-export const createUserAccount = (token, user) => axios({
+export const createUserAccount = (user, base64credentials) => axios({
 	url: `${API_URL}/users`,
 	method: 'post',
 	headers: {
-		Authorization: `Bearer ${token}`,
+		Authorization: `Basic ${base64credentials}`,
 	},
 	data: user,
 });
 
-export const login = user => axios({
+export const login = (user, base64credentials) => axios({
 	url: `${API_URL}/auth/authenticate`,
 	method: 'post',
 	headers: {
-		Authorization: `Basic ${user}`,
+		Authorization: `Basic ${base64credentials}`,
 	},
 	data: user,
 });
