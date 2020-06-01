@@ -109,7 +109,7 @@ const Title = styled.h2`
 
 const ContainerUser = styled.div`
 	width: 100%;
-	padding-left: 3.5rem;
+	padding-left: 3.7rem;
 	display: flex;
 	flex-flow: wrap column;
 	@media(max-width: 648px) {
@@ -570,7 +570,7 @@ class ModalCreateOrganization extends Component {
 												modalOrg
 												margin={isCnpjError ? '0' : '0 0 2rem'}
 												type="number"
-												placeholder="00.000.000/0000-00"
+												placeholder="00000000000000"
 												onChange={ev => this.handleChangeCnpj('cnpj', ev)}
 												value={this.state.cnpj}
 												name="cnpj"
@@ -639,7 +639,6 @@ class ModalCreateOrganization extends Component {
 													value={this.state.addressComplement}
 													name="addressComplement"
 													isError={isAddressComplementError}
-													required
 												/>
 												{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
 											</WrapOrganizationItem>
