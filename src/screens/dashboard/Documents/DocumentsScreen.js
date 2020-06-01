@@ -2066,6 +2066,40 @@ class DocumentsScreen extends Component {
 								<ContainerScroll>
 									<ContainerModels>
 										{isAdmin ? this.renderDocAdmin() : this.renderDocUser()}
+										{isAdmin ? (
+											this.state.isMobileButton === true && this.state.addModel !== true ? (
+												<Button
+													width="17.5rem"
+													height="4.5rem"
+													marginMobile="0 0 1rem 0"
+													widthMobile="85%"
+													bottomMobile="0"
+													// left="11px"
+													positionMobile="fixed"
+													onClick={this.handleAddModel}
+													text="Adicionar Modelo"
+													fontSizeMobile="1.2rem"
+												/>
+											) : (
+													null
+												)
+										) : (
+												this.state.isMobileButton === true
+													&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
+														<Button
+															width="17.5rem"
+															height="4.5rem"
+															marginMobile="0 0 1rem 0"
+															widthMobile="85%"
+															bottomMobile="0"
+															// left="11px"
+															positionMobile="fixed"
+															onClick={this.openModalListDoc}
+															text="Adicionar Documento"
+															fontSizeMobile="1.2rem"
+														/>
+													) : (
+														null))}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}
