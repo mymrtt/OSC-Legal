@@ -589,7 +589,7 @@ const ContainerModalDelete = styled.div`
 const ModalDelete = styled.div`
 	width: 480px;
 	background: #FFF;
-	padding: 1% 1% 1% 1%;
+	padding: 1% 1% 1% 3%;
 
 	@media (max-width: 490px) {
 		width: 100%;
@@ -617,7 +617,7 @@ const TitleDelete = styled.h2`
 	font-size: 2rem;
 	margin-top: 2%;
 	margin-bottom: 1%;
-	margin-left: 1rem;
+	/* margin-left: 1rem; */
   font-family: "Overpass", Bold;
   font-weight: 900;
 
@@ -628,7 +628,10 @@ const TitleDelete = styled.h2`
 `;
 
 const WrapTextModal = styled.div`
+	width: 85%;
+
 	@media (max-width: 490px) {
+		width: 100%;
 		height: 30%;
     display: flex;
     flex-direction: column;
@@ -636,6 +639,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
+	width: ${props => (props.width && '79%')};
 	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
@@ -647,7 +651,9 @@ const TextModal = styled.p`
 	}
 
 	@media (max-width: 490px) {
+		width: ${props => (props.width && '100%')};
 		margin: 0;
+		margin-top: ${props => (props.margin && '2rem')};
 		font-size: 1.3rem;
 	}
 `;
@@ -989,7 +995,7 @@ class OrganizationScreen extends Component {
 					<TextModal>
 						Após ser excluida, uma organização não pode ser recuperada.
 					</TextModal>
-					<TextModal>
+					<TextModal width margin>
 						Você deseja excluir <strong>{this.state.itemSelected.tradingName}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
@@ -1267,7 +1273,7 @@ class OrganizationScreen extends Component {
 								<TextNoOrganitazion>
 									{isAdmin
 										? <TextInformation>Não há organizações no momento.</TextInformation>
-										: <TextInformation>Essa organização não existe!</TextInformation>}
+										: <TextInformation>Essa organização não existe.</TextInformation>}
 								</TextNoOrganitazion>
 							)}
 						</Content>

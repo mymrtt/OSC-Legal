@@ -921,7 +921,7 @@ const ContainerModalDelete = styled(ContainerModal)`
 const ModalDelete = styled.div`
 	background: #FFF;
 	width: 480px;
-	padding: 1% 1% 1% 1%;
+	padding: 1% 1% 1% 3%;
 
 
 	@media (max-width: 648px) {
@@ -947,6 +947,8 @@ const TitleDelete = styled(TitleAddModel)`
 `;
 
 const WrapTextModal = styled.div`
+	width: 85%;
+
 	@media (max-width: 648px) {
 		height: 30%;
     display: flex;
@@ -957,6 +959,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
+	width: ${props => (props.width && '79%')};
 	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
@@ -1724,7 +1727,7 @@ class DocumentsScreen extends Component {
 					<TextModal>
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
-					<TextModal>
+					<TextModal width>
 						Você deseja excluir o <strong>{this.state.modelSelect.title
 							|| this.state.userSelectDoc.title}</strong> permanentemente?
 					</TextModal>
