@@ -252,7 +252,7 @@ class ModalCreateOrganization extends Component {
 		isCnpjError: false,
 		isTelephoneError: false,
 		isAddressError: false,
-		// isAddressComplementError: false,
+		isAddressComplementError: false,
 		isNeighborhoodError: false,
 		isCityError: false,
 		isCepError: false,
@@ -292,7 +292,7 @@ class ModalCreateOrganization extends Component {
 			cnpj,
 			telephone,
 			address,
-			// addressComplement,
+			addressComplement,
 			neighborhood,
 			city,
 			cep,
@@ -319,7 +319,7 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cnpj || cnpj.length !== 14 || !this.validateCnpj(cnpj)) {
+		if (!cnpj || cnpj.length !== 14 || this.validateCnpj(cnpj)) {
 			this.setState({
 				isCnpjError: true,
 			});
@@ -349,15 +349,15 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		// if (!addressComplement || addressComplement.length < 4) {
-		// 	this.setState({
-		// 		isAddressComplementError: true,
-		// 	});
-		// } else {
-		// 	this.setState({
-		// 		isAddressComplementError: false,
-		// 	});
-		// }
+		if (!addressComplement || addressComplement.length < 4) {
+			this.setState({
+				isAddressComplementError: true,
+			});
+		} else {
+			this.setState({
+				isAddressComplementError: false,
+			});
+		}
 
 		if (!city || city.length < 4) {
 			this.setState({
@@ -379,7 +379,7 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cep || cep.length !== 8) {
+		if (!cep || cep.length != 8) {
 			this.setState({
 				isCepError: true,
 			});
@@ -389,14 +389,15 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (tradingName.length > 4 && companyName.length > 4 && cnpj.length === 14
-			&& telephone.length >= 8 && address.length > 4 && city.length > 4
-			&& neighborhood.length > 4 && cep.length === 8
+		if (tradingName.length >= 4 && companyName.length >= 4 && cnpj.length === 14
+			&& telephone.length >= 8 && address.length >= 4 && addressComplement.length >= 4
+			&& city.length >= 4 && neighborhood.length >= 4 && cep.length === 8
 		) {
+
 			const isEdit = this.props.modalType === 'edit';
 			const createDate = () => {
 				const date = new Date();
-				return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
+				return `${date.getDay()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 			};
 
 			const org = {
@@ -444,7 +445,7 @@ class ModalCreateOrganization extends Component {
 	};
 
 	validateCnpj = (cnpj) => {
-		if (!cnpj || cnpj.length != 14
+		if (!cnpj || cnpj.length !== 14
 				|| cnpj == '00000000000000'
 				|| cnpj == '11111111111111'
 				|| cnpj == '22222222222222'

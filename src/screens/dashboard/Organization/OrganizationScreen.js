@@ -26,6 +26,9 @@ import Exit from '../../../assets/exit.svg';
 // Redux
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
+// Api
+import { findUser } from '../../../services/api';
+
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
@@ -36,7 +39,6 @@ const mapDispatchToProps = dispatch => ({
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
 	deleteOrg: info => dispatch(deleteOrg(info)),
 });
-
 
 const Container = styled.div`
 	width: 100%;
@@ -122,7 +124,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.isAdmin ? '35%' : '37%')};
+	width: ${props => (props.isAdmin ? '35%' : '35%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -587,7 +589,7 @@ const ContainerModalDelete = styled.div`
 const ModalDelete = styled.div`
 	width: 480px;
 	background: #FFF;
-	padding: 1% 1% 1% 1%;
+	padding: 1% 1% 1% 3%;
 
 	@media (max-width: 490px) {
 		width: 100%;
@@ -615,7 +617,7 @@ const TitleDelete = styled.h2`
 	font-size: 2rem;
 	margin-top: 2%;
 	margin-bottom: 1%;
-	margin-left: 1rem;
+	/* margin-left: 1rem; */
   font-family: "Overpass", Bold;
   font-weight: 900;
 
@@ -626,7 +628,10 @@ const TitleDelete = styled.h2`
 `;
 
 const WrapTextModal = styled.div`
+	width: 85%;
+
 	@media (max-width: 490px) {
+		width: 100%;
 		height: 30%;
     display: flex;
     flex-direction: column;
@@ -634,6 +639,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
+	width: ${props => (props.width && '79%')};
 	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
@@ -645,7 +651,9 @@ const TextModal = styled.p`
 	}
 
 	@media (max-width: 490px) {
+		width: ${props => (props.width && '100%')};
 		margin: 0;
+		margin-top: ${props => (props.margin && '2rem')};
 		font-size: 1.3rem;
 	}
 `;
@@ -748,6 +756,20 @@ class OrganizationScreen extends Component {
 			selectedStatusImgs: undefined,
 			selectedStatusOrg: undefined,
 		};
+	}
+
+	componentDidMount() {
+		this.getUser();
+	}
+
+	getUser = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			// const response = await findUser(id, token);
+		} catch (error) {
+			console.log('error', error);
+		}
 	}
 
 	isModalOpen = (item) => {
@@ -910,18 +932,6 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		// const teste = this.state.statusImgs.filter(item => item.teste);
-		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
-		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
-
-		// const isPayment = this.state.statusImgs.filter(item => item.isPayment);
-		// const isPendingPayment = (item.status === 'pendente de pagamento') ? isPayment : this.state.statusImgs;
-
-		// let listinha = [];
-
-		// if (item.status === 'pendente de pagamento') {
-		// 	listinha = isPayment;
-		// }
 		const { statusImgs } = this.state;
 		let listinha = statusImgs;
 
@@ -961,8 +971,6 @@ class OrganizationScreen extends Component {
 						))}
 					</Box>
 				) : null}
-
-
 				<BoxButton
 					isClickedName={item.status === 'isento' || item.status === 'autorizado'
 						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
@@ -987,7 +995,7 @@ class OrganizationScreen extends Component {
 					<TextModal>
 						Após ser excluida, uma organização não pode ser recuperada.
 					</TextModal>
-					<TextModal>
+					<TextModal width margin>
 						Você deseja excluir <strong>{this.state.itemSelected.tradingName}</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
@@ -1265,7 +1273,7 @@ class OrganizationScreen extends Component {
 								<TextNoOrganitazion>
 									{isAdmin
 										? <TextInformation>Não há organizações no momento.</TextInformation>
-										: <TextInformation>Essa organização não existe!</TextInformation>}
+										: <TextInformation>Essa organização não existe.</TextInformation>}
 								</TextNoOrganitazion>
 							)}
 						</Content>

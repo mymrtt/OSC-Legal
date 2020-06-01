@@ -133,19 +133,19 @@ const Text = styled.p`
   }
 `;
 
-export default class ModalSucessfully extends Component {
+class ModalSucessfully extends Component {
 	render() {
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
-				<Container>
+				<Container onClick={ev => ev.stopPropagation()}>
 					<Title>A {this.props.tradingName} foi criada com sucesso!</Title>
 					<ImageBarcode src={Barcode} alt="Barcode" />
 					<WarningText>
 						<Text>
-							Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado até o dia <strong>16/07/2019</strong>, para o <span>e-mail cadastrado.</span>
+							Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado até o dia <strong>--/--/----</strong>, para o <span>e-mail cadastrado.</span>
 						</Text>
 						<Text>
-							Caso não receba o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="www.osclegal.org.br">www.osclegal.org.br</a>
+							Caso não receba o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="http://www.osclegal.org.br/">www.osclegal.org.br</a>
 						</Text>
 					</WarningText>
 					<Button
@@ -162,3 +162,5 @@ export default class ModalSucessfully extends Component {
 		);
 	}
 }
+
+export default ModalSucessfully;
