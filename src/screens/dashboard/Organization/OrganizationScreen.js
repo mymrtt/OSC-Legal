@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
+import jwt from 'jsonwebtoken';
 
 // Components
 import Header from '../components/Header';
@@ -755,6 +756,7 @@ class OrganizationScreen extends Component {
 			],
 			selectedStatusImgs: undefined,
 			selectedStatusOrg: undefined,
+			userData: [],
 		};
 	}
 
@@ -766,7 +768,12 @@ class OrganizationScreen extends Component {
 		try {
 			const token = await localStorage.getItem('token');
 
-			// const response = await findUser(id, token);
+			this.setState({ userData: jwt.decode(token) });
+
+			await localStorage.setItem('userInfo', {
+				acessToken: token,
+				...this.state.userData,
+			});
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -1207,6 +1214,7 @@ class OrganizationScreen extends Component {
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
 						handleRedirect={this.handleRedirect}
+						userData={this.state.userData}
 					/>
 				}
 				<Header />

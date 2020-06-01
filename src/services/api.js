@@ -31,9 +31,12 @@ export const findUser = (id, token) => axios({
 // Onboarding
 
 // Organization
-export const createOrganization = org => axios({
+export const createOrganization = (org, token) => axios({
 	url: `${API_URL}/organizations`,
 	method: 'post',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
 	data: org,
 });
 // Organization
