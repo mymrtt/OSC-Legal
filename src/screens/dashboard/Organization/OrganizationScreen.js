@@ -122,7 +122,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.isAdmin ? '35%' : '37%')};
+	width: ${props => (props.isAdmin ? '35%' : '35%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -910,18 +910,7 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		// const teste = this.state.statusImgs.filter(item => item.teste);
-		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
-		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
-
-		// const isPayment = this.state.statusImgs.filter(item => item.isPayment);
-		// const isPendingPayment = (item.status === 'pendente de pagamento') ? isPayment : this.state.statusImgs;
-
-		// let listinha = [];
-
-		// if (item.status === 'pendente de pagamento') {
-		// 	listinha = isPayment;
-		// }
+		console.log('itemmmm', item)
 		const { statusImgs } = this.state;
 		let listinha = statusImgs;
 
@@ -961,8 +950,6 @@ class OrganizationScreen extends Component {
 						))}
 					</Box>
 				) : null}
-
-
 				<BoxButton
 					isClickedName={item.status === 'isento' || item.status === 'autorizado'
 						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}

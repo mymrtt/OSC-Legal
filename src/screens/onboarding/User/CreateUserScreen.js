@@ -378,7 +378,6 @@ class CreateUserScreen extends Component {
 
 			const response = await createUserAccount(user, base64credentials);
 			console.log('response', response);
-
 		} catch (err) {
 			console.log('err', err);
 		}
@@ -455,12 +454,6 @@ class CreateUserScreen extends Component {
 		this.handleErrors();
 	};
 
-	// validateEmail = (email) => {
-	// 	const expression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line
-
-	// 	return expression.test(String(email).toLowerCase());
-	// };
-
 	handleErrors = () => {
 		const { user } = this.state;
 		const {
@@ -472,21 +465,7 @@ class CreateUserScreen extends Component {
 			cpf,
 		} = this.state.user;
 
-		const regDominio = /[^@.$]/;
-		const regDot = /[. | ..]/;
-
-		const isDominio = regDominio.test(email);
-		const isDot = regDot.test(email);
-
-		if (isDominio === false || isDot === false) {
-			this.setState({
-				isErrorEmail: true,
-			});
-		} else {
-			this.setState({
-				isErrorEmail: false,
-			});
-		}	if (
+		if (
 			name === ''
 			// || surname === ''
 			// || email === ''
@@ -529,7 +508,7 @@ class CreateUserScreen extends Component {
 			});
 		}
 
-		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && isDominio === true && isDot === true) {
+		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11) {
 			this.props.addNewUser(user);
 			this.userRegister(user);
 			this.handleModalSucess();
