@@ -569,7 +569,7 @@ class ModalCreateOrganization extends Component {
 												modalOrg
 												margin={isCnpjError ? '0' : '0 0 2rem'}
 												type="number"
-												placeholder="00.000.000/0000-00"
+												placeholder="00000000000000"
 												onChange={ev => this.handleChangeCnpj('cnpj', ev)}
 												value={this.state.cnpj}
 												name="cnpj"

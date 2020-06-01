@@ -57,11 +57,11 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	height: ${props => (props.isAdmin ? 'calc(100vh - -3px - 6.5rem)' : 'calc(100vh - -3px - 5.5rem)')};
+	height: ${props => (props.isAdmin ? 'calc(100vh - -3px - 6.5rem)' : 'calc(100vh - -3px - 8.5rem)')};
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: ${props => (props.isAdmin ? '#FFFFFF' : '#FFCFCD')};
+	background: #FFFFFF;
 
 	@media(max-width: 1400px) and (max-height: 900px){
 		min-height: 83.5vh;
@@ -71,13 +71,13 @@ const Content = styled.div`
 		min-height: 94vh;
 	}
 
-	/* @media(max-width: 768px){
-		min-height: 92.6vh;
-	} */
+	@media(max-width: 490px){
+		min-height: 84vh;
+	}
 `;
 
 const MaximumWidth = styled.div`
-	padding: ${props => (props.isAdmin ? '3.0rem 1rem 0' : '2rem 0 0')};
+	padding: ${props => (props.isAdmin ? '3rem 1rem 0' : '2rem 0 0')};
 	margin-top: ${props => (props.isAdmin ? '0' : '2rem')};
 	width: ${props => (props.isAdmin ? '100%' : '96%')};
 	min-width: ${props => (props.isAdmin ? '100%' : '95%')};
@@ -93,7 +93,7 @@ const MaximumWidth = styled.div`
 
 	@media(max-width: 648px){
 		width: 100%;
-		height: 80vh;
+		height: 84vh;
 		padding: 0;
 		margin: 0;
 	}
@@ -121,7 +121,7 @@ const ContainerHeader = styled.div`
 
 	@media (max-width: 648px) {
 		padding-right: 0;
-		margin: 1.2rem;
+		margin: .8rem;
 	}
 `;
 
@@ -1505,6 +1505,15 @@ class DocumentsScreen extends Component {
 				isErrorDescription: false,
 			});
 		}
+		if (description.length > 250) {
+			this.setState({
+				isErrorDescriptionQtd: true,
+			});
+		} else {
+			this.setState({
+				isErrorDescriptionQtd: false,
+			});
+		}
 		if (title === '') {
 			this.setState({
 				isErrorTitle: true,
@@ -1533,7 +1542,7 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: false,
 			});
 		}
-		if (title !== '' && title.length > 4 && description !== '' && isFile !== null) {
+		if (title !== '' && title.length > 4 && description !== '' && description.length <= 250 && isFile !== null) {
 			this.props.addNewDocument({
 				title, description, isFile,
 			});
@@ -1643,6 +1652,7 @@ class DocumentsScreen extends Component {
 			'Adicione um modelo',
 			'Preencha todos os campos',
 			'Nome do modelo deve ter no mínimo 4 letras',
+			'você excedeu o número máximo de caracteres',
 		];
 		return (
 			<ContainerModal onClick={this.handleCancelAddModel}>
@@ -1694,6 +1704,7 @@ class DocumentsScreen extends Component {
 						<ContainerInput>
 							<TitleInputs>Descrição</TitleInputs>
 							<TextArea
+								// maxLength="250"
 								validationModel={this.state.validationModel}
 								value={this.state.document.description}
 								onChange={e => this.handleModelChange('description', e)}
@@ -1702,6 +1713,7 @@ class DocumentsScreen extends Component {
 								isError={this.state.isError}
 							/>
 							{this.state.isErrorDescription && <ErrorText>{Messages[1]}</ErrorText>}
+							{this.state.isErrorDescriptionQtd && <ErrorText>{Messages[5]}</ErrorText>}
 						</ContainerInput>
 					</ContainerInputs>
 					<span>
@@ -2093,7 +2105,7 @@ class DocumentsScreen extends Component {
 														width="17.5rem"
 														height="4.5rem"
 														marginMobile="0 0 1rem 0"
-														widthMobile="85%"
+														widthMobile="82%"
 														bottomMobile="0"
 														// left="11px"
 														positionMobile="fixed"

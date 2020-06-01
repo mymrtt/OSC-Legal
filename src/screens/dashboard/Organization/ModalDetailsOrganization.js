@@ -513,13 +513,15 @@ class ModalDetailsOrganization extends Component {
 										<SubTitle>nome fantasia</SubTitle>
 										<SubAnswer>{org.tradingName || '-'}</SubAnswer>
 										{/* <SubTitle>email</SubTitle>
-									<SubAnswer>{org.email || '-'}</SubAnswer> */}
+										<SubAnswer>{org.email || '-'}</SubAnswer> */}
 										<SubTitle>cnpj</SubTitle>
 										<SubAnswer>{org.cnpj || '-'}</SubAnswer>
 										<SubTitle>complemento</SubTitle>
 										<SubAnswer>{org.addressComplement || '-'}</SubAnswer>
 										<SubTitle>bairro</SubTitle>
 										<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
+										<SubTitle>cidade</SubTitle>
+										<SubAnswer>{org.city || '-'}</SubAnswer>
 									</SeparationMobile>
 									<SeparationMobile>
 										<SubTitle>razão social</SubTitle>
@@ -530,8 +532,6 @@ class ModalDetailsOrganization extends Component {
 										<SubAnswer>{org.address || '-'}</SubAnswer>
 										<SubTitle>cep</SubTitle>
 										<SubAnswer>{org.cep || '-'}</SubAnswer>
-										<SubTitle>cidade</SubTitle>
-										<SubAnswer>{org.city || '-'}</SubAnswer>
 									</SeparationMobile>
 								</ContentOrganizationMobile>
 							</ContentOrganization>
