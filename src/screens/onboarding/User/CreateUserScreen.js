@@ -378,8 +378,8 @@ class CreateUserScreen extends Component {
 
 			const response = await createUserAccount(user, base64credentials);
 			console.log('response', response);
-		} catch (err) {
-			console.log('err', err);
+		} catch (error) {
+			console.log('err', error);
 		}
 	}
 

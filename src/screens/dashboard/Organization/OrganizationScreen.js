@@ -26,6 +26,9 @@ import Exit from '../../../assets/exit.svg';
 // Redux
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
+// Api
+import { findUser } from '../../../services/api';
+
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
@@ -750,6 +753,20 @@ class OrganizationScreen extends Component {
 		};
 	}
 
+	componentDidMount() {
+		this.getUser();
+	}
+
+	getUser = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			// const response = await findUser(id, token);
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	isModalOpen = (item) => {
 		this.setState({
 			itemSelected: item,
@@ -910,7 +927,6 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		console.log('itemmmm', item)
 		const { statusImgs } = this.state;
 		let listinha = statusImgs;
 
