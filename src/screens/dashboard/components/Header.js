@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import jwt from 'jsonwebtoken';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -149,15 +150,36 @@ const ParagraphSair = styled.p`
 class Header extends Component {
 	state = {
 		redirect: false,
+		userData: [],
 	}
 
 	handleRedirect = () => {
 		this.setState({ redirect: true });
 	}
 
+	componentDidMount() {
+		this.userInfo();
+	}
+
+	userInfo = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			this.setState({ userData: jwt.decode(token) });
+
+			await localStorage.setItem('userInfo', {
+				acessToken: token,
+				...this.state.userData,
+			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	render() {
+		const { userData } = this.state;
 		return (
-			<Container border={this.props.isAdmin}>
+			<Container border={userData.isAdmin == 1}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
 						margin={'0 0 0 3rem'}
@@ -166,7 +188,7 @@ class Header extends Component {
 						height='2.8rem'
 					/>
 				</NavLink>
-				<WrapButton width={this.props.isAdmin}>
+				<WrapButton width={userData.isAdmin == 1}>
 					<NavLink
 						exact to="/organizations"
 						activeClassName="button-header-dash"
@@ -180,9 +202,9 @@ class Header extends Component {
 						Documentos
 					</NavLink>
 				</WrapButton>
-				<ContainerUser isAdmin={this.props.isAdmin}>
+				<ContainerUser isAdmin={userData.isAdmin == 1}>
 					<ParagraphUserName>
-						{this.props.isAdmin ? 'Administrador' : this.props.name}
+						{userData.isAdmin !== 0 ? 'Administrador' : userData.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleRedirect}>
 						sair

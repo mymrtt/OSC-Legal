@@ -377,7 +377,6 @@ class CreateUserScreen extends Component {
 			delete user['password'];
 
 			const response = await createUserAccount(user, base64credentials);
-			console.log('response', response);
 		} catch (error) {
 			console.log('err', error);
 		}
