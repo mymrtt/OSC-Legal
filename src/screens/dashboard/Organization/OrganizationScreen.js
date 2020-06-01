@@ -26,6 +26,9 @@ import Exit from '../../../assets/exit.svg';
 // Redux
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
+// Api
+import { findUser } from '../../../services/api';
+
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
@@ -36,7 +39,6 @@ const mapDispatchToProps = dispatch => ({
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
 	deleteOrg: info => dispatch(deleteOrg(info)),
 });
-
 
 const Container = styled.div`
 	width: 100%;
@@ -122,7 +124,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.isAdmin ? '35%' : '37%')};
+	width: ${props => (props.isAdmin ? '35%' : '35%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -750,6 +752,20 @@ class OrganizationScreen extends Component {
 		};
 	}
 
+	componentDidMount() {
+		this.getUser();
+	}
+
+	getUser = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			// const response = await findUser(id, token);
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	isModalOpen = (item) => {
 		this.setState({
 			itemSelected: item,
@@ -910,18 +926,6 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		// const teste = this.state.statusImgs.filter(item => item.teste);
-		// const isPendingAuthorization = (item.status === 'pendente de autorização') ? teste : this.state.statusImgs;
-		// const hiddenList = (item.status === 'autorizar' || item.status === 'isento');
-
-		// const isPayment = this.state.statusImgs.filter(item => item.isPayment);
-		// const isPendingPayment = (item.status === 'pendente de pagamento') ? isPayment : this.state.statusImgs;
-
-		// let listinha = [];
-
-		// if (item.status === 'pendente de pagamento') {
-		// 	listinha = isPayment;
-		// }
 		const { statusImgs } = this.state;
 		let listinha = statusImgs;
 
@@ -961,8 +965,6 @@ class OrganizationScreen extends Component {
 						))}
 					</Box>
 				) : null}
-
-
 				<BoxButton
 					isClickedName={item.status === 'isento' || item.status === 'autorizado'
 						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
