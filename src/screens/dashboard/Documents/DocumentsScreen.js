@@ -30,7 +30,7 @@ import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
 // Api
-import { createTemplate } from '../../../services/api';
+import { createTemplate, getAllTemplates, deleteTemplate } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
@@ -1251,6 +1251,7 @@ class DocumentsScreen extends Component {
 		isMobileButton: false,
 		userSelectDoc: '',
 		isErrorDoc: false,
+		templateList: [],
 	};
 
 
@@ -1268,6 +1269,26 @@ class DocumentsScreen extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.renderTemplate();
+		this.renderMobileButton();
+	}
+
+	renderTemplate = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await getAllTemplates(token);
+
+			this.setState({
+				templateList: response.data,
+			});
+
+			console.log('response', response.data);
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
 
 	handleOnOptions = (doc) => {
 		this.setState({
@@ -1447,13 +1468,24 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleDelete = () => {
-		this.props.deleteDocument(this.state.modelSelect.id);
-		this.setState({
-			modelSelect: '',
-		});
+	handleDelete = async () => {
+		try {
+			const templateId = this.state.templateList.id;
+			const token = await localStorage.getItem('token');
+			const response = await deleteTemplate(token, templateId);
+			this.state.templateList.filter(template => template !== templateId);
+
+			console.log('response', response.data);
+		} catch (error) {
+			console.log('error', error);
+		}
+		// this.props.deleteDocument(this.state.modelSelect.id);
+		// this.setState({
+		// 	modelSelect: '',
+		// });
 		this.handleCancelDelete();
 	}
+
 
 	handleSearch = (e) => {
 		this.setState({
@@ -1482,10 +1514,6 @@ class DocumentsScreen extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.handleErrors();
-	}
-
-	componentDidMount() {
-		this.renderMobileButton();
 	}
 
 	renderMobileButton = () => {
@@ -1784,7 +1812,7 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-					{this.props.documentsList.map((docs, index) => (
+					{this.state.templateList.map((docs, index) => (
 						<ContainerModelDescription
 							modal={this.state.modalListDoc}
 							list={this.state.listDocs}
@@ -1808,18 +1836,18 @@ class DocumentsScreen extends Component {
 	)
 
 	renderDocAdmin = () => {
-		const documentsList = (this.state.search !== '' && this.state.searching === true)
-			? this.props.documentsList.filter(model => model.templateName.match(new RegExp(this.state.search, 'i')))
-			: this.props.documentsList;
+		const templateList = (this.state.search !== '' && this.state.searching === true)
+			? this.state.templateList.filter(model => model.templateName.match(new RegExp(this.state.search, 'i')))
+			: this.state.templateList;
 		// MAP DOCUMENTS ADM
 		return (
-			documentsList && documentsList.length > 0 ? (
-				documentsList.map((doc, index) => (
+			templateList && templateList.length > 0 ? (
+				templateList.map((doc, index) => (
 					<ContainerModel
 						// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
-						style={{ margin: index === documentsList.length - 1 && '0 0 7rem 0' }}
+						style={{ margin: index === templateList.length - 1 && '0 0 7rem 0' }}
 						// MARGEM ULTIMO ITEM LISTA MOBILE
-						lastIndex={(window.innerWidth <= 490) && index === documentsList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+						lastIndex={(window.innerWidth <= 490) && index === templateList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 						key={index}
 						zIndex={this.state.addModel}
 						displayBefore={this.state.modalDelete}
@@ -1989,7 +2017,6 @@ class DocumentsScreen extends Component {
 
 	render() {
 		const { isAdmin } = this.props;
-
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header/>

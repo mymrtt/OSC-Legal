@@ -58,4 +58,20 @@ export const createTemplate = (templateData, token) => axios({
 	},
 	data: templateData,
 });
+
+export const getAllTemplates = token => axios({
+	url: `${API_URL}/templates`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const deleteTemplate = (token, templateId) => axios({
+	url: `${API_URL}/templates/${templateId}`,
+	method: 'delete',
+	header: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 // Template (Document - Admin)
