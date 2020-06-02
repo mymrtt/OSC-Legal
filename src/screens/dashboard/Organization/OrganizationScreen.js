@@ -22,7 +22,7 @@ import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 import deleteIcon from '../../../assets/delete.svg';
 import selectMaisMobile from '../../../assets/selectMais.svg';
-import Exit from '../../../assets/exit.svg';
+import Exit from '../../../assets/fechar.svg';
 
 // Redux
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
@@ -53,14 +53,6 @@ const ContainerUser = styled.div`
 
 	@media(max-width: 648px) {
 		background-color: ${props => (props.background ? '#FFFFFF' : '#FFFFFF')};
-	}
-`;
-
-const InvolveButton = styled.div`
-	padding: .5rem 0.2rem;
-
-	@media (max-width: 768px) {
-		padding: 0;
 	}
 `;
 
@@ -125,7 +117,7 @@ const TitleMyOrganization = styled.h2`
 `;
 
 const SelectViewBy = styled.div`
-	width: ${props => (props.isAdmin ? '35%' : '35%')};
+	width: ${props => (props.isAdmin ? '37%' : '36%')};
 	display: flex;
 	flex-direction: row;
 	justify-content: ${props => (props.isAdmin ? 'flex-end' : 'initial')};
@@ -328,7 +320,7 @@ const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 79px - 5.8rem - 2.4rem);
+	height: calc(100vh - 66px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
 
 	@media (max-width: 768px) {
@@ -590,7 +582,7 @@ const ContainerModalDelete = styled.div`
 const ModalDelete = styled.div`
 	width: 480px;
 	background: #FFF;
-	padding: 1% 1% 1% 3%;
+	padding: 1% 2% 1% 3%;
 
 	@media (max-width: 490px) {
 		width: 100%;
@@ -607,8 +599,8 @@ const TitleModal = styled.div`
 	justify-content: space-between;
 
 	img {
-		width: 20px;
-		height: 20px;
+		/* width: 20px;
+		height: 20px; */
 		cursor: pointer;
 	}
 `;
@@ -822,7 +814,7 @@ class OrganizationScreen extends Component {
 	handleDeleteModal = () => {
 		this.setState({
 			isDeleteModal: !this.state.isDeleteModal,
-			error: undefined
+			error: undefined,
 		});
 	}
 
@@ -840,15 +832,15 @@ class OrganizationScreen extends Component {
 			this.handleDeleteModal();
 		} catch (error) {
 			console.log('error', error.response);
-			const companyName = this.state.itemSelected.companyName;
+			const { companyName } = this.state.itemSelected;
 			if (error.response.status === 404) {
 				return this.setState({
-					error: `A organização ${companyName} não foi encontrada.`
-				})
+					error: `A organização ${companyName} não foi encontrada.`,
+				});
 			}
 			this.setState({
-				error: `Algo deu errado.`
-			})
+				error: 'Algo deu errado.',
+			});
 		}
 	}
 
@@ -922,7 +914,7 @@ class OrganizationScreen extends Component {
 								{this.state.selectedItems.map((item, index) => (
 									<SelectedItem
 										onClick={() => this.handleSelectedValue(item)}
-										style={{ paddingTop: item === 'Selecionar status' && '.7rem'}}
+										style={{ paddingTop: item === 'Selecionar status' && '.7rem' }}
 										key={index}
 										hover={item}
 									>
@@ -984,28 +976,35 @@ class OrganizationScreen extends Component {
 		return (
 			<>
 				{this.props.isAdmin ? (
-					<Box isClickedStatus={item.status === 'isento' || item.status === 'autorizado'
-						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}>
-						{!hiddenList && listinha.map((status, index) => (
-							<ImageStatus
-								cursor={this.props.isAdmin}
-								key={index}
-								src={status.img}
-								alt={status.desc}
-								onClick={() => this.handleSelectedStatus(status, item)}
-							/>
-						))}
-					</Box>
-				) : null}
-				<BoxButton
-					isClickedName={item.status === 'isento' || item.status === 'autorizado'
-						|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
-					onClick={() => this.handleClickedImageStatus(item)}
-				>
-					<TextStatus color={item.isChanged}>
-						{item.status}
-					</TextStatus>
-				</BoxButton>
+					<>
+						<Box isClickedStatus={item.status === 'isento' || item.status === 'autorizado'
+		|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}>
+							{!hiddenList && listinha.map((status, index) => (
+								<ImageStatus
+									cursor={this.props.isAdmin}
+									key={index}
+									src={status.img}
+									alt={status.desc}
+									onClick={() => this.handleSelectedStatus(status, item)}
+								/>
+							))}
+						</Box>
+						<BoxButton
+							isClickedName={item.status === 'isento' || item.status === 'autorizado'
+			|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}
+							onClick={() => this.handleClickedImageStatus(item)}
+						>
+							<TextStatus color={item.isChanged}>
+								{item.status}
+							</TextStatus>
+						</BoxButton>
+					</>
+				)
+					: (
+						<TextStatus color={item.isChanged}>
+							{item.status}
+						</TextStatus>
+					)}
 			</>
 		);
 	}
@@ -1216,6 +1215,7 @@ class OrganizationScreen extends Component {
 			modalType,
 			isModalCreateOrg,
 		} = this.state;
+		console.log('test ---', this.state.use)
 
 		return (
 			<Container>
@@ -1247,23 +1247,25 @@ class OrganizationScreen extends Component {
 					justifyContent={isAdmin}
 				>
 					{!isAdmin
-						&& <InvolveButton><Button
-							width='20%'
-							widthMedium='24%'
-							widthMobile='88%'
-							// widthMobileSmall='80%'
-							widthMobileSmall='90%'
-							height='4.5rem'
-							heightMobile='5.3rem'
-							fontSize='1.4rem'
-							margin='1rem 0 1rem 2.5rem'
-							marginMobile='1.5rem 2.5rem 1.5rem 4rem'
-							marginMobileSmall='1.5rem 1.5rem 1.5rem 1.2rem'
-							text='Criar Organização'
-							type='button'
-							orderMobile
-							organizationMobile
-							onClick={this.isModalCreateOrganization} /></InvolveButton>
+						&& <>
+							<Button
+								width='20%'
+								widthMedium='24%'
+								widthMobile='88%'
+								// widthMobileSmall='80%'
+								widthMobileSmall='90%'
+								height='4.5rem'
+								heightMobile='5.3rem'
+								fontSize='1.4rem'
+								margin='1.3rem 0 1.3rem 2.5rem'
+								marginMobile='1.5rem 2.5rem 1.5rem 4rem'
+								marginMobileSmall='1.5rem 1.5rem 1.5rem 1.2rem'
+								text='Criar Organização'
+								type='button'
+								orderMobile
+								organizationMobile
+								onClick={this.isModalCreateOrganization} />
+						</>
 					}
 					<ContainerTableUser
 						width={isAdmin}
