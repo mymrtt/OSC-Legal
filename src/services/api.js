@@ -48,13 +48,13 @@ export const removeOrg = (orgID, token) => axios({
 	},
 });
 
-export const getAllOrganizations = (token, userId) => axios({
+export const getAllOrganizations = (userId, token) => axios({
 	url: `${API_URL}/organizations/${userId}`,
 	method: 'get',
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
-)};
+});
 // Organization
 
 // Document
