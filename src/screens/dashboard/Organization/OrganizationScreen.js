@@ -28,7 +28,7 @@ import Exit from '../../../assets/exit.svg';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { findUser } from '../../../services/api';
+import { findUser, removeOrg } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -822,15 +822,34 @@ class OrganizationScreen extends Component {
 	handleDeleteModal = () => {
 		this.setState({
 			isDeleteModal: !this.state.isDeleteModal,
+			error: undefined
 		});
 	}
 
-	deleteOrganization = () => {
-		this.props.deleteOrg(this.state.itemSelected);
-		this.setState({
-			isModal: false,
-		});
-		this.handleDeleteModal();
+	deleteOrganization = async () => {
+		try {
+			const orgID = this.state.itemSelected.id;
+			const token = await localStorage.getItem('token');
+
+			const response = await removeOrg(orgID, token);
+
+			this.props.deleteOrg(this.state.itemSelected);
+			this.setState({
+				isModal: false,
+			});
+			this.handleDeleteModal();
+		} catch (error) {
+			console.log('error', error.response);
+			const companyName = this.state.itemSelected.companyName;
+			if (error.response.status === 404) {
+				return this.setState({
+					error: `A organização ${companyName} não foi encontrada.`
+				})
+			}
+			this.setState({
+				error: `Algo deu errado.`
+			})
+		}
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
@@ -1004,6 +1023,9 @@ class OrganizationScreen extends Component {
 					</TextModal>
 					<TextModal width margin>
 						Você deseja excluir <strong>{this.state.itemSelected.tradingName}</strong> permanentemente?
+					</TextModal>
+					<TextModal width margin>
+						{this.state.error}
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>

@@ -39,6 +39,14 @@ export const createOrganization = (org, token) => axios({
 	},
 	data: org,
 });
+
+export const removeOrg = (orgID, token) => axios({
+	url: `${API_URL}/organizations/${orgID}`,
+	method: 'patch',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 // Organization
 
 // Document
