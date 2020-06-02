@@ -39,6 +39,14 @@ export const createOrganization = (org, token) => axios({
 	},
 	data: org,
 });
+
+export const getAllOrganizations = (token, userId) => axios({
+	url: `${API_URL}/organizations`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 // Organization
 
 // Document
