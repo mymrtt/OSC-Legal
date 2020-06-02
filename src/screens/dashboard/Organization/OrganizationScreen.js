@@ -28,7 +28,7 @@ import Exit from '../../../assets/fechar.svg';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { findUser, removeOrg } from '../../../services/api';
+import { findUser, removeOrg, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -754,6 +754,7 @@ class OrganizationScreen extends Component {
 
 	componentDidMount() {
 		this.getUser();
+		this.getOrgs();
 	}
 
 	getUser = async () => {
@@ -766,6 +767,18 @@ class OrganizationScreen extends Component {
 				acessToken: token,
 				...this.state.userData,
 			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
+	getOrgs = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+			const response = await getAllOrganizations(jwt.decode(token).id, token)
+			this.props.updateTableDatas(response.data)
+
+			console.log('orgs', response)
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -820,10 +833,13 @@ class OrganizationScreen extends Component {
 
 	deleteOrganization = async () => {
 		try {
-			const orgID = this.state.itemSelected.id;
 			const token = await localStorage.getItem('token');
 
-			const response = await removeOrg(orgID, token);
+			const org = {
+				...this.state.itemSelected,
+				deletedAt: true
+			}
+			const response = await removeOrg(org, token);
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({
@@ -832,10 +848,10 @@ class OrganizationScreen extends Component {
 			this.handleDeleteModal();
 		} catch (error) {
 			console.log('error', error.response);
-			const { companyName } = this.state.itemSelected;
+			const { tradingName } = this.state.itemSelected;
 			if (error.response.status === 404) {
 				return this.setState({
-					error: `A organização ${companyName} não foi encontrada.`,
+					error: `A organização ${tradingName} não foi encontrada.`,
 				});
 			}
 			this.setState({
@@ -1281,7 +1297,7 @@ class OrganizationScreen extends Component {
 									<Thead>
 										<Tr>
 											{this.state.tableTitles.map(title => (
-												<TableTitle width={'6rem'}
+												<TableTitle width={'8.3rem'}
 													key={title}
 													center={title}
 													style={{

@@ -434,7 +434,6 @@ class ModalCreateOrganization extends Component {
 			};
 
 			const org = {
-				// id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
 				tradingName: this.state.tradingName,
 				address: this.state.address,
 				addressComplement: this.state.addressComplement,
@@ -444,13 +443,11 @@ class ModalCreateOrganization extends Component {
 				cnpj: this.state.cnpj,
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
-				// authorization: null,
-				// dueDate: null,
 				user_id: this.props.userData.id,
-				// deletedAt: null,
 				telephone: this.state.telephone,
-				orgId: this.props.userData.id,
+				orgId: this.props.item.orgId,
 			};
+			console.log(this.props)
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
 			} else {
@@ -458,7 +455,6 @@ class ModalCreateOrganization extends Component {
 				this.createOrg(org);
 				this.setState({ allStateTrue: true });
 				this.handleModalSucess(tradingName);
-				// this.props.handleClosedModal();
 			}
 		}
 	}
