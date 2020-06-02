@@ -436,7 +436,7 @@ class ModalCreateOrganization extends Component {
 				this.props.closeModal();
 			} else {
 				this.props.addNewOrg(org);
-				this.createOrg(org);
+				// this.createOrg(org);
 				this.setState({ allStateTrue: true });
 				this.handleModalSucess(tradingName);
 				// this.props.handleClosedModal();
