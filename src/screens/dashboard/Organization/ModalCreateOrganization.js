@@ -284,6 +284,7 @@ class ModalCreateOrganization extends Component {
 			console.log('error', error);
 		}
 	}
+
 	editOrganization = async (org) => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -304,7 +305,7 @@ class ModalCreateOrganization extends Component {
 
 			const token = await localStorage.getItem('token');
 
-			const response = await getAllOrganizations(token, userId);
+			const response = await getAllOrganizations(userId, token);
 
 			console.log('response get orgs', response);
 		} catch (error) {
