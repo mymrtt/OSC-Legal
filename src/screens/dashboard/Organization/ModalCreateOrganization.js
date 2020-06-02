@@ -289,7 +289,6 @@ class ModalCreateOrganization extends Component {
 		try {
 			const token = await localStorage.getItem('token');
 			const response = await patchOrg(org, token);
-			console.log('response', response)
 
 			this.props.editOrg(org);
 			this.props.handleClosedModal();

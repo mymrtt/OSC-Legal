@@ -1215,7 +1215,6 @@ class OrganizationScreen extends Component {
 			modalType,
 			isModalCreateOrg,
 		} = this.state;
-		console.log('test ---', this.state.use)
 
 		return (
 			<Container>
