@@ -47,6 +47,14 @@ export const removeOrg = (orgID, token) => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
+
+export const getAllOrganizations = (token, userId) => axios({
+	url: `${API_URL}/organizations/${userId}`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+)};
 // Organization
 
 // Document

@@ -20,7 +20,7 @@ import Exit from '../../../assets/fechar.svg';
 import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { createOrganization } from '../../../services/api';
+import { createOrganization, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -255,7 +255,7 @@ class ModalCreateOrganization extends Component {
 	};
 
 	componentDidMount() {
-		this.createOrg();
+		this.getAllOrgs();
 
 		if (this.props.modalType === 'edit') {
 			this.setState({
@@ -277,13 +277,24 @@ class ModalCreateOrganization extends Component {
 
 	createOrg = async (org) => {
 		try {
-			console.log('org', org)
-
 			const token = await localStorage.getItem('token');
 
 			const response = await createOrganization(org, token);
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
 
-			console.log('response', response);
+	getAllOrgs = async () => {
+		try {
+			const userId = this.props.userData.id;
+
+			const token = await localStorage.getItem('token');
+
+			const response = await getAllOrganizations(token, userId);
+
+			console.log('response get orgs', response);
+
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -412,7 +423,7 @@ class ModalCreateOrganization extends Component {
 			};
 
 			const org = {
-				id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
+				// id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
 				tradingName: this.state.tradingName,
 				address: this.state.address,
 				addressComplement: this.state.addressComplement,
@@ -422,11 +433,10 @@ class ModalCreateOrganization extends Component {
 				cnpj: this.state.cnpj,
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
-				// email: '',
-				authorization: null,
-				dueDate: null,
+				// authorization: null,
+				// dueDate: null,
 				user_id: this.props.userData.id,
-				deletedAt: null,
+				// deletedAt: null,
 				telephone: this.state.telephone,
 			};
 			if (this.props.modalType === 'edit') {
@@ -435,7 +445,7 @@ class ModalCreateOrganization extends Component {
 				this.props.closeModal();
 			} else {
 				this.props.addNewOrg(org);
-				// this.createOrg(org);
+				this.createOrg(org);
 				this.setState({ allStateTrue: true });
 				this.handleModalSucess(tradingName);
 				// this.props.handleClosedModal();
