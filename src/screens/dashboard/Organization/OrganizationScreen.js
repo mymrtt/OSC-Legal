@@ -837,7 +837,7 @@ class OrganizationScreen extends Component {
 
 			const org = {
 				...this.state.itemSelected,
-				deletedAt: Date.now()
+				deletedAt: true
 			}
 			const response = await removeOrg(org, token);
 
