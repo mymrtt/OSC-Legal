@@ -559,7 +559,7 @@ class ModalDetailsOrganization extends Component {
 								</SpanContainerImage>
 								<SpanContainerImage onClick={this.props.handleDeleteModal}>
 									<img src={ImageDelete} />
-									<ContainerOptionMobile>Excluir</ContainerOptionMobile>
+								 <ContainerOptionMobile>Excluir</ContainerOptionMobile>
 								</SpanContainerImage>
 							</ContainerEditImage>
 						}
