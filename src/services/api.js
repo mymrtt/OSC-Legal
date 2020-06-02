@@ -50,9 +50,12 @@ export const createDocument = doc => axios({
 // Document
 
 // Template (Document - Admin)
-export const createTemplate = (title, description, isFile) => axios({
+export const createTemplate = (templateData, token) => axios({
 	url: `${API_URL}/templates`,
 	method: 'post',
-	data: { title, description, isFile },
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: templateData,
 });
 // Template (Document - Admin)

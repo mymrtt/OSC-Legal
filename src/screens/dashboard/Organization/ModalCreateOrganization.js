@@ -255,8 +255,7 @@ class ModalCreateOrganization extends Component {
 	};
 
 	componentDidMount() {
-		this.createOrg();
-
+		// this.createOrg();
 		if (this.props.modalType === 'edit') {
 			this.setState({
 				tradingName: this.props.item.tradingName,
@@ -277,7 +276,7 @@ class ModalCreateOrganization extends Component {
 
 	createOrg = async (org) => {
 		try {
-			console.log('org', org)
+			console.log('org', org);
 
 			const token = await localStorage.getItem('token');
 
@@ -412,7 +411,7 @@ class ModalCreateOrganization extends Component {
 			};
 
 			const org = {
-				id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
+				// id: isEdit ? this.props.item.id : this.props.tableDatas.length + 1,
 				tradingName: this.state.tradingName,
 				address: this.state.address,
 				addressComplement: this.state.addressComplement,
@@ -422,12 +421,11 @@ class ModalCreateOrganization extends Component {
 				cnpj: this.state.cnpj,
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
-				status: 'Pendente de autorização',
 				// email: '',
-				authorization: null,
-				dueDate: null,
+				// authorization: null,
+				// dueDate: null,
 				user_id: this.props.userData.id,
-				deletedAt: null,
+				// deletedAt: null,
 				telephone: this.state.telephone,
 			};
 			if (this.props.modalType === 'edit') {
@@ -436,7 +434,7 @@ class ModalCreateOrganization extends Component {
 				this.props.closeModal();
 			} else {
 				this.props.addNewOrg(org);
-				// this.createOrg(org);
+				this.createOrg(org);
 				this.setState({ allStateTrue: true });
 				this.handleModalSucess(tradingName);
 				// this.props.handleClosedModal();

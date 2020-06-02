@@ -1231,9 +1231,9 @@ class DocumentsScreen extends Component {
 		colorTextEdit: '',
 		colorTextDelete: '',
 		redirect: false,
-		isFile: null,
-		document: {
-			title: '',
+		template: null,
+		templateData: {
+			templateName: '',
 			description: '',
 			id: 0,
 		},
@@ -1254,15 +1254,22 @@ class DocumentsScreen extends Component {
 	};
 
 
-	createTemplate = async (title, description, isFile) => {
+	createDoc = async (templateData) => {
 		try {
-			const response = await createTemplate(title, description, isFile);
-		} catch (err) {
+			console.log(templateData);
+
+			const token = await localStorage.getItem('token');
+
+			const response = await createTemplate(templateData, token);
+
+			console.log('response', response);
+		} catch (error) {
+			console.log('error', error);
 		}
 	}
 
 
-	handleOnOptions = (doc, index) => {
+	handleOnOptions = (doc) => {
 		this.setState({
 			options: true,
 			selectedOptions: doc,
@@ -1292,10 +1299,10 @@ class DocumentsScreen extends Component {
 	handleCancelAddModel = () => {
 		this.setState({
 			description: '',
-			title: '',
+			templateName: '',
 			addModel: false,
 			isError: false,
-			isFile: null,
+			template: null,
 			isErrorDescription: false,
 			isErrorFile: false,
 			isErrorTitle: false,
@@ -1318,16 +1325,16 @@ class DocumentsScreen extends Component {
 	}
 
 	handleModelChange = (field, e) => {
-		const { document } = this.state;
-		document[field] = e.target.value;
+		const { templateData } = this.state;
+		templateData[field] = e.target.value;
 		this.setState({
-			document,
+			templateData,
 			isError: false,
 			isErrorFile: false,
 			isErrorTitle: false,
 			isErrorDescription: false,
 			isErrorTitleQtd: false,
-			file: this.state.isFile,
+			file: this.state.template,
 		});
 	}
 
@@ -1427,7 +1434,7 @@ class DocumentsScreen extends Component {
 
 		reader.onloadend = () => {
 			this.setState({
-				isFile: reader.result,
+				template: reader.result,
 				isErrorFile: false,
 			});
 		};
@@ -1494,10 +1501,10 @@ class DocumentsScreen extends Component {
 	}
 
 	handleErrors = () => {
-		const { title, description } = this.state.document;
-		const { isFile } = this.state;
+		const { templateName, description } = this.state.templateData;
+		const { template } = this.state;
 
-		if (isFile === null) {
+		if (template === null) {
 			this.setState({
 				isErrorFile: true,
 			});
@@ -1524,7 +1531,7 @@ class DocumentsScreen extends Component {
 				isErrorDescriptionQtd: false,
 			});
 		}
-		if (title === '') {
+		if (templateName === '') {
 			this.setState({
 				isErrorTitle: true,
 				isErrorTitleQtd: false,
@@ -1534,7 +1541,7 @@ class DocumentsScreen extends Component {
 				isErrorTitle: false,
 			});
 		}
-		if (title.length < 4 && title.length > 0) {
+		if (templateName.length < 4 && templateName.length > 0) {
 			this.setState({
 				isErrorTitleQtd: true,
 			});
@@ -1543,7 +1550,7 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: false,
 			});
 		}
-		if (title === '' && description === '' && isFile === null) {
+		if (templateName === '' && description === '' && template === null) {
 			this.setState({
 				isError: true,
 				isErrorTitle: false,
@@ -1552,15 +1559,14 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: false,
 			});
 		}
-		if (title !== '' && title.length > 4 && description !== '' && description.length <= 250 && isFile !== null) {
-			this.props.addNewDocument({
-				title, description, isFile,
-			});
-			this.createTemplate(title, description, isFile);
+		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
+			const templateData = { templateName, description, template };
+			this.props.addNewDocument(templateData);
+			this.createDoc(templateData);
 
 			this.setState({
-				document: {},
-				isFile: null,
+				templateData: {},
+				template: null,
 			});
 
 			this.handleCancelAddModel();
@@ -1675,11 +1681,11 @@ class DocumentsScreen extends Component {
 								type="file"
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
-							<TextUploadFile file={this.state.isFile}>
-								<h3>{this.state.isFile === null ? 'Adicionar modelo' : 'Modelo adicionado'}</h3>
+							<TextUploadFile file={this.state.template}>
+								<h3>{this.state.template === null ? 'Adicionar modelo' : 'Modelo adicionado'}</h3>
 								<p>
 									<span>Clique aqui</span>
-									{this.state.isFile !== null && ' para adicionar outro.'}
+									{this.state.template !== null && ' para adicionar outro.'}
 								</p>
 							</TextUploadFile>
 						</UploadFile>
@@ -1689,8 +1695,8 @@ class DocumentsScreen extends Component {
 							<Input
 								required
 								validationModel={this.state.validationModel}
-								value={this.state.document.title}
-								onChange={e => this.handleModelChange('title', e)}
+								value={this.state.templateData.templateName}
+								onChange={e => this.handleModelChange('templateName', e)}
 								type="text"
 								placeholder="Digitar o nome do documento"
 								isError={this.state.isError}
@@ -1703,7 +1709,7 @@ class DocumentsScreen extends Component {
 							<TextArea
 								// maxLength="250"
 								validationModel={this.state.validationModel}
-								value={this.state.document.description}
+								value={this.state.templateData.description}
 								onChange={e => this.handleModelChange('description', e)}
 								type="text"
 								placeholder="Como esse documento é usado"
@@ -1745,11 +1751,11 @@ class DocumentsScreen extends Component {
 					</TextModal>
 					<TextModal>
 						Você deseja excluir o
-						<strong style={{marginLeft: '.5rem'}}>
+						<strong style={{ marginLeft: '.5rem' }}>
 							{this.props.isAdmin ? (
-								this.state.modelSelect.title
+								this.state.modelSelect.templateName
 							) : (
-								this.state.userSelectDoc.title
+								this.state.userSelectDoc.templateName
 							)}
 						</strong> permanentemente?
 					</TextModal>
@@ -1789,7 +1795,7 @@ class DocumentsScreen extends Component {
 						>
 							<span key={index}>
 								<ModelNumber>{index + 1}</ModelNumber>
-								<ModelTitle>{docs.title}</ModelTitle>
+								<ModelTitle>{docs.templateName}</ModelTitle>
 							</span>
 							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
 						</ContainerModelDescription>
@@ -1803,7 +1809,7 @@ class DocumentsScreen extends Component {
 
 	renderDocAdmin = () => {
 		const documentsList = (this.state.search !== '' && this.state.searching === true)
-			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
+			? this.props.documentsList.filter(model => model.templateName.match(new RegExp(this.state.search, 'i')))
 			: this.props.documentsList;
 		// MAP DOCUMENTS ADM
 		return (
@@ -1823,7 +1829,7 @@ class DocumentsScreen extends Component {
 						<ContainerModelDescription>
 							<span>
 								<ModelNumber>{index + 1}</ModelNumber>
-								<ModelTitle>{doc.title}</ModelTitle>
+								<ModelTitle>{doc.templateName}</ModelTitle>
 							</span>
 							<ModelParagraph>{doc.description}</ModelParagraph>
 						</ContainerModelDescription>
@@ -1906,7 +1912,7 @@ class DocumentsScreen extends Component {
 					<ContainerModelDescription>
 						<span>
 							<ModelNumber>{index + 1}</ModelNumber>
-							<ModelTitle>{doc.title}</ModelTitle>
+							<ModelTitle>{doc.templateName}</ModelTitle>
 						</span>
 						<ModelParagraph>{doc.description}</ModelParagraph>
 					</ContainerModelDescription>

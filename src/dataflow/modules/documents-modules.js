@@ -6,23 +6,7 @@ const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
 // Initial State
 let nextDocId = 0;
 const initialState = {
-	documentsList: [
-		{
-			id: 1,
-			title: 'MODELO 1',
-			description: 'fsadipgndioashgfskagopfsahgipfs',
-		},
-		{
-			id: 2,
-			title: 'MODELO 2',
-			description: 'hfppjglpha ljoga ÇOGDAHSFA pohdfafdal óddhdak fadlk',
-		},
-		{
-			id: 3,
-			title: 'MODELO 3',
-			description: 'lfndapfndsphgdsfa vdkçm ophdfia fçkdsjaop',
-		},
-	],
+	documentsList: [],
 };
 
 // Reducers
