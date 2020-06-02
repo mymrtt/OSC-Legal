@@ -55,6 +55,24 @@ export const getAllOrganizations = (userId, token) => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
+
+<<<<<<< Updated upstream
+export const patchOrg = (org, token) => axios({
+	url: `${API_URL}/organizations`,
+=======
+export const editOrganization = (org, token) => axios({
+	url: `${API_URL}/organizations/${org.orgId}`,
+>>>>>>> Stashed changes
+	method: 'patch',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+<<<<<<< Updated upstream
+	data: org
+=======
+>>>>>>> Stashed changes
+});
+
 // Organization
 
 // Document
