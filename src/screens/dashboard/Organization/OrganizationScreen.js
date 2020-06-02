@@ -1297,7 +1297,7 @@ class OrganizationScreen extends Component {
 									<Thead>
 										<Tr>
 											{this.state.tableTitles.map(title => (
-												<TableTitle width={'6rem'}
+												<TableTitle width={'8.3rem'}
 													key={title}
 													center={title}
 													style={{
