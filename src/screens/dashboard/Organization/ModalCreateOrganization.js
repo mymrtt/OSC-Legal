@@ -739,7 +739,6 @@ class ModalCreateOrganization extends Component {
 										type="submit"
 										text="concluir"
 										textTransform
-									// onClick={this.state.allStateTrue && this.props.handleChangeCloseModal}
 									/>
 								</ContainerConcludeButton>
 							</ContentWrapper>
