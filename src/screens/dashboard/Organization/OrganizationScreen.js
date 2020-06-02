@@ -32,6 +32,7 @@ import { findUser, removeOrg, getAllOrganizations } from '../../../services/api'
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
+	tableDatas: state.organization.tableDatas,
 	user: state.onboarding.users,
 });
 
@@ -775,10 +776,8 @@ class OrganizationScreen extends Component {
 		try {
 			const token = await localStorage.getItem('token');
 			const response = await getAllOrganizations(jwt.decode(token).id, token)
+			this.props.updateTableDatas(response.data)
 
-			this.setState({
-				organizations: response.data
-			})
 			console.log('orgs', response)
 		} catch (error) {
 			console.log('error', error);
@@ -859,8 +858,8 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
-		const { organizations } = this.state;
-		const newList = organizations.map((data) => {
+		const { tableDatas } = this.props;
+		const newList = tableDatas.map((data) => {
 			if (data === item) {
 				return {
 					...data,
@@ -872,7 +871,7 @@ class OrganizationScreen extends Component {
 		});
 		this.setState({
 			isClickedStatus: '',
-			organizations: newList,
+			tableDatas: newList,
 		});
 		this.props.updateTableDatas(
 			newList,
@@ -1059,7 +1058,7 @@ class OrganizationScreen extends Component {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 		const { user } = this.props;
 
-		return listTable && listTable.map((item, index) => (
+		return listTable.map((item, index) => (
 			<Tr style={{ margin: !this.props.isAdmin && index === listTable.length - 1 && '0 0 5rem 0' }} key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
@@ -1178,25 +1177,25 @@ class OrganizationScreen extends Component {
 					</>
 				}
 				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)} />
-			</Tr> 
+			</Tr>
 		));
 	}
 
 	renderAllTable = () => {
 		const { selectedValue, filter, toFilter } = this.state;
-		const { organizations } = this.state;
+		const { tableDatas } = this.props;
 
-		let listTable = this.renderTable(organizations);
+		let listTable = this.renderTable(tableDatas);
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(organizations.filter(item => item.status.toLowerCase() === (selectedValue.filter || selectedValue).toLowerCase()));
+			listTable = this.renderTable(tableDatas.filter(item => item.status.toLowerCase() === (selectedValue.filter || selectedValue).toLowerCase()));
 		}
 
 		if (
 			toFilter
 		) {
-			listTable = this.renderTable(organizations.filter(item => (filter.split(' ').length === 1
+			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
 				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
 				: item.tradingName.toLowerCase() === filter)));
 		}
@@ -1220,7 +1219,7 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		const { isAdmin } = this.props;
+		const { isAdmin, tableDatas } = this.props;
 		const {
 			isSelected,
 			isModal,
@@ -1228,8 +1227,8 @@ class OrganizationScreen extends Component {
 			itemSelected,
 			modalType,
 			isModalCreateOrg,
-			organizations
 		} = this.state;
+		console.log('test ---', this.state.use)
 
 		return (
 			<Container>
@@ -1246,6 +1245,7 @@ class OrganizationScreen extends Component {
 					&& <ModalCreateOrganization
 						item={itemSelected}
 						modalType={modalType}
+						tableDatas={tableDatas}
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
 						handleRedirect={this.handleRedirect}
@@ -1314,7 +1314,7 @@ class OrganizationScreen extends Component {
 									</tbody>
 								</Table>
 							</ContainerTable>
-							{organizations && organizations.length === 0 && (
+							{this.renderAllTable().length === 0 && (
 								<TextNoOrganitazion>
 									{isAdmin
 										? <TextInformation>Não há organizações no momento.</TextInformation>
