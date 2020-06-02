@@ -412,6 +412,7 @@ class ModalCreateOrganization extends Component {
 				city: this.state.city,
 				cep: this.state.cep,
 				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
+				status: 'Pendente de autorização',
 			};
 			if (this.props.modalType === 'edit') {
 				this.props.editOrg(org);

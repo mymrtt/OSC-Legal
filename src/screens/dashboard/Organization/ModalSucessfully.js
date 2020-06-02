@@ -53,11 +53,12 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-	width: 75%;
+	max-width: 75%;
 	font-size: 1.125rem;
 	font-family: "Overpass", ExtraBold;
 	font-weight: 900;
 	text-align: center;
+	word-wrap: break-word;
 	margin: 1.5rem 0 1.8rem;
 
 	@media (max-width: 648px) {

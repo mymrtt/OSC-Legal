@@ -12,6 +12,16 @@ const initialState = {
 			title: 'MODELO 1',
 			description: 'fsadipgndioashgfskagopfsahgipfs',
 		},
+		{
+			id: 2,
+			title: 'MODELO 2',
+			description: 'hfppjglpha ljoga ÇOGDAHSFA pohdfafdal óddhdak fadlk',
+		},
+		{
+			id: 3,
+			title: 'MODELO 3',
+			description: 'lfndapfndsphgdsfa vdkçm ophdfia fçkdsjaop',
+		},
 	],
 };
 

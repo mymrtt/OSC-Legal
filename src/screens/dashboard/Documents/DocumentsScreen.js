@@ -1725,8 +1725,14 @@ class DocumentsScreen extends Component {
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
 					<TextModal>
-						Você deseja excluir o <strong>{this.state.modelSelect.title
-							|| this.state.userSelectDoc.title}</strong> permanentemente?
+						Você deseja excluir o
+						<strong style={{marginLeft: '.5rem'}}>
+							{this.props.isAdmin ? (
+								this.state.modelSelect.title
+							) : (
+								this.state.userSelectDoc.title
+							)}
+						</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
@@ -2081,25 +2087,24 @@ class DocumentsScreen extends Component {
 													fontSizeMobile="1.2rem"
 												/>
 											) : (
-													null
-												)
+												null
+											)
 										) : (
-												this.state.isMobileButton === true
+											this.state.isMobileButton === true
 													&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
-														<Button
-															width="17.5rem"
-															height="4.5rem"
-															marginMobile="0 0 1rem 0"
-															widthMobile="85%"
-															bottomMobile="0"
-															// left="11px"
-															positionMobile="fixed"
-															onClick={this.openModalListDoc}
-															text="Adicionar Documento"
-															fontSizeMobile="1.2rem"
-														/>
-													) : (
-														null))}
+													<Button
+														width="17.5rem"
+														height="4.5rem"
+														marginMobile="0 0 1rem 0"
+														widthMobile="85%"
+														bottomMobile="0"
+														positionMobile="fixed"
+														onClick={this.openModalListDoc}
+														text="Adicionar Documento"
+														fontSizeMobile="1.2rem"
+													/>
+												) : (
+													null))}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}
