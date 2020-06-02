@@ -55,6 +55,16 @@ export const getAllOrganizations = (userId, token) => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
+
+export const patchOrg = (org, token) => axios({
+	url: `${API_URL}/organizations`,
+	method: 'patch',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: org
+});
+
 // Organization
 
 // Document
