@@ -28,7 +28,7 @@ import Exit from '../../../assets/fechar.svg';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { findUser, removeOrg } from '../../../services/api';
+import { findUser, removeOrg, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -754,6 +754,7 @@ class OrganizationScreen extends Component {
 
 	componentDidMount() {
 		this.getUser();
+		this.getOrgs();
 	}
 
 	getUser = async () => {
@@ -766,6 +767,20 @@ class OrganizationScreen extends Component {
 				acessToken: token,
 				...this.state.userData,
 			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
+	getOrgs = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+			const response = await getAllOrganizations(jwt.decode(token).id, token)
+
+			this.setState({
+				organizations: response.data
+			})
+			console.log('orgs', response)
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -845,8 +860,8 @@ class OrganizationScreen extends Component {
 	}
 
 	handleSelectedStatus = (newStatus, item) => {
-		const { tableDatas } = this.props;
-		const newList = tableDatas.map((data) => {
+		const { organizations } = this.state;
+		const newList = organizations.map((data) => {
 			if (data === item) {
 				return {
 					...data,
@@ -858,7 +873,7 @@ class OrganizationScreen extends Component {
 		});
 		this.setState({
 			isClickedStatus: '',
-			tableDatas: newList,
+			organizations: newList,
 		});
 		this.props.updateTableDatas(
 			newList,
@@ -1045,7 +1060,7 @@ class OrganizationScreen extends Component {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
 		const { user } = this.props;
 
-		return listTable.map((item, index) => (
+		return listTable && listTable.map((item, index) => (
 			<Tr style={{ margin: !this.props.isAdmin && index === listTable.length - 1 && '0 0 5rem 0' }} key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
@@ -1164,25 +1179,25 @@ class OrganizationScreen extends Component {
 					</>
 				}
 				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)} />
-			</Tr>
+			</Tr> 
 		));
 	}
 
 	renderAllTable = () => {
 		const { selectedValue, filter, toFilter } = this.state;
-		const { tableDatas } = this.props;
+		const { organizations } = this.state;
 
-		let listTable = this.renderTable(tableDatas);
+		let listTable = this.renderTable(organizations);
 		if (
 			selectedValue !== 'Selecionar status'
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => item.status.toLowerCase() === (selectedValue.filter || selectedValue).toLowerCase()));
+			listTable = this.renderTable(organizations.filter(item => item.status.toLowerCase() === (selectedValue.filter || selectedValue).toLowerCase()));
 		}
 
 		if (
 			toFilter
 		) {
-			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
+			listTable = this.renderTable(organizations.filter(item => (filter.split(' ').length === 1
 				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
 				: item.tradingName.toLowerCase() === filter)));
 		}
@@ -1206,7 +1221,7 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		const { isAdmin, tableDatas } = this.props;
+		const { isAdmin } = this.props;
 		const {
 			isSelected,
 			isModal,
@@ -1214,8 +1229,8 @@ class OrganizationScreen extends Component {
 			itemSelected,
 			modalType,
 			isModalCreateOrg,
+			organizations
 		} = this.state;
-		console.log('test ---', this.state.use)
 
 		return (
 			<Container>
@@ -1232,7 +1247,7 @@ class OrganizationScreen extends Component {
 					&& <ModalCreateOrganization
 						item={itemSelected}
 						modalType={modalType}
-						tableDatas={tableDatas}
+						tableDatas={organizations}
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
 						handleRedirect={this.handleRedirect}
@@ -1301,13 +1316,13 @@ class OrganizationScreen extends Component {
 									</tbody>
 								</Table>
 							</ContainerTable>
-							{this.renderAllTable().length === 0 && (
+							{/* {this.renderAllTable().length === 0 && (
 								<TextNoOrganitazion>
 									{isAdmin
 										? <TextInformation>Não há organizações no momento.</TextInformation>
 										: <TextInformation>Essa organização não existe.</TextInformation>}
 								</TextNoOrganitazion>
-							)}
+							)} */}
 						</Content>
 					</ContainerTableUser>
 				</ContainerUser>
