@@ -1314,13 +1314,13 @@ class OrganizationScreen extends Component {
 									</tbody>
 								</Table>
 							</ContainerTable>
-							{/* {this.renderAllTable().length === 0 && (
+							{organizations && organizations.length === 0 && (
 								<TextNoOrganitazion>
 									{isAdmin
 										? <TextInformation>Não há organizações no momento.</TextInformation>
 										: <TextInformation>Essa organização não existe.</TextInformation>}
 								</TextNoOrganitazion>
-							)} */}
+							)}
 						</Content>
 					</ContainerTableUser>
 				</ContainerUser>
