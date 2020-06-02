@@ -293,7 +293,7 @@ class ModalCreateOrganization extends Component {
 
 			const response = await getAllOrganizations(token, userId);
 
-			console.log('response get orgs', response);
+			// console.log('response get orgs', response);
 		} catch (error) {
 			console.log('error', error);
 		}
