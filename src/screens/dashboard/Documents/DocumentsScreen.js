@@ -605,7 +605,7 @@ const ContainerOptions = styled.div`
 		margin-top: .6rem;
     right: 0rem;
     border: 1px solid #85144B;
-		z-index: ${props => (props.modal ? 0 : '2')};
+		z-index: ${props => (props.modal ? '0' : '2')};
 		background: #ffffff;
 		align-items: center;
 		border-radius: 3px;
@@ -951,14 +951,13 @@ const TitleDelete = styled(TitleAddModel)`
 `;
 
 const WrapTextModal = styled.div`
-	width: 85%;
+	width: 100%;
 
 	@media (max-width: 648px) {
 		height: 30%;
     display: flex;
-    ${''}
+		justify-content: space-around;
     flex-direction: column;
-		${''}
 	}
 `;
 
@@ -976,6 +975,7 @@ const TextModal = styled.p`
 		color: #404040;
 	}
 	@media (max-width: 648px) {
+		width: 100%;
 		margin: 0;
 		font-size: 1.3rem;
 	}
@@ -1822,6 +1822,7 @@ class DocumentsScreen extends Component {
 							<ModelParagraph>{doc.description}</ModelParagraph>
 						</ContainerModelDescription>
 						<ContainerOptions
+							modal={this.state.modalDelete}
 							contOptions={this.state.options && (this.state.selectedOptions === doc)}>
 							<Option
 								onMouseEnter={() => this.handleChangeColorExport(doc)}

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-undef */
 /* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
@@ -903,7 +905,7 @@ class OrganizationScreen extends Component {
 								{this.state.selectedItems.map((item, index) => (
 									<SelectedItem
 										onClick={() => this.handleSelectedValue(item)}
-										style={{ paddingTop: item === 'Selecionar status' && '.7rem'}}
+										style={{ paddingTop: item === 'Selecionar status' && '.7rem' }}
 										key={index}
 										hover={item}
 									>
