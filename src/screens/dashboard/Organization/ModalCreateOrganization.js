@@ -20,11 +20,7 @@ import Exit from '../../../assets/fechar.svg';
 import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-<<<<<<< Updated upstream
 import { createOrganization, getAllOrganizations, patchOrg } from '../../../services/api';
-=======
-import { createOrganization, getAllOrganizations, editOrganization } from '../../../services/api';
->>>>>>> Stashed changes
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -302,18 +298,6 @@ class ModalCreateOrganization extends Component {
 		}
 	}
 
-	editOrganization = async (org) => {
-		try {
-			console.log('ooorg', org)
-			const token = await localStorage.getItem('token');
-
-			const response = await editOrganization(org, token);
-			console.log('response', response.response)
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
-
 	getAllOrgs = async () => {
 		try {
 			const userId = this.props.userData.id;
@@ -469,12 +453,6 @@ class ModalCreateOrganization extends Component {
 			};
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
-<<<<<<< Updated upstream
-=======
-				// this.props.editOrg(org);
-				// this.props.handleClosedModal();
-				// this.props.closeModal();
->>>>>>> Stashed changes
 			} else {
 				this.props.addNewOrg(org);
 				this.createOrg(org);
