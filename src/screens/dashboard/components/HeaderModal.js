@@ -3,12 +3,16 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import jwt from 'jsonwebtoken';
 
 // Images
 import logo from '../../../assets/logo.svg';
 
 // Redux
 const mapStateToProps = state => ({
+	email: state.onboarding.users.email,
+	password: state.onboarding.users.password,
+	name: state.onboarding.users.name,
 	isAdmin: state.onboarding.users.isAdmin,
 });
 
@@ -74,19 +78,40 @@ const ParagraphSair = styled.p`
 class HeaderModal extends Component {
 	state = {
 		redirect: false,
+		userData: [],
 	}
 
 	handleRedirect = () => {
 		this.setState({ redirect: true });
 	}
 
+	componentDidMount() {
+		this.userInfo();
+	}
+
+	userInfo = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			this.setState({ userData: jwt.decode(token) });
+
+			await localStorage.setItem('userInfo', {
+				acessToken: token,
+				...this.state.userData,
+			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	render() {
+		const { userData } = this.state;
 		return (
 			<Container>
 				<Logo src={logo} alt="Logo OSC Legal" />
 				<ContainerUser>
 					<ParagraphUserName>
-						{this.props.isAdmin ? 'Administrador' : this.props.name}
+						{userData.isAdmin == 1 ? 'Administrador' : userData.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleRedirect}>
 						sair

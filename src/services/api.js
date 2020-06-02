@@ -20,12 +20,23 @@ export const login = (user, base64credentials) => axios({
 	},
 	data: user,
 });
+
+export const findUser = (id, token) => axios({
+	url: `${API_URL}/users/${id}`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 // Onboarding
 
 // Organization
-export const createOrganization = org => axios({
+export const createOrganization = (org, token) => axios({
 	url: `${API_URL}/organizations`,
 	method: 'post',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
 	data: org,
 });
 // Organization

@@ -186,7 +186,6 @@ class LoginScreen extends Component {
 				email: this.state.email,
 				password: this.state.password,
 			};
-			console.log('user', user)
 
 			const encodedPassword = OscHash(user.password);
 
@@ -197,7 +196,6 @@ class LoginScreen extends Component {
 			);
 
 			const response = await login(user, base64credentials);
-			console.log('response', response);
 
 			if (response) {
 				this.setState({ redirect: '/organizations' });
@@ -210,8 +208,8 @@ class LoginScreen extends Component {
 					error: true,
 				});
 			}
-		} catch (err) {
-			console.log('err', err);
+		} catch (error) {
+			console.log('error', error);
 			this.setState({
 				error: true,
 			});
