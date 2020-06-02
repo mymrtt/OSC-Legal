@@ -833,10 +833,13 @@ class OrganizationScreen extends Component {
 
 	deleteOrganization = async () => {
 		try {
-			const orgID = this.state.itemSelected.id;
 			const token = await localStorage.getItem('token');
 
-			const response = await removeOrg(orgID, token);
+			const org = {
+				...this.state.itemSelected,
+				deletedAt: Date.now()
+			}
+			const response = await removeOrg(org, token);
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({
@@ -845,10 +848,10 @@ class OrganizationScreen extends Component {
 			this.handleDeleteModal();
 		} catch (error) {
 			console.log('error', error.response);
-			const { companyName } = this.state.itemSelected;
+			const { tradingName } = this.state.itemSelected;
 			if (error.response.status === 404) {
 				return this.setState({
-					error: `A organização ${companyName} não foi encontrada.`,
+					error: `A organização ${tradingName} não foi encontrada.`,
 				});
 			}
 			this.setState({
@@ -1228,7 +1231,6 @@ class OrganizationScreen extends Component {
 			modalType,
 			isModalCreateOrg,
 		} = this.state;
-		console.log('test ---', this.state.use)
 
 		return (
 			<Container>
