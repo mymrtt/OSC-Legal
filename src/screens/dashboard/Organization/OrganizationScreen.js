@@ -32,7 +32,6 @@ import { findUser, removeOrg, getAllOrganizations } from '../../../services/api'
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
-	tableDatas: state.organization.tableDatas,
 	user: state.onboarding.users,
 });
 
@@ -1247,7 +1246,6 @@ class OrganizationScreen extends Component {
 					&& <ModalCreateOrganization
 						item={itemSelected}
 						modalType={modalType}
-						tableDatas={organizations}
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
 						handleRedirect={this.handleRedirect}
