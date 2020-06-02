@@ -446,8 +446,9 @@ class ModalCreateOrganization extends Component {
 				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
 				user_id: this.props.userData.id,
 				telephone: this.state.telephone,
-				orgId: this.props.userData.id,
+				orgId: this.props.item.orgId,
 			};
+			console.log(this.props)
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
 			} else {
