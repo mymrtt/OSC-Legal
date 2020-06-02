@@ -1,25 +1,28 @@
 // Libs
-import { compose, createStore, applyMiddleware, combineReducers } from "redux";
-import thunkMiddleware from "redux-thunk";
+import {
+	compose, createStore, applyMiddleware, combineReducers,
+} from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
 // Reducers
-import SignUp from "./dataflow/modules/sign-up-modules";
+import Onboarding from './dataflow/modules/onboarding-modules';
+import Documents from './dataflow/modules/documents-modules';
+import Organization from './dataflow/modules/organization-modules';
 
 const reducers = combineReducers({
-  signup: SignUp
-  // login: Login,
+	onboarding: Onboarding,
+	documents: Documents,
+	organization: Organization,
 });
 
 export default function configureStore(initialState) {
-  // const epicMiddleware = createEpicMiddleware(rootEpic);
+	const bundle = compose(applyMiddleware(thunkMiddleware));
+	const createStoreWithMiddleware = bundle(createStore);
+	const store = createStoreWithMiddleware(
+		reducers,
+		initialState,
+		window.devToolsExtension ? window.devToolsExtension() : f => f,
+	);
 
-  const bundle = compose(applyMiddleware(thunkMiddleware));
-  const createStoreWithMiddleware = bundle(createStore);
-  const store = createStoreWithMiddleware(
-    reducers,
-    initialState,
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  );
-
-  return store;
+	return store;
 }

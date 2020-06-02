@@ -1,22 +1,22 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 // import VisibilityOff from "../../../assets/visibility-off.svg";
 // import VisibilityOn from "../../../assets/visibility-on.svg";
 
-import ImageLogo from "../../../components/ImageLogo";
-import Input from "../../../components/Input";
-import Button from "../../../components/Button";
+import ImageLogo from '../../../components/ImageLogo';
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
 
 export const ContainerForm = styled.div`
   background-color: #FFCFCD;
   display: flex;
   align-items: flex-end;
-  flex-direction: column; 
+  flex-direction: column;
   margin: 0;
 
   @media (max-width: 648px) {
 	background-color: #fff;
-	
+
 	  }
 	}
 `;
@@ -32,7 +32,7 @@ export const Form = styled.form`
 
   @media (max-width: 648px) {
 	width: 100%;
-	
+
 	  }
 	}
 `;
@@ -45,9 +45,9 @@ export const InputBox = styled.span`
 
 	@media (max-width: 457px) {
 		width: 83%;
-		
+
 		  }
-		}	
+		}
 `;
 
 export const Label = styled.label`
@@ -87,62 +87,62 @@ export const Error = styled.h4`
 `;
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: "",
-      email: "",
-      password: ""
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			value: '',
+			email: '',
+			password: '',
+		};
+	}
 
-  handleChangeEmail = ev => {
-    this.setState({
-      email: ev.target.value
-    });
-  };
+	handleChangeEmail = (ev) => {
+		this.setState({
+			email: ev.target.value,
+		});
+	};
 
-  handleChangePassword = ev => {
-    this.setState({
-      password: ev.target.value
-    });
-  };
+	handleChangePassword = (ev) => {
+		this.setState({
+			password: ev.target.value,
+		});
+	};
 
-  render() {
-    console.log(this.state.email);
-    return (
-      <ContainerForm>
-        <Form onSubmit={this.handleSubmit}>
-          <ImageLogo />
-          <InputBox>
-            <Label>E-MAIL</Label>
-            <Input
-              login
-              type="text"
-              onChange={this.handleChangeEmail}
-              placeholder="name@email.com"
-            />
-          </InputBox>
-          <InputBox>
-            <Label>SENHA</Label>
-            <Input
-              login
-              type="password"
-              onChange={this.handleChangePassword}
-              placeholder="Insert password"
-            />
-          </InputBox>
-          {/* <Error>Email e/ ou senha incorreta</Error> */}
-          {/* <Error>Endereço de email inválido</Error> */}
-          <Button login text="ENTRAR" type="submit" />
-          <Span>
-            <buttonText>CRIAR CONTA</buttonText>
-            <buttonText>RESETAR SENHA</buttonText>
-          </Span>
-        </Form>
-      </ContainerForm>
-    );
-  }
+	render() {
+		console.log(this.state.email);
+		return (
+			<ContainerForm>
+				<Form onSubmit={this.handleSubmit}>
+					<ImageLogo />
+					<InputBox>
+						<Label>E-MAIL</Label>
+						<Input
+							login
+							type="text"
+							onChange={this.handleChangeEmail}
+							placeholder="name@email.com"
+						/>
+					</InputBox>
+					<InputBox>
+						<Label>SENHA</Label>
+						<Input
+							login
+							type="password"
+							onChange={this.handleChangePassword}
+							placeholder="Insert password"
+						/>
+					</InputBox>
+					{/* <Error>Email e/ ou senha incorreta</Error> */}
+					{/* <Error>Endereço de email inválido</Error> */}
+					<Button login text="ENTRAR" type="submit" />
+					<Span>
+						<buttonText>CRIAR CONTA</buttonText>
+						<buttonText>RESETAR SENHA</buttonText>
+					</Span>
+				</Form>
+			</ContainerForm>
+		);
+	}
 }
 
 export default App;
