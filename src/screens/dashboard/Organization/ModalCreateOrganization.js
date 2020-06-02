@@ -307,7 +307,7 @@ class ModalCreateOrganization extends Component {
 
 			const response = await getAllOrganizations(userId, token);
 
-			console.log('response get orgs', response);
+			// console.log('response get orgs', response);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -450,7 +450,7 @@ class ModalCreateOrganization extends Component {
 				user_id: this.props.userData.id,
 				// deletedAt: null,
 				telephone: this.state.telephone,
-				orgId: this.props.item.id
+				orgId: this.props.userData.id,
 			};
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
