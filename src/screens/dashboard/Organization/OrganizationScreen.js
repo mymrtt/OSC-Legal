@@ -28,7 +28,7 @@ import Exit from '../../../assets/fechar.svg';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { findUser, removeOrg } from '../../../services/api';
+import { findUser, removeOrg, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -754,6 +754,7 @@ class OrganizationScreen extends Component {
 
 	componentDidMount() {
 		this.getUser();
+		this.getOrgs();
 	}
 
 	getUser = async () => {
@@ -766,6 +767,18 @@ class OrganizationScreen extends Component {
 				acessToken: token,
 				...this.state.userData,
 			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
+	getOrgs = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+			const response = await getAllOrganizations(jwt.decode(token).id, token)
+			this.props.updateTableDatas(response.data)
+
+			console.log('orgs', response)
 		} catch (error) {
 			console.log('error', error);
 		}
