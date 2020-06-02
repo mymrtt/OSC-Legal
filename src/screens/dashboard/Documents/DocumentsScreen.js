@@ -85,7 +85,7 @@ const MaximumWidth = styled.div`
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
-	background: #FFF;	
+	background: #FFF;
 	overflow-y: hidden;
 
 	@media(max-width: 768px){
@@ -351,7 +351,7 @@ const ContainerSearch = styled.div`
 
 const SearchText = styled.p`
   color: #231F20;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-family: Overpass, Bold;
 	font-weight: 600;
   margin-right: 1rem;
@@ -1466,24 +1466,27 @@ class DocumentsScreen extends Component {
 		this.setState({
 			modelSelect: doc,
 		});
+		console.log(this.state.modelSelect.templateId);
 	}
 
 	handleDelete = async () => {
 		try {
-			const templateId = this.state.templateList.id;
-			const token = await localStorage.getItem('token');
-			const response = await deleteTemplate(token, templateId);
-			this.state.templateList.filter(template => template !== templateId);
+			const templateID = this.state.modelSelect.templateId;
 
-			console.log('response', response.data);
+			const token = await localStorage.getItem('token');
+
+			const response = await deleteTemplate(templateID, token);
+
+			// this.setState({
+			// 	templateList: response.data,
+			// });
+
+
+			console.log('response', response);
+			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error);
 		}
-		// this.props.deleteDocument(this.state.modelSelect.id);
-		// this.setState({
-		// 	modelSelect: '',
-		// });
-		this.handleCancelDelete();
 	}
 
 

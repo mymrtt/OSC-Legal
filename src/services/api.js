@@ -39,6 +39,32 @@ export const createOrganization = (org, token) => axios({
 	},
 	data: org,
 });
+
+export const removeOrg = (orgID, token) => axios({
+	url: `${API_URL}/organizations/${orgID}`,
+	method: 'patch',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const getAllOrganizations = (userId, token) => axios({
+	url: `${API_URL}/organizations/${userId}`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const patchOrg = (org, token) => axios({
+	url: `${API_URL}/organizations`,
+	method: 'patch',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: org
+});
+
 // Organization
 
 // Document
@@ -67,8 +93,8 @@ export const getAllTemplates = token => axios({
 	},
 });
 
-export const deleteTemplate = (token, templateId) => axios({
-	url: `${API_URL}/templates/${templateId}`,
+export const deleteTemplate = (templateID, token) => axios({
+	url: `${API_URL}/templates/${templateID}`,
 	method: 'delete',
 	header: {
 		Authorization: `Bearer ${token}`,

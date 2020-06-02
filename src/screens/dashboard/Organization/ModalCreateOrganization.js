@@ -20,7 +20,7 @@ import Exit from '../../../assets/fechar.svg';
 import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { createOrganization } from '../../../services/api';
+import { createOrganization, getAllOrganizations, patchOrg } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -255,7 +255,8 @@ class ModalCreateOrganization extends Component {
 	};
 
 	componentDidMount() {
-		// this.createOrg();
+		this.getAllOrgs();
+
 		if (this.props.modalType === 'edit') {
 			this.setState({
 				tradingName: this.props.item.tradingName,
@@ -281,8 +282,34 @@ class ModalCreateOrganization extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await createOrganization(org, token);
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
 
-			console.log('response', response);
+	editOrganization = async (org) => {
+		try {
+			const token = await localStorage.getItem('token');
+			const response = await patchOrg(org, token);
+			console.log('response', response)
+
+			this.props.editOrg(org);
+			this.props.handleClosedModal();
+			this.props.closeModal();
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	getAllOrgs = async () => {
+		try {
+			const userId = this.props.userData.id;
+
+			const token = await localStorage.getItem('token');
+
+			const response = await getAllOrganizations(userId, token);
+
+			// console.log('response get orgs', response);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -296,7 +323,7 @@ class ModalCreateOrganization extends Component {
 		});
 	}
 
-	handleErros = () => {
+	validateOrg = () => {
 		const {
 			tradingName,
 			companyName,
@@ -308,7 +335,6 @@ class ModalCreateOrganization extends Component {
 			city,
 			cep,
 		} = this.state;
-
 
 		if (!tradingName || tradingName.length < 4) {
 			this.setState({
@@ -427,11 +453,10 @@ class ModalCreateOrganization extends Component {
 				user_id: this.props.userData.id,
 				// deletedAt: null,
 				telephone: this.state.telephone,
+				orgId: this.props.userData.id,
 			};
 			if (this.props.modalType === 'edit') {
-				this.props.editOrg(org);
-				this.props.handleClosedModal();
-				this.props.closeModal();
+				this.editOrganization(org);
 			} else {
 				this.props.addNewOrg(org);
 				this.createOrg(org);
@@ -444,7 +469,7 @@ class ModalCreateOrganization extends Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		this.handleErros();
+		this.validateOrg();
 	};
 
 	handleChange = (field, ev) => {
@@ -510,7 +535,7 @@ class ModalCreateOrganization extends Component {
 			'Insira um cep válido.',
 		];
 
-		const { userData } = this.props;
+		const { userData, modalType } = this.props;
 
 		const {
 			isTradingNameError,
@@ -534,7 +559,10 @@ class ModalCreateOrganization extends Component {
 								<ExitIcon src={Exit} alt="close" onClick={this.props.handleClosedModal} />
 							</ContainerExit>
 							<ContentWrapper>
-								<CreateOrgTitle>Criar Organização</CreateOrgTitle>
+								{modalType === 'edit'
+									? (<CreateOrgTitle>Editar Organização</CreateOrgTitle>)
+									: (<CreateOrgTitle>Criar Organização</CreateOrgTitle>)
+								}
 								<ContainerUser>
 									<Title>Usuário</Title>
 									<UserTitle>nome</UserTitle>
