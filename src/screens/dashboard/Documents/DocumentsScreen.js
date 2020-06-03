@@ -1330,14 +1330,14 @@ class DocumentsScreen extends Component {
 
 	handleDelete = async () => {
 		try {
-			const templateID = this.state.modelSelecttemplateId;
+			const templateId = this.state.modelSelect.templateId;
 
 			const token = await localStorage.getItem('token');
 
-			console.log('id', templateID);
+			console.log('id', templateId);
 			console.log('token', token);
 
-			const response = await deleteTemplate(templateID, token);
+			const response = await deleteTemplate(templateId, token);
 			console.log('response', response);
 
 			// this.setState({
@@ -1636,7 +1636,7 @@ class DocumentsScreen extends Component {
 		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
 			const templateData = { templateName, description, template };
 			this.props.addNewDocument(templateData);
-			this.createDoc(templateData);
+			this.createTemplate(templateData);
 
 			this.setState({
 				templateData: {},
