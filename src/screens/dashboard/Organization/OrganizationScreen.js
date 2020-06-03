@@ -48,7 +48,7 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: 100%;
-	height: ${props => (!props.height && 'calc(100vh - -3px - 5.5rem)')};
+	height: ${props => (!props.height && 'calc(100vh - 5.5rem + 1px)')};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 
 	@media(max-width: 648px) {
@@ -320,7 +320,7 @@ const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 66px - 5.8rem - 2.4rem);
+	height: calc(100vh - 68px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
 
 	@media (max-width: 768px) {
@@ -331,7 +331,7 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	max-height: 66vh;
+	max-height: calc(100% - 89.8px);;
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -601,6 +601,7 @@ const TitleModal = styled.div`
 	img {
 		/* width: 20px;
 		height: 20px; */
+		margin-bottom: 2rem;
 		cursor: pointer;
 	}
 `;
@@ -1062,7 +1063,7 @@ class OrganizationScreen extends Component {
 		const { user } = this.props;
 
 		return listTable.map((item, index) => (
-			<Tr style={{ margin: !this.props.isAdmin && index === listTable.length - 1 && '0 0 5rem 0' }} key={item.id}>
+			<Tr style={{ margin: !this.props.isAdmin && index === listTable.length - 1 && '0 0 6rem 0' }} key={item.id}>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>

@@ -210,6 +210,8 @@ class LoginScreen extends Component {
 			}
 		} catch (error) {
 			console.log('error', error);
+			console.log('error.response', error.response);
+
 			this.setState({
 				error: true,
 			});
