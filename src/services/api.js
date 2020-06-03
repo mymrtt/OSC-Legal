@@ -54,7 +54,7 @@ export const removeOrg = (org, token) => axios({
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
-	data: org
+	data: org,
 });
 
 export const getAllOrganizations = (userId, token) => axios({
@@ -71,7 +71,7 @@ export const patchOrg = (org, token) => axios({
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
-	data: org
+	data: org,
 });
 
 // Organization
@@ -82,12 +82,32 @@ export const createDocument = doc => axios({
 	method: 'post',
 	data: doc,
 });
+
 // Document
 
 // Template (Document - Admin)
-export const createTemplate = (title, description, isFile) => axios({
+export const createTemplate = (templateData, token) => axios({
 	url: `${API_URL}/templates`,
 	method: 'post',
-	data: { title, description, isFile },
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: templateData,
+});
+
+export const getAllTemplates = token => axios({
+	url: `${API_URL}/templates`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const deleteTemplate = (templateID, token) => axios({
+	url: `${API_URL}/templates/${templateID}`,
+	method: 'delete',
+	header: {
+		Authorization: `Bearer ${token}`,
+	},
 });
 // Template (Document - Admin)

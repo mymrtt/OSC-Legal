@@ -37,9 +37,9 @@ const Container = styled.div`
 	}
 
 	@media (max-width: 648px) {
-		padding: 0;
-		flex-wrap: wrap;
 		border-bottom: ${props => (!props.border ? '1px solid  #707070' : 'none')};
+		flex-wrap: wrap;
+		padding: 0;
 	}
 `;
 

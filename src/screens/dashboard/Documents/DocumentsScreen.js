@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import jwt from 'jsonwebtoken';
 
 // Components
 import Header from '../components/Header';
@@ -30,7 +31,7 @@ import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
 // Api
-import { createTemplate } from '../../../services/api';
+import { createTemplate, getAllTemplates, deleteTemplate, getAllOrganizations, createDocument } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
@@ -1231,9 +1232,9 @@ class DocumentsScreen extends Component {
 		colorTextEdit: '',
 		colorTextDelete: '',
 		redirect: false,
-		isFile: null,
-		document: {
-			title: '',
+		template: null,
+		templateData: {
+			templateName: '',
 			description: '',
 			id: 0,
 		},
@@ -1251,18 +1252,62 @@ class DocumentsScreen extends Component {
 		isMobileButton: false,
 		userSelectDoc: '',
 		isErrorDoc: false,
+		templateList: [],
+		organizationUser: [],
 	};
 
 
-	createTemplate = async (title, description, isFile) => {
+	createDoc = async (templateData) => {
 		try {
-			const response = await createTemplate(title, description, isFile);
-		} catch (err) {
+			console.log(templateData);
+
+			const token = await localStorage.getItem('token');
+
+			const response = await createTemplate(templateData, token);
+
+			console.log('response', response);
+		} catch (error) {
+			console.log('error', error);
 		}
 	}
 
+	getOrg = async () => {
+		try {
+			const token = await localStorage.getItem('token');
 
-	handleOnOptions = (doc, index) => {
+			const userID = jwt.decode(token).id;
+
+			const response = await getAllOrganizations(userID, token);
+
+			this.setState({
+				organizationUser: response.data,
+			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
+	componentDidMount() {
+		this.renderTemplate();
+		this.getOrg();
+		this.renderMobileButton();
+	}
+
+	renderTemplate = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await getAllTemplates(token);
+
+			this.setState({
+				templateList: response.data,
+			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
+	handleOnOptions = (doc) => {
 		this.setState({
 			options: true,
 			selectedOptions: doc,
@@ -1291,11 +1336,13 @@ class DocumentsScreen extends Component {
 
 	handleCancelAddModel = () => {
 		this.setState({
-			description: '',
-			title: '',
+			templateData: {
+				description: '',
+				templateName: '',
+			},
 			addModel: false,
 			isError: false,
-			isFile: null,
+			template: null,
 			isErrorDescription: false,
 			isErrorFile: false,
 			isErrorTitle: false,
@@ -1318,16 +1365,16 @@ class DocumentsScreen extends Component {
 	}
 
 	handleModelChange = (field, e) => {
-		const { document } = this.state;
-		document[field] = e.target.value;
+		const { templateData } = this.state;
+		templateData[field] = e.target.value;
 		this.setState({
-			document,
+			templateData,
 			isError: false,
 			isErrorFile: false,
 			isErrorTitle: false,
 			isErrorDescription: false,
 			isErrorTitleQtd: false,
-			file: this.state.isFile,
+			file: this.state.template,
 		});
 	}
 
@@ -1427,7 +1474,7 @@ class DocumentsScreen extends Component {
 
 		reader.onloadend = () => {
 			this.setState({
-				isFile: reader.result,
+				template: reader.result,
 				isErrorFile: false,
 			});
 		};
@@ -1438,15 +1485,33 @@ class DocumentsScreen extends Component {
 		this.setState({
 			modelSelect: doc,
 		});
+		console.log(this.state.modelSelect.templateId);
 	}
 
-	handleDelete = () => {
-		this.props.deleteDocument(this.state.modelSelect.id);
-		this.setState({
-			modelSelect: '',
-		});
-		this.handleCancelDelete();
+	handleDelete = async () => {
+		try {
+			const templateID = this.state.modelSelect.templateId;
+
+			const token = await localStorage.getItem('token');
+
+			console.log('id', templateID);
+			console.log('token', token);
+
+			const response = await deleteTemplate(templateID, token);
+			console.log('response', response);
+
+			// this.setState({
+			// 	templateList: response.data,
+			// });
+
+
+			// console.log('response', response);
+			// this.handleCancelDelete();
+		} catch (error) {
+			console.log('error', error.response);
+		}
 	}
+
 
 	handleSearch = (e) => {
 		this.setState({
@@ -1477,10 +1542,6 @@ class DocumentsScreen extends Component {
 		this.handleErrors();
 	}
 
-	componentDidMount() {
-		this.renderMobileButton();
-	}
-
 	renderMobileButton = () => {
 		if (window.innerWidth < '500') {
 			this.setState({
@@ -1494,10 +1555,10 @@ class DocumentsScreen extends Component {
 	}
 
 	handleErrors = () => {
-		const { title, description } = this.state.document;
-		const { isFile } = this.state;
+		const { templateName, description } = this.state.templateData;
+		const { template } = this.state;
 
-		if (isFile === null) {
+		if (template === null) {
 			this.setState({
 				isErrorFile: true,
 			});
@@ -1524,7 +1585,7 @@ class DocumentsScreen extends Component {
 				isErrorDescriptionQtd: false,
 			});
 		}
-		if (title === '') {
+		if (templateName === '') {
 			this.setState({
 				isErrorTitle: true,
 				isErrorTitleQtd: false,
@@ -1534,7 +1595,7 @@ class DocumentsScreen extends Component {
 				isErrorTitle: false,
 			});
 		}
-		if (title.length < 4 && title.length > 0) {
+		if (templateName.length < 4 && templateName.length > 0) {
 			this.setState({
 				isErrorTitleQtd: true,
 			});
@@ -1543,7 +1604,7 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: false,
 			});
 		}
-		if (title === '' && description === '' && isFile === null) {
+		if (templateName === '' && description === '' && template === null) {
 			this.setState({
 				isError: true,
 				isErrorTitle: false,
@@ -1552,15 +1613,14 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: false,
 			});
 		}
-		if (title !== '' && title.length > 4 && description !== '' && description.length <= 250 && isFile !== null) {
-			this.props.addNewDocument({
-				title, description, isFile,
-			});
-			this.createTemplate(title, description, isFile);
+		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
+			const templateData = { templateName, description, template };
+			this.props.addNewDocument(templateData);
+			this.createDoc(templateData);
 
 			this.setState({
-				document: {},
-				isFile: null,
+				templateData: {},
+				template: null,
 			});
 
 			this.handleCancelAddModel();
@@ -1603,7 +1663,7 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleDocsUser = (e) => {
+	handleDocsUser = async (e, doc) => {
 		e.preventDefault();
 		this.setState({
 			modalListDoc: false,
@@ -1675,11 +1735,11 @@ class DocumentsScreen extends Component {
 								type="file"
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
-							<TextUploadFile file={this.state.isFile}>
-								<h3>{this.state.isFile === null ? 'Adicionar modelo' : 'Modelo adicionado'}</h3>
+							<TextUploadFile file={this.state.template}>
+								<h3>{this.state.template === null ? 'Adicionar modelo' : 'Modelo adicionado'}</h3>
 								<p>
 									<span>Clique aqui</span>
-									{this.state.isFile !== null && ' para adicionar outro.'}
+									{this.state.template !== null && ' para adicionar outro.'}
 								</p>
 							</TextUploadFile>
 						</UploadFile>
@@ -1689,8 +1749,8 @@ class DocumentsScreen extends Component {
 							<Input
 								required
 								validationModel={this.state.validationModel}
-								value={this.state.document.title}
-								onChange={e => this.handleModelChange('title', e)}
+								value={this.state.templateName}
+								onChange={e => this.handleModelChange('templateName', e)}
 								type="text"
 								placeholder="Digitar o nome do documento"
 								isError={this.state.isError}
@@ -1703,7 +1763,7 @@ class DocumentsScreen extends Component {
 							<TextArea
 								// maxLength="250"
 								validationModel={this.state.validationModel}
-								value={this.state.document.description}
+								value={this.state.description}
 								onChange={e => this.handleModelChange('description', e)}
 								type="text"
 								placeholder="Como esse documento é usado"
@@ -1743,9 +1803,15 @@ class DocumentsScreen extends Component {
 					<TextModal>
 						Após ser excluido, um modelo não pode ser recuperado.
 					</TextModal>
-					<TextModal width>
-						Você deseja excluir o <strong>{this.state.modelSelect.title
-							|| this.state.userSelectDoc.title}</strong> permanentemente?
+					<TextModal>
+						Você deseja excluir o
+						<strong style={{ marginLeft: '.5rem' }}>
+							{this.props.isAdmin ? (
+								this.state.modelSelect.templateName
+							) : (
+								this.state.userSelectDoc.templateName
+							)}
+						</strong> permanentemente?
 					</TextModal>
 				</WrapTextModal>
 				<ButtonsModal>
@@ -1772,7 +1838,7 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-					{this.props.documentsList.map((docs, index) => (
+					{this.state.templateList.map((docs, index) => (
 						<ContainerModelDescription
 							modal={this.state.modalListDoc}
 							list={this.state.listDocs}
@@ -1783,7 +1849,7 @@ class DocumentsScreen extends Component {
 						>
 							<span key={index}>
 								<ModelNumber>{index + 1}</ModelNumber>
-								<ModelTitle>{docs.title}</ModelTitle>
+								<ModelTitle>{docs.templateName}</ModelTitle>
 							</span>
 							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
 						</ContainerModelDescription>
@@ -1796,18 +1862,18 @@ class DocumentsScreen extends Component {
 	)
 
 	renderDocAdmin = () => {
-		const documentsList = (this.state.search !== '' && this.state.searching === true)
-			? this.props.documentsList.filter(model => model.title.match(new RegExp(this.state.search, 'i')))
-			: this.props.documentsList;
+		const templateList = (this.state.search !== '' && this.state.searching === true)
+			? this.state.templateList.filter(model => model.templateName.match(new RegExp(this.state.search, 'i')))
+			: this.state.templateList;
 		// MAP DOCUMENTS ADM
 		return (
-			documentsList && documentsList.length > 0 ? (
-				documentsList.map((doc, index) => (
+			templateList && templateList.length > 0 ? (
+				templateList.map((doc, index) => (
 					<ContainerModel
 						// MARGEM ULTIMO ITEM DA LISTA, ATE O MOBILE
-						style={{ margin: index === documentsList.length - 1 && '0 0 7rem 0' }}
+						style={{ margin: index === templateList.length - 1 && '0 0 7rem 0' }}
 						// MARGEM ULTIMO ITEM LISTA MOBILE
-						lastIndex={(window.innerWidth <= 490) && index === documentsList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+						lastIndex={(window.innerWidth <= 490) && index === templateList.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 						key={index}
 						zIndex={this.state.addModel}
 						displayBefore={this.state.modalDelete}
@@ -1817,7 +1883,7 @@ class DocumentsScreen extends Component {
 						<ContainerModelDescription>
 							<span>
 								<ModelNumber>{index + 1}</ModelNumber>
-								<ModelTitle>{doc.title}</ModelTitle>
+								<ModelTitle>{doc.templateName}</ModelTitle>
 							</span>
 							<ModelParagraph>{doc.description}</ModelParagraph>
 						</ContainerModelDescription>
@@ -1900,7 +1966,7 @@ class DocumentsScreen extends Component {
 					<ContainerModelDescription>
 						<span>
 							<ModelNumber>{index + 1}</ModelNumber>
-							<ModelTitle>{doc.title}</ModelTitle>
+							<ModelTitle>{doc.templateName}</ModelTitle>
 						</span>
 						<ModelParagraph>{doc.description}</ModelParagraph>
 					</ContainerModelDescription>
@@ -1977,7 +2043,6 @@ class DocumentsScreen extends Component {
 
 	render() {
 		const { isAdmin } = this.props;
-
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header/>
@@ -2065,10 +2130,10 @@ class DocumentsScreen extends Component {
 											<BoxOrgs
 												onClick={ev => ev.stopPropagation()}
 												isBoxOrgs={this.state.isBoxOrgs}
-												orgs={this.props.organization}
+												orgs={this.state.organizationUser}
 											>
 												<Org onClick={() => this.setState({ selectOrg: '' })}>Selecionar organizações</Org>
-												{this.props.organization.map((orgs, index) => (
+												{this.state.organizationUser.map((orgs, index) => (
 													<Org
 														key={index}
 														onClick={() => this.handleSelectOrg(orgs.tradingName)}
@@ -2109,9 +2174,8 @@ class DocumentsScreen extends Component {
 														width="17.5rem"
 														height="4.5rem"
 														marginMobile="0 0 1rem 0"
-														widthMobile="82%"
+														widthMobile="85%"
 														bottomMobile="0"
-														// left="11px"
 														positionMobile="fixed"
 														onClick={this.openModalListDoc}
 														text="Adicionar Documento"
