@@ -28,7 +28,7 @@ import Exit from '../../../assets/fechar.svg';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { findUser, removeOrg, getAllOrganizations } from '../../../services/api';
+import { removeOrg, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
@@ -48,7 +48,7 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: 100%;
-	height: ${props => (!props.height && 'calc(100vh - -3px - 5.5rem)')};
+	height: ${props => (props.height ? 'calc(100vh - -3px - 5.5rem)' : 0)};
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 
 	@media(max-width: 648px) {
@@ -777,8 +777,6 @@ class OrganizationScreen extends Component {
 			const token = await localStorage.getItem('token');
 			const response = await getAllOrganizations(jwt.decode(token).id, token);
 			this.props.updateTableDatas(response.data);
-
-			console.log('orgs', response);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -837,9 +835,9 @@ class OrganizationScreen extends Component {
 
 			const org = {
 				...this.state.itemSelected,
-				deletedAt: true
-			}
-			const response = await removeOrg(org, token);
+				deletedAt: true,
+			};
+			await removeOrg(org, token);
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({
@@ -1059,10 +1057,13 @@ class OrganizationScreen extends Component {
 
 	renderTable = (listTable) => {
 		const widthMob = (window.matchMedia('(max-width: 768px)').matches);
-		const { user } = this.props;
+		const { user, isAdmin } = this.props;
 
 		return listTable.map((item, index) => (
-			<Tr style={{ margin: !this.props.isAdmin && index === listTable.length - 1 && '0 0 5rem 0' }} key={item.id}>
+			<Tr
+				style={{ margin: !isAdmin && index === listTable.length - 1 && '0 0 5rem 0' }}
+				key={index}
+			>
 				{widthMob
 					? <ContainerTableTitleMob>
 						<TableTitleMob>Organização</TableTitleMob>
@@ -1179,7 +1180,10 @@ class OrganizationScreen extends Component {
 						)}
 					</>
 				}
-				<ImageMore src={selectMaisMobile} onClick={() => this.isModalOpen(item)} />
+				<ImageMore
+					src={selectMaisMobile}
+					onClick={() => this.isModalOpen(item)}
+				/>
 			</Tr>
 		));
 	}
@@ -1297,7 +1301,8 @@ class OrganizationScreen extends Component {
 									<Thead>
 										<Tr>
 											{this.state.tableTitles.map(title => (
-												<TableTitle width={'8.3rem'}
+												<TableTitle
+													width={'8.3rem'}
 													key={title}
 													center={title}
 													style={{
