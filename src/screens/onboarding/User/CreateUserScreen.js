@@ -457,7 +457,6 @@ class CreateUserScreen extends Component {
 		const { user } = this.state;
 		const {
 			name,
-			// surname,
 			email,
 			telephone,
 			password,
@@ -466,7 +465,6 @@ class CreateUserScreen extends Component {
 
 		if (
 			name === ''
-			// || surname === ''
 			// || email === ''
 			|| telephone === ''
 			|| password === ''

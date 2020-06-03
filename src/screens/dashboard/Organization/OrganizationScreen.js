@@ -48,7 +48,8 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: 100%;
-	height: ${props => (props.height ? 'calc(100vh - -3px - 5.5rem)' : 0)};
+	height: ${props => (!props.height && 'calc(100vh - 5.5rem + 1px)')};
+	/* height: ${props => (props.height ? 'calc(100vh - -3px - 5.5rem)' : 0)}; */
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 
 	@media(max-width: 648px) {
@@ -320,7 +321,7 @@ const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
 	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 66px - 5.8rem - 2.4rem);
+	height: calc(100vh - 68px - 5.8rem - 2.4rem);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
 
 	@media (max-width: 768px) {
@@ -331,7 +332,7 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	max-height: 66vh;
+	max-height: calc(100% - 89.8px);;
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -601,6 +602,7 @@ const TitleModal = styled.div`
 	img {
 		/* width: 20px;
 		height: 20px; */
+		margin-bottom: 2rem;
 		cursor: pointer;
 	}
 `;
@@ -828,6 +830,16 @@ class OrganizationScreen extends Component {
 			error: undefined,
 		});
 	}
+
+	handleDateExpired = (createdIn) => {
+		console.log('createdIn', createdIn);
+
+		const dateExpired = new Date (createdIn);
+		console.log('dateExpired', dateExpired);
+
+		// const dateExpired = new Date (+30);
+
+	};
 
 	deleteOrganization = async () => {
 		try {
@@ -1061,7 +1073,7 @@ class OrganizationScreen extends Component {
 
 		return listTable.map((item, index) => (
 			<Tr
-				style={{ margin: !isAdmin && index === listTable.length - 1 && '0 0 5rem 0' }}
+				style={{ margin: !isAdmin && index === listTable.length - 1 && '0 0 6rem 0' }}
 				key={index}
 			>
 				{widthMob
@@ -1152,6 +1164,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
+							{this.handleDateExpired(item.createdIn)}
 							{item.dueDate}
 						</TableList>
 					</>
