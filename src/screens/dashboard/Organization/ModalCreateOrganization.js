@@ -277,6 +277,8 @@ class ModalCreateOrganization extends Component {
 
 	createOrg = async (org) => {
 		try {
+			console.log('org', org);
+
 			const token = await localStorage.getItem('token');
 
 			const response = await createOrganization(org, token);
@@ -441,11 +443,14 @@ class ModalCreateOrganization extends Component {
 				cnpj: this.state.cnpj,
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
+				// email: '',
+				// authorization: null,
+				// dueDate: null,
 				user_id: this.props.userData.id,
 				telephone: this.state.telephone,
 				orgId: this.props.userData.orgId,
 			};
-			console.log(this.props)
+			console.log(this.props);
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
 			} else {
