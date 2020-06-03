@@ -86,6 +86,7 @@ class HeaderModal extends Component {
 	}
 
 	componentDidMount() {
+		console.log('ooo')
 		this.userInfo();
 	}
 

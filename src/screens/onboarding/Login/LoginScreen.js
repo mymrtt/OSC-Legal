@@ -199,9 +199,8 @@ class LoginScreen extends Component {
 			const response = await login(user, base64credentials);
 
 			if (response) {
-				this.setState({ redirect: '/organizations' });
-
 				await localStorage.setItem('token', response.data.token);
+				this.setState({ redirect: '/organizations' });
 			}
 
 			this.setState({

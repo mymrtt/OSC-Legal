@@ -153,10 +153,6 @@ class Header extends Component {
 		userData: [],
 	}
 
-	handleRedirect = () => {
-		this.setState({ redirect: true });
-	}
-
 	componentDidMount() {
 		this.userInfo();
 	}
@@ -176,9 +172,19 @@ class Header extends Component {
 		}
 	}
 
+	handleLogout = async () => {
+		try {
+			await localStorage.removeItem(('token', 'userInfo'));
+
+			this.setState({ redirect: true });
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	render() {
 		const { userData } = this.state;
-		console.log('userData', userData)
+
 		return (
 			<Container border={userData.isAdmin == 1}>
 				<NavLink exact to="/organizations">
@@ -207,7 +213,7 @@ class Header extends Component {
 					<ParagraphUserName>
 						{userData.isAdmin !== 0 ? 'Administrador' : userData.name}
 					</ParagraphUserName>
-					<ParagraphSair onClick={this.handleRedirect}>
+					<ParagraphSair onClick={this.handleLogout}>
 						sair
 					</ParagraphSair>
 					{this.state.redirect && <Redirect exact to="/" />}
