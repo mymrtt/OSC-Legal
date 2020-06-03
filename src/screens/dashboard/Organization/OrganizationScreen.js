@@ -777,10 +777,10 @@ class OrganizationScreen extends Component {
 	getOrgs = async () => {
 		try {
 			const token = await localStorage.getItem('token');
-			const response = await getAllOrganizations(jwt.decode(token).id, token)
-			this.props.updateTableDatas(response.data)
+			const response = await getAllOrganizations(jwt.decode(token).id, token);
+			this.props.updateTableDatas(response.data);
 
-			console.log('orgs', response)
+			console.log('orgs', response);
 		} catch (error) {
 			console.log('error', error);
 		}
