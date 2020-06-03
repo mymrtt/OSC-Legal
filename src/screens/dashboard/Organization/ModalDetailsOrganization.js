@@ -406,6 +406,7 @@ class ModalDetailsOrganization extends Component {
 		});
 	};
 
+
 	render() {
 		const { org, user } = this.props;
 		return (
