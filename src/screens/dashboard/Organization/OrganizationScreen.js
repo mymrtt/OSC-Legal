@@ -25,6 +25,7 @@ import selectMaisMobile from '../../../assets/selectMais.svg';
 import Exit from '../../../assets/fechar.svg';
 
 // Redux
+import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
@@ -33,10 +34,11 @@ import { removeOrg, getAllOrganizations } from '../../../services/api';
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
-	user: state.onboarding.users,
+	user: state.onboarding.user,
 });
 
 const mapDispatchToProps = dispatch => ({
+	saveUserData: info => dispatch(saveUserData(info)),
 	updateTableDatas: info => dispatch(updateTableDatas(info)),
 	deleteOrg: info => dispatch(deleteOrg(info)),
 });
@@ -750,7 +752,6 @@ class OrganizationScreen extends Component {
 			],
 			selectedStatusImgs: undefined,
 			selectedStatusOrg: undefined,
-			userData: [],
 		};
 	}
 
@@ -762,13 +763,14 @@ class OrganizationScreen extends Component {
 	getUser = async () => {
 		try {
 			const token = await localStorage.getItem('token');
-
-			this.setState({ userData: jwt.decode(token) });
+			const userData = jwt.decode(token);
 
 			await localStorage.setItem('userInfo', {
 				acessToken: token,
-				...this.state.userData,
+				...userData,
 			});
+
+			this.props.saveUserData(userData);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -1268,7 +1270,7 @@ class OrganizationScreen extends Component {
 						handleClosedModal={this.isModalCreateOrganization}
 						closeModal={this.isModalOpen}
 						handleRedirect={this.handleRedirect}
-						userData={this.state.userData}
+						userData={this.props.user}
 					/>
 				}
 				<Header />

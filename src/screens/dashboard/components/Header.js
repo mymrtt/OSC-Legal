@@ -3,17 +3,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import jwt from 'jsonwebtoken';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 
 // Redux
 const mapStateToProps = state => ({
-	email: state.onboarding.users.email,
-	password: state.onboarding.users.password,
-	name: state.onboarding.users.name,
-	isAdmin: state.onboarding.users.isAdmin,
+	user: state.onboarding.user,
 });
 
 const Container = styled.div`
@@ -150,36 +146,18 @@ const ParagraphSair = styled.p`
 class Header extends Component {
 	state = {
 		redirect: false,
-		userData: [],
 	}
 
-	handleRedirect = () => {
+	handleRedirect = async () => {
+		await localStorage.removeItem('userInfo');
+		await localStorage.removeItem('token');
 		this.setState({ redirect: true });
 	}
 
-	componentDidMount() {
-		this.userInfo();
-	}
-
-	userInfo = async () => {
-		try {
-			const token = await localStorage.getItem('token');
-
-			this.setState({ userData: jwt.decode(token) });
-
-			await localStorage.setItem('userInfo', {
-				acessToken: token,
-				...this.state.userData,
-			});
-		} catch (error) {
-			console.log('error', error);
-		}
-	}
-
 	render() {
-		const { userData } = this.state;
+		const { user } = this.props;
 		return (
-			<Container border={userData.isAdmin == 1}>
+			<Container border={user.isAdmin === 1}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
 						margin={'0 0 0 3rem'}
@@ -188,7 +166,7 @@ class Header extends Component {
 						height='2.8rem'
 					/>
 				</NavLink>
-				<WrapButton width={userData.isAdmin == 1}>
+				<WrapButton width={user.isAdmin === 1}>
 					<NavLink
 						exact to="/organizations"
 						activeClassName="button-header-dash"
@@ -202,9 +180,9 @@ class Header extends Component {
 						Documentos
 					</NavLink>
 				</WrapButton>
-				<ContainerUser isAdmin={userData.isAdmin == 1}>
+				<ContainerUser isAdmin={user.isAdmin === 1}>
 					<ParagraphUserName>
-						{userData.isAdmin !== 0 ? 'Administrador' : userData.name}
+						{user.isAdmin !== 0 ? 'Administrador' : user.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleRedirect}>
 						sair

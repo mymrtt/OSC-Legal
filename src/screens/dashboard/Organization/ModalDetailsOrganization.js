@@ -16,9 +16,9 @@ import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const mapStateToProps = state => ({
-	isAdmin: state.onboarding.users.isAdmin,
+	isAdmin: state.onboarding.user.isAdmin,
+	user: state.onboarding.user,
 	tableDatas: state.organization.tableDatas,
-	user: state.onboarding.users,
 });
 
 const Overlay = styled.div`
