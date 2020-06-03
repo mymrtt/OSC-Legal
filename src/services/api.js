@@ -49,7 +49,7 @@ export const removeOrg = (orgID, token) => axios({
 });
 
 export const getAllOrganizations = (userId, token) => axios({
-	url: `${API_URL}/organizations/${userId}`,
+	url: `${API_URL}/users/${userId}/organizations`,
 	method: 'get',
 	headers: {
 		Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ export const patchOrg = (org, token) => axios({
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
-	data: org
+	data: org,
 });
 
 // Organization

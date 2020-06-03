@@ -1474,6 +1474,8 @@ class DocumentsScreen extends Component {
 			const templateID = this.state.modelSelect.templateId;
 
 			const token = await localStorage.getItem('token');
+		
+			console.log(templateID);
 
 			const response = await deleteTemplate(templateID, token);
 
