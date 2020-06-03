@@ -104,7 +104,7 @@ const initialState = {
 			createdIn: '24/06/2000',
 			authorization: '12/07/1996',
 			dueDate: '31/08/1995',
-			status: '-',
+			status: 'vencido',
 		},
 	],
 	org: {
