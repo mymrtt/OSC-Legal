@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import jwt from 'jsonwebtoken';
 
 // Components
 import Header from '../components/Header';
@@ -30,7 +31,7 @@ import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
 // Api
-import { createTemplate, getAllTemplates, deleteTemplate } from '../../../services/api';
+import { createTemplate, getAllTemplates, deleteTemplate, getAllOrganizations, createDocument } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
@@ -1252,6 +1253,7 @@ class DocumentsScreen extends Component {
 		userSelectDoc: '',
 		isErrorDoc: false,
 		templateList: [],
+		organizationUser: [],
 	};
 
 
@@ -1269,8 +1271,25 @@ class DocumentsScreen extends Component {
 		}
 	}
 
+	getOrg = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const userID = jwt.decode(token).id;
+
+			const response = await getAllOrganizations(userID, token);
+
+			this.setState({
+				organizationUser: response.data,
+			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	componentDidMount() {
 		this.renderTemplate();
+		this.getOrg();
 		this.renderMobileButton();
 	}
 
@@ -1283,8 +1302,6 @@ class DocumentsScreen extends Component {
 			this.setState({
 				templateList: response.data,
 			});
-
-			console.log('response', response.data);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -1319,8 +1336,10 @@ class DocumentsScreen extends Component {
 
 	handleCancelAddModel = () => {
 		this.setState({
-			description: '',
-			templateName: '',
+			templateData: {
+				description: '',
+				templateName: '',
+			},
 			addModel: false,
 			isError: false,
 			template: null,
@@ -1474,20 +1493,22 @@ class DocumentsScreen extends Component {
 			const templateID = this.state.modelSelect.templateId;
 
 			const token = await localStorage.getItem('token');
-		
-			console.log(templateID);
+
+			console.log('id', templateID);
+			console.log('token', token);
 
 			const response = await deleteTemplate(templateID, token);
+			console.log('response', response);
 
 			// this.setState({
 			// 	templateList: response.data,
 			// });
 
 
-			console.log('response', response);
-			this.handleCancelDelete();
+			// console.log('response', response);
+			// this.handleCancelDelete();
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
@@ -1642,7 +1663,7 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleDocsUser = (e) => {
+	handleDocsUser = async (e, doc) => {
 		e.preventDefault();
 		this.setState({
 			modalListDoc: false,
@@ -1728,7 +1749,7 @@ class DocumentsScreen extends Component {
 							<Input
 								required
 								validationModel={this.state.validationModel}
-								value={this.state.templateData.templateName}
+								value={this.state.templateName}
 								onChange={e => this.handleModelChange('templateName', e)}
 								type="text"
 								placeholder="Digitar o nome do documento"
@@ -1742,7 +1763,7 @@ class DocumentsScreen extends Component {
 							<TextArea
 								// maxLength="250"
 								validationModel={this.state.validationModel}
-								value={this.state.templateData.description}
+								value={this.state.description}
 								onChange={e => this.handleModelChange('description', e)}
 								type="text"
 								placeholder="Como esse documento é usado"
@@ -2109,10 +2130,10 @@ class DocumentsScreen extends Component {
 											<BoxOrgs
 												onClick={ev => ev.stopPropagation()}
 												isBoxOrgs={this.state.isBoxOrgs}
-												orgs={this.props.organization}
+												orgs={this.state.organizationUser}
 											>
 												<Org onClick={() => this.setState({ selectOrg: '' })}>Selecionar organizações</Org>
-												{this.props.organization.map((orgs, index) => (
+												{this.state.organizationUser.map((orgs, index) => (
 													<Org
 														key={index}
 														onClick={() => this.handleSelectOrg(orgs.tradingName)}

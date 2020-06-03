@@ -46,7 +46,7 @@ export const removeOrg = (org, token) => axios({
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
-	data: org
+	data: org,
 });
 
 export const getAllOrganizations = (userId, token) => axios({
@@ -74,6 +74,7 @@ export const createDocument = doc => axios({
 	method: 'post',
 	data: doc,
 });
+
 // Document
 
 // Template (Document - Admin)
