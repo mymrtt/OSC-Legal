@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
+import jwt from 'jsonwebtoken';
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
@@ -18,6 +19,12 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 import { login } from '../../../services/api';
 
 // Redux
+import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
+
+const mapDispatchToProps = dispatch => ({
+	saveUserData: info => dispatch(saveUserData(info)),
+});
+
 const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
@@ -198,9 +205,17 @@ class LoginScreen extends Component {
 			const response = await login(user, base64credentials);
 
 			if (response) {
-				this.setState({ redirect: '/organizations' });
-
+				const userData = jwt.decode(response.data.token);
+				console.log('userData', userData)
+				
 				await localStorage.setItem('token', response.data.token);
+				await localStorage.setItem('userInfo', {
+					acessToken: response.data.token,
+					...userData,
+				});
+				
+				this.props.saveUserData(userData);
+				this.setState({ redirect: '/organizations' });
 			}
 
 			if (this.state.password.length < 6 || response.status !== 200) {
@@ -310,4 +325,4 @@ class LoginScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
