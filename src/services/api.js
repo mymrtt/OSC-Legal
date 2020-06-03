@@ -40,12 +40,13 @@ export const createOrganization = (org, token) => axios({
 	data: org,
 });
 
-export const removeOrg = (orgID, token) => axios({
-	url: `${API_URL}/organizations/${orgID}`,
+export const removeOrg = (org, token) => axios({
+	url: `${API_URL}/organizations`,
 	method: 'patch',
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
+	data: org
 });
 
 export const getAllOrganizations = (userId, token) => axios({

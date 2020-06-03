@@ -291,7 +291,6 @@ class ModalCreateOrganization extends Component {
 		try {
 			const token = await localStorage.getItem('token');
 			const response = await patchOrg(org, token);
-			console.log('response', response)
 
 			this.props.editOrg(org);
 			this.props.handleClosedModal();
@@ -308,8 +307,6 @@ class ModalCreateOrganization extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await getAllOrganizations(userId, token);
-
-			// console.log('response get orgs', response);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -451,7 +448,7 @@ class ModalCreateOrganization extends Component {
 				// dueDate: null,
 				user_id: this.props.userData.id,
 				telephone: this.state.telephone,
-				orgId: this.props.item.orgId,
+				orgId: this.props.userData.orgId,
 			};
 			console.log(this.props);
 			if (this.props.modalType === 'edit') {
