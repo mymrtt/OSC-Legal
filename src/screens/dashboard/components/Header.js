@@ -157,7 +157,7 @@ class Header extends Component {
 	render() {
 		const { user } = this.props;
 		return (
-			<Container border={user.isAdmin === 1}>
+			<Container border={user.isAdmin}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
 						margin={'0 0 0 3rem'}
@@ -166,7 +166,7 @@ class Header extends Component {
 						height='2.8rem'
 					/>
 				</NavLink>
-				<WrapButton width={user.isAdmin === 1}>
+				<WrapButton width={user.isAdmin}>
 					<NavLink
 						exact to="/organizations"
 						activeClassName="button-header-dash"
@@ -180,9 +180,9 @@ class Header extends Component {
 						Documentos
 					</NavLink>
 				</WrapButton>
-				<ContainerUser isAdmin={user.isAdmin === 1}>
+				<ContainerUser isAdmin={user.isAdmin}>
 					<ParagraphUserName>
-						{user.isAdmin !== 0 ? 'Administrador' : user.name}
+						{user.isAdmin ? 'Administrador' : user.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleLogout}>
 						sair
