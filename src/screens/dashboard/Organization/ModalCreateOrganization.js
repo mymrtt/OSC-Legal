@@ -278,21 +278,20 @@ class ModalCreateOrganization extends Component {
 	createOrg = async (org) => {
 		try {
 			const response = await createOrganization(org);
-			console.log('response', response)
+			console.log('response', response);
 
-			this.setState({ allStateTrue: true });
-			this.handleModalSucess(org.tradingName);
-			this.props.addNewOrg(org);
 			this.setState({
+				allStateTrue: true,
 				isCnpjError: '',
 				error: '',
 			});
+			this.handleModalSucess(org.tradingName);
+			this.props.addNewOrg(org);
 		} catch (error) {
-			this.setState({
-				error: 'Algo deu errado.',
-			});
-			console.log('error', error);
 			console.log('error', error.response);
+			this.setState({
+				error: error.response.data.errors[0].message,
+			});
 		}
 	}
 
