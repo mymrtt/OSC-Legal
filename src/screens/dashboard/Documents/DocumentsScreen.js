@@ -31,7 +31,9 @@ import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
 // Api
-import { createTemplate, getAllTemplates, deleteTemplate, getAllOrganizations, createDocument } from '../../../services/api';
+import {
+	createTemplate, getAllTemplates, deleteTemplate, getAllOrganizations, createDocument,
+} from '../../../services/api';
 
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
@@ -1262,21 +1264,6 @@ class DocumentsScreen extends Component {
 		this.renderMobileButton();
 	}
 
-
-	createDoc = async (templateData) => {
-		try {
-			console.log(templateData);
-
-			const token = await localStorage.getItem('token');
-
-			const response = await createTemplate(templateData, token);
-
-			console.log('response', response);
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
-
 	getAllOrgs = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1288,6 +1275,47 @@ class DocumentsScreen extends Component {
 			this.setState({
 				organizationUser: response.data,
 			});
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	createDoc = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await createDocument(doc, token);
+			console.log('response', response);
+
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	createTemplate = async (templateData) => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await createTemplate(templateData, token);
+
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	deleteTemplate = async () => {
+		try {
+			const { templateId } = this.state.modelSelect;
+
+			const token = await localStorage.getItem('token');
+
+			const response = await deleteTemplate(templateId, token);
+
+			this.setState({
+				templateList: response.data,
+			});
+
+			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1485,27 +1513,7 @@ class DocumentsScreen extends Component {
 		this.setState({
 			modelSelect: doc,
 		});
-		console.log(this.state.modelSelect.templateId);
 	}
-
-	deleteTemplate = async () => {
-		try {
-			const templateId = this.state.modelSelect.templateId;
-
-			const token = await localStorage.getItem('token');
-
-			const response = await deleteTemplate(templateId, token);
-
-			this.setState({
-				templateList: response.data,
-			});
-
-			this.handleCancelDelete();
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
-
 
 	handleSearch = (e) => {
 		this.setState({
@@ -1610,7 +1618,7 @@ class DocumentsScreen extends Component {
 		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
 			const templateData = { description, template, templateName };
 			this.props.addNewDocument(templateData);
-			this.createDoc(templateData);
+			this.createTemplate(templateData);
 
 			this.setState({
 				templateData: {},
