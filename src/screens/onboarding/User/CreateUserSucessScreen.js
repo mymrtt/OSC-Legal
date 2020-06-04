@@ -112,7 +112,6 @@ const TextTermsBold = styled.strong`
 
 const CreateUserSucessScreen = (props) => {
 	const userRegister = async () => {
-		console.log('aqui')
 		try {
 			const { users } = props.onboarding;
 
