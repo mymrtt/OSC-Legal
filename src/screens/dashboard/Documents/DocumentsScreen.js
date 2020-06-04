@@ -89,7 +89,7 @@ const MaximumWidth = styled.div`
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
-	background: #FFF;
+	background: #FFF;	
 	overflow-y: hidden;
 
 	@media(max-width: 768px){
@@ -387,7 +387,7 @@ const ContainerSearch = styled.div`
 
 const SearchText = styled.p`
   color: #231F20;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-family: Overpass, Bold;
 	font-weight: 600;
   margin-right: 1rem;
@@ -641,7 +641,7 @@ const ContainerOptions = styled.div`
 		margin-top: .6rem;
     right: 0rem;
     border: 1px solid #85144B;
-		z-index: ${props => (props.modal ? 0 : '2')};
+		z-index: ${props => (props.modal ? '0' : '2')};
 		background: #ffffff;
 		align-items: center;
 		border-radius: 3px;
@@ -962,7 +962,7 @@ const ContainerModalDelete = styled(ContainerModal)`
 const ModalDelete = styled.div`
 	background: #FFF;
 	width: 480px;
-	padding: 1% 1% 1% 3%;
+	padding: 1em 1.5rem;
 
 
 	@media (max-width: 648px) {
@@ -986,14 +986,13 @@ const TitleDelete = styled(TitleAddModel)`
 `;
 
 const WrapTextModal = styled.div`
-	width: 85%;
+	width: 100%;
 
 	@media (max-width: 648px) {
 		height: 30%;
     display: flex;
-    ${''}
+		justify-content: space-around;
     flex-direction: column;
-		${''}
 	}
 `;
 
@@ -1011,6 +1010,7 @@ const TextModal = styled.p`
 		color: #404040;
 	}
 	@media (max-width: 648px) {
+		width: 100%;
 		margin: 0;
 		font-size: 1.3rem;
 	}
@@ -1286,6 +1286,7 @@ class DocumentsScreen extends Component {
 		isMobileButton: false,
 		userSelectDoc: '',
 		isErrorDoc: false,
+		isErrorDocClear: false,
 		templateList: [],
 		organizationUser: [],
 		isEdit: false,
@@ -1727,6 +1728,7 @@ class DocumentsScreen extends Component {
 	closeModalListDoc = () => {
 		this.setState({
 			modalListDoc: false,
+			isErrorDocClear: false,
 		});
 	}
 
@@ -1739,12 +1741,20 @@ class DocumentsScreen extends Component {
 
 	handleDocsUser = (e) => {
 		e.preventDefault();
-		this.setState({
-			modalListDoc: false,
-			listDocs: newList,
-			isSelected: '',
-			isErrorDoc: false,
-		});
+		if (this.state.templateList.length <= 0) {
+			this.setState({
+				isErrorDocClear: true,
+				modalListDoc: true,
+			});
+		} else {
+			this.setState({
+				modalListDoc: false,
+				listDocs: newList,
+				isSelected: '',
+				isErrorDoc: false,
+				isErrorDocClear: false,
+			});
+		}
 		this.createDoc();
 	}
 
@@ -1938,6 +1948,7 @@ class DocumentsScreen extends Component {
 					))}
 				</BoxModelsDoc>
 				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
+				{this.state.isErrorDocClear && <ErrorText>Não há documento para ser escolhido</ErrorText>}
 				<ButtonModalList onClick={this.handleDocsUser}>Escolher</ButtonModalList>
 			</Modal>
 		</ContainerModal>
@@ -1970,6 +1981,7 @@ class DocumentsScreen extends Component {
 							<ModelParagraph>{doc.description}</ModelParagraph>
 						</ContainerModelDescription>
 						<ContainerOptions
+							modal={this.state.modalDelete}
 							contOptions={this.state.options && (this.state.selectedOptions === doc)}>
 							<Option
 								onMouseEnter={() => this.handleChangeColorExport(doc)}

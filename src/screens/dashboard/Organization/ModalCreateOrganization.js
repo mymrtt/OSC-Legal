@@ -277,11 +277,20 @@ class ModalCreateOrganization extends Component {
 
 	createOrg = async (org) => {
 		try {
-			const token = await localStorage.getItem('token');
+			const token = localStorage.getItem('token');
 
-			await createOrganization(org, token);
+			const response = await createOrganization(org, token);
+			console.log('response', response)
+
+			this.setState({ allStateTrue: true });
+			this.handleModalSucess(org.tradingName);
+			this.props.addNewOrg(org);
 		} catch (error) {
+			this.setState({
+				error: 'Algo deu errado.',
+			});
 			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
@@ -450,10 +459,7 @@ class ModalCreateOrganization extends Component {
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
 			} else {
-				this.props.addNewOrg(org);
 				this.createOrg(org);
-				this.setState({ allStateTrue: true });
-				this.handleModalSucess(tradingName);
 			}
 		}
 	}
