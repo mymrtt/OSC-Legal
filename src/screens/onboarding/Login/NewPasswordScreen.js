@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -11,6 +12,7 @@ import Button from '../../../components/Button';
 
 // Redux
 import { addNewUser, isResetPassword } from '../../../dataflow/modules/onboarding-modules';
+import { resetPassword } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	onboarding: state.onboarding,
@@ -86,20 +88,6 @@ const Title = styled.h1`
 	}
 `;
 
-const Paragraph = styled.p`
-	width: ${props => props.width};
-  color: #231F20;
-  font-family: Overpass, Regular;
-  margin-bottom: 1.5rem;
-	@media (max-width: 648px) {
-		margin-top: 1rem;
-	}
-	@media (max-width: 460px) {
-		font-size: 0.9rem;
-		width: 90%;
-	}
-`;
-
 const ErrorMessage = styled.h4`
   color: #D63434;
   display: flex;
@@ -150,6 +138,15 @@ class NewPasswordScreen extends Component {
 			repetPasswordError: false,
 			redirect: false,
 		};
+	}resetPassword
+
+	componentDidMount() {
+		const { search } = this.props.location;
+		const parsed = queryString.parse(search);
+
+		this.setState({
+			token: parsed.token,
+		});
 	}
 
 	handleSubmit = (ev) => {
@@ -159,7 +156,6 @@ class NewPasswordScreen extends Component {
 
 	handleErrors = () => {
 		const { newPassword, repeatPassword } = this.state;
-		const { emailReset } = this.props;
 
 		if (newPassword.length < 6) {
 			this.setState({
@@ -182,9 +178,22 @@ class NewPasswordScreen extends Component {
 		}
 
 		if (newPassword.length >= 6 && newPassword === repeatPassword) {
+			this.handleNewPassword();
+		}
+	}
+
+	handleNewPassword = async () => {
+		try {
+			const {token, newPassword, repeatPassword} = this.state;
+			const { emailReset } = this.props;
+
+			// await newPassword(token, newPassword);
 			this.props.addNewUser({ email: emailReset, password: newPassword });
 			this.props.isResetPassword(true);
 			this.setState({ redirect: true });
+		} catch(error) {
+			console.log('error', error);
+			console.log('error.response', error.response);
 		}
 	}
 
@@ -202,7 +211,7 @@ class NewPasswordScreen extends Component {
 
 	render() {
 		const {
-			newPasswordError, repetPasswordError, redirect, newPassword, confirmationCode, repeatPassword,
+			newPasswordError, repetPasswordError, redirect, newPassword, repeatPassword,
 		} = this.state;
 
 		const errorMessages = [
@@ -216,18 +225,6 @@ class NewPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						{/* <Paragraph width='100%'>
-							Um código de confirmação foi enviado para {this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'},
-							por favor, cole-o abaixo:
-						</Paragraph>
-						<Label>código de confirmação</Label>
-						<Input
-							login
-							value={confirmationCode}
-							type='text'
-							placeholder="Insira aqui o código"
-							required
-						/> */}
 						<Label>nova senha</Label>
 						<Input
 							login
@@ -258,9 +255,9 @@ class NewPasswordScreen extends Component {
 						type="submit"
 						textTransform
 					/>
-					{/* <BackLogin>
+					<BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
-					</BackLogin> */}
+					</BackLogin>
 				</Form>
 				{redirect && <Redirect to={'/'} />}
 			</ContainerForm>

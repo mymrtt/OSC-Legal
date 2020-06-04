@@ -289,8 +289,7 @@ class LoginScreen extends Component {
 				<Form onSubmit={this.handleSubmit}>
 					<ImageLogo margin={this.props.isResetPassword ? '3rem 0 3rem' : '3rem 0 6rem'} width="180px"/>
 					{this.props.isResetPassword
-						&& <Title>A senha ({this.props.emailReset ? this.props.emailReset : 'nome@email.com'})
-					foi redefinida, faça login para acessar a sua dashboard.
+						&& <Title>Sua senha foi redefinida com sucesso, faça login para acessar a sua dashboard.
 						</Title>
 					}
 					<InputBox>
@@ -336,8 +335,8 @@ class LoginScreen extends Component {
 						textTransform
 					/>
 					{!this.props.isResetPassword && <Span>
-						{/* <ButtonText to={'/createuser'}>criar conta</ButtonText> */}
-						<ButtonText to={'/newpassword'}>Resete senha</ButtonText>
+						<ButtonText to={'/createuser'}>criar conta</ButtonText>
+						{/* <ButtonText to={'/newpassword'}>Resete senha</ButtonText> */}
 						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
 					</Span>}
 				</Form>
