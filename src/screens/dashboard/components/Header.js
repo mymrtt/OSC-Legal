@@ -184,7 +184,7 @@ class Header extends Component {
 					<ParagraphUserName>
 						{user.isAdmin !== 0 ? 'Administrador' : user.name}
 					</ParagraphUserName>
-					<ParagraphSair onClick={this.handleRedirect}>
+					<ParagraphSair onClick={this.handleLogout}>
 						sair
 					</ParagraphSair>
 					{this.state.redirect && <Redirect exact to="/" />}
