@@ -148,9 +148,9 @@ class Header extends Component {
 		redirect: false,
 	}
 
-	handleRedirect = async () => {
-		await localStorage.removeItem('userInfo');
-		await localStorage.removeItem('token');
+	handleLogout = () => {
+		localStorage.removeItem('user');
+		localStorage.removeItem('token');
 		this.setState({ redirect: true });
 	}
 
