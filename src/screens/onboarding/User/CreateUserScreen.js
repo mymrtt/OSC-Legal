@@ -285,8 +285,6 @@ const ButtonTerms = styled.button`
     margin: 0.8rem 0;
     font-size: 1rem;
     font-weight: bold;
-
-
   }
 `;
 
@@ -328,7 +326,6 @@ const Terms = styled.p`
     width: 90%;
     align-self: center;
 	}
-
 `;
 
 const SubtitleTerms = styled.h3`
@@ -369,16 +366,17 @@ class CreateUserScreen extends Component {
 
 			const credentials = `${user.email}:${encodedPassword}`;
 
-			const base64credentials = Buffer.from(credentials, "utf-8").toString(
-				"base64"
+			const base64credentials = Buffer.from(credentials, 'utf-8').toString(
+				'base64',
 			);
 
-			delete user['email'];
-			delete user['password'];
+			delete user.email;
+			delete user.password;
 
-			const response = await createUserAccount(user, base64credentials);
+			await createUserAccount(user, base64credentials);
 		} catch (error) {
 			console.log('err', error);
+			console.log('err.response', error.response);
 		}
 	}
 
@@ -551,6 +549,7 @@ class CreateUserScreen extends Component {
 			'E-mail incompleto.',
 		];
 		const {
+			user,
 			isErrorPassword,
 			modalSucess,
 			isEmpty,
