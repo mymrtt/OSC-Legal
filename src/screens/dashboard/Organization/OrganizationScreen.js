@@ -32,7 +32,7 @@ import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organizat
 import { removeOrg, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
-	isAdmin: state.onboarding.users.isAdmin,
+	isAdmin: state.onboarding.user.isAdmin,
 	tableDatas: state.organization.tableDatas,
 	user: state.onboarding.user,
 });
@@ -762,15 +762,13 @@ class OrganizationScreen extends Component {
 
 	getUser = async () => {
 		try {
-			const token = await localStorage.getItem('token');
-			const userData = jwt.decode(token);
+			let user = await localStorage.getItem('user');
+			user = JSON.parse(user);
 
-			await localStorage.setItem('userInfo', {
-				acessToken: token,
-				...userData,
+			this.props.saveUserData({
+				...user,
+				isAdmin: user.isAdmin === 1,
 			});
-
-			this.props.saveUserData(userData);
 		} catch (error) {
 			console.log('error', error);
 		}
