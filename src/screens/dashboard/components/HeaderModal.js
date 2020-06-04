@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import jwt from 'jsonwebtoken';
 
 // Images
 import logo from '../../../assets/logo.svg';
