@@ -277,11 +277,9 @@ class ModalCreateOrganization extends Component {
 
 	createOrg = async (org) => {
 		try {
-			console.log('org', org);
-
 			const token = await localStorage.getItem('token');
 
-			const response = await createOrganization(org, token);
+			await createOrganization(org, token);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -290,13 +288,16 @@ class ModalCreateOrganization extends Component {
 	editOrganization = async (org) => {
 		try {
 			const token = await localStorage.getItem('token');
-			const response = await patchOrg(org, token);
+			await patchOrg(org, token);
 
 			this.props.editOrg(org);
 			this.props.handleClosedModal();
 			this.props.closeModal();
 		} catch (error) {
 			console.log('error', error.response);
+			this.setState({
+				error: 'Algo deu errado.',
+			});
 		}
 	}
 
@@ -306,7 +307,7 @@ class ModalCreateOrganization extends Component {
 
 			const token = await localStorage.getItem('token');
 
-			const response = await getAllOrganizations(userId, token);
+			await getAllOrganizations(userId, token);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -427,7 +428,6 @@ class ModalCreateOrganization extends Component {
 			&& telephone.length >= 8 && address.length >= 4 && addressComplement.length >= 4
 			&& city.length >= 4 && neighborhood.length >= 4 && cep.length === 8
 		) {
-			const isEdit = this.props.modalType === 'edit';
 			const createDate = () => {
 				const date = new Date();
 				return `${date.getDay()}/${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -443,14 +443,10 @@ class ModalCreateOrganization extends Component {
 				cnpj: this.state.cnpj,
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
-				// email: '',
-				// authorization: null,
-				// dueDate: null,
 				user_id: this.props.userData.id,
 				telephone: this.state.telephone,
 				orgId: this.props.userData.orgId,
 			};
-			console.log(this.props);
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
 			} else {
@@ -542,6 +538,7 @@ class ModalCreateOrganization extends Component {
 			isCityError,
 			isNeighborhoodError,
 			isCepError,
+			error,
 		} = this.state;
 
 		return (
@@ -732,6 +729,7 @@ class ModalCreateOrganization extends Component {
 									</WrapOrganization>
 								</ContainerCreateOrg>
 								<ContainerConcludeButton>
+									{error && <ErrorMessage>{error}</ErrorMessage>}
 									<Button
 										width={'100%'}
 										type="submit"

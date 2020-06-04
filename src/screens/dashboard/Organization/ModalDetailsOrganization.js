@@ -16,9 +16,9 @@ import freeIcon from '../../../assets/free.svg';
 import extendDeadlineIcon from '../../../assets/extendDeadline.svg';
 
 const mapStateToProps = state => ({
-	isAdmin: state.onboarding.users.isAdmin,
+	isAdmin: state.onboarding.user.isAdmin,
+	user: state.onboarding.user,
 	tableDatas: state.organization.tableDatas,
-	user: state.onboarding.users,
 });
 
 const Overlay = styled.div`
@@ -406,6 +406,7 @@ class ModalDetailsOrganization extends Component {
 		});
 	};
 
+
 	render() {
 		const { org, user } = this.props;
 		return (
@@ -465,7 +466,7 @@ class ModalDetailsOrganization extends Component {
 											<ContainerOption>Editar</ContainerOption>
 										</SpanContainer>
 										<SpanContainer onClick={this.props.handleDeleteModal}>
-											<img src={ImageDelete}/>
+											<img src={ImageDelete} alt="delete icon"/>
 											<ContainerOptionDelete>Excluir</ContainerOptionDelete>
 										</SpanContainer>
 									</ContainerEdit>
@@ -558,7 +559,7 @@ class ModalDetailsOrganization extends Component {
 									<ContainerOptionMobile>Editar</ContainerOptionMobile>
 								</SpanContainerImage>
 								<SpanContainerImage onClick={this.props.handleDeleteModal}>
-									<img src={ImageDelete} />
+									<img src={ImageDelete} alt="delete icon" />
 								 <ContainerOptionMobile>Excluir</ContainerOptionMobile>
 								</SpanContainerImage>
 							</ContainerEditImage>
