@@ -31,7 +31,7 @@ import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { removeOrg, getAllOrganizations } from '../../../services/api';
+import { removeOrg, getAllOrganizations, patchOrg } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.user.isAdmin,
@@ -872,10 +872,28 @@ class OrganizationScreen extends Component {
 		}
 	}
 
-	handleSelectedStatus = (newStatus, item) => {
+	handleSelectedStatus = async (newStatus, org) => {
+		try {
+			const token = localStorage.getItem('token');
+			const orgObj = {
+				...org,
+				status: newStatus.desc,
+			};
+
+			await patchOrg(orgObj, token);
+			this.changeOrgStatus(newStatus, org);
+		} catch (error) {
+			console.log('error', error)
+			this.setState({
+				error: 'Algo deu errado.',
+			});
+		}
+	}
+
+	changeOrgStatus = (newStatus, org) => {
 		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
-			if (data === item) {
+			if (data === org) {
 				return {
 					...data,
 					status: newStatus.desc,
@@ -978,7 +996,7 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		const { statusImgs } = this.state;
+		const { statusImgs, isClickedStatus } = this.state;
 		let listinha = statusImgs;
 
 		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado');
@@ -1005,8 +1023,13 @@ class OrganizationScreen extends Component {
 			<>
 				{this.props.isAdmin ? (
 					<>
-						<Box isClickedStatus={item.status === 'isento' || item.status === 'autorizado'
-		|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}>
+						<Box
+							isClickedStatus={item.status === 'isento'
+							|| item.status === 'autorizado'
+							|| item.status === 'prazo prorrogado'
+								? null
+								: item.id === isClickedStatus
+							}>
 							{!hiddenList && listinha.map((status, index) => (
 								<ImageStatus
 									cursor={this.props.isAdmin}
