@@ -78,7 +78,6 @@ export const patchOrg = (org, token) => axios({
 
 // Document
 export const createDocument = (docs, token) => axios({
-
 	url: `${API_URL}/documents`,
 	method: 'post',
 	headers: {

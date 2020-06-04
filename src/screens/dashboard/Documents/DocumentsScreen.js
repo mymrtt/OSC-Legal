@@ -1284,24 +1284,11 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	createDoc = async () => {
-		try {
-			const token = await localStorage.getItem('token');
-
-			const response = await createDocument(token);
-			console.log('response', response);
-
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
-
 	createTemplate = async (templateData) => {
 		try {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
-
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1324,6 +1311,7 @@ class DocumentsScreen extends Component {
 			console.log('error', error.response);
 		}
 	}
+
 	renderTemplate = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1353,7 +1341,7 @@ class DocumentsScreen extends Component {
 
 			console.log('response', response);
 		} catch (error) {
-			console.log('erro', error);
+			console.log('erro', error.response);
 		}
 	}
 
@@ -1656,7 +1644,8 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: false,
 			});
 		}
-		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
+		if (templateName !== '' && templateName.length > 4 && description !== ''
+		&& description.length <= 250 && template !== null) {
 			const templateData = { description, template, templateName };
 			this.props.addNewDocument(templateData);
 			this.createTemplate(templateData);
