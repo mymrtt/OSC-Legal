@@ -11,7 +11,6 @@ import jwt from 'jsonwebtoken';
 import Header from '../components/Header';
 import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
-import Editor from './Editor';
 
 // Images
 import DocumentUser from '../../../assets/document-user.svg';
@@ -1257,7 +1256,6 @@ class DocumentsScreen extends Component {
 		isErrorDoc: false,
 		templateList: [],
 		organizationUser: [],
-		isEdit: false,
 	};
 
 	componentDidMount() {
@@ -1290,7 +1288,6 @@ class DocumentsScreen extends Component {
 
 			const response = await createDocument(token);
 			console.log('response', response);
-
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1301,7 +1298,6 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
-
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1324,6 +1320,7 @@ class DocumentsScreen extends Component {
 			console.log('error', error.response);
 		}
 	}
+
 	renderTemplate = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1747,12 +1744,6 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	handleEdit = () => {
-		this.setState({
-			isEdit: true,
-		});
-	}
-
 	renderModalModels = () => {
 		const Messages = [
 			'Adicione um nome ao seu modelo',
@@ -2042,7 +2033,6 @@ class DocumentsScreen extends Component {
 						<Option
 							onMouseEnter={() => this.handleChangeColorEditUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveEdit}
-							onClick={this.handleEdit}
 						>
 							<OptionImage src={this.state.hoverEdit === doc ? this.state.downloadEdit : EditIcon} />
 							<OptionText
@@ -2234,7 +2224,6 @@ class DocumentsScreen extends Component {
 													/>
 												) : (
 													null))}
-										{this.state.isEdit && <Editor handleEdit={this.handleEdit} isEdit={this.state.isEdit}/>}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}
