@@ -14,6 +14,7 @@ const initialState = {
 		cpf: '',
 		isAdmin: false,
 	},
+
 	user: '',
 	isResetPassword: undefined,
 	emailReset: '',

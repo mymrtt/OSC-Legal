@@ -19,7 +19,7 @@ import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
 import DownloadIcon from '../../../assets/download.svg';
 import DownloadWhiteIcon from '../../../assets/downloadwhite.svg';
-import Exit from '../../../assets/exit.svg';
+import Exit from '../../../assets/fechar.svg';
 import DeleteIcon from '../../../assets/delete.svg';
 import DeleteIconWhite from '../../../assets/deleteWhite.svg';
 import EditIcon from '../../../assets/edit.svg';
@@ -307,10 +307,42 @@ const TitleInitialAddModel = styled.h2`
 	}
 `;
 
-const TextInitialAddModel = styled.p`
+const TitleInitialAddDoc = styled.h2`
+	font-size: 1.5rem;
+  font-family: "Overpass", Black;
+	font-weight: 900;
+	display: none;
+
+	@media (max-width: 768px) {
+		font-size: 1.2rem;
+	}
+`;
+
+const ParagraphInitialAddModel = styled.p`
 	font-size: 1.2rem;
   font-family: "Overpass", Regular;
 	font-weight: 300;
+
+	span {
+		color: #85144B;
+		text-decoration: underline;
+		text-underline-position: under;
+		cursor: pointer;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 1rem;
+	}
+
+	@media (max-width: 648px) {
+		margin-top: 1rem;
+	}
+`;
+
+const ParagraphInitialAddDoc = styled.p`
+	font-size: 1.5rem;
+  font-family: "Overpass", Regular;
+	font-weight: 900;
 
 	span {
 		color: #85144B;
@@ -623,6 +655,7 @@ const Option = styled.button`
 	height: 2.5rem;
 	padding: 0 1rem;
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	background: transparent;
 	border: none;
@@ -944,8 +977,6 @@ const ModalDelete = styled.div`
 
 const TitleModal = styled(HeaderAddModel)`
 	img {
-		width: 20px;
-		height: 20px;
 		cursor: pointer;
 	}
 `;
@@ -1196,7 +1227,7 @@ const ButtonModalList = styled.button`
 `;
 
 const ImageExit = styled.img`
-	width: 20px;
+	/* width: 20px; */
 	align-self: flex-end;
 	position: absolute;
 	margin-top: .5rem;
@@ -1988,10 +2019,10 @@ class DocumentsScreen extends Component {
 								Esse modelo de documento não existe !
 						</TitleInitialAddModel>
 					) : undefined}
-					<TextInitialAddModel>
+					<ParagraphInitialAddModel>
 							Escolha um modelo de documento
 			clicando em <span onClick={this.handleAddModel}>Adicionar Modelo</span>
-					</TextInitialAddModel>
+					</ParagraphInitialAddModel>
 				</InitialAddModel>
 			)
 		);
@@ -2073,10 +2104,10 @@ class DocumentsScreen extends Component {
 			))
 		) : (
 			<InitialAddModel>
-				<TitleInitialAddModel>
+				<TitleInitialAddDoc>
 					Você ainda não tem nenhum documento
-				</TitleInitialAddModel>
-				<TextInitialAddModel>
+				</TitleInitialAddDoc>
+				<ParagraphInitialAddDoc>
 					{this.state.selectOrg === '' ? (
 						'Selecione uma organização para adicionar um documento'
 					) : (
@@ -2087,7 +2118,7 @@ class DocumentsScreen extends Component {
 							</span>
 						</>
 					)}
-				</TextInitialAddModel>
+				</ParagraphInitialAddDoc>
 			</InitialAddModel>
 		)
 	)

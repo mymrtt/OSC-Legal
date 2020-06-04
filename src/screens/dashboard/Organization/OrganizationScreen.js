@@ -32,7 +32,7 @@ import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organizat
 import { removeOrg, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
-	isAdmin: state.onboarding.user.isAdmin,
+	isAdmin: state.onboarding.users.isAdmin,
 	tableDatas: state.organization.tableDatas,
 	user: state.onboarding.user,
 });
@@ -603,8 +603,6 @@ const TitleModal = styled.div`
 	justify-content: space-between;
 
 	img {
-		/* width: 20px;
-		height: 20px; */
 		margin-bottom: 2rem;
 		cursor: pointer;
 	}
@@ -615,7 +613,6 @@ const TitleDelete = styled.h2`
 	font-size: 2rem;
 	margin-top: 2%;
 	margin-bottom: 1%;
-	/* margin-left: 1rem; */
   font-family: "Overpass", Bold;
   font-weight: 900;
 
@@ -706,6 +703,7 @@ class OrganizationScreen extends Component {
 				'Pendente de Pagamento',
 				'Pendente de Autorização',
 				// { select: 'Pendente de Autorização', filter: 'autorizado' },
+				'Autorizado',
 				'Isento',
 				'Pago',
 				'Vencido',
