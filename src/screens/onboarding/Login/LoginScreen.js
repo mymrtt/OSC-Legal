@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
+import jwt from 'jsonwebtoken';
 import ImageLogo from '../../../components/ImageLogo';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
@@ -18,6 +19,12 @@ import VisibilityOff from '../../../assets/visibility-off.svg';
 import { login } from '../../../services/api';
 
 // Redux
+import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
+
+const mapDispatchToProps = dispatch => ({
+	saveUserData: info => dispatch(saveUserData(info)),
+});
+
 const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
@@ -200,6 +207,15 @@ class LoginScreen extends Component {
 
 			if (response) {
 				await localStorage.setItem('token', response.data.token);
+				const userData = jwt.decode(response.data.token);
+				console.log('userData', userData)
+
+				await localStorage.setItem('userInfo', {
+					acessToken: response.data.token,
+					...userData,
+				});
+
+				this.props.saveUserData(userData);
 				this.setState({ redirect: '/organizations' });
 			}
 
@@ -207,9 +223,10 @@ class LoginScreen extends Component {
 				error: '',
 			});
 		} catch (error) {
-			const { data } = error.response;
 			console.log('error', error);
 			console.log('error.response', error.response);
+
+			const { data } = error.response;
 
 			if (data === 'user not verified') {
 				this.setState({
@@ -326,4 +343,4 @@ class LoginScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

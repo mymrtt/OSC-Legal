@@ -10,10 +10,7 @@ import logo from '../../../assets/logo.svg';
 
 // Redux
 const mapStateToProps = state => ({
-	email: state.onboarding.users.email,
-	password: state.onboarding.users.password,
-	name: state.onboarding.users.name,
-	isAdmin: state.onboarding.users.isAdmin,
+	user: state.onboarding.user,
 });
 
 const Container = styled.div`
@@ -78,41 +75,40 @@ const ParagraphSair = styled.p`
 class HeaderModal extends Component {
 	state = {
 		redirect: false,
-		userData: [],
 	}
 
 	handleRedirect = () => {
 		this.setState({ redirect: true });
 	}
 
-	componentDidMount() {
-		console.log('ooo')
-		this.userInfo();
-	}
+	// componentDidMount() {
+	// 	console.log('ooo')
+	// 	this.userInfo();
+	// }
 
-	userInfo = async () => {
-		try {
-			const token = await localStorage.getItem('token');
+	// userInfo = async () => {
+	// 	try {
+	// 		const token = await localStorage.getItem('token');
 
-			this.setState({ userData: jwt.decode(token) });
+	// 		this.setState({ userData: jwt.decode(token) });
 
-			await localStorage.setItem('userInfo', {
-				acessToken: token,
-				...this.state.userData,
-			});
-		} catch (error) {
-			console.log('error', error);
-		}
-	}
+	// 		await localStorage.setItem('userInfo', {
+	// 			acessToken: token,
+	// 			...this.state.userData,
+	// 		});
+	// 	} catch (error) {
+	// 		console.log('error', error);
+	// 	}
+	// }
 
 	render() {
-		const { userData } = this.state;
+		const { user } = this.props;
 		return (
 			<Container>
 				<Logo src={logo} alt="Logo OSC Legal" />
 				<ContainerUser>
 					<ParagraphUserName>
-						{userData.isAdmin == 1 ? 'Administrador' : userData.name}
+						{user.isAdmin === 1 ? 'Administrador' : user.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleRedirect}>
 						sair
