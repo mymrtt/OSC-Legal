@@ -206,15 +206,19 @@ class LoginScreen extends Component {
 
 			if (response) {
 				const userData = jwt.decode(response.data.token);
-				console.log('userData', userData)
-				
-				await localStorage.setItem('token', response.data.token);
-				await localStorage.setItem('userInfo', {
+				const user = {
 					acessToken: response.data.token,
 					...userData,
+				};
+
+				await localStorage.setItem('token', response.data.token);
+				await localStorage.setItem('user', JSON.stringify(user));
+
+				this.props.saveUserData({
+					...userData,
+					isAdmin: userData.isAdmin === 1,
 				});
-				
-				this.props.saveUserData(userData);
+
 				this.setState({ redirect: '/organizations' });
 			}
 
