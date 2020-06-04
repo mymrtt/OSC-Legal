@@ -584,8 +584,9 @@ const ContainerModalDelete = styled.div`
 
 const ModalDelete = styled.div`
 	width: 480px;
+	border-radius: 3px;
 	background: #FFF;
-	padding: 1% 2% 1% 3%;
+	padding: 1rem 1.5rem;
 
 	@media (max-width: 490px) {
 		width: 100%;
