@@ -283,6 +283,10 @@ class ModalCreateOrganization extends Component {
 			this.setState({ allStateTrue: true });
 			this.handleModalSucess(org.tradingName);
 			this.props.addNewOrg(org);
+			this.setState({
+				isCnpjError: '',
+				error: '',
+			});
 		} catch (error) {
 			this.setState({
 				error: 'Algo deu errado.',
