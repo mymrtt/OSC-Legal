@@ -32,7 +32,7 @@ import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organizat
 import { removeOrg, getAllOrganizations } from '../../../services/api';
 
 const mapStateToProps = state => ({
-	isAdmin: state.onboarding.users.isAdmin,
+	isAdmin: state.onboarding.user.isAdmin,
 	tableDatas: state.organization.tableDatas,
 	user: state.onboarding.user,
 });
@@ -584,8 +584,9 @@ const ContainerModalDelete = styled.div`
 
 const ModalDelete = styled.div`
 	width: 480px;
+	border-radius: 3px;
 	background: #FFF;
-	padding: 1% 2% 1% 3%;
+	padding: 1rem 1.5rem;
 
 	@media (max-width: 490px) {
 		width: 100%;
@@ -762,15 +763,13 @@ class OrganizationScreen extends Component {
 
 	getUser = async () => {
 		try {
-			const token = await localStorage.getItem('token');
-			const userData = jwt.decode(token);
+			let user = await localStorage.getItem('user');
+			user = JSON.parse(user);
 
-			await localStorage.setItem('userInfo', {
-				acessToken: token,
-				...userData,
+			this.props.saveUserData({
+				...user,
+				isAdmin: user.isAdmin === 1,
 			});
-
-			this.props.saveUserData(userData);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -834,13 +833,12 @@ class OrganizationScreen extends Component {
 	}
 
 	handleDateExpired = (createdIn) => {
-		console.log('createdIn', createdIn);
+		const formateDate = createdIn.split('/');
+		const dateCreate = new Date(`${formateDate[1]}/${formateDate[0]}/${formateDate[2]}`);
+		const dateExpired =	dateCreate.setDate(dateCreate.getDate() + 30);
+		const date = new Date(dateExpired);
 
-		const dateExpired = new Date (createdIn);
-		console.log('dateExpired', dateExpired);
-
-		// const dateExpired = new Date (+30);
-
+		return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 	};
 
 	deleteOrganization = async () => {

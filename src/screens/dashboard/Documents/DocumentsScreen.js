@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken';
 import Header from '../components/Header';
 import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
+import Editor from './Editor';
 
 // Images
 import DocumentUser from '../../../assets/document-user.svg';
@@ -31,7 +32,9 @@ import ArrowUpIcon from '../../../assets/arrow-up.svg';
 import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
 
 // Api
-import { createTemplate, getAllTemplates, deleteTemplate, getAllOrganizations, createDocument } from '../../../services/api';
+import {
+	createTemplate, getAllTemplates, deleteTemplate, getAllOrganizations, createDocument,
+} from '../../../services/api';
 
 const mapStateToProps = state => ({
 	documentsList: state.documents.documentsList,
@@ -1254,24 +1257,17 @@ class DocumentsScreen extends Component {
 		isErrorDoc: false,
 		templateList: [],
 		organizationUser: [],
+		isEdit: false,
 	};
 
-
-	createDoc = async (templateData) => {
-		try {
-			console.log(templateData);
-
-			const token = await localStorage.getItem('token');
-
-			const response = await createTemplate(templateData, token);
-
-			console.log('response', response);
-		} catch (error) {
-			console.log('error', error);
-		}
+	componentDidMount() {
+		this.renderTemplate();
+		this.getAllOrgs();
+		this.renderMobileButton();
 	}
 
-	getOrg = async () => {
+
+	getAllOrgs = async () => {
 		try {
 			const token = await localStorage.getItem('token');
 
@@ -1279,20 +1275,55 @@ class DocumentsScreen extends Component {
 
 			const response = await getAllOrganizations(userID, token);
 
+			console.log('response', response.data);
 			this.setState({
 				organizationUser: response.data,
 			});
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
-	componentDidMount() {
-		this.renderTemplate();
-		this.getOrg();
-		this.renderMobileButton();
+	createDoc = async () => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await createDocument(token);
+			console.log('response', response);
+
+		} catch (error) {
+			console.log('error', error.response);
+		}
 	}
 
+	createTemplate = async (templateData) => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await createTemplate(templateData, token);
+
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	deleteTemplate = async () => {
+		try {
+			const { templateId } = this.state.modelSelect;
+
+			const token = await localStorage.getItem('token');
+
+			const response = await deleteTemplate(templateId, token);
+
+			this.setState({
+				templateList: response.data,
+			});
+
+			this.handleCancelDelete();
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
 	renderTemplate = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1303,7 +1334,44 @@ class DocumentsScreen extends Component {
 				templateList: response.data,
 			});
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
+		}
+	}
+
+	createDoc = async () => {
+		try {
+			const docs = {
+				template_id: this.state.isSelected.templateId,
+				org_id: this.state.orgID,
+				doc: this.state.isSelected.template,
+			};
+			console.log(docs);
+
+			const token = await localStorage.getItem('token');
+
+			const response = await createDocument(docs, token);
+
+			console.log('response', response);
+		} catch (error) {
+			console.log('erro', error);
+		}
+	}
+
+	handleDelete = async () => {
+		try {
+			const templateID = this.state.modelSelect.templateId;
+
+			const token = await localStorage.getItem('token');
+
+			console.log('id', templateID);
+			console.log('token', token);
+
+			const response = await deleteTemplate(templateID, token);
+			console.log('response', response);
+
+			this.handleCancelDelete();
+		} catch (error) {
+			console.log('error', error.response);
 		}
 	}
 
@@ -1314,7 +1382,8 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleOnOptionsUser = (docs, index) => {
+
+	handleOnOptionsUser = (doc, index) => {
 		this.setState({
 			options: true,
 			selectedOptions: index,
@@ -1337,8 +1406,8 @@ class DocumentsScreen extends Component {
 	handleCancelAddModel = () => {
 		this.setState({
 			templateData: {
-				description: '',
 				templateName: '',
+				description: '',
 			},
 			addModel: false,
 			isError: false,
@@ -1485,33 +1554,7 @@ class DocumentsScreen extends Component {
 		this.setState({
 			modelSelect: doc,
 		});
-		console.log(this.state.modelSelect.templateId);
 	}
-
-	handleDelete = async () => {
-		try {
-			const templateID = this.state.modelSelect.templateId;
-
-			const token = await localStorage.getItem('token');
-
-			console.log('id', templateID);
-			console.log('token', token);
-
-			const response = await deleteTemplate(templateID, token);
-			console.log('response', response);
-
-			// this.setState({
-			// 	templateList: response.data,
-			// });
-
-
-			// console.log('response', response);
-			// this.handleCancelDelete();
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
-
 
 	handleSearch = (e) => {
 		this.setState({
@@ -1614,9 +1657,9 @@ class DocumentsScreen extends Component {
 			});
 		}
 		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
-			const templateData = { templateName, description, template };
+			const templateData = { description, template, templateName };
 			this.props.addNewDocument(templateData);
-			this.createDoc(templateData);
+			this.createTemplate(templateData);
 
 			this.setState({
 				templateData: {},
@@ -1663,7 +1706,7 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleDocsUser = async (e, doc) => {
+	handleDocsUser = (e) => {
 		e.preventDefault();
 		this.setState({
 			modalListDoc: false,
@@ -1671,12 +1714,14 @@ class DocumentsScreen extends Component {
 			isSelected: '',
 			isErrorDoc: false,
 		});
+		this.createDoc();
 	}
 
 	handleSelectOrg = (orgs) => {
 		this.setState({
-			selectOrg: orgs,
+			selectOrg: orgs.tradingName,
 			isBoxOrgs: false,
+			orgID: orgs.orgId,
 		});
 	}
 
@@ -1696,10 +1741,16 @@ class DocumentsScreen extends Component {
 
 	delete = () => {
 		if (this.props.isAdmin === true) {
-			this.handleDelete();
+			this.deleteTemplate();
 		} else {
 			this.deleteUserDoc();
 		}
+	}
+
+	handleEdit = () => {
+		this.setState({
+			isEdit: true,
+		});
 	}
 
 	renderModalModels = () => {
@@ -1838,20 +1889,20 @@ class DocumentsScreen extends Component {
 					<SubtitleModal>Escolha um modelo da lista abaixo</SubtitleModal>
 				</BoxTitle>
 				<BoxModelsDoc>
-					{this.state.templateList.map((docs, index) => (
+					{this.state.templateList.map((doc, index) => (
 						<ContainerModelDescription
 							modal={this.state.modalListDoc}
 							list={this.state.listDocs}
 							hidden={this.state.modalListDoc}
 							addDocument={this.state.modalListDoc}
-							onClick={() => this.selecetedDocUser(docs)}
-							isSelected={docs === this.state.isSelected}
+							onClick={() => this.selecetedDocUser(doc)}
+							isSelected={doc === this.state.isSelected}
 						>
 							<span key={index}>
 								<ModelNumber>{index + 1}</ModelNumber>
-								<ModelTitle>{docs.templateName}</ModelTitle>
+								<ModelTitle>{doc.templateName}</ModelTitle>
 							</span>
-							<ModelParagraph isAdmin={this.state.isAdmin}>{docs.description}</ModelParagraph>
+							<ModelParagraph isAdmin={this.state.isAdmin}>{doc.description}</ModelParagraph>
 						</ContainerModelDescription>
 					))}
 				</BoxModelsDoc>
@@ -1991,7 +2042,7 @@ class DocumentsScreen extends Component {
 						<Option
 							onMouseEnter={() => this.handleChangeColorEditUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveEdit}
-							onClick={() => { }}
+							onClick={this.handleEdit}
 						>
 							<OptionImage src={this.state.hoverEdit === doc ? this.state.downloadEdit : EditIcon} />
 							<OptionText
@@ -2136,7 +2187,7 @@ class DocumentsScreen extends Component {
 												{this.state.organizationUser.map((orgs, index) => (
 													<Org
 														key={index}
-														onClick={() => this.handleSelectOrg(orgs.tradingName)}
+														onClick={() => this.handleSelectOrg(orgs)}
 													>
 														{orgs.tradingName}
 													</Org>
@@ -2183,6 +2234,7 @@ class DocumentsScreen extends Component {
 													/>
 												) : (
 													null))}
+										{this.state.isEdit && <Editor handleEdit={this.handleEdit} isEdit={this.state.isEdit}/>}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}
