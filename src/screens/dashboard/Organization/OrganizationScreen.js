@@ -33,7 +33,7 @@ import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organizat
 import { removeOrg, getAllOrganizations, patchOrg } from '../../../services/api';
 
 const mapStateToProps = state => ({
-	isAdmin: state.onboarding.users.isAdmin,
+	isAdmin: state.onboarding.user.isAdmin,
 	tableDatas: state.organization.tableDatas,
 	user: state.onboarding.user,
 });
