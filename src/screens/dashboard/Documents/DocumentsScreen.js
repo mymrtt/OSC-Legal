@@ -1256,6 +1256,12 @@ class DocumentsScreen extends Component {
 		organizationUser: [],
 	};
 
+	componentDidMount() {
+		this.renderTemplate();
+		this.getAllOrgs();
+		this.renderMobileButton();
+	}
+
 
 	createDoc = async (templateData) => {
 		try {
@@ -1267,11 +1273,11 @@ class DocumentsScreen extends Component {
 
 			console.log('response', response);
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
-	getOrg = async () => {
+	getAllOrgs = async () => {
 		try {
 			const token = await localStorage.getItem('token');
 
@@ -1283,14 +1289,8 @@ class DocumentsScreen extends Component {
 				organizationUser: response.data,
 			});
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
-	}
-
-	componentDidMount() {
-		this.renderTemplate();
-		this.getOrg();
-		this.renderMobileButton();
 	}
 
 	renderTemplate = async () => {
@@ -1303,7 +1303,7 @@ class DocumentsScreen extends Component {
 				templateList: response.data,
 			});
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
@@ -1337,8 +1337,8 @@ class DocumentsScreen extends Component {
 	handleCancelAddModel = () => {
 		this.setState({
 			templateData: {
-				description: '',
 				templateName: '',
+				description: '',
 			},
 			addModel: false,
 			isError: false,
@@ -1488,25 +1488,19 @@ class DocumentsScreen extends Component {
 		console.log(this.state.modelSelect.templateId);
 	}
 
-	handleDelete = async () => {
+	deleteTemplate = async () => {
 		try {
-			const templateID = this.state.modelSelect.templateId;
+			const templateId = this.state.modelSelect.templateId;
 
 			const token = await localStorage.getItem('token');
 
-			console.log('id', templateID);
-			console.log('token', token);
+			const response = await deleteTemplate(templateId, token);
 
-			const response = await deleteTemplate(templateID, token);
-			console.log('response', response);
+			this.setState({
+				templateList: response.data,
+			});
 
-			// this.setState({
-			// 	templateList: response.data,
-			// });
-
-
-			// console.log('response', response);
-			// this.handleCancelDelete();
+			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1614,7 +1608,7 @@ class DocumentsScreen extends Component {
 			});
 		}
 		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
-			const templateData = { templateName, description, template };
+			const templateData = { description, template, templateName };
 			this.props.addNewDocument(templateData);
 			this.createDoc(templateData);
 
@@ -1696,7 +1690,7 @@ class DocumentsScreen extends Component {
 
 	delete = () => {
 		if (this.props.isAdmin === true) {
-			this.handleDelete();
+			this.deleteTemplate();
 		} else {
 			this.deleteUserDoc();
 		}
