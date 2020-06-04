@@ -28,6 +28,14 @@ export const findUser = (id, token) => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
+
+export const resetPassword = email => axios({
+	url: `${API_URL}/auth/recovery`,
+	method: 'post',
+	headers: {
+		'x-osclegal-email': email,
+	},
+});
 // Onboarding
 
 // Organization
