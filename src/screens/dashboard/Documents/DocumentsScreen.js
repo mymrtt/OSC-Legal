@@ -1284,24 +1284,12 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	createDoc = async () => {
-		try {
-			const token = await localStorage.getItem('token');
-
-			const response = await createDocument(token);
-			console.log('response', response);
-
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
 
 	createTemplate = async (templateData) => {
 		try {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
-
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1324,6 +1312,7 @@ class DocumentsScreen extends Component {
 			console.log('error', error.response);
 		}
 	}
+
 	renderTemplate = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1348,6 +1337,7 @@ class DocumentsScreen extends Component {
 			console.log(docs);
 
 			const token = await localStorage.getItem('token');
+			console.log('token', token)
 
 			const response = await createDocument(docs, token);
 
@@ -1868,7 +1858,9 @@ class DocumentsScreen extends Component {
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
 					<Button
+						// onClick={() => this.delete()}
 						onClick={() => this.delete()}
+
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
@@ -1969,7 +1961,7 @@ class DocumentsScreen extends Component {
 									}
 									onClick={() => this.handleSelected(doc)}
 								>
-									<p>Excluir</p>
+									<p>Excluir aqui</p>
 								</OptionText>
 							</Option>
 						</ContainerOptions>
@@ -2065,7 +2057,7 @@ class DocumentsScreen extends Component {
 									? this.state.colorTextDelete : '#85144B'}
 								onClick={() => this.userSelectedDoc(doc, index)}
 							>
-								<p>Excluir</p>
+								<p>Excluir oioi</p>
 							</OptionText>
 						</Option>
 					</ContainerOptions>

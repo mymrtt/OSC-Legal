@@ -336,7 +336,8 @@ class LoginScreen extends Component {
 						textTransform
 					/>
 					{!this.props.isResetPassword && <Span>
-						<ButtonText to={'/createuser'}>criar conta</ButtonText>
+						{/* <ButtonText to={'/createuser'}>criar conta</ButtonText> */}
+						<ButtonText to={'/newpassword'}>Resete senha</ButtonText>
 						<ButtonText to={'/resetpassword'}>resetar conta</ButtonText>
 					</Span>}
 				</Form>

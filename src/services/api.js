@@ -87,6 +87,16 @@ export const createDocument = (docs, token) => axios({
 	data: docs,
 });
 
+export const getDocument = (docs, token) => axios({
+
+	url: `${API_URL}/documents`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: docs,
+});
+
 // Document
 
 // Template (Document - Admin)

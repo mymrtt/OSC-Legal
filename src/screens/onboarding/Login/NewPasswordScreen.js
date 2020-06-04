@@ -216,7 +216,7 @@ class NewPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						<Paragraph width='100%'>
+						{/* <Paragraph width='100%'>
 							Um código de confirmação foi enviado para {this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'},
 							por favor, cole-o abaixo:
 						</Paragraph>
@@ -227,7 +227,7 @@ class NewPasswordScreen extends Component {
 							type='text'
 							placeholder="Insira aqui o código"
 							required
-						/>
+						/> */}
 						<Label>nova senha</Label>
 						<Input
 							login
@@ -258,9 +258,9 @@ class NewPasswordScreen extends Component {
 						type="submit"
 						textTransform
 					/>
-					<BackLogin>
+					{/* <BackLogin>
 						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
-					</BackLogin>
+					</BackLogin> */}
 				</Form>
 				{redirect && <Redirect to={'/'} />}
 			</ContainerForm>
