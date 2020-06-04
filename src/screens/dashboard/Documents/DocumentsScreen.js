@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken';
 import Header from '../components/Header';
 import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
+import Editor from './Editor';
 
 // Images
 import DocumentUser from '../../../assets/document-user.svg';
@@ -1256,6 +1257,7 @@ class DocumentsScreen extends Component {
 		isErrorDoc: false,
 		templateList: [],
 		organizationUser: [],
+		isEdit: false,
 	};
 
 	componentDidMount() {
@@ -1272,7 +1274,7 @@ class DocumentsScreen extends Component {
 
 			const response = await createTemplate(templateData, token);
 
-			console.log('response', response);
+			console.log('response', response.data);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -1330,23 +1332,17 @@ class DocumentsScreen extends Component {
 
 	handleDelete = async () => {
 		try {
-			const templateId = this.state.modelSelect.templateId;
+			const templateID = this.state.modelSelect.templateId;
 
 			const token = await localStorage.getItem('token');
 
-			console.log('id', templateId);
+			console.log('id', templateID);
 			console.log('token', token);
 
-			const response = await deleteTemplate(templateId, token);
+			const response = await deleteTemplate(templateID, token);
 			console.log('response', response);
 
-			// this.setState({
-			// 	templateList: response.data,
-			// });
-
-
-			// console.log('response', response);
-			// this.handleCancelDelete();
+			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1724,6 +1720,12 @@ class DocumentsScreen extends Component {
 		}
 	}
 
+	handleEdit = () => {
+		this.setState({
+			isEdit: true,
+		});
+	}
+
 	renderModalModels = () => {
 		const Messages = [
 			'Adicione um nome ao seu modelo',
@@ -2013,7 +2015,7 @@ class DocumentsScreen extends Component {
 						<Option
 							onMouseEnter={() => this.handleChangeColorEditUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveEdit}
-							onClick={() => { }}
+							onClick={this.handleEdit}
 						>
 							<OptionImage src={this.state.hoverEdit === doc ? this.state.downloadEdit : EditIcon} />
 							<OptionText
@@ -2205,6 +2207,7 @@ class DocumentsScreen extends Component {
 													/>
 												) : (
 													null))}
+										{this.state.isEdit && <Editor handleEdit={this.handleEdit} isEdit={this.state.isEdit}/>}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}

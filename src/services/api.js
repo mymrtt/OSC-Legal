@@ -98,10 +98,10 @@ export const getAllTemplates = token => axios({
 	},
 });
 
-export const deleteTemplate = (templateId, token) => axios({
-	url: `${API_URL}/templates/${templateId}`,
+export const deleteTemplate = (templateID, token) => axios({
+	url: `${API_URL}/templates/${templateID}`,
 	method: 'delete',
-	header: {
+	headers: {
 		Authorization: `Bearer ${token}`,
 	},
 });
