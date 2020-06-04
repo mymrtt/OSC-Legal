@@ -208,14 +208,19 @@ class LoginScreen extends Component {
 			if (response) {
 				await localStorage.setItem('token', response.data.token);
 				const userData = jwt.decode(response.data.token);
-				console.log('userData', userData)
-
-				await localStorage.setItem('userInfo', {
+				const user = {
 					acessToken: response.data.token,
 					...userData,
+				};
+
+				await localStorage.setItem('token', response.data.token);
+				await localStorage.setItem('user', JSON.stringify(user));
+
+				this.props.saveUserData({
+					...userData,
+					isAdmin: userData.isAdmin === 1,
 				});
 
-				this.props.saveUserData(userData);
 				this.setState({ redirect: '/organizations' });
 			}
 
@@ -225,9 +230,7 @@ class LoginScreen extends Component {
 		} catch (error) {
 			console.log('error', error);
 			console.log('error.response', error.response);
-
 			const { data } = error.response;
-
 			if (data === 'user not verified') {
 				this.setState({
 					error: 'Por favor, confirma a sua conta no email',
