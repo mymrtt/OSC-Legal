@@ -926,7 +926,7 @@ const ContainerModalDelete = styled(ContainerModal)`
 const ModalDelete = styled.div`
 	background: #FFF;
 	width: 480px;
-	padding: 1% 1% 1% 3%;
+	padding: 1em 1.5rem;
 
 
 	@media (max-width: 648px) {
@@ -1252,6 +1252,7 @@ class DocumentsScreen extends Component {
 		isMobileButton: false,
 		userSelectDoc: '',
 		isErrorDoc: false,
+		isErrorDocClear: false,
 		templateList: [],
 		organizationUser: [],
 	};
@@ -1653,6 +1654,7 @@ class DocumentsScreen extends Component {
 	closeModalListDoc = () => {
 		this.setState({
 			modalListDoc: false,
+			isErrorDocClear: false,
 		});
 	}
 
@@ -1665,12 +1667,20 @@ class DocumentsScreen extends Component {
 
 	handleDocsUser = async (e, doc) => {
 		e.preventDefault();
-		this.setState({
-			modalListDoc: false,
-			listDocs: newList,
-			isSelected: '',
-			isErrorDoc: false,
-		});
+		if (this.state.templateList.length <= 0) {
+			this.setState({
+				isErrorDocClear: true,
+				modalListDoc: true,
+			});
+		} else {
+			this.setState({
+				modalListDoc: false,
+				listDocs: newList,
+				isSelected: '',
+				isErrorDoc: false,
+				isErrorDocClear: false,
+			});
+		}
 	}
 
 	handleSelectOrg = (orgs) => {
@@ -1856,6 +1866,7 @@ class DocumentsScreen extends Component {
 					))}
 				</BoxModelsDoc>
 				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
+				{this.state.isErrorDocClear && <ErrorText>Não há documento para ser escolhido</ErrorText>}
 				<ButtonModalList onClick={this.handleDocsUser}>Escolher</ButtonModalList>
 			</Modal>
 		</ContainerModal>
