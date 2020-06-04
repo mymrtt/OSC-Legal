@@ -1262,25 +1262,12 @@ class DocumentsScreen extends Component {
 
 	componentDidMount() {
 		this.renderTemplate();
-		this.getOrg();
+		this.getAllOrgs();
 		this.renderMobileButton();
 	}
 
-	createTemplate = async (templateData) => {
-		try {
-			console.log(templateData);
 
-			const token = await localStorage.getItem('token');
-
-			const response = await createTemplate(templateData, token);
-
-			console.log('response', response.data);
-		} catch (error) {
-			console.log('error', error);
-		}
-	}
-
-	getOrg = async () => {
+	getAllOrgs = async () => {
 		try {
 			const token = await localStorage.getItem('token');
 
@@ -1288,15 +1275,55 @@ class DocumentsScreen extends Component {
 
 			const response = await getAllOrganizations(userID, token);
 
+			console.log('response', response.data);
 			this.setState({
 				organizationUser: response.data,
 			});
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
+	createDoc = async () => {
+		try {
+			const token = await localStorage.getItem('token');
 
+			const response = await createDocument(token);
+			console.log('response', response);
+
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	createTemplate = async (templateData) => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await createTemplate(templateData, token);
+
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	deleteTemplate = async () => {
+		try {
+			const { templateId } = this.state.modelSelect;
+
+			const token = await localStorage.getItem('token');
+
+			const response = await deleteTemplate(templateId, token);
+
+			this.setState({
+				templateList: response.data,
+			});
+
+			this.handleCancelDelete();
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
 	renderTemplate = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1307,7 +1334,7 @@ class DocumentsScreen extends Component {
 				templateList: response.data,
 			});
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
@@ -1379,8 +1406,8 @@ class DocumentsScreen extends Component {
 	handleCancelAddModel = () => {
 		this.setState({
 			templateData: {
-				description: '',
 				templateName: '',
+				description: '',
 			},
 			addModel: false,
 			isError: false,
@@ -1630,7 +1657,7 @@ class DocumentsScreen extends Component {
 			});
 		}
 		if (templateName !== '' && templateName.length > 4 && description !== '' && description.length <= 250 && template !== null) {
-			const templateData = { templateName, description, template };
+			const templateData = { description, template, templateName };
 			this.props.addNewDocument(templateData);
 			this.createTemplate(templateData);
 
@@ -1714,7 +1741,7 @@ class DocumentsScreen extends Component {
 
 	delete = () => {
 		if (this.props.isAdmin === true) {
-			this.handleDelete();
+			this.deleteTemplate();
 		} else {
 			this.deleteUserDoc();
 		}

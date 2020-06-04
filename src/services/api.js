@@ -28,6 +28,14 @@ export const findUser = (id, token) => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
+
+export const resetPassword = email => axios({
+	url: `${API_URL}/auth/recovery`,
+	method: 'post',
+	headers: {
+		'x-osclegal-email': email,
+	},
+});
 // Onboarding
 
 // Organization
@@ -70,6 +78,7 @@ export const patchOrg = (org, token) => axios({
 
 // Document
 export const createDocument = (docs, token) => axios({
+
 	url: `${API_URL}/documents`,
 	method: 'post',
 	headers: {
@@ -98,11 +107,12 @@ export const getAllTemplates = token => axios({
 	},
 });
 
-export const deleteTemplate = (templateID, token) => axios({
-	url: `${API_URL}/templates/${templateID}`,
+export const deleteTemplate = (templateId, token) => axios({
+	url: `${API_URL}/templates/${templateId}`,
 	method: 'delete',
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
 });
+
 // Template (Document - Admin)

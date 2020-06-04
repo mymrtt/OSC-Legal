@@ -18,6 +18,7 @@ const Container = styled.div`
   height: 100vh;
   background-color: #FFCFCD;
   display: flex;
+	justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 0;
@@ -30,8 +31,8 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  width: 35%;
-  height: 50vh;
+	padding: 1rem;
+	height: 25vh;
   background-color: #fff;
   border-radius: 5px;
   display: flex;
@@ -48,32 +49,6 @@ const Content = styled.div`
     width: 80%;
 		height: 79vh;
 	}
-`;
-
-const Title = styled.h1`
-  width: 65%;
-  color: #85144B;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-
-  @media (max-width: 648px) {
-		width: 95%;
-	}
-`;
-
-const Code = styled.p`
-  color: #FF4136;
-  font-size: 2.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Overpass;
-
-  @media (max-width: 648px) {
-    margin: 3rem;
-  }
 `;
 
 const ContainerParagraph = styled.span`
@@ -110,26 +85,22 @@ class ResetPasswordCode extends Component {
 			<Container>
 				<ImageLogo margin='3rem 0 2.5rem 0'/>
 				<Content>
-					<Title>Aqui está o seu código de redefinição de senha:</Title>
-					<Code>210704</Code>
 					<ContainerParagraph>
-						<Paragraph>Uma redefinição de senha foi necessária para o seu endereço de e-mail: { }
-							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com. '} { }
-							Se você não realizou essa solicitação,
-							pode acessar sua conta normalmente.
+						<Paragraph>Uma redefinição de senha foi enviada para o seu endereço de e-mail: { }
+							{this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'}.
 						</Paragraph>
 					</ContainerParagraph>
 					<Button
 						width='75%'
 						widthMobile='100%'
 						marginMobile='3rem 0 2rem 0'
-						text="redefinir senha"
+						text="voltar para o login"
 						type="button"
 						textTransform
 						onClick={this.handleRedirect}
 					/>
 				</Content>
-				{this.state.redirect && <Redirect to={'/newpassword'}/>}
+				{this.state.redirect && <Redirect to={'/'}/>}
 			</Container>
 		);
 	}
