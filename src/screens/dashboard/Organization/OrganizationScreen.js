@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
-import jwt from 'jsonwebtoken';
 
 // Components
 import Header from '../components/Header';
@@ -760,7 +759,6 @@ class OrganizationScreen extends Component {
 
 	componentDidMount() {
 		this.getUser();
-		this.getOrgs();
 	}
 
 	getUser = async () => {
@@ -772,6 +770,7 @@ class OrganizationScreen extends Component {
 				...user,
 				isAdmin: user.isAdmin === 1,
 			});
+			this.getOrgs();
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -779,11 +778,10 @@ class OrganizationScreen extends Component {
 
 	getOrgs = async () => {
 		try {
-			const token = await localStorage.getItem('token');
-			const response = await getAllOrganizations(jwt.decode(token).id, token);
+			const response = await getAllOrganizations(this.props.user.id);
 			this.props.updateTableDatas(response.data);
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
@@ -845,13 +843,11 @@ class OrganizationScreen extends Component {
 
 	deleteOrganization = async () => {
 		try {
-			const token = await localStorage.getItem('token');
-
 			const org = {
 				...this.state.itemSelected,
 				deletedAt: true,
 			};
-			await removeOrg(org, token);
+			await removeOrg(org);
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({
@@ -874,13 +870,12 @@ class OrganizationScreen extends Component {
 
 	handleSelectedStatus = async (newStatus, org) => {
 		try {
-			const token = localStorage.getItem('token');
 			const orgObj = {
 				...org,
 				status: newStatus.desc,
 			};
 
-			await patchOrg(orgObj, token);
+			await patchOrg(orgObj);
 			this.changeOrgStatus(newStatus, org);
 		} catch (error) {
 			console.log('error', error)

@@ -277,14 +277,16 @@ class ModalCreateOrganization extends Component {
 
 	createOrg = async (org) => {
 		try {
-			const token = localStorage.getItem('token');
-
-			const response = await createOrganization(org, token);
+			const response = await createOrganization(org);
 			console.log('response', response)
 
 			this.setState({ allStateTrue: true });
 			this.handleModalSucess(org.tradingName);
 			this.props.addNewOrg(org);
+			this.setState({
+				isCnpjError: '',
+				error: '',
+			});
 		} catch (error) {
 			this.setState({
 				error: 'Algo deu errado.',
@@ -296,8 +298,7 @@ class ModalCreateOrganization extends Component {
 
 	editOrganization = async (org) => {
 		try {
-			const token = await localStorage.getItem('token');
-			await patchOrg(org, token);
+			await patchOrg(org);
 
 			this.props.editOrg(org);
 			this.props.handleClosedModal();
@@ -313,10 +314,7 @@ class ModalCreateOrganization extends Component {
 	getAllOrgs = async () => {
 		try {
 			const userId = this.props.userData.id;
-
-			const token = await localStorage.getItem('token');
-
-			await getAllOrganizations(userId, token);
+			await getAllOrganizations(userId);
 		} catch (error) {
 			console.log('error', error);
 		}
