@@ -834,13 +834,12 @@ class OrganizationScreen extends Component {
 	}
 
 	handleDateExpired = (createdIn) => {
-		console.log('createdIn', createdIn);
+		const formateDate = createdIn.split('/');
+		const dateCreate = new Date(`${formateDate[1]}/${formateDate[0]}/${formateDate[2]}`);
+		const dateExpired =	dateCreate.setDate(dateCreate.getDate() + 30);
+		const date = new Date(dateExpired);
 
-		const dateExpired = new Date (createdIn);
-		console.log('dateExpired', dateExpired);
-
-		// const dateExpired = new Date (+30);
-
+		return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 	};
 
 	deleteOrganization = async () => {
