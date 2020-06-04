@@ -477,6 +477,15 @@ class CreateUserScreen extends Component {
 				isEmpty: false,
 			});
 		}
+		if (name.length < 4) {
+			this.setState({
+				nameError: true,
+			});
+		} else {
+			this.setState({
+				nameError: false,
+			});
+		}
 		if (cpf.length === 11) {
 			this.setState({
 				isErrorCpf: false,
@@ -505,7 +514,7 @@ class CreateUserScreen extends Component {
 			});
 		}
 
-		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11) {
+		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
 			this.props.addNewUser(user);
 			this.userRegister(user);
 			this.handleModalSucess();
@@ -549,11 +558,13 @@ class CreateUserScreen extends Component {
 			'CPF inválido.',
 			'Insira um número de telefone válido.',
 			'E-mail incompleto.',
+			'Insira um nome válido.',
 		];
 		const {
 			isErrorPassword,
 			modalSucess,
 			isEmpty,
+			nameError,
 			isErrorCpf,
 			togglePassword,
 			isTermsOpen,
@@ -594,8 +605,10 @@ class CreateUserScreen extends Component {
 									value={name}
 									placeholder="Nome completo"
 									name="nomeCompleto"
+									isError={nameError}
 									required
 								/>
+								{nameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
 							</Label>
 							{/* <Label>
 							<ParagraphInput>sobrenome</ParagraphInput>
@@ -616,6 +629,7 @@ class CreateUserScreen extends Component {
 									value={cpf}
 									placeholder="000.000.000-00"
 									name="cpf"
+									isError={isErrorCpf}
 									required
 								/>
 								{isErrorCpf && <ErrorMessage>{errorMessage[1]}</ErrorMessage>}

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-undef */
 /* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
