@@ -89,7 +89,7 @@ const MaximumWidth = styled.div`
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
-	background: #FFF;	
+	background: #FFF;
 	overflow-y: hidden;
 
 	@media(max-width: 768px){
@@ -288,12 +288,12 @@ const ContainerScroll = styled.div`
 
 	@media (max-width: 648px) {
 		min-width: 100%;
-		min-height: 100vh;
+		/* min-height: 100vh; */
 		padding-bottom: 10rem;
 		margin: 0;
 		display: flex;
 		justify-content: center;
-		padding: 0 .2rem;
+		/* padding: 0 .2rem; */
 	}
 `;
 
@@ -783,9 +783,11 @@ const HeaderAddModel = styled.div`
 	display: flex;
 	justify-content: space-between;
 
+	@media (max-width: 648px) {
+		margin-top: 2rem;
+	}
+
 	img {
-		width: 20px;
-		height: 20px;
 		cursor: pointer;
 	}
 `;

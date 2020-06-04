@@ -404,8 +404,12 @@ const Tr = styled.tr`
 		padding: 1rem 1rem 8.5rem 1rem;
 	}
 
-	@media(max-width: 490px) {
-		padding: 1rem 1rem 17rem 1rem;
+	@media(max-width: 530px) {
+		padding: 1rem 1rem 12.5rem 1rem;
+	}
+
+	@media(max-width: 387px) {
+		padding: 1rem 1rem 20rem 1rem;
 	}
 `;
 
