@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-undef */
 /* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
@@ -29,7 +31,7 @@ import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { removeOrg, getAllOrganizations } from '../../../services/api';
+import { removeOrg, getAllOrganizations, patchOrg } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.user.isAdmin,
@@ -584,8 +586,9 @@ const ContainerModalDelete = styled.div`
 
 const ModalDelete = styled.div`
 	width: 480px;
+	border-radius: 3px;
 	background: #FFF;
-	padding: 1% 2% 1% 3%;
+	padding: 1rem 1.5rem;
 
 	@media (max-width: 490px) {
 		width: 100%;
@@ -832,13 +835,12 @@ class OrganizationScreen extends Component {
 	}
 
 	handleDateExpired = (createdIn) => {
-		// console.log('createdIn', createdIn);
+		const formateDate = createdIn.split('/');
+		const dateCreate = new Date(`${formateDate[1]}/${formateDate[0]}/${formateDate[2]}`);
+		const dateExpired =	dateCreate.setDate(dateCreate.getDate() + 30);
+		const date = new Date(dateExpired);
 
-		const dateExpired = new Date (createdIn);
-		// console.log('dateExpired', dateExpired);
-
-		// const dateExpired = new Date (+30);
-
+		return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 	};
 
 	deleteOrganization = async () => {
@@ -870,10 +872,28 @@ class OrganizationScreen extends Component {
 		}
 	}
 
-	handleSelectedStatus = (newStatus, item) => {
+	handleSelectedStatus = async (newStatus, org) => {
+		try {
+			const token = localStorage.getItem('token');
+			const orgObj = {
+				...org,
+				status: newStatus.desc,
+			};
+
+			await patchOrg(orgObj, token);
+			this.changeOrgStatus(newStatus, org);
+		} catch (error) {
+			console.log('error', error)
+			this.setState({
+				error: 'Algo deu errado.',
+			});
+		}
+	}
+
+	changeOrgStatus = (newStatus, org) => {
 		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
-			if (data === item) {
+			if (data === org) {
 				return {
 					...data,
 					status: newStatus.desc,
@@ -976,7 +996,7 @@ class OrganizationScreen extends Component {
 	)
 
 	renderStatus = (item) => {
-		const { statusImgs } = this.state;
+		const { statusImgs, isClickedStatus } = this.state;
 		let listinha = statusImgs;
 
 		const hiddenList = (item.status === 'autorizado' || item.status === 'isento' || item.status === 'prazo prorrogado');
@@ -1003,8 +1023,13 @@ class OrganizationScreen extends Component {
 			<>
 				{this.props.isAdmin ? (
 					<>
-						<Box isClickedStatus={item.status === 'isento' || item.status === 'autorizado'
-		|| item.status === 'prazo prorrogado' ? null : item.id === this.state.isClickedStatus}>
+						<Box
+							isClickedStatus={item.status === 'isento'
+							|| item.status === 'autorizado'
+							|| item.status === 'prazo prorrogado'
+								? null
+								: item.id === isClickedStatus
+							}>
 							{!hiddenList && listinha.map((status, index) => (
 								<ImageStatus
 									cursor={this.props.isAdmin}
