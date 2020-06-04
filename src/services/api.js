@@ -77,10 +77,14 @@ export const patchOrg = (org, token) => axios({
 // Organization
 
 // Document
-export const createDocument = doc => axios({
+export const createDocument = (docs, token) => axios({
+
 	url: `${API_URL}/documents`,
 	method: 'post',
-	data: doc,
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: docs,
 });
 
 // Document
@@ -103,11 +107,12 @@ export const getAllTemplates = token => axios({
 	},
 });
 
-export const deleteTemplate = (templateID, token) => axios({
-	url: `${API_URL}/templates/${templateID}`,
+export const deleteTemplate = (templateId, token) => axios({
+	url: `${API_URL}/templates/${templateId}`,
 	method: 'delete',
-	header: {
+	headers: {
 		Authorization: `Bearer ${token}`,
 	},
 });
+
 // Template (Document - Admin)
