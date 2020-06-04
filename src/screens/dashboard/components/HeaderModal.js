@@ -80,6 +80,26 @@ class HeaderModal extends Component {
 		this.setState({ redirect: true });
 	}
 
+	// componentDidMount() {
+	// 	console.log('ooo')
+	// 	this.userInfo();
+	// }
+
+	// userInfo = async () => {
+	// 	try {
+	// 		const token = await localStorage.getItem('token');
+
+	// 		this.setState({ userData: jwt.decode(token) });
+
+	// 		await localStorage.setItem('userInfo', {
+	// 			acessToken: token,
+	// 			...this.state.userData,
+	// 		});
+	// 	} catch (error) {
+	// 		console.log('error', error);
+	// 	}
+	// }
+
 	render() {
 		const { user } = this.props;
 		return (

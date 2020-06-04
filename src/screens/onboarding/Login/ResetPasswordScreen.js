@@ -12,6 +12,10 @@ import Button from '../../../components/Button';
 // Redux
 import { emailReset } from '../../../dataflow/modules/onboarding-modules';
 
+// Api
+import { resetPassword } from '../../../services/api';
+
+
 const mapStateToProps = state => ({
 	onboarding: state.onboarding,
 });
@@ -88,10 +92,11 @@ const Title = styled.h1`
 `;
 
 const ErrorMessage = styled.p`
-	font-size: 0.7rem;
-	color: #f00;
-	align-self: flex-start;
 	margin-top: 0.5rem;
+	color: #f00;
+	font-size: 0.6rem;
+	font-family: Overpass, Regular;
+	align-self: flex-end;
 `;
 
 const Box = styled.span`
@@ -109,19 +114,27 @@ const Label = styled.label`
 	font-size: 0.75rem;
 	margin: 1.6rem 0rem 0.3rem 0.9rem;
 	font-family: Overpass, Regular;
+	font-weight: bold;
 	text-transform: uppercase;
 `;
 
 const BackLogin = styled.span`
+  margin: ${props => (props.isFetching && '1rem 0 1.5rem 0')};
+	width: 100%;
+	height: ${props => (props.isFetching && '3.5rem')};
 	display: flex;
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-around;
+	background: ${props => (props.isFetching && '#FF4136')};
+
 `;
 
 const ButtonText = styled(Link)`
-	color: #85144B;
+	color: ${props => (props.isFetching ? '#FFF' : '#85144B')};
+	font-size: 1rem;
 	font-family: Overpass, Regular;
+	font-weight: bold;
 	text-decoration: none;
 	text-transform: uppercase;
 `;
@@ -132,30 +145,46 @@ class ResetPasswordEmailScreen extends Component {
 		email: '',
 		redirect: null,
 		isErrorEmail: false,
+		isFetching: undefined,
 	}
 
 	handleChangeEmail = (ev) => {
 		this.setState({
 			email: ev.target.value,
+			isErrorEmail: false,
 		});
 	};
 
-	handleSubmit = (e) => {
+	handleSubmit = async (e) => {
 		e.preventDefault();
-		if (this.state.email !== this.props.onboarding.users.email) {
+
+		try {
+			const { email } = this.state;
+
+			this.setState({
+				isFetching: true,
+			});
+
+			await resetPassword(email);
+			this.props.emailReset(this.state.email);
+			this.setState({
+				redirect: '/resetcode',
+				isFetching: false,
+			});
+		} catch (error) {
+			console.log('error', error);
+			console.log('error.response', error.response);
+
 			this.setState({
 				isErrorEmail: true,
+				isFetching: false,
 			});
-		} else {
-			this.setState({
-				isErrorEmail: false,
-			});
-			this.props.emailReset(this.state.email);
-			this.setState({ redirect: '/resetcode' });
 		}
 	}
 
 	render() {
+		const { isFetching } = this.state;
+
 		return (
 			<ContainerForm>
 				<ImageLogo margin='0 0 4rem' />
@@ -171,14 +200,24 @@ class ResetPasswordEmailScreen extends Component {
 							required
 						/>
 						{this.state.isErrorEmail && <ErrorMessage>E-mail não encontrado</ErrorMessage>}
-						<Button
-							width='100%'
-							margin='1rem 0 1.5rem 0'
-							marginMobile='5.9rem 0 2.7rem 0'
-							text="solicitar redefinição de senha"
-							textTransform
-							type="submit"
-						/>
+						{isFetching
+							? (
+								<BackLogin isFetching>
+									<ButtonText isFetching>Carregando...</ButtonText>
+								</BackLogin>
+							)
+							: (
+								<Button
+									width='100%'
+									margin='1rem 0 1.5rem 0'
+									marginMobile='5.9rem 0 2.7rem 0'
+									text="solicitar redefinição de senha"
+									textTransform
+									type="submit"
+								/>
+
+							)
+						}
 					</Box>
 					<BackLogin>
 						<ButtonText to={'/'}>volte ao login</ButtonText>

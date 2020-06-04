@@ -157,12 +157,13 @@ const ButtonText = styled(Link)`
 `;
 
 const Error = styled.h4`
+	margin-top: 0.5rem;
   width: 70%;
   color: #D63434;
-	display: flex;
-  justify-content: flex-end;
   font-size: 0.6rem;
 	font-family: Overpass, Regular;
+	display: flex;
+  justify-content: flex-end;
 
 	@media (max-width: 648px) {
 		width: 80%;
@@ -205,6 +206,7 @@ class LoginScreen extends Component {
 			const response = await login(user, base64credentials);
 
 			if (response) {
+				await localStorage.setItem('token', response.data.token);
 				const userData = jwt.decode(response.data.token);
 				const user = {
 					acessToken: response.data.token,
@@ -222,38 +224,52 @@ class LoginScreen extends Component {
 				this.setState({ redirect: '/organizations' });
 			}
 
-			if (this.state.password.length < 6 || response.status !== 200) {
-				this.setState({
-					error: true,
-				});
-			}
+			this.setState({
+				error: '',
+			});
 		} catch (error) {
 			console.log('error', error);
 			console.log('error.response', error.response);
-
-			this.setState({
-				error: true,
-			});
+			const { data } = error.response;
+			if (data === 'user not verified') {
+				this.setState({
+					error: 'Por favor, confirma a sua conta no email',
+				});
+			}
+			if (data === 'user not found') {
+				this.setState({
+					error: 'E-mail e/ ou senha incorreta',
+				});
+			}
 		}
 	}
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
+		const { password } = this.state;
 
-		this.userLogin();
+		if (password.length < 6) {
+			this.setState({
+				error: 'E-mail e/ ou senha incorreta',
+			});
+		}
+
+		if (password.length >= 6) {
+			this.userLogin();
+		}
 	}
 
 	handleChangeEmail = (ev) => {
 		this.setState({
 			email: ev.target.value,
-			error: false,
+			error: '',
 		});
 	};
 
 	handleChangePassword = (ev) => {
 		this.setState({
 			password: ev.target.value,
-			error: false,
+			error: '',
 		});
 	}
 
@@ -267,6 +283,7 @@ class LoginScreen extends Component {
 		const {
 			email, type, error, password, redirect,
 		} = this.state;
+
 		return (
 			<ContainerForm>
 				<Form onSubmit={this.handleSubmit}>
@@ -306,7 +323,7 @@ class LoginScreen extends Component {
 							/>
 						</span>
 					</InputBox>
-					{error && <Error>E-mail e/ ou senha incorreta</Error>}
+					{error && <Error>{this.state.error}</Error>}
 					<Button
 						width='70%'
 						widthMobile='80%'
