@@ -127,8 +127,8 @@ const ParagraphUserName = styled.p`
 		font-size: 1rem;
 	}
 
-	@media (max-width: 648px) {
-		font-size: 1.2rem;
+	@media (max-width: 490px) {
+		font-size: 0.9rem;
 	}
 `;
 

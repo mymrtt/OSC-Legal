@@ -103,7 +103,7 @@ const TextTerms = styled.p`
 const TextTermsBold = styled.strong`
 	margin-left: 0.5rem;
 	text-decoration: underline;
-	cursor: pointer;
+	/* cursor: pointer; */
 `;
 
 const CreateUserSucessScreen = props => (
