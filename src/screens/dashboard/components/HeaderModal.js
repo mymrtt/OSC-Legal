@@ -7,9 +7,15 @@ import { connect } from 'react-redux';
 // Images
 import logo from '../../../assets/logo.svg';
 
+import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
+
 // Redux
 const mapStateToProps = state => ({
 	user: state.onboarding.user,
+});
+
+const mapDispatchToProps = dispatch => ({
+	saveUserData: info => dispatch(saveUserData(info)),
 });
 
 const Container = styled.div`
@@ -74,6 +80,24 @@ class HeaderModal extends Component {
 		redirect: false,
 	}
 
+	componentDidMount() {
+		this.getUser();
+	}
+
+	getUser = async () => {
+		try {
+			let user = await localStorage.getItem('user');
+			user = JSON.parse(user);
+
+			this.props.saveUserData({
+				...user,
+				isAdmin: user.isAdmin === 1,
+			});
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	handleRedirect = () => {
 		this.setState({ redirect: true });
 	}
@@ -85,7 +109,7 @@ class HeaderModal extends Component {
 				<Logo src={logo} alt="Logo OSC Legal" />
 				<ContainerUser>
 					<ParagraphUserName>
-						{user.isAdmin === 1 ? 'Administrador' : user.name}
+						{user.isAdmin ? 'Administrador' : user.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleRedirect}>
 						sair
@@ -97,4 +121,4 @@ class HeaderModal extends Component {
 	}
 }
 
-export default connect(mapStateToProps, null)(HeaderModal);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderModal);
