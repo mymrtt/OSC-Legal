@@ -775,7 +775,7 @@ class OrganizationScreen extends Component {
 			});
 			this.getOrgs();
 		} catch (error) {
-			console.log('error', error);
+			// console.log('error', error);
 		}
 	}
 
