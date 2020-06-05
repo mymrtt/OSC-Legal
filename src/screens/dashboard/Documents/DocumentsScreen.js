@@ -33,7 +33,12 @@ import { addNewDocument, deleteDocument } from '../../../dataflow/modules/docume
 
 // Api
 import {
-	createTemplate, getAllTemplates, deleteTemplate, getAllOrganizations, createDocument,
+	createTemplate,
+	getAllTemplates,
+	deleteTemplate,
+	getAllOrganizations,
+	getAllDocuments,
+	createDocument,
 } from '../../../services/api';
 
 const mapStateToProps = state => ({
@@ -1177,6 +1182,7 @@ class DocumentsScreen extends Component {
 	componentDidMount() {
 		this.renderTemplate();
 		this.getAllOrgs();
+		this.getAllDocuments();
 		this.renderMobileButton();
 	}
 
@@ -1189,7 +1195,6 @@ class DocumentsScreen extends Component {
 
 			const response = await getAllOrganizations(userID, token);
 
-			console.log('response', response.data);
 			this.setState({
 				organizationUser: response.data,
 			});
@@ -1198,15 +1203,18 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	createDoc = async () => {
+	getAllDocuments = async () => {
 		try {
 			const token = await localStorage.getItem('token');
 
-			const response = await createDocument(token);
-			console.log('response', response);
-
+			const response = await getAllDocuments(token);
+			console.log('response documents', response.data);
+			this.setState({
+				allDocuments: response.data,
+			});
 		} catch (error) {
-			console.log('error', error.response);
+			console.log('erro', error);
+			console.log('erro.response', error.response);
 		}
 	}
 
@@ -1215,7 +1223,6 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
-
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1228,6 +1235,7 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await deleteTemplate(templateId, token);
+			console.log('response delete', response);
 
 			this.setState({
 				templateList: response.data,
@@ -1238,6 +1246,7 @@ class DocumentsScreen extends Component {
 			console.log('error', error.response);
 		}
 	}
+
 	renderTemplate = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1754,7 +1763,7 @@ class DocumentsScreen extends Component {
 						<Button
 							width="20.25rem"
 							height="3.5rem"
-							text="Adicionar"
+							text="Adicionar UM"
 							type="submit"
 							widthMobileSmall="100%"
 							onClick={this.handleSubmit}
@@ -1794,7 +1803,7 @@ class DocumentsScreen extends Component {
 						onClick={() => this.delete()}
 						width="50%"
 						height="3.5rem"
-						text="Confirmar"
+						text="Confirmar Um"
 						fontSize="1.2rem"
 					/>
 				</ButtonsModal>
@@ -1894,7 +1903,7 @@ class DocumentsScreen extends Component {
 									}
 									onClick={() => this.handleSelected(doc)}
 								>
-									<p>Excluir</p>
+									<p>Excluir um</p>
 								</OptionText>
 							</Option>
 						</ContainerOptions>
@@ -1990,7 +1999,7 @@ class DocumentsScreen extends Component {
 									? this.state.colorTextDelete : '#85144B'}
 								onClick={() => this.userSelectedDoc(doc, index)}
 							>
-								<p>Excluir</p>
+								<p>Excluir Dois</p>
 							</OptionText>
 						</Option>
 					</ContainerOptions>

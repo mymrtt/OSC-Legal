@@ -39,7 +39,7 @@ export const resetPassword = email => axios({
 });
 
 export const createNewPassword = (token, newPassword) => axios({
-	//Testar
+	//Testar ainda
 	url: `${API_URL}/auth/recovery`,
 	method: 'post',
 	headers: {
@@ -105,16 +105,6 @@ export const getAllDocuments = token => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
-
-export const getDocument = (docs, token) => axios({
-	url: `${API_URL}/documents`,
-	method: 'get',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-	data: docs,
-});
-
 // Document
 
 // Template (Document - Admin)
