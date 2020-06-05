@@ -181,6 +181,7 @@ class Header extends Component {
 
 	render() {
 		const { user } = this.props;
+		console.log('user', user)
 		return (
 			<Container border={user.isAdmin}>
 				<NavLink exact to="/organizations">
