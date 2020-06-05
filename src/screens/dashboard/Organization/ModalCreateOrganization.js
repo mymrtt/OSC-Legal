@@ -198,7 +198,7 @@ const ContainerConcludeButton = styled.span`
 	width: 100%;
 	padding-left: 3rem;
 	padding-right: 3rem;
-	margin-top: 2rem;
+	margin-top: 1.5rem;
 	/* padding-bottom: 1.5rem; */
 
 	@media(max-width: 648px) {
@@ -248,6 +248,7 @@ const ErrorAllMessage = styled.p`
   font-weight: 400;
 	font-family: Overpass, Regular;
 	text-align: center;
+	margin-bottom: 0.5rem;
 
   @media (max-width: 648px) {
     margin: 0.5rem 0 0.8rem 0;
