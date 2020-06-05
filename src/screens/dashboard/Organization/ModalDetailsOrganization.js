@@ -385,16 +385,8 @@ class ModalDetailsOrganization extends Component {
 					desc: 'Autorizar',
 				},
 				{
-					img: payIcon,
-					desc: 'Pago',
-				},
-				{
 					img: freeIcon,
 					desc: 'Isento',
-				},
-				{
-					img: extendDeadlineIcon,
-					desc: 'Prorrogar',
 				},
 			],
 		};
@@ -548,19 +540,20 @@ class ModalDetailsOrganization extends Component {
 					</Content>
 					<ContainerSelected>
 						{this.props.isAdmin
-							?	this.state.paymentMethodList.map(item => (
-								<ContainerPaymentMethod
-									key={item.desc}
-									border={this.state.selectedStatus === item.desc}
-									onClick={() => this.handleClicked(item)}
-								>
-									<img src={item.img} alt={item.desc} />
-									<PaymentMethodText
-										color={this.state.selectedStatus === item.desc}
-									>
-										{item.desc}
-									</PaymentMethodText>
-								</ContainerPaymentMethod>))
+							?	null
+							// this.state.paymentMethodList.map(item => (
+							// 	<ContainerPaymentMethod
+							// 		key={item.desc}
+							// 		border={this.state.selectedStatus === item.desc}
+							// 		onClick={() => this.handleClicked(item)}
+							// 	>
+							// 		<img src={item.img} alt={item.desc} />
+							// 		<PaymentMethodText
+							// 			color={this.state.selectedStatus === item.desc}
+							// 		>
+							// 			{item.desc}
+							// 		</PaymentMethodText>
+							// 	</ContainerPaymentMethod>))
 							: <ContainerEditImage>
 								<SpanContainerImage onClick={() => this.props.isModalCreateOrganization('edit')}>
 									<ImageEdite src={ImageEdit} />

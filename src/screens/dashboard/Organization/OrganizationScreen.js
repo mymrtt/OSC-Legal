@@ -770,7 +770,7 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 0,
+				isAdmin: user.isAdmin === 1,
 			});
 			this.getOrgs();
 		} catch (error) {
@@ -788,9 +788,11 @@ class OrganizationScreen extends Component {
 	}
 
 	isModalOpen = (item) => {
+		console.log('lkjlkjlkj')
 		this.setState({
 			itemSelected: item,
 			isModal: !this.state.isModal,
+			filter: '',
 		});
 	}
 
@@ -847,8 +849,9 @@ class OrganizationScreen extends Component {
 		try {
 			const org = {
 				...this.state.itemSelected,
-				deletedAt: true,
+				deletedAt: 0,
 			};
+
 			await removeOrg(org);
 
 			this.props.deleteOrg(this.state.itemSelected);
@@ -982,6 +985,7 @@ class OrganizationScreen extends Component {
 						<Input
 							onChange={this.handleChangeFilter}
 							onKeyUp={this.handleChangeFilterKey}
+							value={this.state.filter}
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
@@ -1034,6 +1038,7 @@ class OrganizationScreen extends Component {
 									src={status.img}
 									alt={status.desc}
 									onClick={() => this.handleSelectedStatus(status, item)}
+									//blabla
 								/>
 							))}
 						</Box>
@@ -1187,7 +1192,7 @@ class OrganizationScreen extends Component {
 							onClick={() => this.isModalOpen(item)}
 						>
 							{this.handleDateExpired(item.createdIn)}
-							{item.dueDate}
+							{item.dueDate} blabla
 						</TableList>
 					</>
 				}
@@ -1261,7 +1266,7 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		console.log('this.props.tableDatas', this.props.tableDatas);
+		console.log('this.props.filter', this.state.filter);
 		const { isAdmin, tableDatas } = this.props;
 		const {
 			isSelected,
