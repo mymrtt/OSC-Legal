@@ -46,7 +46,7 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	password: state.onboarding.users.password,
 	name: state.onboarding.users.name,
-	isAdmin: state.onboarding.users.isAdmin,
+	isAdmin: state.onboarding.user.isAdmin,
 	organization: state.organization.tableDatas,
 });
 
@@ -1186,7 +1186,6 @@ class DocumentsScreen extends Component {
 		this.renderMobileButton();
 	}
 
-
 	getAllOrgs = async () => {
 		try {
 			const token = await localStorage.getItem('token');
@@ -1223,7 +1222,6 @@ class DocumentsScreen extends Component {
 	createTemplate = async (templateData) => {
 		try {
 			const token = await localStorage.getItem('token');
-			console.log('templateData', templateData);
 
 			const response = await createTemplate(templateData, token);
 
@@ -1287,13 +1285,15 @@ class DocumentsScreen extends Component {
 			};
 			console.log(docs);
 
-			const token = await localStorage.getItem('token');
+			console.log('this.state.isSelected.template', this.state.isSelected)
 
-			const response = await createDocument(docs, token);
+			// const token = await localStorage.getItem('token');
 
-			console.log('response', response);
+			// const response = await createDocument(docs, token);
+
+			// console.log('response', response);
 		} catch (error) {
-			console.log('erro', error);
+			console.log('erro', error.response);
 		}
 	}
 
@@ -1537,7 +1537,7 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	handleErrors = () => {
+	handleErrors = async () => {
 		const { templateName, description } = this.state.templateData;
 		const { template } = this.state;
 
@@ -1598,10 +1598,10 @@ class DocumentsScreen extends Component {
 		}
 		if (templateName !== '' && templateName.length >= 4 && description !== '' && description.length <= 250 && template !== null) {
 			const templateData = { description, template, templateName };
-			this.props.addNewDocument(templateData);
 
-			//Criando tamplate do usuário
-			this.createTemplate(templateData);
+			//Criando tamplate admin
+			await this.createTemplate(templateData);
+			this.props.addNewDocument(templateData);
 
 			this.setState({
 				templateData: {},
@@ -1864,6 +1864,7 @@ class DocumentsScreen extends Component {
 			? this.state.templateList.filter(model => model.templateName.match(new RegExp(this.state.search, 'i')))
 			: this.state.templateList;
 		// MAP DOCUMENTS ADM
+		console.log('templateList', templateList)
 		return (
 			templateList && templateList.length > 0 ? (
 				templateList.map((doc, index) => (
@@ -2041,6 +2042,7 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
+		console.log('templateList', this.state.templateList)
 		const { isAdmin } = this.props;
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
