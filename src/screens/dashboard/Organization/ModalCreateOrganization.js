@@ -677,6 +677,7 @@ class ModalCreateOrganization extends Component {
 													value={this.state.addressComplement}
 													name="addressComplement"
 													isError={isAddressComplementError}
+													required
 												/>
 												{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
 											</WrapOrganizationItem>
