@@ -1291,7 +1291,7 @@ class DocumentsScreen extends Component {
 		isErrorDocClear: false,
 		templateList: [],
 		organizationUser: [],
-		isEdit: false,
+		isEdit: true,
 	};
 
 	componentDidMount() {
@@ -1334,7 +1334,7 @@ class DocumentsScreen extends Component {
 
 			const response = await createTemplate(templateData, token);
 
-			console.log('reponse', response)
+			console.log('reponse', response);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -1361,10 +1361,10 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await getAllTemplates(token);
-
 			this.setState({
 				templateList: response.data,
 			});
+			
 		} catch (error) {
 			console.log('error', error.response);
 		}

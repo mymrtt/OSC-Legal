@@ -3,13 +3,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import TextareaAutosize from 'react-autosize-textarea';
+import '../../../index.css';
 
 // Images
 import Logo from '../../../assets/logo.svg';
 import DownloadIcon from '../../../assets/download.svg';
 import SaveIcon from '../../../assets/save.svg';
 import PrintIcon from '../../../assets/print.svg';
-import Documento from './files/doc2.pdf';
+import Doc2 from './files/doc2.pdf';
 
 // Styled
 const Container = styled.div`
@@ -58,6 +59,7 @@ const BoxDoc = styled.div`
 	display: flex;
 	justify-content: center;
 	padding: 1rem;
+	position: relative;
 	box-shadow: 0 3px 6px #00000029;
 `;
 
@@ -116,12 +118,12 @@ class Editor extends Component {
 
 	componentDidMount() {
 		this.handleDoc();
-		console.log(this.state.doc)
+		console.log(this.state.doc);
 	}
 
 	handleDoc = () => {
 		this.setState({
-			doc: Documento,
+			doc: Doc2,
 		});
 	} 
 
@@ -152,9 +154,8 @@ class Editor extends Component {
 						{/* Conteudo doc
 						<p>Meu nome é
 							<TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> tenho <TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> anos, sou portar do RG <TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> e CPF <TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> </p> */}
-						<iframe src={this.state.doc} width="100%" height="100%">
-							<TextareaAutosize style={{backgroundColor: '#c1c0c0'}} />
-							</iframe>
+						<iframe src={this.state.doc} width="100%" height="100%"/>
+							<TextareaAutosize class="text-editor" />
 					</BoxDoc>
 				</Content>
 			</Container>
