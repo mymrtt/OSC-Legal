@@ -375,17 +375,21 @@ class CreateUserScreen extends Component {
 			delete user.password;
 
 			await createUserAccount(user, base64credentials);
+			this.handleModalSucess();
 		} catch (error) {
 			console.log('err', error);
 			console.log('err.response', error.response);
-
-			if (error.response) {
-				this.setState({
-					errorEmailExisting: true,
-					emailErrorText: error.response.data.errors[0].message,
-					modalSucess: false,
-				});
-			}
+			this.setState({
+				errorEmailExisting: true,
+				emailErrorText: error.response.data.errors[0].message,
+				modalSucess: false,
+				user: {
+					password: '',
+					name: '',
+					telephone: '',
+					cpf: '',
+				},
+			});
 		}
 	}
 
@@ -402,7 +406,7 @@ class CreateUserScreen extends Component {
 		});
 	};
 
-	closeModalTerms = ev => {
+	closeModalTerms = (ev) => {
 		ev.stopPropagation();
 		this.setState({
 			isTermsOpen: false,
@@ -467,6 +471,7 @@ class CreateUserScreen extends Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
+		console.log('objeto user', this.state.user);
 		this.handleErrors();
 	};
 
@@ -530,16 +535,13 @@ class CreateUserScreen extends Component {
 				isErrorTel: false,
 			});
 		}
-		if (this.state.errorEmailExisting === true) {
-			this.setState({
-				modalSucess: false,
-			});
-		}
 
-		if (this.state.errorEmailExisting === false && telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
+		console.log('senha', password);
+		console.log('telephone', telephone);
+
+		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
 			this.props.addNewUser(user);
 			this.userRegister(user);
-			this.handleModalSucess();
 		}
 	};
 
@@ -583,6 +585,8 @@ class CreateUserScreen extends Component {
 			'Insira um nome válido.',
 		];
 
+		// console.log('USER', this.state.user);
+
 		const {
 			user,
 			isErrorPassword,
@@ -612,7 +616,7 @@ class CreateUserScreen extends Component {
 					</Container>
 				) : (
 					<Container>
-						<Form onSubmit={this.handleSubmit}>
+						<Form onClick={this.handleSubmit}>
 							<ImageLogo
 								margin="3rem 0 2rem 0"
 								// marginMobile="15rem 0 2rem 0"
