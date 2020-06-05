@@ -11,7 +11,6 @@ import jwt from 'jsonwebtoken';
 import Header from '../components/Header';
 import Button from '../../../components/Button';
 import HeaderModal from '../components/HeaderModal';
-import Editor from './Editor';
 
 // Images
 import DocumentUser from '../../../assets/document-user.svg';
@@ -1176,7 +1175,6 @@ class DocumentsScreen extends Component {
 		isErrorDocClear: false,
 		templateList: [],
 		organizationUser: [],
-		isEdit: true,
 	};
 
 	componentDidMount() {
@@ -1207,16 +1205,13 @@ class DocumentsScreen extends Component {
 		try {
 			const token = await localStorage.getItem('token');
 
-<<<<<<< HEAD
-			const response = await createDocument(token);
+			// const response = await createDocument(token);
 			console.log('response', response);
-=======
 			const response = await getAllDocuments(token);
 			console.log('response documents', response.data);
 			this.setState({
 				allDocuments: response.data,
 			});
->>>>>>> 35e85cc55f8f5aca1a1a3cffdf472dee57d2757a
 		} catch (error) {
 			console.log('erro', error);
 			console.log('erro.response', error.response);
@@ -1228,11 +1223,8 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
-<<<<<<< HEAD
 
 			console.log('reponse', response);
-=======
->>>>>>> 35e85cc55f8f5aca1a1a3cffdf472dee57d2757a
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -1240,7 +1232,7 @@ class DocumentsScreen extends Component {
 
 	deleteTemplate = async () => {
 		try {
-			const { templateId } = this.state.modelSelect;
+			const templateId  = this.state.modelSelect;
 
 			const token = await localStorage.getItem('token');
 
@@ -1668,17 +1660,6 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	openEditor = () => {
-		this.setState({
-			isEdit: true,
-		});
-	}
-
-	closeEditor = () => {
-		this.setState({
-			isEdit: false,
-		});
-	}
 
 	renderModalModels = () => {
 		const Messages = [
@@ -2163,7 +2144,6 @@ class DocumentsScreen extends Component {
 													/>
 												) : (
 													null))}
-										{this.state.isEdit && <Editor closeEditor={this.closeEditor} isEdit={this.state.isEdit}/>}
 										{this.state.addModel && this.renderModalModels()}
 										{this.state.modalDelete && this.renderModalDelete()}
 										{this.state.modalListDoc && this.renderModalListDoc()}
