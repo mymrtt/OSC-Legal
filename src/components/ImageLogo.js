@@ -9,7 +9,7 @@ const LogoImage = styled.img`
   width: ${props => props.width};
   margin: ${props => props.margin};
 	height: ${props => props.height};
-	cursor: pointer;
+	/* cursor: pointer; */
 
 	@media(max-width: 768px){
 		margin: ${props => props.marginMobile};
@@ -18,7 +18,7 @@ const LogoImage = styled.img`
 	@media(max-width: 648px) {
 		height: ${props => props.heightMobile};
 		padding-top: ${props => props.paddingMobile};
-		margin: ${props => props.marginMobile};
+		margin: ${props => props.marginMobileSmall};
 		display: ${props => props.displayMobile};
 	}
 `;
@@ -33,6 +33,7 @@ const ImageLogo = props => (
 		paddingMobile={props.paddingMobile}
 		margin={props.margin}
 		marginMobile={props.marginMobile}
+		marginMobileSmall={props.marginMobileSmall}
 		onClick={props.onClick}
 	/>
 );
