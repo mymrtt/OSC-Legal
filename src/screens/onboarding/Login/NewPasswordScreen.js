@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
+import jwt from 'jsonwebtoken';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -12,12 +13,7 @@ import Button from '../../../components/Button';
 
 // Redux
 import { addNewUser, isResetPassword } from '../../../dataflow/modules/onboarding-modules';
-import { resetPassword } from '../../../services/api';
-
-const mapStateToProps = state => ({
-	onboarding: state.onboarding,
-	emailReset: state.onboarding.emailReset,
-});
+import { createNewPassword } from '../../../services/api';
 
 const mapDispatchToProps = dispatch => ({
 	addNewUser: (newPassword) => {
@@ -138,7 +134,7 @@ class NewPasswordScreen extends Component {
 			repetPasswordError: false,
 			redirect: false,
 		};
-	}resetPassword
+	}
 
 	componentDidMount() {
 		const { search } = this.props.location;
@@ -184,14 +180,15 @@ class NewPasswordScreen extends Component {
 
 	handleNewPassword = async () => {
 		try {
-			const {token, newPassword, repeatPassword} = this.state;
-			const { emailReset } = this.props;
+			const { token, newPassword } = this.state;
+			const userEmail = await jwt.decode(token);
 
-			// await newPassword(token, newPassword);
-			this.props.addNewUser({ email: emailReset, password: newPassword });
-			this.props.isResetPassword(true);
+			// fazer o hast antes do post
+			// await createNewPassword(token, newPassword);
+			await this.props.addNewUser({ email: userEmail.email, password: newPassword });
+			await this.props.isResetPassword(true);
 			this.setState({ redirect: true });
-		} catch(error) {
+		} catch (error) {
 			console.log('error', error);
 			console.log('error.response', error.response);
 		}
@@ -256,7 +253,7 @@ class NewPasswordScreen extends Component {
 						textTransform
 					/>
 					<BackLogin>
-						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
+						<ButtonText to={'/resetpassword'}>reenviar e-mail</ButtonText>
 					</BackLogin>
 				</Form>
 				{redirect && <Redirect to={'/'} />}
@@ -265,4 +262,4 @@ class NewPasswordScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
+export default connect(null, mapDispatchToProps)(NewPasswordScreen);

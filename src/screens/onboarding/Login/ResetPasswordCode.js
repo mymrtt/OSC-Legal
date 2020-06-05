@@ -18,31 +18,34 @@ const Container = styled.div`
   height: 100vh;
   background-color: #FFCFCD;
   display: flex;
-	justify-content: center;
+	/* justify-content: center; */
   align-items: center;
   flex-direction: column;
   margin: 0;
 
   @media (max-width: 648px) {
-		padding: 1rem;
-		background-color: #fff;
+		background-color: #FFFFFF;
 		justify-content: center;
 	}
 `;
 
 const Content = styled.div`
-	padding: 1rem;
-	height: 25vh;
-  background-color: #fff;
+	width: 32%;
+	height: 38vh;
+  background-color: #FFFFFF;
   border-radius: 5px;
+	padding: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
 
-
 	@media (max-width: 1030px) {
-    width: 50%
+    width: 39%
+	}
+
+	@media (max-width: 768px) {
+    width: 52%;
 	}
 
 	@media (max-width: 648px) {
@@ -65,8 +68,9 @@ const ContainerParagraph = styled.span`
 `;
 
 const Paragraph = styled.span`
-  font-size: 0.8rem;
+  font-size: .9rem;
   font-family: Overpass, Regular;
+	margin-bottom: 1.5rem;
 `;
 
 class ResetPasswordCode extends Component {
@@ -83,7 +87,7 @@ class ResetPasswordCode extends Component {
 	render() {
 		return (
 			<Container>
-				<ImageLogo margin='3rem 0 2.5rem 0'/>
+				<ImageLogo margin='5rem 0 6rem 0' marginMobileSmall='0'/>
 				<Content>
 					<ContainerParagraph>
 						<Paragraph>Uma redefinição de senha foi enviada para o seu endereço de e-mail: { }
@@ -91,9 +95,8 @@ class ResetPasswordCode extends Component {
 						</Paragraph>
 					</ContainerParagraph>
 					<Button
-						width='75%'
+						width='80%'
 						widthMobile='100%'
-						marginMobile='3rem 0 2rem 0'
 						text="voltar para o login"
 						type="button"
 						textTransform

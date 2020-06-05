@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const API_URL = 'http://localhost:3333';
+export const token = localStorage.getItem('token');
 
 // Onboarding
 export const createUserAccount = (user, base64credentials) => axios({
@@ -21,7 +22,7 @@ export const login = (user, base64credentials) => axios({
 	data: user,
 });
 
-export const findUser = (id, token) => axios({
+export const findUser = id => axios({
 	url: `${API_URL}/users/${id}`,
 	method: 'get',
 	headers: {
@@ -37,19 +38,20 @@ export const resetPassword = email => axios({
 	},
 });
 
-export const newPassword = (token, newPassword) => axios({
-	// url: `${API_URL}/auth/recovery`,
-	// method: 'post',
-	// headers: {
-	// 	Authorization: `Bearer ${token}`,
-	// },
-	// data: newPassword,
+export const createNewPassword = (token, newPassword) => axios({
+	//Testar
+	url: `${API_URL}/auth/recovery`,
+	method: 'post',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: newPassword,
 });
 
 // Onboarding
 
 // Organization
-export const createOrganization = (org, token) => axios({
+export const createOrganization = org => axios({
 	url: `${API_URL}/organizations`,
 	method: 'post',
 	headers: {
@@ -58,7 +60,7 @@ export const createOrganization = (org, token) => axios({
 	data: org,
 });
 
-export const removeOrg = (org, token) => axios({
+export const removeOrg = org => axios({
 	url: `${API_URL}/organizations`,
 	method: 'patch',
 	headers: {
@@ -67,7 +69,7 @@ export const removeOrg = (org, token) => axios({
 	data: org,
 });
 
-export const getAllOrganizations = (userId, token) => axios({
+export const getAllOrganizations = userId => axios({
 	url: `${API_URL}/users/${userId}/organizations`,
 	method: 'get',
 	headers: {
@@ -75,7 +77,7 @@ export const getAllOrganizations = (userId, token) => axios({
 	},
 });
 
-export const patchOrg = (org, token) => axios({
+export const patchOrg = org => axios({
 	url: `${API_URL}/organizations`,
 	method: 'patch',
 	headers: {
@@ -116,7 +118,7 @@ export const getDocument = (docs, token) => axios({
 // Document
 
 // Template (Document - Admin)
-export const createTemplate = (templateData, token) => axios({
+export const createTemplate = templateData => axios({
 	url: `${API_URL}/templates`,
 	method: 'post',
 	headers: {
@@ -125,7 +127,7 @@ export const createTemplate = (templateData, token) => axios({
 	data: templateData,
 });
 
-export const getAllTemplates = token => axios({
+export const getAllTemplates = () => axios({
 	url: `${API_URL}/templates`,
 	method: 'get',
 	headers: {
@@ -133,7 +135,7 @@ export const getAllTemplates = token => axios({
 	},
 });
 
-export const deleteTemplate = (templateId, token) => axios({
+export const deleteTemplate = templateId => axios({
 	url: `${API_URL}/templates/${templateId}`,
 	method: 'delete',
 	headers: {

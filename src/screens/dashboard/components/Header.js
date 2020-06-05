@@ -41,7 +41,7 @@ const Container = styled.div`
 
 const WrapButton = styled.div`
 	/* width: 48%; */
-	width: ${props => (props.width ? '48%' : '60%')};
+	width: ${props => (props.width ? '48%' : '50%')};
 	height: 5.3rem;
 	display: flex;
 	justify-content: flex-start;
@@ -61,7 +61,7 @@ const WrapButton = styled.div`
 	}
 
 	@media (max-width: 1024px) {
-		width: ${props => (props.width ? '48%' : '55%')};
+		width: ${props => (props.width ? '48%' : '48%')};
 	}
 
 	@media(max-width: 768px){
@@ -157,7 +157,7 @@ class Header extends Component {
 	render() {
 		const { user } = this.props;
 		return (
-			<Container border={user.isAdmin === 1}>
+			<Container border={user.isAdmin}>
 				<NavLink exact to="/organizations">
 					<ImageLogo
 						margin={'0 0 0 3rem'}
@@ -166,7 +166,7 @@ class Header extends Component {
 						height='2.8rem'
 					/>
 				</NavLink>
-				<WrapButton width={user.isAdmin === 1}>
+				<WrapButton width={user.isAdmin}>
 					<NavLink
 						exact to="/organizations"
 						activeClassName="button-header-dash"
@@ -180,9 +180,9 @@ class Header extends Component {
 						Documentos
 					</NavLink>
 				</WrapButton>
-				<ContainerUser isAdmin={user.isAdmin === 1}>
+				<ContainerUser isAdmin={user.isAdmin}>
 					<ParagraphUserName>
-						{user.isAdmin !== 0 ? 'Administrador' : user.name}
+						{user.isAdmin ? 'Administrador' : user.name}
 					</ParagraphUserName>
 					<ParagraphSair onClick={this.handleLogout}>
 						sair
