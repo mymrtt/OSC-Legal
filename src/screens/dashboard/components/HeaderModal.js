@@ -31,8 +31,9 @@ const Container = styled.div`
 `;
 
 const Logo = styled.img`
-	padding-top: 0.5rem;
 	width: 10rem;
+	padding-top: 0.5rem;
+	padding-left: 2rem;
 `;
 
 const ContainerUser = styled.div`
@@ -51,7 +52,6 @@ const ContainerUser = styled.div`
 const ParagraphUserName = styled.p`
 	@media (max-width: 648px) {
 		margin-right: 1.7rem;
-		font-size: 1.25rem;
 		font-family: "Overpass", Light;
 		font-size: 1.2rem;
 	}

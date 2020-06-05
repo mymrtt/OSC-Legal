@@ -107,7 +107,7 @@ const TextTerms = styled.p`
 const TextTermsBold = styled.strong`
 	margin-left: 0.5rem;
 	text-decoration: underline;
-	cursor: pointer;
+	/* cursor: pointer; */
 `;
 
 class CreateUserSucessScreen extends Component {

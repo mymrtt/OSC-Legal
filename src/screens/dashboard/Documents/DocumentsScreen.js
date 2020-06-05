@@ -607,6 +607,7 @@ const Option = styled.button`
 `;
 
 const OptionImage = styled.img`
+	margin-bottom: 0.5rem;
 `;
 
 const OptionText = styled.span`
@@ -754,7 +755,7 @@ const UploadFile = styled.label`
 `;
 
 const TextUploadFile = styled.div`
-	width: 34%;
+	width: 36%;
 	display: flex;
 	flex-direction: column;
 	margin-left: 1rem;
@@ -809,7 +810,7 @@ const TextArea = styled.textarea`
 	height: 150px;
 	border-radius: 3px;
 	padding: 3% 2.5%;
-	margin-bottom: .5rem;
+	/* margin-bottom: .5rem; */
 	border: ${props => (props.isError === true ? '2px solid #F00' : '1px solid #FFCFCD')};
 	background: #FAFAFA;
 	font-size: 1rem;
@@ -1892,7 +1893,7 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorExport(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
 							>
-								<OptionImage
+								<img
 									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Exportar" />
 								<OptionText
@@ -1975,7 +1976,7 @@ class DocumentsScreen extends Component {
 							onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveExport}
 						>
-							<OptionImage
+							<img
 								src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
 								alt="Exportar" />
 							<OptionText
