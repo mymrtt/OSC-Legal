@@ -37,6 +37,17 @@ export const resetPassword = email => axios({
 		'x-osclegal-email': email,
 	},
 });
+
+export const createNewPassword = (token, newPassword) => axios({
+	//Testar ainda
+	url: `${API_URL}/auth/recovery`,
+	method: 'post',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+	data: newPassword,
+});
+
 // Onboarding
 
 // Organization
@@ -78,8 +89,7 @@ export const patchOrg = org => axios({
 // Organization
 
 // Document
-export const createDocument = docs => axios({
-
+export const createDocument = (docs, token) => axios({
 	url: `${API_URL}/documents`,
 	method: 'post',
 	headers: {
@@ -88,6 +98,13 @@ export const createDocument = docs => axios({
 	data: docs,
 });
 
+export const getAllDocuments = token => axios({
+	url: `${API_URL}/documents`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 // Document
 
 // Template (Document - Admin)

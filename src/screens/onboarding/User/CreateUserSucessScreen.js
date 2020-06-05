@@ -7,9 +7,13 @@ import { Link } from 'react-router-dom';
 // Components
 import ImageLogo from '../../../components/ImageLogo';
 import Button from '../../../components/Button';
+import OscHash from '../../../services/OscHash';
 
 // Images
 import sucessImage from '../../../assets/sucess.svg';
+
+// Api
+import { createUserAccount } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	onboarding: state.onboarding,
@@ -106,33 +110,58 @@ const TextTermsBold = styled.strong`
 	/* cursor: pointer; */
 `;
 
-const CreateUserSucessScreen = props => (
-	<Container>
-		<ImageLogo margin='5rem 0 3.5rem 0' displayMobile='none'/>
-		<Content>
-			<TitleTerms>Cadastro concluído com sucesso!</TitleTerms>
-			<SucessImage src={sucessImage} alt="sucess image" />
-			<TextTerms>
-      Enviamos um e-mail de confirmação para
-				<TextTermsBold>
-					{props.onboarding.users.email ? props.onboarding.users.email : 'nome@email.com'}
-				</TextTermsBold>. Verifique sua caixa de entrada para prosseguir.
-			</TextTerms>
-			<TextTerms>
-      Caso não tenha recebido a confirmação, clique em
-				<TextTermsBold>Reenviar e-mail.</TextTermsBold>
-			</TextTerms>
-			<Link to="/">
-				<Button
-					width="85%"
-					height="3.8rem"
-					margin="2rem 0 1.5rem"
-					text="fazer login"
-					textTransform
-				/>
-			</Link>
-		</Content>
-	</Container>
-);
+const CreateUserSucessScreen = (props) => {
+	const userRegister = async () => {
+		try {
+			const { users } = props.onboarding;
+
+			const encodedPassword = OscHash(users.password);
+
+			const credentials = `${users.email}:${encodedPassword}`;
+
+			const base64credentials = Buffer.from(credentials, 'utf-8').toString(
+				'base64',
+			);
+
+			delete users.email;
+			delete users.password;
+
+			await createUserAccount(users, base64credentials);
+		} catch (error) {
+			console.log('err', error);
+			console.log('err.response', error.response);
+		}
+	};
+
+	return (
+		<Container>
+			<ImageLogo margin='5rem 0 3.5rem 0' displayMobile='none'/>
+			<Content>
+				<TitleTerms>Cadastro concluído com sucesso!</TitleTerms>
+				<SucessImage src={sucessImage} alt="sucess image" />
+				<TextTerms>
+					Enviamos um e-mail de confirmação para
+					<TextTermsBold>
+						{props.onboarding.users.email ? props.onboarding.users.email : 'nome@email.com'}
+					</TextTermsBold>. Verifique sua caixa de entrada para prosseguir.
+				</TextTerms>
+				<TextTerms>
+				Caso não tenha recebido a confirmação, clique em
+					<TextTermsBold onClick={userRegister}>Reenviar e-mail.</TextTermsBold>
+				</TextTerms>
+				<Link to="/">
+					<Button
+						width="85%"
+						height="3.8rem"
+						margin="2rem 0 1.5rem"
+						text="fazer login"
+						textTransform
+					/>
+				</Link>
+			</Content>
+		</Container>
+
+	);
+};
 
 export default connect(mapStateToProps)(CreateUserSucessScreen);
