@@ -335,7 +335,8 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	max-height: calc(100% - 89.8px);;
+	/* max-height: calc(100% - 89.8px); */
+	max-height: ${props => (props.maxHeight ? 'calc(100% - -41.2px)' : 'calc(100% - 89.8px)')};
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -774,7 +775,7 @@ class OrganizationScreen extends Component {
 			});
 			this.getOrgs();
 		} catch (error) {
-			console.log('error', error);
+			// console.log('error', error);
 		}
 	}
 
@@ -1107,8 +1108,9 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
-							style={{ paddingLeft: '.7rem' }}
+							style={{ paddingLeft: '.7rem'}}
 							width={'10rem'}
+
 						>
 							{item.tradingName}
 						</TableList>
@@ -1238,8 +1240,8 @@ class OrganizationScreen extends Component {
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
-				: item.tradingName.toLowerCase() === filter)));
+				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter.toLowerCase())).length
+				: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1261,7 +1263,6 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		console.log('this.props.tableDatas', this.props.tableDatas);
 		const { isAdmin, tableDatas } = this.props;
 		const {
 			isSelected,
