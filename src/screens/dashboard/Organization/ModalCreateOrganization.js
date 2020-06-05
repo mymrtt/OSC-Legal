@@ -290,7 +290,7 @@ class ModalCreateOrganization extends Component {
 		} catch (error) {
 			console.log('error', error.response);
 			this.setState({
-				error: error.response.data.errors[0].message,
+				error: error.response,
 			});
 		}
 	}
