@@ -89,7 +89,7 @@ const MaximumWidth = styled.div`
 	max-width: 1440px;
 	height: ${props => (props.isAdmin ? '100%' : 'calc(100vh - 0px - 5.8rem - 1.5rem)')};
 	display: flex;
-	background: #FFF;	
+	background: #FFF;
 	overflow-y: hidden;
 
 	@media(max-width: 768px){
@@ -1336,11 +1336,13 @@ class DocumentsScreen extends Component {
 			};
 			console.log(docs);
 
-			const token = await localStorage.getItem('token');
+			console.log('this.state.isSelected.template', this.state.isSelected)
 
-			const response = await createDocument(docs, token);
+			// const token = await localStorage.getItem('token');
 
-			console.log('response', response);
+			// const response = await createDocument(docs, token);
+
+			// console.log('response', response);
 		} catch (error) {
 			console.log('erro', error.response);
 		}
