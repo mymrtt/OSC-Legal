@@ -358,6 +358,7 @@ class CreateUserScreen extends Component {
 		isErrorTel: false,
 		isTermsOpen: false,
 		isErrorEmail: false,
+		errorEmailExisting: false,
 	};
 
 	userRegister = async (user) => {
@@ -377,6 +378,15 @@ class CreateUserScreen extends Component {
 		} catch (error) {
 			console.log('err', error);
 			console.log('err.response', error.response);
+
+			if (error.response) {
+				this.setState({
+					errorEmailExisting: true,
+					emailErrorText: error.response.data.errors[0].message,
+				});
+				console.log(this.state.errorEmailExisting);
+				console.log(this.state.emailErrorText);
+			}
 		}
 	}
 
@@ -395,7 +405,7 @@ class CreateUserScreen extends Component {
 
 	handleModalSucess = () => {
 		this.setState({
-			modalSucess: !this.state.modalSucess,
+			modalSucess: true,
 		});
 	};
 
@@ -511,6 +521,11 @@ class CreateUserScreen extends Component {
 				isErrorTel: false,
 			});
 		}
+		if (this.state.errorEmailExisting === true) {
+			this.setState({
+				modalSucess: false,
+			});
+		}
 
 		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
 			this.props.addNewUser(user);
@@ -558,6 +573,7 @@ class CreateUserScreen extends Component {
 			'E-mail incompleto.',
 			'Insira um nome válido.',
 		];
+
 		const {
 			user,
 			isErrorPassword,
@@ -673,6 +689,7 @@ class CreateUserScreen extends Component {
 									isError={isErrorPassword}
 									required
 								/>
+								{this.state.errorEmailExisting && <ErrorMessage>{this.state.emailErrorText}</ErrorMessage>}
 								{togglePassword === true ? (
 									<BlockSmallerInput>
 										<ImagePassword
