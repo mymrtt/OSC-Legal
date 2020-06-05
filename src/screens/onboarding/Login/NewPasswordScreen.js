@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
+import jwt from 'jsonwebtoken';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -11,11 +13,7 @@ import Button from '../../../components/Button';
 
 // Redux
 import { addNewUser, isResetPassword } from '../../../dataflow/modules/onboarding-modules';
-
-const mapStateToProps = state => ({
-	onboarding: state.onboarding,
-	emailReset: state.onboarding.emailReset,
-});
+import { createNewPassword } from '../../../services/api';
 
 const mapDispatchToProps = dispatch => ({
 	addNewUser: (newPassword) => {
@@ -86,20 +84,6 @@ const Title = styled.h1`
 	}
 `;
 
-const Paragraph = styled.p`
-	width: ${props => props.width};
-  color: #231F20;
-  font-family: Overpass, Regular;
-  margin-bottom: 1.5rem;
-	@media (max-width: 648px) {
-		margin-top: 1rem;
-	}
-	@media (max-width: 460px) {
-		font-size: 0.9rem;
-		width: 90%;
-	}
-`;
-
 const ErrorMessage = styled.h4`
   color: #D63434;
   display: flex;
@@ -152,6 +136,15 @@ class NewPasswordScreen extends Component {
 		};
 	}
 
+	componentDidMount() {
+		const { search } = this.props.location;
+		const parsed = queryString.parse(search);
+
+		this.setState({
+			token: parsed.token,
+		});
+	}
+
 	handleSubmit = (ev) => {
 		ev.preventDefault();
 		this.handleErrors();
@@ -159,7 +152,6 @@ class NewPasswordScreen extends Component {
 
 	handleErrors = () => {
 		const { newPassword, repeatPassword } = this.state;
-		const { emailReset } = this.props;
 
 		if (newPassword.length < 6) {
 			this.setState({
@@ -182,9 +174,23 @@ class NewPasswordScreen extends Component {
 		}
 
 		if (newPassword.length >= 6 && newPassword === repeatPassword) {
-			this.props.addNewUser({ email: emailReset, password: newPassword });
-			this.props.isResetPassword(true);
+			this.handleNewPassword();
+		}
+	}
+
+	handleNewPassword = async () => {
+		try {
+			const { token, newPassword } = this.state;
+			const userEmail = await jwt.decode(token);
+
+			// fazer o hast antes do post
+			// await createNewPassword(token, newPassword);
+			await this.props.addNewUser({ email: userEmail.email, password: newPassword });
+			await this.props.isResetPassword(true);
 			this.setState({ redirect: true });
+		} catch (error) {
+			console.log('error', error);
+			console.log('error.response', error.response);
 		}
 	}
 
@@ -202,7 +208,7 @@ class NewPasswordScreen extends Component {
 
 	render() {
 		const {
-			newPasswordError, repetPasswordError, redirect, newPassword, confirmationCode, repeatPassword,
+			newPasswordError, repetPasswordError, redirect, newPassword, repeatPassword,
 		} = this.state;
 
 		const errorMessages = [
@@ -216,18 +222,6 @@ class NewPasswordScreen extends Component {
 				<Form onSubmit={this.handleSubmit} withError={newPasswordError || repetPasswordError}>
 					<Span>
 						<Title>redefinição de senha</Title>
-						<Paragraph width='100%'>
-							Um código de confirmação foi enviado para {this.props.onboarding.emailReset ? this.props.onboarding.emailReset : ' nome@email.com'},
-							por favor, cole-o abaixo:
-						</Paragraph>
-						<Label>código de confirmação</Label>
-						<Input
-							login
-							value={confirmationCode}
-							type='text'
-							placeholder="Insira aqui o código"
-							required
-						/>
 						<Label>nova senha</Label>
 						<Input
 							login
@@ -259,7 +253,7 @@ class NewPasswordScreen extends Component {
 						textTransform
 					/>
 					<BackLogin>
-						<ButtonText to={'/resetcode'}>reenviar e-mail</ButtonText>
+						<ButtonText to={'/resetpassword'}>reenviar e-mail</ButtonText>
 					</BackLogin>
 				</Form>
 				{redirect && <Redirect to={'/'} />}
@@ -268,4 +262,4 @@ class NewPasswordScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPasswordScreen);
+export default connect(null, mapDispatchToProps)(NewPasswordScreen);
