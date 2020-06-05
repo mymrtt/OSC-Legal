@@ -1,67 +1,165 @@
-// import React, { useEffect, useRef } from 'react';
-// import WebViewer from '@pdftron/webviewer';
-// import styled from 'styled-components';
-// import Doc from './Templates/protocolo.docx';
+/* eslint-disable class-methods-use-this */
+// Libs
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import TextareaAutosize from 'react-autosize-textarea';
 
-// const Container = styled.div`
-//   width: 100%;
-//   height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   background: #999;
-// `;
+// Images
+import Logo from '../../../assets/logo.svg';
+import DownloadIcon from '../../../assets/download.svg';
+import SaveIcon from '../../../assets/save.svg';
+import PrintIcon from '../../../assets/print.svg';
+import Documento from './files/doc2.pdf';
 
-// const Header = styled.header`
-//   width: 100%;
-//   height: 60px;
-//   padding: 8px 8px 8px 16px;
-//   box-sizing: border-box;
-//   background: #00a5e4;
-//   font-size: 1.2em;
-//   line-height: 44px;
-//   color: white;
-// `;
+// Styled
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #FCFCFC;
+`;
 
-// const Editor = () => {
-// 	const viewer = useRef(null);
+const Header = styled.header`
+	width: 100%;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	box-shadow: 0 1px 2px #0000001A;
+`;
 
-//   useEffect(() => {
-//     WebViewer(
-//       {
-//         path: '/webviewer/lib',
-//         initialDoc: Doc,
-//       },
-//       viewer.current,
-//     ).then((instance) => {
-//       const { docViewer, Annotations } = instance;
-//       const annotManager = docViewer.getAnnotationManager();
+const ImageLogo = styled.img`
+	width: 100px;
+	margin-right: 1.5rem;
+`;
 
-//       docViewer.on('documentLoaded', () => {
-//         const rectangleAnnot = new Annotations.RectangleAnnotation();
-//         rectangleAnnot.PageNumber = 1;
-//         // values are in page coordinates with (0, 0) in the top left
-//         rectangleAnnot.X = 100;
-//         rectangleAnnot.Y = 150;
-//         rectangleAnnot.Width = 200;
-//         rectangleAnnot.Height = 50;
-//         rectangleAnnot.Author = annotManager.getCurrentUser();
+const DocName = styled.p`
+	font-size: 1.3rem;
+	color: #231F20;
+	font-family: 'Overpass';
+	font-weight: bold;
+`;
 
-//         annotManager.addAnnotation(rectangleAnnot);
-//         // need to draw the annotation otherwise it won't show up until the page is refreshed
-//         annotManager.redrawAnnotation(rectangleAnnot);
-//       });
-//     });
-//   }, []);
+const Content = styled.div`
+	width: 100%;
+	min-height: 93.4vh;
+	background: #E9E9E9;
+	display: flex;
+	justify-content: flex-start;
+`;
 
-// 	return (
-// 		<Container>
-// 			<Header>Documento</Header>
-// 			<div className="webviewer" ref={viewer}></div>
-// 		</Container>
-// 	);
-// };
+const BoxDoc = styled.div`
+	width: 50%;
+	height: 80vh;
+	background: #FFF;
+	margin-top: 2rem;
+	border: 1px solid #707070;
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+	box-shadow: 0 3px 6px #00000029;
+`;
 
-// export default Editor;
+const BoxOptions = styled.div`
+	width: 18rem;
+	height: 12.2rem;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #85144B;
+	margin-top: 2rem;
+	margin-left: 2rem;
+	margin-right: 4rem;
+	background: #FFF;
+`;
+
+const Option = styled.span`
+	width: 100%;
+	border-top: 1px solid #C1C0C0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem 0;
+	cursor: pointer;
+
+	:hover{
+		background: #C1C0C0;
+	}
+`;
+
+const ImageSave = styled.img`
+	width: 30px;
+	margin-right: 2rem;
+`;
+
+const ImageDownload = styled.img`
+	width: 25px;
+	margin-right: 1rem;
+`;
+
+const ImagePrint = styled.img`
+	width: 30px;
+	margin-right: 1.5rem;
+`;
+
+const TextOption = styled.p`
+	color: #231F20;
+	font-family: 'Overpass';
+	font-weight: bold;
+	text-transform: uppercase;
+`;
+
+class Editor extends Component {
+	state = {
+		doc: null,
+	}
+
+	componentDidMount() {
+		this.handleDoc();
+		console.log(this.state.doc)
+	}
+
+	handleDoc = () => {
+		this.setState({
+			doc: Documento,
+		});
+	} 
+
+	render() {
+		console.log(this.state.doc);
+		return (
+			<Container>
+				<Header>
+					<ImageLogo src={Logo} />
+					<DocName>Nome do Documento selecionado</DocName>
+				</Header>
+				<Content>
+					<BoxOptions>
+						<Option>
+							<ImageSave src={SaveIcon}/>
+							<TextOption>Salvar</TextOption>
+						</Option>
+						<Option>
+							<ImageDownload src={DownloadIcon}/>
+							<TextOption>Exportar</TextOption>
+						</Option>
+						<Option>
+							<ImagePrint src={PrintIcon}/>
+							<TextOption>Imprimir</TextOption>
+						</Option>
+					</BoxOptions>
+					<BoxDoc>
+						{/* Conteudo doc
+						<p>Meu nome é
+							<TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> tenho <TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> anos, sou portar do RG <TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> e CPF <TextareaAutosize style={{ backgroundColor: '#C1C0C0' }} /> </p> */}
+						<iframe src={this.state.doc} width="100%" height="100%">
+							<TextareaAutosize style={{backgroundColor: '#c1c0c0'}} />
+							</iframe>
+					</BoxDoc>
+				</Content>
+			</Container>
+		);
+	}
+}
+
+export default Editor;
