@@ -383,9 +383,8 @@ class CreateUserScreen extends Component {
 				this.setState({
 					errorEmailExisting: true,
 					emailErrorText: error.response.data.errors[0].message,
+					modalSucess: false,
 				});
-				console.log(this.state.errorEmailExisting);
-				console.log(this.state.emailErrorText);
 			}
 		}
 	}
@@ -399,9 +398,16 @@ class CreateUserScreen extends Component {
 
 	handleModalTerms = () => {
 		this.setState({
-			isTermsOpen: !this.state.isTermsOpen,
+			isTermsOpen: true,
 		});
 	};
+
+	closeModalTerms = ev => {
+		ev.stopPropagation();
+		this.setState({
+			isTermsOpen: false,
+		});
+	}
 
 	handleModalSucess = () => {
 		this.setState({
@@ -412,7 +418,10 @@ class CreateUserScreen extends Component {
 	handleChange = (field, ev) => {
 		const { user } = this.state;
 		user[field] = ev.target.value;
-		this.setState({ user });
+		this.setState({
+			user,
+			errorEmailExisting: false,
+		});
 	};
 
 	handleChangeCpf = (ev) => {
@@ -527,7 +536,7 @@ class CreateUserScreen extends Component {
 			});
 		}
 
-		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
+		if (this.state.errorEmailExisting === false && telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
 			this.props.addNewUser(user);
 			this.userRegister(user);
 			this.handleModalSucess();
@@ -535,8 +544,8 @@ class CreateUserScreen extends Component {
 	};
 
 	renderTerms = () => (
-		<Overlay>
-			<Modal>
+		<Overlay onClick={this.closeModalTerms}>
+			<Modal onClick={e => e.stopPropagation()}>
 				<TitleTerms>termos de serviço</TitleTerms>
 				<BlockTerms>
 					<SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
@@ -560,7 +569,7 @@ class CreateUserScreen extends Component {
 						</u>
 					</Terms>
 				</BlockTerms>
-				<ButtonTerms onClick={this.handleModalTerms}>ok</ButtonTerms>
+				<ButtonTerms onClick={this.closeModalTerms}>ok</ButtonTerms>
 			</Modal>
 		</Overlay>
 	)
@@ -689,7 +698,6 @@ class CreateUserScreen extends Component {
 									isError={isErrorPassword}
 									required
 								/>
-								{this.state.errorEmailExisting && <ErrorMessage>{this.state.emailErrorText}</ErrorMessage>}
 								{togglePassword === true ? (
 									<BlockSmallerInput>
 										<ImagePassword
@@ -705,6 +713,7 @@ class CreateUserScreen extends Component {
 										/>
 									</BlockSmallerInput>
 								)}
+								{this.state.errorEmailExisting && <ErrorMessage>{this.state.emailErrorText}</ErrorMessage>}
 								{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
 							{isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
