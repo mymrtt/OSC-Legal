@@ -1763,7 +1763,7 @@ class DocumentsScreen extends Component {
 						<Button
 							width="20.25rem"
 							height="3.5rem"
-							text="Adicionar UM"
+							text="Adicionar"
 							type="submit"
 							widthMobileSmall="100%"
 							onClick={this.handleSubmit}
@@ -1803,7 +1803,7 @@ class DocumentsScreen extends Component {
 						onClick={() => this.delete()}
 						width="50%"
 						height="3.5rem"
-						text="Confirmar Um"
+						text="Confirmar"
 						fontSize="1.2rem"
 					/>
 				</ButtonsModal>
@@ -1903,7 +1903,7 @@ class DocumentsScreen extends Component {
 									}
 									onClick={() => this.handleSelected(doc)}
 								>
-									<p>Excluir um</p>
+									<p>Excluir</p>
 								</OptionText>
 							</Option>
 						</ContainerOptions>
@@ -1999,7 +1999,7 @@ class DocumentsScreen extends Component {
 									? this.state.colorTextDelete : '#85144B'}
 								onClick={() => this.userSelectedDoc(doc, index)}
 							>
-								<p>Excluir Dois</p>
+								<p>Excluir</p>
 							</OptionText>
 						</Option>
 					</ContainerOptions>
