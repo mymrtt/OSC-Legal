@@ -16,13 +16,11 @@ const Container = styled.div`
 	display: none;
 
 	@media (max-width: 648px) {
-		padding-top: 1rem;
-    padding-left: .45rem;
-    padding-bottom: 1rem;
 		width: 100%;
+		background-color: #fff;
+		padding: 1rem 0.45rem 1rem 0;
 		display: flex;
 		justify-content: space-between;
-		background-color: #fff;
 	}
 `;
 
