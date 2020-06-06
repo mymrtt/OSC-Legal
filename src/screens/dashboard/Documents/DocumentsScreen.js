@@ -38,7 +38,6 @@ import {
 	getAllOrganizations,
 	getAllDocuments,
 	createDocument,
-	// createDocumentUser,
 } from '../../../services/api';
 
 const mapStateToProps = state => ({
@@ -1206,8 +1205,6 @@ class DocumentsScreen extends Component {
 		try {
 			const token = await localStorage.getItem('token');
 
-			// const response = await createDocument(token);
-			console.log('response', response);
 			const response = await getAllDocuments(token);
 			console.log('response documents', response.data);
 			this.setState({
@@ -1231,19 +1228,6 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	// createDocumentUser = async (templateData) => {
-	// 	try {
-	// 		console.log('template', templateData)
-	// 		const token = await localStorage.getItem('token');
-
-	// 		const response = await createDocumentUser(templateData, token);
-	// 		console.log('response createDocumentUser', response)
-	// 	} catch (error) {
-	// 		console.log('error', error.response);
-	// 	}
-	// }
-
-
 	deleteTemplate = async () => {
 		try {
 			const templateId = this.state.modelSelect;
@@ -1251,10 +1235,6 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await deleteTemplate(templateId, token);
-			console.log('response delete', response)
-
-			console.log('response', response);
-
 			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
@@ -1302,11 +1282,7 @@ class DocumentsScreen extends Component {
 
 			const token = await localStorage.getItem('token');
 
-			console.log('id', templateID);
-			console.log('token', token);
-
-			const response = await deleteTemplate(templateID, token);
-			console.log('response', response);
+			await deleteTemplate(templateID, token);
 
 			this.handleCancelDelete();
 		} catch (error) {
@@ -1863,7 +1839,6 @@ class DocumentsScreen extends Component {
 			? this.state.templateList.filter(model => model.templateName.match(new RegExp(this.state.search, 'i')))
 			: this.state.templateList;
 		// MAP DOCUMENTS ADM
-		console.log('templateList', templateList)
 		return (
 			templateList && templateList.length > 0 ? (
 				templateList.map((doc, index) => (
@@ -2041,7 +2016,6 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
-		console.log('templateList', this.state.templateList)
 		const { isAdmin } = this.props;
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>

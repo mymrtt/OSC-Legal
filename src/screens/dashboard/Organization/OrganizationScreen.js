@@ -51,7 +51,7 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: 100%;
-	height: ${props => (!props.height && 'calc(100vh - 5.5rem + 1px)')};
+	height: ${props => (!props.height && 'calc(100vh - 5.5rem + 3px)')};
 	/* height: ${props => (props.height ? 'calc(100vh - -3px - 5.5rem)' : 0)}; */
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 
@@ -323,9 +323,13 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 68px - 5.8rem - 2.4rem);
+	height: calc(100vh - 70px - 5.8rem - 2.2rem);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
+
+	@media (max-width: 1024px) {
+		padding: ${props => (props.padding ? '3rem 2rem 0' : '1.5rem 2rem 0')};
+
+	}
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -354,6 +358,7 @@ const ContainerTable = styled.div`
 
 	@media(max-width: 768px) {
 		max-height: 75vh;
+		overflow-y: visible;
 	}
 
 	@media(max-width: 648px) {
@@ -447,7 +452,7 @@ const ContainerTableTitleMob = styled.span`
 
 	@media (max-width: 768px) {
 		padding-right: 2rem;
-		padding-bottom: 1rem;
+		padding-bottom: 0.8rem;
 		display: flex;
 		flex-direction: column;
 		${({ selected }) => selected && css`
@@ -510,7 +515,9 @@ const TableTitleMob = styled.th`
 `;
 
 const TableList = styled.td`
-	width: ${props => (props.width)};
+	/* width: ${props => (props.width)}; */
+	width: ${props => (props.widthEmail ? '20%' : '10%')};
+
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-size: 0.95rem;
@@ -522,6 +529,7 @@ const TableList = styled.td`
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
+		width: 100%;
 		display: ${props => (props.mob ? 'none' : 'flex')};
 	}
 `;
@@ -771,7 +779,7 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 1,
+				isAdmin: user.isAdmin === 0,
 			});
 			this.getOrgs();
 		} catch (error) {
@@ -792,6 +800,7 @@ class OrganizationScreen extends Component {
 		this.setState({
 			itemSelected: item,
 			isModal: !this.state.isModal,
+			filter: '',
 		});
 	}
 
@@ -848,8 +857,9 @@ class OrganizationScreen extends Component {
 		try {
 			const org = {
 				...this.state.itemSelected,
-				deletedAt: true,
+				deletedAt: 0,
 			};
+
 			await removeOrg(org);
 
 			this.props.deleteOrg(this.state.itemSelected);
@@ -983,6 +993,7 @@ class OrganizationScreen extends Component {
 						<Input
 							onChange={this.handleChangeFilter}
 							onKeyUp={this.handleChangeFilterKey}
+							value={this.state.filter}
 							placeholder='Digite aqui para pesquisar'
 							type="text"
 						/>
@@ -1143,15 +1154,17 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.createdIn}</TableList>
+						<TableList font={this.state.hovered === item}>{item.createdIn || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Autorização</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.authorization}</TableList>
+						<TableList font={this.state.hovered === item}>{item.authorization || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Vencimento</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.dueDate}</TableList>
+						<TableList font={this.state.hovered === item}>
+							{this.handleDateExpired(item.createdIn) || '-' }
+						</TableList>
 					</ContainerTableTitleMob>
 					</>
 					: <>
@@ -1159,6 +1172,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'9rem'}
+							widthEmail
 						>
 							{user.email || '-'}
 						</TableList>
@@ -1174,22 +1188,21 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.createdIn}
+							{item.createdIn || '-'}
 						</TableList>
 						<TableList
 							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.authorization}
+							{item.authorization || '-'}
 						</TableList>
 						<TableList
 							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{this.handleDateExpired(item.createdIn)}
-							{item.dueDate}
+							{this.handleDateExpired(item.createdIn) || '-' }
 						</TableList>
 					</>
 				}
@@ -1225,7 +1238,7 @@ class OrganizationScreen extends Component {
 		));
 	}
 
-	renderAllTable = () => {
+	Table = () => {
 		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
 
@@ -1308,7 +1321,6 @@ class OrganizationScreen extends Component {
 								width='20%'
 								widthMedium='24%'
 								widthMobile='88%'
-								// widthMobileSmall='80%'
 								widthMobileSmall='90%'
 								height='4.5rem'
 								heightMobile='5.3rem'
@@ -1354,7 +1366,7 @@ class OrganizationScreen extends Component {
 										</Tr>
 									</Thead>
 									<tbody>
-										{this.renderAllTable()}
+										{this.Table()}
 									</tbody>
 								</Table>
 							</ContainerTable>
@@ -1363,7 +1375,7 @@ class OrganizationScreen extends Component {
 									<TextInformation>Não há organizações no momento.</TextInformation>
 								</TextNoOrganitazion>
 							)
-								: this.renderAllTable().length === 0 && (
+								: this.Table().length === 0 && (
 									<TextNoOrganitazion>
 										{isAdmin
 											? <TextInformation>Não há organizações no momento.</TextInformation>

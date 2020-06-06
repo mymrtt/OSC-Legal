@@ -471,7 +471,6 @@ class CreateUserScreen extends Component {
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		console.log('objeto user', this.state.user);
 		this.handleErrors();
 	};
 
@@ -479,7 +478,7 @@ class CreateUserScreen extends Component {
 		const { user } = this.state;
 		const {
 			name,
-			email,
+			// email,
 			telephone,
 			password,
 			cpf,
@@ -536,9 +535,6 @@ class CreateUserScreen extends Component {
 			});
 		}
 
-		console.log('senha', password);
-		console.log('telephone', telephone);
-
 		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
 			this.props.addNewUser(user);
 			this.userRegister(user);
@@ -584,8 +580,6 @@ class CreateUserScreen extends Component {
 			'E-mail incompleto.',
 			'Insira um nome válido.',
 		];
-
-		// console.log('USER', this.state.user);
 
 		const {
 			user,
@@ -638,17 +632,6 @@ class CreateUserScreen extends Component {
 								/>
 								{nameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
 							</Label>
-							{/* <Label>
-							<ParagraphInput>sobrenome</ParagraphInput>
-							<Input
-								type="text"
-								onChange={ev => this.handleChange('surname', ev)}
-								value={surname}
-								placeholder="Sobrenome"
-								name="sobrenome"
-								required
-							/>
-						</Label> */}
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input
@@ -720,7 +703,7 @@ class CreateUserScreen extends Component {
 								{this.state.errorEmailExisting && <ErrorMessage>{this.state.emailErrorText}</ErrorMessage>}
 								{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
-							{isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
+							{/* {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>} */}
 							<TextTerms>
 							Clique abaixo para concordar com os
 								<strong onClick={this.handleModalTerms}>

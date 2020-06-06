@@ -51,7 +51,7 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.form`
-	width: 33%;
+	/* width: 33%; */
 	background-color: #FFFFFF;
 	border-radius: 3px;
 	display: flex;
@@ -261,6 +261,7 @@ class ModalCreateOrganization extends Component {
 		companyName: '',
 		cpf: '',
 		// email: '',
+		cnpj: '',
 		telephone: '',
 		address: '',
 		addressComplement: '',
@@ -325,6 +326,7 @@ class ModalCreateOrganization extends Component {
 
 	editOrganization = async (org) => {
 		try {
+
 			await patchOrg(org);
 
 			this.props.editOrg(org);
@@ -480,6 +482,7 @@ class ModalCreateOrganization extends Component {
 				user_id: this.props.userData.id,
 				telephone: this.state.telephone,
 				orgId: this.props.userData.orgId,
+				deletedAt: 0,
 			};
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
