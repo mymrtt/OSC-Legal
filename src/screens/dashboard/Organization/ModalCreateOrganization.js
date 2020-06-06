@@ -327,9 +327,8 @@ class ModalCreateOrganization extends Component {
 	editOrganization = async (org) => {
 		try {
 
-			const response = await patchOrg(org);
-			console.log('response org', org)
-			console.log('response editOrganization', response)
+			await patchOrg(org);
+
 			this.props.editOrg(org);
 			this.props.handleClosedModal();
 			this.props.closeModal();

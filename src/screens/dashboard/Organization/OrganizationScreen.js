@@ -323,9 +323,13 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	/* height: calc(100vh - 85px - 5.8rem - 1.87rem); */
-	height: calc(100vh - 68px - 5.8rem - 2.4rem);
+	height: calc(100vh - 70px - 5.8rem - 2rem);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
+
+	@media (max-width: 1024px) {
+		padding: ${props => (props.padding ? '3rem 2rem 0' : '1.5rem 2rem 0')};
+
+	}
 
 	@media (max-width: 768px) {
 		padding: 1.5rem 0 0;
@@ -335,7 +339,8 @@ const Content = styled.div`
 `;
 
 const ContainerTable = styled.div`
-	max-height: calc(100% - 89.8px);;
+	/* max-height: calc(100% - 89.8px); */
+	max-height: ${props => (props.maxHeight ? 'calc(100% - -41.2px)' : 'calc(100% - 89.8px)')};
 	overflow-y: scroll;
 
 	::-webkit-scrollbar {
@@ -353,6 +358,7 @@ const ContainerTable = styled.div`
 
 	@media(max-width: 768px) {
 		max-height: 75vh;
+		overflow-y: visible;
 	}
 
 	@media(max-width: 648px) {
@@ -446,7 +452,7 @@ const ContainerTableTitleMob = styled.span`
 
 	@media (max-width: 768px) {
 		padding-right: 2rem;
-		padding-bottom: 1rem;
+		padding-bottom: 0.8rem;
 		display: flex;
 		flex-direction: column;
 		${({ selected }) => selected && css`
@@ -509,7 +515,9 @@ const TableTitleMob = styled.th`
 `;
 
 const TableList = styled.td`
-	width: ${props => (props.width)};
+	/* width: ${props => (props.width)}; */
+	width: ${props => (props.widthEmail ? '20%' : '10%')};
+
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-size: 0.95rem;
@@ -521,6 +529,7 @@ const TableList = styled.td`
 
 	@media (max-width: 768px) {
 		padding: 0.5rem 0;
+		width: 100%;
 		display: ${props => (props.mob ? 'none' : 'flex')};
 	}
 `;
@@ -770,11 +779,11 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 1,
+				isAdmin: user.isAdmin === 0,
 			});
 			this.getOrgs();
 		} catch (error) {
-			console.log('error', error);
+			// console.log('error', error);
 		}
 	}
 
@@ -788,7 +797,6 @@ class OrganizationScreen extends Component {
 	}
 
 	isModalOpen = (item) => {
-		console.log('lkjlkjlkj')
 		this.setState({
 			itemSelected: item,
 			isModal: !this.state.isModal,
@@ -1038,7 +1046,6 @@ class OrganizationScreen extends Component {
 									src={status.img}
 									alt={status.desc}
 									onClick={() => this.handleSelectedStatus(status, item)}
-									//blabla
 								/>
 							))}
 						</Box>
@@ -1112,8 +1119,9 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
-							style={{ paddingLeft: '.7rem' }}
+							style={{ paddingLeft: '.7rem'}}
 							width={'10rem'}
+
 						>
 							{item.tradingName}
 						</TableList>
@@ -1162,6 +1170,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							width={'9rem'}
+							widthEmail
 						>
 							{user.email || '-'}
 						</TableList>
@@ -1184,7 +1193,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.authorization}
+							{item.authorization || '-'}
 						</TableList>
 						<TableList
 							wNumber
@@ -1192,7 +1201,7 @@ class OrganizationScreen extends Component {
 							onClick={() => this.isModalOpen(item)}
 						>
 							{this.handleDateExpired(item.createdIn)}
-							{item.dueDate} blabla
+							{item.dueDate}
 						</TableList>
 					</>
 				}
@@ -1228,7 +1237,7 @@ class OrganizationScreen extends Component {
 		));
 	}
 
-	renderAllTable = () => {
+	Table = () => {
 		const { selectedValue, filter, toFilter } = this.state;
 		const { tableDatas } = this.props;
 
@@ -1243,8 +1252,8 @@ class OrganizationScreen extends Component {
 			toFilter
 		) {
 			listTable = this.renderTable(tableDatas.filter(item => (filter.split(' ').length === 1
-				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter)).length
-				: item.tradingName.toLowerCase() === filter)));
+				? item.tradingName.toLowerCase().split(' ').filter(subItem => subItem.includes(filter.toLowerCase())).length
+				: item.tradingName.toLowerCase() === filter.toLowerCase())));
 		}
 		return listTable;
 	}
@@ -1266,7 +1275,6 @@ class OrganizationScreen extends Component {
 	}
 
 	render() {
-		console.log('this.props.filter', this.state.filter);
 		const { isAdmin, tableDatas } = this.props;
 		const {
 			isSelected,
@@ -1312,7 +1320,6 @@ class OrganizationScreen extends Component {
 								width='20%'
 								widthMedium='24%'
 								widthMobile='88%'
-								// widthMobileSmall='80%'
 								widthMobileSmall='90%'
 								height='4.5rem'
 								heightMobile='5.3rem'
@@ -1358,7 +1365,7 @@ class OrganizationScreen extends Component {
 										</Tr>
 									</Thead>
 									<tbody>
-										{this.renderAllTable()}
+										{this.Table()}
 									</tbody>
 								</Table>
 							</ContainerTable>
@@ -1367,7 +1374,7 @@ class OrganizationScreen extends Component {
 									<TextInformation>Não há organizações no momento.</TextInformation>
 								</TextNoOrganitazion>
 							)
-								: this.renderAllTable().length === 0 && (
+								: this.Table().length === 0 && (
 									<TextNoOrganitazion>
 										{isAdmin
 											? <TextInformation>Não há organizações no momento.</TextInformation>

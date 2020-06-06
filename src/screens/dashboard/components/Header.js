@@ -8,8 +8,15 @@ import { connect } from 'react-redux';
 import ImageLogo from '../../../components/ImageLogo';
 
 // Redux
+import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
+
 const mapStateToProps = state => ({
 	user: state.onboarding.user,
+});
+
+
+const mapDispatchToProps = dispatch => ({
+	saveUserData: info => dispatch(saveUserData(info)),
 });
 
 const Container = styled.div`
@@ -95,6 +102,10 @@ const ContainerUser = styled.div`
 	flex-direction: column;
 	margin: ${props => (props.isAdmin ? '0 6rem 0.8rem 0' : '0 2.6rem 0.8rem 0')};
 
+	@media (max-width: 1024px) {
+		margin: ${props => (props.isAdmin ? '0 2rem 0.8rem 0' : '0 2.6rem 0.8rem 0')};
+	}
+
 	@media (max-width: 785px) {
 		margin: 0 0 0.8rem 0;
 		width: 40%;
@@ -148,6 +159,24 @@ class Header extends Component {
 		redirect: false,
 	}
 
+	componentDidMount() {
+		this.getUser();
+	}
+
+	getUser = async () => {
+		try {
+			let user = await localStorage.getItem('user');
+			user = JSON.parse(user);
+
+			this.props.saveUserData({
+				...user,
+				isAdmin: user.isAdmin === 1,
+			});
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
 	handleLogout = () => {
 		localStorage.removeItem('user');
 		localStorage.removeItem('token');
@@ -194,4 +223,4 @@ class Header extends Component {
 	}
 }
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

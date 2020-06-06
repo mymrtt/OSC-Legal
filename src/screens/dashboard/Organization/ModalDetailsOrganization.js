@@ -199,8 +199,7 @@ const ContainerOrganization = styled.section`
 	padding-bottom: 1.5rem;
 
 	@media (max-width: 648px) {
-		/* height: auto; */
-		padding: 0 0 4rem 1rem;
+		padding: ${props => (props.padding ? '0 0 2rem 1rem' : '0 0 4rem 1rem')};
 		order: 3;
 	}
 `;
@@ -296,7 +295,6 @@ const ContainerOptionDelete = styled.p`
 `;
 
 const Separation = styled.div`
-	/* display: flex; */
 	@media (max-width: 648px) {
 		display: none;
 	}
@@ -306,7 +304,7 @@ const SeparationMobile = styled.div`
 	display: none;
 	@media (max-width: 648px) {
 		width: 56%;
-		height: 45vh;
+		height: 39vh;
 		display: flex;
 		flex-direction: column;
 	}
@@ -317,7 +315,6 @@ const ContainerSelected = styled.div`
 
 	@media (max-width: 648px) {
 		width: 100%;
-		padding: 1rem 0 0;
 		display: flex;
 		justify-content: center;
 		justify-content: space-evenly;
@@ -331,6 +328,7 @@ const ContainerSelected = styled.div`
 const ContainerPaymentMethod = styled.div`
 	border-bottom: ${props => (props.border && '5px solid #FF4136')};
 	color: #231F20;
+	padding-top: 1rem;
 	padding-bottom: 1rem;
 	display: flex;
 	flex-direction: row;
@@ -474,7 +472,7 @@ class ModalDetailsOrganization extends Component {
 								</ContentConsultorDetails>
 							</ContentCreate>
 						</ContentAdmin>
-						<ContainerOrganization>
+						<ContainerOrganization padding={this.props.isAdmin}>
 							<Title>organização</Title>
 							<ContentOrganization margin>
 								<Separation>
@@ -540,7 +538,8 @@ class ModalDetailsOrganization extends Component {
 					</Content>
 					<ContainerSelected>
 						{this.props.isAdmin
-							?	null
+							? null
+							//Status
 							// this.state.paymentMethodList.map(item => (
 							// 	<ContainerPaymentMethod
 							// 		key={item.desc}
