@@ -383,8 +383,16 @@ class ModalDetailsOrganization extends Component {
 					desc: 'Autorizar',
 				},
 				{
+					img: payIcon,
+					desc: 'Pago',
+				},
+				{
 					img: freeIcon,
 					desc: 'Isento',
+				},
+				{
+					img: extendDeadlineIcon,
+					desc: 'Prorrogar',
 				},
 			],
 		};
