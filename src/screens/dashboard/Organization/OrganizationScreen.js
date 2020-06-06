@@ -51,7 +51,7 @@ const Container = styled.div`
 
 const ContainerUser = styled.div`
 	width: 100%;
-	height: ${props => (!props.height && 'calc(100vh - 5.5rem + 1px)')};
+	height: ${props => (!props.height && 'calc(100vh - 5.5rem + 3px)')};
 	/* height: ${props => (props.height ? 'calc(100vh - -3px - 5.5rem)' : 0)}; */
 	background-color: ${props => (props.background ? '#FFFFFF' : '#FFCFCD')};
 
@@ -323,7 +323,7 @@ const ContainerTableUser = styled.div`
 const Content = styled.div`
 	width: 100%;
 	max-width: 100%;
-	height: calc(100vh - 70px - 5.8rem - 2rem);
+	height: calc(100vh - 70px - 5.8rem - 2.2rem);
 	padding: ${props => (props.padding ? '3rem 5.5rem 0' : '1.5rem 2rem 0')};
 
 	@media (max-width: 1024px) {
@@ -1154,15 +1154,17 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.createdIn}</TableList>
+						<TableList font={this.state.hovered === item}>{item.createdIn || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Autorização</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.authorization}</TableList>
+						<TableList font={this.state.hovered === item}>{item.authorization || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Vencimento</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.dueDate}</TableList>
+						<TableList font={this.state.hovered === item}>
+							{this.handleDateExpired(item.createdIn) || '-' }
+						</TableList>
 					</ContainerTableTitleMob>
 					</>
 					: <>
@@ -1186,7 +1188,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.createdIn}
+							{item.createdIn || '-'}
 						</TableList>
 						<TableList
 							wNumber
@@ -1200,8 +1202,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{this.handleDateExpired(item.createdIn)}
-							{item.dueDate}
+							{this.handleDateExpired(item.createdIn) || '-' }
 						</TableList>
 					</>
 				}

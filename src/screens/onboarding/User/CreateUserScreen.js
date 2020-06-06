@@ -478,7 +478,7 @@ class CreateUserScreen extends Component {
 		const { user } = this.state;
 		const {
 			name,
-			email,
+			// email,
 			telephone,
 			password,
 			cpf,
@@ -632,17 +632,6 @@ class CreateUserScreen extends Component {
 								/>
 								{nameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
 							</Label>
-							{/* <Label>
-							<ParagraphInput>sobrenome</ParagraphInput>
-							<Input
-								type="text"
-								onChange={ev => this.handleChange('surname', ev)}
-								value={surname}
-								placeholder="Sobrenome"
-								name="sobrenome"
-								required
-							/>
-						</Label> */}
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input

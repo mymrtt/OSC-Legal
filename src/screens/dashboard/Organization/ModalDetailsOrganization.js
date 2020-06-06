@@ -537,32 +537,16 @@ class ModalDetailsOrganization extends Component {
 						</ContainerOrganization>
 					</Content>
 					<ContainerSelected>
-						{this.props.isAdmin
-							? null
-							//Status
-							// this.state.paymentMethodList.map(item => (
-							// 	<ContainerPaymentMethod
-							// 		key={item.desc}
-							// 		border={this.state.selectedStatus === item.desc}
-							// 		onClick={() => this.handleClicked(item)}
-							// 	>
-							// 		<img src={item.img} alt={item.desc} />
-							// 		<PaymentMethodText
-							// 			color={this.state.selectedStatus === item.desc}
-							// 		>
-							// 			{item.desc}
-							// 		</PaymentMethodText>
-							// 	</ContainerPaymentMethod>))
-							: <ContainerEditImage>
-								<SpanContainerImage onClick={() => this.props.isModalCreateOrganization('edit')}>
-									<ImageEdite src={ImageEdit} />
-									<ContainerOptionMobile>Editar</ContainerOptionMobile>
-								</SpanContainerImage>
-								<SpanContainerImage onClick={this.props.handleDeleteModal}>
-									<img src={ImageDelete} alt="delete icon" />
+						{!this.props.isAdmin && <ContainerEditImage>
+							<SpanContainerImage onClick={() => this.props.isModalCreateOrganization('edit')}>
+								<ImageEdite src={ImageEdit} />
+								<ContainerOptionMobile>Editar</ContainerOptionMobile>
+							</SpanContainerImage>
+							<SpanContainerImage onClick={this.props.handleDeleteModal}>
+								<img src={ImageDelete} alt="delete icon" />
 								 <ContainerOptionMobile>Excluir</ContainerOptionMobile>
-								</SpanContainerImage>
-							</ContainerEditImage>
+							</SpanContainerImage>
+						</ContainerEditImage>
 						}
 					</ContainerSelected>
 				</Container>
