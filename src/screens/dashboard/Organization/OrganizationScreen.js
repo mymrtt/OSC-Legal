@@ -875,10 +875,13 @@ class OrganizationScreen extends Component {
 		try {
 			const org = {
 				...this.state.itemSelected,
-				deletedAt: 0,
 			};
 
-			await removeOrg(org);
+			console.log('org', org)
+
+			const response = await removeOrg(org.orgId);
+			console.log('response delete', response)
+
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({
