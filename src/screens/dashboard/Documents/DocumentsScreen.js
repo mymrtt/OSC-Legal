@@ -38,7 +38,6 @@ import {
 	getAllOrganizations,
 	getAllDocuments,
 	createDocument,
-	// createDocumentUser,
 } from '../../../services/api';
 
 const mapStateToProps = state => ({
@@ -1231,13 +1230,11 @@ class DocumentsScreen extends Component {
 
 	deleteTemplate = async () => {
 		try {
-			// const { templateId } = this.state.modelSelect;
 			const templateId = this.state.modelSelect;
 
 			const token = await localStorage.getItem('token');
 
 			const response = await deleteTemplate(templateId, token);
-
 			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
@@ -1289,11 +1286,7 @@ class DocumentsScreen extends Component {
 
 			const token = await localStorage.getItem('token');
 
-			console.log('id', templateID);
-			console.log('token', token);
-
-			const response = await deleteTemplate(templateID, token);
-			console.log('response', response);
+			await deleteTemplate(templateID, token);
 
 			this.handleCancelDelete();
 		} catch (error) {

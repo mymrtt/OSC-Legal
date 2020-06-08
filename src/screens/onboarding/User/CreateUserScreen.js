@@ -358,6 +358,7 @@ class CreateUserScreen extends Component {
 		isErrorTel: false,
 		isTermsOpen: false,
 		isErrorEmail: false,
+		errorEmailExisting: false,
 	};
 
 	userRegister = async (user) => {
@@ -374,9 +375,21 @@ class CreateUserScreen extends Component {
 			delete user.password;
 
 			await createUserAccount(user, base64credentials);
+			this.handleModalSucess();
 		} catch (error) {
 			console.log('err', error);
 			console.log('err.response', error.response);
+			this.setState({
+				errorEmailExisting: true,
+				emailErrorText: error.response.data.errors[0].message,
+				modalSucess: false,
+				user: {
+					password: '',
+					name: '',
+					telephone: '',
+					cpf: '',
+				},
+			});
 		}
 	}
 
@@ -389,20 +402,30 @@ class CreateUserScreen extends Component {
 
 	handleModalTerms = () => {
 		this.setState({
-			isTermsOpen: !this.state.isTermsOpen,
+			isTermsOpen: true,
 		});
 	};
 
+	closeModalTerms = (ev) => {
+		ev.stopPropagation();
+		this.setState({
+			isTermsOpen: false,
+		});
+	}
+
 	handleModalSucess = () => {
 		this.setState({
-			modalSucess: !this.state.modalSucess,
+			modalSucess: true,
 		});
 	};
 
 	handleChange = (field, ev) => {
 		const { user } = this.state;
 		user[field] = ev.target.value;
-		this.setState({ user });
+		this.setState({
+			user,
+			errorEmailExisting: false,
+		});
 	};
 
 	handleChangeCpf = (ev) => {
@@ -455,7 +478,7 @@ class CreateUserScreen extends Component {
 		const { user } = this.state;
 		const {
 			name,
-			email,
+			// email,
 			telephone,
 			password,
 			cpf,
@@ -515,13 +538,12 @@ class CreateUserScreen extends Component {
 		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
 			this.props.addNewUser(user);
 			this.userRegister(user);
-			this.handleModalSucess();
 		}
 	};
 
 	renderTerms = () => (
-		<Overlay>
-			<Modal>
+		<Overlay onClick={this.closeModalTerms}>
+			<Modal onClick={e => e.stopPropagation()}>
 				<TitleTerms>termos de serviço</TitleTerms>
 				<BlockTerms>
 					<SubtitleTerms>Boas vindas ao Aplicativo do Estatuto OSC Legal</SubtitleTerms>
@@ -545,7 +567,7 @@ class CreateUserScreen extends Component {
 						</u>
 					</Terms>
 				</BlockTerms>
-				<ButtonTerms onClick={this.handleModalTerms}>ok</ButtonTerms>
+				<ButtonTerms onClick={this.closeModalTerms}>ok</ButtonTerms>
 			</Modal>
 		</Overlay>
 	)
@@ -558,6 +580,7 @@ class CreateUserScreen extends Component {
 			'E-mail incompleto.',
 			'Insira um nome válido.',
 		];
+
 		const {
 			user,
 			isErrorPassword,
@@ -587,7 +610,7 @@ class CreateUserScreen extends Component {
 					</Container>
 				) : (
 					<Container>
-						<Form onSubmit={this.handleSubmit}>
+						<Form onClick={this.handleSubmit}>
 							<ImageLogo
 								margin="3rem 0 2rem 0"
 								// marginMobile="15rem 0 2rem 0"
@@ -609,17 +632,6 @@ class CreateUserScreen extends Component {
 								/>
 								{nameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
 							</Label>
-							{/* <Label>
-							<ParagraphInput>sobrenome</ParagraphInput>
-							<Input
-								type="text"
-								onChange={ev => this.handleChange('surname', ev)}
-								value={surname}
-								placeholder="Sobrenome"
-								name="sobrenome"
-								required
-							/>
-						</Label> */}
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input
@@ -688,9 +700,10 @@ class CreateUserScreen extends Component {
 										/>
 									</BlockSmallerInput>
 								)}
+								{this.state.errorEmailExisting && <ErrorMessage>{this.state.emailErrorText}</ErrorMessage>}
 								{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
-							{isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>}
+							{/* {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>} */}
 							<TextTerms>
 							Clique abaixo para concordar com os
 								<strong onClick={this.handleModalTerms}>
