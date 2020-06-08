@@ -1216,13 +1216,11 @@ class DocumentsScreen extends Component {
 	}
 
 	createTemplate = async (templateData) => {
-		console.log('templateData', templateData)
 		try {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
 
-			console.log('reponse', response);
 		} catch (error) {
 			console.log('error', error.response);
 		}

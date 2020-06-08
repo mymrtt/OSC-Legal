@@ -27,6 +27,7 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	telephone: state.onboarding.users.telephone,
 	cpf: state.onboarding.users.cpf,
+	tableDatas: state.organization.tableDatas,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -286,6 +287,7 @@ class ModalCreateOrganization extends Component {
 
 		if (this.props.modalType === 'edit') {
 			this.setState({
+				orgId: this.props.item.orgId,
 				tradingName: this.props.item.tradingName,
 				companyName: this.props.item.companyName,
 				cpf: this.props.item.cpf,
@@ -298,6 +300,9 @@ class ModalCreateOrganization extends Component {
 				city: this.props.item.city,
 				cep: this.props.item.cep,
 				user_id: this.props.userData.id,
+				createdIn: this.props.item.createdIn,
+				authorization: this.props.item.authorization,
+				status: this.props.item.status,
 			});
 		}
 	}
@@ -326,10 +331,16 @@ class ModalCreateOrganization extends Component {
 
 	editOrganization = async (org) => {
 		try {
+			const newOrg = {
+				...org,
+				authorization: this.state.authorization,
+				status: this.state.status,
+			};
+			await patchOrg(newOrg);
 
-			await patchOrg(org);
+			const newTableDatas = this.props.tableDatas.map(item => (item.orgId === newOrg.orgId ? newOrg : item));
 
-			this.props.editOrg(org);
+			this.props.editOrg(newTableDatas);
 			this.props.handleClosedModal();
 			this.props.closeModal();
 		} catch (error) {
@@ -478,12 +489,13 @@ class ModalCreateOrganization extends Component {
 				cep: this.state.cep,
 				cnpj: this.state.cnpj,
 				companyName: this.state.companyName,
-				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
+				createdIn: this.props.modalType === 'edit' ? this.state.createdIn : createDate(),
 				user_id: this.props.userData.id,
 				telephone: this.state.telephone,
-				orgId: this.props.userData.orgId,
+				orgId: this.state.orgId,
 				deletedAt: 0,
 			};
+
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
 			} else {
@@ -648,18 +660,6 @@ class ModalCreateOrganization extends Component {
 											/>
 											{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 										</ContentOrganizationItem>
-										{/* <ContentOrganizationItem>
-										<UserTitle org>email</UserTitle>
-										<Input
-											modalOrg
-											margin={'0 0 2rem'}
-											type="text"
-											placeholder="email@email.com"
-											value={this.state.email}
-											name="email"
-											required
-										/>
-									</ContentOrganizationItem> */}
 										<ContentOrganizationItem>
 											<UserTitle org>telefone</UserTitle>
 											<Input

@@ -38,13 +38,13 @@ export default function (state = initialState, action) {
 			tableDatas: state.tableDatas.filter(org => org !== action.info),
 		};
 	case EDIT_ORG: {
-		const remainningOrgs = state.tableDatas.filter(
-			item => item.id !== action.info.id,
-		);
+		// const remainningOrgs = state.tableDatas.filter(
+		// 	item => item.id !== action.info.id,
+		// );
 
 		return {
 			...state,
-			tableDatas: remainningOrgs.concat(action.info),
+			tableDatas: action.info,
 		};
 	}
 	default:

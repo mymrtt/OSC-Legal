@@ -77,6 +77,14 @@ export const getAllOrganizations = userId => axios({
 	},
 });
 
+export const getAllOrganizationsAdmin = () => axios({
+	url: `${API_URL}/organizations`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
 export const patchOrg = org => axios({
 	url: `${API_URL}/organizations`,
 	method: 'patch',
