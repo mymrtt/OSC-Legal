@@ -104,11 +104,28 @@ export const getAllDocuments = token => axios({
 	},
 });
 
-export const uploadDocument = templateId => axios({
-	url: `${API_URL}/documents`,
-	method: 'patch',
+export const getllOrgDocumets = orgId => axios({
+	url: `${API_URL}/organizations/${orgId}/documents`,
+	method: 'get',
 	headers: {
 		Authorization: `Bearer ${token}`,
+	},
+});
+
+// export const uploadDocument = docs => axios({
+// 	url: `${API_URL}/documents`,
+// 	method: 'patch',
+// 	headers: {
+// 		Authorization: `Bearer ${token}`,
+// 		'Content-Type': 'multipart/form-data',
+// 	},
+// 	data: docs,
+// });
+
+export const uploadDocument = docs => axios.patch(`${API_URL}/documents`, docs, {
+	headers: {
+		Authorization: `Bearer ${token}`,
+		'Content-Type': 'multipart/form-data',
 	},
 });
 

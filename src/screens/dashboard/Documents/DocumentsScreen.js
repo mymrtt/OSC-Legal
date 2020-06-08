@@ -43,6 +43,7 @@ import {
 	downloadTemplate,
 	exportDocument,
 	uploadDocument,
+	getllOrgDocumets,
 } from '../../../services/api';
 
 const mapStateToProps = state => ({
@@ -1228,6 +1229,7 @@ class DocumentsScreen extends Component {
 		this.getAllOrgs();
 		this.getAllDocuments();
 		this.renderMobileButton();
+		// this.getllOrgDoc();
 	}
 
 	getAllOrgs = async () => {
@@ -1260,13 +1262,26 @@ class DocumentsScreen extends Component {
 		}
 	}
 
+	getllOrgDoc = async (orgId) => {
+		try {
+			const token = await localStorage.getItem('token');
+
+			const response = await getllOrgDocumets(orgId, token);
+			// console.log('response', response)
+
+			this.setState({
+				allOrgsDocuments: response.data,
+			});
+		} catch (error) {
+			console.log('erro.response', error.response);
+		}
+	}
+
 	createTemplate = async (templateData) => {
 		try {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
-
-			console.log('reponse', response);
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1308,7 +1323,7 @@ class DocumentsScreen extends Component {
 
 			const response = await createDocument(docs, token);
 
-			console.log('response', response);
+			// console.log('response', response);
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -1352,25 +1367,20 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	uploadDocument = async () => {
+	uploadDocumento = async (fileDoc, doc) => {
 		try {
 			const docs = new FormData();
+			docs.append('docId', doc.docId);
 			docs.append('org_id', this.state.orgID);
-			docs.append('template_id', this.state.isSelected.templateId);
-			docs.append('docUrl', this.state.docUrl);
-			docs.append('file', this.state.docFile);
+			docs.append('template_id', doc.templateId);
+			// docs.append('docUrl', this.state.docUrl);
+			docs.append('file', fileDoc);
 
-			console.log('doc file', this.state.docFile);
-			console.log('doc file', this.state.docUrl);
-
-
-			const token = await localStorage.getItem('token');
-
-			const response = await uploadDocument(docs, token);
+			const response = await uploadDocument(docs);
 
 			console.log('reponse', response);
 		} catch (error) {
-			console.log('error', error.response);
+			console.log('error', error);
 		}
 	}
 
@@ -1584,23 +1594,17 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	uploadDoc = (e) => {
+	uploadDoc = (doc, e) => {
 		e.preventDefault();
+
+		// console.log('docc', doc)
+
+		// console.log('e', e.target);
+
 		const fileDoc = e.target.files[0];
-		console.log('file', fileDoc);
+		// console.log('file', fileDoc);
 
-		// this.setState({
-		// 	docFile: fileDoc,
-		// 	docUrl: fileDoc,
-		// });
-
-		this.setState({
-			docFile: fileDoc,
-		});
-
-		console.log('doc file', this.state.fileDoc);
-
-		this.uploadDocument();
+		this.uploadDocumento(fileDoc, doc);
 	}
 
 	handleSelected = (doc) => {
@@ -1794,6 +1798,8 @@ class DocumentsScreen extends Component {
 			isBoxOrgs: false,
 			orgID: orgs.orgId,
 		});
+
+		this.getllOrgDoc(orgs.orgId);
 	}
 
 	userSelectedDoc = (docs, index) => {
@@ -2071,8 +2077,8 @@ class DocumentsScreen extends Component {
 
 	renderDocUser = () => (
 		// MAP DOCUMENTS USER
-		this.state.listDocs && this.state.listDocs.length > 0 ? (
-			this.state.listDocs.map((doc, index) => (
+		this.state.allOrgsDocuments && this.state.allOrgsDocuments.length > 0 ? (
+			this.state.allOrgsDocuments.map((doc, index) => (
 				<ContainerModel
 					// MARGEM ULTIMO ITEM DA LISTA, ATÉ O MOBILE
 					style={{ margin: index === this.state.listDocs.length - 1 && '0 0 9rem 0' }}
@@ -2139,7 +2145,7 @@ class DocumentsScreen extends Component {
 							htmlFor='upload-doc'
 						>
 							<input
-								onChange={this.uploadDoc}
+								onChange={e => this.uploadDoc(doc, e)}
 								id='upload-doc'
 								type="file"
 								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -2209,6 +2215,7 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
+		// console.log('aaaaaaaaaaaaaaa', this.state.allOrgsDocuments)
 		const { isAdmin } = this.props;
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
