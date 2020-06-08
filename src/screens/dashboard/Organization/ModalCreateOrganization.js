@@ -4,7 +4,7 @@
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -279,6 +279,7 @@ class ModalCreateOrganization extends Component {
 		isCityError: false,
 		isCepError: false,
 		allStateTrue: false,
+		redirect: false,
 	};
 
 	componentDidMount() {
@@ -316,11 +317,21 @@ class ModalCreateOrganization extends Component {
 			this.props.addNewOrg(org);
 		} catch (error) {
 			console.log('error', error.response);
-			const msgError = error.response.data.errors[0].message;
-
-			this.setState({
-				error: msgError,
-			});
+			if (error.response.status === 401) {
+				setTimeout(() => {
+					localStorage.removeItem('user');
+					localStorage.removeItem('token');
+					this.setState({ redirect: true });
+				}, 5000);
+				return this.setState({
+					error: 'Token expirado, faça login novamente',
+				});
+			}
+			if (error.response.data.errors[0]) {
+				this.setState({
+					error: error.response.data.errors[0].message,
+				});
+			}
 		}
 	}
 
@@ -783,6 +794,7 @@ class ModalCreateOrganization extends Component {
 					handleModalSucess={this.handleModalSucess}
 					handleRedirect={this.props.handleRedirect}
 				/>}
+				{this.state.redirect && <Redirect exact to="/" />}
 			</Overlay>
 		);
 	}

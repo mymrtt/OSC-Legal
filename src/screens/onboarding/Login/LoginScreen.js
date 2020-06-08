@@ -179,8 +179,8 @@ class LoginScreen extends Component {
 		super(props);
 		this.state = {
 			value: '',
-			email: '',
-			password: '',
+			email: 'mymrtt@gmail.com',
+			password: 'minhasenha123',
 			passwordError: '',
 			error: undefined,
 			type: 'password',
@@ -228,8 +228,6 @@ class LoginScreen extends Component {
 				error: '',
 			});
 		} catch (error) {
-			console.log('error', error);
-			console.log('error.response', error.response);
 			const { data } = error.response;
 			if (data === 'user not verified') {
 				this.setState({
