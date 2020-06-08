@@ -335,7 +335,7 @@ class CreateUserScreen extends Component {
 			telephone: '',
 			password: '',
 		},
-		nameError: false,
+		isNameError: false,
 		isErrorCpf: false,
 		isErrorPassword: false,
 		isEmpty: false,
@@ -405,7 +405,7 @@ class CreateUserScreen extends Component {
 
 		if (field === 'name') {
 			this.setState({
-				nameError: ev.target.value.length < 4,
+				isNameError: ev.target.value.length < 4,
 			});
 		}
 
@@ -461,16 +461,16 @@ class CreateUserScreen extends Component {
 	};
 
 	validateUser = () => {
-		const { user } = this.state;
 		const {
+			user,
 			isErrorPassword,
-			nameError,
+			isNameError,
 			isErrorCpf,
 			isErrorTel,
 			isErrorEmail,
-		} = this.state.user;
+		} = this.state;
 
-		if (!nameError && !isErrorCpf && !isErrorEmail && !isErrorTel && !isErrorPassword) {
+		if (!isNameError && !isErrorCpf && !isErrorEmail && !isErrorTel && !isErrorPassword) {
 			this.userRegister(user);
 		}
 	};
@@ -529,7 +529,7 @@ class CreateUserScreen extends Component {
 		const {
 			isErrorPassword,
 			modalSucess,
-			nameError,
+			isNameError,
 			isErrorCpf,
 			togglePassword,
 			isTermsOpen,
@@ -568,10 +568,10 @@ class CreateUserScreen extends Component {
 									value={name || ''}
 									placeholder="Nome completo"
 									name="nomeCompleto"
-									isError={nameError}
+									isError={isNameError}
 									required
 								/>
-								{nameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
+								{isNameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
