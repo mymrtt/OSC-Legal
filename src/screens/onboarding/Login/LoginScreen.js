@@ -196,9 +196,7 @@ class LoginScreen extends Component {
 			};
 
 			const encodedPassword = OscHash(user.password);
-
 			const credentials = `${user.email}:${encodedPassword}`;
-
 			const base64credentials = Buffer.from(credentials, 'utf-8').toString(
 				'base64',
 			);
@@ -206,38 +204,37 @@ class LoginScreen extends Component {
 			const response = await login(user, base64credentials);
 
 			if (response) {
-				await localStorage.setItem('token', response.data.token);
+				localStorage.setItem('token', response.data.token);
 				const userData = jwt.decode(response.data.token);
 				const user = {
 					acessToken: response.data.token,
 					...userData,
 				};
 
-				await localStorage.setItem('token', response.data.token);
-				await localStorage.setItem('user', JSON.stringify(user));
+				localStorage.setItem('token', response.data.token);
+				localStorage.setItem('user', JSON.stringify(user));
 
 				this.props.saveUserData({
 					...userData,
-					isAdmin: userData.isAdmin === 1,
+					isAdmin: userData.isAdmin !== 0,
 				});
 
 				this.setState({ redirect: '/organizations' });
 			}
-
-			this.setState({
-				error: '',
-			});
 		} catch (error) {
-			console.log('error.response', error.response);
 			const { data } = error.response;
 			if (data === 'user not verified') {
 				this.setState({
-					error: 'Por favor, confirma a sua conta no email',
+					error: 'Por favor, confirme a sua conta no email',
 				});
 			}
 			if (data === 'user not found') {
 				this.setState({
 					error: 'E-mail e/ ou senha incorreta',
+				});
+			} else {
+				this.setState({
+					error: 'Algo deu errado',
 				});
 			}
 		}
@@ -249,7 +246,7 @@ class LoginScreen extends Component {
 
 		if (password.length < 6) {
 			this.setState({
-				error: 'E-mail e/ ou senha incorreta',
+				error: 'E-mail e/ ou senha estão incorretos',
 			});
 		}
 

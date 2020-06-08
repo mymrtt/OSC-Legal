@@ -1,10 +1,7 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable eqeqeq */
-/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -27,6 +24,7 @@ const mapStateToProps = state => ({
 	email: state.onboarding.users.email,
 	telephone: state.onboarding.users.telephone,
 	cpf: state.onboarding.users.cpf,
+	tableDatas: state.organization.tableDatas,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -189,7 +187,6 @@ const WrapOrganizationContent2 = styled.div`
 
 const WrapOrganizationItem = styled.div`
 	width: 50%;
-	/* padding-bottom: 2rem; */
 	display: flex;
 	flex-direction: column;
 `;
@@ -199,7 +196,6 @@ const ContainerConcludeButton = styled.span`
 	padding-left: 3rem;
 	padding-right: 3rem;
 	margin-top: 1.5rem;
-	/* padding-bottom: 1.5rem; */
 
 	@media(max-width: 648px) {
 		padding-left: 2rem;
@@ -260,7 +256,6 @@ class ModalCreateOrganization extends Component {
 		tradingName: '',
 		companyName: '',
 		cpf: '',
-		// email: '',
 		cnpj: '',
 		telephone: '',
 		address: '',
@@ -279,6 +274,7 @@ class ModalCreateOrganization extends Component {
 		isCityError: false,
 		isCepError: false,
 		allStateTrue: false,
+		redirect: false,
 	};
 
 	componentDidMount() {
@@ -286,10 +282,10 @@ class ModalCreateOrganization extends Component {
 
 		if (this.props.modalType === 'edit') {
 			this.setState({
+				orgId: this.props.item.orgId,
 				tradingName: this.props.item.tradingName,
 				companyName: this.props.item.companyName,
 				cpf: this.props.item.cpf,
-				// email: '',
 				cnpj: this.props.item.cnpj,
 				telephone: this.props.item.telephone,
 				address: this.props.item.address,
@@ -298,6 +294,9 @@ class ModalCreateOrganization extends Component {
 				city: this.props.item.city,
 				cep: this.props.item.cep,
 				user_id: this.props.userData.id,
+				createdIn: this.props.item.createdIn,
+				authorization: this.props.item.authorization,
+				status: this.props.item.status,
 			});
 		}
 	}
@@ -305,31 +304,52 @@ class ModalCreateOrganization extends Component {
 	createOrg = async (org) => {
 		try {
 			const response = await createOrganization(org);
-			console.log('response', response);
+
+			const newOrg = {
+				...org,
+				orgId: response.data.insertId,
+			};
 
 			this.setState({
 				allStateTrue: true,
 				isCnpjError: '',
 				error: '',
 			});
+
 			this.handleModalSucess(org.tradingName);
-			this.props.addNewOrg(org);
+			this.props.addNewOrg(newOrg);
 		} catch (error) {
 			console.log('error', error.response);
-			const msgError = error.response.data.errors[0].message;
-
-			this.setState({
-				error: msgError,
-			});
+			if (error.response.status === 401) {
+				setTimeout(() => {
+					localStorage.removeItem('user');
+					localStorage.removeItem('token');
+					this.setState({ redirect: true });
+				}, 5000);
+				return this.setState({
+					error: 'Token expirado, faça login novamente',
+				});
+			}
+			if (error.response.data.errors[0]) {
+				this.setState({
+					error: error.response.data.errors[0].message,
+				});
+			}
 		}
 	}
 
 	editOrganization = async (org) => {
 		try {
+			const newOrg = {
+				...org,
+				authorization: this.state.authorization,
+				status: this.state.status,
+			};
+			await patchOrg(newOrg);
 
-			await patchOrg(org);
+			const newTableDatas = this.props.tableDatas.map(item => (item.orgId === newOrg.orgId ? newOrg : item));
 
-			this.props.editOrg(org);
+			this.props.editOrg(newTableDatas);
 			this.props.handleClosedModal();
 			this.props.closeModal();
 		} catch (error) {
@@ -346,6 +366,8 @@ class ModalCreateOrganization extends Component {
 			await getAllOrganizations(userId);
 		} catch (error) {
 			console.log('error', error);
+			console.log('error.response', error.response);
+
 		}
 	}
 
@@ -478,12 +500,13 @@ class ModalCreateOrganization extends Component {
 				cep: this.state.cep,
 				cnpj: this.state.cnpj,
 				companyName: this.state.companyName,
-				createdIn: this.props.modalType === 'edit' ? this.props.item.createdIn : createDate(),
+				createdIn: this.props.modalType === 'edit' ? this.state.createdIn : createDate(),
 				user_id: this.props.userData.id,
 				telephone: this.state.telephone,
-				orgId: this.props.userData.orgId,
+				orgId: this.state.orgId,
 				deletedAt: 0,
 			};
+
 			if (this.props.modalType === 'edit') {
 				this.editOrganization(org);
 			} else {
@@ -648,18 +671,6 @@ class ModalCreateOrganization extends Component {
 											/>
 											{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 										</ContentOrganizationItem>
-										{/* <ContentOrganizationItem>
-										<UserTitle org>email</UserTitle>
-										<Input
-											modalOrg
-											margin={'0 0 2rem'}
-											type="text"
-											placeholder="email@email.com"
-											value={this.state.email}
-											name="email"
-											required
-										/>
-									</ContentOrganizationItem> */}
 										<ContentOrganizationItem>
 											<UserTitle org>telefone</UserTitle>
 											<Input
@@ -783,6 +794,7 @@ class ModalCreateOrganization extends Component {
 					handleModalSucess={this.handleModalSucess}
 					handleRedirect={this.props.handleRedirect}
 				/>}
+				{this.state.redirect && <Redirect exact to="/" />}
 			</Overlay>
 		);
 	}

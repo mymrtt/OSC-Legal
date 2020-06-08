@@ -30,7 +30,9 @@ import { saveUserData } from '../../../dataflow/modules/onboarding-modules';
 import { updateTableDatas, deleteOrg } from '../../../dataflow/modules/organization-modules';
 
 // Api
-import { removeOrg, getAllOrganizations, patchOrg } from '../../../services/api';
+import {
+	removeOrg, getAllOrganizations, getAllOrganizationsAdmin, patchOrg,
+} from '../../../services/api';
 
 const mapStateToProps = state => ({
 	isAdmin: state.onboarding.user.isAdmin,
@@ -515,16 +517,13 @@ const TableTitleMob = styled.th`
 `;
 
 const TableList = styled.td`
-	/* width: ${props => (props.width)}; */
 	width: ${props => (props.widthEmail ? '20%' : '10%')};
-
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-size: 0.95rem;
 	font-weight: ${props => (props.font && '900')};
 	text-align: ${props => (props.wNumber && 'center')};
 	padding: .25rem;
-	/* padding: 0.5%; */
 	cursor: pointer;
 
 	@media (max-width: 768px) {
@@ -779,17 +778,33 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 0,
+				isAdmin: user.isAdmin === 1,
 			});
-			this.getOrgs();
+
+			if (user.isAdmin === 0) {
+				this.getOrgsUser();
+			}
+			if (user.isAdmin === 1) {
+				this.getOrgsAdmin();
+			}
 		} catch (error) {
-			// console.log('error', error);
+			console.log('error', error);
 		}
 	}
 
-	getOrgs = async () => {
+	getOrgsUser = async () => {
 		try {
 			const response = await getAllOrganizations(this.props.user.id);
+
+			this.props.updateTableDatas(response.data);
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	getOrgsAdmin = async () => {
+		try {
+			const response = await getAllOrganizationsAdmin(this.props.user.id);
 			this.props.updateTableDatas(response.data);
 		} catch (error) {
 			console.log('error', error.response);
@@ -857,10 +872,9 @@ class OrganizationScreen extends Component {
 		try {
 			const org = {
 				...this.state.itemSelected,
-				deletedAt: 0,
 			};
 
-			await removeOrg(org);
+			await removeOrg(org.orgId);
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({
@@ -886,9 +900,11 @@ class OrganizationScreen extends Component {
 			const orgObj = {
 				...org,
 				status: newStatus.desc,
+				authorization: new Date(),
 			};
 
 			await patchOrg(orgObj);
+
 			this.changeOrgStatus(newStatus, org);
 		} catch (error) {
 			console.log('error', error);
@@ -1119,9 +1135,7 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
-							style={{ paddingLeft: '.7rem'}}
-							width={'10rem'}
-
+							style={{ paddingLeft: '.7rem' }}
 						>
 							{item.tradingName}
 						</TableList>
@@ -1131,7 +1145,6 @@ class OrganizationScreen extends Component {
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'8rem'}
 				>
 					{user.cpf || '-'}
 				</TableList>
@@ -1139,7 +1152,6 @@ class OrganizationScreen extends Component {
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'9rem'}
 				>
 					{user.name || '-'}
 				</TableList>
@@ -1150,7 +1162,7 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList width={'7rem'} font={this.state.hovered === item}>{user.telephone || '-'}</TableList>
+						<TableList font={this.state.hovered === item}>{user.telephone || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
@@ -1158,12 +1170,12 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Autorização</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{item.authorization || '-'}</TableList>
+						<TableList font={this.state.hovered === item}>{this.renderAuthorizedData(item.authorization) || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Vencimento</TableTitleMob>
 						<TableList font={this.state.hovered === item}>
-							{this.handleDateExpired(item.createdIn) || '-' }
+							{item.createdIn === null ? '-' : this.handleDateExpired(item.createdIn)}
 						</TableList>
 					</ContainerTableTitleMob>
 					</>
@@ -1171,7 +1183,6 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
-							width={'9rem'}
 							widthEmail
 						>
 							{user.email || '-'}
@@ -1179,7 +1190,6 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
-							width={'8rem'}
 						>
 							{user.telephone || '-'}
 						</TableList>
@@ -1195,14 +1205,15 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.authorization || '-'}
+							{this.renderAuthorizedData(item.authorization) || '-'}
 						</TableList>
 						<TableList
 							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{this.handleDateExpired(item.createdIn) || '-' }
+							{/* {this.handleDateExpired(item.createdIn) || '-' } */}
+							{item.createdIn === null ? '-' : this.handleDateExpired(item.createdIn)}
 						</TableList>
 					</>
 				}
@@ -1273,6 +1284,13 @@ class OrganizationScreen extends Component {
 			modalSucess: !this.state.modalSucess,
 			isModalCreateOrg: false,
 		});
+	}
+
+	renderAuthorizedData = (date) => {
+		const authorizedDate = new Date(date);
+		const formatDate = `${authorizedDate.getDate() <= 9 && `0${authorizedDate.getDate()}`}/${authorizedDate.getMonth() + 1 <= 9 && `0${authorizedDate.getMonth() + 1}`}/${authorizedDate.getFullYear()}`;
+
+		return `${date === null ? '-' : formatDate}`;
 	}
 
 	render() {

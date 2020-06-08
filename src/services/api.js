@@ -1,90 +1,107 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const API_URL = 'http://localhost:3333';
-export const token = localStorage.getItem('token');
+export const API_URL = process.env.REACT_APP_API_URL;
+export const token = localStorage.getItem("token");
 
 // Onboarding
-export const createUserAccount = (user, base64credentials) => axios({
-	url: `${API_URL}/users`,
-	method: 'post',
-	headers: {
-		Authorization: `Basic ${base64credentials}`,
-	},
-	data: user,
-});
+export const createUserAccount = (user, base64credentials) =>
+	axios({
+		url: `${API_URL}/users`,
+		method: "post",
+		headers: {
+			Authorization: `Basic ${base64credentials}`,
+		},
+		data: user,
+	});
 
-export const login = (user, base64credentials) => axios({
-	url: `${API_URL}/auth/authenticate`,
-	method: 'post',
-	headers: {
-		Authorization: `Basic ${base64credentials}`,
-	},
-	data: user,
-});
+export const login = (user, base64credentials) =>
+	axios({
+		url: `${API_URL}/auth/authenticate`,
+		method: "post",
+		headers: {
+			Authorization: `Basic ${base64credentials}`,
+		},
+		data: user,
+	});
 
-export const findUser = id => axios({
-	url: `${API_URL}/users/${id}`,
-	method: 'get',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-});
+export const findUser = (id) =>
+	axios({
+		url: `${API_URL}/users/${id}`,
+		method: "get",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
 
-export const resetPassword = email => axios({
-	url: `${API_URL}/auth/recovery`,
-	method: 'post',
-	headers: {
-		'x-osclegal-email': email,
-	},
-});
+export const resetPassword = (email) =>
+	axios({
+		url: `${API_URL}/auth/recovery`,
+		method: "post",
+		headers: {
+			"x-osclegal-email": email,
+		},
+	});
 
-export const createNewPassword = (token, newPassword) => axios({
-	// Testar ainda
-	url: `${API_URL}/auth/recovery`,
-	method: 'post',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-	data: newPassword,
-});
+export const createNewPassword = (token, newPassword) =>
+	axios({
+		// Testar ainda
+		url: `${API_URL}/auth/recovery`,
+		method: "post",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		data: newPassword,
+	});
 
 // Onboarding
 
 // Organization
-export const createOrganization = org => axios({
-	url: `${API_URL}/organizations`,
-	method: 'post',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-	data: org,
-});
+export const createOrganization = (org) =>
+	axios({
+		url: `${API_URL}/organizations`,
+		method: "post",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		data: org,
+	});
 
-export const removeOrg = org => axios({
-	url: `${API_URL}/organizations`,
-	method: 'patch',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-	data: org,
-});
+export const removeOrg = (orgId) =>
+	axios({
+		url: `${API_URL}/organizations/${orgId}`,
+		method: "delete",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
 
-export const getAllOrganizations = userId => axios({
-	url: `${API_URL}/users/${userId}/organizations`,
-	method: 'get',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-});
+export const getAllOrganizations = (userId) =>
+	axios({
+		url: `${API_URL}/users/${userId}/organizations`,
+		method: "get",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
 
-export const patchOrg = org => axios({
-	url: `${API_URL}/organizations`,
-	method: 'patch',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-	data: org,
-});
+export const getAllOrganizationsAdmin = () =>
+	axios({
+		url: `${API_URL}/organizations`,
+		method: "get",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+export const patchOrg = (org) =>
+	axios({
+		url: `${API_URL}/organizations`,
+		method: "patch",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		data: org,
+	});
 
 // Organization
 

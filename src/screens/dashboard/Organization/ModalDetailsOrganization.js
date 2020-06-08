@@ -156,6 +156,8 @@ const SubAnswer = styled.p`
 	font-size: 0.9rem;
 	font-family: "Overpass", Light;
 	margin: 0.5rem 0 1rem 0;
+	word-break: break-word;
+	width: ${props => (props.fantasyName && '90%')};
 `;
 
 const ContentCreate = styled.div`
@@ -413,6 +415,13 @@ class ModalDetailsOrganization extends Component {
 		return `${date.getDate() <= 9 && `0${date.getDate()}`}/${date.getMonth() + 1 <= 9 && `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
 	};
 
+	renderAuthorizedData = (date) => {
+		const authorizedDate = new Date(date);
+		const formatDate = `${authorizedDate.getDate() <= 9 && `0${authorizedDate.getDate()}`}/${authorizedDate.getMonth() + 1 <= 9 && `0${authorizedDate.getMonth() + 1}`}/${authorizedDate.getFullYear()}`;
+
+		return `${date === null ? '-' : formatDate}`;
+	}
+
 	render() {
 		const { org, user } = this.props;
 		return (
@@ -429,14 +438,8 @@ class ModalDetailsOrganization extends Component {
 									<div>
 										<SubTitle>nome</SubTitle>
 										<SubAnswer>{user.name || '-'}</SubAnswer>
-										{/* <SubTitle>rg</SubTitle>
-									<SubAnswer>rg do consultor</SubAnswer> */}
 										<SubTitle>cpf</SubTitle>
 										<SubAnswer>{user.cpf || '-'}</SubAnswer>
-									</div>
-									<div>
-										{/* <SubTitle>data de nascimento</SubTitle>
-									<SubAnswer>data do consultor</SubAnswer> */}
 									</div>
 									<div>
 										<SubTitle>e-mail</SubTitle>
@@ -458,7 +461,7 @@ class ModalDetailsOrganization extends Component {
 										</div>
 										<div>
 											<SubTitle>autorizado em</SubTitle>
-											<SubAnswer>{org.authorization || '-'}</SubAnswer>
+											<SubAnswer>{this.renderAuthorizedData(org.authorization) || '-'}</SubAnswer>
 										</div>
 										<div>
 											<SubTitle>vencimento</SubTitle>
@@ -485,7 +488,7 @@ class ModalDetailsOrganization extends Component {
 							<ContentOrganization margin>
 								<Separation>
 									<SubTitle>nome fantasia</SubTitle>
-									<SubAnswer>{org.tradingName || '-'}</SubAnswer>
+									<SubAnswer fantasyName>{org.tradingName || '-'}</SubAnswer>
 									<SubTitle>razão social</SubTitle>
 									<SubAnswer>{org.companyName || '-'}</SubAnswer>
 								</Separation>
@@ -496,8 +499,6 @@ class ModalDetailsOrganization extends Component {
 									<SubAnswer>{org.telephone || '-'}</SubAnswer>
 								</Separation>
 								<Separation>
-									{/* <SubTitle>email</SubTitle>
-								<SubAnswer>{org.email || '-'}</SubAnswer> */}
 									<SubTitle>endereço</SubTitle>
 									<SubAnswer>{org.address || '-'}</SubAnswer>
 									<SubTitle>cep</SubTitle>
@@ -510,8 +511,6 @@ class ModalDetailsOrganization extends Component {
 									<SubAnswer>{org.neighborhood || '-'}</SubAnswer>
 								</Separation>
 								<Separation>
-									{/* <SubTitle>cep</SubTitle>
-								<SubAnswer>{org.cep || '-'}</SubAnswer> */}
 									<SubTitle>cidade</SubTitle>
 									<SubAnswer>{org.city || '-'}</SubAnswer>
 								</Separation>
@@ -519,8 +518,6 @@ class ModalDetailsOrganization extends Component {
 									<SeparationMobile>
 										<SubTitle>nome fantasia</SubTitle>
 										<SubAnswer>{org.tradingName || '-'}</SubAnswer>
-										{/* <SubTitle>email</SubTitle>
-										<SubAnswer>{org.email || '-'}</SubAnswer> */}
 										<SubTitle>cnpj</SubTitle>
 										<SubAnswer>{org.cnpj || '-'}</SubAnswer>
 										<SubTitle>complemento</SubTitle>
@@ -552,7 +549,7 @@ class ModalDetailsOrganization extends Component {
 							</SpanContainerImage>
 							<SpanContainerImage onClick={this.props.handleDeleteModal}>
 								<img src={ImageDelete} alt="delete icon" />
-								 <ContainerOptionMobile>Excluir</ContainerOptionMobile>
+								<ContainerOptionMobile>Excluir</ContainerOptionMobile>
 							</SpanContainerImage>
 						</ContainerEditImage>
 						}
