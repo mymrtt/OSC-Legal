@@ -779,7 +779,7 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 0,
+				isAdmin: userData.isAdmin !== 0,
 			});
 			this.getOrgs();
 		} catch (error) {
@@ -790,6 +790,8 @@ class OrganizationScreen extends Component {
 	getOrgs = async () => {
 		try {
 			const response = await getAllOrganizations(this.props.user.id);
+			console.log('response', response)
+
 			this.props.updateTableDatas(response.data);
 		} catch (error) {
 			console.log('error', error.response);
