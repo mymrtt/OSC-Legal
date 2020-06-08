@@ -102,6 +102,10 @@ const ContainerUser = styled.div`
 	flex-direction: column;
 	margin: ${props => (props.isAdmin ? '0 6rem 0.8rem 0' : '0 2.6rem 0.8rem 0')};
 
+	@media (max-width: 1024px) {
+		margin: ${props => (props.isAdmin ? '0 2rem 0.8rem 0' : '0 2.6rem 0.8rem 0')};
+	}
+
 	@media (max-width: 785px) {
 		margin: 0 0 0.8rem 0;
 		width: 40%;
@@ -181,7 +185,6 @@ class Header extends Component {
 
 	render() {
 		const { user } = this.props;
-		console.log('user', user)
 		return (
 			<Container border={user.isAdmin}>
 				<NavLink exact to="/organizations">
