@@ -517,16 +517,13 @@ const TableTitleMob = styled.th`
 `;
 
 const TableList = styled.td`
-	/* width: ${props => (props.width)}; */
 	width: ${props => (props.widthEmail ? '20%' : '10%')};
-
 	color: #404040;
 	font-family: "Overpass", Light;
 	font-size: 0.95rem;
 	font-weight: ${props => (props.font && '900')};
 	text-align: ${props => (props.wNumber && 'center')};
 	padding: .25rem;
-	/* padding: 0.5%; */
 	cursor: pointer;
 
 	@media (max-width: 768px) {
@@ -791,7 +788,7 @@ class OrganizationScreen extends Component {
 				this.getOrgsAdmin();
 			}
 		} catch (error) {
-			// console.log('error', error);
+			console.log('error', error);
 		}
 	}
 
@@ -877,11 +874,7 @@ class OrganizationScreen extends Component {
 				...this.state.itemSelected,
 			};
 
-			console.log('org', org)
-
-			const response = await removeOrg(org.orgId);
-			console.log('response delete', response)
-
+			await removeOrg(org.orgId);
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({
@@ -1143,8 +1136,6 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 							style={{ paddingLeft: '.7rem' }}
-							width={'10rem'}
-
 						>
 							{item.tradingName}
 						</TableList>
@@ -1154,7 +1145,6 @@ class OrganizationScreen extends Component {
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'8rem'}
 				>
 					{user.cpf || '-'}
 				</TableList>
@@ -1162,7 +1152,6 @@ class OrganizationScreen extends Component {
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
-					width={'9rem'}
 				>
 					{user.name || '-'}
 				</TableList>
@@ -1173,7 +1162,7 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList width={'7rem'} font={this.state.hovered === item}>{user.telephone || '-'}</TableList>
+						<TableList font={this.state.hovered === item}>{user.telephone || '-'}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
@@ -1194,7 +1183,6 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
-							width={'9rem'}
 							widthEmail
 						>
 							{user.email || '-'}
@@ -1202,7 +1190,6 @@ class OrganizationScreen extends Component {
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
-							width={'8rem'}
 						>
 							{user.telephone || '-'}
 						</TableList>
@@ -1227,7 +1214,6 @@ class OrganizationScreen extends Component {
 						>
 							{/* {this.handleDateExpired(item.createdIn) || '-' } */}
 							{item.createdIn === null ? '-' : this.handleDateExpired(item.createdIn)}
-
 						</TableList>
 					</>
 				}
