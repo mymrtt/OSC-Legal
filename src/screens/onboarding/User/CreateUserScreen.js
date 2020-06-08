@@ -342,7 +342,6 @@ class CreateUserScreen extends Component {
 		isErrorTel: false,
 		isTermsOpen: false,
 		isErrorEmail: false,
-		errorEmailExisting: false,
 	};
 
 	userRegister = async (user) => {
@@ -367,7 +366,6 @@ class CreateUserScreen extends Component {
 			console.log('err', error);
 			console.log('err.response', error.response);
 			this.setState({
-				errorEmailExisting: true,
 				emailErrorText: error.response.data.errors[0].message,
 				modalSucess: false,
 			});
@@ -424,7 +422,7 @@ class CreateUserScreen extends Component {
 		user[field] = ev.target.value;
 		this.setState({
 			user,
-			errorEmailExisting: false,
+			emailErrorText: '',
 		});
 	};
 
@@ -535,6 +533,7 @@ class CreateUserScreen extends Component {
 			isTermsOpen,
 			isErrorTel,
 			isErrorEmail,
+			emailErrorText,
 		} = this.state;
 		const {
 			name,
@@ -639,7 +638,7 @@ class CreateUserScreen extends Component {
 										/>
 									</BlockSmallerInput>
 								)}
-								{this.state.errorEmailExisting && <ErrorMessage>{this.state.emailErrorText}</ErrorMessage>}
+								{emailErrorText && <ErrorMessage>{emailErrorText}</ErrorMessage>}
 								{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
 							<TextTerms>
