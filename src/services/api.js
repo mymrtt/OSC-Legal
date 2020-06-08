@@ -89,15 +89,6 @@ export const patchOrg = org => axios({
 // Organization
 
 // Document
-// export const createDocument = (docs, token) => axios({
-// 	url: `${API_URL}/documents`,
-// 	method: 'post',
-// 	headers: {
-// 		Authorization: `Bearer ${token}`,
-// 	},
-// 	data: docs,
-// });
-
 export const createDocument = docs => axios.post(`${API_URL}/documents`, docs, {
 	headers: {
 		Authorization: `Bearer ${token}`,
@@ -112,19 +103,25 @@ export const getAllDocuments = token => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
+
+export const uploadDocument = templateId => axios({
+	url: `${API_URL}/documents`,
+	method: 'patch',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const exportDocument = templateId => axios({
+	url: `${API_URL}/documents/${templateId}/download`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 // Document
 
 // Template (Document - Admin)
-// export const createTemplate = templateData => axios({
-// 	url: `${API_URL}/templates`,
-// 	method: 'post',
-// 	headers: {
-// 		Authorization: `Bearer ${token}`,
-// 		'Content-Type': 'multipart/form-data',
-// 	},
-// 	data: templateData,
-// });
-
 export const createTemplate = templateData => axios.post(`${API_URL}/templates`, templateData, {
 	headers: {
 		Authorization: `Bearer ${token}`,
@@ -155,5 +152,4 @@ export const downloadTemplate = templateId => axios({
 		Authorization: `Bearer ${token}`,
 	},
 });
-
 // Template (Document - Admin)

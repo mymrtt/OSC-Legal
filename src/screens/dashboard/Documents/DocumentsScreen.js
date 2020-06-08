@@ -18,6 +18,8 @@ import ImageDocument from '../../../assets/document.png';
 import magnifyingGlass from '../../../assets/magnifyingGlass.svg';
 import DownloadIcon from '../../../assets/download.svg';
 import DownloadWhiteIcon from '../../../assets/downloadwhite.svg';
+import uploadIcon from '../../../assets/upload.svg';
+import uploadWhiteIcon from '../../../assets/upload-branco.svg';
 import Exit from '../../../assets/fechar.svg';
 import DeleteIcon from '../../../assets/delete.svg';
 import DeleteIconWhite from '../../../assets/deleteWhite.svg';
@@ -38,6 +40,9 @@ import {
 	getAllOrganizations,
 	getAllDocuments,
 	createDocument,
+	downloadTemplate,
+	exportDocument,
+	uploadDocument,
 } from '../../../services/api';
 
 const mapStateToProps = state => ({
@@ -605,6 +610,42 @@ const Option = styled.button`
 	}
 `;
 
+const OptionLabel = styled.label`
+	margin-bottom: 1rem;
+	width: 8rem;
+	height: 2.5rem;
+	padding: 0 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: transparent;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	&:hover {
+		background: #FF4136;
+	}
+	@media (max-width: 768px) {
+		width: 7rem;
+		padding: 0 0.8rem;
+	}
+	@media (max-width: 648px) {
+		align-self: center;
+		margin-bottom: 0;
+		height: 100%;
+		width: 100%;
+		padding: 0 15%;
+		border-radius: initial;
+	}
+	input[type='file'] {
+		display: none;
+	}
+`;
+
+const OptionLink = styled.a`
+	text-decoration: none;
+`;
+
 const OptionImage = styled.img`
 	margin-bottom: 0.5rem;
 `;
@@ -1143,17 +1184,21 @@ class DocumentsScreen extends Component {
 		downloadExport: DownloadIcon,
 		downloadEdit: EditIcon,
 		downloadDelete: DeleteIcon,
+		downloadUpload: DownloadIcon,
 		modelSelect: '',
 		search: '',
 		searching: false,
 		hoverExport: '',
 		hoverEdit: '',
+		hoverUpload: '',
+		hoverBaixar: '',
 		hoverDelete: '',
 		colorTextExport: '',
 		colorTextEdit: '',
 		colorTextDelete: '',
 		redirect: false,
 		template: null,
+		docFile: null,
 		templateData: {
 			templateName: '',
 			description: '',
@@ -1216,7 +1261,6 @@ class DocumentsScreen extends Component {
 	}
 
 	createTemplate = async (templateData) => {
-		console.log('templateData', templateData)
 		try {
 			const token = await localStorage.getItem('token');
 
@@ -1249,7 +1293,6 @@ class DocumentsScreen extends Component {
 			this.setState({
 				templateList: response.data,
 			});
-
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1257,18 +1300,9 @@ class DocumentsScreen extends Component {
 
 	createDoc = async () => {
 		try {
-			// const docs = {
-			// 	template_id: this.state.isSelected.templateId,
-			// 	org_id: this.state.orgID,
-			// 	docUrl: this.state.file.name,
-			// 	doc: this.state.isSelected.template,
-			// };
-
 			const docs = new FormData();
-			docs.append('template_id', this.state.isSelected.templateId);
 			docs.append('org_id', this.state.orgID);
-
-			console.log('document', docs);
+			docs.append('template_id', this.state.isSelected.templateId);
 
 			const token = await localStorage.getItem('token');
 
@@ -1289,6 +1323,52 @@ class DocumentsScreen extends Component {
 			await deleteTemplate(templateID, token);
 
 			this.handleCancelDelete();
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	downloadTemplate = async (doc) => {
+		try {
+			const { templateId } = doc;
+
+			const token = await localStorage.getItem('token');
+
+			const response = await downloadTemplate(templateId, token);
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	exportDocument = async (doc) => {
+		try {
+			const { templateId } = doc;
+
+			const token = await localStorage.getItem('token');
+
+			const response = await exportDocument(templateId, token);
+		} catch (error) {
+			console.log('error', error.response);
+		}
+	}
+
+	uploadDocument = async () => {
+		try {
+			const docs = new FormData();
+			docs.append('org_id', this.state.orgID);
+			docs.append('template_id', this.state.isSelected.templateId);
+			docs.append('docUrl', this.state.docUrl);
+			docs.append('file', this.state.docFile);
+
+			console.log('doc file', this.state.docFile);
+			console.log('doc file', this.state.docUrl);
+
+
+			const token = await localStorage.getItem('token');
+
+			const response = await uploadDocument(docs, token);
+
+			console.log('reponse', response);
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1382,10 +1462,42 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	handleChangeColorUploadUser = (docs) => {
+		this.setState({
+			downloadUpload: uploadWhiteIcon,
+			hoverUpload: docs,
+			colorTextExport: '#ffffff',
+		});
+	}
+
+	handleChangeColorBaixarUser = (docs) => {
+		this.setState({
+			downloadExport: DownloadWhiteIcon,
+			hoverBaixar: docs,
+			colorTextExport: '#ffffff',
+		});
+	}
+
 	handleChangeColorLeaveExport = () => {
 		this.setState({
 			downloadExport: DownloadIcon,
 			hoverExport: '',
+			colorTextExport: '#85144B',
+		});
+	}
+
+	handleChangeColorLeaveBaixar = () => {
+		this.setState({
+			downloadExport: DownloadIcon,
+			hoverBaixar: '',
+			colorTextExport: '#85144B',
+		});
+	}
+
+	handleChangeColorLeaveUpload = () => {
+		this.setState({
+			downloadUpload: uploadWhiteIcon,
+			hoverUpload: '',
 			colorTextExport: '#85144B',
 		});
 	}
@@ -1454,26 +1566,41 @@ class DocumentsScreen extends Component {
 		});
 	}
 
+	handleClickBaixar = (doc) => {
+		this.downloadTemplate(doc);
+	}
+
+	handleClickExport = (doc) => {
+		this.exportDocument(doc);
+	}
+
 	uploadFile = (e) => {
 		e.preventDefault();
-		// // eslint-disable-next-line no-undef
-		// const reader = new FileReader();
 		const file = e.target.files[0];
-		// console.log('fileee', e.target.files[0]);
-
-		// reader.onloadend = () => {
-		// 	this.setState({
-		// 		template: reader.result,
-		// 		isErrorFile: false,
-		// 		templateUrl: file,
-		// 	});
-		// };
-		// reader.readAsArrayBuffer(file);
 		this.setState({
 			template: file,
 			templateUrl: file,
 			isErrorFile: false,
 		});
+	}
+
+	uploadDoc = (e) => {
+		e.preventDefault();
+		const fileDoc = e.target.files[0];
+		console.log('file', fileDoc);
+
+		// this.setState({
+		// 	docFile: fileDoc,
+		// 	docUrl: fileDoc,
+		// });
+
+		this.setState({
+			docFile: fileDoc,
+		});
+
+		console.log('doc file', this.state.fileDoc);
+
+		this.uploadDocument();
 	}
 
 	handleSelected = (doc) => {
@@ -1582,10 +1709,9 @@ class DocumentsScreen extends Component {
 				isErrorTitleQtd: false,
 			});
 		}
-		if (templateName !== '' && templateName.length >= 4 && description !== '' && description.length <= 250 && template !== null) {
+		if (templateName !== '' && templateName.length >= 4 && description !== ''
+		&& description.length <= 250 && template !== null) {
 			const templateUrl = this.state.templateUrl.name;
-
-			// const templateData = { description, template, templateName, templateUrl};
 
 			const templateData = new FormData();
 			templateData.append('description', description);
@@ -1593,9 +1719,7 @@ class DocumentsScreen extends Component {
 			templateData.append('templateUrl', templateUrl);
 			templateData.append('file', template);
 
-			console.log('templateDataaa', templateData.get('file'))
-
-			//Criando tamplate admin
+			// Criando tamplate admin
 			await this.createTemplate(templateData);
 			this.props.addNewDocument(templateData);
 
@@ -1726,6 +1850,7 @@ class DocumentsScreen extends Component {
 								onChange={this.uploadFile}
 								id='upload-file'
 								type="file"
+								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
 							<TextUploadFile file={this.state.template}>
@@ -1884,6 +2009,7 @@ class DocumentsScreen extends Component {
 						<ContainerOptions
 							modal={this.state.modalDelete}
 							contOptions={this.state.options && (this.state.selectedOptions === doc)}>
+
 							<Option
 								onMouseEnter={() => this.handleChangeColorExport(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
@@ -1899,6 +2025,8 @@ class DocumentsScreen extends Component {
 									Exportar
 								</OptionText>
 							</Option>
+
+
 							<Option
 								onMouseEnter={() => this.handleChangeColorDelete(doc)}
 								onMouseLeave={this.handleChangeColorLeaveDelete}
@@ -1970,20 +2098,64 @@ class DocumentsScreen extends Component {
 						<Option
 							onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveExport}
+							onClick={() => this.handleClickExport(doc)}
 						>
+							<OptionLink href={doc.path} download={doc.originalname}>
+								<img
+									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
+									alt="Exportar" />
+								<OptionText
+									style={{ marginLeft: '.3rem' }}
+									colorTextButton={
+										this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
+									}
+								>
+									Exportar
+								</OptionText>
+							</OptionLink>
+						</Option>
+						<Option
+							onMouseEnter={() => this.handleChangeColorBaixarUser(doc)}
+							onMouseLeave={this.handleChangeColorLeaveBaixar}
+							onClick={() => this.handleClickBaixar(doc)}
+						>
+							<OptionLink href={doc.path} download={doc.originalname}>
+								<img
+									src={this.state.hoverBaixar === doc ? this.state.downloadExport : DownloadIcon}
+									alt="Baixar" />
+								<OptionText
+									style={{ marginLeft: '.8rem' }}
+									colorTextButton={
+										this.state.hoverBaixar === doc ? this.state.colorTextExport : '#85144B'
+									}
+								>
+									Baixar
+								</OptionText>
+							</OptionLink>
+						</Option>
+						<OptionLabel
+							onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
+							onMouseLeave={this.handleChangeColorLeaveUpload}
+							htmlFor='upload-doc'
+						>
+							<input
+								onChange={this.uploadDoc}
+								id='upload-doc'
+								type="file"
+								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+							/>
 							<img
-								src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
-								alt="Exportar" />
+								src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
+								alt="Upload" />
 							<OptionText
 								colorTextButton={
-									this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
+									this.state.hoverUpload === doc ? this.state.colorTextExport : '#85144B'
 								}
 							>
-								Exportar
+								Upload
 							</OptionText>
-						</Option>
-
-						<Option
+						</OptionLabel>
+						{/* <Option
 							onMouseEnter={() => this.handleChangeColorEditUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveEdit}
 							onClick={this.openEditor}
@@ -1995,7 +2167,7 @@ class DocumentsScreen extends Component {
 								<p>Editar</p>
 							</OptionText>
 
-						</Option>
+						</Option> */}
 						<Option
 							onMouseEnter={() => this.handleChangeColorDeleteUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveDelete}

@@ -228,7 +228,6 @@ class LoginScreen extends Component {
 				error: '',
 			});
 		} catch (error) {
-			console.log('error', error);
 			console.log('error.response', error.response);
 			const { data } = error.response;
 			if (data === 'user not verified') {
