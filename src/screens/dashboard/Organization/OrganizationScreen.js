@@ -779,7 +779,7 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 0,
+				isAdmin: userData.isAdmin !== 0,
 			});
 			this.getOrgs();
 		} catch (error) {
