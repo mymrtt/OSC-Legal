@@ -1,6 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable eqeqeq */
-/* eslint-disable no-mixed-spaces-and-tabs */
 // Libs
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -190,7 +187,6 @@ const WrapOrganizationContent2 = styled.div`
 
 const WrapOrganizationItem = styled.div`
 	width: 50%;
-	/* padding-bottom: 2rem; */
 	display: flex;
 	flex-direction: column;
 `;
@@ -200,7 +196,6 @@ const ContainerConcludeButton = styled.span`
 	padding-left: 3rem;
 	padding-right: 3rem;
 	margin-top: 1.5rem;
-	/* padding-bottom: 1.5rem; */
 
 	@media(max-width: 648px) {
 		padding-left: 2rem;
@@ -261,7 +256,6 @@ class ModalCreateOrganization extends Component {
 		tradingName: '',
 		companyName: '',
 		cpf: '',
-		// email: '',
 		cnpj: '',
 		telephone: '',
 		address: '',
@@ -292,7 +286,6 @@ class ModalCreateOrganization extends Component {
 				tradingName: this.props.item.tradingName,
 				companyName: this.props.item.companyName,
 				cpf: this.props.item.cpf,
-				// email: '',
 				cnpj: this.props.item.cnpj,
 				telephone: this.props.item.telephone,
 				address: this.props.item.address,
@@ -311,15 +304,20 @@ class ModalCreateOrganization extends Component {
 	createOrg = async (org) => {
 		try {
 			const response = await createOrganization(org);
-			console.log('response aqui', response)
+
+			const newOrg = {
+				...org,
+				orgId: response.data.insertId,
+			};
 
 			this.setState({
 				allStateTrue: true,
 				isCnpjError: '',
 				error: '',
 			});
+
 			this.handleModalSucess(org.tradingName);
-			this.props.addNewOrg(org);
+			this.props.addNewOrg(newOrg);
 		} catch (error) {
 			console.log('error', error.response);
 			if (error.response.status === 401) {
@@ -368,6 +366,8 @@ class ModalCreateOrganization extends Component {
 			await getAllOrganizations(userId);
 		} catch (error) {
 			console.log('error', error);
+			console.log('error.response', error.response);
+
 		}
 	}
 
