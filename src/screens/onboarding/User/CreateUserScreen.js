@@ -144,22 +144,6 @@ const ErrorMessage = styled.p`
   }
 `;
 
-const ErrorEmpty = styled.p`
-  margin: 0.5rem 0 0.5rem 1.9rem;
-  font-size: 0.7rem;
-  color: #F00;
-  align-self: flex-start;
-	font-family: Overpass;
-  font-weight: 400;
-	@media(max-width: 2560px){
-		margin: 0.5rem 0 0.5rem 3.2rem;
-	}
-  @media(max-width: 648px){
-	  align-self: flex-start;
-	  margin: 1rem 0 1rem 0.2rem;
-  }
-`;
-
 const ImagePassword = styled.img`
   position: absolute;
   bottom: 1.2rem;
@@ -351,44 +335,39 @@ class CreateUserScreen extends Component {
 			telephone: '',
 			password: '',
 		},
-		nameError: false,
+		isNameError: false,
 		isErrorCpf: false,
 		isErrorPassword: false,
 		isEmpty: false,
 		isErrorTel: false,
 		isTermsOpen: false,
 		isErrorEmail: false,
-		errorEmailExisting: false,
 	};
 
 	userRegister = async (user) => {
 		try {
-			const encodedPassword = OscHash(user.password);
+			const userData = {
+				...user,
+				cpf: user.cpf.replace(/[^\w\s]/gi, ''),
+			};
 
-			const credentials = `${user.email}:${encodedPassword}`;
-
+			const encodedPassword = OscHash(userData.password);
+			const credentials = `${userData.email}:${encodedPassword}`;
 			const base64credentials = Buffer.from(credentials, 'utf-8').toString(
 				'base64',
 			);
 
-			delete user.email;
-			delete user.password;
+			delete userData.email;
+			delete userData.password;
 
-			await createUserAccount(user, base64credentials);
+			await createUserAccount(userData, base64credentials);
 			this.handleModalSucess();
 		} catch (error) {
 			console.log('err', error);
 			console.log('err.response', error.response);
 			this.setState({
-				errorEmailExisting: true,
 				emailErrorText: error.response.data.errors[0].message,
 				modalSucess: false,
-				user: {
-					password: '',
-					name: '',
-					telephone: '',
-					cpf: '',
-				},
 			});
 		}
 	}
@@ -421,122 +400,75 @@ class CreateUserScreen extends Component {
 
 	handleChange = (field, ev) => {
 		const { user } = this.state;
+
+		if (field === 'name') {
+			this.setState({
+				isNameError: ev.target.value.length < 4,
+			});
+		}
+
+		if (field === 'password') {
+			this.setState({
+				isErrorPassword: ev.target.value.length < 6,
+			});
+		}
+
+		if (field === 'telephone') {
+			this.setState({
+				isErrorTel: ev.target.value.length < 8,
+			});
+		}
+
 		user[field] = ev.target.value;
 		this.setState({
 			user,
-			errorEmailExisting: false,
+			emailErrorText: '',
 		});
 	};
 
 	handleChangeCpf = (ev) => {
 		const { user } = this.state;
 		user.cpf = ev.target.value;
-		this.setState({ user, isErrorCpf: false });
+
+		this.setState({
+			user,
+			isErrorCpf: !this.isValidCPF(ev.target.value),
+		});
 	};
 
-	isValidCPF = () => {
-		const { cpf } = this.state.user;
-		let numbers; let digits; let sum; let i; let result;
-		let digitsEqual;
-		digitsEqual = 1;
-		if (cpf.length < 11) return false;
-		for (i = 0; i < cpf.length - 1; i++) {
-			if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
-				digitsEqual = 0;
-				break;
-			}
-		}
-		if (!digitsEqual) {
-			numbers = cpf.substring(0, 9);
-			digits = cpf.substring(9);
-			sum = 0;
-			for (i = 10; i > 1; i--) sum += numbers.charAt(10 - i) * i;
-			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
-			if (result !== digits.charAt(0)) return false;
-			numbers = cpf.substring(0, 10);
-			sum = 0;
-			for (i = 11; i > 1; i--) sum += numbers.charAt(11 - i) * i;
-			result = sum % 11 < 2 ? 0 : 11 - sum % 11;
-			if (result !== digits.charAt(1)) return false;
-			return true;
-		}
-		return false;
+	isValidCPF = (value) => {
+		const cpf = value.replace(/\D/g, '');
+		if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+		let result = true;
+		[9, 10].forEach((j) => {
+			let soma = 0; let
+				r;
+			cpf.split(/(?=)/).splice(0, j).forEach((e, i) => {
+				soma += parseInt(e) * ((j + 2) - (i + 1));
+			});
+			r = soma % 11;
+			r = (r < 2) ? 0 : 11 - r;
+			if (r != cpf.substring(j, j + 1)) result = false;
+		});
+		return result;
 	}
-
-	// handleChangeEmail = (ev) => {
-	// 	const { user } = this.state;
-	// 	user.email = ev.target.value;
-	// 	this.setState({ user, isErrorEmail: false });
-	// };
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
-		this.handleErrors();
+		this.validateUser();
 	};
 
-	handleErrors = () => {
-		const { user } = this.state;
+	validateUser = () => {
 		const {
-			name,
-			// email,
-			telephone,
-			password,
-			cpf,
-		} = this.state.user;
+			user,
+			isErrorPassword,
+			isNameError,
+			isErrorCpf,
+			isErrorTel,
+			isErrorEmail,
+		} = this.state;
 
-		if (
-			name === ''
-			// || email === ''
-			|| telephone === ''
-			|| password === ''
-		) {
-			this.setState({
-				isEmpty: true,
-			});
-		} else {
-			this.setState({
-				isEmpty: false,
-			});
-		}
-		if (name.length < 4) {
-			this.setState({
-				nameError: true,
-			});
-		} else {
-			this.setState({
-				nameError: false,
-			});
-		}
-		if (cpf.length === 11) {
-			this.setState({
-				isErrorCpf: false,
-			});
-		} else {
-			this.setState({
-				isErrorCpf: true,
-			});
-		}
-		if (!password || password.length < 6) {
-			this.setState({
-				isErrorPassword: true,
-			});
-		} else {
-			this.setState({
-				isErrorPassword: false,
-			});
-		}
-		if (!telephone || telephone.length < 8) {
-			this.setState({
-				isErrorTel: true,
-			});
-		} else {
-			this.setState({
-				isErrorTel: false,
-			});
-		}
-
-		if (telephone.length >= 8 && password.length >= 6 && cpf.length === 11 && name.length >= 4) {
-			this.props.addNewUser(user);
+		if (!isNameError && !isErrorCpf && !isErrorEmail && !isErrorTel && !isErrorPassword) {
 			this.userRegister(user);
 		}
 	};
@@ -572,6 +504,17 @@ class CreateUserScreen extends Component {
 		</Overlay>
 	)
 
+	telMask = value => value
+		.replace(/\D/g, '')
+		.replace(/(\d{2})(\d)/, '($1) $2')
+
+	cpfMask = value => value
+		.replace(/\D/g, '')
+		.replace(/(\d{3})(\d)/, '$1.$2')
+		.replace(/(\d{3})(\d)/, '$1.$2')
+		.replace(/(\d{3})(\d{1,2})/, '$1-$2')
+		.replace(/(-\d{2})\d+?$/, '$1')
+
 	render() {
 		const errorMessage = [
 			'Use 6 caracteres ou mais para a sua senha.',
@@ -582,20 +525,18 @@ class CreateUserScreen extends Component {
 		];
 
 		const {
-			user,
 			isErrorPassword,
 			modalSucess,
-			isEmpty,
-			nameError,
+			isNameError,
 			isErrorCpf,
 			togglePassword,
 			isTermsOpen,
 			isErrorTel,
 			isErrorEmail,
+			emailErrorText,
 		} = this.state;
 		const {
 			name,
-			// surname,
 			cpf,
 			email,
 			telephone,
@@ -610,10 +551,9 @@ class CreateUserScreen extends Component {
 					</Container>
 				) : (
 					<Container>
-						<Form onClick={this.handleSubmit}>
+						<Form onSubmit={this.handleSubmit}>
 							<ImageLogo
 								margin="3rem 0 2rem 0"
-								// marginMobile="15rem 0 2rem 0"
 								width=" 180px"
 							/>
 							<BlockTitle>
@@ -624,20 +564,19 @@ class CreateUserScreen extends Component {
 								<Input
 									type="text"
 									onChange={ev => this.handleChange('name', ev)}
-									value={name}
+									value={name || ''}
 									placeholder="Nome completo"
 									name="nomeCompleto"
-									isError={nameError}
+									isError={isNameError}
 									required
 								/>
-								{nameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
+								{isNameError && <ErrorMessage>{errorMessage[4]}</ErrorMessage>}
 							</Label>
 							<Label>
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input
-									type="number"
 									onChange={ev => this.handleChangeCpf(ev)}
-									value={cpf}
+									value={this.cpfMask(cpf) || ''}
 									placeholder="000.000.000-00"
 									name="cpf"
 									isError={isErrorCpf}
@@ -661,9 +600,8 @@ class CreateUserScreen extends Component {
 							<Label>
 								<ParagraphInput>telefone</ParagraphInput>
 								<Input
-									type="number"
 									onChange={ev => this.handleChange('telephone', ev)}
-									value={telephone}
+									value={this.telMask(telephone) || ''}
 									placeholder="(00) 00000-0000"
 									name="telephone"
 									isError={isErrorTel}
@@ -700,10 +638,9 @@ class CreateUserScreen extends Component {
 										/>
 									</BlockSmallerInput>
 								)}
-								{this.state.errorEmailExisting && <ErrorMessage>{this.state.emailErrorText}</ErrorMessage>}
+								{emailErrorText && <ErrorMessage>{emailErrorText}</ErrorMessage>}
 								{isErrorPassword && <ErrorMessage>{errorMessage[0]}</ErrorMessage>}
 							</Label>
-							{/* {isEmpty && <ErrorEmpty>{errorMessage[3]}</ErrorEmpty>} */}
 							<TextTerms>
 							Clique abaixo para concordar com os
 								<strong onClick={this.handleModalTerms}>

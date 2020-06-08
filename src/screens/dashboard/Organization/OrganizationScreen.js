@@ -798,6 +798,7 @@ class OrganizationScreen extends Component {
 	getOrgsUser = async () => {
 		try {
 			const response = await getAllOrganizations(this.props.user.id);
+
 			this.props.updateTableDatas(response.data);
 		} catch (error) {
 			console.log('error', error.response);
