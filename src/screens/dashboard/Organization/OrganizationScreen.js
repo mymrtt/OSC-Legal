@@ -878,7 +878,7 @@ class OrganizationScreen extends Component {
 				deletedAt: 0,
 			};
 
-			await removeOrg(org);
+			await removeOrg(org.orgId);
 
 			this.props.deleteOrg(this.state.itemSelected);
 			this.setState({

@@ -311,7 +311,7 @@ class ModalCreateOrganization extends Component {
 	createOrg = async (org) => {
 		try {
 			const response = await createOrganization(org);
-			console.log('response', response);
+			console.log('response aqui', response)
 
 			this.setState({
 				allStateTrue: true,
