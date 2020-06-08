@@ -39,7 +39,7 @@ export const resetPassword = email => axios({
 });
 
 export const createNewPassword = (token, newPassword) => axios({
-	//Testar ainda
+	// Testar ainda
 	url: `${API_URL}/auth/recovery`,
 	method: 'post',
 	headers: {
@@ -89,13 +89,20 @@ export const patchOrg = org => axios({
 // Organization
 
 // Document
-export const createDocument = (docs, token) => axios({
-	url: `${API_URL}/documents`,
-	method: 'post',
+// export const createDocument = (docs, token) => axios({
+// 	url: `${API_URL}/documents`,
+// 	method: 'post',
+// 	headers: {
+// 		Authorization: `Bearer ${token}`,
+// 	},
+// 	data: docs,
+// });
+
+export const createDocument = docs => axios.post(`${API_URL}/documents`, docs, {
 	headers: {
 		Authorization: `Bearer ${token}`,
+		'Content-Type': 'multipart/form-data',
 	},
-	data: docs,
 });
 
 export const getAllDocuments = token => axios({
@@ -108,13 +115,21 @@ export const getAllDocuments = token => axios({
 // Document
 
 // Template (Document - Admin)
-export const createTemplate = templateData => axios({
-	url: `${API_URL}/templates`,
-	method: 'post',
+// export const createTemplate = templateData => axios({
+// 	url: `${API_URL}/templates`,
+// 	method: 'post',
+// 	headers: {
+// 		Authorization: `Bearer ${token}`,
+// 		'Content-Type': 'multipart/form-data',
+// 	},
+// 	data: templateData,
+// });
+
+export const createTemplate = templateData => axios.post(`${API_URL}/templates`, templateData, {
 	headers: {
 		Authorization: `Bearer ${token}`,
+		'Content-Type': 'multipart/form-data',
 	},
-	data: templateData,
 });
 
 export const getAllTemplates = () => axios({
@@ -128,6 +143,14 @@ export const getAllTemplates = () => axios({
 export const deleteTemplate = templateId => axios({
 	url: `${API_URL}/templates/${templateId}`,
 	method: 'delete',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const downloadTemplate = templateId => axios({
+	url: `${API_URL}/templates/${templateId}/download`,
+	method: 'get',
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},

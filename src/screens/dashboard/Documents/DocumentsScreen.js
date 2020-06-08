@@ -1206,17 +1206,17 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await getAllDocuments(token);
-			console.log('response documents', response.data);
+
 			this.setState({
 				allDocuments: response.data,
 			});
 		} catch (error) {
-			console.log('erro', error);
 			console.log('erro.response', error.response);
 		}
 	}
 
 	createTemplate = async (templateData) => {
+		console.log('templateData', templateData)
 		try {
 			const token = await localStorage.getItem('token');
 
@@ -1224,7 +1224,7 @@ class DocumentsScreen extends Component {
 
 			console.log('reponse', response);
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 		}
 	}
 
@@ -1257,22 +1257,26 @@ class DocumentsScreen extends Component {
 
 	createDoc = async () => {
 		try {
-			const docs = {
-				template_id: this.state.isSelected.templateId,
-				org_id: this.state.orgID,
-				doc: this.state.isSelected.template,
-			};
-			console.log(docs);
+			// const docs = {
+			// 	template_id: this.state.isSelected.templateId,
+			// 	org_id: this.state.orgID,
+			// 	docUrl: this.state.file.name,
+			// 	doc: this.state.isSelected.template,
+			// };
 
-			console.log('this.state.isSelected.template', this.state.isSelected)
+			const docs = new FormData();
+			docs.append('template_id', this.state.isSelected.templateId);
+			docs.append('org_id', this.state.orgID);
 
-			// const token = await localStorage.getItem('token');
+			console.log('document', docs);
 
-			// const response = await createDocument(docs, token);
+			const token = await localStorage.getItem('token');
 
-			// console.log('response', response);
+			const response = await createDocument(docs, token);
+
+			console.log('response', response);
 		} catch (error) {
-			console.log('erro', error.response);
+			console.log('error', error);
 		}
 	}
 
@@ -1452,17 +1456,24 @@ class DocumentsScreen extends Component {
 
 	uploadFile = (e) => {
 		e.preventDefault();
-		// eslint-disable-next-line no-undef
-		const reader = new FileReader();
+		// // eslint-disable-next-line no-undef
+		// const reader = new FileReader();
 		const file = e.target.files[0];
+		// console.log('fileee', e.target.files[0]);
 
-		reader.onloadend = () => {
-			this.setState({
-				template: reader.result,
-				isErrorFile: false,
-			});
-		};
-		reader.readAsDataURL(file);
+		// reader.onloadend = () => {
+		// 	this.setState({
+		// 		template: reader.result,
+		// 		isErrorFile: false,
+		// 		templateUrl: file,
+		// 	});
+		// };
+		// reader.readAsArrayBuffer(file);
+		this.setState({
+			template: file,
+			templateUrl: file,
+			isErrorFile: false,
+		});
 	}
 
 	handleSelected = (doc) => {
@@ -1572,7 +1583,17 @@ class DocumentsScreen extends Component {
 			});
 		}
 		if (templateName !== '' && templateName.length >= 4 && description !== '' && description.length <= 250 && template !== null) {
-			const templateData = { description, template, templateName };
+			const templateUrl = this.state.templateUrl.name;
+
+			// const templateData = { description, template, templateName, templateUrl};
+
+			const templateData = new FormData();
+			templateData.append('description', description);
+			templateData.append('templateName', templateName);
+			templateData.append('templateUrl', templateUrl);
+			templateData.append('file', template);
+
+			console.log('templateDataaa', templateData.get('file'))
 
 			//Criando tamplate admin
 			await this.createTemplate(templateData);
@@ -1988,7 +2009,7 @@ class DocumentsScreen extends Component {
 									? this.state.colorTextDelete : '#85144B'}
 								onClick={() => this.userSelectedDoc(doc, index)}
 							>
-								<p>Excluir Dois</p>
+								<p>Excluir</p>
 							</OptionText>
 						</Option>
 					</ContainerOptions>
