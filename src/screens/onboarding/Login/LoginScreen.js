@@ -202,7 +202,6 @@ class LoginScreen extends Component {
 			);
 
 			const response = await login(user, base64credentials);
-			console.log('response', response)
 
 			if (response) {
 				localStorage.setItem('token', response.data.token);

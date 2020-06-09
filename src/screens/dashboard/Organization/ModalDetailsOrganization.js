@@ -407,7 +407,8 @@ class ModalDetailsOrganization extends Component {
 	}
 
 	render() {
-		const { org, user } = this.props;
+		const { org, user, isAdmin } = this.props;
+
 		return (
 			<Overlay onClick={this.props.handleClosedModal}>
 				<Container onClick={ev => ev.stopPropagation()}>
@@ -421,15 +422,15 @@ class ModalDetailsOrganization extends Component {
 								<ContentConsultorItem>
 									<div>
 										<SubTitle>nome</SubTitle>
-										<SubAnswer>{user.name || '-'}</SubAnswer>
+										<SubAnswer>{isAdmin ? org.name : user.name}</SubAnswer>
 										<SubTitle>cpf</SubTitle>
-										<SubAnswer>{user.cpf || '-'}</SubAnswer>
+										<SubAnswer>{isAdmin ? org.cpf : user.cpf}</SubAnswer>
 									</div>
 									<div>
 										<SubTitle>e-mail</SubTitle>
-										<SubAnswer>{user.email || '-'}</SubAnswer>
+										<SubAnswer> {isAdmin ? org.email : user.email}</SubAnswer>
 										<SubTitle>telefone</SubTitle>
-										<SubAnswer>{user.telephone || '-'}</SubAnswer>
+										<SubAnswer>{isAdmin ? org.telephone : user.telephone}</SubAnswer>
 									</div>
 								</ContentConsultorItem>
 							</ContentConsultor>
