@@ -142,8 +142,11 @@ class ModalSucessfully extends Component {
 					<Title>A {this.props.tradingName} foi criada com sucesso!</Title>
 					<ImageBarcode src={Barcode} alt="Barcode" />
 					<WarningText>
-						<Text>
+						{/* <Text>
 							Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado até o dia <strong>--/--/----</strong>, para o <span>e-mail cadastrado.</span>
+						</Text> */}
+						<Text>
+							Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado para o <span>e-mail cadastrado.</span>
 						</Text>
 						<Text>
 							Caso não receba o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="http://www.osclegal.org.br/" target="_blank">www.osclegal.org.br</a>
