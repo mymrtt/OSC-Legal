@@ -332,11 +332,11 @@ class ModalCreateOrganization extends Component {
 					error: 'Token expirado, faça login novamente',
 				});
 			}
-			if (error.response.data.errors[0]) {
-				this.setState({
-					error: error.response.data.errors[0].message,
-				});
-			}
+			// if (error.response.data.errors[0]) {
+			// 	this.setState({
+			// 		error: error.response.data.errors[0].message,
+			// 	});
+			// }
 		}
 	}
 
@@ -489,8 +489,11 @@ class ModalCreateOrganization extends Component {
 				isCepError: false,
 			});
 		}
+		console.log('cnpj', cnpj)
+		console.log('cnpj.length', cnpj.length)
 
-		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj || cnpj.length === 14)
+
+		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj.length || cnpj.length === 14)
 			&& telephone.length >= 8 && address.length >= 4 && addressComplement.length >= 4
 			&& city.length >= 4 && neighborhood.length >= 4 && cep.length === 8
 		) {
@@ -499,6 +502,8 @@ class ModalCreateOrganization extends Component {
 				return `${date.getDate() <= 9 && `0${date.getDate()}`}/${date.getMonth() + 1 <= 9 && `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
 			};
 
+			console.log('cnpj foi ----', cnpj);
+
 			const org = {
 				tradingName: this.state.tradingName,
 				address: this.state.address,
@@ -506,7 +511,7 @@ class ModalCreateOrganization extends Component {
 				neighborhood: this.state.neighborhood,
 				city: this.state.city,
 				cep: this.state.cep,
-				cnpj: this.state.cnpj,
+				cnpj: this.state.cnpj || null,
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.state.createdIn : createDate(),
 				user_id: this.props.userData.id,

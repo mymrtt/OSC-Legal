@@ -1268,7 +1268,6 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await getllOrgDocumets(orgId, token);
-			// console.log('response', response)
 
 			this.setState({
 				allOrgsDocuments: response.data,
@@ -1810,7 +1809,7 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleDeleteUserDoc = async () => {
+	handleDeleteDoc = async () => {
 		// this.setState({
 		// 	listDocs: this.state.listDocs.filter((doc, index) => index !== this.state.clickedModel),
 		// 	modalDelete: false,
@@ -1829,15 +1828,13 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	handleDeleteTemplate = () => {
-		console.log('blabla this.props.isAdmin', this.props.isAdmin);
+	handleDelete = () => {
 		if (this.props.isAdmin) {
 			this.deleteTemplate();
 		} else {
-			this.handleDeleteUserDoc();
+			this.handleDeleteDoc();
 		}
 	}
-
 
 	renderModalModels = () => {
 		const Messages = [
@@ -1934,7 +1931,7 @@ class DocumentsScreen extends Component {
 		<ContainerModalDelete onClick={this.handleCancelDelete}>
 			<ModalDelete onClick={e => e.stopPropagation()}>
 				<TitleModal>
-					<TitleDelete>Excluir Modelo blabla</TitleDelete>
+					<TitleDelete>Excluir Modelo</TitleDelete>
 					<img onClick={this.handleCancelDelete} src={Exit} alt="Sair" />
 				</TitleModal>
 				<WrapTextModal>
@@ -1955,7 +1952,7 @@ class DocumentsScreen extends Component {
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
 					<Button
-						onClick={() => this.handleDeleteTemplate()}
+						onClick={() => this.handleDelete()}
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
@@ -2201,7 +2198,7 @@ class DocumentsScreen extends Component {
 									? this.state.colorTextDelete : '#85144B'}
 								onClick={() => this.userSelectedDoc(doc, index)}
 							>
-								<p>Excluir blabla</p>
+								<p>Excluir</p>
 							</OptionText>
 						</Option>
 					</ContainerOptions>
@@ -2320,7 +2317,7 @@ class DocumentsScreen extends Component {
 												isBoxOrgs={this.state.isBoxOrgs}
 												orgs={this.state.organizationUser}
 											>
-												<Org onClick={() => this.setState({ selectOrg: '' })}>Selecionar organizações</Org>
+												<Org onClick={() => this.setState({ selectOrg: '', isBoxOrgs: false, allOrgsDocuments: [] })}>Selecionar organizações</Org>
 												{this.state.organizationUser.map((orgs, index) => (
 													<Org
 														key={index}
