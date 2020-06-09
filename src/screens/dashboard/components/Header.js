@@ -170,7 +170,7 @@ class Header extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 0,
+				isAdmin: user.isAdmin === 1,
 			});
 		} catch (error) {
 			console.log('error', error.response);

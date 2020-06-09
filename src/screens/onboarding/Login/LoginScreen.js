@@ -202,6 +202,7 @@ class LoginScreen extends Component {
 			);
 
 			const response = await login(user, base64credentials);
+			console.log('response', response)
 
 			if (response) {
 				localStorage.setItem('token', response.data.token);
@@ -222,17 +223,21 @@ class LoginScreen extends Component {
 				this.setState({ redirect: '/organizations' });
 			}
 		} catch (error) {
-			const { data } = error.response;
-			if (data === 'user not verified') {
+			const { response } = error;
+
+			console.log('response', response)
+
+			if (response.status === 403) {
 				this.setState({
 					error: 'Por favor, confirme a sua conta no email',
 				});
-			}
-			if (data === 'user not found') {
+			} if (response.status === 404) {
 				this.setState({
 					error: 'E-mail e/ ou senha incorreta',
 				});
-			} else {
+			}
+
+			if (response.status !== 403 && response.status !== 404) {
 				this.setState({
 					error: 'Algo deu errado',
 				});
