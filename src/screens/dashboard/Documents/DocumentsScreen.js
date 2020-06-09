@@ -1267,7 +1267,7 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await getllOrgDocumets(orgId, token);
-			// console.log('response', response)
+			console.log('response', response)
 
 			this.setState({
 				allOrgsDocuments: response.data,
@@ -1597,12 +1597,7 @@ class DocumentsScreen extends Component {
 	uploadDoc = (doc, e) => {
 		e.preventDefault();
 
-		// console.log('docc', doc)
-
-		// console.log('e', e.target);
-
 		const fileDoc = e.target.files[0];
-		// console.log('file', fileDoc);
 
 		this.uploadDocumento(fileDoc, doc);
 	}
