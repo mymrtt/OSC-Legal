@@ -112,7 +112,7 @@ const TextTermsBold = styled.strong`
 
 class CreateUserSucessScreen extends Component {
 	state = {
-		resendEmail: undefined,
+		textResendEmail: undefined,
 	};
 
 	resendEmail = async () => {
@@ -133,7 +133,7 @@ class CreateUserSucessScreen extends Component {
 			await createUserAccount(users, base64credentials);
 
 			this.setState({
-				resendEmail: true,
+				textResendEmail: true,
 			});
 		} catch (error) {
 			console.log('err', error);
@@ -142,18 +142,20 @@ class CreateUserSucessScreen extends Component {
 	};
 
 	render() {
+		const { textResendEmail } = this.state;
+
 		return (
 			<Container>
 				<ImageLogo margin='5rem 0 3.5rem 0' displayMobile='none'/>
 				<Content>
-					{this.state.resendEmail ? (
+					{textResendEmail ? (
 						<TitleTerms>Reenviado com sucesso!</TitleTerms>
 					) : (
 						<TitleTerms>Cadastro concluído com sucesso!</TitleTerms>
 					)}
 					<SucessImage src={sucessImage} alt="sucess image" />
 					<TextTerms>
-						{this.state.resendEmail ? (
+						{textResendEmail ? (
 							'Reenviado um e-mail de confirmação para'
 						) : (
 							'Enviamos um e-mail de confirmação para'
@@ -162,10 +164,10 @@ class CreateUserSucessScreen extends Component {
 							{this.props.onboarding.users.email ? this.props.onboarding.users.email : 'nome@email.com'}
 						</TextTermsBold>. Verifique sua caixa de entrada para prosseguir.
 					</TextTerms>
-					<TextTerms>
+					{/* <TextTerms>
 						Caso não tenha recebido a confirmação, clique em
 						<TextTermsBold onClick={this.resendEmail}>Reenviar e-mail.</TextTermsBold>
-					</TextTerms>
+					</TextTerms> */}
 					<Link to="/">
 						<Button
 							width="85%"

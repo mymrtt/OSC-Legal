@@ -22,10 +22,6 @@ import { addNewUser } from '../../../dataflow/modules/onboarding-modules';
 import { createUserAccount } from '../../../services/api';
 import { validateCPF, telMask, cpfMask } from '../../../utils';
 
-const mapStateToProps = state => ({
-	signup: state.signup,
-});
-
 const mapDispatchToProps = dispatch => ({
 	addNewUser: (user) => {
 		dispatch(addNewUser(user));
@@ -358,6 +354,7 @@ class CreateUserScreen extends Component {
 				'base64',
 			);
 
+			this.props.addNewUser(user);
 			delete userData.email;
 			delete userData.password;
 
@@ -433,7 +430,7 @@ class CreateUserScreen extends Component {
 
 		this.setState({
 			user,
-			isErrorCpf: !validateCPF(ev.target.value),
+			isErrorCpf: validateCPF(ev.target.value),
 		});
 	};
 
@@ -454,6 +451,7 @@ class CreateUserScreen extends Component {
 
 		if (!isNameError && !isErrorCpf && !isErrorEmail && !isErrorTel && !isErrorPassword) {
 			this.userRegister(user);
+			console.log('userrr', user)
 		}
 	};
 
@@ -639,4 +637,4 @@ class CreateUserScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUserScreen);
+export default connect(null, mapDispatchToProps)(CreateUserScreen);
