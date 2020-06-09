@@ -1207,6 +1207,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
+							{console.log('item.authorization', item.authorization)}
 							{this.renderAuthorizedData(item.authorization) || '-'}
 						</TableList>
 						<TableList

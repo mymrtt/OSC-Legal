@@ -179,11 +179,10 @@ const WrapOrganization = styled.div`
 
 const WrapOrganizationContent = styled.div`
 	display: flex;
-	/* padding-bottom: 2rem; */
+	padding-bottom: ${props => (props.textError ? '1rem' : '2rem')};
 `;
 
 const WrapOrganizationContent2 = styled.div`
-	padding-top: ${props => (!props.textError && '2rem')};
 	display: flex;
 `;
 
@@ -310,6 +309,7 @@ class ModalCreateOrganization extends Component {
 			const newOrg = {
 				...org,
 				orgId: response.data.insertId,
+				authorization: null,
 			};
 
 			this.setState({
@@ -356,6 +356,11 @@ class ModalCreateOrganization extends Component {
 			this.props.closeModal();
 		} catch (error) {
 			console.log('error', error.response);
+			if (error.response.data.errors[0]) {
+				this.setState({
+					error: error.response.data.errors[0].message,
+				});
+			}
 			this.setState({
 				error: 'Algo deu errado.',
 			});
@@ -667,7 +672,7 @@ class ModalCreateOrganization extends Component {
 										</ContentOrganizationItem>
 									</ContentOrganization>
 									<WrapOrganization>
-										<WrapOrganizationContent>
+										<WrapOrganizationContent textError={isAddressComplementError || isCityError}>
 											<WrapOrganizationItem
 												style={{
 													marginRight: '1rem',
@@ -701,7 +706,7 @@ class ModalCreateOrganization extends Component {
 												{isCityError && <ErrorMessage>{errorMessage[6]}</ErrorMessage>}
 											</WrapOrganizationItem>
 										</WrapOrganizationContent>
-										<WrapOrganizationContent2 textError={isNeighborhoodError || isCepError}>
+										<WrapOrganizationContent2>
 											<WrapOrganizationItem
 												style={{
 													marginRight: '1rem',

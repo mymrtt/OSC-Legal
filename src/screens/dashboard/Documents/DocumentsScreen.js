@@ -2215,8 +2215,8 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
-		// console.log('aaaaaaaaaaaaaaa', this.state.allOrgsDocuments)
 		const { isAdmin } = this.props;
+
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header/>
