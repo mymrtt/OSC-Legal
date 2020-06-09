@@ -412,7 +412,7 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cnpj || cnpj.length !== 14 || validateCNPJ(cnpj)) {
+		if (!cnpj || cnpj.length !== 14 || !validateCNPJ(cnpj)) {
 			this.setState({
 				isCnpjError: true,
 			});
