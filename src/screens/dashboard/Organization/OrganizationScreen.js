@@ -778,7 +778,9 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
+				// isAdmin: user.isAdmin === 1,  CERTO
 				isAdmin: user.isAdmin === 1,
+
 			});
 
 			if (user.isAdmin === 0) {
@@ -805,6 +807,7 @@ class OrganizationScreen extends Component {
 	getOrgsAdmin = async () => {
 		try {
 			const response = await getAllOrganizationsAdmin(this.props.user.id);
+
 			this.props.updateTableDatas(response.data);
 		} catch (error) {
 			console.log('error', error.response);
@@ -1145,23 +1148,23 @@ class OrganizationScreen extends Component {
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 				>
-					{user.cpf || '-'}
+					{isAdmin ? item.cpf : user.cpf}
 				</TableList>
 				<TableList
 					mob
 					font={this.state.hovered === item}
 					onClick={() => this.isModalOpen(item)}
 				>
-					{user.name || '-'}
+					{isAdmin ? item.name : user.name}
 				</TableList>
 				{widthMob
 					? <> <ContainerTableTitleMob>
 						<TableTitleMob>E-mail</TableTitleMob>
-						<TableList>{user.email || '-'}</TableList>
+						<TableList>{isAdmin ? item.email : user.email}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Telefone</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{user.telephone || '-'}</TableList>
+						<TableList font={this.state.hovered === item}>{isAdmin ? item.telephone : user.telephone}</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Criado em</TableTitleMob>
@@ -1184,13 +1187,13 @@ class OrganizationScreen extends Component {
 							onClick={() => this.isModalOpen(item)}
 							widthEmail
 						>
-							{user.email || '-'}
+							{isAdmin ? item.email : user.email}
 						</TableList>
 						<TableList
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{user.telephone || '-'}
+							{isAdmin ? item.telephone : user.telephone}
 						</TableList>
 						<TableList
 							wNumber
