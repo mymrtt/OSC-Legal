@@ -327,22 +327,6 @@ const ContainerSelected = styled.div`
  	}
 `;
 
-const ContainerPaymentMethod = styled.div`
-	border-bottom: ${props => (props.border && '5px solid #FF4136')};
-	color: #231F20;
-	padding-top: 1rem;
-	padding-bottom: 1rem;
-	display: flex;
-	flex-direction: row;
-	cursor: pointer;
-`;
-
-const PaymentMethodText = styled.p`
-	color: ${props => (props.color && '#FF4136')};
-	font-family: "Overpass", Light;
-	padding-left: 0.3rem;
-`;
-
 const ContainerEditImage = styled.div`
 	display: none;
 	@media (max-width: 648px) {

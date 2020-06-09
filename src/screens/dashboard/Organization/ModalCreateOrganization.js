@@ -18,6 +18,7 @@ import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modul
 
 // Api
 import { createOrganization, getAllOrganizations, patchOrg } from '../../../services/api';
+import { validateCNPJ } from '../../../utils';
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -367,7 +368,6 @@ class ModalCreateOrganization extends Component {
 		} catch (error) {
 			console.log('error', error);
 			console.log('error.response', error.response);
-
 		}
 	}
 
@@ -412,7 +412,7 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cnpj || cnpj.length !== 14 || this.validateCnpj(cnpj)) {
+		if (!cnpj || cnpj.length !== 14 || validateCNPJ(cnpj)) {
 			this.setState({
 				isCnpjError: true,
 			});
@@ -472,7 +472,7 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cep || cep.length != 8) {
+		if (!cep || cep.length !== 8) {
 			this.setState({
 				isCepError: true,
 			});
@@ -531,44 +531,6 @@ class ModalCreateOrganization extends Component {
 			[field]: ev.target.value,
 		});
 	};
-
-	validateCnpj = (cnpj) => {
-		if (!cnpj || cnpj.length !== 14
-				|| cnpj == '00000000000000'
-				|| cnpj == '11111111111111'
-				|| cnpj == '22222222222222'
-				|| cnpj == '33333333333333'
-				|| cnpj == '44444444444444'
-				|| cnpj == '55555555555555'
-				|| cnpj == '66666666666666'
-				|| cnpj == '77777777777777'
-				|| cnpj == '88888888888888'
-				|| cnpj == '99999999999999') return false;
-		let tamanho = cnpj.length - 2;
-		let numeros = cnpj.substring(0, tamanho);
-		const digitos = cnpj.substring(tamanho);
-		let soma = 0;
-		let pos = tamanho - 7;
-		for (let i = tamanho; i >= 1; i--) {
-			soma += numeros.charAt(tamanho - i) * pos--;
-			if (pos < 2) pos = 9;
-		}
-		// eslint-disable-next-line no-mixed-operators
-		let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-		if (resultado != digitos.charAt(0)) return false;
-		tamanho += 1;
-		numeros = cnpj.substring(0, tamanho);
-		soma = 0;
-		pos = tamanho - 7;
-		for (let i = tamanho; i >= 1; i--) {
-			soma += numeros.charAt(tamanho - i) * pos--;
-			if (pos < 2) pos = 9;
-		}
-		// eslint-disable-next-line no-mixed-operators
-		resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-		if (resultado != digitos.charAt(1)) return false;
-		return true;
-	}
 
 	render() {
 		const errorMessage = [

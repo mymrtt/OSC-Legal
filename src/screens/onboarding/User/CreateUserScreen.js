@@ -20,10 +20,7 @@ import { addNewUser } from '../../../dataflow/modules/onboarding-modules';
 
 // Api
 import { createUserAccount } from '../../../services/api';
-
-const mapStateToProps = state => ({
-	signup: state.signup,
-});
+import { validateCPF, telMask, cpfMask } from '../../../utils';
 
 const mapDispatchToProps = dispatch => ({
 	addNewUser: (user) => {
@@ -357,6 +354,7 @@ class CreateUserScreen extends Component {
 				'base64',
 			);
 
+			this.props.addNewUser(user);
 			delete userData.email;
 			delete userData.password;
 
@@ -432,26 +430,9 @@ class CreateUserScreen extends Component {
 
 		this.setState({
 			user,
-			isErrorCpf: !this.isValidCPF(ev.target.value),
+			isErrorCpf: validateCPF(ev.target.value),
 		});
 	};
-
-	isValidCPF = (value) => {
-		const cpf = value.replace(/\D/g, '');
-		if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
-		let result = true;
-		[9, 10].forEach((j) => {
-			let soma = 0; let
-				r;
-			cpf.split(/(?=)/).splice(0, j).forEach((e, i) => {
-				soma += parseInt(e) * ((j + 2) - (i + 1));
-			});
-			r = soma % 11;
-			r = (r < 2) ? 0 : 11 - r;
-			if (r != cpf.substring(j, j + 1)) result = false;
-		});
-		return result;
-	}
 
 	handleSubmit = (ev) => {
 		ev.preventDefault();
@@ -470,6 +451,7 @@ class CreateUserScreen extends Component {
 
 		if (!isNameError && !isErrorCpf && !isErrorEmail && !isErrorTel && !isErrorPassword) {
 			this.userRegister(user);
+			console.log('userrr', user)
 		}
 	};
 
@@ -503,17 +485,6 @@ class CreateUserScreen extends Component {
 			</Modal>
 		</Overlay>
 	)
-
-	telMask = value => value
-		.replace(/\D/g, '')
-		.replace(/(\d{2})(\d)/, '($1) $2')
-
-	cpfMask = value => value
-		.replace(/\D/g, '')
-		.replace(/(\d{3})(\d)/, '$1.$2')
-		.replace(/(\d{3})(\d)/, '$1.$2')
-		.replace(/(\d{3})(\d{1,2})/, '$1-$2')
-		.replace(/(-\d{2})\d+?$/, '$1')
 
 	render() {
 		const errorMessage = [
@@ -576,7 +547,7 @@ class CreateUserScreen extends Component {
 								<ParagraphInput>cpf</ParagraphInput>
 								<Input
 									onChange={ev => this.handleChangeCpf(ev)}
-									value={this.cpfMask(cpf) || ''}
+									value={cpfMask(cpf) || ''}
 									placeholder="000.000.000-00"
 									name="cpf"
 									isError={isErrorCpf}
@@ -601,7 +572,7 @@ class CreateUserScreen extends Component {
 								<ParagraphInput>telefone</ParagraphInput>
 								<Input
 									onChange={ev => this.handleChange('telephone', ev)}
-									value={this.telMask(telephone) || ''}
+									value={telMask(telephone) || ''}
 									placeholder="(00) 00000-0000"
 									name="telephone"
 									isError={isErrorTel}
@@ -622,6 +593,7 @@ class CreateUserScreen extends Component {
 									name="password"
 									isError={isErrorPassword}
 									required
+									autoComplete={'new-password'}
 								/>
 								{togglePassword === true ? (
 									<BlockSmallerInput>
@@ -665,4 +637,4 @@ class CreateUserScreen extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUserScreen);
+export default connect(null, mapDispatchToProps)(CreateUserScreen);
