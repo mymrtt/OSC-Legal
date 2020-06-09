@@ -945,7 +945,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
-	width: ${props => (props.width && '79%')};
+	width: ${props => (props.width && '100%')};
 	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
