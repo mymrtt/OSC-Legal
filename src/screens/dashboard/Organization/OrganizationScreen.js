@@ -898,16 +898,15 @@ class OrganizationScreen extends Component {
 	handleSelectedStatus = async (newStatus, org) => {
 		try {
 			const orgObj = {
-				...org,
+				orgId: org.orgId,
 				status: newStatus.desc,
 				authorization: new Date(),
 			};
-
 			await patchOrg(orgObj);
 
 			this.changeOrgStatus(newStatus, org);
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 			this.setState({
 				error: 'Algo deu errado.',
 			});
