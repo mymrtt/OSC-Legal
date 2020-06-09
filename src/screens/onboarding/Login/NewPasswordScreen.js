@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 
 // Redux
 import { addNewUser, isResetPassword } from '../../../dataflow/modules/onboarding-modules';
-import { createNewPassword } from '../../../services/api';
+// import { createNewPassword } from '../../../services/api';
 
 const mapDispatchToProps = dispatch => ({
 	addNewUser: (newPassword) => {
