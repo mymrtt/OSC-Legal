@@ -40,7 +40,7 @@ import {
 	getAllOrganizations,
 	getAllDocuments,
 	createDocument,
-	downloadTemplate,
+	// downloadTemplate,
 	exportDocument,
 	uploadDocument,
 	getllOrgDocumets,
@@ -945,7 +945,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
-	width: ${props => (props.width && '79%')};
+	width: ${props => (props.width && '100%')};
 	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
@@ -1267,7 +1267,7 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await getllOrgDocumets(orgId, token);
-			// console.log('response', response)
+			console.log('response', response)
 
 			this.setState({
 				allOrgsDocuments: response.data,
@@ -1343,17 +1343,17 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	downloadTemplate = async (doc) => {
-		try {
-			const { templateId } = doc;
+	// downloadTemplate = async (doc) => {
+	// 	try {
+	// 		const { templateId } = doc;
 
-			const token = await localStorage.getItem('token');
+	// 		const token = await localStorage.getItem('token');
 
-			const response = await downloadTemplate(templateId, token);
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
+	// 		const response = await downloadTemplate(templateId, token);
+	// 	} catch (error) {
+	// 		console.log('error', error.response);
+	// 	}
+	// }
 
 	exportDocument = async (doc) => {
 		try {
@@ -1576,9 +1576,9 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleClickBaixar = (doc) => {
-		this.downloadTemplate(doc);
-	}
+	// handleClickBaixar = (doc) => {
+	// 	this.downloadTemplate(doc);
+	// }
 
 	handleClickExport = (doc) => {
 		this.exportDocument(doc);
@@ -1597,12 +1597,7 @@ class DocumentsScreen extends Component {
 	uploadDoc = (doc, e) => {
 		e.preventDefault();
 
-		// console.log('docc', doc)
-
-		// console.log('e', e.target);
-
 		const fileDoc = e.target.files[0];
-		// console.log('file', fileDoc);
 
 		this.uploadDocumento(fileDoc, doc);
 	}
@@ -1856,7 +1851,7 @@ class DocumentsScreen extends Component {
 								onChange={this.uploadFile}
 								id='upload-file'
 								type="file"
-								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
 							<TextUploadFile file={this.state.template}>
@@ -1885,7 +1880,7 @@ class DocumentsScreen extends Component {
 						<ContainerInput>
 							<TitleInputs>Descrição</TitleInputs>
 							<TextArea
-								// maxLength="250"
+								maxLength="250"
 								validationModel={this.state.validationModel}
 								value={this.state.description}
 								onChange={e => this.handleModelChange('description', e)}
@@ -2104,9 +2099,9 @@ class DocumentsScreen extends Component {
 						<Option
 							onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveExport}
-							onClick={() => this.handleClickExport(doc)}
+							// onClick={() => this.handleClickExport(doc)}
 						>
-							<OptionLink href={doc.path} download={doc.originalname}>
+							<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
 								<img
 									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Exportar" />
@@ -2125,7 +2120,7 @@ class DocumentsScreen extends Component {
 							onMouseLeave={this.handleChangeColorLeaveBaixar}
 							onClick={() => this.handleClickBaixar(doc)}
 						>
-							<OptionLink href={doc.path} download={doc.originalname}>
+							<OptionLink href={`${process.env.REACT_APP_API_URL}/documents/${doc.templateId}/download`} target="_blank">
 								<img
 									src={this.state.hoverBaixar === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Baixar" />
@@ -2148,7 +2143,7 @@ class DocumentsScreen extends Component {
 								onChange={e => this.uploadDoc(doc, e)}
 								id='upload-doc'
 								type="file"
-								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img
 								src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
