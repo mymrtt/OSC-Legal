@@ -392,6 +392,8 @@ const Thead = styled.thead`
 
 const Tr = styled.tr`
 	height: 2.3rem;
+	/* height: 2.6rem; */
+
 	padding-left: 0.7rem;
 
 	&:nth-child(even) {
@@ -1207,7 +1209,6 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{console.log('item.authorization', item.authorization)}
 							{this.renderAuthorizedData(item.authorization) || '-'}
 						</TableList>
 						<TableList

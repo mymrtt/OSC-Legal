@@ -356,11 +356,11 @@ class ModalCreateOrganization extends Component {
 			this.props.closeModal();
 		} catch (error) {
 			console.log('error', error.response);
-			if (error.response.data.errors[0]) {
-				this.setState({
-					error: error.response.data.errors[0].message,
-				});
-			}
+			// if (error.response.data.errors[0]) {
+			// 	this.setState({
+			// 		error: error.response.data.errors[0].message,
+			// 	});
+			// }
 			this.setState({
 				error: 'Algo deu errado.',
 			});
@@ -418,14 +418,16 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cnpj || cnpj.length !== 14 || validateCNPJ(cnpj)) {
-			this.setState({
-				isCnpjError: true,
-			});
-		} else {
-			this.setState({
-				isCnpjError: false,
-			});
+		if (cnpj) {
+			if (cnpj.length !== 14 || validateCNPJ(cnpj)) {
+				this.setState({
+					isCnpjError: true,
+				});
+			} else {
+				this.setState({
+					isCnpjError: false,
+				});
+			}
 		}
 
 		if (!telephone || telephone.length < 8) {
@@ -488,7 +490,7 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (tradingName.length >= 4 && companyName.length >= 4 && cnpj.length === 14
+		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj || cnpj.length === 14)
 			&& telephone.length >= 8 && address.length >= 4 && addressComplement.length >= 4
 			&& city.length >= 4 && neighborhood.length >= 4 && cep.length === 8
 		) {
@@ -635,7 +637,6 @@ class ModalCreateOrganization extends Component {
 												value={this.state.cnpj}
 												name="cnpj"
 												isError={isCnpjError}
-												required
 											/>
 											{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 										</ContentOrganizationItem>

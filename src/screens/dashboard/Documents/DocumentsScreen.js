@@ -30,7 +30,7 @@ import ArrowDownIcon from '../../../assets/caminho.svg';
 import ArrowUpIcon from '../../../assets/arrow-up.svg';
 
 // Redux
-import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
+import { addNewDocument } from '../../../dataflow/modules/documents-modules';
 
 // Api
 import {
@@ -40,6 +40,7 @@ import {
 	getAllOrganizations,
 	getAllDocuments,
 	createDocument,
+	deleteDocument,
 	downloadTemplate,
 	exportDocument,
 	uploadDocument,
@@ -1809,18 +1810,31 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	deleteUserDoc = () => {
-		this.setState({
-			listDocs: this.state.listDocs.filter((doc, index) => index !== this.state.clickedModel),
-			modalDelete: false,
-		});
+	handleDeleteUserDoc = async () => {
+		// this.setState({
+		// 	listDocs: this.state.listDocs.filter((doc, index) => index !== this.state.clickedModel),
+		// 	modalDelete: false,
+		// });
+
+		try {
+			const { docId } = this.state.userSelectDoc;
+			await deleteDocument(docId);
+
+			this.setState({
+				modalDelete: false,
+			});
+		} catch (error) {
+			console.log('error', error);
+			console.log('error.response', error.response);
+		}
 	}
 
 	handleDeleteTemplate = () => {
+		console.log('blabla this.props.isAdmin', this.props.isAdmin);
 		if (this.props.isAdmin) {
 			this.deleteTemplate();
 		} else {
-			this.deleteUserDoc();
+			this.handleDeleteUserDoc();
 		}
 	}
 
@@ -1920,7 +1934,7 @@ class DocumentsScreen extends Component {
 		<ContainerModalDelete onClick={this.handleCancelDelete}>
 			<ModalDelete onClick={e => e.stopPropagation()}>
 				<TitleModal>
-					<TitleDelete>Excluir Modelo</TitleDelete>
+					<TitleDelete>Excluir Modelo blabla</TitleDelete>
 					<img onClick={this.handleCancelDelete} src={Exit} alt="Sair" />
 				</TitleModal>
 				<WrapTextModal>
@@ -2187,7 +2201,7 @@ class DocumentsScreen extends Component {
 									? this.state.colorTextDelete : '#85144B'}
 								onClick={() => this.userSelectedDoc(doc, index)}
 							>
-								<p>Excluir</p>
+								<p>Excluir blabla</p>
 							</OptionText>
 						</Option>
 					</ContainerOptions>
