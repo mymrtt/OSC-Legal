@@ -778,7 +778,8 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				isAdmin: user.isAdmin === 1,
+				// isAdmin: user.isAdmin === 1,
+				isAdmin: user.isAdmin === 0,
 			});
 
 			if (user.isAdmin === 0) {
