@@ -332,9 +332,10 @@ class ModalCreateOrganization extends Component {
 				});
 			}
 			if (error.response.data.errors[0]) {
-				this.setState({
-					error: error.response.data.errors[0].message,
-				});
+				// this.setState({
+				// 	error: error.response.data.errors[0].message,
+				// });
+				console.log('errr')
 			}
 		}
 	}

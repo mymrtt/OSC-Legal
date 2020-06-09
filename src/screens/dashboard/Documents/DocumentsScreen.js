@@ -40,7 +40,7 @@ import {
 	getAllOrganizations,
 	getAllDocuments,
 	createDocument,
-	downloadTemplate,
+	// downloadTemplate,
 	exportDocument,
 	uploadDocument,
 	getllOrgDocumets,
@@ -1343,17 +1343,17 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	downloadTemplate = async (doc) => {
-		try {
-			const { templateId } = doc;
+	// downloadTemplate = async (doc) => {
+	// 	try {
+	// 		const { templateId } = doc;
 
-			const token = await localStorage.getItem('token');
+	// 		const token = await localStorage.getItem('token');
 
-			const response = await downloadTemplate(templateId, token);
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
+	// 		const response = await downloadTemplate(templateId, token);
+	// 	} catch (error) {
+	// 		console.log('error', error.response);
+	// 	}
+	// }
 
 	exportDocument = async (doc) => {
 		try {
@@ -1576,9 +1576,9 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleClickBaixar = (doc) => {
-		this.downloadTemplate(doc);
-	}
+	// handleClickBaixar = (doc) => {
+	// 	this.downloadTemplate(doc);
+	// }
 
 	handleClickExport = (doc) => {
 		this.exportDocument(doc);
@@ -1880,7 +1880,7 @@ class DocumentsScreen extends Component {
 						<ContainerInput>
 							<TitleInputs>Descrição</TitleInputs>
 							<TextArea
-								// maxLength="250"
+								maxLength="250"
 								validationModel={this.state.validationModel}
 								value={this.state.description}
 								onChange={e => this.handleModelChange('description', e)}
@@ -2099,9 +2099,9 @@ class DocumentsScreen extends Component {
 						<Option
 							onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveExport}
-							onClick={() => this.handleClickExport(doc)}
+							// onClick={() => this.handleClickExport(doc)}
 						>
-							<OptionLink href={doc.path} download={doc.originalname}>
+							<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
 								<img
 									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Exportar" />
@@ -2120,7 +2120,7 @@ class DocumentsScreen extends Component {
 							onMouseLeave={this.handleChangeColorLeaveBaixar}
 							onClick={() => this.handleClickBaixar(doc)}
 						>
-							<OptionLink href={doc.path} download={doc.originalname}>
+							<OptionLink href={`${process.env.REACT_APP_API_URL}/documents/${doc.templateId}/download`} target="_blank">
 								<img
 									src={this.state.hoverBaixar === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Baixar" />
