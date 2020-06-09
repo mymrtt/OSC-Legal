@@ -430,7 +430,7 @@ class CreateUserScreen extends Component {
 
 		this.setState({
 			user,
-			isErrorCpf: validateCPF(ev.target.value),
+			isErrorCpf: !validateCPF(ev.target.value),
 		});
 	};
 
