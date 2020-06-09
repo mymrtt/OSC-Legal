@@ -326,7 +326,6 @@ class CreateUserScreen extends Component {
 		modalSucess: false,
 		user: {
 			name: '',
-			// surname: '',
 			cpf: '',
 			email: '',
 			telephone: '',
