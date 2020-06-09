@@ -106,77 +106,84 @@ export const patchOrg = (org) =>
 // Organization
 
 // Document
-// export const createDocument = (docs, token) => axios({
+export const createDocument = docs => axios.post(`${API_URL}/documents`, docs, {
+	headers: {
+		Authorization: `Bearer ${token}`,
+		'Content-Type': 'multipart/form-data',
+	},
+});
+
+export const getAllDocuments = token => axios({
+	url: `${API_URL}/documents`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const getllOrgDocumets = orgId => axios({
+	url: `${API_URL}/organizations/${orgId}/documents`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+// export const uploadDocument = docs => axios({
 // 	url: `${API_URL}/documents`,
-// 	method: 'post',
-// 	headers: {
-// 		Authorization: `Bearer ${token}`,
-// 	},
-// 	data: docs,
-// });
-
-export const createDocument = (docs) =>
-	axios.post(`${API_URL}/documents`, docs, {
-		headers: {
-			Authorization: `Bearer ${token}`,
-			"Content-Type": "multipart/form-data",
-		},
-	});
-
-export const getAllDocuments = (token) =>
-	axios({
-		url: `${API_URL}/documents`,
-		method: "get",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
-// Document
-
-// Template (Document - Admin)
-// export const createTemplate = templateData => axios({
-// 	url: `${API_URL}/templates`,
-// 	method: 'post',
+// 	method: 'patch',
 // 	headers: {
 // 		Authorization: `Bearer ${token}`,
 // 		'Content-Type': 'multipart/form-data',
 // 	},
-// 	data: templateData,
+// 	data: docs,
 // });
 
-export const createTemplate = (templateData) =>
-	axios.post(`${API_URL}/templates`, templateData, {
-		headers: {
-			Authorization: `Bearer ${token}`,
-			"Content-Type": "multipart/form-data",
-		},
-	});
+export const uploadDocument = docs => axios.patch(`${API_URL}/documents`, docs, {
+	headers: {
+		Authorization: `Bearer ${token}`,
+		'Content-Type': 'multipart/form-data',
+	},
+});
 
-export const getAllTemplates = () =>
-	axios({
-		url: `${API_URL}/templates`,
-		method: "get",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
+export const exportDocument = templateId => axios({
+	url: `${API_URL}/documents/${templateId}/download`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+// Document
 
-export const deleteTemplate = (templateId) =>
-	axios({
-		url: `${API_URL}/templates/${templateId}`,
-		method: "delete",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
+// Template (Document - Admin)
+export const createTemplate = templateData => axios.post(`${API_URL}/templates`, templateData, {
+	headers: {
+		Authorization: `Bearer ${token}`,
+		'Content-Type': 'multipart/form-data',
+	},
+});
 
-export const downloadTemplate = (templateId) =>
-	axios({
-		url: `${API_URL}/templates/${templateId}/download`,
-		method: "get",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
+export const getAllTemplates = () => axios({
+	url: `${API_URL}/templates`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 
+export const deleteTemplate = templateId => axios({
+	url: `${API_URL}/templates/${templateId}`,
+	method: 'delete',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
+export const downloadTemplate = templateId => axios({
+	url: `${API_URL}/templates/${templateId}/download`,
+	method: 'get',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
 // Template (Document - Admin)
