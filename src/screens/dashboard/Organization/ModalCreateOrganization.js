@@ -18,7 +18,7 @@ import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modul
 
 // Api
 import { createOrganization, getAllOrganizations, patchOrg } from '../../../services/api';
-import { validateCNPJ } from '../../../utils';
+import { validateCNPJ, telMask } from '../../../utils';
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -179,10 +179,11 @@ const WrapOrganization = styled.div`
 
 const WrapOrganizationContent = styled.div`
 	display: flex;
-	padding-bottom: 2rem;
+	/* padding-bottom: 2rem; */
 `;
 
 const WrapOrganizationContent2 = styled.div`
+	padding-top: ${props => (!props.textError && '2rem')};
 	display: flex;
 `;
 
@@ -641,6 +642,7 @@ class ModalCreateOrganization extends Component {
 												type="number"
 												placeholder="(00) 00000-0000"
 												onChange={ev => this.handleChange('telephone', ev)}
+												// value={this.state.telephone}
 												value={this.state.telephone}
 												name="telephone"
 												isError={isTelephoneError}
@@ -669,7 +671,6 @@ class ModalCreateOrganization extends Component {
 											<WrapOrganizationItem
 												style={{
 													marginRight: '1rem',
-													paddingBottom: isAddressComplementError && '1rem',
 												}}
 											>
 												<UserTitle org>complemento</UserTitle>
@@ -685,7 +686,7 @@ class ModalCreateOrganization extends Component {
 												/>
 												{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
 											</WrapOrganizationItem>
-											<WrapOrganizationItem style={{ paddingBottom: isCityError && '1rem' }}>
+											<WrapOrganizationItem>
 												<UserTitle org>cidade</UserTitle>
 												<Input
 													modalOrg
@@ -700,7 +701,7 @@ class ModalCreateOrganization extends Component {
 												{isCityError && <ErrorMessage>{errorMessage[6]}</ErrorMessage>}
 											</WrapOrganizationItem>
 										</WrapOrganizationContent>
-										<WrapOrganizationContent2>
+										<WrapOrganizationContent2 textError={isNeighborhoodError || isCepError}>
 											<WrapOrganizationItem
 												style={{
 													marginRight: '1rem',
