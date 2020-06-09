@@ -1851,7 +1851,7 @@ class DocumentsScreen extends Component {
 								onChange={this.uploadFile}
 								id='upload-file'
 								type="file"
-								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
 							<TextUploadFile file={this.state.template}>
@@ -2143,7 +2143,7 @@ class DocumentsScreen extends Component {
 								onChange={e => this.uploadDoc(doc, e)}
 								id='upload-doc'
 								type="file"
-								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img
 								src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
