@@ -739,8 +739,14 @@ class OrganizationScreen extends Component {
 				{
 					img: authorizationIcon,
 					desc: 'autorizado',
-					pendenteAut: true,
+					pendenteAut: false,
 					pago: true,
+				},
+				{
+					img: authorizationIcon,
+					desc: 'pendente de pagamento',
+					pendenteAut: true,
+					pago: false,
 				},
 				{
 					img: payIcon,
