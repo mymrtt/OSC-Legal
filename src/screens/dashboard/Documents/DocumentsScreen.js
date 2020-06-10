@@ -1345,19 +1345,6 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	// Template = async () => {
-	// 	try {
-	// 		const templateID = this.state.modelSelect.templateId;
-
-	// 		const token = await localStorage.getItem('token');
-
-	// 		await deleteTemplate(templateID, token);
-	// 		this.handleCancelDelete();
-	// 	} catch (error) {
-	// 		console.log('error', error.response);
-	// 	}
-	// }
-
 	// downloadTemplate = async (doc) => {
 	// 	try {
 	// 		const { templateId } = doc;
