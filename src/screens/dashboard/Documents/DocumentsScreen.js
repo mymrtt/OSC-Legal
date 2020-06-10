@@ -59,6 +59,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	addNewDocument: info => dispatch(addNewDocument(info)),
 	deleteDocument: info => dispatch(deleteDocument(info)),
+	deleteTemplate: info => dispatch(deleteTemplate(info)),
 });
 
 const Container = styled.div`
@@ -1282,19 +1283,34 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
+
+			const newTemplate = {
+				templateName: this.state.templateData.templateName,
+				description: this.state.templateData.description,
+				id: this.state.templateData.id,
+			};
+
+			this.setState({
+				templateList: this.state.templateList.concat(newTemplate),
+			});
 		} catch (error) {
 			console.log('error', error.response);
 		}
 	}
 
-	deleteTemplate = async () => {
+	handleDeleteTemplate = async () => {
 		try {
 			const { templateId } = this.state.modelSelect;
 
 			await deleteTemplate(templateId);
+
+			this.setState({
+				templateList: this.state.templateList.filter(template => template.templateId !== templateId),
+			});
+
 			this.handleCancelDelete();
 		} catch (error) {
-			console.log('error', error.response);
+			console.log('error', error);
 		}
 	}
 
@@ -1339,19 +1355,6 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	Template = async () => {
-		try {
-			const templateID = this.state.modelSelect.templateId;
-
-			const token = await localStorage.getItem('token');
-
-			await deleteTemplate(templateID, token);
-			this.handleCancelDelete();
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
-
 	// downloadTemplate = async (doc) => {
 	// 	try {
 	// 		const { templateId } = doc;
@@ -1382,10 +1385,15 @@ class DocumentsScreen extends Component {
 			docs.append('docId', doc.docId);
 			docs.append('org_id', this.state.orgID);
 			docs.append('template_id', doc.templateId);
-			// docs.append('docUrl', this.state.docUrl);
 			docs.append('file', fileDoc);
 
 			const response = await uploadDocument(docs);
+
+			if (response.status === 200) {
+				this.setState({
+					testando: true,
+				});
+			}
 
 			console.log('reponse', response);
 		} catch (error) {
@@ -1732,7 +1740,7 @@ class DocumentsScreen extends Component {
 			this.props.addNewDocument(templateData);
 
 			this.setState({
-				templateData: {},
+				// templateData: {},
 				template: null,
 			});
 
@@ -1799,6 +1807,7 @@ class DocumentsScreen extends Component {
 	handleSelectOrg = (orgs) => {
 		this.setState({
 			selectOrg: orgs.tradingName,
+			authorizedOrg: orgs,
 			isBoxOrgs: false,
 			orgID: orgs.orgId,
 		});
@@ -1831,7 +1840,7 @@ class DocumentsScreen extends Component {
 
 	handleDelete = () => {
 		if (this.props.isAdmin) {
-			this.deleteTemplate();
+			this.handleDeleteTemplate();
 		} else {
 			this.handleDeleteDoc();
 		}
@@ -2032,16 +2041,18 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorExport(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
 							>
-								<img
-									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
-									alt="Exportar" />
-								<OptionText
-									colorTextButton={
-										this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
-									}
-								>
-									Exportar
-								</OptionText>
+								<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
+									<img
+										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
+										alt="Exportar" />
+									<OptionText
+										colorTextButton={
+											this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
+										}
+									>
+										Exportar
+									</OptionText>
+								</OptionLink>
 							</Option>
 
 
@@ -2111,28 +2122,31 @@ class DocumentsScreen extends Component {
 						</span>
 						<ModelParagraph>{doc.description}</ModelParagraph>
 					</ContainerModelDescription>
-					<ContainerOptions modal={this.state.modalDelete}
-						contOptions={this.state.options && (this.state.selectedOptions === index)}>
-						<Option
-							onMouseEnter={() => this.handleChangeColorExportUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveExport}
+					{this.state.authorizedOrg && this.state.authorizedOrg.status === 'autorizado' ? (
+						<ContainerOptions modal={this.state.modalDelete}
+							contOptions={this.state.options && (this.state.selectedOptions === index)}>
+							<Option
+								onMouseEnter={() => this.handleChangeColorExportUser(doc)}
+								onMouseLeave={this.handleChangeColorLeaveExport}
 							// onClick={() => this.handleClickExport(doc)}
-						>
-							<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
-								<img
-									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
-									alt="Exportar" />
-								<OptionText
-									style={{ marginLeft: '.3rem' }}
-									colorTextButton={
-										this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
-									}
-								>
+							>
+								<OptionLink href={ this.state.testando ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download`
+									: `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
+								} target="_blank">
+									<img
+										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
+										alt="Exportar" />
+									<OptionText
+										style={{ marginLeft: '.3rem' }}
+										colorTextButton={
+											this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
+										}
+									>
 									Exportar
-								</OptionText>
-							</OptionLink>
-						</Option>
-						{/* <Option
+									</OptionText>
+								</OptionLink>
+							</Option>
+							{/* <Option
 							onMouseEnter={() => this.handleChangeColorBaixarUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveBaixar}
 							onClick={() => this.handleClickBaixar(doc)}
@@ -2151,29 +2165,29 @@ class DocumentsScreen extends Component {
 								</OptionText>
 							</OptionLink>
 						</Option> */}
-						<OptionLabel
-							onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveUpload}
-							htmlFor='upload-doc'
-						>
-							<input
-								onChange={e => this.uploadDoc(doc, e)}
-								id='upload-doc'
-								type="file"
-								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-							/>
-							<img
-								src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
-								alt="Upload" />
-							<OptionText
-								colorTextButton={
-									this.state.hoverUpload === doc ? this.state.colorTextExport : '#85144B'
-								}
+							<OptionLabel
+								onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
+								onMouseLeave={this.handleChangeColorLeaveUpload}
+								htmlFor='upload-doc'
 							>
+								<input
+									onChange={e => this.uploadDoc(doc, e)}
+									id='upload-doc'
+									type="file"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								/>
+								<img
+									src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
+									alt="Upload" />
+								<OptionText
+									colorTextButton={
+										this.state.hoverUpload === doc ? this.state.colorTextExport : '#85144B'
+									}
+								>
 								Upload
-							</OptionText>
-						</OptionLabel>
-						{/* <Option
+								</OptionText>
+							</OptionLabel>
+							{/* <Option
 							onMouseEnter={() => this.handleChangeColorEditUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveEdit}
 							onClick={this.openEditor}
@@ -2186,23 +2200,25 @@ class DocumentsScreen extends Component {
 							</OptionText>
 
 						</Option> */}
-						<Option
-							onMouseEnter={() => this.handleChangeColorDeleteUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveDelete}
-							onClick={() => this.handleModalDelete(doc, index)}
-						>
-							<OptionImage
-								src={this.state.hoverDelete === doc ? this.state.downloadDelete : DeleteIcon}
-								alt="Deletar" />
-							<OptionText
-								colorTextButton={this.state.hoverDelete === doc
-									? this.state.colorTextDelete : '#85144B'}
-								onClick={() => this.userSelectedDoc(doc, index)}
+							<Option
+								onMouseEnter={() => this.handleChangeColorDeleteUser(doc)}
+								onMouseLeave={this.handleChangeColorLeaveDelete}
+								onClick={() => this.handleModalDelete(doc, index)}
 							>
-								<p>Excluir</p>
-							</OptionText>
-						</Option>
-					</ContainerOptions>
+								<OptionImage
+									src={this.state.hoverDelete === doc ? this.state.downloadDelete : DeleteIcon}
+									alt="Deletar" />
+								<OptionText
+									colorTextButton={this.state.hoverDelete === doc
+										? this.state.colorTextDelete : '#85144B'}
+									onClick={() => this.userSelectedDoc(doc, index)}
+								>
+									<p>Excluir</p>
+								</OptionText>
+							</Option>
+						</ContainerOptions>
+					) : null}
+
 				</ContainerModel>
 			))
 		) : (
@@ -2211,16 +2227,19 @@ class DocumentsScreen extends Component {
 					Você ainda não tem nenhum documento
 				</TitleInitialAddDoc>
 				<ParagraphInitialAddDoc>
-					{this.state.selectOrg === '' ? (
-						'Selecione uma organização para adicionar um documento'
-					) : (
-						<>
-							Escolha um modelo de documento clicando em
-							<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
-							Adicionar Documento
-							</span>
-						</>
-					)}
+					{this.state.authorizedOrg && this.state.authorizedOrg.status !== 'autorizado'
+						? 'Você ainda não possui autorização para adicionar um documento.' : (
+							this.state.selectOrg === '' ? (
+								'Selecione uma organização para adicionar um documento'
+							) : (
+								<>
+								Escolha um modelo de documento clicando em
+									<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
+								Adicionar Documento
+									</span>
+								</>
+							)
+						)}
 				</ParagraphInitialAddDoc>
 			</InitialAddModel>
 		)
@@ -2259,7 +2278,7 @@ class DocumentsScreen extends Component {
 										onClick={this.handleAddModel}
 									/>
 								) : (
-									this.state.selectOrg !== '' ? (
+									this.state.selectOrg !== '' && this.state.authorizedOrg && this.state.authorizedOrg.status === 'autorizado' ? (
 										<Button
 											width="17.5rem"
 											height="4.5rem"

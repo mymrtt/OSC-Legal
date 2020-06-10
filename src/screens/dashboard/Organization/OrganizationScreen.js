@@ -719,8 +719,8 @@ class OrganizationScreen extends Component {
 				'Pendente de Autorização',
 				// { select: 'Pendente de Autorização', filter: 'autorizado' },
 				'Autorizado',
-				'Isento',
-				'Pago',
+				// 'Isento',
+				// 'Pago',
 				'Vencido',
 			],
 			redirect: 'organization',
@@ -755,7 +755,8 @@ class OrganizationScreen extends Component {
 				},
 				{
 					img: freeIcon,
-					desc: 'isento',
+					// desc: 'isento',
+					desc: 'autorizado',
 					pendenteAut: true,
 					pagamento: true,
 				},
@@ -1214,7 +1215,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.status === 'pendente de autorização' ? '-' : this.renderAuthorizedData(item.authorization) || '-'}
+							{item.status === 'pendente de autorização' || item.status === 'pendente de pagamento' ? '-' : this.renderAuthorizedData(item.authorization) || '-'}
 						</TableList>
 						<TableList
 							wNumber
@@ -1222,7 +1223,7 @@ class OrganizationScreen extends Component {
 							onClick={() => this.isModalOpen(item)}
 						>
 							{/* {this.handleDateExpired(item.createdIn) || '-' } */}
-							{item.createdIn === null ? '-' : this.handleDateExpired(item.createdIn)}
+							{item.createdIn === null || item.status === 'pendente de autorização' || item.status === 'pendente de pagamento' ? '-' : this.handleDateExpired(item.createdIn)}
 						</TableList>
 					</>
 				}

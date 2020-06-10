@@ -2,6 +2,7 @@
 // Action Types
 const ADD_NEW_DOCUMENT = 'osc/documents/ADD_NEW_DOCUMENTS';
 const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
+const DELETE_TEMPLATE = 'osc/documents/DELETE_TEMPLATE';
 
 // Initial State
 let nextDocId = 0;
@@ -27,6 +28,11 @@ export default function (state = initialState, action) {
 			...state,
 			documentsList: state.documentsList.filter(item => item.id !== action.info),
 		});
+	case DELETE_TEMPLATE:
+		return Object.assign({}, state, {
+			...state,
+			documentsList: state.documentsList.filter(item => item.id !== action.info),
+		});
 	default: return state;
 	}
 }
@@ -41,5 +47,10 @@ export const addNewDocument = info => ({
 
 export const deleteDocument = info => ({
 	type: DELETE_DOCUMENT,
+	info,
+});
+
+export const deleteTemplate = info => ({
+	type: DELETE_TEMPLATE,
 	info,
 });
