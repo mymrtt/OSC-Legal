@@ -1385,10 +1385,15 @@ class DocumentsScreen extends Component {
 			docs.append('docId', doc.docId);
 			docs.append('org_id', this.state.orgID);
 			docs.append('template_id', doc.templateId);
-			// docs.append('docUrl', this.state.docUrl);
 			docs.append('file', fileDoc);
 
 			const response = await uploadDocument(docs);
+
+			if (response.status === 200) {
+				this.setState({
+					testando: true,
+				});
+			}
 
 			console.log('reponse', response);
 		} catch (error) {
@@ -2124,7 +2129,9 @@ class DocumentsScreen extends Component {
 							onMouseLeave={this.handleChangeColorLeaveExport}
 							// onClick={() => this.handleClickExport(doc)}
 						>
-							<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
+							<OptionLink href={ this.state.testando ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download`
+								: `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
+							} target="_blank">
 								<img
 									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Exportar" />

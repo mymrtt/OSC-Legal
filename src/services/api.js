@@ -137,16 +137,6 @@ export const deleteDocument = docId => axios({
 	},
 });
 
-// export const uploadDocument = docs => axios({
-// 	url: `${API_URL}/documents`,
-// 	method: 'patch',
-// 	headers: {
-// 		Authorization: `Bearer ${token}`,
-// 		'Content-Type': 'multipart/form-data',
-// 	},
-// 	data: docs,
-// });
-
 export const uploadDocument = docs => axios.patch(`${API_URL}/documents`, docs, {
 	headers: {
 		Authorization: `Bearer ${token}`,
