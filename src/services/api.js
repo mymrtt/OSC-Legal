@@ -35,7 +35,6 @@ export const resetPassword = (email) =>
 
 export const createNewPassword = base64credentials =>
 	axios({
-		// Testar ainda
 		url: `${API_URL}/auth/recovery/new`,
 		method: "post",
 		headers: {
