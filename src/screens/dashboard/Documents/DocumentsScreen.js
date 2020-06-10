@@ -2115,7 +2115,7 @@ class DocumentsScreen extends Component {
 								</OptionText>
 							</OptionLink>
 						</Option>
-						<Option
+						{/* <Option
 							onMouseEnter={() => this.handleChangeColorBaixarUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveBaixar}
 							onClick={() => this.handleClickBaixar(doc)}
@@ -2133,7 +2133,7 @@ class DocumentsScreen extends Component {
 									Baixar
 								</OptionText>
 							</OptionLink>
-						</Option>
+						</Option> */}
 						<OptionLabel
 							onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveUpload}
