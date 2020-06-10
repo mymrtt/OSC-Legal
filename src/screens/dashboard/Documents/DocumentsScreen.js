@@ -1283,6 +1283,16 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
+
+			const newTemplate = {
+				templateName: this.state.templateData.templateName,
+				description: this.state.templateData.description,
+				id: this.state.templateData.id,
+			};
+
+			this.setState({
+				templateList: this.state.templateList.concat(newTemplate),
+			});
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1295,7 +1305,7 @@ class DocumentsScreen extends Component {
 			await deleteTemplate(templateId);
 
 			this.setState({
-				templateList: this.state.templateList.filter(template => template.templateId !== templateId)
+				templateList: this.state.templateList.filter(template => template.templateId !== templateId),
 			});
 
 			this.handleCancelDelete();
@@ -1725,7 +1735,7 @@ class DocumentsScreen extends Component {
 			this.props.addNewDocument(templateData);
 
 			this.setState({
-				templateData: {},
+				// templateData: {},
 				template: null,
 			});
 
@@ -2025,16 +2035,18 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorExport(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
 							>
-								<img
-									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
-									alt="Exportar" />
-								<OptionText
-									colorTextButton={
-										this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
-									}
-								>
-									Exportar
-								</OptionText>
+								<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
+									<img
+										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
+										alt="Exportar" />
+									<OptionText
+										colorTextButton={
+											this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
+										}
+									>
+										Exportar
+									</OptionText>
+								</OptionLink>
 							</Option>
 
 
