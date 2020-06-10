@@ -346,7 +346,6 @@ class ModalCreateOrganization extends Component {
 				...org,
 				authorization: this.state.authorization,
 				status: this.state.status,
-				// ...org.cnpj && { cnpj: this.state.cnpj },
 			};
 			await patchOrg(newOrg);
 
@@ -514,6 +513,7 @@ class ModalCreateOrganization extends Component {
 				telephone: this.state.telephone,
 				orgId: this.state.orgId,
 				deletedAt: 0,
+				status: this.props.userData.status || 'pendente de autorização',
 			};
 
 			if (this.props.modalType === 'edit') {
