@@ -1283,6 +1283,16 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await createTemplate(templateData, token);
+
+			const newTemplate = {
+				templateName: this.state.templateData.templateName,
+				description: this.state.templateData.description,
+				id: this.state.templateData.id,
+			};
+
+			this.setState({
+				templateList: this.state.templateList.concat(newTemplate),
+			});
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -1295,7 +1305,7 @@ class DocumentsScreen extends Component {
 			await deleteTemplate(templateId);
 
 			this.setState({
-				templateList: this.state.templateList.filter(template => template.templateId !== templateId)
+				templateList: this.state.templateList.filter(template => template.templateId !== templateId),
 			});
 
 			this.handleCancelDelete();
@@ -1725,7 +1735,7 @@ class DocumentsScreen extends Component {
 			this.props.addNewDocument(templateData);
 
 			this.setState({
-				templateData: {},
+				// templateData: {},
 				template: null,
 			});
 
@@ -1792,6 +1802,7 @@ class DocumentsScreen extends Component {
 	handleSelectOrg = (orgs) => {
 		this.setState({
 			selectOrg: orgs.tradingName,
+			authorizedOrg: orgs,
 			isBoxOrgs: false,
 			orgID: orgs.orgId,
 		});
@@ -2025,16 +2036,18 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorExport(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
 							>
-								<img
-									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
-									alt="Exportar" />
-								<OptionText
-									colorTextButton={
-										this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
-									}
-								>
-									Exportar
-								</OptionText>
+								<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
+									<img
+										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
+										alt="Exportar" />
+									<OptionText
+										colorTextButton={
+											this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
+										}
+									>
+										Exportar
+									</OptionText>
+								</OptionLink>
 							</Option>
 
 
@@ -2204,16 +2217,19 @@ class DocumentsScreen extends Component {
 					Você ainda não tem nenhum documento
 				</TitleInitialAddDoc>
 				<ParagraphInitialAddDoc>
-					{this.state.selectOrg === '' ? (
-						'Selecione uma organização para adicionar um documento'
-					) : (
-						<>
-							Escolha um modelo de documento clicando em
-							<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
-							Adicionar Documento
-							</span>
-						</>
-					)}
+					{this.state.authorizedOrg && this.state.authorizedOrg.status !== 'autorizado'
+						? 'Você ainda não possui autorização para adicionar um documento.' : (
+							this.state.selectOrg === '' ? (
+								'Selecione uma organização para adicionar um documento'
+							) : (
+								<>
+								Escolha um modelo de documento clicando em
+									<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
+								Adicionar Documento
+									</span>
+								</>
+							)
+						)}
 				</ParagraphInitialAddDoc>
 			</InitialAddModel>
 		)
@@ -2252,7 +2268,7 @@ class DocumentsScreen extends Component {
 										onClick={this.handleAddModel}
 									/>
 								) : (
-									this.state.selectOrg !== '' ? (
+									this.state.selectOrg !== '' && this.state.authorizedOrg && this.state.authorizedOrg.status === 'autorizado' ? (
 										<Button
 											width="17.5rem"
 											height="4.5rem"
