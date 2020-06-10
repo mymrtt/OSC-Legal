@@ -1802,6 +1802,7 @@ class DocumentsScreen extends Component {
 	handleSelectOrg = (orgs) => {
 		this.setState({
 			selectOrg: orgs.tradingName,
+			authorizedOrg: orgs,
 			isBoxOrgs: false,
 			orgID: orgs.orgId,
 		});
@@ -2216,16 +2217,19 @@ class DocumentsScreen extends Component {
 					Você ainda não tem nenhum documento
 				</TitleInitialAddDoc>
 				<ParagraphInitialAddDoc>
-					{this.state.selectOrg === '' ? (
-						'Selecione uma organização para adicionar um documento'
-					) : (
-						<>
-							Escolha um modelo de documento clicando em
-							<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
-							Adicionar Documento
-							</span>
-						</>
-					)}
+					{this.state.authorizedOrg && this.state.authorizedOrg.status !== 'autorizado'
+						? 'Você ainda não possui autorização para adicionar um documento.' : (
+							this.state.selectOrg === '' ? (
+								'Selecione uma organização para adicionar um documento'
+							) : (
+								<>
+								Escolha um modelo de documento clicando em
+									<span style={{ marginLeft: '.3rem' }} onClick={this.openModalListDoc}>
+								Adicionar Documento
+									</span>
+								</>
+							)
+						)}
 				</ParagraphInitialAddDoc>
 			</InitialAddModel>
 		)
@@ -2264,7 +2268,7 @@ class DocumentsScreen extends Component {
 										onClick={this.handleAddModel}
 									/>
 								) : (
-									this.state.selectOrg !== '' ? (
+									this.state.selectOrg !== '' && this.state.authorizedOrg && this.state.authorizedOrg.status === 'autorizado' ? (
 										<Button
 											width="17.5rem"
 											height="4.5rem"
