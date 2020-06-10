@@ -739,8 +739,14 @@ class OrganizationScreen extends Component {
 				{
 					img: authorizationIcon,
 					desc: 'autorizado',
-					pendenteAut: true,
+					pendenteAut: false,
 					pago: true,
+				},
+				{
+					img: authorizationIcon,
+					desc: 'pendente de pagamento',
+					pendenteAut: true,
+					pago: false,
 				},
 				{
 					img: payIcon,
@@ -1210,7 +1216,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{this.renderAuthorizedData(item.authorization) || '-'}
+							{item.status === 'pendente de autorização' ? '-' : this.renderAuthorizedData(item.authorization) || '-'}
 						</TableList>
 						<TableList
 							wNumber
