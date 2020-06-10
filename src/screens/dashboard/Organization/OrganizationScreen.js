@@ -392,6 +392,8 @@ const Thead = styled.thead`
 
 const Tr = styled.tr`
 	height: 2.3rem;
+	/* height: 2.6rem; */
+
 	padding-left: 0.7rem;
 
 	&:nth-child(even) {
@@ -778,7 +780,6 @@ class OrganizationScreen extends Component {
 
 			this.props.saveUserData({
 				...user,
-				// isAdmin: user.isAdmin === 1,  CERTO
 				isAdmin: user.isAdmin === 1,
 
 			});
@@ -868,7 +869,9 @@ class OrganizationScreen extends Component {
 		const dateExpired =	dateCreate.setDate(dateCreate.getDate() + 30);
 		const date = new Date(dateExpired);
 
-		return `${date.getDate() <= 9 && `0${date.getDate()}`}/${date.getMonth() + 1 <= 9 && `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
+
+		return `${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}/${date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
+
 	};
 
 	deleteOrganization = async () => {
@@ -1290,7 +1293,7 @@ class OrganizationScreen extends Component {
 
 	renderAuthorizedData = (date) => {
 		const authorizedDate = new Date(date);
-		const formatDate = `${authorizedDate.getDate() <= 9 && `0${authorizedDate.getDate()}`}/${authorizedDate.getMonth() + 1 <= 9 && `0${authorizedDate.getMonth() + 1}`}/${authorizedDate.getFullYear()}`;
+		const formatDate = `${authorizedDate.getDate() > 9 ? authorizedDate.getDate() : `0${authorizedDate.getDate()}`}/${authorizedDate.getMonth() + 1 > 9 ? authorizedDate.getMonth() + 1 : `0${authorizedDate.getMonth() + 1}`}/${authorizedDate.getFullYear()}`;
 
 		return `${date === null ? '-' : formatDate}`;
 	}

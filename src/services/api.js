@@ -129,6 +129,14 @@ export const getllOrgDocumets = orgId => axios({
 	},
 });
 
+export const deleteDocument = docId => axios({
+	url: `${API_URL}/documents/${docId}`,
+	method: 'delete',
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+
 // export const uploadDocument = docs => axios({
 // 	url: `${API_URL}/documents`,
 // 	method: 'patch',
