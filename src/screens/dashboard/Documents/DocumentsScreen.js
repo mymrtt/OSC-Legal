@@ -1313,19 +1313,31 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	createDoc = async () => {
+	createDoc = async (currentDoc) => {
 		try {
 			const docs = new FormData();
 			docs.append('org_id', this.state.orgID);
 			docs.append('template_id', this.state.isSelected.templateId);
 
-			const token = await localStorage.getItem('token');
+			const response = await createDocument(docs);
 
-			const response = await createDocument(docs, token);
+			const newDoc = {
+				description: currentDoc.description,
+				docId: response.data.insertId,
+				document: null,
+				org_id: this.state.orgID,
+				template: currentDoc.template,
+				templateId: currentDoc.templateId,
+				templateName: currentDoc.templateName,
+				template_id: currentDoc.templateId,
+			};
 
-			// console.log('response', response);
+			this.setState({
+				allOrgsDocuments: this.state.allOrgsDocuments.concat(newDoc),
+			});
 		} catch (error) {
 			console.log('error', error);
+			console.log('error', error.respose);
 		}
 	}
 
@@ -1776,6 +1788,7 @@ class DocumentsScreen extends Component {
 				modalListDoc: true,
 			});
 		} else {
+			this.createDoc(this.state.isSelected);
 			this.setState({
 				modalListDoc: false,
 				listDocs: newList,
@@ -1784,7 +1797,6 @@ class DocumentsScreen extends Component {
 				isErrorDocClear: false,
 			});
 		}
-		this.createDoc();
 	}
 
 	handleSelectOrg = (orgs) => {
@@ -2210,7 +2222,6 @@ class DocumentsScreen extends Component {
 	)
 
 	render() {
-		// console.log('aaaaaaaaaaaaaaa', this.state.allOrgsDocuments)
 		const { isAdmin } = this.props;
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
