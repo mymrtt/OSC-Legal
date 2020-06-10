@@ -59,6 +59,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	addNewDocument: info => dispatch(addNewDocument(info)),
 	deleteDocument: info => dispatch(deleteDocument(info)),
+	deleteTemplate: info => dispatch(deleteTemplate(info)),
 });
 
 const Container = styled.div`
@@ -1287,14 +1288,19 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	deleteTemplate = async () => {
+	handleDeleteTemplate = async () => {
 		try {
 			const { templateId } = this.state.modelSelect;
 
 			await deleteTemplate(templateId);
+
+			this.setState({
+				templateList: this.state.templateList.filter(template => template.templateId !== templateId)
+			});
+
 			this.handleCancelDelete();
 		} catch (error) {
-			console.log('error', error.response);
+			console.log('error', error);
 		}
 	}
 
@@ -1339,18 +1345,18 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	Template = async () => {
-		try {
-			const templateID = this.state.modelSelect.templateId;
+	// Template = async () => {
+	// 	try {
+	// 		const templateID = this.state.modelSelect.templateId;
 
-			const token = await localStorage.getItem('token');
+	// 		const token = await localStorage.getItem('token');
 
-			await deleteTemplate(templateID, token);
-			this.handleCancelDelete();
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
+	// 		await deleteTemplate(templateID, token);
+	// 		this.handleCancelDelete();
+	// 	} catch (error) {
+	// 		console.log('error', error.response);
+	// 	}
+	// }
 
 	// downloadTemplate = async (doc) => {
 	// 	try {
@@ -1831,7 +1837,7 @@ class DocumentsScreen extends Component {
 
 	handleDelete = () => {
 		if (this.props.isAdmin) {
-			this.deleteTemplate();
+			this.handleDeleteTemplate();
 		} else {
 			this.handleDeleteDoc();
 		}
