@@ -1810,17 +1810,14 @@ class DocumentsScreen extends Component {
 	}
 
 	handleDeleteDoc = async () => {
-		// this.setState({
-		// 	listDocs: this.state.listDocs.filter((doc, index) => index !== this.state.clickedModel),
-		// 	modalDelete: false,
-		// });
-
 		try {
-			const { docId } = this.state.userSelectDoc;
-			await deleteDocument(docId);
+			const { userSelectDoc, allOrgsDocuments } = this.state;
+
+			await deleteDocument(userSelectDoc.docId);
 
 			this.setState({
 				modalDelete: false,
+				allOrgsDocuments: allOrgsDocuments.filter(doc => doc.docId !== userSelectDoc.docId),
 			});
 		} catch (error) {
 			console.log('error', error);
@@ -1992,7 +1989,7 @@ class DocumentsScreen extends Component {
 				</BoxModelsDoc>
 				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
 				{this.state.isErrorDocClear && <ErrorText>Não há documento para ser escolhido</ErrorText>}
-				<ButtonModalList onClick={this.handleDocsUser}>Escolher Um</ButtonModalList>
+				<ButtonModalList onClick={this.handleDocsUser}>Escolher Um blabla</ButtonModalList>
 			</Modal>
 		</ContainerModal>
 	)

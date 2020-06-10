@@ -346,6 +346,7 @@ class ModalCreateOrganization extends Component {
 				...org,
 				authorization: this.state.authorization,
 				status: this.state.status,
+				// ...org.cnpj && { cnpj: this.state.cnpj },
 			};
 			await patchOrg(newOrg);
 
@@ -489,8 +490,9 @@ class ModalCreateOrganization extends Component {
 				isCepError: false,
 			});
 		}
-		console.log('cnpj', cnpj)
-		console.log('cnpj.length', cnpj.length)
+
+		console.log('!cnpj.length',cnpj.length )
+		console.log(' cnpj', cnpj )
 
 
 		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj.length || cnpj.length === 14)
@@ -502,8 +504,6 @@ class ModalCreateOrganization extends Component {
 				return `${date.getDate() <= 9 && `0${date.getDate()}`}/${date.getMonth() + 1 <= 9 && `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
 			};
 
-			console.log('cnpj foi ----', cnpj);
-
 			const org = {
 				tradingName: this.state.tradingName,
 				address: this.state.address,
@@ -511,7 +511,7 @@ class ModalCreateOrganization extends Component {
 				neighborhood: this.state.neighborhood,
 				city: this.state.city,
 				cep: this.state.cep,
-				cnpj: this.state.cnpj || null,
+				...cnpj && { cnpj: this.state.cnpj },
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.state.createdIn : createDate(),
 				user_id: this.props.userData.id,
@@ -521,6 +521,7 @@ class ModalCreateOrganization extends Component {
 			};
 
 			if (this.props.modalType === 'edit') {
+				console.log('cai edit' )
 				this.editOrganization(org);
 			} else {
 				this.createOrg(org);
