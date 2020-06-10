@@ -326,6 +326,7 @@ class CreateUserScreen extends Component {
 		modalSucess: false,
 		user: {
 			name: '',
+			// surname: '',
 			cpf: '',
 			email: '',
 			telephone: '',
@@ -450,7 +451,6 @@ class CreateUserScreen extends Component {
 
 		if (!isNameError && !isErrorCpf && !isErrorEmail && !isErrorTel && !isErrorPassword) {
 			this.userRegister(user);
-			console.log('userrr', user)
 		}
 	};
 

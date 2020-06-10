@@ -18,7 +18,7 @@ import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modul
 
 // Api
 import { createOrganization, getAllOrganizations, patchOrg } from '../../../services/api';
-import { validateCNPJ } from '../../../utils';
+import { validateCNPJ, telMask } from '../../../utils';
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -179,7 +179,7 @@ const WrapOrganization = styled.div`
 
 const WrapOrganizationContent = styled.div`
 	display: flex;
-	padding-bottom: 2rem;
+	padding-bottom: ${props => (props.textError ? '1rem' : '2rem')};
 `;
 
 const WrapOrganizationContent2 = styled.div`
@@ -309,6 +309,7 @@ class ModalCreateOrganization extends Component {
 			const newOrg = {
 				...org,
 				orgId: response.data.insertId,
+				authorization: null,
 			};
 
 			this.setState({
@@ -331,12 +332,11 @@ class ModalCreateOrganization extends Component {
 					error: 'Token expirado, faça login novamente',
 				});
 			}
-			if (error.response.data.errors[0]) {
-				// this.setState({
-				// 	error: error.response.data.errors[0].message,
-				// });
-				console.log('errr')
-			}
+			// if (error.response.data.errors[0]) {
+			// 	this.setState({
+			// 		error: error.response.data.errors[0].message,
+			// 	});
+			// }
 		}
 	}
 
@@ -346,6 +346,7 @@ class ModalCreateOrganization extends Component {
 				...org,
 				authorization: this.state.authorization,
 				status: this.state.status,
+				// ...org.cnpj && { cnpj: this.state.cnpj },
 			};
 			await patchOrg(newOrg);
 
@@ -356,6 +357,11 @@ class ModalCreateOrganization extends Component {
 			this.props.closeModal();
 		} catch (error) {
 			console.log('error', error.response);
+			// if (error.response.data.errors[0]) {
+			// 	this.setState({
+			// 		error: error.response.data.errors[0].message,
+			// 	});
+			// }
 			this.setState({
 				error: 'Algo deu errado.',
 			});
@@ -413,14 +419,16 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (!cnpj || cnpj.length !== 14 || validateCNPJ(cnpj)) {
-			this.setState({
-				isCnpjError: true,
-			});
-		} else {
-			this.setState({
-				isCnpjError: false,
-			});
+		if (cnpj) {
+			if (cnpj.length !== 14 || validateCNPJ(cnpj)) {
+				this.setState({
+					isCnpjError: true,
+				});
+			} else {
+				this.setState({
+					isCnpjError: false,
+				});
+			}
 		}
 
 		if (!telephone || telephone.length < 8) {
@@ -483,13 +491,13 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (tradingName.length >= 4 && companyName.length >= 4 && cnpj.length === 14
+		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj.length || cnpj.length === 14)
 			&& telephone.length >= 8 && address.length >= 4 && addressComplement.length >= 4
 			&& city.length >= 4 && neighborhood.length >= 4 && cep.length === 8
 		) {
 			const createDate = () => {
 				const date = new Date();
-				return `${date.getDate() <= 9 && `0${date.getDate()}`}/${date.getMonth() + 1 <= 9 && `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
+				return `${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}/${date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
 			};
 
 			const org = {
@@ -499,7 +507,7 @@ class ModalCreateOrganization extends Component {
 				neighborhood: this.state.neighborhood,
 				city: this.state.city,
 				cep: this.state.cep,
-				cnpj: this.state.cnpj,
+				...cnpj && { cnpj: this.state.cnpj },
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.state.createdIn : createDate(),
 				user_id: this.props.userData.id,
@@ -630,7 +638,6 @@ class ModalCreateOrganization extends Component {
 												value={this.state.cnpj}
 												name="cnpj"
 												isError={isCnpjError}
-												required
 											/>
 											{isCnpjError && <ErrorMessage>{errorMessage[2]}</ErrorMessage>}
 										</ContentOrganizationItem>
@@ -642,6 +649,7 @@ class ModalCreateOrganization extends Component {
 												type="number"
 												placeholder="(00) 00000-0000"
 												onChange={ev => this.handleChange('telephone', ev)}
+												// value={this.state.telephone}
 												value={this.state.telephone}
 												name="telephone"
 												isError={isTelephoneError}
@@ -666,11 +674,10 @@ class ModalCreateOrganization extends Component {
 										</ContentOrganizationItem>
 									</ContentOrganization>
 									<WrapOrganization>
-										<WrapOrganizationContent>
+										<WrapOrganizationContent textError={isAddressComplementError || isCityError}>
 											<WrapOrganizationItem
 												style={{
 													marginRight: '1rem',
-													paddingBottom: isAddressComplementError && '1rem',
 												}}
 											>
 												<UserTitle org>complemento</UserTitle>
@@ -686,7 +693,7 @@ class ModalCreateOrganization extends Component {
 												/>
 												{isAddressComplementError && <ErrorMessage>{errorMessage[5]}</ErrorMessage>}
 											</WrapOrganizationItem>
-											<WrapOrganizationItem style={{ paddingBottom: isCityError && '1rem' }}>
+											<WrapOrganizationItem>
 												<UserTitle org>cidade</UserTitle>
 												<Input
 													modalOrg

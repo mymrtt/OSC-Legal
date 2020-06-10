@@ -30,7 +30,7 @@ import ArrowDownIcon from '../../../assets/caminho.svg';
 import ArrowUpIcon from '../../../assets/arrow-up.svg';
 
 // Redux
-import { addNewDocument, deleteDocument } from '../../../dataflow/modules/documents-modules';
+import { addNewDocument } from '../../../dataflow/modules/documents-modules';
 
 // Api
 import {
@@ -40,6 +40,7 @@ import {
 	getAllOrganizations,
 	getAllDocuments,
 	createDocument,
+	deleteDocument,
 	// downloadTemplate,
 	exportDocument,
 	uploadDocument,
@@ -1267,7 +1268,6 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			const response = await getllOrgDocumets(orgId, token);
-			console.log('response', response)
 
 			this.setState({
 				allOrgsDocuments: response.data,
@@ -1289,11 +1289,9 @@ class DocumentsScreen extends Component {
 
 	deleteTemplate = async () => {
 		try {
-			const templateId = this.state.modelSelect;
+			const { templateId } = this.state.modelSelect;
 
-			const token = await localStorage.getItem('token');
-
-			const response = await deleteTemplate(templateId, token);
+			await deleteTemplate(templateId);
 			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
@@ -1348,7 +1346,6 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			await deleteTemplate(templateID, token);
-
 			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
@@ -1816,21 +1813,29 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	deleteUserDoc = () => {
-		this.setState({
-			listDocs: this.state.listDocs.filter((doc, index) => index !== this.state.clickedModel),
-			modalDelete: false,
-		});
-	}
+	handleDeleteDoc = async () => {
+		try {
+			const { userSelectDoc, allOrgsDocuments } = this.state;
 
-	handleDeleteTemplate = () => {
-		if (this.props.isAdmin) {
-			this.deleteTemplate();
-		} else {
-			this.deleteUserDoc();
+			await deleteDocument(userSelectDoc.docId);
+
+			this.setState({
+				modalDelete: false,
+				allOrgsDocuments: allOrgsDocuments.filter(doc => doc.docId !== userSelectDoc.docId),
+			});
+		} catch (error) {
+			console.log('error', error);
+			console.log('error.response', error.response);
 		}
 	}
 
+	handleDelete = () => {
+		if (this.props.isAdmin) {
+			this.deleteTemplate();
+		} else {
+			this.handleDeleteDoc();
+		}
+	}
 
 	renderModalModels = () => {
 		const Messages = [
@@ -1948,7 +1953,7 @@ class DocumentsScreen extends Component {
 				<ButtonsModal>
 					<ButtonCancel onClick={this.handleCancelDelete}>Cancelar</ButtonCancel>
 					<Button
-						onClick={() => this.handleDeleteTemplate()}
+						onClick={() => this.handleDelete()}
 						width="50%"
 						height="3.5rem"
 						text="Confirmar"
@@ -1988,7 +1993,7 @@ class DocumentsScreen extends Component {
 				</BoxModelsDoc>
 				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
 				{this.state.isErrorDocClear && <ErrorText>Não há documento para ser escolhido</ErrorText>}
-				<ButtonModalList onClick={this.handleDocsUser}>Escolher Um</ButtonModalList>
+				<ButtonModalList onClick={this.handleDocsUser}>Escolher Um blabla</ButtonModalList>
 			</Modal>
 		</ContainerModal>
 	)
@@ -2223,6 +2228,7 @@ class DocumentsScreen extends Component {
 
 	render() {
 		const { isAdmin } = this.props;
+
 		return (
 			<Container onClick={this.handleClickedLabelLeave || this.closeBoxOrgs}>
 				<Header/>
@@ -2312,7 +2318,7 @@ class DocumentsScreen extends Component {
 												isBoxOrgs={this.state.isBoxOrgs}
 												orgs={this.state.organizationUser}
 											>
-												<Org onClick={() => this.setState({ selectOrg: '' })}>Selecionar organizações</Org>
+												<Org onClick={() => this.setState({ selectOrg: '', isBoxOrgs: false, allOrgsDocuments: [] })}>Selecionar organizações</Org>
 												{this.state.organizationUser.map((orgs, index) => (
 													<Org
 														key={index}
