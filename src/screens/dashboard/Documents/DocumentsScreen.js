@@ -2122,30 +2122,31 @@ class DocumentsScreen extends Component {
 						</span>
 						<ModelParagraph>{doc.description}</ModelParagraph>
 					</ContainerModelDescription>
-					<ContainerOptions modal={this.state.modalDelete}
-						contOptions={this.state.options && (this.state.selectedOptions === index)}>
-						<Option
-							onMouseEnter={() => this.handleChangeColorExportUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveExport}
+					{this.state.authorizedOrg && this.state.authorizedOrg.status === 'autorizado' ? (
+						<ContainerOptions modal={this.state.modalDelete}
+							contOptions={this.state.options && (this.state.selectedOptions === index)}>
+							<Option
+								onMouseEnter={() => this.handleChangeColorExportUser(doc)}
+								onMouseLeave={this.handleChangeColorLeaveExport}
 							// onClick={() => this.handleClickExport(doc)}
-						>
-							<OptionLink href={ this.state.testando ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download`
-								: `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
-							} target="_blank">
-								<img
-									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
-									alt="Exportar" />
-								<OptionText
-									style={{ marginLeft: '.3rem' }}
-									colorTextButton={
-										this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
-									}
-								>
+							>
+								<OptionLink href={ this.state.testando ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download`
+									: `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
+								} target="_blank">
+									<img
+										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
+										alt="Exportar" />
+									<OptionText
+										style={{ marginLeft: '.3rem' }}
+										colorTextButton={
+											this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
+										}
+									>
 									Exportar
-								</OptionText>
-							</OptionLink>
-						</Option>
-						{/* <Option
+									</OptionText>
+								</OptionLink>
+							</Option>
+							{/* <Option
 							onMouseEnter={() => this.handleChangeColorBaixarUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveBaixar}
 							onClick={() => this.handleClickBaixar(doc)}
@@ -2164,29 +2165,29 @@ class DocumentsScreen extends Component {
 								</OptionText>
 							</OptionLink>
 						</Option> */}
-						<OptionLabel
-							onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveUpload}
-							htmlFor='upload-doc'
-						>
-							<input
-								onChange={e => this.uploadDoc(doc, e)}
-								id='upload-doc'
-								type="file"
-								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-							/>
-							<img
-								src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
-								alt="Upload" />
-							<OptionText
-								colorTextButton={
-									this.state.hoverUpload === doc ? this.state.colorTextExport : '#85144B'
-								}
+							<OptionLabel
+								onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
+								onMouseLeave={this.handleChangeColorLeaveUpload}
+								htmlFor='upload-doc'
 							>
+								<input
+									onChange={e => this.uploadDoc(doc, e)}
+									id='upload-doc'
+									type="file"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								/>
+								<img
+									src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
+									alt="Upload" />
+								<OptionText
+									colorTextButton={
+										this.state.hoverUpload === doc ? this.state.colorTextExport : '#85144B'
+									}
+								>
 								Upload
-							</OptionText>
-						</OptionLabel>
-						{/* <Option
+								</OptionText>
+							</OptionLabel>
+							{/* <Option
 							onMouseEnter={() => this.handleChangeColorEditUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveEdit}
 							onClick={this.openEditor}
@@ -2199,23 +2200,25 @@ class DocumentsScreen extends Component {
 							</OptionText>
 
 						</Option> */}
-						<Option
-							onMouseEnter={() => this.handleChangeColorDeleteUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveDelete}
-							onClick={() => this.handleModalDelete(doc, index)}
-						>
-							<OptionImage
-								src={this.state.hoverDelete === doc ? this.state.downloadDelete : DeleteIcon}
-								alt="Deletar" />
-							<OptionText
-								colorTextButton={this.state.hoverDelete === doc
-									? this.state.colorTextDelete : '#85144B'}
-								onClick={() => this.userSelectedDoc(doc, index)}
+							<Option
+								onMouseEnter={() => this.handleChangeColorDeleteUser(doc)}
+								onMouseLeave={this.handleChangeColorLeaveDelete}
+								onClick={() => this.handleModalDelete(doc, index)}
 							>
-								<p>Excluir</p>
-							</OptionText>
-						</Option>
-					</ContainerOptions>
+								<OptionImage
+									src={this.state.hoverDelete === doc ? this.state.downloadDelete : DeleteIcon}
+									alt="Deletar" />
+								<OptionText
+									colorTextButton={this.state.hoverDelete === doc
+										? this.state.colorTextDelete : '#85144B'}
+									onClick={() => this.userSelectedDoc(doc, index)}
+								>
+									<p>Excluir</p>
+								</OptionText>
+							</Option>
+						</ContainerOptions>
+					) : null}
+
 				</ContainerModel>
 			))
 		) : (
