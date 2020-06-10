@@ -187,11 +187,11 @@ export const deleteTemplate = templateId => axios({
 	},
 });
 
-export const downloadTemplate = templateId => axios({
-	url: `${API_URL}/templates/${templateId}/download`,
-	method: 'get',
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-});
+// export const downloadTemplate = templateId => axios({
+// 	url: `${API_URL}/templates/${templateId}/download`,
+// 	method: 'get',
+// 	headers: {
+// 		Authorization: `Bearer ${token}`,
+// 	},
+// });
 // Template (Document - Admin)

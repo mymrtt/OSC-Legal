@@ -41,7 +41,7 @@ import {
 	getAllDocuments,
 	createDocument,
 	deleteDocument,
-	downloadTemplate,
+	// downloadTemplate,
 	exportDocument,
 	uploadDocument,
 	getllOrgDocumets,
@@ -946,7 +946,7 @@ const WrapTextModal = styled.div`
 `;
 
 const TextModal = styled.p`
-	width: ${props => (props.width && '79%')};
+	width: ${props => (props.width && '100%')};
 	margin: 1.5rem  0;
 	font-size: 1rem;
 	font-family: 'Overpass', Regular;
@@ -1289,11 +1289,9 @@ class DocumentsScreen extends Component {
 
 	deleteTemplate = async () => {
 		try {
-			const templateId = this.state.modelSelect;
+			const { templateId } = this.state.modelSelect;
 
-			const token = await localStorage.getItem('token');
-
-			const response = await deleteTemplate(templateId, token);
+			await deleteTemplate(templateId);
 			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
@@ -1313,19 +1311,31 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	createDoc = async () => {
+	createDoc = async (currentDoc) => {
 		try {
 			const docs = new FormData();
 			docs.append('org_id', this.state.orgID);
 			docs.append('template_id', this.state.isSelected.templateId);
 
-			const token = await localStorage.getItem('token');
+			const response = await createDocument(docs);
 
-			const response = await createDocument(docs, token);
+			const newDoc = {
+				description: currentDoc.description,
+				docId: response.data.insertId,
+				document: null,
+				org_id: this.state.orgID,
+				template: currentDoc.template,
+				templateId: currentDoc.templateId,
+				templateName: currentDoc.templateName,
+				template_id: currentDoc.templateId,
+			};
 
-			// console.log('response', response);
+			this.setState({
+				allOrgsDocuments: this.state.allOrgsDocuments.concat(newDoc),
+			});
 		} catch (error) {
 			console.log('error', error);
+			console.log('error', error.respose);
 		}
 	}
 
@@ -1336,24 +1346,23 @@ class DocumentsScreen extends Component {
 			const token = await localStorage.getItem('token');
 
 			await deleteTemplate(templateID, token);
-
 			this.handleCancelDelete();
 		} catch (error) {
 			console.log('error', error.response);
 		}
 	}
 
-	downloadTemplate = async (doc) => {
-		try {
-			const { templateId } = doc;
+	// downloadTemplate = async (doc) => {
+	// 	try {
+	// 		const { templateId } = doc;
 
-			const token = await localStorage.getItem('token');
+	// 		const token = await localStorage.getItem('token');
 
-			const response = await downloadTemplate(templateId, token);
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
+	// 		const response = await downloadTemplate(templateId, token);
+	// 	} catch (error) {
+	// 		console.log('error', error.response);
+	// 	}
+	// }
 
 	exportDocument = async (doc) => {
 		try {
@@ -1576,9 +1585,9 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	handleClickBaixar = (doc) => {
-		this.downloadTemplate(doc);
-	}
+	// handleClickBaixar = (doc) => {
+	// 	this.downloadTemplate(doc);
+	// }
 
 	handleClickExport = (doc) => {
 		this.exportDocument(doc);
@@ -1597,12 +1606,7 @@ class DocumentsScreen extends Component {
 	uploadDoc = (doc, e) => {
 		e.preventDefault();
 
-		// console.log('docc', doc)
-
-		// console.log('e', e.target);
-
 		const fileDoc = e.target.files[0];
-		// console.log('file', fileDoc);
 
 		this.uploadDocumento(fileDoc, doc);
 	}
@@ -1781,6 +1785,7 @@ class DocumentsScreen extends Component {
 				modalListDoc: true,
 			});
 		} else {
+			this.createDoc(this.state.isSelected);
 			this.setState({
 				modalListDoc: false,
 				listDocs: newList,
@@ -1789,7 +1794,6 @@ class DocumentsScreen extends Component {
 				isErrorDocClear: false,
 			});
 		}
-		this.createDoc();
 	}
 
 	handleSelectOrg = (orgs) => {
@@ -1864,7 +1868,7 @@ class DocumentsScreen extends Component {
 								onChange={this.uploadFile}
 								id='upload-file'
 								type="file"
-								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
 							<TextUploadFile file={this.state.template}>
@@ -1893,7 +1897,7 @@ class DocumentsScreen extends Component {
 						<ContainerInput>
 							<TitleInputs>Descrição</TitleInputs>
 							<TextArea
-								// maxLength="250"
+								maxLength="250"
 								validationModel={this.state.validationModel}
 								value={this.state.description}
 								onChange={e => this.handleModelChange('description', e)}
@@ -2112,9 +2116,9 @@ class DocumentsScreen extends Component {
 						<Option
 							onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 							onMouseLeave={this.handleChangeColorLeaveExport}
-							onClick={() => this.handleClickExport(doc)}
+							// onClick={() => this.handleClickExport(doc)}
 						>
-							<OptionLink href={doc.path} download={doc.originalname}>
+							<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
 								<img
 									src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Exportar" />
@@ -2133,7 +2137,7 @@ class DocumentsScreen extends Component {
 							onMouseLeave={this.handleChangeColorLeaveBaixar}
 							onClick={() => this.handleClickBaixar(doc)}
 						>
-							<OptionLink href={doc.path} download={doc.originalname}>
+							<OptionLink href={`${process.env.REACT_APP_API_URL}/documents/${doc.templateId}/download`} target="_blank">
 								<img
 									src={this.state.hoverBaixar === doc ? this.state.downloadExport : DownloadIcon}
 									alt="Baixar" />
@@ -2156,7 +2160,7 @@ class DocumentsScreen extends Component {
 								onChange={e => this.uploadDoc(doc, e)}
 								id='upload-doc'
 								type="file"
-								accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img
 								src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}

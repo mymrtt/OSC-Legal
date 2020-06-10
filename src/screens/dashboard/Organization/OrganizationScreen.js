@@ -869,7 +869,9 @@ class OrganizationScreen extends Component {
 		const dateExpired =	dateCreate.setDate(dateCreate.getDate() + 30);
 		const date = new Date(dateExpired);
 
-		return `${date.getDate() <= 9 && `0${date.getDate()}`}/${date.getMonth() + 1 <= 9 && `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
+
+		return `${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}/${date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
+
 	};
 
 	deleteOrganization = async () => {
@@ -902,16 +904,15 @@ class OrganizationScreen extends Component {
 	handleSelectedStatus = async (newStatus, org) => {
 		try {
 			const orgObj = {
-				...org,
+				orgId: org.orgId,
 				status: newStatus.desc,
 				authorization: new Date(),
 			};
-
 			await patchOrg(orgObj);
 
 			this.changeOrgStatus(newStatus, org);
 		} catch (error) {
-			console.log('error', error);
+			console.log('error', error.response);
 			this.setState({
 				error: 'Algo deu errado.',
 			});
@@ -1292,7 +1293,7 @@ class OrganizationScreen extends Component {
 
 	renderAuthorizedData = (date) => {
 		const authorizedDate = new Date(date);
-		const formatDate = `${authorizedDate.getDate() <= 9 && `0${authorizedDate.getDate()}`}/${authorizedDate.getMonth() + 1 <= 9 && `0${authorizedDate.getMonth() + 1}`}/${authorizedDate.getFullYear()}`;
+		const formatDate = `${authorizedDate.getDate() > 9 ? authorizedDate.getDate() : `0${authorizedDate.getDate()}`}/${authorizedDate.getMonth() + 1 > 9 ? authorizedDate.getMonth() + 1 : `0${authorizedDate.getMonth() + 1}`}/${authorizedDate.getFullYear()}`;
 
 		return `${date === null ? '-' : formatDate}`;
 	}

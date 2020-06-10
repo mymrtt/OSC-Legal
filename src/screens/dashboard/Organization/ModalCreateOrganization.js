@@ -491,17 +491,13 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		console.log('!cnpj.length',cnpj.length )
-		console.log(' cnpj', cnpj )
-
-
 		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj.length || cnpj.length === 14)
 			&& telephone.length >= 8 && address.length >= 4 && addressComplement.length >= 4
 			&& city.length >= 4 && neighborhood.length >= 4 && cep.length === 8
 		) {
 			const createDate = () => {
 				const date = new Date();
-				return `${date.getDate() <= 9 && `0${date.getDate()}`}/${date.getMonth() + 1 <= 9 && `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
+				return `${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}/${date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
 			};
 
 			const org = {
@@ -521,7 +517,6 @@ class ModalCreateOrganization extends Component {
 			};
 
 			if (this.props.modalType === 'edit') {
-				console.log('cai edit' )
 				this.editOrganization(org);
 			} else {
 				this.createOrg(org);
