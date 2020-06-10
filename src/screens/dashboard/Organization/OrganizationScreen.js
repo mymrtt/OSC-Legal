@@ -1216,7 +1216,7 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{this.renderAuthorizedData(item.authorization) || '-'}
+							{item.status === 'pendente de autorização' ? '-' : this.renderAuthorizedData(item.authorization) || '-'}
 						</TableList>
 						<TableList
 							wNumber
