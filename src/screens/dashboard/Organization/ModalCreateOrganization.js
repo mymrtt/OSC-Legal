@@ -358,11 +358,11 @@ class ModalCreateOrganization extends Component {
 			console.log('error', error);
 
 			console.log('error.response', error.response);
-			if (error.response.data.errors[0]) {
-				this.setState({
-					error: error.response.data.errors[0].message,
-				});
-			}
+			// if (error.response.data.errors[0]) {
+			// 	this.setState({
+			// 		error: error.response.data.errors[0].message,
+			// 	});
+			// }
 			this.setState({
 				error: 'Algo deu errado.',
 			});

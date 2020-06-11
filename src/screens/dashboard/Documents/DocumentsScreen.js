@@ -2002,7 +2002,7 @@ class DocumentsScreen extends Component {
 				</BoxModelsDoc>
 				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
 				{this.state.isErrorDocClear && <ErrorText>Não há documento para ser escolhido</ErrorText>}
-				<ButtonModalList onClick={this.handleDocsUser}>Escolher Um blabla</ButtonModalList>
+				<ButtonModalList onClick={this.handleDocsUser}>Escolher Um</ButtonModalList>
 			</Modal>
 		</ContainerModal>
 	)
