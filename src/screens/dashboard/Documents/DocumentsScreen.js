@@ -30,7 +30,7 @@ import ArrowDownIcon from '../../../assets/caminho.svg';
 import ArrowUpIcon from '../../../assets/arrow-up.svg';
 
 // Redux
-import { addNewDocument } from '../../../dataflow/modules/documents-modules';
+import { addNewDocument, exportNewDoc } from '../../../dataflow/modules/documents-modules';
 
 // Api
 import {
@@ -60,6 +60,7 @@ const mapDispatchToProps = dispatch => ({
 	addNewDocument: info => dispatch(addNewDocument(info)),
 	deleteDocument: info => dispatch(deleteDocument(info)),
 	deleteTemplate: info => dispatch(deleteTemplate(info)),
+	exportNewDoc: info => dispatch(exportNewDoc(info)),
 });
 
 const Container = styled.div`
@@ -1391,11 +1392,30 @@ class DocumentsScreen extends Component {
 
 			if (response.status === 200) {
 				this.setState({
-					testando: true,
+					newDoc: true,
 				});
 			}
 
-			console.log('reponse', response);
+			const obj = {
+				docId: doc.docId,
+				org_id: this.state.orgID,
+				template_id: doc.templateId,
+				file: fileDoc,
+			};
+
+			if (this.state.newDoc) {
+				await this.props.exportNewDoc(obj);
+
+				// localStorage.setItem('newDoc', this.state.newDoc);
+			}
+
+			// let teste = await localStorage.getItem('newDoc');
+			// console.log('teste', teste);
+
+			// this.setState({
+			// 	newDoc: teste,
+			// });
+
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -2002,7 +2022,7 @@ class DocumentsScreen extends Component {
 				</BoxModelsDoc>
 				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
 				{this.state.isErrorDocClear && <ErrorText>Não há documento para ser escolhido</ErrorText>}
-				<ButtonModalList onClick={this.handleDocsUser}>Escolher Um blabla</ButtonModalList>
+				<ButtonModalList onClick={this.handleDocsUser}>Escolher um Documento</ButtonModalList>
 			</Modal>
 		</ContainerModal>
 	)
@@ -2128,10 +2148,8 @@ class DocumentsScreen extends Component {
 							<Option
 								onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
-							// onClick={() => this.handleClickExport(doc)}
 							>
-								<OptionLink href={ this.state.testando ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download`
-									: `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
+								<OptionLink href={this.state.newDoc ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download` : `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
 								} target="_blank">
 									<img
 										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
@@ -2146,25 +2164,26 @@ class DocumentsScreen extends Component {
 									</OptionText>
 								</OptionLink>
 							</Option>
-							{/* <Option
-							onMouseEnter={() => this.handleChangeColorBaixarUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveBaixar}
-							onClick={() => this.handleClickBaixar(doc)}
-						>
-							<OptionLink href={`${process.env.REACT_APP_API_URL}/documents/${doc.templateId}/download`} target="_blank">
-								<img
-									src={this.state.hoverBaixar === doc ? this.state.downloadExport : DownloadIcon}
-									alt="Baixar" />
-								<OptionText
-									style={{ marginLeft: '.8rem' }}
-									colorTextButton={
-										this.state.hoverBaixar === doc ? this.state.colorTextExport : '#85144B'
-									}
+							{/* {this.state.newDoc ? (
+								<Option
+									onMouseEnter={() => this.handleChangeColorBaixarUser(doc)}
+									onMouseLeave={this.handleChangeColorLeaveBaixar}
 								>
-									Baixar
-								</OptionText>
-							</OptionLink>
-						</Option> */}
+									<OptionLink href={`${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download`} target="_blank">
+										<img
+											src={this.state.hoverBaixar === doc ? this.state.downloadExport : DownloadIcon}
+											alt="Baixar" />
+										<OptionText
+											style={{ marginLeft: '.8rem' }}
+											colorTextButton={
+												this.state.hoverBaixar === doc ? this.state.colorTextExport : '#85144B'
+											}
+										>
+											Baixar
+										</OptionText>
+									</OptionLink>
+								</Option>
+							) : null} */}
 							<OptionLabel
 								onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveUpload}
