@@ -871,7 +871,7 @@ class OrganizationScreen extends Component {
 	}
 
 	handleDateExpired = (authorization) => {
-		const dateExpired = format(add(authorization, { months: 1, days: 1 }), 'dd/MM/yyyy');
+		const dateExpired = format(add(authorization, { days: 30 }), 'dd/MM/yyyy');
 
 		return dateExpired;
 	};
@@ -906,20 +906,16 @@ class OrganizationScreen extends Component {
 	handleSelectedStatus = async (newStatus, org) => {
 		try {
 			const dateAuthorization = new Date();
-			//blabla
-			console.log('newStatus.desc', newStatus.desc)
 
-
-			// 'pendente de pagamento' 'prazo prorrogado'
 			const orgObj = {
 				orgId: org.orgId,
 				status: newStatus.desc,
 				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado') && { authorization: dateAuthorization },
-				...newStatus.desc === 'pendente de pagamento' && { dueDate: this.handleDateExpired(dateAuthorization) },
+				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { dueDate: this.handleDateExpired(dateAuthorization) },
 			};
 
-			// await patchOrg(orgObj);
-			console.log('orgObj -------', orgObj);
+			await patchOrg(orgObj);
+
 			this.changeOrgStatus(newStatus, org);
 		} catch (error) {
 			console.log('error', error.response);
@@ -939,10 +935,11 @@ class OrganizationScreen extends Component {
 					...data,
 					status: newStatus.desc,
 					...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado') && { authorization: dateAuthorization },
-					...newStatus.desc === 'pendente de pagamento' && { dueDate: this.handleDateExpired(dateAuthorization) },
+					...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { dueDate: this.handleDateExpired(dateAuthorization) },
 					isChanged: true,
 				};
 			}
+
 			return data;
 		});
 
@@ -1063,7 +1060,6 @@ class OrganizationScreen extends Component {
 			vencido = false;
 		}
 
-
 		if (item.status === 'pendente de autorização') {
 			listinha = isPendingAuthorization;
 		} else if (item.status === 'pendente de pagamento') {
@@ -1108,10 +1104,7 @@ class OrganizationScreen extends Component {
 							onClick={() => this.handleClickedImageStatus(item)}
 						>
 							<TextStatus color={item.isChanged}>
-								{/* {vencido ? 'Vencido' : item.status} */}
-								{/* {vencido && item.status !== 'prazo prorrogado' ? 'vencido' : item.status} */}
-								{vencido ? 'vencido' : item.status}
-
+								{vencido ? 'Vencido' : item.status}
 							</TextStatus>
 						</BoxButton>
 					</>
@@ -1246,8 +1239,6 @@ class OrganizationScreen extends Component {
 							onClick={() => this.isModalOpen(item)}
 						>
 							{item.status === 'pendente de autorização' ? '-' : this.renderAuthorizedData(item.authorization)}
-							{/* {item.status === 'pendente de autorização' || item.status === 'pendente de pagamento' ? '-' : this.renderAuthorizedData(item.authorization) || '-'} */}
-
 						</TableList>
 						<TableList
 							wNumber
