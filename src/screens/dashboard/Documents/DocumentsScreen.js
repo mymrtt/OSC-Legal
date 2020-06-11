@@ -1405,17 +1405,7 @@ class DocumentsScreen extends Component {
 
 			if (this.state.newDoc) {
 				await this.props.exportNewDoc(obj);
-
-				// localStorage.setItem('newDoc', this.state.newDoc);
 			}
-
-			// let teste = await localStorage.getItem('newDoc');
-			// console.log('teste', teste);
-
-			// this.setState({
-			// 	newDoc: teste,
-			// });
-
 		} catch (error) {
 			console.log('error', error);
 		}
