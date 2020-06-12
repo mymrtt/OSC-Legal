@@ -14,6 +14,16 @@ export const createUserAccount = (user, base64credentials) =>
 		data: user,
 	});
 
+export const resendCreateAccountEmail = (users, base64credentials) =>
+	axios({
+		url: `${API_URL}/users/resend-email`,
+		method: "post",
+		headers: {
+			Authorization: `Basic ${base64credentials}`,
+		},
+		data: users,
+});
+
 export const login = (user, base64credentials) =>
 	axios({
 		url: `${API_URL}/auth/authenticate`,
