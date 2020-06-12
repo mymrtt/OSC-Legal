@@ -2083,19 +2083,6 @@ class DocumentsScreen extends Component {
 								Upload
 								</OptionText>
 							</OptionLabel>
-							{/* <Option
-							onMouseEnter={() => this.handleChangeColorEditUser(doc)}
-							onMouseLeave={this.handleChangeColorLeaveEdit}
-							onClick={this.openEditor}
-						>
-							<OptionImage src={this.state.hoverEdit === doc ? this.state.downloadEdit : EditIcon} />
-							<OptionText
-								colorTextButton={this.state.hoverEdit === doc ? this.state.colorTextEdit : '#85144B'}
-							>
-								<p>Editar</p>
-							</OptionText>
-
-						</Option> */}
 							<Option
 								onMouseEnter={() => this.handleChangeColorDeleteUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveDelete}
