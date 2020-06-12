@@ -93,6 +93,7 @@ const TextTerms = styled.p`
 	width: 80%;
 	font-family: Overpass;
 	font-size: 1rem;
+	word-break: break-word;
 
 	@media(max-width: 768px) {
 		padding-bottom: 1rem;
@@ -107,7 +108,7 @@ const TextTerms = styled.p`
 const TextTermsBold = styled.strong`
 	margin-left: 0.5rem;
 	text-decoration: underline;
-	/* cursor: pointer; */
+	cursor: ${props => (props.resendEmail && 'pointer')};
 `;
 
 class CreateUserSucessScreen extends Component {
@@ -167,7 +168,7 @@ class CreateUserSucessScreen extends Component {
 					</TextTerms>
 					<TextTerms>
 						Caso não tenha recebido a confirmação, clique em
-						<TextTermsBold onClick={this.resendEmail}>Reenviar e-mail.</TextTermsBold>
+						<TextTermsBold resendEmail onClick={this.resendEmail}>Reenviar e-mail.</TextTermsBold>
 					</TextTerms>
 					<Link to="/">
 						<Button
