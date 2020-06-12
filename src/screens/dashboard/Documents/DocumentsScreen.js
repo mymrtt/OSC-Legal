@@ -2340,7 +2340,11 @@ class DocumentsScreen extends Component {
 											)
 										) : (
 											this.state.isMobileButton === true
-													&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
+											&& this.state.modalListDoc !== true
+											&& this.state.selectOrg !== ''
+											&& this.state.authorizedOrg
+											&& this.state.authorizedOrg.status === 'autorizado'
+												? (
 													<Button
 														width="17.5rem"
 														height="4.5rem"
