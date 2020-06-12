@@ -121,8 +121,6 @@ class CreateUserSucessScreen extends Component {
 		try {
 			const { users } = this.props.onboarding;
 
-			console.log('users', users.password)
-
 			const encodedPassword = OscHash(users.password);
 
 			const credentials = `${users.email}:${encodedPassword}`;
