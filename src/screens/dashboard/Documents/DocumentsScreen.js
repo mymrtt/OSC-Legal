@@ -568,11 +568,11 @@ const ContainerOptions = styled.div`
 	}
 	@media (max-width: 1024px) {
 		width: 25%;
-		padding: 0 0 0 3.4%;
+		/* padding: 0 0 0 3.4%; */
 	}
 	@media (max-width: 768px) {
 		width: 32%;
-		padding: 0 0 0 4.5%;
+		/* padding: 0 0 0 4.5%; */
 	}
 	@media (max-width: 648px) {
 		position: absolute;
@@ -586,18 +586,20 @@ const ContainerOptions = styled.div`
 		background: #ffffff;
 		align-items: center;
 		border-radius: 3px;
-		padding: 0;
+		/* padding: 0; */
 	}
 `;
 
 const Option = styled.button`
 	margin-bottom: 1rem;
-	width: 8rem;
+	/* width: 8rem; */
+	width: 9rem;
+
 	height: 2.5rem;
 	padding: 0 1rem;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 	background: transparent;
 	border: none;
 	border-radius: 4px;
@@ -605,8 +607,8 @@ const Option = styled.button`
 		background: #FF4136;
 	}
 	@media (max-width: 768px) {
-		width: 7rem;
-		padding: 0 0.8rem;
+		width: 8rem;
+		/* padding: 0 0.8rem; */
 	}
 	@media (max-width: 648px) {
 		align-self: center;
@@ -620,7 +622,7 @@ const Option = styled.button`
 
 const OptionLabel = styled.label`
 	margin-bottom: 1rem;
-	width: 8rem;
+	width: 9rem;
 	height: 2.5rem;
 	padding: 0 1rem;
 	display: flex;
@@ -634,8 +636,8 @@ const OptionLabel = styled.label`
 		background: #FF4136;
 	}
 	@media (max-width: 768px) {
-		width: 7rem;
-		padding: 0 0.8rem;
+		width: 8rem;
+		/* padding: 0 0.8rem; */
 	}
 	@media (max-width: 648px) {
 		align-self: center;
@@ -659,6 +661,9 @@ const OptionImage = styled.img`
 `;
 
 const OptionText = styled.span`
+  padding-left: .9rem;
+
+
 	color: ${props => (props.colorTextButton)};
 	font-size: 1.2rem;
 	font-family: "Overpass", SemiBold;
@@ -670,7 +675,9 @@ const OptionText = styled.span`
 	}
 	@media (max-width: 648px) {
 		font-size: 1.3rem;
-    margin-left: 0.8rem;
+		padding-left: .5rem;
+
+    /* margin-left: 0.8rem; */
 	}
 `;
 
@@ -2041,7 +2048,6 @@ class DocumentsScreen extends Component {
 										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
 										alt="Exportar" />
 									<OptionText
-										style={{ marginLeft: '.3rem' }}
 										colorTextButton={
 											this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
 										}
@@ -2065,7 +2071,7 @@ class DocumentsScreen extends Component {
 								/>
 								<img
 									src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
-									alt="Upload" style={{ marginRight: '.4rem' }} />
+									alt="Upload" />
 								<OptionText
 									colorTextButton={
 										this.state.hoverUpload === doc ? this.state.colorTextExport : '#85144B'
@@ -2260,7 +2266,11 @@ class DocumentsScreen extends Component {
 											)
 										) : (
 											this.state.isMobileButton === true
-													&& this.state.modalListDoc !== true && this.state.selectOrg !== '' ? (
+											&& this.state.modalListDoc !== true
+											&& this.state.selectOrg !== ''
+											&& this.state.authorizedOrg
+											&& this.state.authorizedOrg.status === 'autorizado'
+												? (
 													<Button
 														width="17.5rem"
 														height="4.5rem"

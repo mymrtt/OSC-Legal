@@ -93,6 +93,7 @@ const TextTerms = styled.p`
 	width: 80%;
 	font-family: Overpass;
 	font-size: 1rem;
+	word-break: break-word;
 
 	@media(max-width: 768px) {
 		padding-bottom: 1rem;
@@ -107,7 +108,6 @@ const TextTerms = styled.p`
 const TextTermsBold = styled.strong`
 	margin-left: 0.5rem;
 	text-decoration: underline;
-	/* cursor: pointer; */
 	cursor: ${props => (props.link && 'pointer')};
 `;
 

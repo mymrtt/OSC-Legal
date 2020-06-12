@@ -651,7 +651,6 @@ class ModalCreateOrganization extends Component {
 												type="number"
 												placeholder="(00) 00000-0000"
 												onChange={ev => this.handleChange('telephone', ev)}
-												// value={this.state.telephone}
 												value={this.state.telephone}
 												name="telephone"
 												isError={isTelephoneError}
