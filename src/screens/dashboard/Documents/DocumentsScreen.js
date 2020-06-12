@@ -30,7 +30,7 @@ import ArrowDownIcon from '../../../assets/caminho.svg';
 import ArrowUpIcon from '../../../assets/arrow-up.svg';
 
 // Redux
-import { addNewDocument, exportNewDoc } from '../../../dataflow/modules/documents-modules';
+import { addNewDocument, exportNewDoc, exportNewTemplate } from '../../../dataflow/modules/documents-modules';
 
 // Api
 import {
@@ -54,6 +54,8 @@ const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
 	isAdmin: state.onboarding.user.isAdmin,
 	organization: state.organization.tableDatas,
+	exportNewDoc: state.documents.exportNewDoc,
+	exportNewTemplate: state.documents.exportNewTemplate,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -61,6 +63,7 @@ const mapDispatchToProps = dispatch => ({
 	deleteDocument: info => dispatch(deleteDocument(info)),
 	deleteTemplate: info => dispatch(deleteTemplate(info)),
 	exportNewDoc: info => dispatch(exportNewDoc(info)),
+	exportNewTemplate: info => dispatch(exportNewTemplate(info)),
 });
 
 const Container = styled.div`
@@ -1232,7 +1235,10 @@ class DocumentsScreen extends Component {
 		this.getAllOrgs();
 		this.getAllDocuments();
 		this.renderMobileButton();
-		// this.getllOrgDoc();
+
+		if (this.state.newDoc) {
+			this.props.exportNewDoc(this.state.newDocData);
+		}
 	}
 
 	getAllOrgs = async () => {
@@ -1356,30 +1362,6 @@ class DocumentsScreen extends Component {
 		}
 	}
 
-	// downloadTemplate = async (doc) => {
-	// 	try {
-	// 		const { templateId } = doc;
-
-	// 		const token = await localStorage.getItem('token');
-
-	// 		const response = await downloadTemplate(templateId, token);
-	// 	} catch (error) {
-	// 		console.log('error', error.response);
-	// 	}
-	// }
-
-	exportDocument = async (doc) => {
-		try {
-			const { templateId } = doc;
-
-			const token = await localStorage.getItem('token');
-
-			const response = await exportDocument(templateId, token);
-		} catch (error) {
-			console.log('error', error.response);
-		}
-	}
-
 	uploadDocumento = async (fileDoc, doc) => {
 		try {
 			const docs = new FormData();
@@ -1394,17 +1376,6 @@ class DocumentsScreen extends Component {
 				this.setState({
 					newDoc: true,
 				});
-			}
-
-			const obj = {
-				docId: doc.docId,
-				org_id: this.state.orgID,
-				template_id: doc.templateId,
-				file: fileDoc,
-			};
-
-			if (this.state.newDoc) {
-				await this.props.exportNewDoc(obj);
 			}
 		} catch (error) {
 			console.log('error', error);
@@ -1603,14 +1574,6 @@ class DocumentsScreen extends Component {
 		});
 	}
 
-	// handleClickBaixar = (doc) => {
-	// 	this.downloadTemplate(doc);
-	// }
-
-	handleClickExport = (doc) => {
-		this.exportDocument(doc);
-	}
-
 	uploadFile = (e) => {
 		e.preventDefault();
 		const file = e.target.files[0];
@@ -1625,6 +1588,15 @@ class DocumentsScreen extends Component {
 		e.preventDefault();
 
 		const fileDoc = e.target.files[0];
+
+		const newDocData = {
+			fileDoc,
+			doc,
+		};
+
+		this.setState({
+			newDocData,
+		});
 
 		this.uploadDocumento(fileDoc, doc);
 	}
@@ -1858,12 +1830,12 @@ class DocumentsScreen extends Component {
 
 	renderModalModels = () => {
 		const Messages = [
-			'Adicione um nome ao seu modelo',
-			'Adicione uma descrição para o seu modelo',
-			'Adicione um modelo',
-			'Preencha todos os campos',
-			'Nome do modelo deve ter no mínimo 4 letras',
-			'você excedeu o número máximo de caracteres',
+			'Adicione um nome ao seu modelo.',
+			'Adicione uma descrição para o seu modelo.',
+			'Adicione um modelo.',
+			'Preencha todos os campos.',
+			'Nome do modelo deve ter no mínimo 4 letras.',
+			'Você excedeu o número máximo de caracteres.',
 		];
 		return (
 			<ContainerModal onClick={this.handleCancelAddModel}>
@@ -1887,6 +1859,7 @@ class DocumentsScreen extends Component {
 								onChange={this.uploadFile}
 								id='upload-file'
 								type="file"
+								accept=".xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf"
 								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 							/>
 							<img src={documentWhite} alt="Anexar Documento" />
@@ -2012,7 +1985,7 @@ class DocumentsScreen extends Component {
 				</BoxModelsDoc>
 				{this.state.isErrorDoc && <ErrorText>Documento já adicionado</ErrorText>}
 				{this.state.isErrorDocClear && <ErrorText>Não há documento para ser escolhido</ErrorText>}
-				<ButtonModalList onClick={this.handleDocsUser}>Escolher um Documento</ButtonModalList>
+				<ButtonModalList onClick={this.handleDocsUser}>Escolher Documento</ButtonModalList>
 			</Modal>
 		</ContainerModal>
 	)
@@ -2139,7 +2112,7 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
 							>
-								<OptionLink href={this.state.newDoc ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download` : `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
+								<OptionLink href={this.props.exportNewDoc ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download` : `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
 								} target="_blank">
 									<img
 										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
@@ -2154,26 +2127,6 @@ class DocumentsScreen extends Component {
 									</OptionText>
 								</OptionLink>
 							</Option>
-							{/* {this.state.newDoc ? (
-								<Option
-									onMouseEnter={() => this.handleChangeColorBaixarUser(doc)}
-									onMouseLeave={this.handleChangeColorLeaveBaixar}
-								>
-									<OptionLink href={`${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download`} target="_blank">
-										<img
-											src={this.state.hoverBaixar === doc ? this.state.downloadExport : DownloadIcon}
-											alt="Baixar" />
-										<OptionText
-											style={{ marginLeft: '.8rem' }}
-											colorTextButton={
-												this.state.hoverBaixar === doc ? this.state.colorTextExport : '#85144B'
-											}
-										>
-											Baixar
-										</OptionText>
-									</OptionLink>
-								</Option>
-							) : null} */}
 							<OptionLabel
 								onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveUpload}
@@ -2183,6 +2136,7 @@ class DocumentsScreen extends Component {
 									onChange={e => this.uploadDoc(doc, e)}
 									id='upload-doc'
 									type="file"
+									accept=".xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf"
 								// accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 								/>
 								<img
