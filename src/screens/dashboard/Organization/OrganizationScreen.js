@@ -393,8 +393,6 @@ const Thead = styled.thead`
 
 const Tr = styled.tr`
 	height: 2.3rem;
-	/* height: 2.6rem; */
-
 	padding-left: 0.7rem;
 
 	&:nth-child(even) {
@@ -696,7 +694,6 @@ const ButtonCancel = styled.button`
 	@media (max-width: 490px) {
 		margin: 0;
 		position: initial;
-		/* width: 100%; */
 	}
 `;
 
@@ -1048,16 +1045,16 @@ class OrganizationScreen extends Component {
 		const isPaid = statusImgs.filter(item => item.pago);
 
 		const { dueDate } = item;
-		let vencido = false;
+		let deadlineExpired = false;
 
 		if (dueDate) {
 			const splitDueDate = dueDate.split('/');
 			const formatedDueDate = `${splitDueDate[1]}/${splitDueDate[0]}/${splitDueDate[2]}`;
 			const newDueDate = new Date(formatedDueDate);
 
-			vencido = !isFuture(newDueDate);
+			deadlineExpired = !isFuture(newDueDate);
 		} else {
-			vencido = false;
+			deadlineExpired = false;
 		}
 
 		if (item.status === 'pendente de autorização') {
@@ -1073,7 +1070,7 @@ class OrganizationScreen extends Component {
 		} else {
 			listinha = statusImgs;
 		}
-		if (vencido) {
+		if (deadlineExpired) {
 			listinha = isExpired;
 		}
 
@@ -1104,14 +1101,14 @@ class OrganizationScreen extends Component {
 							onClick={() => this.handleClickedImageStatus(item)}
 						>
 							<TextStatus color={item.isChanged}>
-								{vencido ? 'Vencido' : item.status}
+								{deadlineExpired ? 'Vencido' : item.status}
 							</TextStatus>
 						</BoxButton>
 					</>
 				)
 					: (
 						<TextStatus color={item.isChanged}>
-							{item.status}
+							{deadlineExpired ? 'Vencido' : item.status}
 						</TextStatus>
 					)}
 			</>
@@ -1203,7 +1200,9 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Autorização</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{this.renderAuthorizedData(item.authorization) || '-'}</TableList>
+						<TableList font={this.state.hovered === item}>
+							{item.status === 'pendente de autorização' ? '-' : this.renderAuthorizedData(item.authorization)}
+						</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Vencimento</TableTitleMob>
