@@ -138,9 +138,9 @@ const ParagraphUserName = styled.p`
 		font-size: 1rem;
 	}
 
-	@media (max-width: 490px) {
+	${'' /* @media (max-width: 490px) {
 		font-size: 0.9rem;
-	}
+	} */}
 `;
 
 const ParagraphSair = styled.p`

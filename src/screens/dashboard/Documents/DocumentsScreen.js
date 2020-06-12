@@ -331,9 +331,9 @@ const ParagraphInitialAddDoc = styled.p`
 	@media (max-width: 768px) {
 		font-size: 1rem;
 	}
-	@media (max-width: 648px) {
+	${'' /* @media (max-width: 648px) {
 		margin-top: 1rem;
-	}
+	} */}
 `;
 
 const ContainerSearch = styled.div`
@@ -458,6 +458,7 @@ const ContainerModel = styled.div`
 				width: 10rem;
 				height: 1px;
 				display: ${props => (props.displayBefore ? 'none' : 'flex')};
+				display: ${props => (props.authorizedOrg ? 'flex' : 'none')};
 				margin-top: 20.6%;
     		top: 100%;
 				z-index: 1;
@@ -534,7 +535,7 @@ const ModelTitle = styled.h2`
 		font-size: 1.3rem;
 	}
 	@media (max-width: 648px) {
-		font-size: 1rem;
+		font-size: 1.1rem;
 	}
 `;
 
@@ -1158,7 +1159,7 @@ const ButtonModalList = styled.button`
 	font-size: 1rem;
 	@media (max-width: 648px) {
 		width: 100%;
-		height: 4.5rem;
+		height: 6.5rem;
 	}
 `;
 
@@ -1670,7 +1671,7 @@ class DocumentsScreen extends Component {
 				isErrorDescription: false,
 			});
 		}
-		if (description.length > 250) {
+		if (description.length > 255) {
 			this.setState({
 				isErrorDescriptionQtd: true,
 			});
@@ -1708,7 +1709,7 @@ class DocumentsScreen extends Component {
 			});
 		}
 		if (templateName !== '' && templateName.length >= 4 && description !== ''
-		&& description.length <= 250 && template !== null) {
+		&& description.length <= 255 && template !== null) {
 			const templateUrl = this.state.templateUrl.name;
 
 			const templateData = new FormData();
@@ -1889,7 +1890,7 @@ class DocumentsScreen extends Component {
 						<ContainerInput>
 							<TitleInputs>Descrição</TitleInputs>
 							<TextArea
-								maxLength="250"
+								maxLength="255"
 								validationModel={this.state.validationModel}
 								value={this.state.description}
 								onChange={e => this.handleModelChange('description', e)}
@@ -2086,10 +2087,12 @@ class DocumentsScreen extends Component {
 		this.state.allOrgsDocuments && this.state.allOrgsDocuments.length > 0 ? (
 			this.state.allOrgsDocuments.map((doc, index) => (
 				<ContainerModel
+					authorizedOrg={this.state.authorizedOrg && this.state.authorizedOrg.status === 'autorizado'}
 					// MARGEM ULTIMO ITEM DA LISTA, ATÉ O MOBILE
-					style={{ margin: index === this.state.listDocs.length - 1 && '0 0 9rem 0' }}
+					style={{ margin: index === this.state.allOrgsDocuments.length - 1 && '0 0 9rem 0' }}
 					// MARGEM ATÉ O ULTIMO ITEM LISTA MOBILE
-					lastIndex={(window.innerWidth <= 490) && index === this.state.listDocs.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+					lastIndex={(window.innerWidth <= 648) && index === this.state.allOrgsDocuments.length - 1
+						? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 					key={index}
 					zIndex={this.state.modalListDoc}
 					displayBefore={this.state.modalDelete}
@@ -2131,6 +2134,7 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveUpload}
 								htmlFor='upload-doc'
+								style={{ justifyContent: 'normal' }}
 							>
 								<input
 									onChange={e => this.uploadDoc(doc, e)}
@@ -2141,7 +2145,7 @@ class DocumentsScreen extends Component {
 								/>
 								<img
 									src={this.state.hoverUpload === doc ? this.state.downloadUpload : uploadIcon}
-									alt="Upload" />
+									alt="Upload" style={{ marginRight: '.4rem' }} />
 								<OptionText
 									colorTextButton={
 										this.state.hoverUpload === doc ? this.state.colorTextExport : '#85144B'
@@ -2235,7 +2239,6 @@ class DocumentsScreen extends Component {
 										positionMobile="fixed"
 										margin="1rem 0 0 0"
 										fontSize="1.3rem"
-										// left="11px"
 										text="Adicionar Modelo"
 										hidden={this.state.addModel || this.state.deleteModal}
 										onClick={this.handleAddModel}

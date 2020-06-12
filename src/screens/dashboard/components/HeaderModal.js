@@ -53,7 +53,8 @@ const ParagraphUserName = styled.p`
 	@media (max-width: 648px) {
 		margin-right: 1.7rem;
 		font-family: "Overpass", Light;
-		font-size: 1.2rem;
+		font-size: 1rem;
+		text-transform: uppercase;
 	}
 
 	@media (max-width: 490px) {
