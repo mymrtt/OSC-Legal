@@ -13,7 +13,7 @@ import OscHash from '../../../services/OscHash';
 import sucessImage from '../../../assets/sucess.svg';
 
 // Api
-import { createUserAccount } from '../../../services/api';
+import { resendCreateAccountEmail } from '../../../services/api';
 
 const mapStateToProps = state => ({
 	onboarding: state.onboarding,
@@ -108,7 +108,7 @@ const TextTerms = styled.p`
 const TextTermsBold = styled.strong`
 	margin-left: 0.5rem;
 	text-decoration: underline;
-	cursor: ${props => (props.resendEmail && 'pointer')};
+	cursor: ${props => (props.link && 'pointer')};
 `;
 
 class CreateUserSucessScreen extends Component {
@@ -132,7 +132,7 @@ class CreateUserSucessScreen extends Component {
 			delete users.email;
 			delete users.password;
 
-			await createUserAccount(users, base64credentials);
+			await resendCreateAccountEmail(users, base64credentials);
 
 			this.setState({
 				textResendEmail: true,
@@ -168,7 +168,7 @@ class CreateUserSucessScreen extends Component {
 					</TextTerms>
 					<TextTerms>
 						Caso não tenha recebido a confirmação, clique em
-						<TextTermsBold resendEmail onClick={this.resendEmail}>Reenviar e-mail.</TextTermsBold>
+						<TextTermsBold link onClick={this.resendEmail}>Reenviar e-mail.</TextTermsBold>
 					</TextTerms>
 					<Link to="/">
 						<Button

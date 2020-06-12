@@ -718,43 +718,6 @@ const ModalAddModel = styled.form`
 	}
 `;
 
-// const LogoAndData = styled.div`
-// 	display: none;
-
-// 	@media (max-width: 490px) {
-// 		display: flex;
-// 		justify-content: space-between;
-// 		margin-bottom: 10%;
-// 	}
-// `;
-
-// const ParagraphContainer1 = styled.p`
-// 	font-size: 1.25rem;
-// 	font-family: "Overpass", Light;
-// 	margin-top: 1.2rem;
-
-// 	@media (max-width: 859px) {
-// 		font-size: 1rem;
-// 	}
-
-// 	@media (max-width: 685px) {
-// 		margin-top: 0;
-// 	}
-
-// 	@media (max-width: 648px) {
-// 		font-size: 0.8rem;
-// 	}
-// `;
-
-// const ParagraphSair = styled.p`
-//   color: #85144B;
-//   font-family: Overpass, SemiBold;
-// 	font-size: 1rem;
-// 	cursor: pointer;
-// 	align-self: flex-end;
-// 	text-transform: uppercase;
-// `;
-
 const HeaderAddModel = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -890,34 +853,6 @@ const TextArea = styled.textarea`
 	}
 `;
 
-// const ButtonAdd = styled(Button)`
-// 	align-self: flex-end;
-// 	width: 18.75rem;
-// 	height: 4rem;
-// 	font-size: 1.2rem;
-// 	margin: 0;
-// 	text-transform: uppercase;
-
-// 	@media (max-width: 1024px) {
-// 		font-size: .9rem;
-// 		width: 55%;
-// 		padding: .8rem;
-// 	}
-
-// 	@media (max-width: 768px) {
-// 		width: 45%;
-// 		padding: 1rem;
-// 		font-size: 1.3rem;
-// 		margin: 0;
-// 	}
-
-// 	@media (max-width: 490px) {
-// 		width: 90%;
-// 		font-size: 1.2rem;
-// 		align-self: center;
-// 	}
-// `;
-
 const ContainerModalDelete = styled(ContainerModal)`
 	@media (max-width: 648px) {
 		background: #ffffff;
@@ -1004,23 +939,6 @@ const ButtonCancel = styled.button`
 		margin: 0;
 	}
 `;
-
-// const ButtonConfirm = styled(Button)`
-// 	margin: 5% 0 0 0;
-// 	width: 50%;
-// 	height: 3.5rem;
-
-// 	@media (max-width: 1024px) {
-// 		margin: 5% 0 0 0;
-// 		width: 50%;
-// 	}
-
-// 	@media (max-width: 490px) {
-// 		margin: 0;
-// 		position: initial;
-// 		width: 100%;
-// 	}
-// `;
 
 const ErrorText = styled.p`
 	color: #f00;
@@ -2032,10 +1950,12 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorExport(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
 							>
-								<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank">
+								<OptionLink href={`${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`} target="_blank"
+									style={{ width: '100%', maxWidth: 'fit-content' }}
+								>
 									<img
 										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
-										alt="Exportar" />
+										alt="Exportar" style={{ marginRight: '.3rem' }} />
 									<OptionText
 										colorTextButton={
 											this.state.hoverExport === doc ? this.state.colorTextExport : '#85144B'
