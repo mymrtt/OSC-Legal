@@ -2091,7 +2091,8 @@ class DocumentsScreen extends Component {
 					// MARGEM ULTIMO ITEM DA LISTA, ATÉ O MOBILE
 					style={{ margin: index === this.state.allOrgsDocuments.length - 1 && '0 0 9rem 0' }}
 					// MARGEM ATÉ O ULTIMO ITEM LISTA MOBILE
-					lastIndex={(window.innerWidth <= 648) && index === this.state.allOrgsDocuments.length - 1 ? '0 0 20rem 0 !important' : '0 0 1rem 0'}
+					lastIndex={(window.innerWidth <= 648) && index === this.state.allOrgsDocuments.length - 1
+						? '0 0 20rem 0 !important' : '0 0 1rem 0'}
 					key={index}
 					zIndex={this.state.modalListDoc}
 					displayBefore={this.state.modalDelete}
@@ -2133,7 +2134,7 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorUploadUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveUpload}
 								htmlFor='upload-doc'
-								style={{justifyContent: 'normal'}}
+								style={{ justifyContent: 'normal' }}
 							>
 								<input
 									onChange={e => this.uploadDoc(doc, e)}
