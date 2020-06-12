@@ -224,7 +224,7 @@ class LoginScreen extends Component {
 		} catch (error) {
 			const { response } = error;
 
-			console.log('response', response)
+			console.log('response', response);
 
 			if (response.status === 403) {
 				this.setState({
