@@ -1298,6 +1298,8 @@ class DocumentsScreen extends Component {
 
 			const response = await uploadDocument(docs);
 
+			console.log('upload caralho', response);
+
 			if (response.status === 200) {
 				this.setState({
 					newDoc: true,
@@ -2042,7 +2044,8 @@ class DocumentsScreen extends Component {
 								onMouseEnter={() => this.handleChangeColorExportUser(doc)}
 								onMouseLeave={this.handleChangeColorLeaveExport}
 							>
-								<OptionLink href={this.props.exportNewDoc ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download` : `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
+								{/* {console.log('docc', doc)} */}
+								<OptionLink href={doc.documentPath ? `${process.env.REACT_APP_API_URL}/documents/${doc.docId}/download` : `${process.env.REACT_APP_API_URL}/templates/${doc.templateId}/download`
 								} target="_blank">
 									<img
 										src={this.state.hoverExport === doc ? this.state.downloadExport : DownloadIcon}
