@@ -332,7 +332,7 @@ class ModalCreateOrganization extends Component {
 					error: 'Token expirado, faça login novamente',
 				});
 			}
-			if (error.response.data.errors[0]) {
+			if (error.response.status === 400) {
 				this.setState({
 					error: error.response.data.errors[0].message,
 				});
@@ -347,6 +347,7 @@ class ModalCreateOrganization extends Component {
 				authorization: this.state.authorization,
 				status: this.state.status,
 			};
+
 			await patchOrg(newOrg);
 
 			const newTableDatas = this.props.tableDatas.map(item => (item.orgId === newOrg.orgId ? newOrg : item));
@@ -363,10 +364,6 @@ class ModalCreateOrganization extends Component {
 					error: error.response.data.errors[0].message,
 				});
 			}
-			console.log('error.response.data.errors[0].message', error.response.data.errors[0].message)
-			// this.setState({
-			// 	error: 'Não foi possível editar.',
-			// });
 		}
 	}
 
@@ -509,7 +506,7 @@ class ModalCreateOrganization extends Component {
 				neighborhood: this.state.neighborhood,
 				city: this.state.city,
 				cep: this.state.cep,
-				...cnpj && { cnpj: this.state.cnpj },
+				...(cnpj || this.props.modalType === 'edit') && { cnpj: this.state.cnpj || null },
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.state.createdIn : createDate(),
 				user_id: this.props.userData.id,
