@@ -30,7 +30,7 @@ const Routes = () => (
 
 			<Route path='/sucessfully' component={ModalSucessfully} />
 			<PrivateRoute path='/organizations' component={OrganizationScreen} />
-			<Route path='/documents' component={DocumentsScreen} />
+			<PrivateRoute path='/documents' component={DocumentsScreen} />
 		</Switch>
 	</BrowserRouter>
 );

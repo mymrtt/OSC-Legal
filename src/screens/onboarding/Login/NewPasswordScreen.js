@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import jwt from 'jsonwebtoken';
+import OscHash from '../../../services/OscHash';
 
 // Components
 import ImageLogo from '../../../components/ImageLogo';
@@ -13,7 +14,7 @@ import Button from '../../../components/Button';
 
 // Redux
 import { addNewUser, isResetPassword } from '../../../dataflow/modules/onboarding-modules';
-// import { createNewPassword } from '../../../services/api';
+import { createNewPassword } from '../../../services/api';
 
 const mapDispatchToProps = dispatch => ({
 	addNewUser: (newPassword) => {
@@ -183,8 +184,16 @@ class NewPasswordScreen extends Component {
 			const { token, newPassword } = this.state;
 			const userEmail = await jwt.decode(token);
 
-			// fazer o hast antes do post
-			// await createNewPassword(token, newPassword);
+			const password = newPassword;
+
+			const encodedPassword = OscHash(password);
+			const credentials = `${userEmail.email}:${encodedPassword}`;
+			const base64credentials = Buffer.from(credentials, 'utf-8').toString(
+				'base64',
+			);
+
+			await createNewPassword(base64credentials);
+
 			await this.props.addNewUser({ email: userEmail.email, password: newPassword });
 			await this.props.isResetPassword(true);
 			this.setState({ redirect: true });

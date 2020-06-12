@@ -24,15 +24,6 @@ export const login = (user, base64credentials) =>
 		data: user,
 	});
 
-export const findUser = (id) =>
-	axios({
-		url: `${API_URL}/users/${id}`,
-		method: "get",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
-
 export const resetPassword = (email) =>
 	axios({
 		url: `${API_URL}/auth/recovery`,
@@ -42,15 +33,13 @@ export const resetPassword = (email) =>
 		},
 	});
 
-export const createNewPassword = (token, newPassword) =>
+export const createNewPassword = base64credentials =>
 	axios({
-		// Testar ainda
-		url: `${API_URL}/auth/recovery`,
+		url: `${API_URL}/auth/recovery/new`,
 		method: "post",
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Basic ${base64credentials}`,
 		},
-		data: newPassword,
 	});
 
 // Onboarding

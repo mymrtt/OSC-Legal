@@ -3,6 +3,7 @@
 const ADD_NEW_DOCUMENT = 'osc/documents/ADD_NEW_DOCUMENTS';
 const DELETE_DOCUMENT = 'osc/documents/DELETE_DOCUMENT';
 const DELETE_TEMPLATE = 'osc/documents/DELETE_TEMPLATE';
+const EXPORT_NEW_DOC = 'osc/documents/EXPORT_NEW_DOC';
 
 // Initial State
 let nextDocId = 0;
@@ -33,6 +34,10 @@ export default function (state = initialState, action) {
 			...state,
 			documentsList: state.documentsList.filter(item => item.id !== action.info),
 		});
+	case EXPORT_NEW_DOC:
+		return Object.assign({}, state, {
+			documentsList: action.info,
+		});
 	default: return state;
 	}
 }
@@ -52,5 +57,10 @@ export const deleteDocument = info => ({
 
 export const deleteTemplate = info => ({
 	type: DELETE_TEMPLATE,
+	info,
+});
+
+export const exportNewDoc = info => ({
+	type: EXPORT_NEW_DOC,
 	info,
 });
