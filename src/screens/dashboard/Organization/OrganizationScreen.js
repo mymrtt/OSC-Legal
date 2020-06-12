@@ -774,10 +774,10 @@ class OrganizationScreen extends Component {
 	}
 
 	componentDidMount() {
-		this.getUser();
+		this.getOrganizations();
 	}
 
-	getUser = async () => {
+	getOrganizations = async () => {
 		try {
 			let user = await localStorage.getItem('user');
 			user = JSON.parse(user);
@@ -803,7 +803,7 @@ class OrganizationScreen extends Component {
 		try {
 			const response = await getAllOrganizations(this.props.user.id);
 
-			this.props.updateTableDatas(response.data);
+			this.handleValidateOrg(response.data);
 		} catch (error) {
 			console.log('error', error.response);
 		}
@@ -813,10 +813,33 @@ class OrganizationScreen extends Component {
 		try {
 			const response = await getAllOrganizationsAdmin(this.props.user.id);
 
-			this.props.updateTableDatas(response.data);
+			this.handleValidateOrg(response.data);
 		} catch (error) {
 			console.log('error', error.response);
 		}
+	}
+
+	handleValidateOrg = (org) => {
+		const newOrg = [];
+
+		org.map((item) => {
+			let { dueDate, status, ...rest } = item;
+
+			if (dueDate) {
+				const splitDueDate = dueDate.split('/');
+				const formatedDueDate = `${splitDueDate[1]}/${splitDueDate[0]}/${splitDueDate[2]}`;
+				const dateDueDate = new Date(formatedDueDate);
+
+				if (!isFuture(dateDueDate)) {
+					status = 'vencido';
+				}
+			}
+
+			newOrg.push({ ...rest, dueDate, status });
+			return null;
+		});
+
+		this.props.updateTableDatas(newOrg);
 	}
 
 	isModalOpen = (item) => {
@@ -907,7 +930,7 @@ class OrganizationScreen extends Component {
 			const orgObj = {
 				orgId: org.orgId,
 				status: newStatus.desc,
-				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado') && { authorization: dateAuthorization },
+				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado' || newStatus.desc === 'prazo prorrogado') && { authorization: dateAuthorization },
 				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { dueDate: this.handleDateExpired(dateAuthorization) },
 			};
 
@@ -915,7 +938,6 @@ class OrganizationScreen extends Component {
 
 			this.changeOrgStatus(newStatus, org);
 		} catch (error) {
-			console.log('error', error.response);
 			this.setState({
 				error: 'Algo deu errado.',
 			});
@@ -931,7 +953,7 @@ class OrganizationScreen extends Component {
 				return {
 					...data,
 					status: newStatus.desc,
-					...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado') && { authorization: dateAuthorization },
+					...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado' || newStatus.desc === 'prazo prorrogado') && { authorization: dateAuthorization },
 					...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { dueDate: this.handleDateExpired(dateAuthorization) },
 					isChanged: true,
 				};
@@ -1044,18 +1066,6 @@ class OrganizationScreen extends Component {
 		const isExpired = statusImgs.filter(item => item.prazoProrrogado);
 		const isPaid = statusImgs.filter(item => item.pago);
 
-		const { dueDate } = item;
-		let deadlineExpired = false;
-
-		if (dueDate) {
-			const splitDueDate = dueDate.split('/');
-			const formatedDueDate = `${splitDueDate[1]}/${splitDueDate[0]}/${splitDueDate[2]}`;
-			const newDueDate = new Date(formatedDueDate);
-
-			deadlineExpired = !isFuture(newDueDate);
-		} else {
-			deadlineExpired = false;
-		}
 
 		if (item.status === 'pendente de autorização') {
 			listinha = isPendingAuthorization;
@@ -1069,9 +1079,6 @@ class OrganizationScreen extends Component {
 			listinha = isPaid;
 		} else {
 			listinha = statusImgs;
-		}
-		if (deadlineExpired) {
-			listinha = isExpired;
 		}
 
 		return (
@@ -1101,14 +1108,14 @@ class OrganizationScreen extends Component {
 							onClick={() => this.handleClickedImageStatus(item)}
 						>
 							<TextStatus color={item.isChanged}>
-								{deadlineExpired ? 'Vencido' : item.status}
+								{item.status}
 							</TextStatus>
 						</BoxButton>
 					</>
 				)
 					: (
 						<TextStatus color={item.isChanged}>
-							{deadlineExpired ? 'Vencido' : item.status}
+							{item.status}
 						</TextStatus>
 					)}
 			</>

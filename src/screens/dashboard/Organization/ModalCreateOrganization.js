@@ -332,7 +332,7 @@ class ModalCreateOrganization extends Component {
 					error: 'Token expirado, faça login novamente',
 				});
 			}
-			if (error.response.data.errors[0]) {
+			if (error.response.status === 400) {
 				this.setState({
 					error: error.response.data.errors[0].message,
 				});
@@ -510,6 +510,7 @@ class ModalCreateOrganization extends Component {
 				city: this.state.city,
 				cep: this.state.cep,
 				...cnpj && { cnpj: this.state.cnpj },
+				// cnpj: !cnpj ? null : this.state.cnpj,
 				companyName: this.state.companyName,
 				createdIn: this.props.modalType === 'edit' ? this.state.createdIn : createDate(),
 				user_id: this.props.userData.id,
