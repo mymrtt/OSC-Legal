@@ -149,7 +149,7 @@ class ModalSucessfully extends Component {
 							Você terá acesso aos modelos de documentos <span>após a confirmação de pagamento do boleto</span> que será enviado para o <span>e-mail cadastrado.</span>
 						</Text>
 						<Text>
-							Caso não receba o boleto no prazo estipulado, entre em contato conosco através do nosso site <a href="http://www.osclegal.org.br/" target="_blank">www.osclegal.org.br</a>
+							Caso não receba o boleto, entre em contato conosco através do nosso site <a href="http://www.osclegal.org.br/" target="_blank" rel="noopener noreferrer">www.osclegal.org.br</a>
 						</Text>
 					</WarningText>
 					<Button

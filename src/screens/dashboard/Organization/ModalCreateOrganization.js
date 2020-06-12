@@ -358,14 +358,15 @@ class ModalCreateOrganization extends Component {
 			console.log('error', error);
 
 			console.log('error.response', error.response);
-			// if (error.response.data.errors[0]) {
-			// 	this.setState({
-			// 		error: error.response.data.errors[0].message,
-			// 	});
-			// }
-			this.setState({
-				error: 'Algo deu errado.',
-			});
+			if (error.response.data.errors[0]) {
+				this.setState({
+					error: error.response.data.errors[0].message,
+				});
+			}
+			console.log('error.response.data.errors[0].message', error.response.data.errors[0].message)
+			// this.setState({
+			// 	error: 'Não foi possível editar.',
+			// });
 		}
 	}
 
