@@ -1298,7 +1298,7 @@ class DocumentsScreen extends Component {
 
 			const response = await uploadDocument(docs);
 
-			console.log('upload caralho', response);
+			console.log('uploadddd', response);
 
 			if (response.status === 200) {
 				this.setState({
