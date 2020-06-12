@@ -18,7 +18,7 @@ import { addNewOrg, editOrg } from '../../../dataflow/modules/organization-modul
 
 // Api
 import { createOrganization, getAllOrganizations, patchOrg } from '../../../services/api';
-import { validateCNPJ, telMask } from '../../../utils';
+import { validateCNPJ } from '../../../utils';
 
 const mapStateToProps = state => ({
 	name: state.onboarding.users.name,
@@ -332,11 +332,11 @@ class ModalCreateOrganization extends Component {
 					error: 'Token expirado, faça login novamente',
 				});
 			}
-			// if (error.response.data.errors[0]) {
-			// 	this.setState({
-			// 		error: error.response.data.errors[0].message,
-			// 	});
-			// }
+			if (error.response.data.errors[0]) {
+				this.setState({
+					error: error.response.data.errors[0].message,
+				});
+			}
 		}
 	}
 
@@ -346,7 +346,6 @@ class ModalCreateOrganization extends Component {
 				...org,
 				authorization: this.state.authorization,
 				status: this.state.status,
-				// ...org.cnpj && { cnpj: this.state.cnpj },
 			};
 			await patchOrg(newOrg);
 
@@ -356,7 +355,9 @@ class ModalCreateOrganization extends Component {
 			this.props.handleClosedModal();
 			this.props.closeModal();
 		} catch (error) {
-			console.log('error', error.response);
+			console.log('error', error);
+
+			console.log('error.response', error.response);
 			// if (error.response.data.errors[0]) {
 			// 	this.setState({
 			// 		error: error.response.data.errors[0].message,
@@ -491,7 +492,7 @@ class ModalCreateOrganization extends Component {
 			});
 		}
 
-		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj.length || cnpj.length === 14)
+		if (tradingName.length >= 4 && companyName.length >= 4 && (!cnpj || !cnpj.length || cnpj.length === 14)
 			&& telephone.length >= 8 && address.length >= 4 && addressComplement.length >= 4
 			&& city.length >= 4 && neighborhood.length >= 4 && cep.length === 8
 		) {
@@ -514,6 +515,7 @@ class ModalCreateOrganization extends Component {
 				telephone: this.state.telephone,
 				orgId: this.state.orgId,
 				deletedAt: 0,
+				status: this.props.userData.status || 'pendente de autorização',
 			};
 
 			if (this.props.modalType === 'edit') {

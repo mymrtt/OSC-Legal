@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
+import { add, isFuture, format } from 'date-fns';
 
 // Components
 import Header from '../components/Header';
@@ -392,8 +393,6 @@ const Thead = styled.thead`
 
 const Tr = styled.tr`
 	height: 2.3rem;
-	/* height: 2.6rem; */
-
 	padding-left: 0.7rem;
 
 	&:nth-child(even) {
@@ -695,7 +694,6 @@ const ButtonCancel = styled.button`
 	@media (max-width: 490px) {
 		margin: 0;
 		position: initial;
-		/* width: 100%; */
 	}
 `;
 
@@ -755,7 +753,6 @@ class OrganizationScreen extends Component {
 				},
 				{
 					img: freeIcon,
-					// desc: 'isento',
 					desc: 'autorizado',
 					pendenteAut: true,
 					pagamento: true,
@@ -870,15 +867,10 @@ class OrganizationScreen extends Component {
 		});
 	}
 
-	handleDateExpired = (createdIn) => {
-		const formateDate = createdIn.split('/');
-		const dateCreate = new Date(`${formateDate[1]}/${formateDate[0]}/${formateDate[2]}`);
-		const dateExpired =	dateCreate.setDate(dateCreate.getDate() + 30);
-		const date = new Date(dateExpired);
+	handleDateExpired = (authorization) => {
+		const dateExpired = format(add(authorization, { days: 30 }), 'dd/MM/yyyy');
 
-
-		return `${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}/${date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${date.getFullYear()}`;
-
+		return dateExpired;
 	};
 
 	deleteOrganization = async () => {
@@ -910,11 +902,15 @@ class OrganizationScreen extends Component {
 
 	handleSelectedStatus = async (newStatus, org) => {
 		try {
+			const dateAuthorization = new Date();
+
 			const orgObj = {
 				orgId: org.orgId,
 				status: newStatus.desc,
-				authorization: new Date(),
+				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado') && { authorization: dateAuthorization },
+				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { dueDate: this.handleDateExpired(dateAuthorization) },
 			};
+
 			await patchOrg(orgObj);
 
 			this.changeOrgStatus(newStatus, org);
@@ -929,15 +925,21 @@ class OrganizationScreen extends Component {
 	changeOrgStatus = (newStatus, org) => {
 		const { tableDatas } = this.props;
 		const newList = tableDatas.map((data) => {
+			const dateAuthorization = new Date();
+
 			if (data === org) {
 				return {
 					...data,
 					status: newStatus.desc,
+					...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado') && { authorization: dateAuthorization },
+					...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { dueDate: this.handleDateExpired(dateAuthorization) },
 					isChanged: true,
 				};
 			}
+
 			return data;
 		});
+
 		this.setState({
 			isClickedStatus: '',
 			tableDatas: newList,
@@ -1042,6 +1044,19 @@ class OrganizationScreen extends Component {
 		const isExpired = statusImgs.filter(item => item.prazoProrrogado);
 		const isPaid = statusImgs.filter(item => item.pago);
 
+		const { dueDate } = item;
+		let deadlineExpired = false;
+
+		if (dueDate) {
+			const splitDueDate = dueDate.split('/');
+			const formatedDueDate = `${splitDueDate[1]}/${splitDueDate[0]}/${splitDueDate[2]}`;
+			const newDueDate = new Date(formatedDueDate);
+
+			deadlineExpired = !isFuture(newDueDate);
+		} else {
+			deadlineExpired = false;
+		}
+
 		if (item.status === 'pendente de autorização') {
 			listinha = isPendingAuthorization;
 		} else if (item.status === 'pendente de pagamento') {
@@ -1054,6 +1069,9 @@ class OrganizationScreen extends Component {
 			listinha = isPaid;
 		} else {
 			listinha = statusImgs;
+		}
+		if (deadlineExpired) {
+			listinha = isExpired;
 		}
 
 		return (
@@ -1083,14 +1101,14 @@ class OrganizationScreen extends Component {
 							onClick={() => this.handleClickedImageStatus(item)}
 						>
 							<TextStatus color={item.isChanged}>
-								{item.status}
+								{deadlineExpired ? 'Vencido' : item.status}
 							</TextStatus>
 						</BoxButton>
 					</>
 				)
 					: (
 						<TextStatus color={item.isChanged}>
-							{item.status}
+							{deadlineExpired ? 'Vencido' : item.status}
 						</TextStatus>
 					)}
 			</>
@@ -1182,12 +1200,14 @@ class OrganizationScreen extends Component {
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Autorização</TableTitleMob>
-						<TableList font={this.state.hovered === item}>{this.renderAuthorizedData(item.authorization) || '-'}</TableList>
+						<TableList font={this.state.hovered === item}>
+							{item.status === 'pendente de autorização' ? '-' : this.renderAuthorizedData(item.authorization)}
+						</TableList>
 					</ContainerTableTitleMob>
 					<ContainerTableTitleMob>
 						<TableTitleMob>Vencimento</TableTitleMob>
 						<TableList font={this.state.hovered === item}>
-							{item.createdIn === null ? '-' : this.handleDateExpired(item.createdIn)}
+							{item.dueDate || '-'}
 						</TableList>
 					</ContainerTableTitleMob>
 					</>
@@ -1217,15 +1237,14 @@ class OrganizationScreen extends Component {
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{item.status === 'pendente de autorização' || item.status === 'pendente de pagamento' ? '-' : this.renderAuthorizedData(item.authorization) || '-'}
+							{item.status === 'pendente de autorização' ? '-' : this.renderAuthorizedData(item.authorization)}
 						</TableList>
 						<TableList
 							wNumber
 							font={this.state.hovered === item}
 							onClick={() => this.isModalOpen(item)}
 						>
-							{/* {this.handleDateExpired(item.createdIn) || '-' } */}
-							{item.createdIn === null || item.status === 'pendente de autorização' || item.status === 'pendente de pagamento' ? '-' : this.handleDateExpired(item.createdIn)}
+							{item.dueDate || '-'}
 						</TableList>
 					</>
 				}
