@@ -930,7 +930,7 @@ class OrganizationScreen extends Component {
 			const orgObj = {
 				orgId: org.orgId,
 				status: newStatus.desc,
-				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'autorizado' || newStatus.desc === 'prazo prorrogado') && { authorization: dateAuthorization },
+				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { authorization: dateAuthorization },
 				...(newStatus.desc === 'pendente de pagamento' || newStatus.desc === 'prazo prorrogado') && { dueDate: this.handleDateExpired(dateAuthorization) },
 			};
 
